@@ -13,6 +13,1243 @@ class TestCompositionClient:
         config=_config, transporter=EchoTransporter(_config)
     )
 
+    async def test_custom_delete_(self):
+        """
+        allow del method for a custom path with minimal parameters
+        """
+        _req = await self._client.custom_delete_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_delete_1(self):
+        """
+        allow del method for a custom path with all parameters
+        """
+        _req = await self._client.custom_delete_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_(self):
+        """
+        allow get method for a custom path with minimal parameters
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_1(self):
+        """
+        allow get method for a custom path with all parameters
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters with space",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters%20with%20space"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = await self._client.custom_get_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
+        assert _req.data is None
+
+    async def test_custom_post_(self):
+        """
+        allow post method for a custom path with minimal parameters
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    async def test_custom_post_1(self):
+        """
+        allow post method for a custom path with all parameters
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "body": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"body":"parameters"}""")
+
+    async def test_custom_post_2(self):
+        """
+        requestOptions can override default query parameters
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"query":"myQueryParameter"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_3(self):
+        """
+        requestOptions merges query parameters with default ones
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"query2":"myQueryParameter"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_4(self):
+        """
+        requestOptions can override default headers
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_5(self):
+        """
+        requestOptions merges headers with default ones
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_6(self):
+        """
+        requestOptions queryParameters accepts booleans
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"isItWorking":true}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_7(self):
+        """
+        requestOptions queryParameters accepts integers
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":2}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "2"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_8(self):
+        """
+        requestOptions queryParameters accepts list of string
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_9(self):
+        """
+        requestOptions queryParameters accepts list of booleans
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":[true,true,false]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_post_10(self):
+        """
+        requestOptions queryParameters accepts list of integers
+        """
+        _req = await self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":[1,2]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    async def test_custom_put_(self):
+        """
+        allow put method for a custom path with minimal parameters
+        """
+        _req = await self._client.custom_put_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    async def test_custom_put_1(self):
+        """
+        allow put method for a custom path with all parameters
+        """
+        _req = await self._client.custom_put_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "body": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"body":"parameters"}""")
+
+    async def test_delete_composition_(self):
+        """
+        deleteComposition
+        """
+        _req = await self._client.delete_composition_with_http_info(
+            composition_id="1234",
+        )
+
+        assert _req.path == "/1/compositions/1234"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_delete_composition_rule_(self):
+        """
+        deleteCompositionRule
+        """
+        _req = await self._client.delete_composition_rule_with_http_info(
+            composition_id="1234",
+            object_id="5678",
+        )
+
+        assert _req.path == "/1/compositions/1234/rules/5678"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_composition_(self):
+        """
+        getComposition
+        """
+        _req = await self._client.get_composition_with_http_info(
+            composition_id="foo",
+        )
+
+        assert _req.path == "/1/compositions/foo"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_rule_(self):
+        """
+        getRule
+        """
+        _req = await self._client.get_rule_with_http_info(
+            composition_id="foo",
+            object_id="123",
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/123"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_task_(self):
+        """
+        getTask
+        """
+        _req = await self._client.get_task_with_http_info(
+            composition_id="foo",
+            task_id=42,
+        )
+
+        assert _req.path == "/1/compositions/foo/task/42"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_list_compositions_(self):
+        """
+        listCompositions
+        """
+        _req = await self._client.list_compositions_with_http_info()
+
+        assert _req.path == "/1/compositions"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_list_compositions_1(self):
+        """
+        listCompositions
+        """
+        _req = await self._client.list_compositions_with_http_info()
+
+        assert _req.path == "/1/compositions"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_multiple_batch_(self):
+        """
+        multipleBatch
+        """
+        _req = await self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "foo",
+                            "name": "my first composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "bar",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        "action": "delete",
+                        "body": {
+                            "objectID": "baz",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}"""
+        )
+
+    async def test_multiple_batch_1(self):
+        """
+        multipleBatch
+        """
+        _req = await self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-external-injection-compo",
+                            "name": "my first composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injectedItem1",
+                                            "source": {
+                                                "external": {
+                                                    "index": "foo",
+                                                    "ordering": "userDefined",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}"""
+        )
+
+    async def test_multiple_batch_2(self):
+        """
+        multipleBatch
+        """
+        _req = await self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-metadata-compo",
+                            "name": "my composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                                "params": {
+                                                    "filters": "brand:adidas",
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injectedItem1",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                            "metadata": {
+                                                "hits": {
+                                                    "addItemKey": True,
+                                                    "extra": {
+                                                        "my-string": "string",
+                                                        "my-bool": True,
+                                                        "my-number": 42,
+                                                        "my-object": {
+                                                            "sub-key": "sub-value"
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            "key": "externalItem",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                    "params": {
+                                                        "filters": "brand:puma",
+                                                    },
+                                                },
+                                            },
+                                            "position": 5,
+                                            "length": 5,
+                                            "metadata": {
+                                                "hits": {
+                                                    "addItemKey": True,
+                                                    "extra": {
+                                                        "my-string": "string",
+                                                        "my-bool": True,
+                                                        "my-number": 42,
+                                                        "my-object": {
+                                                            "sub-key": "sub-value"
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
+        )
+
+    async def test_put_composition_(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="1234",
+            composition={
+                "objectID": "1234",
+                "name": "my first composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/1234"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}"""
+        )
+
+    async def test_put_composition_1(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-external-injection-compo",
+            composition={
+                "objectID": "my-external-injection-compo",
+                "name": "my first composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "external": {
+                                        "index": "foo",
+                                        "ordering": "userDefined",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-external-injection-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}"""
+        )
+
+    async def test_put_composition_2(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-metadata-compo",
+            composition={
+                "objectID": "my-metadata-compo",
+                "name": "my composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                    "params": {
+                                        "filters": "brand:adidas",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                                "metadata": {
+                                    "hits": {
+                                        "addItemKey": True,
+                                        "extra": {
+                                            "my-string": "string",
+                                            "my-bool": True,
+                                            "my-number": 42,
+                                            "my-object": {"sub-key": "sub-value"},
+                                        },
+                                    },
+                                },
+                            },
+                            {
+                                "key": "externalItem",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                        "params": {
+                                            "filters": "brand:puma",
+                                        },
+                                    },
+                                },
+                                "position": 5,
+                                "length": 5,
+                                "metadata": {
+                                    "hits": {
+                                        "addItemKey": True,
+                                        "extra": {
+                                            "my-string": "string",
+                                            "my-bool": True,
+                                            "my-number": 42,
+                                            "my-object": {"sub-key": "sub-value"},
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-metadata-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+        )
+
+    async def test_put_composition_rule_(self):
+        """
+        putCompositionRule
+        """
+        _req = await self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="ruleID",
+            composition_rule={
+                "objectID": "ruleID",
+                "conditions": [
+                    {
+                        "anchoring": "is",
+                        "pattern": "test",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem1",
+                                    "source": {
+                                        "search": {
+                                            "index": "foo",
+                                        },
+                                    },
+                                    "position": 2,
+                                    "length": 1,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/compositionID/rules/ruleID"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}"""
+        )
+
+    async def test_put_composition_rule_1(self):
+        """
+        putCompositionRule
+        """
+        _req = await self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-metadata",
+            composition_rule={
+                "objectID": "rule-with-metadata",
+                "conditions": [
+                    {
+                        "anchoring": "is",
+                        "pattern": "test",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem1",
+                                    "source": {
+                                        "search": {
+                                            "index": "foo",
+                                            "params": {
+                                                "filters": "brand:adidas",
+                                            },
+                                        },
+                                    },
+                                    "position": 2,
+                                    "length": 1,
+                                    "metadata": {
+                                        "hits": {
+                                            "addItemKey": True,
+                                            "extra": {
+                                                "my-string": "string",
+                                                "my-bool": True,
+                                                "my-number": 42,
+                                                "my-object": {"sub-key": "sub-value"},
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/compositionID/rules/rule-with-metadata"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}"""
+        )
+
+    async def test_put_composition_rule_2(self):
+        """
+        putCompositionRule
+        """
+        _req = await self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-exernal-source",
+            composition_rule={
+                "objectID": "rule-with-exernal-source",
+                "description": "my description",
+                "tags": [
+                    "tag1",
+                    "tag2",
+                ],
+                "enabled": True,
+                "validity": [
+                    {
+                        "from": 1704063600,
+                        "until": 1704083600,
+                    },
+                ],
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                    {
+                        "anchoring": "contains",
+                        "pattern": "potter",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem",
+                                    "source": {
+                                        "external": {
+                                            "index": "my-index",
+                                            "params": {
+                                                "filters": "brand:adidas",
+                                            },
+                                            "ordering": "userDefined",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/compositions/compositionID/rules/rule-with-exernal-source"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+        )
+
+    async def test_save_rules_(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="foo",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "123",
+                            "conditions": [
+                                {
+                                    "pattern": "a",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "<YOUR_INDEX_NAME>",
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}"""
+        )
+
+    async def test_save_rules_1(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="rule-with-metadata",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-metadata",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "test",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injectedItem1",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "foo",
+                                                        "params": {
+                                                            "filters": "brand:adidas",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 2,
+                                                "length": 1,
+                                                "metadata": {
+                                                    "hits": {
+                                                        "addItemKey": True,
+                                                        "extra": {
+                                                            "my-string": "string",
+                                                            "my-bool": True,
+                                                            "my-number": 42,
+                                                            "my-object": {
+                                                                "sub-key": "sub-value"
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-metadata/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}"""
+        )
+
+    async def test_save_rules_2(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="rule-with-exernal-source",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-exernal-source",
+                            "description": "my description",
+                            "tags": [
+                                "tag1",
+                                "tag2",
+                            ],
+                            "enabled": True,
+                            "validity": [
+                                {
+                                    "from": 1704063600,
+                                    "until": 1704083600,
+                                },
+                            ],
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "harry",
+                                },
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "potter",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "my-index",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injectedItem",
+                                                "source": {
+                                                    "external": {
+                                                        "index": "my-index",
+                                                        "params": {
+                                                            "filters": "brand:adidas",
+                                                        },
+                                                        "ordering": "userDefined",
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 3,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-exernal-source/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+        )
+
     async def test_search_(self):
         """
         search
@@ -31,6 +1268,62 @@ class TestCompositionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"params":{"query":"batman"}}""")
+
+    async def test_search_1(self):
+        """
+        search
+        """
+        _req = await self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                    "injectedItems": {
+                        "injectedItem1": {
+                            "items": [
+                                {
+                                    "objectID": "my-object-1",
+                                },
+                                {
+                                    "objectID": "my-object-2",
+                                    "metadata": {
+                                        "my-string": "string",
+                                        "my-bool": True,
+                                        "my-number": 42,
+                                        "my-object": {"sub-key": "sub-value"},
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
+        )
+
+    async def test_search_composition_rules_(self):
+        """
+        searchCompositionRules
+        """
+        _req = await self._client.search_composition_rules_with_http_info(
+            composition_id="foo",
+            search_composition_rules_params={
+                "query": "batman",
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"batman"}""")
 
     async def test_search_for_facet_values_(self):
         """
@@ -59,6 +1352,1243 @@ class TestCompositionClientSync:
         config=_config, transporter=EchoTransporterSync(_config)
     )
 
+    def test_custom_delete_(self):
+        """
+        allow del method for a custom path with minimal parameters
+        """
+        _req = self._client.custom_delete_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_custom_delete_1(self):
+        """
+        allow del method for a custom path with all parameters
+        """
+        _req = self._client.custom_delete_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_custom_get_(self):
+        """
+        allow get method for a custom path with minimal parameters
+        """
+        _req = self._client.custom_get_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_custom_get_1(self):
+        """
+        allow get method for a custom path with all parameters
+        """
+        _req = self._client.custom_get_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters with space",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters%20with%20space"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_custom_get_2(self):
+        """
+        requestOptions should be escaped too
+        """
+        _req = self._client.custom_get_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "to be overriden",
+            },
+            request_options={
+                "headers": loads("""{"x-header-1":"spaces are left alone"}"""),
+                "query_parameters": loads(
+                    """{"query":"parameters with space","and an array":["array","with spaces"]}"""
+                ),
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "query": "parameters%20with%20space",
+                "and%20an%20array": "array%2Cwith%20spaces",
+            }.items()
+        )
+        assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
+        assert _req.data is None
+
+    def test_custom_post_(self):
+        """
+        allow post method for a custom path with minimal parameters
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    def test_custom_post_1(self):
+        """
+        allow post method for a custom path with all parameters
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "body": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"body":"parameters"}""")
+
+    def test_custom_post_2(self):
+        """
+        requestOptions can override default query parameters
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"query":"myQueryParameter"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_3(self):
+        """
+        requestOptions merges query parameters with default ones
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"query2":"myQueryParameter"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "query2": "myQueryParameter"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_4(self):
+        """
+        requestOptions can override default headers
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_5(self):
+        """
+        requestOptions merges headers with default ones
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "headers": loads("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {"x-algolia-api-key": "ALGOLIA_API_KEY"}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_6(self):
+        """
+        requestOptions queryParameters accepts booleans
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"isItWorking":true}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "isItWorking": "true"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_7(self):
+        """
+        requestOptions queryParameters accepts integers
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":2}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "2"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_8(self):
+        """
+        requestOptions queryParameters accepts list of string
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":["b and c","d"]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "b%20and%20c%2Cd"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_9(self):
+        """
+        requestOptions queryParameters accepts list of booleans
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":[true,true,false]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_post_10(self):
+        """
+        requestOptions queryParameters accepts list of integers
+        """
+        _req = self._client.custom_post_with_http_info(
+            path="test/requestOptions",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "facet": "filters",
+            },
+            request_options={
+                "query_parameters": loads("""{"myParam":[1,2]}"""),
+            },
+        )
+
+        assert _req.path == "/test/requestOptions"
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"query": "parameters", "myParam": "1%2C2"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"facet":"filters"}""")
+
+    def test_custom_put_(self):
+        """
+        allow put method for a custom path with minimal parameters
+        """
+        _req = self._client.custom_put_with_http_info(
+            path="test/minimal",
+        )
+
+        assert _req.path == "/test/minimal"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    def test_custom_put_1(self):
+        """
+        allow put method for a custom path with all parameters
+        """
+        _req = self._client.custom_put_with_http_info(
+            path="test/all",
+            parameters={
+                "query": "parameters",
+            },
+            body={
+                "body": "parameters",
+            },
+        )
+
+        assert _req.path == "/test/all"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {"query": "parameters"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"body":"parameters"}""")
+
+    def test_delete_composition_(self):
+        """
+        deleteComposition
+        """
+        _req = self._client.delete_composition_with_http_info(
+            composition_id="1234",
+        )
+
+        assert _req.path == "/1/compositions/1234"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_delete_composition_rule_(self):
+        """
+        deleteCompositionRule
+        """
+        _req = self._client.delete_composition_rule_with_http_info(
+            composition_id="1234",
+            object_id="5678",
+        )
+
+        assert _req.path == "/1/compositions/1234/rules/5678"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_composition_(self):
+        """
+        getComposition
+        """
+        _req = self._client.get_composition_with_http_info(
+            composition_id="foo",
+        )
+
+        assert _req.path == "/1/compositions/foo"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_rule_(self):
+        """
+        getRule
+        """
+        _req = self._client.get_rule_with_http_info(
+            composition_id="foo",
+            object_id="123",
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/123"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_task_(self):
+        """
+        getTask
+        """
+        _req = self._client.get_task_with_http_info(
+            composition_id="foo",
+            task_id=42,
+        )
+
+        assert _req.path == "/1/compositions/foo/task/42"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_list_compositions_(self):
+        """
+        listCompositions
+        """
+        _req = self._client.list_compositions_with_http_info()
+
+        assert _req.path == "/1/compositions"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_list_compositions_1(self):
+        """
+        listCompositions
+        """
+        _req = self._client.list_compositions_with_http_info()
+
+        assert _req.path == "/1/compositions"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_multiple_batch_(self):
+        """
+        multipleBatch
+        """
+        _req = self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "foo",
+                            "name": "my first composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "bar",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        "action": "delete",
+                        "body": {
+                            "objectID": "baz",
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}"""
+        )
+
+    def test_multiple_batch_1(self):
+        """
+        multipleBatch
+        """
+        _req = self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-external-injection-compo",
+                            "name": "my first composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injectedItem1",
+                                            "source": {
+                                                "external": {
+                                                    "index": "foo",
+                                                    "ordering": "userDefined",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}"""
+        )
+
+    def test_multiple_batch_2(self):
+        """
+        multipleBatch
+        """
+        _req = self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-metadata-compo",
+                            "name": "my composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                                "params": {
+                                                    "filters": "brand:adidas",
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "injectedItem1",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                            "metadata": {
+                                                "hits": {
+                                                    "addItemKey": True,
+                                                    "extra": {
+                                                        "my-string": "string",
+                                                        "my-bool": True,
+                                                        "my-number": 42,
+                                                        "my-object": {
+                                                            "sub-key": "sub-value"
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            "key": "externalItem",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                    "params": {
+                                                        "filters": "brand:puma",
+                                                    },
+                                                },
+                                            },
+                                            "position": 5,
+                                            "length": 5,
+                                            "metadata": {
+                                                "hits": {
+                                                    "addItemKey": True,
+                                                    "extra": {
+                                                        "my-string": "string",
+                                                        "my-bool": True,
+                                                        "my-number": 42,
+                                                        "my-object": {
+                                                            "sub-key": "sub-value"
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
+        )
+
+    def test_put_composition_(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="1234",
+            composition={
+                "objectID": "1234",
+                "name": "my first composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/1234"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}"""
+        )
+
+    def test_put_composition_1(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-external-injection-compo",
+            composition={
+                "objectID": "my-external-injection-compo",
+                "name": "my first composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "external": {
+                                        "index": "foo",
+                                        "ordering": "userDefined",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-external-injection-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}"""
+        )
+
+    def test_put_composition_2(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-metadata-compo",
+            composition={
+                "objectID": "my-metadata-compo",
+                "name": "my composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                    "params": {
+                                        "filters": "brand:adidas",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "injectedItem1",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                                "metadata": {
+                                    "hits": {
+                                        "addItemKey": True,
+                                        "extra": {
+                                            "my-string": "string",
+                                            "my-bool": True,
+                                            "my-number": 42,
+                                            "my-object": {"sub-key": "sub-value"},
+                                        },
+                                    },
+                                },
+                            },
+                            {
+                                "key": "externalItem",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                        "params": {
+                                            "filters": "brand:puma",
+                                        },
+                                    },
+                                },
+                                "position": 5,
+                                "length": 5,
+                                "metadata": {
+                                    "hits": {
+                                        "addItemKey": True,
+                                        "extra": {
+                                            "my-string": "string",
+                                            "my-bool": True,
+                                            "my-number": 42,
+                                            "my-object": {"sub-key": "sub-value"},
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-metadata-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+        )
+
+    def test_put_composition_rule_(self):
+        """
+        putCompositionRule
+        """
+        _req = self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="ruleID",
+            composition_rule={
+                "objectID": "ruleID",
+                "conditions": [
+                    {
+                        "anchoring": "is",
+                        "pattern": "test",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem1",
+                                    "source": {
+                                        "search": {
+                                            "index": "foo",
+                                        },
+                                    },
+                                    "position": 2,
+                                    "length": 1,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/compositionID/rules/ruleID"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}"""
+        )
+
+    def test_put_composition_rule_1(self):
+        """
+        putCompositionRule
+        """
+        _req = self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-metadata",
+            composition_rule={
+                "objectID": "rule-with-metadata",
+                "conditions": [
+                    {
+                        "anchoring": "is",
+                        "pattern": "test",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem1",
+                                    "source": {
+                                        "search": {
+                                            "index": "foo",
+                                            "params": {
+                                                "filters": "brand:adidas",
+                                            },
+                                        },
+                                    },
+                                    "position": 2,
+                                    "length": 1,
+                                    "metadata": {
+                                        "hits": {
+                                            "addItemKey": True,
+                                            "extra": {
+                                                "my-string": "string",
+                                                "my-bool": True,
+                                                "my-number": 42,
+                                                "my-object": {"sub-key": "sub-value"},
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/compositionID/rules/rule-with-metadata"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}"""
+        )
+
+    def test_put_composition_rule_2(self):
+        """
+        putCompositionRule
+        """
+        _req = self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-exernal-source",
+            composition_rule={
+                "objectID": "rule-with-exernal-source",
+                "description": "my description",
+                "tags": [
+                    "tag1",
+                    "tag2",
+                ],
+                "enabled": True,
+                "validity": [
+                    {
+                        "from": 1704063600,
+                        "until": 1704083600,
+                    },
+                ],
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                    {
+                        "anchoring": "contains",
+                        "pattern": "potter",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                        "params": {
+                                            "filters": "brand:adidas",
+                                        },
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "injectedItem",
+                                    "source": {
+                                        "external": {
+                                            "index": "my-index",
+                                            "params": {
+                                                "filters": "brand:adidas",
+                                            },
+                                            "ordering": "userDefined",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/compositions/compositionID/rules/rule-with-exernal-source"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+        )
+
+    def test_save_rules_(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="foo",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "123",
+                            "conditions": [
+                                {
+                                    "pattern": "a",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "<YOUR_INDEX_NAME>",
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}"""
+        )
+
+    def test_save_rules_1(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="rule-with-metadata",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-metadata",
+                            "conditions": [
+                                {
+                                    "anchoring": "is",
+                                    "pattern": "test",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injectedItem1",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "foo",
+                                                        "params": {
+                                                            "filters": "brand:adidas",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 2,
+                                                "length": 1,
+                                                "metadata": {
+                                                    "hits": {
+                                                        "addItemKey": True,
+                                                        "extra": {
+                                                            "my-string": "string",
+                                                            "my-bool": True,
+                                                            "my-number": 42,
+                                                            "my-object": {
+                                                                "sub-key": "sub-value"
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-metadata/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}"""
+        )
+
+    def test_save_rules_2(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="rule-with-exernal-source",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-exernal-source",
+                            "description": "my description",
+                            "tags": [
+                                "tag1",
+                                "tag2",
+                            ],
+                            "enabled": True,
+                            "validity": [
+                                {
+                                    "from": 1704063600,
+                                    "until": 1704083600,
+                                },
+                            ],
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "harry",
+                                },
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "potter",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "my-index",
+                                                    "params": {
+                                                        "filters": "brand:adidas",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "injectedItem",
+                                                "source": {
+                                                    "external": {
+                                                        "index": "my-index",
+                                                        "params": {
+                                                            "filters": "brand:adidas",
+                                                        },
+                                                        "ordering": "userDefined",
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 3,
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/rule-with-exernal-source/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+        )
+
     def test_search_(self):
         """
         search
@@ -77,6 +2607,62 @@ class TestCompositionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"params":{"query":"batman"}}""")
+
+    def test_search_1(self):
+        """
+        search
+        """
+        _req = self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                    "injectedItems": {
+                        "injectedItem1": {
+                            "items": [
+                                {
+                                    "objectID": "my-object-1",
+                                },
+                                {
+                                    "objectID": "my-object-2",
+                                    "metadata": {
+                                        "my-string": "string",
+                                        "my-bool": True,
+                                        "my-number": 42,
+                                        "my-object": {"sub-key": "sub-value"},
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
+        )
+
+    def test_search_composition_rules_(self):
+        """
+        searchCompositionRules
+        """
+        _req = self._client.search_composition_rules_with_http_info(
+            composition_id="foo",
+            search_composition_rules_params={
+                "query": "batman",
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/rules/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"query":"batman"}""")
 
     def test_search_for_facet_values_(self):
         """

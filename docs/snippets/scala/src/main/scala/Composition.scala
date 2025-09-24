@@ -18,12 +18,1505 @@ class SnippetCompositionClient {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = JsonSupport.format
 
+  /** Snippet for the customDelete method.
+    *
+    * allow del method for a custom path with minimal parameters
+    */
+  def snippetForCompositionClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customDelete method.
+    *
+    * allow del method for a custom path with all parameters
+    */
+  def snippetForCompositionClientCustomDelete1(): Unit = {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customDelete[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters"))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * allow get method for a custom path with minimal parameters
+    */
+  def snippetForCompositionClientCustomGet(): Unit = {
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * allow get method for a custom path with all parameters
+    */
+  def snippetForCompositionClientCustomGet1(): Unit = {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters with space"))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customGet method.
+    *
+    * requestOptions should be escaped too
+    */
+  def snippetForCompositionClientCustomGet2(): Unit = {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customGet[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "to be overriden")),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "parameters with space")
+            .withQueryParameter("and an array", Seq("array", "with spaces"))
+            .withHeader("x-header-1", "spaces are left alone")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * allow post method for a custom path with minimal parameters
+    */
+  def snippetForCompositionClientCustomPost(): Unit = {
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * allow post method for a custom path with all parameters
+    */
+  def snippetForCompositionClientCustomPost1(): Unit = {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default query parameters
+    */
+  def snippetForCompositionClientCustomPost2(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges query parameters with default ones
+    */
+  def snippetForCompositionClientCustomPost3(): Unit = {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("query2", "myQueryParameter")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions can override default headers
+    */
+  def snippetForCompositionClientCustomPost4(): Unit = {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions merges headers with default ones
+    */
+  def snippetForCompositionClientCustomPost5(): Unit = {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts booleans
+    */
+  def snippetForCompositionClientCustomPost6(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("isItWorking", true)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts integers
+    */
+  def snippetForCompositionClientCustomPost7(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", 2)
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of string
+    */
+  def snippetForCompositionClientCustomPost8(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq("b and c", "d"))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of booleans
+    */
+  def snippetForCompositionClientCustomPost9(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(true, true, false))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPost method.
+    *
+    * requestOptions queryParameters accepts list of integers
+    */
+  def snippetForCompositionClientCustomPost10(): Unit = {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPost[JObject](
+        path = "test/requestOptions",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("facet", JString("filters"))))),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("myParam", Seq(1, 2))
+            .build()
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPut method.
+    *
+    * allow put method for a custom path with minimal parameters
+    */
+  def snippetForCompositionClientCustomPut(): Unit = {
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/minimal"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the customPut method.
+    *
+    * allow put method for a custom path with all parameters
+    */
+  def snippetForCompositionClientCustomPut1(): Unit = {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.customPut[JObject](
+        path = "test/all",
+        parameters = Some(Map("query" -> "parameters")),
+        body = Some(JObject(List(JField("body", JString("parameters")))))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the deleteComposition method.
+    *
+    * deleteComposition
+    */
+  def snippetForCompositionClientDeleteComposition(): Unit = {
+    // >SEPARATOR deleteComposition default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.deleteComposition(
+        compositionID = "1234"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the deleteCompositionRule method.
+    *
+    * deleteCompositionRule
+    */
+  def snippetForCompositionClientDeleteCompositionRule(): Unit = {
+    // >SEPARATOR deleteCompositionRule default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.deleteCompositionRule(
+        compositionID = "1234",
+        objectID = "5678"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getComposition method.
+    *
+    * getComposition
+    */
+  def snippetForCompositionClientGetComposition(): Unit = {
+    // >SEPARATOR getComposition default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getComposition(
+        compositionID = "foo"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getRule method.
+    *
+    * getRule
+    */
+  def snippetForCompositionClientGetRule(): Unit = {
+    // >SEPARATOR getRule default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getRule(
+        compositionID = "foo",
+        objectID = "123"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTask method.
+    *
+    * getTask
+    */
+  def snippetForCompositionClientGetTask(): Unit = {
+    // >SEPARATOR getTask default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getTask(
+        compositionID = "foo",
+        taskID = 42L
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listCompositions method.
+    *
+    * listCompositions
+    */
+  def snippetForCompositionClientListCompositions(): Unit = {
+    // >SEPARATOR listCompositions listCompositions
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.listCompositions(
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listCompositions method.
+    *
+    * listCompositions
+    */
+  def snippetForCompositionClientListCompositions1(): Unit = {
+    // >SEPARATOR listCompositions listCompositions
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.listCompositions(
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the multipleBatch method.
+    *
+    * multipleBatch
+    */
+  def snippetForCompositionClientMultipleBatch(): Unit = {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.multipleBatch(
+        batchParams = BatchParams(
+          requests = Seq(
+            MultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = Composition(
+                objectID = "foo",
+                name = "my first composition",
+                behavior = CompositionBehavior(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "bar"
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+            MultipleBatchRequest(
+              action = Action.withName("delete"),
+              body = DeleteCompositionAction(
+                objectID = "baz"
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the multipleBatch method.
+    *
+    * multipleBatch
+    */
+  def snippetForCompositionClientMultipleBatch1(): Unit = {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.multipleBatch(
+        batchParams = BatchParams(
+          requests = Seq(
+            MultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = Composition(
+                objectID = "my-external-injection-compo",
+                name = "my first composition",
+                behavior = CompositionBehavior(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "foo"
+                        )
+                      )
+                    ),
+                    injectedItems = Some(
+                      Seq(
+                        InjectedItem(
+                          key = "injectedItem1",
+                          source = ExternalSource(
+                            external = External(
+                              index = "foo",
+                              ordering = Some(ExternalOrdering.withName("userDefined")),
+                              params = Some(
+                                BaseInjectionQueryParameters(
+                                  filters = Some("brand:adidas")
+                                )
+                              )
+                            )
+                          ),
+                          position = 2,
+                          length = 1
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the multipleBatch method.
+    *
+    * multipleBatch
+    */
+  def snippetForCompositionClientMultipleBatch2(): Unit = {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.multipleBatch(
+        batchParams = BatchParams(
+          requests = Seq(
+            MultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = Composition(
+                objectID = "my-metadata-compo",
+                name = "my composition",
+                behavior = CompositionBehavior(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "foo",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
+                          )
+                        )
+                      )
+                    ),
+                    injectedItems = Some(
+                      Seq(
+                        InjectedItem(
+                          key = "injectedItem1",
+                          source = SearchSource(
+                            search = Search(
+                              index = "foo",
+                              params = Some(
+                                BaseInjectionQueryParameters(
+                                  filters = Some("brand:adidas")
+                                )
+                              )
+                            )
+                          ),
+                          position = 2,
+                          length = 1,
+                          metadata = Some(
+                            InjectedItemMetadata(
+                              hits = Some(
+                                InjectedItemHitsMetadata(
+                                  addItemKey = Some(true),
+                                  extra = Some(
+                                    Map(
+                                      "my-string" -> "string",
+                                      "my-bool" -> true,
+                                      "my-number" -> 42,
+                                      "my-object" -> JObject(
+                                        List(
+                                          JField("sub-key", JString("sub-value"))
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        InjectedItem(
+                          key = "externalItem",
+                          source = SearchSource(
+                            search = Search(
+                              index = "foo",
+                              params = Some(
+                                BaseInjectionQueryParameters(
+                                  filters = Some("brand:puma")
+                                )
+                              )
+                            )
+                          ),
+                          position = 5,
+                          length = 5,
+                          metadata = Some(
+                            InjectedItemMetadata(
+                              hits = Some(
+                                InjectedItemHitsMetadata(
+                                  addItemKey = Some(true),
+                                  extra = Some(
+                                    Map(
+                                      "my-string" -> "string",
+                                      "my-bool" -> true,
+                                      "my-number" -> 42,
+                                      "my-object" -> JObject(
+                                        List(
+                                          JField("sub-key", JString("sub-value"))
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "1234",
+        composition = Composition(
+          objectID = "1234",
+          name = "my first composition",
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo"
+                      )
+                    ),
+                    position = 2,
+                    length = 1
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition1(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-external-injection-compo",
+        composition = Composition(
+          objectID = "my-external-injection-compo",
+          name = "my first composition",
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = ExternalSource(
+                      external = External(
+                        index = "foo",
+                        ordering = Some(ExternalOrdering.withName("userDefined")),
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        )
+                      )
+                    ),
+                    position = 2,
+                    length = 1
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition2(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-metadata-compo",
+        composition = Composition(
+          objectID = "my-metadata-compo",
+          name = "my composition",
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
+                      )
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        )
+                      )
+                    ),
+                    position = 2,
+                    length = 1,
+                    metadata = Some(
+                      InjectedItemMetadata(
+                        hits = Some(
+                          InjectedItemHitsMetadata(
+                            addItemKey = Some(true),
+                            extra = Some(
+                              Map(
+                                "my-string" -> "string",
+                                "my-bool" -> true,
+                                "my-number" -> 42,
+                                "my-object" -> JObject(
+                                  List(
+                                    JField("sub-key", JString("sub-value"))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  ),
+                  InjectedItem(
+                    key = "externalItem",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:puma")
+                          )
+                        )
+                      )
+                    ),
+                    position = 5,
+                    length = 5,
+                    metadata = Some(
+                      InjectedItemMetadata(
+                        hits = Some(
+                          InjectedItemHitsMetadata(
+                            addItemKey = Some(true),
+                            extra = Some(
+                              Map(
+                                "my-string" -> "string",
+                                "my-bool" -> true,
+                                "my-number" -> 42,
+                                "my-object" -> JObject(
+                                  List(
+                                    JField("sub-key", JString("sub-value"))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putCompositionRule method.
+    *
+    * putCompositionRule
+    */
+  def snippetForCompositionClientPutCompositionRule(): Unit = {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "ruleID",
+        compositionRule = CompositionRule(
+          objectID = "ruleID",
+          conditions = Seq(
+            Condition(
+              anchoring = Some(Anchoring.withName("is")),
+              pattern = Some("test")
+            )
+          ),
+          consequence = CompositionRuleConsequence(
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo"
+                    )
+                  )
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "injectedItem1",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo"
+                        )
+                      ),
+                      position = 2,
+                      length = 1
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putCompositionRule method.
+    *
+    * putCompositionRule
+    */
+  def snippetForCompositionClientPutCompositionRule1(): Unit = {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "rule-with-metadata",
+        compositionRule = CompositionRule(
+          objectID = "rule-with-metadata",
+          conditions = Seq(
+            Condition(
+              anchoring = Some(Anchoring.withName("is")),
+              pattern = Some("test")
+            )
+          ),
+          consequence = CompositionRuleConsequence(
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo"
+                    )
+                  )
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "injectedItem1",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo",
+                          params = Some(
+                            BaseInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
+                          )
+                        )
+                      ),
+                      position = 2,
+                      length = 1,
+                      metadata = Some(
+                        InjectedItemMetadata(
+                          hits = Some(
+                            InjectedItemHitsMetadata(
+                              addItemKey = Some(true),
+                              extra = Some(
+                                Map(
+                                  "my-string" -> "string",
+                                  "my-bool" -> true,
+                                  "my-number" -> 42,
+                                  "my-object" -> JObject(
+                                    List(
+                                      JField("sub-key", JString("sub-value"))
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putCompositionRule method.
+    *
+    * putCompositionRule
+    */
+  def snippetForCompositionClientPutCompositionRule2(): Unit = {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "rule-with-exernal-source",
+        compositionRule = CompositionRule(
+          objectID = "rule-with-exernal-source",
+          description = Some("my description"),
+          tags = Some(Seq("tag1", "tag2")),
+          enabled = Some(true),
+          validity = Some(
+            Seq(
+              TimeRange(
+                from = Some(1704063600L),
+                until = Some(1704083600L)
+              )
+            )
+          ),
+          conditions = Seq(
+            Condition(
+              anchoring = Some(Anchoring.withName("contains")),
+              pattern = Some("harry")
+            ),
+            Condition(
+              anchoring = Some(Anchoring.withName("contains")),
+              pattern = Some("potter")
+            )
+          ),
+          consequence = CompositionRuleConsequence(
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "my-index",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
+                      )
+                    )
+                  )
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "injectedItem",
+                      source = ExternalSource(
+                        external = External(
+                          index = "my-index",
+                          params = Some(
+                            BaseInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
+                          ),
+                          ordering = Some(ExternalOrdering.withName("userDefined"))
+                        )
+                      ),
+                      position = 0,
+                      length = 3
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "foo",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "123",
+                  conditions = Seq(
+                    Condition(
+                      pattern = Some("a")
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "<YOUR_INDEX_NAME>"
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules1(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "rule-with-metadata",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-metadata",
+                  conditions = Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("is")),
+                      pattern = Some("test")
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "foo"
+                            )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectedItem(
+                              key = "injectedItem1",
+                              source = SearchSource(
+                                search = Search(
+                                  index = "foo",
+                                  params = Some(
+                                    BaseInjectionQueryParameters(
+                                      filters = Some("brand:adidas")
+                                    )
+                                  )
+                                )
+                              ),
+                              position = 2,
+                              length = 1,
+                              metadata = Some(
+                                InjectedItemMetadata(
+                                  hits = Some(
+                                    InjectedItemHitsMetadata(
+                                      addItemKey = Some(true),
+                                      extra = Some(
+                                        Map(
+                                          "my-string" -> "string",
+                                          "my-bool" -> true,
+                                          "my-number" -> 42,
+                                          "my-object" -> JObject(
+                                            List(
+                                              JField("sub-key", JString("sub-value"))
+                                            )
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules2(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "rule-with-exernal-source",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-exernal-source",
+                  description = Some("my description"),
+                  tags = Some(Seq("tag1", "tag2")),
+                  enabled = Some(true),
+                  validity = Some(
+                    Seq(
+                      TimeRange(
+                        from = Some(1704063600L),
+                        until = Some(1704083600L)
+                      )
+                    )
+                  ),
+                  conditions = Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("contains")),
+                      pattern = Some("harry")
+                    ),
+                    Condition(
+                      anchoring = Some(Anchoring.withName("contains")),
+                      pattern = Some("potter")
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "my-index",
+                              params = Some(
+                                MainInjectionQueryParameters(
+                                  filters = Some("brand:adidas")
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectedItem(
+                              key = "injectedItem",
+                              source = ExternalSource(
+                                external = External(
+                                  index = "my-index",
+                                  params = Some(
+                                    BaseInjectionQueryParameters(
+                                      filters = Some("brand:adidas")
+                                    )
+                                  ),
+                                  ordering = Some(ExternalOrdering.withName("userDefined"))
+                                )
+                              ),
+                              position = 0,
+                              length = 3
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
   /** Snippet for the search method.
     *
     * search
     */
   def snippetForCompositionClientSearch(): Unit = {
-    // >SEPARATOR search default
+    // >SEPARATOR search search
     // Initialize the client
     val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -36,6 +1529,84 @@ class SnippetCompositionClient {
             Params(
               query = Some("batman")
             )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the search method.
+    *
+    * search
+    */
+  def snippetForCompositionClientSearch1(): Unit = {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.search(
+        compositionID = "foo",
+        requestBody = RequestBody(
+          params = Some(
+            Params(
+              query = Some("batman"),
+              injectedItems = Some(
+                Map(
+                  "injectedItem1" -> ExternalInjectedItem(
+                    items = Seq(
+                      ExternalInjection(
+                        objectID = "my-object-1"
+                      ),
+                      ExternalInjection(
+                        objectID = "my-object-2",
+                        metadata = Some(
+                          Map(
+                            "my-string" -> "string",
+                            "my-bool" -> true,
+                            "my-number" -> 42,
+                            "my-object" -> JObject(
+                              List(
+                                JField("sub-key", JString("sub-value"))
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchCompositionRules method.
+    *
+    * searchCompositionRules
+    */
+  def snippetForCompositionClientSearchCompositionRules(): Unit = {
+    // >SEPARATOR searchCompositionRules default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchCompositionRules(
+        compositionID = "foo",
+        searchCompositionRulesParams = Some(
+          SearchCompositionRulesParams(
+            query = Some("batman")
           )
         )
       ),
@@ -72,6 +1643,22 @@ class SnippetCompositionClient {
       Duration(100, "sec")
     )
     // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the setClientApiKey method.
+    *
+    * switch API key
+    */
+  def snippetForCompositionClientSetClientApiKey(): Unit = {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    client.setClientApiKey(
+      apiKey = "updated-api-key"
+    ) // >LOG
     // SEPARATOR<
   }
 

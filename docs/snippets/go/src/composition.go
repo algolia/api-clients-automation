@@ -6,6 +6,1205 @@ import "github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
 
 // IMPORT<
 
+func SnippetForCustomDeleteOfComposition() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with minimal parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomDeleteOfComposition1() {
+	/*
+	   Snippet for the customDelete method.
+
+	   allow del method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customDelete allow del method for a custom path with all parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfComposition() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with minimal parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with minimal parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfComposition1() {
+	/*
+	   Snippet for the customGet method.
+
+	   allow get method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customGet allow get method for a custom path with all parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomGetOfComposition2() {
+	/*
+	   Snippet for the customGet method.
+
+	   requestOptions should be escaped too
+	*/
+
+	// >SEPARATOR customGet requestOptions should be escaped too
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomGet(client.NewApiCustomGetRequest(
+		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), composition.WithQueryParam("query", "parameters with space"), composition.WithQueryParam("and an array",
+		[]string{"array", "with spaces"}), composition.WithHeaderParam("x-header-1", "spaces are left alone"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with minimal parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with minimal parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition1() {
+	/*
+	   Snippet for the customPost method.
+
+	   allow post method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPost allow post method for a custom path with all parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition2() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default query parameters
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default query parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("query", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition3() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges query parameters with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges query parameters with default ones
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("query2", "myQueryParameter"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition4() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions can override default headers
+	*/
+
+	// >SEPARATOR customPost requestOptions can override default headers
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition5() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions merges headers with default ones
+	*/
+
+	// >SEPARATOR customPost requestOptions merges headers with default ones
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition6() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts booleans
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("isItWorking", true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition7() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts integers
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam", 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition8() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of string
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of string
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
+		[]string{"b and c", "d"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition9() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of booleans
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
+		[]bool{true, true, false}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPostOfComposition10() {
+	/*
+	   Snippet for the customPost method.
+
+	   requestOptions queryParameters accepts list of integers
+	*/
+
+	// >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPost(client.NewApiCustomPostRequest(
+		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
+		[]int32{1, 2}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfComposition() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with minimal parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with minimal parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/minimal"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForCustomPutOfComposition1() {
+	/*
+	   Snippet for the customPut method.
+
+	   allow put method for a custom path with all parameters
+	*/
+
+	// >SEPARATOR customPut allow put method for a custom path with all parameters
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CustomPut(client.NewApiCustomPutRequest(
+		"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForDeleteCompositionOfComposition() {
+	/*
+	   Snippet for the deleteComposition method.
+
+	   deleteComposition
+	*/
+
+	// >SEPARATOR deleteComposition default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.DeleteComposition(client.NewApiDeleteCompositionRequest(
+		"1234"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForDeleteCompositionRuleOfComposition() {
+	/*
+	   Snippet for the deleteCompositionRule method.
+
+	   deleteCompositionRule
+	*/
+
+	// >SEPARATOR deleteCompositionRule default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.DeleteCompositionRule(client.NewApiDeleteCompositionRuleRequest(
+		"1234", "5678"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetCompositionOfComposition() {
+	/*
+	   Snippet for the getComposition method.
+
+	   getComposition
+	*/
+
+	// >SEPARATOR getComposition default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetComposition(client.NewApiGetCompositionRequest(
+		"foo"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetRuleOfComposition() {
+	/*
+	   Snippet for the getRule method.
+
+	   getRule
+	*/
+
+	// >SEPARATOR getRule default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRule(client.NewApiGetRuleRequest(
+		"foo", "123"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForGetTaskOfComposition() {
+	/*
+	   Snippet for the getTask method.
+
+	   getTask
+	*/
+
+	// >SEPARATOR getTask default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTask(client.NewApiGetTaskRequest(
+		"foo", 42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListCompositionsOfComposition() {
+	/*
+	   Snippet for the listCompositions method.
+
+	   listCompositions
+	*/
+
+	// >SEPARATOR listCompositions listCompositions
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListCompositions(client.NewApiListCompositionsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForListCompositionsOfComposition1() {
+	/*
+	   Snippet for the listCompositions method.
+
+	   listCompositions
+	*/
+
+	// >SEPARATOR listCompositions listCompositions
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListCompositions(client.NewApiListCompositionsRequest())
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForMultipleBatchOfComposition() {
+	/*
+	   Snippet for the multipleBatch method.
+
+	   multipleBatch
+	*/
+
+	// >SEPARATOR multipleBatch multipleBatch
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
+
+		composition.NewEmptyBatchParams().SetRequests(
+			[]composition.MultipleBatchRequest{*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
+				composition.NewEmptyComposition().SetObjectID("foo").SetName("my first composition").SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("bar")))))))), *composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("delete")).SetBody(composition.DeleteCompositionActionAsBatchCompositionAction(
+				composition.NewEmptyDeleteCompositionAction().SetObjectID("baz")))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForMultipleBatchOfComposition1() {
+	/*
+	   Snippet for the multipleBatch method.
+
+	   multipleBatch
+	*/
+
+	// >SEPARATOR multipleBatch multipleBatch
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
+
+		composition.NewEmptyBatchParams().SetRequests(
+			[]composition.MultipleBatchRequest{*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
+				composition.NewEmptyComposition().SetObjectID("my-external-injection-compo").SetName("my first composition").SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.ExternalSourceAsInjectedItemSource(
+								composition.NewEmptyExternalSource().SetExternal(
+									composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
+										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)})))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForMultipleBatchOfComposition2() {
+	/*
+	   Snippet for the multipleBatch method.
+
+	   multipleBatch
+	*/
+
+	// >SEPARATOR multipleBatch multipleBatch
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
+
+		composition.NewEmptyBatchParams().SetRequests(
+			[]composition.MultipleBatchRequest{*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
+				composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+								composition.NewEmptySearchSource().SetSearch(
+									composition.NewEmptySearch().SetIndex("foo").SetParams(
+										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+								composition.NewEmptyInjectedItemMetadata().SetHits(
+									composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
+								composition.NewEmptySearchSource().SetSearch(
+									composition.NewEmptySearch().SetIndex("foo").SetParams(
+										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
+								composition.NewEmptyInjectedItemMetadata().SetHits(
+									composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionOfComposition() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"1234",
+		composition.NewEmptyComposition().SetObjectID("1234").SetName("my first composition").SetBehavior(
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+					[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+						composition.NewEmptySearchSource().SetSearch(
+							composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionOfComposition1() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-external-injection-compo",
+		composition.NewEmptyComposition().SetObjectID("my-external-injection-compo").SetName("my first composition").SetBehavior(
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+					[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.ExternalSourceAsInjectedItemSource(
+						composition.NewEmptyExternalSource().SetExternal(
+							composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
+								composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionOfComposition2() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-metadata-compo",
+		composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+								composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+					[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+						composition.NewEmptySearchSource().SetSearch(
+							composition.NewEmptySearch().SetIndex("foo").SetParams(
+								composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+						composition.NewEmptyInjectedItemMetadata().SetHits(
+							composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
+						composition.NewEmptySearchSource().SetSearch(
+							composition.NewEmptySearch().SetIndex("foo").SetParams(
+								composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
+						composition.NewEmptyInjectedItemMetadata().SetHits(
+							composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionRuleOfComposition() {
+	/*
+	   Snippet for the putCompositionRule method.
+
+	   putCompositionRule
+	*/
+
+	// >SEPARATOR putCompositionRule putCompositionRule
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
+		"compositionID", "ruleID",
+		composition.NewEmptyCompositionRule().SetObjectID("ruleID").SetConditions(
+			[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test")}).SetConsequence(
+			composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+				composition.NewEmptyCompositionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyMain().SetSource(
+							composition.NewEmptyCompositionSource().SetSearch(
+								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionRuleOfComposition1() {
+	/*
+	   Snippet for the putCompositionRule method.
+
+	   putCompositionRule
+	*/
+
+	// >SEPARATOR putCompositionRule putCompositionRule
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
+		"compositionID", "rule-with-metadata",
+		composition.NewEmptyCompositionRule().SetObjectID("rule-with-metadata").SetConditions(
+			[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test")}).SetConsequence(
+			composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+				composition.NewEmptyCompositionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyMain().SetSource(
+							composition.NewEmptyCompositionSource().SetSearch(
+								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo").SetParams(
+									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+							composition.NewEmptyInjectedItemMetadata().SetHits(
+								composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))}))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForPutCompositionRuleOfComposition2() {
+	/*
+	   Snippet for the putCompositionRule method.
+
+	   putCompositionRule
+	*/
+
+	// >SEPARATOR putCompositionRule putCompositionRule
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
+		"compositionID", "rule-with-exernal-source",
+		composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
+			[]string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
+			[]composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
+			[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter")}).SetConsequence(
+			composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+				composition.NewEmptyCompositionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyMain().SetSource(
+							composition.NewEmptyCompositionSource().SetSearch(
+								composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
+									composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
+							composition.NewEmptyExternalSource().SetExternal(
+								composition.NewEmptyExternal().SetIndex("my-index").SetParams(
+									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRulesOfComposition() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"foo",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+				composition.NewEmptyCompositionRule().SetObjectID("123").SetConditions(
+					[]composition.Condition{*composition.NewEmptyCondition().SetPattern("a")}).SetConsequence(
+					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("<YOUR_INDEX_NAME>")))))))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRulesOfComposition1() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"rule-with-metadata",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+				composition.NewEmptyCompositionRule().SetObjectID("rule-with-metadata").SetConditions(
+					[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test")}).SetConsequence(
+					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+									composition.NewEmptyInjectedItemMetadata().SetHits(
+										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))}))))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSaveRulesOfComposition2() {
+	/*
+	   Snippet for the saveRules method.
+
+	   saveRules
+	*/
+
+	// >SEPARATOR saveRules saveRules
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveRules(client.NewApiSaveRulesRequest(
+		"rule-with-exernal-source",
+		composition.NewEmptyCompositionRulesBatchParams().SetRequests(
+			[]composition.RulesMultipleBatchRequest{*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+				composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
+					[]string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
+					[]composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
+					[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter")}).SetConsequence(
+					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
+											composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
+									composition.NewEmptyExternalSource().SetExternal(
+										composition.NewEmptyExternal().SetIndex("my-index").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForSearchOfComposition() {
 	/*
 	   Snippet for the search method.
@@ -13,7 +1212,7 @@ func SnippetForSearchOfComposition() {
 	   search
 	*/
 
-	// >SEPARATOR search default
+	// >SEPARATOR search search
 	// Initialize the client
 	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -26,6 +1225,66 @@ func SnippetForSearchOfComposition() {
 		"foo",
 		composition.NewEmptyRequestBody().SetParams(
 			composition.NewEmptyParams().SetQuery("batman"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchOfComposition1() {
+	/*
+	   Snippet for the search method.
+
+	   search
+	*/
+
+	// >SEPARATOR search search
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+		"foo",
+		composition.NewEmptyRequestBody().SetParams(
+			composition.NewEmptyParams().SetQuery("batman").SetInjectedItems(map[string]composition.ExternalInjectedItem{"injectedItem1": *composition.NewEmptyExternalInjectedItem().SetItems(
+				[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForSearchCompositionRulesOfComposition() {
+	/*
+	   Snippet for the searchCompositionRules method.
+
+	   searchCompositionRules
+	*/
+
+	// >SEPARATOR searchCompositionRules default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchCompositionRules(client.NewApiSearchCompositionRulesRequest(
+		"foo").WithSearchCompositionRulesParams(
+		composition.NewEmptySearchCompositionRulesParams().SetQuery("batman")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -64,5 +1323,31 @@ func SnippetForSearchForFacetValuesOfComposition() {
 	// >LOG
 	// use the model directly
 	print(response)
+	// SEPARATOR<
+}
+func SnippetForSetClientApiKeyOfComposition() {
+	/*
+	   Snippet for the setClientApiKey method.
+
+	   switch API key
+	*/
+
+	// >SEPARATOR setClientApiKey default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SetClientApiKey(
+		"updated-api-key")
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }

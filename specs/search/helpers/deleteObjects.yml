@@ -3,6 +3,17 @@ method:
     x-helper: true
     tags:
       - Records
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: deleteObjects
     summary: Deletes every records for the given objectIDs
     description: |

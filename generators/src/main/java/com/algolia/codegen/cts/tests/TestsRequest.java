@@ -123,6 +123,16 @@ public class TestsRequest extends TestsGenerator {
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
+        if (req.skipLanguages != null && req.skipLanguages.contains(language)) {
+          System.out.println(
+            "Skipping request test " +
+            (req.testName == null ? operationId : req.testName) +
+            " for language " +
+            language +
+            ", please fix this"
+          );
+          continue;
+        }
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId : req.testName);
         test.put("testIndex", i == 0 ? "" : i);

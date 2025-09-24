@@ -2,6 +2,7 @@ package com.algolia.codegen.cts.manager;
 
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
+import com.samskivert.mustache.Mustache.Lambda;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
@@ -50,5 +51,17 @@ public class DartCTSManager implements CTSManager {
     supportingFiles.add(new SupportingFile("analysis_options.tests.mustache", "tests/output/dart/analysis_options.yaml"));
     supportingFiles.add(new SupportingFile("pubspec.tests.mustache", "tests/output/dart/pubspec.yaml"));
     supportingFiles.add(new SupportingFile("pubspec_overrides.tests.mustache", "tests/output/dart/pubspec_overrides.yaml"));
+  }
+
+  @Override
+  public void addMustacheLambdas(Map<String, Lambda> lambdas) {
+    lambdas.put("identifier", (fragment, writer) -> {
+      String text = fragment.execute();
+      if (text.equals("external")) {
+        writer.write("external_");
+      } else {
+        writer.write(text);
+      }
+    });
   }
 }

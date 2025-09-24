@@ -52,11 +52,6 @@ export const refCommon = createRule('refCommon', {
           return;
         }
 
-        // it's expected for composition to import the full version
-        if (spec === 'composition' && ref.includes('composition-full')) {
-          return;
-        }
-
         context.report({
           node: node as any,
           messageId: 'refCommon',

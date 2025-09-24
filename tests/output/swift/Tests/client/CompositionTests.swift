@@ -16,10 +16,7 @@ final class CompositionClientClientTests: XCTestCase {
         let configuration = try CompositionClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = CompositionClient(configuration: configuration, transporter: transporter)
-        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
-            compositionID: "test-composition-id",
-            requestBody: CompositionRequestBody()
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
@@ -31,13 +28,94 @@ final class CompositionClientClientTests: XCTestCase {
         let configuration = try CompositionClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = CompositionClient(configuration: configuration, transporter: transporter)
-        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
-            compositionID: "test-composition-id",
-            requestBody: CompositionRequestBody()
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "test")
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        XCTAssertEqual("test-app-id-dsn.algolia.net", echoResponse.host)
+        XCTAssertEqual("test-app-id.algolia.net", echoResponse.host)
+    }
+
+    /// test the compression strategy
+    func testApiTest2() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6678"
+            )!)],
+            compression: .gzip
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customPost(
+            path: "1/test/gzip",
+            parameters: [String: AnyCodable](),
+            body: ["message": "this is a compressed body"]
+        )
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
+        )
+    }
+
+    /// calls api with correct user agent
+    func testCommonApiTest0() async throws {
+        let configuration = try CompositionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
+
+        let pattern = "^Algolia for Swift \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Composition (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
+        XCTAssertNoThrow(
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
+        )
+    }
+
+    /// the user agent contains the latest version
+    func testCommonApiTest1() async throws {
+        let configuration = try CompositionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customPostWithHTTPInfo(path: "1/test")
+
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
+
+        let pattern = "^Algolia for Swift \\(9.28.0\\).*"
+        XCTAssertNoThrow(
+            try regexMatch(echoResponse.algoliaAgent, against: pattern),
+            "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
+        )
+    }
+
+    /// switch API key
+    func testSetClientApiKeyTest0() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6683"
+            )!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGet(path: "check-api-key/1")
+
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"test-api-key\"}")
+        }
+        do {
+            _ = try client.setClientApiKey(apiKey: "updated-api-key")
+        }
+        do {
+            let response = try await client.customGet(path: "check-api-key/2")
+
+            XTCJSONEquals(received: response, expected: "{\"headerAPIKeyValue\":\"updated-api-key\"}")
+        }
     }
 }

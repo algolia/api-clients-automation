@@ -32,6 +32,1471 @@ class CompositionTest extends AnyFunSuite {
     )
   }
 
+  test("allow del method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customDelete[JObject](
+      path = "test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/minimal")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("allow del method for a custom path with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.customDelete[JObject](
+      path = "test/all",
+      parameters = Some(Map("query" -> "parameters"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/all")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow get method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/minimal")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("allow get method for a custom path with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "test/all",
+      parameters = Some(Map("query" -> "parameters with space"))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/all")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters%20with%20space"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions should be escaped too2") {
+    val (client, echo) = testClient()
+    val future = client.customGet[JObject](
+      path = "test/all",
+      parameters = Some(Map("query" -> "to be overriden")),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query", "parameters with space")
+          .withQueryParameter("and an array", Seq("array", "with spaces"))
+          .withHeader("x-header-1", "spaces are left alone")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/all")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-header-1":"spaces are left alone"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("allow post method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/minimal")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("allow post method for a custom path with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/all",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("body", JString("parameters")))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/all")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"body":"parameters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions can override default query parameters2") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query", "myQueryParameter")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"myQueryParameter"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions merges query parameters with default ones3") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("query2", "myQueryParameter")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","query2":"myQueryParameter"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions can override default headers4") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("requestOptions merges headers with default ones5") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders = parse("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
+  test("requestOptions queryParameters accepts booleans6") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("isItWorking", true)
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","isItWorking":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts integers7") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", 2)
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of string8") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq("b and c", "d"))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of booleans9") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq(true, true, false))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery =
+      parse("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("requestOptions queryParameters accepts list of integers10") {
+    val (client, echo) = testClient()
+    val future = client.customPost[JObject](
+      path = "test/requestOptions",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("facet", JString("filters"))))),
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("myParam", Seq(1, 2))
+          .build()
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/requestOptions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"facet":"filters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters","myParam":"1%2C2"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("allow put method for a custom path with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "test/minimal"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/minimal")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("allow put method for a custom path with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.customPut[JObject](
+      path = "test/all",
+      parameters = Some(Map("query" -> "parameters")),
+      body = Some(JObject(List(JField("body", JString("parameters")))))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/test/all")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"body":"parameters"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("deleteComposition") {
+    val (client, echo) = testClient()
+    val future = client.deleteComposition(
+      compositionID = "1234"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/1234")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("deleteCompositionRule") {
+    val (client, echo) = testClient()
+    val future = client.deleteCompositionRule(
+      compositionID = "1234",
+      objectID = "5678"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/1234/rules/5678")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
+  test("getComposition") {
+    val (client, echo) = testClient()
+    val future = client.getComposition(
+      compositionID = "foo"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getRule") {
+    val (client, echo) = testClient()
+    val future = client.getRule(
+      compositionID = "foo",
+      objectID = "123"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/rules/123")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTask") {
+    val (client, echo) = testClient()
+    val future = client.getTask(
+      compositionID = "foo",
+      taskID = 42L
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/task/42")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("listCompositions") {
+    val (client, echo) = testClient()
+    val future = client.listCompositions(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("listCompositions1") {
+    val (client, echo) = testClient()
+    val future = client.listCompositions(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("multipleBatch") {
+    val (client, echo) = testClient()
+    val future = client.multipleBatch(
+      batchParams = BatchParams(
+        requests = Seq(
+          MultipleBatchRequest(
+            action = Action.withName("upsert"),
+            body = Composition(
+              objectID = "foo",
+              name = "my first composition",
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "bar"
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          ),
+          MultipleBatchRequest(
+            action = Action.withName("delete"),
+            body = DeleteCompositionAction(
+              objectID = "baz"
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/*/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("multipleBatch1") {
+    val (client, echo) = testClient()
+    val future = client.multipleBatch(
+      batchParams = BatchParams(
+        requests = Seq(
+          MultipleBatchRequest(
+            action = Action.withName("upsert"),
+            body = Composition(
+              objectID = "my-external-injection-compo",
+              name = "my first composition",
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
+                      )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "injectedItem1",
+                        source = ExternalSource(
+                          external = External(
+                            index = "foo",
+                            ordering = Some(ExternalOrdering.withName("userDefined")),
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
+                            )
+                          )
+                        ),
+                        position = 2,
+                        length = 1
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/*/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("multipleBatch2") {
+    val (client, echo) = testClient()
+    val future = client.multipleBatch(
+      batchParams = BatchParams(
+        requests = Seq(
+          MultipleBatchRequest(
+            action = Action.withName("upsert"),
+            body = Composition(
+              objectID = "my-metadata-compo",
+              name = "my composition",
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo",
+                        params = Some(
+                          MainInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        )
+                      )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "injectedItem1",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
+                            )
+                          )
+                        ),
+                        position = 2,
+                        length = 1,
+                        metadata = Some(
+                          InjectedItemMetadata(
+                            hits = Some(
+                              InjectedItemHitsMetadata(
+                                addItemKey = Some(true),
+                                extra = Some(
+                                  Map(
+                                    "my-string" -> "string",
+                                    "my-bool" -> true,
+                                    "my-number" -> 42,
+                                    "my-object" -> JObject(
+                                      List(
+                                        JField("sub-key", JString("sub-value"))
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ),
+                      InjectedItem(
+                        key = "externalItem",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:puma")
+                              )
+                            )
+                          )
+                        ),
+                        position = 5,
+                        length = 5,
+                        metadata = Some(
+                          InjectedItemMetadata(
+                            hits = Some(
+                              InjectedItemHitsMetadata(
+                                addItemKey = Some(true),
+                                extra = Some(
+                                  Map(
+                                    "my-string" -> "string",
+                                    "my-bool" -> true,
+                                    "my-number" -> 42,
+                                    "my-object" -> JObject(
+                                      List(
+                                        JField("sub-key", JString("sub-value"))
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/*/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "1234",
+      composition = Composition(
+        objectID = "1234",
+        name = "my first composition",
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo"
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "injectedItem1",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo"
+                    )
+                  ),
+                  position = 2,
+                  length = 1
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/1234")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition1") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-external-injection-compo",
+      composition = Composition(
+        objectID = "my-external-injection-compo",
+        name = "my first composition",
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo"
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "injectedItem1",
+                  source = ExternalSource(
+                    external = External(
+                      index = "foo",
+                      ordering = Some(ExternalOrdering.withName("userDefined")),
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
+                      )
+                    )
+                  ),
+                  position = 2,
+                  length = 1
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-external-injection-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition2") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-metadata-compo",
+      composition = Composition(
+        objectID = "my-metadata-compo",
+        name = "my composition",
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo",
+                  params = Some(
+                    MainInjectionQueryParameters(
+                      filters = Some("brand:adidas")
+                    )
+                  )
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "injectedItem1",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo",
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
+                      )
+                    )
+                  ),
+                  position = 2,
+                  length = 1,
+                  metadata = Some(
+                    InjectedItemMetadata(
+                      hits = Some(
+                        InjectedItemHitsMetadata(
+                          addItemKey = Some(true),
+                          extra = Some(
+                            Map(
+                              "my-string" -> "string",
+                              "my-bool" -> true,
+                              "my-number" -> 42,
+                              "my-object" -> JObject(
+                                List(
+                                  JField("sub-key", JString("sub-value"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+                InjectedItem(
+                  key = "externalItem",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo",
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:puma")
+                        )
+                      )
+                    )
+                  ),
+                  position = 5,
+                  length = 5,
+                  metadata = Some(
+                    InjectedItemMetadata(
+                      hits = Some(
+                        InjectedItemHitsMetadata(
+                          addItemKey = Some(true),
+                          extra = Some(
+                            Map(
+                              "my-string" -> "string",
+                              "my-bool" -> true,
+                              "my-number" -> 42,
+                              "my-object" -> JObject(
+                                List(
+                                  JField("sub-key", JString("sub-value"))
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-metadata-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putCompositionRule") {
+    val (client, echo) = testClient()
+    val future = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "ruleID",
+      compositionRule = CompositionRule(
+        objectID = "ruleID",
+        conditions = Seq(
+          Condition(
+            anchoring = Some(Anchoring.withName("is")),
+            pattern = Some("test")
+          )
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo"
+                      )
+                    ),
+                    position = 2,
+                    length = 1
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/compositionID/rules/ruleID")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putCompositionRule1") {
+    val (client, echo) = testClient()
+    val future = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "rule-with-metadata",
+      compositionRule = CompositionRule(
+        objectID = "rule-with-metadata",
+        conditions = Seq(
+          Condition(
+            anchoring = Some(Anchoring.withName("is")),
+            pattern = Some("test")
+          )
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        )
+                      )
+                    ),
+                    position = 2,
+                    length = 1,
+                    metadata = Some(
+                      InjectedItemMetadata(
+                        hits = Some(
+                          InjectedItemHitsMetadata(
+                            addItemKey = Some(true),
+                            extra = Some(
+                              Map(
+                                "my-string" -> "string",
+                                "my-bool" -> true,
+                                "my-number" -> 42,
+                                "my-object" -> JObject(
+                                  List(
+                                    JField("sub-key", JString("sub-value"))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/compositionID/rules/rule-with-metadata")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putCompositionRule2") {
+    val (client, echo) = testClient()
+    val future = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "rule-with-exernal-source",
+      compositionRule = CompositionRule(
+        objectID = "rule-with-exernal-source",
+        description = Some("my description"),
+        tags = Some(Seq("tag1", "tag2")),
+        enabled = Some(true),
+        validity = Some(
+          Seq(
+            TimeRange(
+              from = Some(1704063600L),
+              until = Some(1704083600L)
+            )
+          )
+        ),
+        conditions = Seq(
+          Condition(
+            anchoring = Some(Anchoring.withName("contains")),
+            pattern = Some("harry")
+          ),
+          Condition(
+            anchoring = Some(Anchoring.withName("contains")),
+            pattern = Some("potter")
+          )
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "my-index",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
+                      )
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "injectedItem",
+                    source = ExternalSource(
+                      external = External(
+                        index = "my-index",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        ),
+                        ordering = Some(ExternalOrdering.withName("userDefined"))
+                      )
+                    ),
+                    position = 0,
+                    length = 3
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/compositionID/rules/rule-with-exernal-source")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "foo",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "123",
+                conditions = Seq(
+                  Condition(
+                    pattern = Some("a")
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "<YOUR_INDEX_NAME>"
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules1") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "rule-with-metadata",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-metadata",
+                conditions = Seq(
+                  Condition(
+                    anchoring = Some(Anchoring.withName("is")),
+                    pattern = Some("test")
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "foo"
+                          )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "injectedItem1",
+                            source = SearchSource(
+                              search = Search(
+                                index = "foo",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
+                                )
+                              )
+                            ),
+                            position = 2,
+                            length = 1,
+                            metadata = Some(
+                              InjectedItemMetadata(
+                                hits = Some(
+                                  InjectedItemHitsMetadata(
+                                    addItemKey = Some(true),
+                                    extra = Some(
+                                      Map(
+                                        "my-string" -> "string",
+                                        "my-bool" -> true,
+                                        "my-number" -> 42,
+                                        "my-object" -> JObject(
+                                          List(
+                                            JField("sub-key", JString("sub-value"))
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/rule-with-metadata/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules2") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "rule-with-exernal-source",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-exernal-source",
+                description = Some("my description"),
+                tags = Some(Seq("tag1", "tag2")),
+                enabled = Some(true),
+                validity = Some(
+                  Seq(
+                    TimeRange(
+                      from = Some(1704063600L),
+                      until = Some(1704083600L)
+                    )
+                  )
+                ),
+                conditions = Seq(
+                  Condition(
+                    anchoring = Some(Anchoring.withName("contains")),
+                    pattern = Some("harry")
+                  ),
+                  Condition(
+                    anchoring = Some(Anchoring.withName("contains")),
+                    pattern = Some("potter")
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "my-index",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
+                            )
+                          )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "injectedItem",
+                            source = ExternalSource(
+                              external = External(
+                                index = "my-index",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
+                                ),
+                                ordering = Some(ExternalOrdering.withName("userDefined"))
+                              )
+                            ),
+                            position = 0,
+                            length = 3
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/rule-with-exernal-source/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("search") {
     val (client, echo) = testClient()
     val future = client.search(
@@ -51,6 +1516,78 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/foo/run")
     assert(res.method == "POST")
     val expectedBody = parse("""{"params":{"query":"batman"}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search1") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("batman"),
+            injectedItems = Some(
+              Map(
+                "injectedItem1" -> ExternalInjectedItem(
+                  items = Seq(
+                    ExternalInjection(
+                      objectID = "my-object-1"
+                    ),
+                    ExternalInjection(
+                      objectID = "my-object-2",
+                      metadata = Some(
+                        Map(
+                          "my-string" -> "string",
+                          "my-bool" -> true,
+                          "my-number" -> 42,
+                          "my-object" -> JObject(
+                            List(
+                              JField("sub-key", JString("sub-value"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("searchCompositionRules") {
+    val (client, echo) = testClient()
+    val future = client.searchCompositionRules(
+      compositionID = "foo",
+      searchCompositionRulesParams = Some(
+        SearchCompositionRulesParams(
+          query = Some("batman")
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/rules/search")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"query":"batman"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

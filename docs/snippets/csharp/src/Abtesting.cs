@@ -3,8 +3,8 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Abtesting;
+
 // IMPORT<
-using Action = Algolia.Search.Models.Ingestion.Action;
 
 public class SnippetAbtestingClient
 {

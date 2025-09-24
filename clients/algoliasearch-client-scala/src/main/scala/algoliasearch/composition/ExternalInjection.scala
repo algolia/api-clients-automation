@@ -14,14 +14,12 @@
   * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account). ## Request format Depending on the endpoint, request bodies are
-  * either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters for GET and
-  * DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
+  * either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed in the request body for POST and
+  * PUT requests. Query parameters must be
   * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
-  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. Arrays as query parameters must be one of: - A
-  * comma-separated string: `attributesToRetrieve=title,description` - A URL-encoded JSON array:
-  * `attributesToRetrieve=%5B%22title%22,%22description%22%D` ## Response status and errors The Composition API returns
-  * JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API
-  * response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
+  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The Composition API
+  * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
+  * the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
   * indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The current
   * version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *

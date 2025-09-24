@@ -3819,6 +3819,18 @@
         "tags": [
           "Api Keys"
         ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
+        ],
         "operationId": "waitForApiKey",
         "summary": "Wait for an API key operation",
         "description": "Waits for an API key to be added, updated, or deleted.",
@@ -3874,6 +3886,18 @@
         "tags": [
           "Records"
         ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
+        ],
         "operationId": "waitForTask",
         "summary": "Wait for operation to complete",
         "description": "Wait for a task to complete to ensure synchronized index updates.\n\nAll Algolia write operations are asynchronous. When you make a request for a write operation, for example, to add or update records in your index, Algolia creates a task on a queue and returns a taskID. The task itself runs separately, depending on the server load.\n",
@@ -3918,6 +3942,18 @@
     "/waitForAppTask": {
       "get": {
         "x-helper": true,
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
+        ],
         "operationId": "waitForAppTask",
         "summary": "Wait for application-level operation to complete",
         "description": "Wait for a application-level task to complete.",
@@ -3995,6 +4031,18 @@
         "x-asynchronous-helper": false,
         "tags": [
           "Api Keys"
+        ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
         ],
         "operationId": "generateSecuredApiKey",
         "summary": "Create secured API keys",
@@ -4121,6 +4169,18 @@
         "x-helper": true,
         "tags": [
           "Records"
+        ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
         ],
         "operationId": "replaceAllObjects",
         "summary": "Replace all records in an index",
@@ -4350,6 +4410,18 @@
         "tags": [
           "Records"
         ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
+        ],
         "operationId": "saveObjects",
         "summary": "Saves the given array of objects in the given index",
         "description": "Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.\n",
@@ -4519,6 +4591,18 @@
         "tags": [
           "Records"
         ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
+        ],
         "operationId": "deleteObjects",
         "summary": "Deletes every records for the given objectIDs",
         "description": "Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.\n",
@@ -4597,6 +4681,18 @@
         "x-helper": true,
         "tags": [
           "Records"
+        ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
         ],
         "operationId": "partialUpdateObjects",
         "summary": "Replaces object content of all the given objects according to their respective `objectID` field",
@@ -4786,6 +4882,18 @@
         "x-helper": true,
         "tags": [
           "Index"
+        ],
+        "x-available-languages": [
+          "csharp",
+          "go",
+          "java",
+          "javascript",
+          "kotlin",
+          "php",
+          "python",
+          "ruby",
+          "scala",
+          "swift"
         ],
         "operationId": "indexExists",
         "summary": "Check if an index exists or not",

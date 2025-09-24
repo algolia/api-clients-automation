@@ -19,6 +19,960 @@ class CompositionTest {
     apiKey = "apiKey",
   )
 
+  // customDelete
+
+  @Test
+  fun `allow del method for a custom path with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        customDelete(
+          path = "test/minimal",
+        )
+      },
+      intercept = {
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `allow del method for a custom path with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        customDelete(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters"),
+        )
+      },
+      intercept = {
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // customGet
+
+  @Test
+  fun `allow get method for a custom path with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "test/minimal",
+        )
+      },
+      intercept = {
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `allow get method for a custom path with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters with space"),
+        )
+      },
+      intercept = {
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions should be escaped too2`() = runTest {
+    client.runTest(
+      call = {
+        customGet(
+          path = "test/all",
+          parameters = mapOf("query" to "to be overriden"),
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "parameters with space")
+              put("and an array", listOf("array", "with spaces"))
+            },
+            headers = buildMap {
+              put("x-header-1", "spaces are left alone")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
+        assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // customPost
+
+  @Test
+  fun `allow post method for a custom path with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/minimal",
+        )
+      },
+      intercept = {
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `allow post method for a custom path with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "body",
+              JsonPrimitive("parameters"),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertJsonBody("""{"body":"parameters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions can override default query parameters2`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query", "myQueryParameter")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions merges query parameters with default ones3`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("query2", "myQueryParameter")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions can override default headers4`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions merges headers with default ones5`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            headers = buildMap {
+              put("x-algolia-api-key", "ALGOLIA_API_KEY")
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertContainsAll("""{"x-algolia-api-key":"ALGOLIA_API_KEY"}""", it.headers)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions queryParameters accepts booleans6`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("isItWorking", true)
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions queryParameters accepts integers7`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("myParam", 2)
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions queryParameters accepts list of string8`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("myParam", listOf("b and c", "d"))
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions queryParameters accepts list of booleans9`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("myParam", listOf(true, true, false))
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `requestOptions queryParameters accepts list of integers10`() = runTest {
+    client.runTest(
+      call = {
+        customPost(
+          path = "test/requestOptions",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "facet",
+              JsonPrimitive("filters"),
+            )
+          },
+          requestOptions = RequestOptions(
+            urlParameters = buildMap {
+              put("myParam", listOf(1, 2))
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
+        assertJsonBody("""{"facet":"filters"}""", it.body)
+      },
+    )
+  }
+
+  // customPut
+
+  @Test
+  fun `allow put method for a custom path with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        customPut(
+          path = "test/minimal",
+        )
+      },
+      intercept = {
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `allow put method for a custom path with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        customPut(
+          path = "test/all",
+          parameters = mapOf("query" to "parameters"),
+          body = buildJsonObject {
+            put(
+              "body",
+              JsonPrimitive("parameters"),
+            )
+          },
+        )
+      },
+      intercept = {
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
+        assertJsonBody("""{"body":"parameters"}""", it.body)
+      },
+    )
+  }
+
+  // deleteComposition
+
+  @Test
+  fun `deleteComposition`() = runTest {
+    client.runTest(
+      call = {
+        deleteComposition(
+          compositionID = "1234",
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/1234".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // deleteCompositionRule
+
+  @Test
+  fun `deleteCompositionRule`() = runTest {
+    client.runTest(
+      call = {
+        deleteCompositionRule(
+          compositionID = "1234",
+          objectID = "5678",
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/1234/rules/5678".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getComposition
+
+  @Test
+  fun `getComposition`() = runTest {
+    client.runTest(
+      call = {
+        getComposition(
+          compositionID = "foo",
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getRule
+
+  @Test
+  fun `getRule`() = runTest {
+    client.runTest(
+      call = {
+        getRule(
+          compositionID = "foo",
+          objectID = "123",
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/rules/123".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getTask
+
+  @Test
+  fun `getTask`() = runTest {
+    client.runTest(
+      call = {
+        getTask(
+          compositionID = "foo",
+          taskID = 42L,
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/task/42".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listCompositions
+
+  @Test
+  fun `listCompositions`() = runTest {
+    client.runTest(
+      call = {
+        listCompositions()
+      },
+      intercept = {
+        assertEquals("/1/compositions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `listCompositions1`() = runTest {
+    client.runTest(
+      call = {
+        listCompositions()
+      },
+      intercept = {
+        assertEquals("/1/compositions".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // multipleBatch
+
+  @Test
+  fun `multipleBatch`() = runTest {
+    client.runTest(
+      call = {
+        multipleBatch(
+          batchParams = BatchParams(
+            requests = listOf(
+              MultipleBatchRequest(
+                action = Action.entries.first { it.value == "upsert" },
+                body = Composition(
+                  objectID = "foo",
+                  name = "my first composition",
+                  behavior = CompositionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "bar",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              MultipleBatchRequest(
+                action = Action.entries.first { it.value == "delete" },
+                body = DeleteCompositionAction(
+                  objectID = "baz",
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/*/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}""", it.body)
+      },
+    )
+  }
+
+  // putComposition
+
+  @Test
+  fun `putComposition`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "1234",
+          composition = Composition(
+            objectID = "1234",
+            name = "my first composition",
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo",
+                    ),
+                  ),
+                ),
+                injectedItems = listOf(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                      ),
+                    ),
+                    position = 2,
+                    length = 1,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/1234".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition1`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-external-injection-compo",
+          composition = Composition(
+            objectID = "my-external-injection-compo",
+            name = "my first composition",
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo",
+                    ),
+                  ),
+                ),
+                injectedItems = listOf(
+                  InjectedItem(
+                    key = "injectedItem1",
+                    source = ExternalSource(
+                      external = External(
+                        index = "foo",
+                        ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
+                        params = BaseInjectionQueryParameters(
+                          filters = "brand:adidas",
+                        ),
+                      ),
+                    ),
+                    position = 2,
+                    length = 1,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-external-injection-compo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}""", it.body)
+      },
+    )
+  }
+
+  // putCompositionRule
+
+  @Test
+  fun `putCompositionRule`() = runTest {
+    client.runTest(
+      call = {
+        putCompositionRule(
+          compositionID = "compositionID",
+          objectID = "ruleID",
+          compositionRule = CompositionRule(
+            objectID = "ruleID",
+            conditions = listOf(
+              Condition(
+                anchoring = Anchoring.entries.first { it.value == "is" },
+                pattern = "test",
+              ),
+            ),
+            consequence = CompositionRuleConsequence(
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo",
+                      ),
+                    ),
+                  ),
+                  injectedItems = listOf(
+                    InjectedItem(
+                      key = "injectedItem1",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo",
+                        ),
+                      ),
+                      position = 2,
+                      length = 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/compositionID/rules/ruleID".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `putCompositionRule2`() = runTest {
+    client.runTest(
+      call = {
+        putCompositionRule(
+          compositionID = "compositionID",
+          objectID = "rule-with-exernal-source",
+          compositionRule = CompositionRule(
+            objectID = "rule-with-exernal-source",
+            description = "my description",
+            tags = listOf("tag1", "tag2"),
+            enabled = true,
+            validity = listOf(
+              TimeRange(
+                from = 1704063600L,
+                until = 1704083600L,
+              ),
+            ),
+            conditions = listOf(
+              Condition(
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+                pattern = "harry",
+              ),
+              Condition(
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+                pattern = "potter",
+              ),
+            ),
+            consequence = CompositionRuleConsequence(
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "my-index",
+                        params = MainInjectionQueryParameters(
+                          filters = "brand:adidas",
+                        ),
+                      ),
+                    ),
+                  ),
+                  injectedItems = listOf(
+                    InjectedItem(
+                      key = "injectedItem",
+                      source = ExternalSource(
+                        external = External(
+                          index = "my-index",
+                          params = BaseInjectionQueryParameters(
+                            filters = "brand:adidas",
+                          ),
+                          ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
+                        ),
+                      ),
+                      position = 0,
+                      length = 3,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/compositionID/rules/rule-with-exernal-source".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}""", it.body)
+      },
+    )
+  }
+
+  // saveRules
+
+  @Test
+  fun `saveRules`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "foo",
+          rules = CompositionRulesBatchParams(
+            requests = listOf(
+              RulesMultipleBatchRequest(
+                action = Action.entries.first { it.value == "upsert" },
+                body = CompositionRule(
+                  objectID = "123",
+                  conditions = listOf(
+                    Condition(
+                      pattern = "a",
+                    ),
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "<YOUR_INDEX_NAME>",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `saveRules2`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "rule-with-exernal-source",
+          rules = CompositionRulesBatchParams(
+            requests = listOf(
+              RulesMultipleBatchRequest(
+                action = Action.entries.first { it.value == "upsert" },
+                body = CompositionRule(
+                  objectID = "rule-with-exernal-source",
+                  description = "my description",
+                  tags = listOf("tag1", "tag2"),
+                  enabled = true,
+                  validity = listOf(
+                    TimeRange(
+                      from = 1704063600L,
+                      until = 1704083600L,
+                    ),
+                  ),
+                  conditions = listOf(
+                    Condition(
+                      anchoring = Anchoring.entries.first { it.value == "contains" },
+                      pattern = "harry",
+                    ),
+                    Condition(
+                      anchoring = Anchoring.entries.first { it.value == "contains" },
+                      pattern = "potter",
+                    ),
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "my-index",
+                              params = MainInjectionQueryParameters(
+                                filters = "brand:adidas",
+                              ),
+                            ),
+                          ),
+                        ),
+                        injectedItems = listOf(
+                          InjectedItem(
+                            key = "injectedItem",
+                            source = ExternalSource(
+                              external = External(
+                                index = "my-index",
+                                params = BaseInjectionQueryParameters(
+                                  filters = "brand:adidas",
+                                ),
+                                ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
+                              ),
+                            ),
+                            position = 0,
+                            length = 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/rule-with-exernal-source/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""", it.body)
+      },
+    )
+  }
+
   // search
 
   @Test
@@ -38,6 +992,27 @@ class CompositionTest {
         assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"params":{"query":"batman"}}""", it.body)
+      },
+    )
+  }
+
+  // searchCompositionRules
+
+  @Test
+  fun `searchCompositionRules`() = runTest {
+    client.runTest(
+      call = {
+        searchCompositionRules(
+          compositionID = "foo",
+          searchCompositionRulesParams = SearchCompositionRulesParams(
+            query = "batman",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/rules/search".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"query":"batman"}""", it.body)
       },
     )
   }

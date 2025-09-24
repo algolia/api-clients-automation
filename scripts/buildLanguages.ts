@@ -38,10 +38,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'dart':
-      if (buildType !== 'snippets') {
-        // fix the snippets at some point
-        await run('dart pub get && dart analyze', { cwd, language });
-      }
+      await run('dart pub get && dart analyze', { cwd, language });
       break;
     case 'go':
       await run('go build -o /dev/null ./...', { cwd, language });
@@ -69,7 +66,10 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
     case 'kotlin':
       // the playground specify search but it will still build everything
       const isTestClass = buildType === 'guides' || buildType === 'snippets';
-      await run(`./gradle/gradlew -p ${cwd} ${isTestClass ? 'testClasses' : 'assemble'} ${language == 'kotlin' ? '-Pclient=Search' : ''}`, { language });
+      await run(
+        `./gradle/gradlew -p ${cwd} ${isTestClass ? 'testClasses' : 'assemble'} ${language == 'kotlin' ? '-Pclient=Search' : ''}`,
+        { language },
+      );
       break;
     case 'php':
       // await runComposerInstall();

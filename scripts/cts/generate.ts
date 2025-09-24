@@ -3,13 +3,17 @@ import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
 
-export async function ctsGenerateMany(generators: Generator[], languageVersion = ''): Promise<void> {
+export async function ctsGenerateMany(
+  generators: Generator[],
+  withDebugger: boolean,
+  languageVersion = '',
+): Promise<void> {
   await setupAndGen(
     generators,
     'tests',
     async (gen) => {
       if (getTestOutputFolder(gen.language)) {
-        await callGenerator(gen);
+        await callGenerator(gen, withDebugger);
       }
     },
     {

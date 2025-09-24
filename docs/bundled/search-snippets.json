@@ -667,9 +667,6 @@
     "deleteObject": {
       "default": "final response = await client.deleteObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"uniqueID\",\n);"
     },
-    "deleteObjects": {
-      "default": "final response = await client.deleteObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectIDs: [\n    \"1\",\n    \"2\",\n  ],\n);"
-    },
     "deleteRule": {
       "delete rule simple case": "final response = await client.deleteRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"id1\",\n);",
       "delete rule with simple characters to encode in objectID": "final response = await client.deleteRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"test/with/slash\",\n);"
@@ -679,15 +676,6 @@
     },
     "deleteSynonym": {
       "default": "final response = await client.deleteSynonym(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"id1\",\n);"
-    },
-    "generateSecuredApiKey": {
-      "api key basic": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"2640659426d5107b6e47d75db9cbaef8\",\n  restrictions: SecuredApiKeyRestrictions(\n    validUntil: 2524604400,\n    restrictIndices: [\n      \"Movies\",\n    ],\n  ),\n);",
-      "with searchParams": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"2640659426d5107b6e47d75db9cbaef8\",\n  restrictions: SecuredApiKeyRestrictions(\n    validUntil: 2524604400,\n    restrictIndices: [\n      \"Movies\",\n      \"cts_e2e_settings\",\n    ],\n    restrictSources: \"192.168.1.0/24\",\n    filters: \"category:Book OR category:Ebook AND _tags:published\",\n    userToken: \"user123\",\n    searchParams: SearchParamsObject(\n      query: \"batman\",\n      typoTolerance: TypoToleranceEnum.fromJson(\"strict\"),\n      aroundRadius: AroundRadiusAll.fromJson(\"all\"),\n      mode: Mode.fromJson(\"neuralSearch\"),\n      hitsPerPage: 10,\n      optionalWords: [\n        \"one\",\n        \"two\",\n      ],\n    ),\n  ),\n);",
-      "with filters": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"2640659426d5107b6e47d75db9cbaef8\",\n  restrictions: SecuredApiKeyRestrictions(\n    filters:\n        \"user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)\",\n  ),\n);",
-      "with visible_by filter": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"2640659426d5107b6e47d75db9cbaef8\",\n  restrictions: SecuredApiKeyRestrictions(\n    filters: \"visible_by:group/Finance\",\n  ),\n);",
-      "with userID": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"2640659426d5107b6e47d75db9cbaef8\",\n  restrictions: SecuredApiKeyRestrictions(\n    userToken: \"user42\",\n  ),\n);",
-      "mcm with filters": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"YourSearchOnlyApiKey\",\n  restrictions: SecuredApiKeyRestrictions(\n    filters: \"user:user42 AND user:public\",\n  ),\n);",
-      "mcm with user token": "final response = client.generateSecuredApiKey(\n  parentApiKey: \"YourSearchOnlyApiKey\",\n  restrictions: SecuredApiKeyRestrictions(\n    userToken: \"user42\",\n  ),\n);"
     },
     "getApiKey": {
       "default": "final response = await client.getApiKey(\n  key: \"myTestApiKey\",\n);"
@@ -739,11 +727,6 @@
       "hasPendingMappings with minimal parameters": "final response = await client.hasPendingMappings();",
       "hasPendingMappings with parameters": "final response = await client.hasPendingMappings(\n  getClusters: true,\n);"
     },
-    "indexExists": {
-      "indexExists": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
-      "indexNotExists": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
-      "indexExistsWithError": "final response = await client.indexExists(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
-    },
     "listApiKeys": {
       "default": "final response = await client.listApiKeys();"
     },
@@ -776,17 +759,8 @@
       "add men pant": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"productId\",\n  attributesToUpdate: {\n    'categoryPageId': {\n      '_operation': \"Add\",\n      'value': \"men-clothing-pants\",\n    },\n  },\n);",
       "remove men pant": "final response = await client.partialUpdateObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"productId\",\n  attributesToUpdate: {\n    'categoryPageId': {\n      '_operation': \"Remove\",\n      'value': \"men-clothing-pants\",\n    },\n  },\n);"
     },
-    "partialUpdateObjects": {
-      "call partialUpdateObjects with createIfNotExists=true": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  createIfNotExists: true,\n);",
-      "call partialUpdateObjects with createIfNotExists=false": "final response = await client.partialUpdateObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n  ],\n  createIfNotExists: false,\n);"
-    },
     "removeUserId": {
       "default": "final response = await client.removeUserId(\n  userID: \"uniqueID\",\n);"
-    },
-    "replaceAllObjects": {
-      "call replaceAllObjects without error": "final response = await client.replaceAllObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n    {\n      'objectID': \"3\",\n      'name': \"Cyril\",\n    },\n    {\n      'objectID': \"4\",\n      'name': \"David\",\n    },\n    {\n      'objectID': \"5\",\n      'name': \"Eva\",\n    },\n    {\n      'objectID': \"6\",\n      'name': \"Fiona\",\n    },\n    {\n      'objectID': \"7\",\n      'name': \"Gael\",\n    },\n    {\n      'objectID': \"8\",\n      'name': \"Hugo\",\n    },\n    {\n      'objectID': \"9\",\n      'name': \"Igor\",\n    },\n    {\n      'objectID': \"10\",\n      'name': \"Julia\",\n    },\n  ],\n  batchSize: 3,\n);",
-      "call replaceAllObjects with partial scopes": "final response = await client.replaceAllObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n  batchSize: 77,\n  scopes: [\n    ScopeType.fromJson(\"settings\"),\n    ScopeType.fromJson(\"synonyms\"),\n  ],\n);",
-      "replaceAllObjects should cleanup on failure": "final response = await client.replaceAllObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"fine\",\n      'body': \"small obj\",\n    },\n    {\n      'objectID': \"toolarge\",\n      'body': \"something bigger than 10KB\",\n    },\n  ],\n);"
     },
     "replaceSources": {
       "default": "final response = await client.replaceSources(\n  source: [\n    Source(\n      source: \"theSource\",\n      description: \"theDescription\",\n    ),\n  ],\n);"
@@ -796,12 +770,6 @@
     },
     "saveObject": {
       "default": "final response = await client.saveObject(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  body: {\n    'name': \"Black T-shirt\",\n    'color': \"#000000||black\",\n    'availableIn': \"https://source.unsplash.com/100x100/?paris||Paris\",\n    'objectID': \"myID\",\n  },\n);"
-    },
-    "saveObjects": {
-      "call saveObjects without error": "final response = await client.saveObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n);",
-      "saveObjects should report errors": "final response = await client.saveObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'name': \"Adam\",\n    },\n    {\n      'objectID': \"2\",\n      'name': \"Benoit\",\n    },\n  ],\n);",
-      "saveObjectsPlaylist": "final response = await client.saveObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'visibility': \"public\",\n      'name': \"Hot 100 Billboard Charts\",\n      'playlistId': \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      'createdAt': \"1500240452\",\n    },\n  ],\n);",
-      "saveObjectsPublicUser": "final response = await client.saveObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objects: [\n    {\n      'objectID': \"1\",\n      'visibility': \"public\",\n      'name': \"Hot 100 Billboard Charts\",\n      'playlistId': \"d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f\",\n      'createdAt': \"1500240452\",\n    },\n  ],\n  waitForTasks: false,\n  batchSize: 1000,\n  requestOptions: RequestOptions(\n    headers: {\n      'X-Algolia-User-ID': '*',\n    },\n  ),\n);"
     },
     "saveRule": {
       "saveRule with minimal parameters": "final response = await client.saveRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  objectID: \"id1\",\n  rule: Rule(\n    objectID: \"id1\",\n    conditions: [\n      Condition(\n        pattern: \"apple\",\n        anchoring: Anchoring.fromJson(\"contains\"),\n      ),\n    ],\n    consequence: Consequence(\n      params: ConsequenceParams(\n        filters: \"brand:xiaomi\",\n      ),\n    ),\n  ),\n);",
@@ -1145,17 +1113,6 @@
     },
     "updateApiKey": {
       "default": "final response = await client.updateApiKey(\n  key: \"ALGOLIA_API_KEY\",\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
-    },
-    "waitForApiKey": {
-      "wait for api key helper - add": "final response = await client.waitForApiKey(\n  key: \"api-key-add-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"add\"),\n);",
-      "wait for api key - update": "final response = await client.waitForApiKey(\n  key: \"api-key-update-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"update\"),\n  apiKey: ApiKey(\n    description: \"my updated api key\",\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n      Acl.fromJson(\"deleteObject\"),\n    ],\n    indexes: [\n      \"Movies\",\n      \"Books\",\n    ],\n    referers: [\n      \"*google.com\",\n      \"*algolia.com\",\n    ],\n    validity: 305,\n    maxQueriesPerIPPerHour: 95,\n    maxHitsPerQuery: 20,\n  ),\n);",
-      "wait for api key - delete": "final response = await client.waitForApiKey(\n  key: \"api-key-delete-operation-test-dart\",\n  operation: ApiKeyOperation.fromJson(\"delete\"),\n);"
-    },
-    "waitForAppTask": {
-      "default": "final response = await client.waitForAppTask(\n  taskID: 123,\n);"
-    },
-    "waitForTask": {
-      "default": "final response = await client.waitForTask(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  taskID: 123,\n);"
     },
     "init": {
       "default": "final client =\n    SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');"

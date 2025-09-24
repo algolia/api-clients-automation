@@ -98,9 +98,9 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     {{#isSearchClient}}
     {{> client/api/helpers}}
     {{/isSearchClient}}
-    {{#isCompositionFullClient}}
+    {{#isCompositionClient}}
     {{> client/api/compositionHelpers}}
-    {{/isCompositionFullClient}}
+    {{/isCompositionClient}}
     {{#operation}}
     {{> client/api/operation/jsdoc}}
     {{nickname}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{#vendorExtensions.x-has-generic-parameter}}<T extends object>{{/vendorExtensions.x-has-generic-parameter}}( {{> client/api/operation/parameters}} ) : Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}> {

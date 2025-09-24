@@ -2,6 +2,7 @@ import fsp from 'fs/promises';
 import path from 'path';
 
 import { Octokit } from '@octokit/rest';
+import chalk from 'chalk';
 import type { ExecaError } from 'execa';
 import { execa, execaCommand } from 'execa';
 import { remove } from 'fs-extra';
@@ -270,13 +271,33 @@ export function isVerbose(): boolean {
   return verbose;
 }
 
-export async function callGenerator(gen: Generator): Promise<void> {
-  await run(
-    // Use the following line if you want to be able to attach a debugger to the generators
-    // `JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=\*:5009" yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
-    `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`,
-    { language: 'java' },
+export async function callGenerator(gen: Generator, withDebugger: boolean): Promise<void> {
+  const cmd = `yarn openapi-generator-cli --custom-generator=generators/build/libs/algolia-java-openapi-generator-1.0.0.jar generate --generator-key ${gen.key}`;
+  if (!withDebugger) {
+    await run(cmd, { language: 'java' });
+    return;
+  }
+
+  console.log(
+    chalk.yellow(
+      'Running the generator in debug mode, waiting for debugger to be attached on port 5009\nsee the doc for reference: https://api-clients-automation.netlify.app/docs/CLI/cts-commands#attach-a-debugger-to-the-generator',
+    ),
   );
+
+  // verbose messes up the order of execution
+  const verbose = isVerbose();
+  setVerbose(false);
+
+  const previous = await run('lsof -ti:5009 || true', { language: 'java' });
+  if (previous) {
+    console.log(chalk.italic(`killing previous generator on port 5009: ${previous}`));
+    await run(`kill -9 ${previous} && sleep 2`, { language: 'java' });
+  }
+  setVerbose(verbose);
+
+  await run(`JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5009" ${cmd}`, {
+    language: 'java',
+  });
 }
 
 export function isWSL(): boolean {

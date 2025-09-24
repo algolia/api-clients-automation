@@ -4,6 +4,1488 @@ import 'package:algolia_test/algolia_test.dart';
 import 'package:test/test.dart';
 
 void main() {
+  // customDelete
+  test(
+    'allow del method for a custom path with minimal parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customDelete(
+        path: "test/minimal",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/minimal');
+        expect(request.method, 'delete');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // customDelete
+  test(
+    'allow del method for a custom path with all parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customDelete(
+        path: "test/all",
+        parameters: {
+          'query': "parameters",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/all');
+        expect(request.method, 'delete');
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // customGet
+  test(
+    'allow get method for a custom path with minimal parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customGet(
+        path: "test/minimal",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/minimal');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // customGet
+  test(
+    'allow get method for a custom path with all parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customGet(
+        path: "test/all",
+        parameters: {
+          'query': "parameters with space",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/all');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"query":"parameters%20with%20space"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // customGet
+  test(
+    'requestOptions should be escaped too',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customGet(
+          path: "test/all",
+          parameters: {
+            'query': "to be overriden",
+          },
+          requestOptions: RequestOptions(
+            headers: {
+              'x-header-1': "spaces are left alone",
+            },
+            urlParameters: {
+              'query': "parameters with space",
+              'and an array': [
+                "array",
+                "with spaces",
+              ],
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/all');
+        expect(request.method, 'get');
+        expectHeaders(
+            request.headers, """{"x-header-1":"spaces are left alone"}""");
+        expectParams(request.queryParameters,
+            """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'allow post method for a custom path with minimal parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+        path: "test/minimal",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/minimal');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'allow post method for a custom path with all parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+        path: "test/all",
+        parameters: {
+          'query': "parameters",
+        },
+        body: {
+          'body': "parameters",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/all');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectBody(request.body, """{"body":"parameters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions can override default query parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'query': "myQueryParameter",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(
+            request.queryParameters, """{"query":"myQueryParameter"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions merges query parameters with default ones',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'query2': "myQueryParameter",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","query2":"myQueryParameter"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions can override default headers',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            headers: {
+              'x-algolia-api-key': "ALGOLIA_API_KEY",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions merges headers with default ones',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            headers: {
+              'x-algolia-api-key': "ALGOLIA_API_KEY",
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectHeaders(
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions queryParameters accepts booleans',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'isItWorking': true,
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","isItWorking":"true"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions queryParameters accepts integers',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': 2,
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","myParam":"2"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions queryParameters accepts list of string',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                "b and c",
+                "d",
+              ],
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","myParam":"b%20and%20c%2Cd"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions queryParameters accepts list of booleans',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                true,
+                true,
+                false,
+              ],
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPost
+  test(
+    'requestOptions queryParameters accepts list of integers',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPost(
+          path: "test/requestOptions",
+          parameters: {
+            'query': "parameters",
+          },
+          body: {
+            'facet': "filters",
+          },
+          requestOptions: RequestOptions(
+            urlParameters: {
+              'myParam': [
+                1,
+                2,
+              ],
+            },
+          )),
+      intercept: (request) {
+        expectPath(request.path, '/test/requestOptions');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"query":"parameters","myParam":"1%2C2"}""");
+        expectBody(request.body, """{"facet":"filters"}""");
+      },
+    ),
+  );
+
+  // customPut
+  test(
+    'allow put method for a custom path with minimal parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPut(
+        path: "test/minimal",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/minimal');
+        expect(request.method, 'put');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // customPut
+  test(
+    'allow put method for a custom path with all parameters',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.customPut(
+        path: "test/all",
+        parameters: {
+          'query': "parameters",
+        },
+        body: {
+          'body': "parameters",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/test/all');
+        expect(request.method, 'put');
+        expectParams(request.queryParameters, """{"query":"parameters"}""");
+        expectBody(request.body, """{"body":"parameters"}""");
+      },
+    ),
+  );
+
+  // deleteComposition
+  test(
+    'deleteComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.deleteComposition(
+        compositionID: "1234",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/1234');
+        expect(request.method, 'delete');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // deleteCompositionRule
+  test(
+    'deleteCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.deleteCompositionRule(
+        compositionID: "1234",
+        objectID: "5678",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/1234/rules/5678');
+        expect(request.method, 'delete');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getComposition
+  test(
+    'getComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getComposition(
+        compositionID: "foo",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getRule
+  test(
+    'getRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRule(
+        compositionID: "foo",
+        objectID: "123",
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/rules/123');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getTask
+  test(
+    'getTask',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTask(
+        compositionID: "foo",
+        taskID: 42,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/task/42');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // listCompositions
+  test(
+    'listCompositions',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.listCompositions(),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // listCompositions
+  test(
+    'listCompositions',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.listCompositions(),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // multipleBatch
+  test(
+    'multipleBatch',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.multipleBatch(
+        batchParams: BatchParams(
+          requests: [
+            MultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: Composition(
+                objectID: "foo",
+                name: "my first composition",
+                behavior: CompositionBehavior(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "bar",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            MultipleBatchRequest(
+              action: Action.fromJson("delete"),
+              body: DeleteCompositionAction(
+                objectID: "baz",
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/*/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}""");
+      },
+    ),
+  );
+
+  // multipleBatch
+  test(
+    'multipleBatch',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.multipleBatch(
+        batchParams: BatchParams(
+          requests: [
+            MultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: Composition(
+                objectID: "my-external-injection-compo",
+                name: "my first composition",
+                behavior: CompositionBehavior(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "foo",
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectedItem(
+                        key: "injectedItem1",
+                        source: ExternalSource(
+                          external_: External(
+                            index: "foo",
+                            ordering: ExternalOrdering.fromJson("userDefined"),
+                            params: BaseInjectionQueryParameters(
+                              filters: "brand:adidas",
+                            ),
+                          ),
+                        ),
+                        position: 2,
+                        length: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/*/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}""");
+      },
+    ),
+  );
+
+  // multipleBatch
+  test(
+    'multipleBatch',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.multipleBatch(
+        batchParams: BatchParams(
+          requests: [
+            MultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: Composition(
+                objectID: "my-metadata-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "foo",
+                          params: MainInjectionQueryParameters(
+                            filters: "brand:adidas",
+                          ),
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectedItem(
+                        key: "injectedItem1",
+                        source: SearchSource(
+                          search: Search(
+                            index: "foo",
+                            params: BaseInjectionQueryParameters(
+                              filters: "brand:adidas",
+                            ),
+                          ),
+                        ),
+                        position: 2,
+                        length: 1,
+                        metadata: InjectedItemMetadata(
+                          hits: InjectedItemHitsMetadata(
+                            addItemKey: true,
+                            extra: {
+                              'my-string': "string",
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': {
+                                'sub-key': 'sub-value',
+                              },
+                            },
+                          ),
+                        ),
+                      ),
+                      InjectedItem(
+                        key: "externalItem",
+                        source: SearchSource(
+                          search: Search(
+                            index: "foo",
+                            params: BaseInjectionQueryParameters(
+                              filters: "brand:puma",
+                            ),
+                          ),
+                        ),
+                        position: 5,
+                        length: 5,
+                        metadata: InjectedItemMetadata(
+                          hits: InjectedItemHitsMetadata(
+                            addItemKey: true,
+                            extra: {
+                              'my-string': "string",
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': {
+                                'sub-key': 'sub-value',
+                              },
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/*/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "1234",
+        composition: Composition(
+          objectID: "1234",
+          name: "my first composition",
+          behavior: CompositionBehavior(
+            injection: Injection(
+              main: Main(
+                source: CompositionSource(
+                  search: CompositionSourceSearch(
+                    index: "foo",
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectedItem(
+                  key: "injectedItem1",
+                  source: SearchSource(
+                    search: Search(
+                      index: "foo",
+                    ),
+                  ),
+                  position: 2,
+                  length: 1,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/1234');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-external-injection-compo",
+        composition: Composition(
+          objectID: "my-external-injection-compo",
+          name: "my first composition",
+          behavior: CompositionBehavior(
+            injection: Injection(
+              main: Main(
+                source: CompositionSource(
+                  search: CompositionSourceSearch(
+                    index: "foo",
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectedItem(
+                  key: "injectedItem1",
+                  source: ExternalSource(
+                    external_: External(
+                      index: "foo",
+                      ordering: ExternalOrdering.fromJson("userDefined"),
+                      params: BaseInjectionQueryParameters(
+                        filters: "brand:adidas",
+                      ),
+                    ),
+                  ),
+                  position: 2,
+                  length: 1,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-external-injection-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-metadata-compo",
+        composition: Composition(
+          objectID: "my-metadata-compo",
+          name: "my composition",
+          behavior: CompositionBehavior(
+            injection: Injection(
+              main: Main(
+                source: CompositionSource(
+                  search: CompositionSourceSearch(
+                    index: "foo",
+                    params: MainInjectionQueryParameters(
+                      filters: "brand:adidas",
+                    ),
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectedItem(
+                  key: "injectedItem1",
+                  source: SearchSource(
+                    search: Search(
+                      index: "foo",
+                      params: BaseInjectionQueryParameters(
+                        filters: "brand:adidas",
+                      ),
+                    ),
+                  ),
+                  position: 2,
+                  length: 1,
+                  metadata: InjectedItemMetadata(
+                    hits: InjectedItemHitsMetadata(
+                      addItemKey: true,
+                      extra: {
+                        'my-string': "string",
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': {
+                          'sub-key': 'sub-value',
+                        },
+                      },
+                    ),
+                  ),
+                ),
+                InjectedItem(
+                  key: "externalItem",
+                  source: SearchSource(
+                    search: Search(
+                      index: "foo",
+                      params: BaseInjectionQueryParameters(
+                        filters: "brand:puma",
+                      ),
+                    ),
+                  ),
+                  position: 5,
+                  length: 5,
+                  metadata: InjectedItemMetadata(
+                    hits: InjectedItemHitsMetadata(
+                      addItemKey: true,
+                      extra: {
+                        'my-string': "string",
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': {
+                          'sub-key': 'sub-value',
+                        },
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-metadata-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}""");
+      },
+    ),
+  );
+
+  // putCompositionRule
+  test(
+    'putCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putCompositionRule(
+        compositionID: "compositionID",
+        objectID: "ruleID",
+        compositionRule: CompositionRule(
+          objectID: "ruleID",
+          conditions: [
+            Condition(
+              anchoring: Anchoring.fromJson("is"),
+              pattern: "test",
+            ),
+          ],
+          consequence: CompositionRuleConsequence(
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "foo",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "injectedItem1",
+                    source: SearchSource(
+                      search: Search(
+                        index: "foo",
+                      ),
+                    ),
+                    position: 2,
+                    length: 1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/compositionID/rules/ruleID');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}""");
+      },
+    ),
+  );
+
+  // putCompositionRule
+  test(
+    'putCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putCompositionRule(
+        compositionID: "compositionID",
+        objectID: "rule-with-metadata",
+        compositionRule: CompositionRule(
+          objectID: "rule-with-metadata",
+          conditions: [
+            Condition(
+              anchoring: Anchoring.fromJson("is"),
+              pattern: "test",
+            ),
+          ],
+          consequence: CompositionRuleConsequence(
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "foo",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "injectedItem1",
+                    source: SearchSource(
+                      search: Search(
+                        index: "foo",
+                        params: BaseInjectionQueryParameters(
+                          filters: "brand:adidas",
+                        ),
+                      ),
+                    ),
+                    position: 2,
+                    length: 1,
+                    metadata: InjectedItemMetadata(
+                      hits: InjectedItemHitsMetadata(
+                        addItemKey: true,
+                        extra: {
+                          'my-string': "string",
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': {
+                            'sub-key': 'sub-value',
+                          },
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/compositionID/rules/rule-with-metadata');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}""");
+      },
+    ),
+  );
+
+  // putCompositionRule
+  test(
+    'putCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putCompositionRule(
+        compositionID: "compositionID",
+        objectID: "rule-with-exernal-source",
+        compositionRule: CompositionRule(
+          objectID: "rule-with-exernal-source",
+          description: "my description",
+          tags: [
+            "tag1",
+            "tag2",
+          ],
+          enabled: true,
+          validity: [
+            TimeRange(
+              from: 1704063600,
+              until: 1704083600,
+            ),
+          ],
+          conditions: [
+            Condition(
+              anchoring: Anchoring.fromJson("contains"),
+              pattern: "harry",
+            ),
+            Condition(
+              anchoring: Anchoring.fromJson("contains"),
+              pattern: "potter",
+            ),
+          ],
+          consequence: CompositionRuleConsequence(
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "my-index",
+                      params: MainInjectionQueryParameters(
+                        filters: "brand:adidas",
+                      ),
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "injectedItem",
+                    source: ExternalSource(
+                      external_: External(
+                        index: "my-index",
+                        params: BaseInjectionQueryParameters(
+                          filters: "brand:adidas",
+                        ),
+                        ordering: ExternalOrdering.fromJson("userDefined"),
+                      ),
+                    ),
+                    position: 0,
+                    length: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/compositionID/rules/rule-with-exernal-source');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "foo",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "123",
+                conditions: [
+                  Condition(
+                    pattern: "a",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionBehavior(
+                    injection: Injection(
+                      main: Main(
+                        source: CompositionSource(
+                          search: CompositionSourceSearch(
+                            index: "<YOUR_INDEX_NAME>",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-metadata",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-metadata",
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("is"),
+                    pattern: "test",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionBehavior(
+                    injection: Injection(
+                      main: Main(
+                        source: CompositionSource(
+                          search: CompositionSourceSearch(
+                            index: "foo",
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectedItem(
+                          key: "injectedItem1",
+                          source: SearchSource(
+                            search: Search(
+                              index: "foo",
+                              params: BaseInjectionQueryParameters(
+                                filters: "brand:adidas",
+                              ),
+                            ),
+                          ),
+                          position: 2,
+                          length: 1,
+                          metadata: InjectedItemMetadata(
+                            hits: InjectedItemHitsMetadata(
+                              addItemKey: true,
+                              extra: {
+                                'my-string': "string",
+                                'my-bool': true,
+                                'my-number': 42,
+                                'my-object': {
+                                  'sub-key': 'sub-value',
+                                },
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/compositions/rule-with-metadata/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "rule-with-exernal-source",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-exernal-source",
+                description: "my description",
+                tags: [
+                  "tag1",
+                  "tag2",
+                ],
+                enabled: true,
+                validity: [
+                  TimeRange(
+                    from: 1704063600,
+                    until: 1704083600,
+                  ),
+                ],
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("contains"),
+                    pattern: "harry",
+                  ),
+                  Condition(
+                    anchoring: Anchoring.fromJson("contains"),
+                    pattern: "potter",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionBehavior(
+                    injection: Injection(
+                      main: Main(
+                        source: CompositionSource(
+                          search: CompositionSourceSearch(
+                            index: "my-index",
+                            params: MainInjectionQueryParameters(
+                              filters: "brand:adidas",
+                            ),
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectedItem(
+                          key: "injectedItem",
+                          source: ExternalSource(
+                            external_: External(
+                              index: "my-index",
+                              params: BaseInjectionQueryParameters(
+                                filters: "brand:adidas",
+                              ),
+                              ordering:
+                                  ExternalOrdering.fromJson("userDefined"),
+                            ),
+                          ),
+                          position: 0,
+                          length: 3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/rule-with-exernal-source/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""");
+      },
+    ),
+  );
+
   // search
   test(
     'search',
@@ -25,6 +1507,75 @@ void main() {
         expectPath(request.path, '/1/compositions/foo/run');
         expect(request.method, 'post');
         expectBody(request.body, """{"params":{"query":"batman"}}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "batman",
+            injectedItems: {
+              'injectedItem1': ExternalInjectedItem(
+                items: [
+                  ExternalInjection(
+                    objectID: "my-object-1",
+                  ),
+                  ExternalInjection(
+                    objectID: "my-object-2",
+                    metadata: {
+                      'my-string': "string",
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': {
+                        'sub-key': 'sub-value',
+                      },
+                    },
+                  ),
+                ],
+              ),
+            },
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}""");
+      },
+    ),
+  );
+
+  // searchCompositionRules
+  test(
+    'searchCompositionRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchCompositionRules(
+        compositionID: "foo",
+        searchCompositionRulesParams: SearchCompositionRulesParams(
+          query: "batman",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/rules/search');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"query":"batman"}""");
       },
     ),
   );

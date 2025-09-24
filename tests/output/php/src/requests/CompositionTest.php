@@ -31,6 +31,1142 @@ class CompositionTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
+    #[TestDox('allow del method for a custom path with minimal parameters')]
+    public function testCustomDelete(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+            'test/minimal',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/minimal',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('allow del method for a custom path with all parameters')]
+    public function testCustomDelete1(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/all',
+                'method' => 'DELETE',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('allow get method for a custom path with minimal parameters')]
+    public function testCustomGet(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+            'test/minimal',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/minimal',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('allow get method for a custom path with all parameters')]
+    public function testCustomGet1(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+            'test/all',
+            ['query' => 'parameters with space',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions should be escaped too')]
+    public function testCustomGet2(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+            'test/all',
+            ['query' => 'to be overriden',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'parameters with space',
+                    'and an array' => ['array', 'with spaces',
+                    ],
+                ],
+                'headers' => [
+                    'x-header-1' => 'spaces are left alone',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/all',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
+                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('allow post method for a custom path with minimal parameters')]
+    public function testCustomPost(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/minimal',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/minimal',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('allow post method for a custom path with all parameters')]
+    public function testCustomPost1(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/all',
+                'method' => 'POST',
+                'body' => json_decode('{"body":"parameters"}'),
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions can override default query parameters')]
+    public function testCustomPost2(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query' => 'myQueryParameter',
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"myQueryParameter"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions merges query parameters with default ones')]
+    public function testCustomPost3(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'query2' => 'myQueryParameter',
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","query2":"myQueryParameter"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions can override default headers')]
+    public function testCustomPost4(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions merges headers with default ones')]
+    public function testCustomPost5(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'headers' => [
+                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
+                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions queryParameters accepts booleans')]
+    public function testCustomPost6(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'isItWorking' => true,
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","isItWorking":"true"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions queryParameters accepts integers')]
+    public function testCustomPost7(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => 2,
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"2"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions queryParameters accepts list of string')]
+    public function testCustomPost8(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => ['b and c', 'd',
+                    ],
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions queryParameters accepts list of booleans')]
+    public function testCustomPost9(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [true, true, false,
+                    ],
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('requestOptions queryParameters accepts list of integers')]
+    public function testCustomPost10(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+            'test/requestOptions',
+            ['query' => 'parameters',
+            ],
+            ['facet' => 'filters',
+            ],
+            [
+                'queryParameters' => [
+                    'myParam' => [1, 2,
+                    ],
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/requestOptions',
+                'method' => 'POST',
+                'body' => json_decode('{"facet":"filters"}'),
+                'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('allow put method for a custom path with minimal parameters')]
+    public function testCustomPut(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+            'test/minimal',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/minimal',
+                'method' => 'PUT',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('allow put method for a custom path with all parameters')]
+    public function testCustomPut1(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+            'test/all',
+            ['query' => 'parameters',
+            ],
+            ['body' => 'parameters',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/test/all',
+                'method' => 'PUT',
+                'body' => json_decode('{"body":"parameters"}'),
+                'queryParameters' => json_decode('{"query":"parameters"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('deleteComposition')]
+    public function testDeleteComposition(): void
+    {
+        $client = $this->getClient();
+        $client->deleteComposition(
+            '1234',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/1234',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('deleteCompositionRule')]
+    public function testDeleteCompositionRule(): void
+    {
+        $client = $this->getClient();
+        $client->deleteCompositionRule(
+            '1234',
+            '5678',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/1234/rules/5678',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getComposition')]
+    public function testGetComposition(): void
+    {
+        $client = $this->getClient();
+        $client->getComposition(
+            'foo',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getRule')]
+    public function testGetRule(): void
+    {
+        $client = $this->getClient();
+        $client->getRule(
+            'foo',
+            '123',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/rules/123',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getTask')]
+    public function testGetTask(): void
+    {
+        $client = $this->getClient();
+        $client->getTask(
+            'foo',
+            42,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/task/42',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('listCompositions')]
+    public function testListCompositions(): void
+    {
+        $client = $this->getClient();
+        $client->listCompositions();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('listCompositions')]
+    public function testListCompositions1(): void
+    {
+        $client = $this->getClient();
+        $client->listCompositions();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('multipleBatch')]
+    public function testMultipleBatch(): void
+    {
+        $client = $this->getClient();
+        $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'foo',
+                        'name' => 'my first composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'bar',
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+
+                ['action' => 'delete',
+                    'body' => ['objectID' => 'baz',
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/*/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('multipleBatch')]
+    public function testMultipleBatch1(): void
+    {
+        $client = $this->getClient();
+        $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-external-injection-compo',
+                        'name' => 'my first composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['external' => ['index' => 'foo',
+                                        'ordering' => 'userDefined',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                ],
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/*/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('multipleBatch')]
+    public function testMultipleBatch2(): void
+    {
+        $client = $this->getClient();
+        $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-metadata-compo',
+                        'name' => 'my composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                            'params' => ['filters' => 'brand:adidas',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+
+                                ['key' => 'externalItem',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:puma',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 5,
+                                    'length' => 5,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/*/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            '1234',
+            ['objectID' => '1234',
+                'name' => 'my first composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/1234',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition1(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-external-injection-compo',
+            ['objectID' => 'my-external-injection-compo',
+                'name' => 'my first composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['external' => ['index' => 'foo',
+                                'ordering' => 'userDefined',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-external-injection-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition2(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-metadata-compo',
+            ['objectID' => 'my-metadata-compo',
+                'name' => 'my composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+
+                        ['key' => 'externalItem',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:puma',
+                                ],
+                            ],
+                            ],
+                            'position' => 5,
+                            'length' => 5,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-metadata-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'ruleID',
+            ['objectID' => 'ruleID',
+                'conditions' => [
+                    ['anchoring' => 'is',
+                        'pattern' => 'test',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/ruleID',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule1(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'rule-with-metadata',
+            ['objectID' => 'rule-with-metadata',
+                'conditions' => [
+                    ['anchoring' => 'is',
+                        'pattern' => 'test',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem1',
+                            'source' => ['search' => ['index' => 'foo',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                            'metadata' => ['hits' => ['addItemKey' => true,
+                                'extra' => ['my-string' => 'string',
+                                    'my-bool' => true,
+                                    'my-number' => 42,
+                                    'my-object' => ['sub-key' => 'sub-value'],
+                                ],
+                            ],
+                            ],
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/rule-with-metadata',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule2(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'rule-with-exernal-source',
+            ['objectID' => 'rule-with-exernal-source',
+                'description' => 'my description',
+                'tags' => [
+                    'tag1',
+
+                    'tag2',
+                ],
+                'enabled' => true,
+                'validity' => [
+                    ['from' => 1704063600,
+                        'until' => 1704083600,
+                    ],
+                ],
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+
+                    ['anchoring' => 'contains',
+                        'pattern' => 'potter',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'injectedItem',
+                            'source' => ['external' => ['index' => 'my-index',
+                                'params' => ['filters' => 'brand:adidas',
+                                ],
+                                'ordering' => 'userDefined',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/rule-with-exernal-source',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'foo',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => '123',
+                        'conditions' => [
+                            ['pattern' => 'a',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => '<YOUR_INDEX_NAME>',
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules1(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'rule-with-metadata',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-metadata',
+                        'conditions' => [
+                            ['anchoring' => 'is',
+                                'pattern' => 'test',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem1',
+                                    'source' => ['search' => ['index' => 'foo',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                    'metadata' => ['hits' => ['addItemKey' => true,
+                                        'extra' => ['my-string' => 'string',
+                                            'my-bool' => true,
+                                            'my-number' => 42,
+                                            'my-object' => ['sub-key' => 'sub-value'],
+                                        ],
+                                    ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/rule-with-metadata/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules2(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'rule-with-exernal-source',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-exernal-source',
+                        'description' => 'my description',
+                        'tags' => [
+                            'tag1',
+
+                            'tag2',
+                        ],
+                        'enabled' => true,
+                        'validity' => [
+                            ['from' => 1704063600,
+                                'until' => 1704083600,
+                            ],
+                        ],
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'harry',
+                            ],
+
+                            ['anchoring' => 'contains',
+                                'pattern' => 'potter',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                            'params' => ['filters' => 'brand:adidas',
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'injectedItem',
+                                    'source' => ['external' => ['index' => 'my-index',
+                                        'params' => ['filters' => 'brand:adidas',
+                                        ],
+                                        'ordering' => 'userDefined',
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 3,
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/rule-with-exernal-source/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('search')]
     public function testSearch(): void
     {
@@ -47,6 +1183,59 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/foo/run',
                 'method' => 'POST',
                 'body' => json_decode('{"params":{"query":"batman"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search')]
+    public function testSearch1(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+                'injectedItems' => ['injectedItem1' => ['items' => [
+                    ['objectID' => 'my-object-1',
+                    ],
+
+                    ['objectID' => 'my-object-2',
+                        'metadata' => ['my-string' => 'string',
+                            'my-bool' => true,
+                            'my-number' => 42,
+                            'my-object' => ['sub-key' => 'sub-value'],
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('searchCompositionRules')]
+    public function testSearchCompositionRules(): void
+    {
+        $client = $this->getClient();
+        $client->searchCompositionRules(
+            'foo',
+            ['query' => 'batman',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/rules/search',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"batman"}'),
             ],
         ]);
     }

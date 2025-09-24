@@ -38,15 +38,15 @@
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.18.0",
     "husky": "9.1.7",
-    "lint-staged": "16.1.6",
-    "oxlint": "1.14.0",
+    "lint-staged": "16.2.0",
+    "oxlint": "1.16.0",
     "prettier": "3.6.2",
     "prettier-plugin-java": "2.7.4",
-    "prettier-plugin-organize-imports": "4.2.0",
+    "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.9.2"
   },
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.0",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"

@@ -5,12 +5,14 @@ import com.algolia.client.api.CompositionClient
 import com.algolia.client.configuration.*
 import com.algolia.client.extensions.*
 import com.algolia.client.model.composition.*
-import com.algolia.client.model.composition.RequestBody
 import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.*
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
+import org.skyscreamer.jsonassert.JSONAssert
+import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
 
 class CompositionTest {
@@ -20,9 +22,8 @@ class CompositionTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        search(
-          compositionID = "test-composition-id",
-          requestBody = RequestBody(),
+        customGet(
+          path = "test",
         )
       },
       intercept = {
@@ -36,13 +37,108 @@ class CompositionTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        search(
-          compositionID = "test-composition-id",
-          requestBody = RequestBody(),
+        customPost(
+          path = "test",
         )
       },
       intercept = {
-        assertEquals("test-app-id-dsn.algolia.net", it.url.host)
+        assertEquals("test-app-id.algolia.net", it.url.host)
+      },
+    )
+  }
+
+  @Test
+  fun `test the compression strategy`() = runTest {
+    val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6678)), compressionType = CompressionType.GZIP))
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test/gzip",
+          parameters = mapOf(),
+          body = buildJsonObject {
+            put(
+              "message",
+              JsonPrimitive("this is a compressed body"),
+            )
+          },
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+    )
+  }
+
+  @Test
+  fun `calls api with correct user agent`() = runTest {
+    val client = CompositionClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Composition (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
+  fun `the user agent contains the latest version`() = runTest {
+    val client = CompositionClient(appId = "appId", apiKey = "apiKey")
+    client.runTest(
+      call = {
+        customPost(
+          path = "1/test",
+        )
+      },
+      intercept = {
+        val regexp = "^Algolia for Kotlin \\(3.28.0\\).*".toRegex()
+        val header = it.headers["User-Agent"].orEmpty()
+        assertTrue(actual = header.matches(regexp), message = "Expected $header to match the following regex: $regexp")
+      },
+    )
+  }
+
+  @Test
+  fun `switch API key`() = runTest {
+    val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/1",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
+      },
+    )
+    client.runTest(
+      call = {
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
+      },
+      intercept = {
+      },
+    )
+    client.runTest(
+      call = {
+        customGet(
+          path = "check-api-key/2",
+        )
+      },
+
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals("""{"headerAPIKeyValue":"updated-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
   }

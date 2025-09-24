@@ -47,9 +47,8 @@ class CompositionTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
 
-        $client->search(
-            'test-composition-id',
-            [],
+        $client->customGet(
+            'test',
         );
         $this->assertEquals(
             'test-app-id-dsn.algolia.net',
@@ -66,13 +65,68 @@ class CompositionTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
 
-        $client->search(
-            'test-composition-id',
-            [],
+        $client->customPost(
+            'test',
         );
         $this->assertEquals(
-            'test-app-id-dsn.algolia.net',
+            'test-app-id.algolia.net',
             $this->recordedRequest['request']->getUri()->getHost()
+        );
+    }
+
+    #[TestDox('calls api with correct user agent')]
+    public function test0commonApi(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertTrue(
+            (bool) preg_match(
+                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
+                $this->recordedRequest['request']->getHeader('User-Agent')[0]
+            )
+        );
+    }
+
+    #[TestDox('the user agent contains the latest version')]
+    public function test1commonApi(): void
+    {
+        $client = $this->createClient(self::APP_ID, self::API_KEY);
+        $client->customPost(
+            '1/test',
+        );
+        $this->assertTrue(
+            (bool) preg_match(
+                '/^Algolia for PHP \(4.28.0\).*/',
+                $this->recordedRequest['request']->getHeader('User-Agent')[0]
+            )
+        );
+    }
+
+    #[TestDox('switch API key')]
+    public function test0setClientApiKey(): void
+    {
+        $client = CompositionClient::createWithConfig(CompositionConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
+
+        $res = $client->customGet(
+            'check-api-key/1',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"test-api-key"}',
+            json_encode($res)
+        );
+
+        $client->setClientApiKey(
+            'updated-api-key',
+        );
+
+        $res = $client->customGet(
+            'check-api-key/2',
+        );
+        $this->assertEquals(
+            '{"headerAPIKeyValue":"updated-api-key"}',
+            json_encode($res)
         );
     }
 

@@ -12,10 +12,9 @@
       },
       {
         "type": "method",
-        "method": "search",
+        "method": "customGet",
         "parameters": {
-          "compositionID": "test-composition-id",
-          "requestBody": {}
+          "path": "test"
         },
         "expected": {
           "type": "host",
@@ -37,14 +36,52 @@
       },
       {
         "type": "method",
-        "method": "search",
+        "method": "customPost",
         "parameters": {
-          "compositionID": "test-composition-id",
-          "requestBody": {}
+          "path": "test"
         },
         "expected": {
           "type": "host",
-          "match": "test-app-id-dsn.algolia.net"
+          "match": "test-app-id.algolia.net"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "test the compression strategy",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6678
+            }
+          ],
+          "gzip": true
+        }
+      },
+      {
+        "type": "method",
+        "method": "customPost",
+        "parameters": {
+          "path": "1/test/gzip",
+          "parameters": {},
+          "body": {
+            "message": "this is a compressed body"
+          }
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok compression test server response",
+            "body": {
+              "message": "this is a compressed body"
+            }
+          }
         }
       }
     ]

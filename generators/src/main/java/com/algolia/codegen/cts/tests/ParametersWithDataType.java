@@ -473,9 +473,7 @@ public class ParametersWithDataType {
     }
 
     Map<String, Object> vars = (Map<String, Object>) param;
-
     List<Object> values = new ArrayList<>();
-
     CodegenProperty items = spec.getItems();
 
     for (Entry<String, Object> entry : vars.entrySet()) {
@@ -547,6 +545,8 @@ public class ParametersWithDataType {
             return "int";
           case "String":
             return "string";
+          case "search":
+            return "Algolia.Search.Models.Composition.Search"; // conflict with the Search namespace
         }
         break;
       case "go":
@@ -640,26 +640,26 @@ public class ParametersWithDataType {
   }
 
   private void transferPrimitiveData(IJsonSchemaValidationProperties spec, Map<String, Object> output) throws CTSException {
-    switch (getTypeName(spec)) {
-      case "String":
+    switch (getTypeName(spec).toLowerCase()) {
+      case "string":
         output.put("isString", true);
         break;
-      case "UUID":
+      case "uuid":
         output.put("isString", true);
         break;
-      case "Integer":
+      case "integer":
         output.put("isInteger", true);
         output.put("isNumber", true);
         break;
-      case "Long":
+      case "long":
         output.put("isLong", true);
         output.put("isNumber", true);
         break;
-      case "Double":
+      case "double":
         output.put("isDouble", true);
         output.put("isNumber", true);
         break;
-      case "Boolean":
+      case "boolean":
         output.put("isBoolean", true);
         break;
       case "oas_any_type_not_mapped":

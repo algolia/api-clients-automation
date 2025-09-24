@@ -4,10 +4,21 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_composition/src/deserialize.dart';
 import 'package:algolia_client_composition/src/version.dart';
 
+import 'package:algolia_client_composition/src/model/batch_params.dart';
+import 'package:algolia_client_composition/src/model/composition.dart';
+import 'package:algolia_client_composition/src/model/composition_rule.dart';
+import 'package:algolia_client_composition/src/model/composition_rules_batch_params.dart';
+import 'package:algolia_client_composition/src/model/get_task_response.dart';
+import 'package:algolia_client_composition/src/model/list_compositions_response.dart';
+import 'package:algolia_client_composition/src/model/multiple_batch_response.dart';
 import 'package:algolia_client_composition/src/model/request_body.dart';
+import 'package:algolia_client_composition/src/model/rules_multiple_batch_response.dart';
+import 'package:algolia_client_composition/src/model/search_composition_rules_params.dart';
+import 'package:algolia_client_composition/src/model/search_composition_rules_response.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_request.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_response.dart';
 import 'package:algolia_client_composition/src/model/search_response.dart';
+import 'package:algolia_client_composition/src/model/task_id_response.dart';
 
 final class CompositionClient implements ApiClient {
   @override
@@ -45,6 +56,513 @@ final class CompositionClient implements ApiClient {
     _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
+  /// This method lets you send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customDelete({
+    required String path,
+    Map<String, Object>? parameters,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customDelete`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.delete,
+      path: r'/{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// This method lets you send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customGet({
+    required String path,
+    Map<String, Object>? parameters,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customGet`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// This method lets you send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [body] Parameters to send with the custom request.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customPost({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customPost`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+      body: body,
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// This method lets you send requests to the Algolia REST API.
+  ///
+  /// Parameters:
+  /// * [path] Path of the endpoint, for example `1/newFeature`.
+  /// * [parameters] Query parameters to apply to the current query.
+  /// * [body] Parameters to send with the custom request.
+  /// * [requestOptions] additional request configuration.
+  Future<Object> customPut({
+    required String path,
+    Map<String, Object>? parameters,
+    Object? body,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      path.isNotEmpty,
+      'Parameter `path` is required when calling `customPut`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.put,
+      path: r'/{path}'.replaceAll('{' r'path' '}', path),
+      queryParams: {
+        ...?parameters,
+      },
+      body: body,
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Object, Object>(
+      response,
+      'Object',
+      growable: true,
+    );
+  }
+
+  /// Delete a composition from the current Algolia application.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [requestOptions] additional request configuration.
+  Future<TaskIDResponse> deleteComposition({
+    required String compositionID,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `deleteComposition`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.delete,
+      path: r'/1/compositions/{compositionID}'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskIDResponse, TaskIDResponse>(
+      response,
+      'TaskIDResponse',
+      growable: true,
+    );
+  }
+
+  /// Delete a Composition Rule from the specified Composition ID.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [objectID] Unique identifier of a rule object.
+  /// * [requestOptions] additional request configuration.
+  Future<TaskIDResponse> deleteCompositionRule({
+    required String compositionID,
+    required String objectID,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `deleteCompositionRule`.',
+    );
+    assert(
+      objectID.isNotEmpty,
+      'Parameter `objectID` is required when calling `deleteCompositionRule`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.delete,
+      path: r'/1/compositions/{compositionID}/rules/{objectID}'
+          .replaceAll('{' r'compositionID' '}',
+              Uri.encodeComponent(compositionID.toString()))
+          .replaceAll(
+              '{' r'objectID' '}', Uri.encodeComponent(objectID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskIDResponse, TaskIDResponse>(
+      response,
+      'TaskIDResponse',
+      growable: true,
+    );
+  }
+
+  /// Retrieve a single composition in the current Algolia application.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///   - settings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [requestOptions] additional request configuration.
+  Future<Composition> getComposition({
+    required String compositionID,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `getComposition`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/compositions/{compositionID}'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<Composition, Composition>(
+      response,
+      'Composition',
+      growable: true,
+    );
+  }
+
+  /// Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///   - settings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [objectID] Unique identifier of a rule object.
+  /// * [requestOptions] additional request configuration.
+  Future<CompositionRule> getRule({
+    required String compositionID,
+    required String objectID,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `getRule`.',
+    );
+    assert(
+      objectID.isNotEmpty,
+      'Parameter `objectID` is required when calling `getRule`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/compositions/{compositionID}/rules/{objectID}'
+          .replaceAll('{' r'compositionID' '}',
+              Uri.encodeComponent(compositionID.toString()))
+          .replaceAll(
+              '{' r'objectID' '}', Uri.encodeComponent(objectID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<CompositionRule, CompositionRule>(
+      response,
+      'CompositionRule',
+      growable: true,
+    );
+  }
+
+  /// Checks the status of a given task.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///   - settings
+  ///   - addObject
+  ///   - deleteObject
+  ///   - deleteIndex
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [taskID] Unique task identifier.
+  /// * [requestOptions] additional request configuration.
+  Future<GetTaskResponse> getTask({
+    required String compositionID,
+    required int taskID,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `getTask`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/compositions/{compositionID}/task/{taskID}'
+          .replaceAll('{' r'compositionID' '}',
+              Uri.encodeComponent(compositionID.toString()))
+          .replaceAll(
+              '{' r'taskID' '}', Uri.encodeComponent(taskID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<GetTaskResponse, GetTaskResponse>(
+      response,
+      'GetTaskResponse',
+      growable: true,
+    );
+  }
+
+  /// Lists all compositions in the current Algolia application.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///   - settings
+  ///
+  /// Parameters:
+  /// * [page] Requested page of the API response. If `null`, the API response is not paginated.
+  /// * [hitsPerPage] Number of hits per page.
+  /// * [requestOptions] additional request configuration.
+  Future<ListCompositionsResponse> listCompositions({
+    int? page,
+    int? hitsPerPage,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/compositions',
+      queryParams: {
+        if (page != null) 'page': page,
+        if (hitsPerPage != null) 'hitsPerPage': hitsPerPage,
+      },
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<ListCompositionsResponse, ListCompositionsResponse>(
+      response,
+      'ListCompositionsResponse',
+      growable: true,
+    );
+  }
+
+  /// Adds, updates, or deletes compositions with a single API request.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [batchParams]
+  /// * [requestOptions] additional request configuration.
+  Future<MultipleBatchResponse> multipleBatch({
+    required BatchParams batchParams,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/compositions/*/batch',
+      body: batchParams.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<MultipleBatchResponse, MultipleBatchResponse>(
+      response,
+      'MultipleBatchResponse',
+      growable: true,
+    );
+  }
+
+  /// Upsert a composition in the current Algolia application.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [composition]
+  /// * [requestOptions] additional request configuration.
+  Future<TaskIDResponse> putComposition({
+    required String compositionID,
+    required Composition composition,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `putComposition`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.put,
+      path: r'/1/compositions/{compositionID}'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+      body: composition.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskIDResponse, TaskIDResponse>(
+      response,
+      'TaskIDResponse',
+      growable: true,
+    );
+  }
+
+  /// Upsert a Composition Rule for the specified composition ID.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [objectID] Unique identifier of a rule object.
+  /// * [compositionRule]
+  /// * [requestOptions] additional request configuration.
+  Future<TaskIDResponse> putCompositionRule({
+    required String compositionID,
+    required String objectID,
+    required CompositionRule compositionRule,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `putCompositionRule`.',
+    );
+    assert(
+      objectID.isNotEmpty,
+      'Parameter `objectID` is required when calling `putCompositionRule`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.put,
+      path: r'/1/compositions/{compositionID}/rules/{objectID}'
+          .replaceAll('{' r'compositionID' '}',
+              Uri.encodeComponent(compositionID.toString()))
+          .replaceAll(
+              '{' r'objectID' '}', Uri.encodeComponent(objectID.toString())),
+      body: compositionRule.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskIDResponse, TaskIDResponse>(
+      response,
+      'TaskIDResponse',
+      growable: true,
+    );
+  }
+
+  /// Create or update or delete multiple composition rules.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [rules]
+  /// * [requestOptions] additional request configuration.
+  Future<RulesMultipleBatchResponse> saveRules({
+    required String compositionID,
+    required CompositionRulesBatchParams rules,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `saveRules`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/compositions/{compositionID}/rules/batch'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+      body: rules.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<RulesMultipleBatchResponse, RulesMultipleBatchResponse>(
+      response,
+      'RulesMultipleBatchResponse',
+      growable: true,
+    );
+  }
+
   /// Runs a query on a single composition and returns matching results.
   ///
   /// Required API Key ACLs:
@@ -78,6 +596,43 @@ final class CompositionClient implements ApiClient {
     return deserialize<SearchResponse, SearchResponse>(
       response,
       'SearchResponse',
+      growable: true,
+    );
+  }
+
+  /// Searches for composition rules in your index.
+  ///
+  /// Required API Key ACLs:
+  ///   - settings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [searchCompositionRulesParams]
+  /// * [requestOptions] additional request configuration.
+  Future<SearchCompositionRulesResponse> searchCompositionRules({
+    required String compositionID,
+    SearchCompositionRulesParams? searchCompositionRulesParams,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `searchCompositionRules`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/compositions/{compositionID}/rules/search'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+      body: searchCompositionRulesParams?.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<SearchCompositionRulesResponse,
+        SearchCompositionRulesResponse>(
+      response,
+      'SearchCompositionRulesResponse',
       growable: true,
     );
   }

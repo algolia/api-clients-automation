@@ -3,8 +3,8 @@
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Insights;
+
 // IMPORT<
-using Action = Algolia.Search.Models.Ingestion.Action;
 
 public class SnippetInsightsClient
 {
@@ -509,7 +509,7 @@ public class SnippetInsightsClient
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1757894400000L,
+              Timestamp = 1758412800000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -522,7 +522,7 @@ public class SnippetInsightsClient
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1757894400000L,
+              Timestamp = 1758412800000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
           ),

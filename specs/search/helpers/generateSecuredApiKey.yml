@@ -4,6 +4,17 @@ method:
     x-asynchronous-helper: false
     tags:
       - Api Keys
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: generateSecuredApiKey
     summary: Create secured API keys
     description: |

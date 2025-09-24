@@ -1,0 +1,316 @@
+[
+  {
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "foo",
+            "name": "my first composition",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "bar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "action": "delete",
+          "body": {
+            "objectID": "baz"
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "foo",
+              "name": "my first composition",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "bar"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "action": "delete",
+            "body": {
+              "objectID": "baz"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "skipLanguages": [
+      "kotlin"
+    ],
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "my-external-injection-compo",
+            "name": "my first composition",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  }
+                },
+                "injectedItems": [
+                  {
+                    "key": "injectedItem1",
+                    "source": {
+                      "external": {
+                        "index": "foo",
+                        "ordering": "userDefined",
+                        "params": {
+                          "filters": "brand:adidas"
+                        }
+                      }
+                    },
+                    "position": 2,
+                    "length": 1
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "my-external-injection-compo",
+              "name": "my first composition",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "foo"
+                      }
+                    }
+                  },
+                  "injectedItems": [
+                    {
+                      "key": "injectedItem1",
+                      "source": {
+                        "external": {
+                          "index": "foo",
+                          "ordering": "userDefined",
+                          "params": {
+                            "filters": "brand:adidas"
+                          }
+                        }
+                      },
+                      "position": 2,
+                      "length": 1
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "skipLanguages": [
+      "kotlin"
+    ],
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "my-metadata-compo",
+            "name": "my composition",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "foo",
+                      "params": {
+                        "filters": "brand:adidas"
+                      }
+                    }
+                  }
+                },
+                "injectedItems": [
+                  {
+                    "key": "injectedItem1",
+                    "source": {
+                      "search": {
+                        "index": "foo",
+                        "params": {
+                          "filters": "brand:adidas"
+                        }
+                      }
+                    },
+                    "position": 2,
+                    "length": 1,
+                    "metadata": {
+                      "hits": {
+                        "addItemKey": true,
+                        "extra": {
+                          "my-string": "string",
+                          "my-bool": true,
+                          "my-number": 42,
+                          "my-object": {
+                            "sub-key": "sub-value"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "externalItem",
+                    "source": {
+                      "search": {
+                        "index": "foo",
+                        "params": {
+                          "filters": "brand:puma"
+                        }
+                      }
+                    },
+                    "position": 5,
+                    "length": 5,
+                    "metadata": {
+                      "hits": {
+                        "addItemKey": true,
+                        "extra": {
+                          "my-string": "string",
+                          "my-bool": true,
+                          "my-number": 42,
+                          "my-object": {
+                            "sub-key": "sub-value"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "my-metadata-compo",
+              "name": "my composition",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "foo",
+                        "params": {
+                          "filters": "brand:adidas"
+                        }
+                      }
+                    }
+                  },
+                  "injectedItems": [
+                    {
+                      "key": "injectedItem1",
+                      "source": {
+                        "search": {
+                          "index": "foo",
+                          "params": {
+                            "filters": "brand:adidas"
+                          }
+                        }
+                      },
+                      "position": 2,
+                      "length": 1,
+                      "metadata": {
+                        "hits": {
+                          "addItemKey": true,
+                          "extra": {
+                            "my-string": "string",
+                            "my-bool": true,
+                            "my-number": 42,
+                            "my-object": {
+                              "sub-key": "sub-value"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "externalItem",
+                      "source": {
+                        "search": {
+                          "index": "foo",
+                          "params": {
+                            "filters": "brand:puma"
+                          }
+                        }
+                      },
+                      "position": 5,
+                      "length": 5,
+                      "metadata": {
+                        "hits": {
+                          "addItemKey": true,
+                          "extra": {
+                            "my-string": "string",
+                            "my-bool": true,
+                            "my-number": 42,
+                            "my-object": {
+                              "sub-key": "sub-value"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]

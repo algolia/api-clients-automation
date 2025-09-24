@@ -3,6 +3,18 @@ method:
     x-helper: true
     tags:
       - Records
+    # it's called waitTask in dart
+    x-available-languages:
+      - csharp
+      - go
+      - java
+      - javascript
+      - kotlin
+      - php
+      - python
+      - ruby
+      - scala
+      - swift
     operationId: waitForTask
     summary: Wait for operation to complete
     description: |

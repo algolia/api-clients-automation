@@ -4,10 +4,1508 @@ using Algolia.Search.Clients;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Composition;
 // IMPORT<
-using Action = Algolia.Search.Models.Ingestion.Action;
+using Action = Algolia.Search.Models.Composition.Action;
 
 public class SnippetCompositionClient
 {
+  /// <summary>
+  /// Snippet for the CustomDelete method.
+  ///
+  /// allow del method for a custom path with minimal parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomDelete()
+  {
+    // >SEPARATOR customDelete allow del method for a custom path with minimal parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomDeleteAsync("test/minimal");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomDelete method.
+  ///
+  /// allow del method for a custom path with all parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomDelete1()
+  {
+    // >SEPARATOR customDelete allow del method for a custom path with all parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomDeleteAsync(
+      "test/all",
+      new Dictionary<string, object> { { "query", "parameters" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomGet method.
+  ///
+  /// allow get method for a custom path with minimal parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomGet()
+  {
+    // >SEPARATOR customGet allow get method for a custom path with minimal parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomGetAsync("test/minimal");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomGet method.
+  ///
+  /// allow get method for a custom path with all parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomGet1()
+  {
+    // >SEPARATOR customGet allow get method for a custom path with all parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomGetAsync(
+      "test/all",
+      new Dictionary<string, object> { { "query", "parameters with space" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomGet method.
+  ///
+  /// requestOptions should be escaped too
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomGet2()
+  {
+    // >SEPARATOR customGet requestOptions should be escaped too
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomGetAsync(
+      "test/all",
+      new Dictionary<string, object> { { "query", "to be overriden" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "parameters with space")
+        .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
+        .AddExtraHeader("x-header-1", "spaces are left alone")
+        .Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// allow post method for a custom path with minimal parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost()
+  {
+    // >SEPARATOR customPost allow post method for a custom path with minimal parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync("test/minimal");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// allow post method for a custom path with all parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost1()
+  {
+    // >SEPARATOR customPost allow post method for a custom path with all parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/all",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "body", "parameters" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions can override default query parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost2()
+  {
+    // >SEPARATOR customPost requestOptions can override default query parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions merges query parameters with default ones
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost3()
+  {
+    // >SEPARATOR customPost requestOptions merges query parameters with default ones
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions can override default headers
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost4()
+  {
+    // >SEPARATOR customPost requestOptions can override default headers
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions merges headers with default ones
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost5()
+  {
+    // >SEPARATOR customPost requestOptions merges headers with default ones
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions queryParameters accepts booleans
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost6()
+  {
+    // >SEPARATOR customPost requestOptions queryParameters accepts booleans
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions queryParameters accepts integers
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost7()
+  {
+    // >SEPARATOR customPost requestOptions queryParameters accepts integers
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions queryParameters accepts list of string
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost8()
+  {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of string
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
+        .Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions queryParameters accepts list of booleans
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost9()
+  {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of booleans
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
+        .Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPost method.
+  ///
+  /// requestOptions queryParameters accepts list of integers
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPost10()
+  {
+    // >SEPARATOR customPost requestOptions queryParameters accepts list of integers
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPostAsync(
+      "test/requestOptions",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "facet", "filters" } },
+      new RequestOptionBuilder()
+        .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
+        .Build()
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPut method.
+  ///
+  /// allow put method for a custom path with minimal parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPut()
+  {
+    // >SEPARATOR customPut allow put method for a custom path with minimal parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPutAsync("test/minimal");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CustomPut method.
+  ///
+  /// allow put method for a custom path with all parameters
+  /// </summary>
+  public async Task SnippetForCompositionClientCustomPut1()
+  {
+    // >SEPARATOR customPut allow put method for a custom path with all parameters
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CustomPutAsync(
+      "test/all",
+      new Dictionary<string, object> { { "query", "parameters" } },
+      new Dictionary<string, string> { { "body", "parameters" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the DeleteComposition method.
+  ///
+  /// deleteComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientDeleteComposition()
+  {
+    // >SEPARATOR deleteComposition default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.DeleteCompositionAsync("1234");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the DeleteCompositionRule method.
+  ///
+  /// deleteCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientDeleteCompositionRule()
+  {
+    // >SEPARATOR deleteCompositionRule default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.DeleteCompositionRuleAsync("1234", "5678");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetComposition method.
+  ///
+  /// getComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientGetComposition()
+  {
+    // >SEPARATOR getComposition default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetCompositionAsync("foo");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetRule method.
+  ///
+  /// getRule
+  /// </summary>
+  public async Task SnippetForCompositionClientGetRule()
+  {
+    // >SEPARATOR getRule default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetRuleAsync("foo", "123");
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTask method.
+  ///
+  /// getTask
+  /// </summary>
+  public async Task SnippetForCompositionClientGetTask()
+  {
+    // >SEPARATOR getTask default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetTaskAsync("foo", 42L);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListCompositions method.
+  ///
+  /// listCompositions
+  /// </summary>
+  public async Task SnippetForCompositionClientListCompositions()
+  {
+    // >SEPARATOR listCompositions listCompositions
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.ListCompositionsAsync();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListCompositions method.
+  ///
+  /// listCompositions
+  /// </summary>
+  public async Task SnippetForCompositionClientListCompositions1()
+  {
+    // >SEPARATOR listCompositions listCompositions
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.ListCompositionsAsync();
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the MultipleBatch method.
+  ///
+  /// multipleBatch
+  /// </summary>
+  public async Task SnippetForCompositionClientMultipleBatch()
+  {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.MultipleBatchAsync(
+      new BatchParams
+      {
+        Requests = new List<MultipleBatchRequest>
+        {
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new BatchCompositionAction(
+              new Composition
+              {
+                ObjectID = "foo",
+                Name = "my first composition",
+                Behavior = new CompositionBehavior
+                {
+                  Injection = new Injection
+                  {
+                    Main = new Main
+                    {
+                      Source = new CompositionSource
+                      {
+                        Search = new CompositionSourceSearch { Index = "bar" },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Delete"),
+            Body = new BatchCompositionAction(new DeleteCompositionAction { ObjectID = "baz" }),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the MultipleBatch method.
+  ///
+  /// multipleBatch
+  /// </summary>
+  public async Task SnippetForCompositionClientMultipleBatch1()
+  {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.MultipleBatchAsync(
+      new BatchParams
+      {
+        Requests = new List<MultipleBatchRequest>
+        {
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new BatchCompositionAction(
+              new Composition
+              {
+                ObjectID = "my-external-injection-compo",
+                Name = "my first composition",
+                Behavior = new CompositionBehavior
+                {
+                  Injection = new Injection
+                  {
+                    Main = new Main
+                    {
+                      Source = new CompositionSource
+                      {
+                        Search = new CompositionSourceSearch { Index = "foo" },
+                      },
+                    },
+                    InjectedItems = new List<InjectedItem>
+                    {
+                      new InjectedItem
+                      {
+                        Key = "injectedItem1",
+                        Source = new InjectedItemSource(
+                          new ExternalSource
+                          {
+                            External = new External
+                            {
+                              Index = "foo",
+                              Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                              Params = new BaseInjectionQueryParameters
+                              {
+                                Filters = "brand:adidas",
+                              },
+                            },
+                          }
+                        ),
+                        Position = 2,
+                        Length = 1,
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the MultipleBatch method.
+  ///
+  /// multipleBatch
+  /// </summary>
+  public async Task SnippetForCompositionClientMultipleBatch2()
+  {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.MultipleBatchAsync(
+      new BatchParams
+      {
+        Requests = new List<MultipleBatchRequest>
+        {
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new BatchCompositionAction(
+              new Composition
+              {
+                ObjectID = "my-metadata-compo",
+                Name = "my composition",
+                Behavior = new CompositionBehavior
+                {
+                  Injection = new Injection
+                  {
+                    Main = new Main
+                    {
+                      Source = new CompositionSource
+                      {
+                        Search = new CompositionSourceSearch
+                        {
+                          Index = "foo",
+                          Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                        },
+                      },
+                    },
+                    InjectedItems = new List<InjectedItem>
+                    {
+                      new InjectedItem
+                      {
+                        Key = "injectedItem1",
+                        Source = new InjectedItemSource(
+                          new SearchSource
+                          {
+                            Search = new Algolia.Search.Models.Composition.Search
+                            {
+                              Index = "foo",
+                              Params = new BaseInjectionQueryParameters
+                              {
+                                Filters = "brand:adidas",
+                              },
+                            },
+                          }
+                        ),
+                        Position = 2,
+                        Length = 1,
+                        Metadata = new InjectedItemMetadata
+                        {
+                          Hits = new InjectedItemHitsMetadata
+                          {
+                            AddItemKey = true,
+                            Extra = new Dictionary<string, object>
+                            {
+                              { "my-string", "string" },
+                              { "my-bool", true },
+                              { "my-number", 42 },
+                              {
+                                "my-object",
+                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                              },
+                            },
+                          },
+                        },
+                      },
+                      new InjectedItem
+                      {
+                        Key = "externalItem",
+                        Source = new InjectedItemSource(
+                          new SearchSource
+                          {
+                            Search = new Algolia.Search.Models.Composition.Search
+                            {
+                              Index = "foo",
+                              Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
+                            },
+                          }
+                        ),
+                        Position = 5,
+                        Length = 5,
+                        Metadata = new InjectedItemMetadata
+                        {
+                          Hits = new InjectedItemHitsMetadata
+                          {
+                            AddItemKey = true,
+                            Extra = new Dictionary<string, object>
+                            {
+                              { "my-string", "string" },
+                              { "my-bool", true },
+                              { "my-number", 42 },
+                              {
+                                "my-object",
+                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "1234",
+      new Composition
+      {
+        ObjectID = "1234",
+        Name = "my first composition",
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch { Index = "foo" },
+              },
+            },
+            InjectedItems = new List<InjectedItem>
+            {
+              new InjectedItem
+              {
+                Key = "injectedItem1",
+                Source = new InjectedItemSource(
+                  new SearchSource
+                  {
+                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                  }
+                ),
+                Position = 2,
+                Length = 1,
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition1()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-external-injection-compo",
+      new Composition
+      {
+        ObjectID = "my-external-injection-compo",
+        Name = "my first composition",
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch { Index = "foo" },
+              },
+            },
+            InjectedItems = new List<InjectedItem>
+            {
+              new InjectedItem
+              {
+                Key = "injectedItem1",
+                Source = new InjectedItemSource(
+                  new ExternalSource
+                  {
+                    External = new External
+                    {
+                      Index = "foo",
+                      Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  }
+                ),
+                Position = 2,
+                Length = 1,
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition2()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-metadata-compo",
+      new Composition
+      {
+        ObjectID = "my-metadata-compo",
+        Name = "my composition",
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch
+                {
+                  Index = "foo",
+                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                },
+              },
+            },
+            InjectedItems = new List<InjectedItem>
+            {
+              new InjectedItem
+              {
+                Key = "injectedItem1",
+                Source = new InjectedItemSource(
+                  new SearchSource
+                  {
+                    Search = new Algolia.Search.Models.Composition.Search
+                    {
+                      Index = "foo",
+                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  }
+                ),
+                Position = 2,
+                Length = 1,
+                Metadata = new InjectedItemMetadata
+                {
+                  Hits = new InjectedItemHitsMetadata
+                  {
+                    AddItemKey = true,
+                    Extra = new Dictionary<string, object>
+                    {
+                      { "my-string", "string" },
+                      { "my-bool", true },
+                      { "my-number", 42 },
+                      {
+                        "my-object",
+                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                      },
+                    },
+                  },
+                },
+              },
+              new InjectedItem
+              {
+                Key = "externalItem",
+                Source = new InjectedItemSource(
+                  new SearchSource
+                  {
+                    Search = new Algolia.Search.Models.Composition.Search
+                    {
+                      Index = "foo",
+                      Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
+                    },
+                  }
+                ),
+                Position = 5,
+                Length = 5,
+                Metadata = new InjectedItemMetadata
+                {
+                  Hits = new InjectedItemHitsMetadata
+                  {
+                    AddItemKey = true,
+                    Extra = new Dictionary<string, object>
+                    {
+                      { "my-string", "string" },
+                      { "my-bool", true },
+                      { "my-number", 42 },
+                      {
+                        "my-object",
+                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutCompositionRule method.
+  ///
+  /// putCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientPutCompositionRule()
+  {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionRuleAsync(
+      "compositionID",
+      "ruleID",
+      new CompositionRule
+      {
+        ObjectID = "ruleID",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "injectedItem1",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutCompositionRule method.
+  ///
+  /// putCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientPutCompositionRule1()
+  {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-metadata",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-metadata",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "injectedItem1",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search
+                      {
+                        Index = "foo",
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                      },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                  Metadata = new InjectedItemMetadata
+                  {
+                    Hits = new InjectedItemHitsMetadata
+                    {
+                      AddItemKey = true,
+                      Extra = new Dictionary<string, object>
+                      {
+                        { "my-string", "string" },
+                        { "my-bool", true },
+                        { "my-number", 42 },
+                        {
+                          "my-object",
+                          new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutCompositionRule method.
+  ///
+  /// putCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientPutCompositionRule2()
+  {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-exernal-source",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-exernal-source",
+        Description = "my description",
+        Tags = new List<string> { "tag1", "tag2" },
+        Enabled = true,
+        Validity = new List<TimeRange>
+        {
+          new TimeRange { From = 1704063600L, Until = 1704083600L },
+        },
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "potter" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch
+                  {
+                    Index = "my-index",
+                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "injectedItem",
+                  Source = new InjectedItemSource(
+                    new ExternalSource
+                    {
+                      External = new External
+                      {
+                        Index = "my-index",
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                      },
+                    }
+                  ),
+                  Position = 0,
+                  Length = 3,
+                },
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "foo",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "123",
+                Conditions = new List<Condition> { new Condition { Pattern = "a" } },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
+                        },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules1()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "rule-with-metadata",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-metadata",
+                Conditions = new List<Condition>
+                {
+                  new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "foo" },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "injectedItem1",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "foo",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                          Metadata = new InjectedItemMetadata
+                          {
+                            Hits = new InjectedItemHitsMetadata
+                            {
+                              AddItemKey = true,
+                              Extra = new Dictionary<string, object>
+                              {
+                                { "my-string", "string" },
+                                { "my-bool", true },
+                                { "my-number", 42 },
+                                {
+                                  "my-object",
+                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules2()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "rule-with-exernal-source",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-exernal-source",
+                Description = "my description",
+                Tags = new List<string> { "tag1", "tag2" },
+                Enabled = true,
+                Validity = new List<TimeRange>
+                {
+                  new TimeRange { From = 1704063600L, Until = 1704083600L },
+                },
+                Conditions = new List<Condition>
+                {
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "harry",
+                  },
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "potter",
+                  },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "my-index",
+                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                          },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "injectedItem",
+                          Source = new InjectedItemSource(
+                            new ExternalSource
+                            {
+                              External = new External
+                              {
+                                Index = "my-index",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
+                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 3,
+                        },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   /// <summary>
   /// Snippet for the Search method.
   ///
@@ -15,7 +1513,7 @@ public class SnippetCompositionClient
   /// </summary>
   public async Task SnippetForCompositionClientSearch()
   {
-    // >SEPARATOR search default
+    // >SEPARATOR search search
     // Initialize the client
     var client = new CompositionClient(
       new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -25,6 +1523,83 @@ public class SnippetCompositionClient
     var response = await client.SearchAsync<Hit>(
       "foo",
       new RequestBody { Params = new Params { Query = "batman" } }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the Search method.
+  ///
+  /// search
+  /// </summary>
+  public async Task SnippetForCompositionClientSearch1()
+  {
+    // >SEPARATOR search search
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params
+        {
+          Query = "batman",
+          InjectedItems = new Dictionary<string, ExternalInjectedItem>
+          {
+            {
+              "injectedItem1",
+              new ExternalInjectedItem
+              {
+                Items = new List<ExternalInjection>
+                {
+                  new ExternalInjection { ObjectID = "my-object-1" },
+                  new ExternalInjection
+                  {
+                    ObjectID = "my-object-2",
+                    Metadata = new Dictionary<string, object>
+                    {
+                      { "my-string", "string" },
+                      { "my-bool", true },
+                      { "my-number", 42 },
+                      {
+                        "my-object",
+                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                      },
+                    },
+                  },
+                },
+              }
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchCompositionRules method.
+  ///
+  /// searchCompositionRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSearchCompositionRules()
+  {
+    // >SEPARATOR searchCompositionRules default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchCompositionRulesAsync(
+      "foo",
+      new SearchCompositionRulesParams { Query = "batman" }
     );
     // >LOG
     // SEPARATOR<
@@ -52,6 +1627,25 @@ public class SnippetCompositionClient
         Params = new SearchForFacetValuesParams { MaxFacetHits = 10 },
       }
     );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SetClientApiKey method.
+  ///
+  /// switch API key
+  /// </summary>
+  public async Task SnippetForCompositionClientSetClientApiKey()
+  {
+    // >SEPARATOR setClientApiKey default
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    client.SetClientApiKey("updated-api-key");
     // >LOG
     // SEPARATOR<
   }

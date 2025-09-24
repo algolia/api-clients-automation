@@ -117,6 +117,10 @@ public class SnippetsGenerator extends TestsGenerator {
         Map<String, Object> test = new HashMap<>();
         Snippet snippet = ops.get(i);
         String name = snippet.testName == null ? snippet.method : snippet.testName;
+        if (snippet.skipLanguages != null && snippet.skipLanguages.contains(language)) {
+          System.out.println("Skipping snippet " + snippet.method + " for language " + language + ", please fix this");
+          continue;
+        }
         test.put("testName", ops.size() > 1 ? name : "default");
         test.put("description", name);
         test.put("testIndex", i == 0 ? "" : i);
