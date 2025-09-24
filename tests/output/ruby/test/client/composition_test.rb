@@ -79,7 +79,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.25.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.26.0\).*/))
   end
 
   # switch API key
