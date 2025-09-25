@@ -154,7 +154,7 @@ export const pushToRepositoryConfiguration: {
         files: {
           type: 'specs',
           ext: 'json',
-          output: 'src/nodes/Algolia/specs',
+          output: 'nodes/Algolia/specs',
           placeholderVariables: { appId: 'applicationId' },
         },
       },
