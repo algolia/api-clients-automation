@@ -14,6 +14,8 @@ public enum ActionType {
 
   PARTIAL("partial"),
 
+  PARTIAL_NO_CREATE("partialNoCreate"),
+
   APPEND("append");
 
   private final String value;
