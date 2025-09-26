@@ -11,13 +11,12 @@ get:
     Since it returns the number of unique users, the sum of the daily values might be different from the total number.
 
     By default:
-    
+
     - Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
     - The analyzed period includes the last eight days including the current day.
   externalDocs:
     url: https://www.algolia.com/doc/guides/search-analytics/guides/usertoken/
-    description: |
-      Related guide: Distinguish users for analytics.
+    description: Distinguish users for analytics.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

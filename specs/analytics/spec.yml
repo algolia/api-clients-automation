@@ -1,8 +1,7 @@
 openapi: 3.0.2
 externalDocs:
   url: https://www.algolia.com/doc/guides/search-analytics/overview/
-  description: |
-    Related guide: Search analytics.
+  description: Search analytics.
 info:
   title: Analytics API
   description: |

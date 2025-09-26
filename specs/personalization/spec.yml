@@ -55,8 +55,7 @@ info:
   version: 1.0.0
 externalDocs:
   url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
-  description: |
-    Related guide: Algolia Personalization.
+  description: Algolia Personalization.
 components:
   securitySchemes:
     appId:

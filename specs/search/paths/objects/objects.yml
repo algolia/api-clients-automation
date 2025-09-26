@@ -76,8 +76,7 @@ delete:
       For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
   externalDocs:
     url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices/
-    description: |
-      Related guide: Delete indices.
+    description: Delete indices.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:

@@ -99,15 +99,13 @@ tags:
     description: Retrieve recommendations from a pre-trained AI model. You can train models in the [Algolia dashboard](https://dashboard.algolia.com/recommend/).
     externalDocs:
       url: https://www.algolia.com/doc/guides/algolia-recommend/overview/
-      description: |
-        Related guide: Algolia Recommend.
+      description: Algolia Recommend.
   - name: rules
     x-displayName: Rules
     description: Curate your recommendations with rules, which are _if_-_then_ statements.
     externalDocs:
       url: https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/
-      description: |
-        Related guide: Recommend Rules.
+      description: Recommend Rules.
 x-tagGroups:
   - name: Recommend
     tags:
