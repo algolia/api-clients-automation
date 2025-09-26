@@ -7,7 +7,7 @@ get:
   summary: Retrieve a rule
   description: |
     Retrieves a rule by its ID.
-    To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    To find the object ID of rules, use the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-rules).
 
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -39,7 +39,7 @@ put:
     If a rule with the specified object ID doesn't exist, it's created.
     Otherwise, the existing rule is replaced.
 
-    To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
+    To create or update more than one rule, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-rules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectIDRule'
@@ -72,7 +72,7 @@ delete:
   description: |
     Deletes a rule by its ID.
     To find the object ID for rules,
-    use the [`search` operation](#tag/Rules/operation/searchRules).
+    use the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-rules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectIDRule'

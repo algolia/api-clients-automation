@@ -78,7 +78,7 @@ tags:
   - name: crawlers
     x-displayName: Manage
     description: |
-      A crawler is an object with a name and a [configuration](#tag/config).
+      A crawler is an object with a name and a configuration.
       Use these endpoints to create, rename, and delete crawlers.
   - name: domains
     x-displayName: Domains

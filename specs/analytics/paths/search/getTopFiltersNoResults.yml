@@ -8,7 +8,7 @@ get:
   description: |
     Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
 
-    To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
+    To get the most frequent searches without results, use the [Retrieve searches without results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'

@@ -13,7 +13,7 @@ get:
     **There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**
 
     - **Null** means there were no queries: since Algolia didn't receive any events, CR is null.
-    - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

@@ -107,7 +107,7 @@ Tags:
 
     You can combine multiple tags with `OR` and `AND`.
     Tags must be URL-encoded.
-    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   example: 'device:mobile%20phone'
   schema:
     type: string

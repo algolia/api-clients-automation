@@ -47,7 +47,7 @@ Configuration:
       maxItems: 10
       items:
         type: string
-        description: For more information, see [Enrich extracted records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
+        description: For more information, see [Enrich extracted records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data).
         example: testCSV
     extraUrls:
       type: array
@@ -113,7 +113,7 @@ Configuration:
         These index settings are only applied during the first crawl of an index.
 
         Any subsequent changes won't be applied to the index.
-        Instead, make changes to your index settings in the [Algolia dashboard](https://dashboard.algolia.com/explorer/configuration/).
+        Instead, make changes to your index settings in the [Algolia dashboard](https://dashboard.algolia.com/explorer/configuration).
       additionalProperties:
         $ref: '../../../common/schemas/IndexSettings.yml#/indexSettings'
         x-additionalPropertiesName: indexName
@@ -123,7 +123,7 @@ Configuration:
       description: |
         Function for extracting URLs from links on crawled pages.
 
-        For more information, see the [`linkExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).
+        For more information, see the [`linkExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor).
       properties:
         __type:
           $ref: './action.yml#/configurationRecordExtractorType'
@@ -566,9 +566,9 @@ schedule:
     Schedule for running the crawl.
 
     Instead of manually starting a crawl each time, you can set up a schedule for automatic crawls.
-    [Use the visual UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual/) or add the `schedule` parameter to [your configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/).
+    [Use the visual UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual) or add the `schedule` parameter to [your configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration).
 
-    `schedule` uses [Later.js syntax](https://bunkat.github.io/later/) to specify when to crawl your site.
+    `schedule` uses [Later.js syntax](https://bunkat.github.io/later) to specify when to crawl your site.
     Here are some key things to keep in mind when using `Later.js` syntax with the Crawler:
 
     - The interval between two scheduled crawls must be at least 24 hours.

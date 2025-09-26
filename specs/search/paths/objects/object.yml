@@ -8,7 +8,7 @@ get:
   description: |
     Retrieves one record by its object ID.
 
-    To retrieve more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+    To retrieve more than one record, use the [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -55,9 +55,9 @@ put:
     If a record with the specified object ID exists, the existing record is replaced.
     Otherwise, a new record is added to the index.
 
-    If you want to use auto-generated object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject).
-    To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.
-    To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    If you want to use auto-generated object IDs, use the [`saveObject` operation](https://www.algolia.com/doc/rest-api/search/save-object).
+    To update _some_ attributes of an existing record, use the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object) instead.
+    To add, update, or replace multiple records, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -95,8 +95,8 @@ delete:
   description: |
     Deletes a record by its object ID.
 
-    To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
-    To delete records matching a query, use the [`deleteBy` operation](#tag/Records/operation/deleteBy).
+    To delete more than one record, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
+    To delete records matching a query, use the [`deleteBy` operation](https://www.algolia.com/doc/rest-api/search/delete-by).
 
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

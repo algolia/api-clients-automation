@@ -46,7 +46,7 @@ info:
     - `x-ratelimit-limit`: The number of requests allowed every second.
     - `x-ratelimit-remaining`: The number of requests remaining in the current
     second period.
-    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com/) of
+    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com) of
     the next time period.
 
     ## Version
@@ -54,9 +54,8 @@ info:
     The current version of the Personalization API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 externalDocs:
-  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
-  description: |
-    Related guide: Algolia Personalization.
+  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization
+  description: Algolia Personalization.
 components:
   securitySchemes:
     appId:

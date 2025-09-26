@@ -100,7 +100,7 @@ urlsCrawledGroupStatus:
   description: |
     Crawled URL status.
 
-    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
+    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).
   enum:
     - DONE
     - SKIPPED
@@ -111,7 +111,7 @@ urlsCrawledGroupCategory:
   description: |
     Step where the status information was generated.
 
-    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
+    For more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).
   enum:
     - fetch
     - extraction

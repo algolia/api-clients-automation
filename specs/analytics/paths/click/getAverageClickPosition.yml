@@ -12,7 +12,7 @@ get:
     For example, if users only ever click on the first result for any search, the average click position is 1.
     By default, the analyzed period includes the last eight days including the current day.
 
-    An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+    An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
     The average is `null` until Algolia receives at least one click event.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

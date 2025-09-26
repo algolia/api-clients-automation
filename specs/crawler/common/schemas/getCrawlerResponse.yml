@@ -26,7 +26,7 @@ BaseResponse:
         Whether this crawler is currently blocked.
 
         If `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard
-        or by [cancelling the blocking task](#tag/tasks/operation/cancelBlockingAction).
+        or by [cancelling the blocking task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).
     blockingError:
       type: string
       description: Reason why the crawler is blocked.

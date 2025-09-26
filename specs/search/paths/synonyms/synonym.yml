@@ -8,7 +8,7 @@ get:
   description: |
     Retrieves a synonym by its ID.
     To find the object IDs for your synonyms,
-    use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+    use the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectID'
@@ -38,7 +38,7 @@ put:
   description: |
     If a synonym with the specified object ID doesn't exist, Algolia adds a new one.
     Otherwise, the existing synonym is replaced.
-    To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+    To add multiple synonyms in a single API request, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectID'
@@ -87,7 +87,7 @@ delete:
   summary: Delete a synonym
   description: |
     Deletes a synonym by its ID.
-    To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+    To find the object IDs of your synonyms, use the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectID'

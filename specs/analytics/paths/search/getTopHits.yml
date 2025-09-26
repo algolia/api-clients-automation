@@ -29,7 +29,7 @@ get:
     **There's a difference between 0% rates and null rates:**
 
     - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null.
-    - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'

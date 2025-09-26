@@ -136,7 +136,7 @@ analyticsTags:
   type: array
   items:
     type: string
-  description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  description: Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   default: []
 
 aroundRadius:
@@ -217,7 +217,7 @@ clickAnalytics:
   type: boolean
   description: |
     Whether to include a `queryID` attribute in the response
-    The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
+    The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started).
   default: false
   x-categories:
     - Analytics
@@ -286,7 +286,7 @@ filters:
     Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
     If a facet attribute is an array, the filter matches if it matches at least one element of the array.
 
-    For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+    For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   example: '(category:Book OR category:Ebook) AND _tags:published'
   x-categories:
     - Filtering
@@ -412,7 +412,7 @@ optionalFilters:
 
     - Optional filters don't work on virtual replicas.
     - Optional filters are applied _after_ sort-by attributes.
-    - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+    - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).
     - Optional filters don't work with numeric attributes.
 
   example: ['category:Book', 'author:John Doe']
@@ -533,7 +533,7 @@ userToken:
     Unique pseudonymous or anonymous user identifier.
 
     This helps with analytics and click and conversion events.
-    For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+    For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   example: test-user-123
   x-categories:
     - Personalization

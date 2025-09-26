@@ -108,7 +108,7 @@ AnalyticsTags:
   title: analyticsTags
   description: |
     Analytics tags for filtering the popular searches.
-    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   default: null
   oneOf:
     - type: array

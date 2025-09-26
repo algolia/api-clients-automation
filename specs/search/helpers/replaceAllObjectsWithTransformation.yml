@@ -12,7 +12,7 @@ method:
     operationId: replaceAllObjectsWithTransformation
     summary: Replace all records in an index
     description: |
-      Replace all records from your index with a new set of records by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+      Replace all records from your index with a new set of records by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).
 
       This method lets you replace all records in your index without downtime. It performs these operations:
         1. Copy settings, synonyms, and rules from your original index to a temporary index.
