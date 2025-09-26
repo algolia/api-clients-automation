@@ -4974,6 +4974,7 @@
           "replace",
           "save",
           "partial",
+          "partialNoCreate",
           "append"
         ]
       },
