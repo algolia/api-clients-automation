@@ -51,7 +51,7 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'doc' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
+  [k in 'AlgoliaWeb' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -77,30 +77,6 @@ export const pushToRepositoryConfiguration: {
           type: 'guides',
           names: ['pushSetup'],
           output: '_client/src/routes/connectors/generated/ingestion-snippets.json',
-        },
-      },
-    ],
-  },
-  doc: {
-    baseBranch: 'master',
-    tasks: [
-      {
-        prBranch: 'feat/automated-update-for-specs',
-        commitMessage: 'feat: update specs and supported versions',
-        files: {
-          type: 'specs',
-          ext: 'yml',
-          output: 'app_data/api/specs',
-          includeSnippets: true,
-          includeSLA: true,
-        },
-      },
-      {
-        prBranch: 'feat/automated-update-for-guides',
-        commitMessage: 'feat: update generated guides',
-        files: {
-          type: 'guides',
-          output: 'app_data/api/specs/guides.json',
         },
       },
     ],
