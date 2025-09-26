@@ -27,15 +27,19 @@ get:
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
 patch:
   operationId: patchCrawler
-  summary: Change crawler name
+  summary: Replace crawler configuration
   description: |
-    Change the crawler's name.
+    Replaces the crawler configuration with a new one.
 
-    While you _could_ use this endpoint to replace the crawler configuration,
-    you should [update it](#tag/config/operation/patchConfig) instead since configuration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).
+    If you only want to change the crawler's name, you can use this operation.
+    For other configuration changes, use the "Update configuration" endpoint instead instead,
+    because changes made here aren't versioned.
 
-    If you replace the configuration, you must provide the full configuration,
+    When replacing the configuration, you must provide the full configuration,
     including any settings you want to keep.
+  externalDocs:
+    url: https://www.algolia.com/doc/rest-api/crawler/patch-config
+    description: Update configuration.
   tags:
     - crawlers
   parameters:

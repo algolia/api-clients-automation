@@ -13,8 +13,8 @@ post:
     - If a record with the specified object ID doesn't exist, a new record is added to your index.
     - If you add a record to an index that doesn't exist yet, a new index is created.
 
-    To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject).
-    To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+    To update _some_ attributes of a record, use the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).
+    To add, update, or replace multiple records, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 
     This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   summary: Add a new record (with auto-generated object ID)

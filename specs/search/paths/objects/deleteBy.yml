@@ -11,8 +11,8 @@ post:
 
     This operation is resource-intensive.
     You should only use it if you can't get the object IDs of the records you want to delete.
-    It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse),
-    and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
+    It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),
+    and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 
     This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   externalDocs:
