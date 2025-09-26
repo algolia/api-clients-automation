@@ -277,7 +277,7 @@ TaskSearch:
 ActionType:
   type: string
   description: Action to perform on the Algolia index.
-  enum: [replace, save, partial, append]
+  enum: [replace, save, partial, partialNoCreate, append]
 
 TaskInput:
   description: Configuration of the task, depending on its type.
