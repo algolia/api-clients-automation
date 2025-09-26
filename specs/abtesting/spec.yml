@@ -1,6 +1,6 @@
 openapi: 3.0.2
 externalDocs:
-  url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/
+  url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing
   description: A/B testing.
 info:
   title: A/B Testing API

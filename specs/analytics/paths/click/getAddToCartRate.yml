@@ -17,7 +17,7 @@ get:
     **There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**
 
     - **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null.
-    - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

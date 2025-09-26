@@ -73,9 +73,9 @@ delete:
     - If you try to delete a non-existing index, the operation is ignored without warning.
     - If the index you want to delete has replica indices, the replicas become independent indices.
     - If the index you want to delete is a replica index, you must first unlink it from its primary index before you can delete it.
-      For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+      For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
   externalDocs:
-    url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices/
+    url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
     description: Delete indices.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

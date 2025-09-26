@@ -243,7 +243,7 @@ post:
               description: Check that you're using the correct URL.
               value:
                 status: 404
-                message: Path not supported by Insights REST API. Please have a look at [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/) for the list of valid commands.
+                message: Path not supported by Insights REST API. Please have a look at [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights) for the list of valid commands.
     '405':
       description: Method Not Allowed.
       content:

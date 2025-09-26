@@ -10,7 +10,7 @@ info:
     ## Client libraries
 
     Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the Insights API.
-    See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/).
+    See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
     ## Base URLs
 
@@ -54,7 +54,7 @@ info:
     The current version of the Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 externalDocs:
-  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
+  url: https://www.algolia.com/doc/guides/sending-events/getting-started
   description: Events
 components:
   securitySchemes:
