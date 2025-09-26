@@ -115,7 +115,7 @@ tags:
   - name: crawlers
     x-displayName: Manage
     description: |
-      A crawler is an object with a name and a [configuration](#tag/config).
+      A crawler is an object with a name and a configuration.
       Use these endpoints to create, rename, and delete crawlers.
   - name: domains
     x-displayName: Domains
@@ -221,23 +221,27 @@ paths:
           $ref: '#/components/responses/NoRightsOnCrawler'
     patch:
       operationId: patchCrawler
-      summary: Change crawler name
+      summary: Replace crawler configuration
       description: >
-        Change the crawler's name.
+        Replaces the crawler configuration with a new one.
 
 
-        While you _could_ use this endpoint to replace the crawler
-        configuration,
+        If you only want to change the crawler's name, you can use this
+        operation.
 
-        you should [update it](#tag/config/operation/patchConfig) instead since
-        configuration changes made here aren't
-        [versioned](#tag/config/operation/listConfigVersions).
+        For other configuration changes, use the "Update configuration" endpoint
+        instead instead,
+
+        because changes made here aren't versioned.
 
 
-        If you replace the configuration, you must provide the full
+        When replacing the configuration, you must provide the full
         configuration,
 
         including any settings you want to keep.
+      externalDocs:
+        url: https://www.algolia.com/doc/rest-api/crawler/patch-config
+        description: Update configuration.
       tags:
         - crawlers
       parameters:
@@ -611,10 +615,7 @@ paths:
         Lists previous versions of the specified crawler's configuration,
         including who authored the change.
 
-        Every time you update a crawler's
-        [configuration](#tag/config/operation/patchConfig),
-
-        a new version is added.
+        Every time you update a crawler's configuration, a new version is added.
       tags:
         - config
       parameters:
@@ -831,7 +832,7 @@ components:
       type: string
       description: >
         For more information, see [Extract data from non-HTML
-        documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
+        documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents).
       enum:
         - doc
         - email
@@ -1063,7 +1064,7 @@ components:
 
 
             For mopre information, consult the [`schedule` parameter
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule).
         selectorsToMatch:
           type: array
           description: >
@@ -1215,7 +1216,7 @@ components:
             - afterDistinct(searchable(publisher))
           description: >
             Attributes used for
-            [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
+            [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting).
 
 
             Facets are attributes that let you categorize search results.
@@ -1252,7 +1253,7 @@ components:
             - dev_products_replica
           description: >
             Creates [replica
-            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
+            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
 
 
             Replicas are copies of a primary index with the same records but
@@ -1277,7 +1278,7 @@ components:
 
             - `virtual("REPLICA")`.
               Create a virtual replica,
-              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
           default: []
           x-categories:
             - Ranking
@@ -1307,7 +1308,7 @@ components:
 
             This can be useful if you want to use an attribute for ranking or to
             [restrict
-            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
+            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
 
             but don't want to include it in the search results.
 
@@ -1327,7 +1328,7 @@ components:
             matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
-            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
             for the specified words.
           default: []
           x-categories:
@@ -1374,7 +1375,7 @@ components:
               - name
           description: >
             Searchable attributes to which Algolia should apply [word
-            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
+            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
             (decompounding).
 
             Attribute names are case-sensitive.
@@ -1419,7 +1420,7 @@ components:
 
             If you don't specify an indexing language, the search engine uses
             all [supported
-            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
 
             or the languages you specified with the `ignorePlurals` or
             `removeStopWords` parameters.
@@ -1427,7 +1428,7 @@ components:
             This can lead to unexpected search results.
 
             For more information, see [Language-specific
-            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
           default: []
           x-categories:
             - Languages
@@ -1545,7 +1546,7 @@ components:
 
 
             For more information, see [Searchable
-            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
+            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
 
 
             **Modifier**
@@ -1566,7 +1567,7 @@ components:
             Characters and their normalized replacements.
 
             This overrides Algolia's default
-            [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+            [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization).
           type: object
           example:
             default:
@@ -1624,7 +1625,7 @@ components:
             - asc(price)
           description: >
             Attributes to use as [custom
-            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking).
 
             Attribute names are case-sensitive.
 
@@ -1651,7 +1652,7 @@ components:
             If you use two or more custom ranking attributes,
 
             [reduce the
-            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision)
             of your first attributes,
 
             or the other attributes will never be applied.
@@ -1726,7 +1727,7 @@ components:
         in your UI
 
         For more information, see [Highlighting and
-        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
       x-categories:
         - Highlighting and Snippeting
     attributesToSnippet:
@@ -1830,12 +1831,12 @@ components:
     typoTolerance:
       description: >
         Whether [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/)
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance)
         is enabled and how it is applied.
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
         are also active.
       oneOf:
         - type: boolean
@@ -1863,14 +1864,14 @@ components:
         - sku
       description: >
         Attributes for which you want to turn off [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).
 
         Attribute names are case-sensitive
 
         Returning only exact matches can help when
 
         - [Searching in hyphenated
-        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
           This can happen with attributes that are long blocks of text, such as product descriptions
@@ -1967,7 +1968,7 @@ components:
 
         If you don't specify an indexing language, the search engine uses all
         [supported
-        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
 
         or the languages you specified with the `ignorePlurals` or
         `removeStopWords` parameters.
@@ -1975,7 +1976,7 @@ components:
         This can lead to unexpected search results.
 
         For more information, see [Language-specific
-        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
       default: []
       x-categories:
         - Languages
@@ -2032,7 +2033,7 @@ components:
 
 
         For more information, see [Prefix
-        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
       default: prefixLast
       x-categories:
         - Query strategy
@@ -2066,7 +2067,7 @@ components:
           Treat all words as optional.
 
         For more information, see [Remove words to improve
-        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
+        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
       default: none
       x-categories:
         - Query strategy
@@ -2313,7 +2314,7 @@ components:
 
 
             - Don't use `distinct > 1` for records that might be [promoted by
-            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/).
+            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits).
               The number of hits won't be correct and faceting won't work as expected.
             - With `distinct > 1`, the `hitsPerPage` parameter controls the
             number of returned groups.
@@ -2419,7 +2420,7 @@ components:
         (see `renderingContent`).
 
         For more information, see [facet value
-        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
       default: count
       x-categories:
         - Faceting
@@ -2584,7 +2585,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -2594,8 +2595,8 @@ components:
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
-        to records that match these filters.
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to
+        records that match these filters.
       oneOf:
         - type: array
           items:
@@ -2618,13 +2619,13 @@ components:
 
 
             By default, each entry corresponds to a [ranking
-            criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
+            criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
 
             The tie-breaking algorithm sequentially applies each criterion in
             the order they're specified.
 
             If you configure a replica index for [sorting by an
-            attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
+            attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
 
             you put the sorting attribute at the top of the list.
 
@@ -2642,7 +2643,7 @@ components:
             you should test your changes in the dashboard,
 
             and by [A/B
-            testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
+            testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
           default:
             - typo
             - geo
@@ -3090,12 +3091,12 @@ components:
         schedule for automatic crawls.
 
         [Use the visual
-        UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual/)
+        UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual)
         or add the `schedule` parameter to [your
-        configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/).
+        configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration).
 
 
-        `schedule` uses [Later.js syntax](https://bunkat.github.io/later/) to
+        `schedule` uses [Later.js syntax](https://bunkat.github.io/later) to
         specify when to crawl your site.
 
         Here are some key things to keep in mind when using `Later.js` syntax
@@ -3183,7 +3184,7 @@ components:
             type: string
             description: >-
               For more information, see [Enrich extracted records with external
-              data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).
+              data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data).
             example: testCSV
         extraUrls:
           type: array
@@ -3279,7 +3280,7 @@ components:
             Any subsequent changes won't be applied to the index.
 
             Instead, make changes to your index settings in the [Algolia
-            dashboard](https://dashboard.algolia.com/explorer/configuration/).
+            dashboard](https://dashboard.algolia.com/explorer/configuration).
           additionalProperties:
             $ref: '#/components/schemas/indexSettings'
             x-additionalPropertiesName: indexName
@@ -3291,7 +3292,7 @@ components:
 
 
             For more information, see the [`linkExtractor`
-            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).
+            documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor).
           properties:
             __type:
               $ref: '#/components/schemas/configurationRecordExtractorType'
@@ -3467,7 +3468,7 @@ components:
             dashboard
 
             or by [cancelling the blocking
-            task](#tag/tasks/operation/cancelBlockingAction).
+            task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).
         blockingError:
           type: string
           description: Reason why the crawler is blocked.
@@ -3540,7 +3541,7 @@ components:
 
 
         For more information, see [Troubleshooting by crawl
-        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
+        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).
       enum:
         - DONE
         - SKIPPED
@@ -3552,7 +3553,7 @@ components:
 
 
         For more information, see [Troubleshooting by crawl
-        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).
+        status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).
       enum:
         - fetch
         - extraction

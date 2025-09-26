@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * matching records rank after records that don't match. - Optional filters don't work on virtual
  * replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters are
  * applied _before_ custom ranking attributes (in the default
- * [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+ * [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).
  * - Optional filters don't work with numeric attributes.
  */
 @JsonDeserialize(using = OptionalFilters.Deserializer.class)

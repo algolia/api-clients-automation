@@ -302,7 +302,7 @@ final class CompositionClient implements ApiClient {
     );
   }
 
-  /// Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+  /// Retrieves a rule by its ID.  To find the object ID of a rule, use the [`search` operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
   ///
   /// Required API Key ACLs:
   ///   - editSettings
@@ -483,7 +483,7 @@ final class CompositionClient implements ApiClient {
     );
   }
 
-  /// Upsert a Composition Rule for the specified composition ID.
+  /// If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one is added.
   ///
   /// Required API Key ACLs:
   ///   - editSettings

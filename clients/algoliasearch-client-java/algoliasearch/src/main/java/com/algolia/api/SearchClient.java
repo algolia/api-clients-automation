@@ -140,10 +140,11 @@ public class SearchClient extends ApiClient {
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
    * new record is added to the index. If you want to use auto-generated object IDs, use the
-   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * [`saveObject` operation](https://www.algolia.com/doc/rest-api/search/save-object). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object) instead. To add,
+   * update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -165,10 +166,11 @@ public class SearchClient extends ApiClient {
   /**
    * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
    * new record is added to the index. If you want to use auto-generated object IDs, use the
-   * [`saveObject` operation](#tag/Records/operation/saveObject). To update _some_ attributes of an
-   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
-   * instead. To add, update, or replace multiple records, use the [`batch`
-   * operation](#tag/Records/operation/batch).
+   * [`saveObject` operation](https://www.algolia.com/doc/rest-api/search/save-object). To update
+   * _some_ attributes of an existing record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object) instead. To add,
+   * update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -184,10 +186,12 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
    * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
-   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
-   * _some_ attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
-   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * object IDs, use the [`saveObject`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-object). To update _some_
+   * attributes of an existing record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object) instead. To add,
+   * update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -220,10 +224,12 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a record with the specified object ID exists, the existing record is
    * replaced. Otherwise, a new record is added to the index. If you want to use auto-generated
-   * object IDs, use the [`saveObject` operation](#tag/Records/operation/saveObject). To update
-   * _some_ attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or replace
-   * multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+   * object IDs, use the [`saveObject`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-object). To update _some_
+   * attributes of an existing record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object) instead. To add,
+   * update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -1561,8 +1567,9 @@ public class SearchClient extends ApiClient {
    * This operation doesn't accept empty filters. This operation is resource-intensive. You should
    * only use it if you can't get the object IDs of the records you want to delete. It's more
    * efficient to get a list of object IDs with the [`browse`
-   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
+   * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
+   * operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -1583,8 +1590,9 @@ public class SearchClient extends ApiClient {
    * This operation doesn't accept empty filters. This operation is resource-intensive. You should
    * only use it if you can't get the object IDs of the records you want to delete. It's more
    * efficient to get a list of object IDs with the [`browse`
-   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
+   * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
+   * operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -1599,8 +1607,9 @@ public class SearchClient extends ApiClient {
    * (asynchronously) This operation doesn't accept empty filters. This operation is
    * resource-intensive. You should only use it if you can't get the object IDs of the records you
    * want to delete. It's more efficient to get a list of object IDs with the [`browse`
-   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
+   * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
+   * operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -1630,8 +1639,9 @@ public class SearchClient extends ApiClient {
    * (asynchronously) This operation doesn't accept empty filters. This operation is
    * resource-intensive. You should only use it if you can't get the object IDs of the records you
    * want to delete. It's more efficient to get a list of object IDs with the [`browse`
-   * operation](#tag/Search/operation/browse), and then delete the records using the [`batch`
-   * operation](#tag/Records/operation/batch). This operation is subject to [indexing rate
+   * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
+   * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
+   * operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -1649,7 +1659,7 @@ public class SearchClient extends ApiClient {
    * index you want to delete has replica indices, the replicas become independent indices. - If the
    * index you want to delete is a replica index, you must first unlink it from its primary index
    * before you can delete it. For more information, see [Delete replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1666,7 +1676,7 @@ public class SearchClient extends ApiClient {
    * index you want to delete has replica indices, the replicas become independent indices. - If the
    * index you want to delete is a replica index, you must first unlink it from its primary index
    * before you can delete it. For more information, see [Delete replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1681,7 +1691,7 @@ public class SearchClient extends ApiClient {
    * warning. - If the index you want to delete has replica indices, the replicas become independent
    * indices. - If the index you want to delete is a replica index, you must first unlink it from
    * its primary index before you can delete it. For more information, see [Delete replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1702,7 +1712,7 @@ public class SearchClient extends ApiClient {
    * warning. - If the index you want to delete has replica indices, the replicas become independent
    * indices. - If the index you want to delete is a replica index, you must first unlink it from
    * its primary index before you can delete it. For more information, see [Delete replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1713,8 +1723,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a record by its object ID. To delete more than one record, use the [`batch`
-   * operation](#tag/Records/operation/batch). To delete records matching a query, use the
-   * [`deleteBy` operation](#tag/Records/operation/deleteBy).
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). To delete records matching a
+   * query, use the [`deleteBy` operation](https://www.algolia.com/doc/rest-api/search/delete-by).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -1729,8 +1739,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a record by its object ID. To delete more than one record, use the [`batch`
-   * operation](#tag/Records/operation/batch). To delete records matching a query, use the
-   * [`deleteBy` operation](#tag/Records/operation/deleteBy).
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). To delete records matching a
+   * query, use the [`deleteBy` operation](https://www.algolia.com/doc/rest-api/search/delete-by).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -1742,8 +1752,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a record by its object ID. To delete more than one record, use the
-   * [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the
-   * [`deleteBy` operation](#tag/Records/operation/deleteBy).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). To delete records
+   * matching a query, use the [`deleteBy`
+   * operation](https://www.algolia.com/doc/rest-api/search/delete-by).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -1769,8 +1780,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a record by its object ID. To delete more than one record, use the
-   * [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the
-   * [`deleteBy` operation](#tag/Records/operation/deleteBy).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). To delete records
+   * matching a query, use the [`deleteBy`
+   * operation](https://www.algolia.com/doc/rest-api/search/delete-by).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -1783,7 +1795,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1803,7 +1815,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1817,7 +1829,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1832,7 +1844,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1844,7 +1856,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1873,7 +1885,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1890,7 +1902,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1908,7 +1920,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1969,7 +1981,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -1989,7 +2001,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2003,7 +2015,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2018,7 +2030,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2030,7 +2042,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
-   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2059,7 +2071,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
-   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2076,7 +2088,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
-   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2094,7 +2106,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
-   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2469,7 +2481,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2492,7 +2504,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2509,7 +2521,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2524,7 +2536,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2536,7 +2548,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
-   * the [`objects` operation](#tag/Records/operation/getObjects).
+   * the [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2568,7 +2580,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
-   * the [`objects` operation](#tag/Records/operation/getObjects).
+   * the [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2585,7 +2597,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
-   * the [`objects` operation](#tag/Records/operation/getObjects).
+   * the [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2603,7 +2615,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
-   * the [`objects` operation](#tag/Records/operation/getObjects).
+   * the [`objects` operation](https://www.algolia.com/doc/rest-api/search/get-objects).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -2685,7 +2697,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2700,7 +2712,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2712,7 +2724,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2735,7 +2747,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -2899,7 +2911,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2914,7 +2926,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * Retrieves a synonym by its ID. To find the object IDs for your synonyms, use the [`search`
-   * operation](#tag/Synonyms/operation/searchSynonyms).
+   * operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2926,7 +2938,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves a synonym by its ID. To find the object IDs for your synonyms, use
-   * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -2952,7 +2964,7 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves a synonym by its ID. To find the object IDs for your synonyms, use
-   * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * the [`search` operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -3662,13 +3674,13 @@ public class SearchClient extends ApiClient {
    * destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -3696,13 +3708,13 @@ public class SearchClient extends ApiClient {
    * destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -3725,13 +3737,13 @@ public class SearchClient extends ApiClient {
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -3768,13 +3780,13 @@ public class SearchClient extends ApiClient {
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
    * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
    * the existing index and copy the data to the replica indices. - Related guide: [Move
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -4325,9 +4337,10 @@ public class SearchClient extends ApiClient {
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
    * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
-   * the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch). This
-   * operation is subject to [indexing rate
+   * the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).
+   * To add, update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
+   * [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -4348,9 +4361,10 @@ public class SearchClient extends ApiClient {
    * specified object ID exists, the existing record is replaced. - If a record with the specified
    * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
    * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
-   * the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add, update, or
-   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch). This
-   * operation is subject to [indexing rate
+   * the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).
+   * To add, update, or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
+   * [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -4368,9 +4382,11 @@ public class SearchClient extends ApiClient {
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record
    * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
-   * record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add,
-   * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
-   * This operation is subject to [indexing rate
+   * record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object). To add, update,
+   * or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
+   * [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -4399,9 +4415,11 @@ public class SearchClient extends ApiClient {
    * with the specified object ID exists, the existing record is replaced. - If a record with the
    * specified object ID doesn't exist, a new record is added to your index. - If you add a record
    * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
-   * record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject). To add,
-   * update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
-   * This operation is subject to [indexing rate
+   * record, use the [`partial`
+   * operation](https://www.algolia.com/doc/rest-api/search/partial-update-object). To add, update,
+   * or replace multiple records, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
+   * [indexing rate
    * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -4417,7 +4435,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
    * rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4440,7 +4458,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
    * rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4456,7 +4474,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
    * rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4477,7 +4495,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
    * rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4492,7 +4510,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
    * the existing rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4527,7 +4545,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
    * the existing rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4547,7 +4565,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
    * the existing rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4568,7 +4586,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
    * the existing rule is replaced. To create or update more than one rule, use the [`batch`
-   * operation](#tag/Rules/operation/saveRules).
+   * operation](https://www.algolia.com/doc/rest-api/search/save-rules).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -4754,7 +4772,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
    * existing synonym is replaced. To add multiple synonyms in a single API request, use the
-   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4777,7 +4795,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
    * existing synonym is replaced. To add multiple synonyms in a single API request, use the
-   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4797,7 +4815,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
    * existing synonym is replaced. To add multiple synonyms in a single API request, use the
-   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4818,7 +4836,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
    * existing synonym is replaced. To add multiple synonyms in a single API request, use the
-   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * [`batch` operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4833,7 +4851,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
    * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
-   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * request, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4868,7 +4887,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
    * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
-   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * request, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4888,7 +4908,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
    * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
-   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * request, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -4909,7 +4930,8 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
    * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
-   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
+   * request, use the [`batch`
+   * operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
@@ -5532,9 +5554,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and returns matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results as hits. This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
@@ -5553,9 +5576,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and returns matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results as hits. This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
@@ -5568,9 +5592,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and returns matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results as hits. This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -5584,9 +5609,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Searches a single index and returns matching search results (_hits_). This method lets you
+   * Searches a single index and returns matching search results as hits. This method lets you
    * retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -5597,9 +5623,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results as hits. This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
@@ -5626,9 +5653,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results as hits. This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
@@ -5644,9 +5672,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results as hits. This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -5663,9 +5692,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches a single index and returns matching search results (_hits_). This
+   * (asynchronously) Searches a single index and returns matching search results as hits. This
    * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
-   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+   * operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the
+   * `paginatedLimitedTo` index setting.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.

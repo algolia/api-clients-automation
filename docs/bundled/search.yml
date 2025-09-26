@@ -13,11 +13,11 @@ info:
     with your apps.
 
     The official API clients are covered by Algolia's [Service Level
-    Agreement](https://www.algolia.com/policies/sla/).
+    Agreement](https://www.algolia.com/policies/sla).
 
 
     See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
 
 
     ## Base URLs
@@ -168,9 +168,8 @@ tags:
       API keys can have permissions (access control lists, ACL) and
       restrictions.
     externalDocs:
-      url: https://www.algolia.com/doc/guides/security/api-keys/
-      description: |
-        Related guide: API keys.
+      url: https://www.algolia.com/doc/guides/security/api-keys
+      description: API keys.
   - name: Clusters
     description: |
       Multi-cluster operations.
@@ -190,9 +189,8 @@ tags:
       Dictionaries are application-wide.
     externalDocs:
       url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/
-      description: |
-        Related guide: Natural languages.
+        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp
+      description: Natural languages.
   - name: Indices
     description: >
       Manage your indices and index settings.
@@ -204,9 +202,8 @@ tags:
       and settings.
     externalDocs:
       url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/
-      description: |
-        Related guide: Manage your indices.
+        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices
+      description: Manage your indices.
   - name: Records
     description: >
       Add, update, and delete records from your indices.
@@ -223,9 +220,8 @@ tags:
       limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
-      description: |
-        Related guide: Prepare your records.
+        https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data
+      description: Prepare your records.
   - name: Rules
     description: >
       Create, update, delete, and search for rules.
@@ -240,10 +236,8 @@ tags:
 
       This can be useful for tuning specific queries or for merchandising.
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/
-      description: |
-        Related guide: Rules.
+      url: https://www.algolia.com/doc/guides/managing-results/rules/rules-overview
+      description: Index Rules.
   - name: Search
     description: Search one or more indices for matching records or facet values.
   - name: Synonyms
@@ -253,17 +247,15 @@ tags:
       Synonyms are terms that the search engine should consider equal.
     externalDocs:
       url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/
-      description: |
-        Related guide: Synonyms.
+        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms
+      description: Synonyms.
   - name: Vaults
     description: >-
       Algolia Vault lets you restrict access to your clusters to specific IP
       addresses and provides disk-level encryption at rest.
     externalDocs:
-      url: https://www.algolia.com/doc/guides/security/algolia-vault/
-      description: |
-        Related guide: Algolia Vault.
+      url: https://www.algolia.com/doc/guides/security/algolia-vault
+      description: Algolia Vault.
   - name: _model_index_settings
     x-displayName: Index settings
     description: |
@@ -1232,14 +1224,14 @@ paths:
         - search
       summary: Search an index
       description: >
-        Searches a single index and returns matching search results (_hits_).
+        Searches a single index and returns matching search results as hits.
 
 
         This method lets you retrieve up to 1,000 hits.
 
         If you need more, use the [`browse`
-        operation](#tag/Search/operation/browse) or increase the
-        `paginatedLimitedTo` index setting.
+        operation](https://www.algolia.com/doc/rest-api/search/browse) or
+        increase the `paginatedLimitedTo` index setting.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -2477,10 +2469,10 @@ paths:
 
 
         To update _some_ attributes of a record, use the [`partial`
-        operation](#tag/Records/operation/partialUpdateObject).
+        operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).
 
         To add, update, or replace multiple records, use the [`batch`
-        operation](#tag/Records/operation/batch).
+        operation](https://www.algolia.com/doc/rest-api/search/batch).
 
 
         This operation is subject to [indexing rate
@@ -2858,12 +2850,11 @@ paths:
 
         - If the index you want to delete is a replica index, you must first
         unlink it from its primary index before you can delete it.
-          For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+          For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
       externalDocs:
         url: >-
-          https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices/
-        description: |
-          Related guide: Delete indices.
+          https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
+        description: Delete indices.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -3112,7 +3103,7 @@ paths:
 
 
         To retrieve more than one record, use the [`objects`
-        operation](#tag/Records/operation/getObjects).
+        operation](https://www.algolia.com/doc/rest-api/search/get-objects).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -3423,13 +3414,14 @@ paths:
 
 
         If you want to use auto-generated object IDs, use the [`saveObject`
-        operation](#tag/Records/operation/saveObject).
+        operation](https://www.algolia.com/doc/rest-api/search/save-object).
 
         To update _some_ attributes of an existing record, use the [`partial`
-        operation](#tag/Records/operation/partialUpdateObject) instead.
+        operation](https://www.algolia.com/doc/rest-api/search/partial-update-object)
+        instead.
 
         To add, update, or replace multiple records, use the [`batch`
-        operation](#tag/Records/operation/batch).
+        operation](https://www.algolia.com/doc/rest-api/search/batch).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -3734,10 +3726,10 @@ paths:
 
 
         To delete more than one record, use the [`batch`
-        operation](#tag/Records/operation/batch).
+        operation](https://www.algolia.com/doc/rest-api/search/batch).
 
         To delete records matching a query, use the [`deleteBy`
-        operation](#tag/Records/operation/deleteBy).
+        operation](https://www.algolia.com/doc/rest-api/search/delete-by).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -4000,10 +3992,10 @@ paths:
         you want to delete.
 
         It's more efficient to get a list of object IDs with the [`browse`
-        operation](#tag/Search/operation/browse),
+        operation](https://www.algolia.com/doc/rest-api/search/browse),
 
         and then delete the records using the [`batch`
-        operation](#tag/Records/operation/batch).
+        operation](https://www.algolia.com/doc/rest-api/search/batch).
 
 
         This operation is subject to [indexing rate
@@ -6674,10 +6666,13 @@ paths:
       x-acl:
         - settings
       summary: Retrieve a synonym
-      description: |
+      description: >
         Retrieves a synonym by its ID.
+
         To find the object IDs for your synonyms,
-        use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+
+        use the [`search`
+        operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/parameters_ObjectID'
@@ -6938,7 +6933,7 @@ paths:
         Otherwise, the existing synonym is replaced.
 
         To add multiple synonyms in a single API request, use the [`batch`
-        operation](#tag/Synonyms/operation/saveSynonyms).
+        operation](https://www.algolia.com/doc/rest-api/search/save-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/parameters_ObjectID'
@@ -7290,7 +7285,7 @@ paths:
         Deletes a synonym by its ID.
 
         To find the object IDs of your synonyms, use the [`search`
-        operation](#tag/Synonyms/operation/searchSynonyms).
+        operation](https://www.algolia.com/doc/rest-api/search/search-synonyms).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/parameters_ObjectID'
@@ -10138,7 +10133,7 @@ paths:
         Retrieves a rule by its ID.
 
         To find the object ID of rules, use the [`search`
-        operation](#tag/Rules/operation/searchRules).
+        operation](https://www.algolia.com/doc/rest-api/search/search-rules).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectIDRule'
@@ -10399,7 +10394,7 @@ paths:
 
 
         To create or update more than one rule, use the [`batch`
-        operation](#tag/Rules/operation/saveRules).
+        operation](https://www.algolia.com/doc/rest-api/search/save-rules).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectIDRule'
@@ -10777,10 +10772,13 @@ paths:
       x-acl:
         - editSettings
       summary: Delete a rule
-      description: |
+      description: >
         Deletes a rule by its ID.
+
         To find the object ID for rules,
-        use the [`search` operation](#tag/Rules/operation/searchRules).
+
+        use the [`search`
+        operation](https://www.algolia.com/doc/rest-api/search/search-rules).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectIDRule'
@@ -13490,7 +13488,7 @@ paths:
       summary: List available languages
       externalDocs:
         url: >-
-          https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/
+          https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages
         description: Supported languages.
       responses:
         '200':
@@ -15645,10 +15643,6 @@ paths:
               properties:
                 query:
                   type: string
-                  description: >-
-                    Query to search. The search is a prefix search with [typo
-                    tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/)
-                    enabled. An empty query will retrieve all users.
                 clusterName:
                   $ref: '#/components/schemas/clusterName'
                 page:
@@ -18300,7 +18294,7 @@ paths:
         limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
 
         - Related guide: [Copy
-        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
 
 
         **Move**
@@ -18316,7 +18310,7 @@ paths:
         existing index and copy the data to the replica indices.
 
         - Related guide: [Move
-        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
 
         This operation is subject to [indexing rate
@@ -19031,7 +19025,7 @@ components:
 
 
         For more information, see
-        [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+        [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
@@ -19089,7 +19083,7 @@ components:
 
         - Optional filters are applied _before_ custom ranking attributes (in
         the default
-        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).
 
         - Optional filters don't work with numeric attributes.
       example:
@@ -19523,7 +19517,7 @@ components:
         This helps with analytics and click and conversion events.
 
         For more information, see [user
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: test-user-123
       x-categories:
         - Personalization
@@ -19546,7 +19540,7 @@ components:
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
-        events](https://www.algolia.com/guides/sending-events/getting-started/).
+        events](https://www.algolia.com/guides/sending-events/getting-started).
       default: false
       x-categories:
         - Analytics
@@ -19562,7 +19556,7 @@ components:
         type: string
       description: >-
         Tags to apply to the query for [segmenting analytics
-        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       default: []
     percentileComputation:
       type: boolean
@@ -19736,7 +19730,7 @@ components:
         in your UI
 
         For more information, see [Highlighting and
-        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
       x-categories:
         - Highlighting and Snippeting
     attributesToSnippet:
@@ -19840,12 +19834,12 @@ components:
     typoTolerance:
       description: >
         Whether [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/)
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance)
         is enabled and how it is applied.
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
         are also active.
       oneOf:
         - type: boolean
@@ -19873,14 +19867,14 @@ components:
         - sku
       description: >
         Attributes for which you want to turn off [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).
 
         Attribute names are case-sensitive
 
         Returning only exact matches can help when
 
         - [Searching in hyphenated
-        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
           This can happen with attributes that are long blocks of text, such as product descriptions
@@ -19977,7 +19971,7 @@ components:
 
         If you don't specify an indexing language, the search engine uses all
         [supported
-        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
 
         or the languages you specified with the `ignorePlurals` or
         `removeStopWords` parameters.
@@ -19985,7 +19979,7 @@ components:
         This can lead to unexpected search results.
 
         For more information, see [Language-specific
-        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
       default: []
       x-categories:
         - Languages
@@ -20042,7 +20036,7 @@ components:
 
 
         For more information, see [Prefix
-        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
       default: prefixLast
       x-categories:
         - Query strategy
@@ -20076,7 +20070,7 @@ components:
           Treat all words as optional.
 
         For more information, see [Remove words to improve
-        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
+        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
       default: none
       x-categories:
         - Query strategy
@@ -20323,7 +20317,7 @@ components:
 
 
             - Don't use `distinct > 1` for records that might be [promoted by
-            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/).
+            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits).
               The number of hits won't be correct and faceting won't work as expected.
             - With `distinct > 1`, the `hitsPerPage` parameter controls the
             number of returned groups.
@@ -20429,7 +20423,7 @@ components:
         (see `renderingContent`).
 
         For more information, see [facet value
-        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
       default: count
       x-categories:
         - Faceting
@@ -20594,7 +20588,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -20604,8 +20598,8 @@ components:
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
-        to records that match these filters.
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to
+        records that match these filters.
       oneOf:
         - type: array
           items:
@@ -20628,13 +20622,13 @@ components:
 
 
             By default, each entry corresponds to a [ranking
-            criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
+            criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
 
             The tie-breaking algorithm sequentially applies each criterion in
             the order they're specified.
 
             If you configure a replica index for [sorting by an
-            attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
+            attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
 
             you put the sorting attribute at the top of the list.
 
@@ -20652,7 +20646,7 @@ components:
             you should test your changes in the dashboard,
 
             and by [A/B
-            testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
+            testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
           default:
             - typo
             - geo
@@ -20971,7 +20965,7 @@ components:
           type: object
           description: >
             [Redirect results to a
-            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/),
+            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects),
             this this parameter is for internal use only.
           properties:
             index:
@@ -20994,7 +20988,7 @@ components:
           type: string
           description: >-
             Unique identifier for the query. This is used for [click
-            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
           example: a00dbc80a8d13c4565a442e7e2dca80a
         _automaticInsights:
           type: boolean
@@ -21455,9 +21449,13 @@ components:
         Unique identifier of a task.
 
 
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task's progress with the [`task`
+        operation](https://www.algolia.com/doc/rest-api/search/get-task) and
+        this task ID.
     deletedAt:
       type: string
       example: '2023-06-27T14:42:38.831Z'
@@ -21603,7 +21601,7 @@ components:
             - afterDistinct(searchable(publisher))
           description: >
             Attributes used for
-            [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
+            [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting).
 
 
             Facets are attributes that let you categorize search results.
@@ -21640,7 +21638,7 @@ components:
             - dev_products_replica
           description: >
             Creates [replica
-            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
+            indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
 
 
             Replicas are copies of a primary index with the same records but
@@ -21665,7 +21663,7 @@ components:
 
             - `virtual("REPLICA")`.
               Create a virtual replica,
-              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
           default: []
           x-categories:
             - Ranking
@@ -21695,7 +21693,7 @@ components:
 
             This can be useful if you want to use an attribute for ranking or to
             [restrict
-            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
+            access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
 
             but don't want to include it in the search results.
 
@@ -21715,7 +21713,7 @@ components:
             matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
 
             This also turns off [word splitting and
-            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+            concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
             for the specified words.
           default: []
           x-categories:
@@ -21762,7 +21760,7 @@ components:
               - name
           description: >
             Searchable attributes to which Algolia should apply [word
-            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
+            segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
             (decompounding).
 
             Attribute names are case-sensitive.
@@ -21807,7 +21805,7 @@ components:
 
             If you don't specify an indexing language, the search engine uses
             all [supported
-            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+            languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
 
             or the languages you specified with the `ignorePlurals` or
             `removeStopWords` parameters.
@@ -21815,7 +21813,7 @@ components:
             This can lead to unexpected search results.
 
             For more information, see [Language-specific
-            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+            configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
           default: []
           x-categories:
             - Languages
@@ -21933,7 +21931,7 @@ components:
 
 
             For more information, see [Searchable
-            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
+            attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
 
 
             **Modifier**
@@ -21954,7 +21952,7 @@ components:
             Characters and their normalized replacements.
 
             This overrides Algolia's default
-            [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+            [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization).
           type: object
           example:
             default:
@@ -22012,7 +22010,7 @@ components:
             - asc(price)
           description: >
             Attributes to use as [custom
-            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+            ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking).
 
             Attribute names are case-sensitive.
 
@@ -22039,7 +22037,7 @@ components:
             If you use two or more custom ranking attributes,
 
             [reduce the
-            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+            precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision)
             of your first attributes,
 
             or the other attributes will never be applied.
@@ -22100,13 +22098,13 @@ components:
           type: string
           description: >-
             Word or phrase to appear in query strings (for
-            [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
+            [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms)).
           example: car
         word:
           type: string
           description: >-
             Word or phrase to appear in query strings (for [`altcorrection1` and
-            `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
+            `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections)).
           example: car
         corrections:
           type: array
@@ -22120,7 +22118,7 @@ components:
           type: string
           description: >
             [Placeholder
-            token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/)
+            token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders)
             to be put inside records.
           example: <Street>
         replacements:
@@ -22129,7 +22127,7 @@ components:
             type: string
           description: >-
             Query words that will match the [placeholder
-            token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
+            token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders).
           example:
             - street
             - st
@@ -22256,7 +22254,7 @@ components:
           type: integer
           description: >
             Maximum number of API requests allowed per IP address or [user
-            token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/)
+            token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken)
             per hour.
 
 
@@ -22716,7 +22714,7 @@ components:
 
         Algolia uses `page` and `hitsPerPage` to control how search results are
         displayed
-        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
 
 
         - `hitsPerPage`: sets the number of search results (_hits_) displayed
@@ -22740,7 +22738,7 @@ components:
 
         Algolia uses `page` and `hitsPerPage` to control how search results are
         displayed
-        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
 
 
         - `hitsPerPage`: sets the number of search results (_hits_) displayed
@@ -22856,7 +22854,7 @@ components:
       type: object
       description: >
         Key-value pairs of [supported language ISO
-        codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
+        codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages)
         and boolean values.
       additionalProperties: false
       properties:

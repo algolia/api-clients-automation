@@ -212,14 +212,14 @@ public class IndexSettings {
 
   /**
    * Attributes used for
-   * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
-   * Facets are attributes that let you categorize search results. They can be used for filtering
-   * search results. By default, no attribute is used for faceting. Attribute names are
-   * case-sensitive. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows the attribute to be used as
-   * a filter but doesn't evaluate the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
-   * for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_
-   * deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
-   * to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+   * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting). Facets
+   * are attributes that let you categorize search results. They can be used for filtering search
+   * results. By default, no attribute is used for faceting. Attribute names are case-sensitive.
+   * **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows the attribute to be used as a filter but
+   * doesn't evaluate the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching for facet
+   * values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_ deduplication with
+   * `distinct`. This ensures accurate facet counts. You can apply this modifier to searchable
+   * facets: `afterDistinct(searchable(ATTRIBUTE))`.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesForFaceting() {
@@ -241,7 +241,7 @@ public class IndexSettings {
 
   /**
    * Creates [replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).
    * Replicas are copies of a primary index with the same records but different settings, synonyms,
    * or rules. If you want to offer a different ranking or sorting of your search results, you'll
    * use replica indices. All index operations on a primary index are automatically forwarded to its
@@ -250,7 +250,7 @@ public class IndexSettings {
    * index that will no longer be synced with the primary index. **Modifier** -
    * `virtual(\"REPLICA\")`. Create a virtual replica, Virtual replicas don't increase the number of
    * records and are optimized for [Relevant
-   * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+   * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
    */
   @javax.annotation.Nullable
   public List<String> getReplicas() {
@@ -288,7 +288,7 @@ public class IndexSettings {
   /**
    * Attributes that can't be retrieved at query time. This can be useful if you want to use an
    * attribute for ranking or to [restrict
-   * access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
+   * access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),
    * but don't want to include it in the search results. Attribute names are case-sensitive.
    */
   @javax.annotation.Nullable
@@ -313,7 +313,7 @@ public class IndexSettings {
    * Creates a list of [words which require exact
    * matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).
    * This also turns off [word splitting and
-   * concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+   * concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
    * for the specified words.
    */
   @javax.annotation.Nullable
@@ -375,7 +375,7 @@ public class IndexSettings {
 
   /**
    * Searchable attributes to which Algolia should apply [word
-   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
+   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation)
    * (decompounding). Attribute names are case-sensitive. Compound words are formed by combining two
    * or more individual words, and are particularly prevalent in Germanic languages—for example,
    * \"firefighter\". With decompounding, the individual components are indexed separately. You can
@@ -407,10 +407,10 @@ public class IndexSettings {
    * Languages for language-specific processing steps, such as word detection and dictionary
    * settings. **You should always specify an indexing language.** If you don't specify an indexing
    * language, the search engine uses all [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
    * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
    * can lead to unexpected search results. For more information, see [Language-specific
-   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
    */
   @javax.annotation.Nullable
   public List<SupportedLanguage> getIndexLanguages() {
@@ -524,7 +524,7 @@ public class IndexSettings {
    * matches in two attributes rank equally, include them in a comma-separated string, such as
    * `\"title,alternate_title\"`. Attributes with the same priority are always unordered. For more
    * information, see [Searchable
-   * attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
+   * attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).
    * **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute.
    * Without a modifier, matches at the beginning of an attribute rank higher than matches at the
    * end.
@@ -560,7 +560,7 @@ public class IndexSettings {
 
   /**
    * Characters and their normalized replacements. This overrides Algolia's default
-   * [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+   * [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization).
    */
   @javax.annotation.Nullable
   public Map<String, Map<String, String>> getCustomNormalization() {
@@ -630,14 +630,14 @@ public class IndexSettings {
 
   /**
    * Attributes to use as [custom
-   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
-   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
-   * first if the other ranking criteria are equal. Records with missing values for your selected
-   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
+   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking). Attribute
+   * names are case-sensitive. The custom ranking attributes decide which items are shown first if
+   * the other ranking criteria are equal. Records with missing values for your selected custom
+   * ranking attributes are always sorted last. Boolean attributes are sorted based on their
    * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
    * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
    * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
-   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision)
    * of your first attributes, or the other attributes will never be applied.
    */
   @javax.annotation.Nullable
@@ -686,15 +686,15 @@ public class IndexSettings {
   /**
    * Determines the order in which Algolia returns your results. By default, each entry corresponds
    * to a [ranking
-   * criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
+   * criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).
    * The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
    * If you configure a replica index for [sorting by an
-   * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
+   * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
    * you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`.
    * Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort
    * the index by the values of an attribute, in descending order. Before you modify the default
    * setting, you should test your changes in the dashboard, and by [A/B
-   * testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
+   * testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
    */
   @javax.annotation.Nullable
   public List<String> getRanking() {
@@ -737,7 +737,7 @@ public class IndexSettings {
    * HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually
    * highlight matching parts of a search query in your UI For more information, see [Highlighting
    * and
-   * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+   * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToHighlight() {
@@ -897,10 +897,10 @@ public class IndexSettings {
 
   /**
    * Attributes for which you want to turn off [typo
-   * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+   * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).
    * Attribute names are case-sensitive Returning only exact matches can help when - [Searching in
    * hyphenated
-   * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+   * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
    * - Reducing the number of matches when you have too many. This can happen with attributes that
    * are long blocks of text, such as product descriptions Consider alternatives such as
    * `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual
@@ -955,10 +955,10 @@ public class IndexSettings {
    * languages. To support this, you must place the CJK language **first** **You should always
    * specify a query language.** If you don't specify an indexing language, the search engine uses
    * all [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
    * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
    * can lead to unexpected search results. For more information, see [Language-specific
-   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
    */
   @javax.annotation.Nullable
   public List<SupportedLanguage> getQueryLanguages() {
@@ -1262,7 +1262,7 @@ public class IndexSettings {
    * count. The count is the number of matching records containing this facet value - `alpha`.
    * Retrieve facet values alphabetically This setting doesn't influence how facet values are
    * displayed in your UI (see `renderingContent`). For more information, see [facet value
-   * display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+   * display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
    */
   @javax.annotation.Nullable
   public String getSortFacetValuesBy() {
@@ -1304,7 +1304,7 @@ public class IndexSettings {
 
   /**
    * Whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This setting only has an
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
    * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   @javax.annotation.Nullable

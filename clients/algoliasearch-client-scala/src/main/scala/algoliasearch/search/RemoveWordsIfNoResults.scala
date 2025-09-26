@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -43,7 +43,7 @@ sealed trait RemoveWordsIfNoResults
   * removed. - `firstWords`. Treat the first (then second, then third) word as optional, until there are results or at
   * most 5 words have been removed. - `allOptional`. Treat all words as optional. For more information, see [Remove
   * words to improve
-  * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
+  * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
   */
 object RemoveWordsIfNoResults {
   case object None extends RemoveWordsIfNoResults {

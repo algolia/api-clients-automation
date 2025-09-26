@@ -69,7 +69,7 @@ public class SearchRulesParams {
   /**
    * Requested page of the API response. Algolia uses `page` and `hitsPerPage` to control how search
    * results are displayed
-   * ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+   * ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
    * - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`:
    * specifies the page number of the search results you want to retrieve. Page numbering starts at
    * 0, so the first page is `page=0`, the second is `page=1`, and so on. For example, to display 10
@@ -89,7 +89,7 @@ public class SearchRulesParams {
   /**
    * Maximum number of hits per page. Algolia uses `page` and `hitsPerPage` to control how search
    * results are displayed
-   * ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+   * ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
    * - `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`:
    * specifies the page number of the search results you want to retrieve. Page numbering starts at
    * 0, so the first page is `page=0`, the second is `page=1`, and so on. For example, to display 10

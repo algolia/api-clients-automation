@@ -13,11 +13,11 @@ info:
     with your apps.
 
     The official API clients are covered by Algolia's [Service Level
-    Agreement](https://www.algolia.com/policies/sla/).
+    Agreement](https://www.algolia.com/policies/sla).
 
 
     See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
 
 
     ## Base URLs
@@ -91,7 +91,7 @@ info:
     - `x-ratelimit-remaining`: The number of requests remaining in the current
     60 second period.
 
-    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com/) of
+    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com) of
     the next time period.
 
 
@@ -137,12 +137,12 @@ tags:
       facets in your index.
     externalDocs:
       url: >-
-        https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization/concepts/user-profiles/
-      description: |
-        Related guide: User Profiles.
+        https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization/concepts/user-profiles
+      description: User profiles.
 externalDocs:
   url: >-
-    https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization/
+    https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization
+  description: What is Advanced Personalization.
 paths:
   /{path}:
     get:
@@ -1370,7 +1370,7 @@ components:
         This helps with analytics and click and conversion events.
 
         For more information, see [user
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: test-user-123
       x-categories:
         - Personalization

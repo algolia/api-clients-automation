@@ -37,8 +37,8 @@
     }
   ],
   "externalDocs": {
-    "url": "https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/",
-    "description": "Related guide: A/B testing.\n"
+    "url": "https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing",
+    "description": "A/B testing."
   },
   "paths": {
     "/{path}": {
@@ -1437,7 +1437,7 @@
         "type": "integer",
         "format": "int64",
         "example": 1514562690001,
-        "description": "Unique identifier of a task.\n\nA successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.\n"
+        "description": "Unique identifier of a task.\n\nA successful API response means that a task was added to a queue.\nIt might not run immediately.\nYou can check the task's progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.\n"
       },
       "ABTestResponse": {
         "type": "object",

@@ -84,7 +84,7 @@ public class SynonymHit {
 
   /**
    * Word or phrase to appear in query strings (for
-   * [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
+   * [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms)).
    */
   @javax.annotation.Nullable
   public String getInput() {
@@ -98,7 +98,7 @@ public class SynonymHit {
 
   /**
    * Word or phrase to appear in query strings (for [`altcorrection1` and
-   * `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
+   * `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections)).
    */
   @javax.annotation.Nullable
   public String getWord() {
@@ -131,7 +131,7 @@ public class SynonymHit {
 
   /**
    * [Placeholder
-   * token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/)
+   * token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders)
    * to be put inside records.
    */
   @javax.annotation.Nullable
@@ -154,7 +154,7 @@ public class SynonymHit {
 
   /**
    * Query words that will match the [placeholder
-   * token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
+   * token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders).
    */
   @javax.annotation.Nullable
   public List<String> getReplacements() {

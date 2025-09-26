@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.*;
  * first (then second, then third) word as optional, until there are results or at most 5 words have
  * been removed. - `allOptional`. Treat all words as optional. For more information, see [Remove
  * words to improve
- * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
+ * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
  */
 public enum RemoveWordsIfNoResults {
   NONE("none"),

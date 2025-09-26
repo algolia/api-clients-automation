@@ -126,7 +126,7 @@ public class Params {
    * facet:value)` Use quotes around your filters, if the facet attribute name or facet value has
    * spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
    * matches if it matches at least one element of the array. For more information, see
-   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
    */
   @javax.annotation.Nullable
   public String getFilters() {
@@ -337,10 +337,10 @@ public class Params {
    * languages. To support this, you must place the CJK language **first** **You should always
    * specify a query language.** If you don't specify an indexing language, the search engine uses
    * all [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
    * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
    * can lead to unexpected search results. For more information, see [Language-specific
-   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
    */
   @javax.annotation.Nullable
   public List<SupportedLanguage> getQueryLanguages() {
@@ -413,7 +413,7 @@ public class Params {
   /**
    * Unique pseudonymous or anonymous user identifier. This helps with analytics and click and
    * conversion events. For more information, see [user
-   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
    */
   @javax.annotation.Nullable
   public String getUserToken() {
@@ -428,7 +428,7 @@ public class Params {
   /**
    * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
    * for a search query and is required for tracking [click and conversion
-   * events](https://www.algolia.com/guides/sending-events/getting-started/).
+   * events](https://www.algolia.com/guides/sending-events/getting-started).
    */
   @javax.annotation.Nullable
   public Boolean getClickAnalytics() {
@@ -461,7 +461,7 @@ public class Params {
 
   /**
    * Tags to apply to the query for [segmenting analytics
-   * data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+   * data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
    */
   @javax.annotation.Nullable
   public List<String> getAnalyticsTags() {
@@ -489,7 +489,7 @@ public class Params {
 
   /**
    * Whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This setting only has an
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
    * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   @javax.annotation.Nullable

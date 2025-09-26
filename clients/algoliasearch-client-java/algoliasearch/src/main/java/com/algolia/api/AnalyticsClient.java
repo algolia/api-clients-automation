@@ -507,14 +507,14 @@ public class AnalyticsClient extends ApiClient {
    * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
    * there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -539,14 +539,14 @@ public class AnalyticsClient extends ApiClient {
    * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
    * there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -564,7 +564,7 @@ public class AnalyticsClient extends ApiClient {
    * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
    * there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -586,7 +586,7 @@ public class AnalyticsClient extends ApiClient {
    * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
    * there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -605,14 +605,14 @@ public class AnalyticsClient extends ApiClient {
    * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
    * **0** mean there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -647,14 +647,14 @@ public class AnalyticsClient extends ApiClient {
    * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
    * **0** mean there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(
@@ -676,7 +676,7 @@ public class AnalyticsClient extends ApiClient {
    * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
    * **0** mean there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -698,7 +698,7 @@ public class AnalyticsClient extends ApiClient {
    * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
    * **0** mean there _were_ queries but no [add-to-cart
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -713,15 +713,15 @@ public class AnalyticsClient extends ApiClient {
    * users only ever click on the first result for any search, the average click position is 1. By
    * default, the analyzed period includes the last eight days including the current day. An average
    * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
-   * The average is `null` until Algolia receives at least one click event.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -742,15 +742,15 @@ public class AnalyticsClient extends ApiClient {
    * users only ever click on the first result for any search, the average click position is 1. By
    * default, the analyzed period includes the last eight days including the current day. An average
    * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
-   * The average is `null` until Algolia receives at least one click event.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index, String startDate, String endDate, String tags)
@@ -764,8 +764,8 @@ public class AnalyticsClient extends ApiClient {
    * users only ever click on the first result for any search, the average click position is 1. By
    * default, the analyzed period includes the last eight days including the current day. An average
    * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
-   * The average is `null` until Algolia receives at least one click event.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -783,8 +783,8 @@ public class AnalyticsClient extends ApiClient {
    * users only ever click on the first result for any search, the average click position is 1. By
    * default, the analyzed period includes the last eight days including the current day. An average
    * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
-   * The average is `null` until Algolia receives at least one click event.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -799,7 +799,7 @@ public class AnalyticsClient extends ApiClient {
    * For example, if users only ever click on the first result for any search, the average click
    * position is 1. By default, the analyzed period includes the last eight days including the
    * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
-   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
    * queries. The average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
@@ -807,7 +807,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -838,7 +838,7 @@ public class AnalyticsClient extends ApiClient {
    * For example, if users only ever click on the first result for any search, the average click
    * position is 1. By default, the analyzed period includes the last eight days including the
    * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
-   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
    * queries. The average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
@@ -846,7 +846,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
@@ -864,7 +864,7 @@ public class AnalyticsClient extends ApiClient {
    * For example, if users only ever click on the first result for any search, the average click
    * position is 1. By default, the analyzed period includes the last eight days including the
    * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
-   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
    * queries. The average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
@@ -885,7 +885,7 @@ public class AnalyticsClient extends ApiClient {
    * For example, if users only ever click on the first result for any search, the average click
    * position is 1. By default, the analyzed period includes the last eight days including the
    * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
-   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
    * queries. The average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
@@ -900,14 +900,14 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the positions in the search results and their associated number of clicks. This lets
    * you check how many clicks the first, second, or tenth search results receive. An average of `0`
    * when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -926,14 +926,14 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the positions in the search results and their associated number of clicks. This lets
    * you check how many clicks the first, second, or tenth search results receive. An average of `0`
    * when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickPositionsResponse getClickPositions(@Nonnull String index, String startDate, String endDate, String tags)
@@ -945,7 +945,7 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the positions in the search results and their associated number of clicks. This lets
    * you check how many clicks the first, second, or tenth search results receive. An average of `0`
    * when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -961,7 +961,7 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the positions in the search results and their associated number of clicks. This lets
    * you check how many clicks the first, second, or tenth search results receive. An average of `0`
    * when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -974,14 +974,14 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the positions in the search results and their associated number of
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1010,14 +1010,14 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the positions in the search results and their associated number of
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
@@ -1033,7 +1033,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the positions in the search results and their associated number of
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1049,7 +1049,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the positions in the search results and their associated number of
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1064,14 +1064,14 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1092,14 +1092,14 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1113,7 +1113,7 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1131,7 +1131,7 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1146,14 +1146,14 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1184,14 +1184,14 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
@@ -1209,7 +1209,7 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1229,7 +1229,7 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day. **There's a difference between a 0 and null CTR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1244,14 +1244,14 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
    * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
    * CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1272,14 +1272,14 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
    * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
    * CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetConversionRateResponse getConversionRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1293,7 +1293,7 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
    * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
    * CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1311,7 +1311,7 @@ public class AnalyticsClient extends ApiClient {
    * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
    * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
    * CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1326,14 +1326,14 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day. **There's a difference between a 0 and null CR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1364,14 +1364,14 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day. **There's a difference between a 0 and null CR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
@@ -1389,7 +1389,7 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day. **There's a difference between a 0 and null CR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1407,7 +1407,7 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day. **There's a difference between a 0 and null CR when
    * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1426,7 +1426,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1451,7 +1451,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoClickRateResponse getNoClickRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1497,7 +1497,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1533,7 +1533,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1581,7 +1581,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1607,7 +1607,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1655,7 +1655,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1691,7 +1691,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
@@ -1741,15 +1741,15 @@ public class AnalyticsClient extends ApiClient {
    * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
    * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
    * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1773,15 +1773,15 @@ public class AnalyticsClient extends ApiClient {
    * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
    * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
    * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1798,8 +1798,8 @@ public class AnalyticsClient extends ApiClient {
    * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
    * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
    * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1820,8 +1820,8 @@ public class AnalyticsClient extends ApiClient {
    * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
    * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
    * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1840,14 +1840,14 @@ public class AnalyticsClient extends ApiClient {
    * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
    * _were_ queries but no [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1882,14 +1882,14 @@ public class AnalyticsClient extends ApiClient {
    * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
    * _were_ queries but no [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(
@@ -1911,7 +1911,7 @@ public class AnalyticsClient extends ApiClient {
    * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
    * _were_ queries but no [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1933,7 +1933,7 @@ public class AnalyticsClient extends ApiClient {
    * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
    * _were_ queries but no [purchase conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1955,7 +1955,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1983,7 +1983,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRevenue getRevenue(@Nonnull String index, String startDate, String endDate, String tags) throws AlgoliaRuntimeException {
@@ -2035,7 +2035,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2073,7 +2073,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, String startDate, String endDate, String tags)
@@ -2123,7 +2123,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2147,7 +2147,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesCountResponse getSearchesCount(@Nonnull String index, String startDate, String endDate, String tags)
@@ -2190,7 +2190,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2225,7 +2225,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
@@ -2276,7 +2276,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2305,7 +2305,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoClicksResponse getSearchesNoClicks(
@@ -2358,7 +2358,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2399,7 +2399,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
@@ -2452,7 +2452,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2479,7 +2479,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoResultsResponse getSearchesNoResults(
@@ -2526,7 +2526,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2565,7 +2565,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
@@ -2670,7 +2670,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2697,7 +2697,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopCountriesResponse getTopCountries(
@@ -2744,7 +2744,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2783,7 +2783,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
@@ -2832,7 +2832,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2862,7 +2862,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterAttributesResponse getTopFilterAttributes(
@@ -2914,7 +2914,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2957,7 +2957,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
@@ -3013,7 +3013,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3047,7 +3047,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(
@@ -3108,7 +3108,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3156,7 +3156,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
@@ -3208,7 +3208,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
    * To get the most frequent searches without results, use the [Retrieve searches without
-   * results](#tag/search/operation/getSearchesNoResults) operation.
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3218,7 +3218,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3239,7 +3239,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
    * To get the most frequent searches without results, use the [Retrieve searches without
-   * results](#tag/search/operation/getSearchesNoResults) operation.
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3249,7 +3249,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
@@ -3267,7 +3267,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
    * To get the most frequent searches without results, use the [Retrieve searches without
-   * results](#tag/search/operation/getSearchesNoResults) operation.
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3282,7 +3282,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
    * To get the most frequent searches without results, use the [Retrieve searches without
-   * results](#tag/search/operation/getSearchesNoResults) operation.
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3294,7 +3294,8 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
    * return any results. To get the most frequent searches without results, use the [Retrieve
-   * searches without results](#tag/search/operation/getSearchesNoResults) operation.
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3304,7 +3305,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3338,7 +3339,8 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
    * return any results. To get the most frequent searches without results, use the [Retrieve
-   * searches without results](#tag/search/operation/getSearchesNoResults) operation.
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3348,7 +3350,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
@@ -3366,7 +3368,8 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
    * return any results. To get the most frequent searches without results, use the [Retrieve
-   * searches without results](#tag/search/operation/getSearchesNoResults) operation.
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3383,7 +3386,8 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
    * return any results. To get the most frequent searches without results, use the [Retrieve
-   * searches without results](#tag/search/operation/getSearchesNoResults) operation.
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3405,7 +3409,7 @@ public class AnalyticsClient extends ApiClient {
    * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
    * there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3419,7 +3423,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3453,7 +3457,7 @@ public class AnalyticsClient extends ApiClient {
    * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
    * there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3467,7 +3471,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(
@@ -3496,7 +3500,7 @@ public class AnalyticsClient extends ApiClient {
    * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
    * there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3519,7 +3523,7 @@ public class AnalyticsClient extends ApiClient {
    * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
    * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
    * there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3540,7 +3544,7 @@ public class AnalyticsClient extends ApiClient {
    * **There's a difference between 0% rates and null rates:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
    * null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3554,7 +3558,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3601,7 +3605,7 @@ public class AnalyticsClient extends ApiClient {
    * **There's a difference between 0% rates and null rates:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
    * null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
@@ -3615,7 +3619,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
@@ -3644,7 +3648,7 @@ public class AnalyticsClient extends ApiClient {
    * **There's a difference between 0% rates and null rates:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
    * null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3668,7 +3672,7 @@ public class AnalyticsClient extends ApiClient {
    * **There's a difference between 0% rates and null rates:** - **Null** means there were no
    * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
    * null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3689,7 +3693,7 @@ public class AnalyticsClient extends ApiClient {
    * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
    * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -3706,7 +3710,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3753,7 +3757,7 @@ public class AnalyticsClient extends ApiClient {
    * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
    * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -3770,7 +3774,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(
@@ -3800,7 +3804,7 @@ public class AnalyticsClient extends ApiClient {
    * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
    * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3824,7 +3828,7 @@ public class AnalyticsClient extends ApiClient {
    * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
    * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
    * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3845,7 +3849,7 @@ public class AnalyticsClient extends ApiClient {
    * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
    * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
    * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
    * received.
    *
    * @param index Index name. (required)
@@ -3863,7 +3867,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3912,7 +3916,7 @@ public class AnalyticsClient extends ApiClient {
    * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
    * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
    * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
    * received.
    *
    * @param index Index name. (required)
@@ -3930,7 +3934,7 @@ public class AnalyticsClient extends ApiClient {
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
@@ -3972,7 +3976,7 @@ public class AnalyticsClient extends ApiClient {
    * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
    * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
    * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
    * received.
    *
    * @param index Index name. (required)
@@ -3997,7 +4001,7 @@ public class AnalyticsClient extends ApiClient {
    * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
    * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
    * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
    * received.
    *
    * @param index Index name. (required)
@@ -4020,7 +4024,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4048,7 +4052,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsersCountResponse getUsersCount(@Nonnull String index, String startDate, String endDate, String tags)
@@ -4102,7 +4106,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4140,7 +4144,7 @@ public class AnalyticsClient extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
-   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index, String startDate, String endDate, String tags)

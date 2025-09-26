@@ -46,7 +46,7 @@ final class GetApiKeyResponse {
   @JsonKey(name: r'maxHitsPerQuery')
   final int? maxHitsPerQuery;
 
-  /// Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
+  /// Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
   @JsonKey(name: r'maxQueriesPerIPPerHour')
   final int? maxQueriesPerIPPerHour;
 
