@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class InsightsTest {
 
@@ -41,7 +42,7 @@ class InsightsTest {
                 index = "products",
                 userToken = "user-123456",
                 authenticatedUserToken = "user-123456",
-                timestamp = 1758672000000L,
+                timestamp = 1758931200000L,
                 objectIDs = listOf("9780545139700", "9780439784542"),
                 queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               ),
@@ -51,7 +52,7 @@ class InsightsTest {
                 index = "products",
                 userToken = "user-123456",
                 authenticatedUserToken = "user-123456",
-                timestamp = 1758672000000L,
+                timestamp = 1758931200000L,
                 objectIDs = listOf("9780545139700", "9780439784542"),
               ),
             ),

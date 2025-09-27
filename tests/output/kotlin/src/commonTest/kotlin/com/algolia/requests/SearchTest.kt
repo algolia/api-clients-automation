@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class SearchTest {
 
@@ -71,10 +72,7 @@ class SearchTest {
           indexName = "indexName",
           objectID = "uniqueID",
           body = buildJsonObject {
-            put(
-              "key",
-              JsonPrimitive("value"),
-            )
+            put("key", JsonPrimitive("value"))
           },
         )
       },
@@ -162,27 +160,15 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("bar"),
-                  )
-                  put(
-                    "foo",
-                    JsonPrimitive("1"),
-                  )
+                  put("key", JsonPrimitive("bar"))
+                  put("foo", JsonPrimitive("1"))
                 },
               ),
               BatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("baz"),
-                  )
-                  put(
-                    "foo",
-                    JsonPrimitive("2"),
-                  )
+                  put("key", JsonPrimitive("baz"))
+                  put("foo", JsonPrimitive("2"))
                 },
               ),
             ),
@@ -208,10 +194,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "clear" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -237,10 +220,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "delete" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -266,10 +246,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "deleteObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -295,10 +272,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "partialUpdateObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -324,10 +298,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "partialUpdateObjectNoCreate" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -353,10 +324,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "updateObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -468,9 +436,7 @@ class SearchTest {
                 body = DictionaryEntry(
                   objectID = "1",
                   language = SupportedLanguage.entries.first { it.value == "en" },
-                  additionalProperties = mapOf(
-                    "additional" to JsonPrimitive("try me"),
-                  ),
+                  additionalProperties = mapOf("additional" to JsonPrimitive("try me")),
                 ),
               ),
             ),
@@ -722,10 +688,7 @@ class SearchTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -746,10 +709,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -775,10 +735,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -804,10 +761,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -834,10 +788,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -864,10 +815,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -893,10 +841,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -922,10 +867,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -951,10 +893,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -980,10 +919,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -1027,10 +963,7 @@ class SearchTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -1682,10 +1615,7 @@ class SearchTest {
               MultipleBatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
                 indexName = "theIndexName",
               ),
@@ -1774,10 +1704,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive("new value"),
-            )
+            put("attributeId", JsonPrimitive("new value"))
           },
         )
       },
@@ -1797,10 +1724,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive(1),
-            )
+            put("attributeId", JsonPrimitive(1))
           },
         )
       },
@@ -1820,10 +1744,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive(true),
-            )
+            put("attributeId", JsonPrimitive(true))
           },
         )
       },
@@ -1875,10 +1796,7 @@ class SearchTest {
             put(
               "attributeId",
               buildJsonObject {
-                put(
-                  "nested",
-                  JsonPrimitive("value"),
-                )
+                put("nested", JsonPrimitive("value"))
               },
             )
           },
@@ -1932,14 +1850,8 @@ class SearchTest {
             put(
               "categoryPageId",
               buildJsonObject {
-                put(
-                  "_operation",
-                  JsonPrimitive("Add"),
-                )
-                put(
-                  "value",
-                  JsonPrimitive("men-clothing-pants"),
-                )
+                put("_operation", JsonPrimitive("Add"))
+                put("value", JsonPrimitive("men-clothing-pants"))
               },
             )
           },
@@ -1964,14 +1876,8 @@ class SearchTest {
             put(
               "categoryPageId",
               buildJsonObject {
-                put(
-                  "_operation",
-                  JsonPrimitive("Remove"),
-                )
-                put(
-                  "value",
-                  JsonPrimitive("men-clothing-pants"),
-                )
+                put("_operation", JsonPrimitive("Remove"))
+                put("value", JsonPrimitive("men-clothing-pants"))
               },
             )
           },
@@ -2053,22 +1959,10 @@ class SearchTest {
         saveObject(
           indexName = "<YOUR_INDEX_NAME>",
           body = buildJsonObject {
-            put(
-              "name",
-              JsonPrimitive("Black T-shirt"),
-            )
-            put(
-              "color",
-              JsonPrimitive("#000000||black"),
-            )
-            put(
-              "availableIn",
-              JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
-            )
-            put(
-              "objectID",
-              JsonPrimitive("myID"),
-            )
+            put("name", JsonPrimitive("Black T-shirt"))
+            put("color", JsonPrimitive("#000000||black"))
+            put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
+            put("objectID", JsonPrimitive("myID"))
           },
         )
       },
@@ -2156,10 +2050,7 @@ class SearchTest {
               ),
               filterPromotes = false,
               userData = buildJsonObject {
-                put(
-                  "algolia",
-                  JsonPrimitive("aloglia"),
-                )
+                put("algolia", JsonPrimitive("aloglia"))
               },
               promote = listOf(
                 PromoteObjectID(
@@ -2295,10 +2186,7 @@ class SearchTest {
             ),
             consequence = Consequence(
               userData = buildJsonObject {
-                put(
-                  "promo_content",
-                  JsonPrimitive("20% OFF on all Harry Potter books!"),
-                )
+                put("promo_content", JsonPrimitive("20% OFF on all Harry Potter books!"))
               },
             ),
           ),
@@ -2361,10 +2249,7 @@ class SearchTest {
             ),
             consequence = Consequence(
               userData = buildJsonObject {
-                put(
-                  "redirect",
-                  JsonPrimitive("https://www.algolia.com/support"),
-                )
+                put("redirect", JsonPrimitive("https://www.algolia.com/support"))
               },
             ),
           ),
@@ -3025,10 +2910,7 @@ class SearchTest {
                 ),
                 filterPromotes = false,
                 userData = buildJsonObject {
-                  put(
-                    "algolia",
-                    JsonPrimitive("aloglia"),
-                  )
+                  put("algolia", JsonPrimitive("aloglia"))
                 },
                 promote = listOf(
                   PromoteObjectID(
@@ -7628,10 +7510,7 @@ class SearchTest {
             customRanking = listOf("algolia"),
             decompoundQuery = false,
             decompoundedAttributes = buildJsonObject {
-              put(
-                "algolia",
-                JsonPrimitive("aloglia"),
-              )
+              put("algolia", JsonPrimitive("aloglia"))
             },
             disableExactOnAttributes = listOf("algolia"),
             disablePrefixOnAttributes = listOf("algolia"),
@@ -8535,14 +8414,7 @@ class SearchTest {
           indexName = "theIndexName",
           indexSettings = IndexSettings(
             decompoundedAttributes = buildJsonObject {
-              put(
-                "de",
-                JsonArray(
-                  listOf(
-                    JsonPrimitive("name"),
-                  ),
-                ),
-              )
+              put("de", JsonArray(listOf(JsonPrimitive("name"))))
             },
           ),
         )

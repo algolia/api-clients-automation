@@ -4,6 +4,7 @@ package com.algolia.e2e
 import com.algolia.client.api.CompositionClient
 import com.algolia.client.configuration.*
 import com.algolia.client.model.composition.*
+import com.algolia.client.model.composition.RequestBody
 import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.github.cdimascio.dotenv.Dotenv
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class CompositionTest {
 

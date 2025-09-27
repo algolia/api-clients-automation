@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class SearchTest {
 
@@ -115,10 +116,7 @@ class SearchTest {
           path = "1/test/gzip",
           parameters = mapOf(),
           body = buildJsonObject {
-            put(
-              "message",
-              JsonPrimitive("this is a compressed body"),
-            )
+            put("message", JsonPrimitive("this is a compressed body"))
           },
         )
       },
@@ -487,24 +485,12 @@ class SearchTest {
           indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
           createIfNotExists = true,
@@ -527,24 +513,12 @@ class SearchTest {
           indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("3"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Cyril"),
-              )
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("4"),
-              )
-              put(
-                "name",
-                JsonPrimitive("David"),
-              )
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
             },
           ),
           createIfNotExists = false,
@@ -567,104 +541,44 @@ class SearchTest {
           indexName = "cts_e2e_replace_all_objects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("3"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Cyril"),
-              )
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("4"),
-              )
-              put(
-                "name",
-                JsonPrimitive("David"),
-              )
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("5"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Eva"),
-              )
+              put("objectID", JsonPrimitive("5"))
+              put("name", JsonPrimitive("Eva"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("6"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Fiona"),
-              )
+              put("objectID", JsonPrimitive("6"))
+              put("name", JsonPrimitive("Fiona"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("7"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Gael"),
-              )
+              put("objectID", JsonPrimitive("7"))
+              put("name", JsonPrimitive("Gael"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("8"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hugo"),
-              )
+              put("objectID", JsonPrimitive("8"))
+              put("name", JsonPrimitive("Hugo"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("9"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Igor"),
-              )
+              put("objectID", JsonPrimitive("9"))
+              put("name", JsonPrimitive("Igor"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("10"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Julia"),
-              )
+              put("objectID", JsonPrimitive("10"))
+              put("name", JsonPrimitive("Julia"))
             },
           ),
           batchSize = 3,
@@ -687,24 +601,12 @@ class SearchTest {
           indexName = "cts_e2e_replace_all_objects_scopes_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
           batchSize = 77,
@@ -727,24 +629,12 @@ class SearchTest {
         indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
         objects = listOf(
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("fine"),
-            )
-            put(
-              "body",
-              JsonPrimitive("small obj"),
-            )
+            put("objectID", JsonPrimitive("fine"))
+            put("body", JsonPrimitive("small obj"))
           },
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("toolarge"),
-            )
-            put(
-              "body",
-              JsonPrimitive("something bigger than 10KB"),
-            )
+            put("objectID", JsonPrimitive("toolarge"))
+            put("body", JsonPrimitive("something bigger than 10KB"))
           },
         ),
       )
@@ -760,24 +650,12 @@ class SearchTest {
           indexName = "cts_e2e_saveObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
         )
@@ -798,24 +676,12 @@ class SearchTest {
         indexName = "cts_e2e_saveObjects_kotlin",
         objects = listOf(
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("1"),
-            )
-            put(
-              "name",
-              JsonPrimitive("Adam"),
-            )
+            put("objectID", JsonPrimitive("1"))
+            put("name", JsonPrimitive("Adam"))
           },
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("2"),
-            )
-            put(
-              "name",
-              JsonPrimitive("Benoit"),
-            )
+            put("objectID", JsonPrimitive("2"))
+            put("name", JsonPrimitive("Benoit"))
           },
         ),
       )
@@ -831,26 +697,11 @@ class SearchTest {
           indexName = "playlists",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "visibility",
-                JsonPrimitive("public"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hot 100 Billboard Charts"),
-              )
-              put(
-                "playlistId",
-                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-              )
-              put(
-                "createdAt",
-                JsonPrimitive("1500240452"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("visibility", JsonPrimitive("public"))
+              put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+              put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+              put("createdAt", JsonPrimitive("1500240452"))
             },
           ),
         )
@@ -869,26 +720,11 @@ class SearchTest {
           indexName = "playlists",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "visibility",
-                JsonPrimitive("public"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hot 100 Billboard Charts"),
-              )
-              put(
-                "playlistId",
-                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-              )
-              put(
-                "createdAt",
-                JsonPrimitive("1500240452"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("visibility", JsonPrimitive("public"))
+              put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+              put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+              put("createdAt", JsonPrimitive("1500240452"))
             },
           ),
           waitForTasks = false,
