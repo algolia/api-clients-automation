@@ -3380,10 +3380,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:6.0.1":
-  version: 6.0.1
-  resolution: "chai@npm:6.0.1"
-  checksum: 10/cd95aee5f98cdeaea3e24c21dcf1786d9eaf515d571861106a2378589cf5ef1ed3ddd223ca1121552656ffd744e4acd051f8881c1a9729c71551776db55fb2cb
+"chai@npm:6.2.0":
+  version: 6.2.0
+  resolution: "chai@npm:6.2.0"
+  checksum: 10/199422854e253d8711ea3f220365c6a850c450abf68b31131d2a0f703cbfc5cb48e6c81567e0adbe80e83cdcae6dba82d069a41a77c16bdf6703329c5c3447ef
   languageName: node
   linkType: hard
 
@@ -7812,7 +7812,7 @@ __metadata:
     "@types/node": "npm:22.18.6"
     "@types/semver": "npm:7.7.1"
     "@types/spinnies": "npm:0.5.3"
-    chai: "npm:6.0.1"
+    chai: "npm:6.2.0"
     chalk: "npm:5.6.2"
     commander: "npm:14.0.1"
     crc: "npm:4.3.2"
