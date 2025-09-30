@@ -41,6 +41,14 @@ compositionBehavior:
           maxItems: 2
           items:
             $ref: '#/injectedItem'
+        deduplication:
+          title: deduplication
+          type: object
+          additionalProperties: false
+          description: Deduplication configures the method used to remove the same items from injected groups and main search.
+          properties:
+            positioning:
+              $ref: '#/dedupPositioning'
       required:
         - main
   required:
@@ -91,3 +99,17 @@ injectedItemSource:
   oneOf:
     - $ref: './InjectionSource.yml#/SearchSource'
     - $ref: './InjectionSource.yml#/ExternalSource'
+
+dedupPositioning:
+  type: string
+  enum:
+    - highest
+    - highestInjected
+  description: |
+    Deduplication setting to determine duplicate object resolution.
+    highest: 
+      - Will keep the item in the highest position if a duplicate is found.
+    highestInjected:
+      - Keeps the item at its highest possible injected position, even if main might be higher.
+  example: highest
+  default: highestInjected

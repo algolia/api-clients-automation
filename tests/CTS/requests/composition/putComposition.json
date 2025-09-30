@@ -134,9 +134,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "compositionID": "my-metadata-compo",
       "composition": {
@@ -284,6 +282,81 @@
                 }
               }
             ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "my-compo",
+      "composition": {
+        "objectID": "my-compo",
+        "name": "my composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo",
+                  "params": {
+                    "filters": "brand:adidas"
+                  }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                },
+                "position": 2,
+                "length": 1
+              }
+            ],
+            "deduplication": {
+              "positioning": "highest"
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-compo",
+        "name": "my composition",
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "foo",
+                  "params": {
+                    "filters": "brand:adidas"
+                  }
+                }
+              }
+            },
+            "injectedItems": [
+              {
+                "key": "injectedItem1",
+                "source": {
+                  "search": {
+                    "index": "foo"
+                  }
+                },
+                "position": 2,
+                "length": 1
+              }
+            ],
+            "deduplication": {
+              "positioning": "highest"
+            }
           }
         }
       }
