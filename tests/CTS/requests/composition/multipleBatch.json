@@ -83,7 +83,7 @@
                 },
                 "injectedItems": [
                   {
-                    "key": "injectedItem1",
+                    "key": "my-unique-external-group-key",
                     "source": {
                       "external": {
                         "index": "foo",
@@ -124,7 +124,7 @@
                   },
                   "injectedItems": [
                     {
-                      "key": "injectedItem1",
+                      "key": "my-unique-external-group-key",
                       "source": {
                         "external": {
                           "index": "foo",
@@ -171,7 +171,7 @@
                 },
                 "injectedItems": [
                   {
-                    "key": "injectedItem1",
+                    "key": "my-unique-group-key",
                     "source": {
                       "search": {
                         "index": "foo",
@@ -197,7 +197,7 @@
                     }
                   },
                   {
-                    "key": "externalItem",
+                    "key": "my-unique-group-key",
                     "source": {
                       "search": {
                         "index": "foo",
@@ -253,7 +253,7 @@
                   },
                   "injectedItems": [
                     {
-                      "key": "injectedItem1",
+                      "key": "my-unique-group-key",
                       "source": {
                         "search": {
                           "index": "foo",
@@ -279,7 +279,7 @@
                       }
                     },
                     {
-                      "key": "externalItem",
+                      "key": "my-unique-group-key",
                       "source": {
                         "search": {
                           "index": "foo",
