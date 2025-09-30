@@ -45,7 +45,7 @@ compositionBehavior:
           title: deduplication
           type: object
           additionalProperties: false
-          description: Deduplication configures the method used to remove the same items from injected groups and main search.
+          description: Deduplication configures the methods used to resolve duplicate items between main search results and injected group results.
           properties:
             positioning:
               $ref: '#/dedupPositioning'
@@ -106,10 +106,10 @@ dedupPositioning:
     - highest
     - highestInjected
   description: |
-    Deduplication setting to determine duplicate object resolution.
-    highest: 
-      - Will keep the item in the highest position if a duplicate is found.
-    highestInjected:
-      - Keeps the item at its highest possible injected position, even if main might be higher.
+    Deduplication positioning configures how a duplicate result should be resolved between an injected item and main search results.
+    Current configuration supports:
+    - 'highest': always select the item in the highest position, and remove duplicates that appear lower in the results.
+    - 'highestInjected': duplicate result will be moved to its highest possible injected position, but not higher. 
+      If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
   example: highest
   default: highestInjected
