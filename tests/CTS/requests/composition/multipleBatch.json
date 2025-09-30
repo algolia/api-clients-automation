@@ -62,9 +62,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "requests": [
         {
@@ -147,9 +145,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "requests": [
         {
@@ -305,6 +301,87 @@
                       }
                     }
                   ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "skipLanguages": ["kotlin"],
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "my-compo",
+            "name": "my composition",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  }
+                },
+                "injectedItems": [
+                  {
+                    "key": "injectedItem1",
+                    "source": {
+                      "search": {
+                        "index": "foo"
+                      }
+                    },
+                    "position": 2,
+                    "length": 1
+                  }
+                ],
+                "deduplication": {
+                  "positioning": "highest"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "my-compo",
+              "name": "my composition",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "foo"
+                      }
+                    }
+                  },
+                  "injectedItems": [
+                    {
+                      "key": "injectedItem1",
+                      "source": {
+                        "search": {
+                          "index": "foo"
+                        }
+                      },
+                      "position": 2,
+                      "length": 1
+                    }
+                  ],
+                  "deduplication": {
+                    "positioning": "highest"
+                  }
                 }
               }
             }

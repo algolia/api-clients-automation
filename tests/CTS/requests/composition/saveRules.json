@@ -65,9 +65,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "compositionID": "rule-with-metadata",
       "rules": {
@@ -200,10 +198,7 @@
             "body": {
               "objectID": "rule-with-exernal-source",
               "description": "my description",
-              "tags": [
-                "tag1",
-                "tag2"
-              ],
+              "tags": ["tag1", "tag2"],
               "enabled": true,
               "validity": [
                 {
@@ -268,10 +263,7 @@
             "body": {
               "objectID": "rule-with-exernal-source",
               "description": "my description",
-              "tags": [
-                "tag1",
-                "tag2"
-              ],
+              "tags": ["tag1", "tag2"],
               "enabled": true,
               "validity": [
                 {
@@ -318,6 +310,107 @@
                         "length": 3
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "my-compo",
+      "rules": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "rule-with-deduplication",
+              "description": "my description",
+              "enabled": true,
+              "conditions": [
+                {
+                  "anchoring": "contains",
+                  "pattern": "harry"
+                }
+              ],
+              "consequence": {
+                "behavior": {
+                  "injection": {
+                    "main": {
+                      "source": {
+                        "search": {
+                          "index": "my-index"
+                        }
+                      }
+                    },
+                    "injectedItems": [
+                      {
+                        "key": "injectedItem",
+                        "source": {
+                          "search": {
+                            "index": "my-index"
+                          }
+                        },
+                        "position": 0,
+                        "length": 3
+                      }
+                    ],
+                    "deduplication": {
+                      "positioning": "highestInjected"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-compo/rules/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "rule-with-deduplication",
+              "description": "my description",
+              "enabled": true,
+              "conditions": [
+                {
+                  "anchoring": "contains",
+                  "pattern": "harry"
+                }
+              ],
+              "consequence": {
+                "behavior": {
+                  "injection": {
+                    "main": {
+                      "source": {
+                        "search": {
+                          "index": "my-index"
+                        }
+                      }
+                    },
+                    "injectedItems": [
+                      {
+                        "key": "injectedItem",
+                        "source": {
+                          "search": {
+                            "index": "my-index"
+                          }
+                        },
+                        "position": 0,
+                        "length": 3
+                      }
+                    ],
+                    "deduplication": {
+                      "positioning": "highestInjected"
+                    }
                   }
                 }
               }
