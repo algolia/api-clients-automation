@@ -49,6 +49,8 @@ compositionBehavior:
           properties:
             positioning:
               $ref: '#/dedupPositioning'
+          required:
+            - positioning
       required:
         - main
   required:
