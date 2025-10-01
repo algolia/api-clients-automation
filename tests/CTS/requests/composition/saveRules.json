@@ -348,7 +348,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injected-item-key",
+                        "key": "my-unique-injected-item-key",
                         "source": {
                           "search": {
                             "index": "my-index"
@@ -398,7 +398,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injected-item-key",
+                        "key": "my-unique-injected-item-key",
                         "source": {
                           "search": {
                             "index": "my-index"
