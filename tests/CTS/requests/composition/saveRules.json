@@ -92,7 +92,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injectedItem1",
+                        "key": "my-unique-group-from-rule-key",
                         "source": {
                           "search": {
                             "index": "foo",
@@ -153,7 +153,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injectedItem1",
+                        "key": "my-unique-group-from-rule-key",
                         "source": {
                           "search": {
                             "index": "foo",
@@ -231,7 +231,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injectedItem",
+                        "key": "my-unique-external-group-from-rule-key",
                         "source": {
                           "external": {
                             "index": "my-index",
@@ -296,7 +296,7 @@
                     },
                     "injectedItems": [
                       {
-                        "key": "injectedItem",
+                        "key": "my-unique-external-group-from-rule-key",
                         "source": {
                           "external": {
                             "index": "my-index",
