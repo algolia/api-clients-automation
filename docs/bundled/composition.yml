@@ -1148,7 +1148,7 @@ paths:
                   InjectedItems = new Dictionary<string, ExternalInjectedItem>
                   {
                     {
-                      "injectedItem1",
+                      "my-unique-external-group-key",
                       new ExternalInjectedItem
                       {
                         Items = new List<ExternalInjection>
@@ -1190,7 +1190,7 @@ paths:
                 params: Params(
                   query: "batman",
                   injectedItems: {
-                    'injectedItem1': ExternalInjectedItem(
+                    'my-unique-external-group-key': ExternalInjectedItem(
                       items: [
                         ExternalInjection(
                           objectID: "my-object-1",
@@ -1232,7 +1232,7 @@ paths:
             response, err := client.Search(client.NewApiSearchRequest(
               "foo",
               composition.NewEmptyRequestBody().SetParams(
-                composition.NewEmptyParams().SetQuery("batman").SetInjectedItems(map[string]composition.ExternalInjectedItem{"injectedItem1": *composition.NewEmptyExternalInjectedItem().SetItems(
+                composition.NewEmptyParams().SetQuery("batman").SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
                   []composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}))))
             if err != nil {
               // handle the eventual error
@@ -1265,7 +1265,7 @@ paths:
                       new HashMap() {
                         {
                           put(
-                            "injectedItem1",
+                            "my-unique-external-group-key",
                             new ExternalInjectedItem().setItems(
                                 Arrays.asList(
                                   new ExternalInjection().setObjectID("my-object-1"),
@@ -1316,7 +1316,7 @@ paths:
                 params: {
                   query: 'batman',
                   injectedItems: {
-                    injectedItem1: {
+                    'my-unique-external-group-key': {
                       items: [
                         { objectID: 'my-object-1' },
                         {
@@ -1381,7 +1381,7 @@ paths:
             $response = $client->search(
                 'foo',
                 ['params' => ['query' => 'batman',
-                    'injectedItems' => ['injectedItem1' => ['items' => [
+                    'injectedItems' => ['my-unique-external-group-key' => ['items' => [
                         ['objectID' => 'my-object-1',
                         ],
 
@@ -1425,7 +1425,7 @@ paths:
                     "params": {
                         "query": "batman",
                         "injectedItems": {
-                            "injectedItem1": {
+                            "my-unique-external-group-key": {
                                 "items": [
                                     {
                                         "objectID": "my-object-1",
@@ -1469,7 +1469,7 @@ paths:
                 params: Algolia::Composition::Params.new(
                   query: "batman",
                   injected_items: {
-                    injectedItem1: Algolia::Composition::ExternalInjectedItem.new(
+                    :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
                       items: [
                         Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
                         Algolia::Composition::ExternalInjection.new(
@@ -1519,7 +1519,7 @@ paths:
                       query = Some("batman"),
                       injectedItems = Some(
                         Map(
-                          "injectedItem1" -> ExternalInjectedItem(
+                          "my-unique-external-group-key" -> ExternalInjectedItem(
                             items = Seq(
                               ExternalInjection(
                                 objectID = "my-object-1"
@@ -1567,7 +1567,7 @@ paths:
                 compositionID: "foo",
                 requestBody: RequestBody(params: CompositionParams(
                     query: "batman",
-                    injectedItems: ["injectedItem1": ExternalInjectedItem(items: [
+                    injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                         ExternalInjection(objectID: "my-object-1"),
                         ExternalInjection(
                             objectID: "my-object-2",

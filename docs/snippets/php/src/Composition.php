@@ -723,7 +723,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-external-group-key',
                                     'source' => ['external' => ['index' => 'foo',
                                         'ordering' => 'userDefined',
                                         'params' => ['filters' => 'brand:adidas',
@@ -772,7 +772,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-group-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -790,7 +790,7 @@ class SnippetCompositionClient
                                     ],
                                 ],
 
-                                ['key' => 'externalItem',
+                                ['key' => 'my-unique-group-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:puma',
                                         ],
@@ -889,7 +889,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                             ],
                             ],
@@ -929,7 +929,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-external-group-key',
                             'source' => ['external' => ['index' => 'foo',
                                 'ordering' => 'userDefined',
                                 'params' => ['filters' => 'brand:adidas',
@@ -974,7 +974,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -992,7 +992,7 @@ class SnippetCompositionClient
                             ],
                         ],
 
-                        ['key' => 'externalItem',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:puma',
                                 ],
@@ -1091,7 +1091,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-from-rule-key',
                             'source' => ['search' => ['index' => 'foo',
                             ],
                             ],
@@ -1137,7 +1137,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-from-rule-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -1211,7 +1211,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem',
+                        ['key' => 'my-unique-external-group-from-rule-key',
                             'source' => ['external' => ['index' => 'my-index',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -1351,7 +1351,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-group-from-rule-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -1429,7 +1429,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem',
+                                ['key' => 'my-unique-external-group-from-rule-key',
                                     'source' => ['external' => ['index' => 'my-index',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -1549,7 +1549,7 @@ class SnippetCompositionClient
         $response = $client->search(
             'foo',
             ['params' => ['query' => 'batman',
-                'injectedItems' => ['injectedItem1' => ['items' => [
+                'injectedItems' => ['my-unique-external-group-key' => ['items' => [
                     ['objectID' => 'my-object-1',
                     ],
 

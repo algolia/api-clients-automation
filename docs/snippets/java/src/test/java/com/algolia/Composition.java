@@ -584,7 +584,7 @@ class SnippetCompositionClient {
                       .setInjectedItems(
                         Arrays.asList(
                           new InjectedItem()
-                            .setKey("injectedItem1")
+                            .setKey("my-unique-external-group-key")
                             .setSource(
                               new ExternalSource().setExternal(
                                 new External()
@@ -640,7 +640,7 @@ class SnippetCompositionClient {
                           .setInjectedItems(
                             Arrays.asList(
                               new InjectedItem()
-                                .setKey("injectedItem1")
+                                .setKey("my-unique-group-key")
                                 .setSource(
                                   new SearchSource().setSearch(
                                     new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -672,7 +672,7 @@ class SnippetCompositionClient {
                                     )
                                 ),
                               new InjectedItem()
-                                .setKey("externalItem")
+                                .setKey("my-unique-group-key")
                                 .setSource(
                                   new SearchSource().setSearch(
                                     new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -778,7 +778,7 @@ class SnippetCompositionClient {
               .setInjectedItems(
                 Arrays.asList(
                   new InjectedItem()
-                    .setKey("injectedItem1")
+                    .setKey("my-unique-group-key")
                     .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                     .setPosition(2)
                     .setLength(1)
@@ -812,7 +812,7 @@ class SnippetCompositionClient {
               .setInjectedItems(
                 Arrays.asList(
                   new InjectedItem()
-                    .setKey("injectedItem1")
+                    .setKey("my-unique-external-group-key")
                     .setSource(
                       new ExternalSource().setExternal(
                         new External()
@@ -859,7 +859,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-group-key")
                       .setSource(
                         new SearchSource().setSearch(
                           new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -891,7 +891,7 @@ class SnippetCompositionClient {
                           )
                       ),
                     new InjectedItem()
-                      .setKey("externalItem")
+                      .setKey("my-unique-group-key")
                       .setSource(
                         new SearchSource().setSearch(
                           new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -995,7 +995,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-group-from-rule-key")
                       .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                       .setPosition(2)
                       .setLength(1)
@@ -1032,7 +1032,7 @@ class SnippetCompositionClient {
                     .setInjectedItems(
                       Arrays.asList(
                         new InjectedItem()
-                          .setKey("injectedItem1")
+                          .setKey("my-unique-group-from-rule-key")
                           .setSource(
                             new SearchSource().setSearch(
                               new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -1113,7 +1113,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem")
+                      .setKey("my-unique-external-group-from-rule-key")
                       .setSource(
                         new ExternalSource().setExternal(
                           new External()
@@ -1239,7 +1239,7 @@ class SnippetCompositionClient {
                               .setInjectedItems(
                                 Arrays.asList(
                                   new InjectedItem()
-                                    .setKey("injectedItem1")
+                                    .setKey("my-unique-group-from-rule-key")
                                     .setSource(
                                       new SearchSource().setSearch(
                                         new Search()
@@ -1329,7 +1329,7 @@ class SnippetCompositionClient {
                         .setInjectedItems(
                           Arrays.asList(
                             new InjectedItem()
-                              .setKey("injectedItem")
+                              .setKey("my-unique-external-group-from-rule-key")
                               .setSource(
                                 new ExternalSource().setExternal(
                                   new External()
@@ -1434,7 +1434,7 @@ class SnippetCompositionClient {
               new HashMap() {
                 {
                   put(
-                    "injectedItem1",
+                    "my-unique-external-group-key",
                     new ExternalInjectedItem().setItems(
                         Arrays.asList(
                           new ExternalInjection().setObjectID("my-object-1"),

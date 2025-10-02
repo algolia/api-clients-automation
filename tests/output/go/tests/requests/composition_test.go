@@ -490,7 +490,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 								composition.NewEmptyMain().SetSource(
 									composition.NewEmptyCompositionSource().SetSearch(
 										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.ExternalSourceAsInjectedItemSource(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
 									composition.NewEmptyExternalSource().SetExternal(
 										composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
 											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)})))))})))
@@ -500,7 +500,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}`)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -514,12 +514,12 @@ func TestComposition_MultipleBatch(t *testing.T) {
 									composition.NewEmptyCompositionSource().SetSearch(
 										composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
 											composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 									composition.NewEmptySearchSource().SetSearch(
 										composition.NewEmptySearch().SetIndex("foo").SetParams(
 											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
 									composition.NewEmptyInjectedItemMetadata().SetHits(
-										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
+										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 									composition.NewEmptySearchSource().SetSearch(
 										composition.NewEmptySearch().SetIndex("foo").SetParams(
 											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
@@ -531,7 +531,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}`)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -571,7 +571,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyMain().SetSource(
 							composition.NewEmptyCompositionSource().SetSearch(
 								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 							composition.NewEmptySearchSource().SetSearch(
 								composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)})))))
 		require.NoError(t, err)
@@ -580,7 +580,7 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -591,7 +591,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyMain().SetSource(
 							composition.NewEmptyCompositionSource().SetSearch(
 								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.ExternalSourceAsInjectedItemSource(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
 							composition.NewEmptyExternalSource().SetExternal(
 								composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
 									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)})))))
@@ -601,7 +601,7 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -613,12 +613,12 @@ func TestComposition_PutComposition(t *testing.T) {
 							composition.NewEmptyCompositionSource().SetSearch(
 								composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
 									composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+						[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 							composition.NewEmptySearchSource().SetSearch(
 								composition.NewEmptySearch().SetIndex("foo").SetParams(
 									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
 							composition.NewEmptyInjectedItemMetadata().SetHits(
-								composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
+								composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 							composition.NewEmptySearchSource().SetSearch(
 								composition.NewEmptySearch().SetIndex("foo").SetParams(
 									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
@@ -630,7 +630,7 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -671,7 +671,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyMain().SetSource(
 								composition.NewEmptyCompositionSource().SetSearch(
 									composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 								composition.NewEmptySearchSource().SetSearch(
 									composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}))))))
 		require.NoError(t, err)
@@ -680,7 +680,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -693,7 +693,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyMain().SetSource(
 								composition.NewEmptyCompositionSource().SetSearch(
 									composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 								composition.NewEmptySearchSource().SetSearch(
 									composition.NewEmptySearch().SetIndex("foo").SetParams(
 										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
@@ -705,7 +705,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -721,7 +721,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 								composition.NewEmptyCompositionSource().SetSearch(
 									composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
 										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
+							[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
 								composition.NewEmptyExternalSource().SetExternal(
 									composition.NewEmptyExternal().SetIndex("my-index").SetParams(
 										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))
@@ -731,7 +731,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}`)
+		ja.Assertf(*echo.Body, `{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -796,7 +796,7 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyMain().SetSource(
 										composition.NewEmptyCompositionSource().SetSearch(
 											composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
 										composition.NewEmptySearchSource().SetSearch(
 											composition.NewEmptySearch().SetIndex("foo").SetParams(
 												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
@@ -808,7 +808,7 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -826,7 +826,7 @@ func TestComposition_SaveRules(t *testing.T) {
 										composition.NewEmptyCompositionSource().SetSearch(
 											composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
 												composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
 										composition.NewEmptyExternalSource().SetExternal(
 											composition.NewEmptyExternal().SetIndex("my-index").SetParams(
 												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))})))
@@ -836,7 +836,7 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -886,7 +886,7 @@ func TestComposition_Search(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
 			"foo",
 			composition.NewEmptyRequestBody().SetParams(
-				composition.NewEmptyParams().SetQuery("batman").SetInjectedItems(map[string]composition.ExternalInjectedItem{"injectedItem1": *composition.NewEmptyExternalInjectedItem().SetItems(
+				composition.NewEmptyParams().SetQuery("batman").SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
 					[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}))))
 		require.NoError(t, err)
 
@@ -894,7 +894,7 @@ func TestComposition_Search(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}`)
+		ja.Assertf(*echo.Body, `{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}`)
 	})
 }
 

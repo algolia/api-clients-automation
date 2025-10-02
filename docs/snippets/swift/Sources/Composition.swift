@@ -490,7 +490,7 @@ final class CompositionClientSnippet {
                     behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-external-group-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -528,7 +528,7 @@ final class CompositionClientSnippet {
                         ))),
                         injectedItems: [
                             InjectedItem(
-                                key: "injectedItem1",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -548,7 +548,7 @@ final class CompositionClientSnippet {
                                 ))
                             ),
                             InjectedItem(
-                                key: "externalItem",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -624,7 +624,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -654,7 +654,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-external-group-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -691,7 +691,7 @@ final class CompositionClientSnippet {
                     ))),
                     injectedItems: [
                         InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -709,7 +709,7 @@ final class CompositionClientSnippet {
                             ))
                         ),
                         InjectedItem(
-                            key: "externalItem",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:puma")
@@ -786,7 +786,7 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -817,7 +817,7 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -865,7 +865,7 @@ final class CompositionClientSnippet {
                         params: MainInjectionQueryParameters(filters: "brand:adidas")
                     ))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem",
+                        key: "my-unique-external-group-from-rule-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "my-index",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -973,7 +973,7 @@ final class CompositionClientSnippet {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -1023,7 +1023,7 @@ final class CompositionClientSnippet {
                             params: MainInjectionQueryParameters(filters: "brand:adidas")
                         ))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem",
+                            key: "my-unique-external-group-from-rule-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "my-index",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -1112,7 +1112,7 @@ final class CompositionClientSnippet {
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
                 query: "batman",
-                injectedItems: ["injectedItem1": ExternalInjectedItem(items: [
+                injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                     ExternalInjection(objectID: "my-object-1"),
                     ExternalInjection(
                         objectID: "my-object-2",

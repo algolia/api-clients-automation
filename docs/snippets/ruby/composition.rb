@@ -630,7 +630,7 @@ def snippet_for_multiple_batch1
                 ),
                 injected_items: [
                   Algolia::Composition::InjectedItem.new(
-                    key: "injectedItem1",
+                    key: "my-unique-external-group-key",
                     source: Algolia::Composition::ExternalSource.new(
                       external: Algolia::Composition::External.new(
                         index: "foo",
@@ -688,7 +688,7 @@ def snippet_for_multiple_batch2
                 ),
                 injected_items: [
                   Algolia::Composition::InjectedItem.new(
-                    key: "injectedItem1",
+                    key: "my-unique-group-key",
                     source: Algolia::Composition::SearchSource.new(
                       search: Algolia::Composition::Search.new(
                         index: "foo",
@@ -710,7 +710,7 @@ def snippet_for_multiple_batch2
                     )
                   ),
                   Algolia::Composition::InjectedItem.new(
-                    key: "externalItem",
+                    key: "my-unique-group-key",
                     source: Algolia::Composition::SearchSource.new(
                       search: Algolia::Composition::Search.new(
                         index: "foo",
@@ -824,7 +824,7 @@ def snippet_for_put_composition
           ),
           injected_items: [
             Algolia::Composition::InjectedItem.new(
-              key: "injectedItem1",
+              key: "my-unique-group-key",
               source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
               position: 2,
               length: 1
@@ -867,7 +867,7 @@ def snippet_for_put_composition1
           ),
           injected_items: [
             Algolia::Composition::InjectedItem.new(
-              key: "injectedItem1",
+              key: "my-unique-external-group-key",
               source: Algolia::Composition::ExternalSource.new(
                 external: Algolia::Composition::External.new(
                   index: "foo",
@@ -919,7 +919,7 @@ def snippet_for_put_composition2
           ),
           injected_items: [
             Algolia::Composition::InjectedItem.new(
-              key: "injectedItem1",
+              key: "my-unique-group-key",
               source: Algolia::Composition::SearchSource.new(
                 search: Algolia::Composition::Search.new(
                   index: "foo",
@@ -941,7 +941,7 @@ def snippet_for_put_composition2
               )
             ),
             Algolia::Composition::InjectedItem.new(
-              key: "externalItem",
+              key: "my-unique-group-key",
               source: Algolia::Composition::SearchSource.new(
                 search: Algolia::Composition::Search.new(
                   index: "foo",
@@ -1049,7 +1049,7 @@ def snippet_for_put_composition_rule
             ),
             injected_items: [
               Algolia::Composition::InjectedItem.new(
-                key: "injectedItem1",
+                key: "my-unique-group-from-rule-key",
                 source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
                 position: 2,
                 length: 1
@@ -1095,7 +1095,7 @@ def snippet_for_put_composition_rule1
             ),
             injected_items: [
               Algolia::Composition::InjectedItem.new(
-                key: "injectedItem1",
+                key: "my-unique-group-from-rule-key",
                 source: Algolia::Composition::SearchSource.new(
                   search: Algolia::Composition::Search.new(
                     index: "foo",
@@ -1167,7 +1167,7 @@ def snippet_for_put_composition_rule2
             ),
             injected_items: [
               Algolia::Composition::InjectedItem.new(
-                key: "injectedItem",
+                key: "my-unique-external-group-from-rule-key",
                 source: Algolia::Composition::ExternalSource.new(
                   external: Algolia::Composition::External.new(
                     index: "my-index",
@@ -1317,7 +1317,7 @@ def snippet_for_save_rules1
                   ),
                   injected_items: [
                     Algolia::Composition::InjectedItem.new(
-                      key: "injectedItem1",
+                      key: "my-unique-group-from-rule-key",
                       source: Algolia::Composition::SearchSource.new(
                         search: Algolia::Composition::Search.new(
                           index: "foo",
@@ -1395,7 +1395,7 @@ def snippet_for_save_rules2
                   ),
                   injected_items: [
                     Algolia::Composition::InjectedItem.new(
-                      key: "injectedItem",
+                      key: "my-unique-external-group-from-rule-key",
                       source: Algolia::Composition::ExternalSource.new(
                         external: Algolia::Composition::External.new(
                           index: "my-index",
@@ -1520,7 +1520,7 @@ def snippet_for_search1
       params: Algolia::Composition::Params.new(
         query: "batman",
         injected_items: {
-          injectedItem1: Algolia::Composition::ExternalInjectedItem.new(
+          :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
             items: [
               Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
               Algolia::Composition::ExternalInjection.new(

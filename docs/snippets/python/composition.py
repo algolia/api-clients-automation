@@ -742,7 +742,7 @@ def snippet_for_multiple_batch1():
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "injectedItem1",
+                                        "key": "my-unique-external-group-key",
                                         "source": {
                                             "external": {
                                                 "index": "foo",
@@ -804,7 +804,7 @@ def snippet_for_multiple_batch2():
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "injectedItem1",
+                                        "key": "my-unique-group-key",
                                         "source": {
                                             "search": {
                                                 "index": "foo",
@@ -830,7 +830,7 @@ def snippet_for_multiple_batch2():
                                         },
                                     },
                                     {
-                                        "key": "externalItem",
+                                        "key": "my-unique-group-key",
                                         "source": {
                                             "search": {
                                                 "index": "foo",
@@ -956,7 +956,7 @@ def snippet_for_put_composition():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -1005,7 +1005,7 @@ def snippet_for_put_composition1():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-external-group-key",
                             "source": {
                                 "external": {
                                     "index": "foo",
@@ -1061,7 +1061,7 @@ def snippet_for_put_composition2():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -1085,7 +1085,7 @@ def snippet_for_put_composition2():
                             },
                         },
                         {
-                            "key": "externalItem",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -1210,7 +1210,7 @@ def snippet_for_put_composition_rule():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem1",
+                                "key": "my-unique-group-from-rule-key",
                                 "source": {
                                     "search": {
                                         "index": "foo",
@@ -1267,7 +1267,7 @@ def snippet_for_put_composition_rule1():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem1",
+                                "key": "my-unique-group-from-rule-key",
                                 "source": {
                                     "search": {
                                         "index": "foo",
@@ -1357,7 +1357,7 @@ def snippet_for_put_composition_rule2():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem",
+                                "key": "my-unique-external-group-from-rule-key",
                                 "source": {
                                     "external": {
                                         "index": "my-index",
@@ -1533,7 +1533,7 @@ def snippet_for_save_rules1():
                                     },
                                     "injectedItems": [
                                         {
-                                            "key": "injectedItem1",
+                                            "key": "my-unique-group-from-rule-key",
                                             "source": {
                                                 "search": {
                                                     "index": "foo",
@@ -1631,7 +1631,7 @@ def snippet_for_save_rules2():
                                     },
                                     "injectedItems": [
                                         {
-                                            "key": "injectedItem",
+                                            "key": "my-unique-external-group-from-rule-key",
                                             "source": {
                                                 "external": {
                                                     "index": "my-index",
@@ -1773,7 +1773,7 @@ def snippet_for_search1():
             "params": {
                 "query": "batman",
                 "injectedItems": {
-                    "injectedItem1": {
+                    "my-unique-external-group-key": {
                         "items": [
                             {
                                 "objectID": "my-object-1",

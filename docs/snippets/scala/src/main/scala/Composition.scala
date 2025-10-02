@@ -684,7 +684,7 @@ class SnippetCompositionClient {
                     injectedItems = Some(
                       Seq(
                         InjectedItem(
-                          key = "injectedItem1",
+                          key = "my-unique-external-group-key",
                           source = ExternalSource(
                             external = External(
                               index = "foo",
@@ -750,7 +750,7 @@ class SnippetCompositionClient {
                     injectedItems = Some(
                       Seq(
                         InjectedItem(
-                          key = "injectedItem1",
+                          key = "my-unique-group-key",
                           source = SearchSource(
                             search = Search(
                               index = "foo",
@@ -786,7 +786,7 @@ class SnippetCompositionClient {
                           )
                         ),
                         InjectedItem(
-                          key = "externalItem",
+                          key = "my-unique-group-key",
                           source = SearchSource(
                             search = Search(
                               index = "foo",
@@ -924,7 +924,7 @@ class SnippetCompositionClient {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-group-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo"
@@ -973,7 +973,7 @@ class SnippetCompositionClient {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-external-group-key",
                     source = ExternalSource(
                       external = External(
                         index = "foo",
@@ -1033,7 +1033,7 @@ class SnippetCompositionClient {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-group-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo",
@@ -1069,7 +1069,7 @@ class SnippetCompositionClient {
                     )
                   ),
                   InjectedItem(
-                    key = "externalItem",
+                    key = "my-unique-group-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo",
@@ -1210,7 +1210,7 @@ class SnippetCompositionClient {
                 injectedItems = Some(
                   Seq(
                     InjectedItem(
-                      key = "injectedItem1",
+                      key = "my-unique-group-from-rule-key",
                       source = SearchSource(
                         search = Search(
                           index = "foo"
@@ -1267,7 +1267,7 @@ class SnippetCompositionClient {
                 injectedItems = Some(
                   Seq(
                     InjectedItem(
-                      key = "injectedItem1",
+                      key = "my-unique-group-from-rule-key",
                       source = SearchSource(
                         search = Search(
                           index = "foo",
@@ -1370,7 +1370,7 @@ class SnippetCompositionClient {
                 injectedItems = Some(
                   Seq(
                     InjectedItem(
-                      key = "injectedItem",
+                      key = "my-unique-external-group-from-rule-key",
                       source = ExternalSource(
                         external = External(
                           index = "my-index",
@@ -1551,7 +1551,7 @@ class SnippetCompositionClient {
                         injectedItems = Some(
                           Seq(
                             InjectedItem(
-                              key = "injectedItem1",
+                              key = "my-unique-group-from-rule-key",
                               source = SearchSource(
                                 search = Search(
                                   index = "foo",
@@ -1662,7 +1662,7 @@ class SnippetCompositionClient {
                         injectedItems = Some(
                           Seq(
                             InjectedItem(
-                              key = "injectedItem",
+                              key = "my-unique-external-group-from-rule-key",
                               source = ExternalSource(
                                 external = External(
                                   index = "my-index",
@@ -1812,7 +1812,7 @@ class SnippetCompositionClient {
               query = Some("batman"),
               injectedItems = Some(
                 Map(
-                  "injectedItem1" -> ExternalInjectedItem(
+                  "my-unique-external-group-key" -> ExternalInjectedItem(
                     items = Seq(
                       ExternalInjection(
                         objectID = "my-object-1"

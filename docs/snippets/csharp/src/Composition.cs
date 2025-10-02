@@ -653,7 +653,7 @@ public class SnippetCompositionClient
                     {
                       new InjectedItem
                       {
-                        Key = "injectedItem1",
+                        Key = "my-unique-external-group-key",
                         Source = new InjectedItemSource(
                           new ExternalSource
                           {
@@ -730,7 +730,7 @@ public class SnippetCompositionClient
                     {
                       new InjectedItem
                       {
-                        Key = "injectedItem1",
+                        Key = "my-unique-group-key",
                         Source = new InjectedItemSource(
                           new SearchSource
                           {
@@ -766,7 +766,7 @@ public class SnippetCompositionClient
                       },
                       new InjectedItem
                       {
-                        Key = "externalItem",
+                        Key = "my-unique-group-key",
                         Source = new InjectedItemSource(
                           new SearchSource
                           {
@@ -914,7 +914,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -968,7 +968,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-external-group-key",
                 Source = new InjectedItemSource(
                   new ExternalSource
                   {
@@ -1031,7 +1031,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -1064,7 +1064,7 @@ public class SnippetCompositionClient
               },
               new InjectedItem
               {
-                Key = "externalItem",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -1207,7 +1207,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem1",
+                  Key = "my-unique-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new SearchSource
                     {
@@ -1268,7 +1268,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem1",
+                  Key = "my-unique-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new SearchSource
                     {
@@ -1362,7 +1362,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem",
+                  Key = "my-unique-external-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new ExternalSource
                     {
@@ -1556,7 +1556,7 @@ public class SnippetCompositionClient
                       {
                         new InjectedItem
                         {
-                          Key = "injectedItem1",
+                          Key = "my-unique-group-from-rule-key",
                           Source = new InjectedItemSource(
                             new SearchSource
                             {
@@ -1672,7 +1672,7 @@ public class SnippetCompositionClient
                       {
                         new InjectedItem
                         {
-                          Key = "injectedItem",
+                          Key = "my-unique-external-group-from-rule-key",
                           Source = new InjectedItemSource(
                             new ExternalSource
                             {
@@ -1835,7 +1835,7 @@ public class SnippetCompositionClient
           InjectedItems = new Dictionary<string, ExternalInjectedItem>
           {
             {
-              "injectedItem1",
+              "my-unique-external-group-key",
               new ExternalInjectedItem
               {
                 Items = new List<ExternalInjection>

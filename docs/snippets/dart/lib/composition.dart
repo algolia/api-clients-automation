@@ -643,7 +643,7 @@ void snippetFormultipleBatch1() async {
                 ),
                 injectedItems: [
                   InjectedItem(
-                    key: "injectedItem1",
+                    key: "my-unique-external-group-key",
                     source: ExternalSource(
                       external_: External(
                         index: "foo",
@@ -700,7 +700,7 @@ void snippetFormultipleBatch2() async {
                 ),
                 injectedItems: [
                   InjectedItem(
-                    key: "injectedItem1",
+                    key: "my-unique-group-key",
                     source: SearchSource(
                       search: Search(
                         index: "foo",
@@ -726,7 +726,7 @@ void snippetFormultipleBatch2() async {
                     ),
                   ),
                   InjectedItem(
-                    key: "externalItem",
+                    key: "my-unique-group-key",
                     source: SearchSource(
                       search: Search(
                         index: "foo",
@@ -842,7 +842,7 @@ void snippetForputComposition() async {
           ),
           injectedItems: [
             InjectedItem(
-              key: "injectedItem1",
+              key: "my-unique-group-key",
               source: SearchSource(
                 search: Search(
                   index: "foo",
@@ -886,7 +886,7 @@ void snippetForputComposition1() async {
           ),
           injectedItems: [
             InjectedItem(
-              key: "injectedItem1",
+              key: "my-unique-external-group-key",
               source: ExternalSource(
                 external_: External(
                   index: "foo",
@@ -937,7 +937,7 @@ void snippetForputComposition2() async {
           ),
           injectedItems: [
             InjectedItem(
-              key: "injectedItem1",
+              key: "my-unique-group-key",
               source: SearchSource(
                 search: Search(
                   index: "foo",
@@ -963,7 +963,7 @@ void snippetForputComposition2() async {
               ),
             ),
             InjectedItem(
-              key: "externalItem",
+              key: "my-unique-group-key",
               source: SearchSource(
                 search: Search(
                   index: "foo",
@@ -1080,7 +1080,7 @@ void snippetForputCompositionRule() async {
             ),
             injectedItems: [
               InjectedItem(
-                key: "injectedItem1",
+                key: "my-unique-group-from-rule-key",
                 source: SearchSource(
                   search: Search(
                     index: "foo",
@@ -1132,7 +1132,7 @@ void snippetForputCompositionRule1() async {
             ),
             injectedItems: [
               InjectedItem(
-                key: "injectedItem1",
+                key: "my-unique-group-from-rule-key",
                 source: SearchSource(
                   search: Search(
                     index: "foo",
@@ -1219,7 +1219,7 @@ void snippetForputCompositionRule2() async {
             ),
             injectedItems: [
               InjectedItem(
-                key: "injectedItem",
+                key: "my-unique-external-group-from-rule-key",
                 source: ExternalSource(
                   external_: External(
                     index: "my-index",
@@ -1380,7 +1380,7 @@ void snippetForsaveRules1() async {
                   ),
                   injectedItems: [
                     InjectedItem(
-                      key: "injectedItem1",
+                      key: "my-unique-group-from-rule-key",
                       source: SearchSource(
                         search: Search(
                           index: "foo",
@@ -1473,7 +1473,7 @@ void snippetForsaveRules2() async {
                   ),
                   injectedItems: [
                     InjectedItem(
-                      key: "injectedItem",
+                      key: "my-unique-external-group-from-rule-key",
                       source: ExternalSource(
                         external_: External(
                           index: "my-index",
@@ -1600,7 +1600,7 @@ void snippetForsearch1() async {
       params: Params(
         query: "batman",
         injectedItems: {
-          'injectedItem1': ExternalInjectedItem(
+          'my-unique-external-group-key': ExternalInjectedItem(
             items: [
               ExternalInjection(
                 objectID: "my-object-1",

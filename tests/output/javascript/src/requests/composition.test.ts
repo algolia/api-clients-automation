@@ -377,7 +377,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo' } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-external-group-key',
                     source: {
                       external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
                     },
@@ -406,7 +406,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo' } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-external-group-key',
                     source: {
                       external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
                     },
@@ -436,7 +436,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                     position: 2,
                     length: 1,
@@ -453,7 +453,7 @@ describe('multipleBatch', () => {
                     },
                   },
                   {
-                    key: 'externalItem',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                     position: 5,
                     length: 5,
@@ -491,7 +491,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                     position: 2,
                     length: 1,
@@ -508,7 +508,7 @@ describe('multipleBatch', () => {
                     },
                   },
                   {
-                    key: 'externalItem',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                     position: 5,
                     length: 5,
@@ -592,7 +592,9 @@ describe('putComposition', () => {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
-            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            injectedItems: [
+              { key: 'my-unique-group-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
           },
         },
       },
@@ -606,7 +608,7 @@ describe('putComposition', () => {
       behavior: {
         injection: {
           main: { source: { search: { index: 'foo' } } },
-          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          injectedItems: [{ key: 'my-unique-group-key', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
         },
       },
     });
@@ -624,7 +626,7 @@ describe('putComposition', () => {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-external-group-key',
                 source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -645,7 +647,7 @@ describe('putComposition', () => {
           main: { source: { search: { index: 'foo' } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-external-group-key',
               source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -668,7 +670,7 @@ describe('putComposition', () => {
             main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-group-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -685,7 +687,7 @@ describe('putComposition', () => {
                 },
               },
               {
-                key: 'externalItem',
+                key: 'my-unique-group-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                 position: 5,
                 length: 5,
@@ -717,7 +719,7 @@ describe('putComposition', () => {
           main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -734,7 +736,7 @@ describe('putComposition', () => {
               },
             },
             {
-              key: 'externalItem',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
               position: 5,
               length: 5,
@@ -806,7 +808,9 @@ describe('putCompositionRule', () => {
           behavior: {
             injection: {
               main: { source: { search: { index: 'foo' } } },
-              injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+              injectedItems: [
+                { key: 'my-unique-group-from-rule-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+              ],
             },
           },
         },
@@ -822,7 +826,9 @@ describe('putCompositionRule', () => {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
-            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            injectedItems: [
+              { key: 'my-unique-group-from-rule-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
           },
         },
       },
@@ -843,7 +849,7 @@ describe('putCompositionRule', () => {
               main: { source: { search: { index: 'foo' } } },
               injectedItems: [
                 {
-                  key: 'injectedItem1',
+                  key: 'my-unique-group-from-rule-key',
                   source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                   position: 2,
                   length: 1,
@@ -877,7 +883,7 @@ describe('putCompositionRule', () => {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-group-from-rule-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -921,7 +927,7 @@ describe('putCompositionRule', () => {
               main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
               injectedItems: [
                 {
-                  key: 'injectedItem',
+                  key: 'my-unique-external-group-from-rule-key',
                   source: {
                     external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                   },
@@ -953,7 +959,7 @@ describe('putCompositionRule', () => {
             main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
             injectedItems: [
               {
-                key: 'injectedItem',
+                key: 'my-unique-external-group-from-rule-key',
                 source: {
                   external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                 },
@@ -1072,7 +1078,7 @@ describe('saveRules', () => {
                     main: { source: { search: { index: 'foo' } } },
                     injectedItems: [
                       {
-                        key: 'injectedItem1',
+                        key: 'my-unique-group-from-rule-key',
                         source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                         position: 2,
                         length: 1,
@@ -1113,7 +1119,7 @@ describe('saveRules', () => {
                   main: { source: { search: { index: 'foo' } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem1',
+                      key: 'my-unique-group-from-rule-key',
                       source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                       position: 2,
                       length: 1,
@@ -1163,7 +1169,7 @@ describe('saveRules', () => {
                     main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
                     injectedItems: [
                       {
-                        key: 'injectedItem',
+                        key: 'my-unique-external-group-from-rule-key',
                         source: {
                           external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                         },
@@ -1202,7 +1208,7 @@ describe('saveRules', () => {
                   main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem',
+                      key: 'my-unique-external-group-from-rule-key',
                       source: {
                         external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                       },
@@ -1309,7 +1315,7 @@ describe('search', () => {
         params: {
           query: 'batman',
           injectedItems: {
-            injectedItem1: {
+            'my-unique-external-group-key': {
               items: [
                 { objectID: 'my-object-1' },
                 {
@@ -1334,7 +1340,7 @@ describe('search', () => {
       params: {
         query: 'batman',
         injectedItems: {
-          injectedItem1: {
+          'my-unique-external-group-key': {
             items: [
               { objectID: 'my-object-1' },
               {

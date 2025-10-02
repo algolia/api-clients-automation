@@ -663,7 +663,7 @@ class SnippetCompositionClient {
             ),
             injectedItems = listOf(
               InjectedItem(
-                key = "injectedItem1",
+                key = "my-unique-group-key",
                 source = SearchSource(
                   search = Search(
                     index = "foo",
@@ -708,7 +708,7 @@ class SnippetCompositionClient {
             ),
             injectedItems = listOf(
               InjectedItem(
-                key = "injectedItem1",
+                key = "my-unique-external-group-key",
                 source = ExternalSource(
                   external = External(
                     index = "foo",
@@ -815,7 +815,7 @@ class SnippetCompositionClient {
               ),
               injectedItems = listOf(
                 InjectedItem(
-                  key = "injectedItem1",
+                  key = "my-unique-group-from-rule-key",
                   source = SearchSource(
                     search = Search(
                       index = "foo",
@@ -884,7 +884,7 @@ class SnippetCompositionClient {
               ),
               injectedItems = listOf(
                 InjectedItem(
-                  key = "injectedItem",
+                  key = "my-unique-external-group-from-rule-key",
                   source = ExternalSource(
                     external = External(
                       index = "my-index",
@@ -1064,7 +1064,7 @@ class SnippetCompositionClient {
                     ),
                     injectedItems = listOf(
                       InjectedItem(
-                        key = "injectedItem",
+                        key = "my-unique-external-group-from-rule-key",
                         source = ExternalSource(
                           external = External(
                             index = "my-index",

@@ -805,7 +805,7 @@ class CompositionClientRequestsTests {
                         .setInjectedItems(
                           Arrays.asList(
                             new InjectedItem()
-                              .setKey("injectedItem1")
+                              .setKey("my-unique-external-group-key")
                               .setSource(
                                 new ExternalSource().setExternal(
                                   new External()
@@ -832,7 +832,7 @@ class CompositionClientRequestsTests {
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-external-injection-compo\",\"name\":\"my" +
         " first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}",
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -867,7 +867,7 @@ class CompositionClientRequestsTests {
                             .setInjectedItems(
                               Arrays.asList(
                                 new InjectedItem()
-                                  .setKey("injectedItem1")
+                                  .setKey("my-unique-group-key")
                                   .setSource(
                                     new SearchSource().setSearch(
                                       new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -899,7 +899,7 @@ class CompositionClientRequestsTests {
                                       )
                                   ),
                                 new InjectedItem()
-                                  .setKey("externalItem")
+                                  .setKey("my-unique-group-key")
                                   .setSource(
                                     new SearchSource().setSearch(
                                       new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -945,7 +945,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-metadata-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}",
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1015,7 +1015,7 @@ class CompositionClientRequestsTests {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-group-key")
                       .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                       .setPosition(2)
                       .setLength(1)
@@ -1031,7 +1031,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"1234\",\"name\":\"my first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}",
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1054,7 +1054,7 @@ class CompositionClientRequestsTests {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-external-group-key")
                       .setSource(
                         new ExternalSource().setExternal(
                           new External()
@@ -1077,7 +1077,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}",
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1108,7 +1108,7 @@ class CompositionClientRequestsTests {
                   .setInjectedItems(
                     Arrays.asList(
                       new InjectedItem()
-                        .setKey("injectedItem1")
+                        .setKey("my-unique-group-key")
                         .setSource(
                           new SearchSource().setSearch(
                             new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -1140,7 +1140,7 @@ class CompositionClientRequestsTests {
                             )
                         ),
                       new InjectedItem()
-                        .setKey("externalItem")
+                        .setKey("my-unique-group-key")
                         .setSource(
                           new SearchSource().setSearch(
                             new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -1183,7 +1183,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-metadata-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1254,7 +1254,7 @@ class CompositionClientRequestsTests {
                   .setInjectedItems(
                     Arrays.asList(
                       new InjectedItem()
-                        .setKey("injectedItem1")
+                        .setKey("my-unique-group-from-rule-key")
                         .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                         .setPosition(2)
                         .setLength(1)
@@ -1270,7 +1270,7 @@ class CompositionClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}",
+        "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1295,7 +1295,7 @@ class CompositionClientRequestsTests {
                       .setInjectedItems(
                         Arrays.asList(
                           new InjectedItem()
-                            .setKey("injectedItem1")
+                            .setKey("my-unique-group-from-rule-key")
                             .setSource(
                               new SearchSource().setSearch(
                                 new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -1338,7 +1338,7 @@ class CompositionClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}",
+        "{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1380,7 +1380,7 @@ class CompositionClientRequestsTests {
                   .setInjectedItems(
                     Arrays.asList(
                       new InjectedItem()
-                        .setKey("injectedItem")
+                        .setKey("my-unique-external-group-from-rule-key")
                         .setSource(
                           new ExternalSource().setExternal(
                             new External()
@@ -1404,7 +1404,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
-        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
+        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1522,7 +1522,7 @@ class CompositionClientRequestsTests {
                                 .setInjectedItems(
                                   Arrays.asList(
                                     new InjectedItem()
-                                      .setKey("injectedItem1")
+                                      .setKey("my-unique-group-from-rule-key")
                                       .setSource(
                                         new SearchSource().setSearch(
                                           new Search()
@@ -1570,7 +1570,7 @@ class CompositionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}}]}",
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1616,7 +1616,7 @@ class CompositionClientRequestsTests {
                           .setInjectedItems(
                             Arrays.asList(
                               new InjectedItem()
-                                .setKey("injectedItem")
+                                .setKey("my-unique-external-group-from-rule-key")
                                 .setSource(
                                   new ExternalSource().setExternal(
                                     new External()
@@ -1643,7 +1643,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
-        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
+        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1729,7 +1729,7 @@ class CompositionClientRequestsTests {
                 new HashMap() {
                   {
                     put(
-                      "injectedItem1",
+                      "my-unique-external-group-key",
                       new ExternalInjectedItem().setItems(
                           Arrays.asList(
                             new ExternalInjection().setObjectID("my-object-1"),
@@ -1767,7 +1767,7 @@ class CompositionClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"injectedItem1\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}",
+        "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"my-unique-external-group-key\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
