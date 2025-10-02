@@ -823,6 +823,52 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the MultipleBatch method.
+     *
+     * multipleBatch
+     */
+    public function snippetForMultipleBatch3(): void
+    {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-compo',
+                        'name' => 'my composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'foo',
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highest',
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PutComposition method.
      *
      * putComposition
@@ -963,6 +1009,50 @@ class SnippetCompositionClient
                             ],
                             ],
                         ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition3(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highest',
                     ],
                 ],
                 ],
@@ -1145,6 +1235,56 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule3(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'rule-with-deduplication',
+            ['objectID' => 'rule-with-deduplication',
+                'description' => 'my description',
+                'enabled' => true,
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'my-index',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highestInjected',
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SaveRules method.
      *
      * saveRules
@@ -1299,6 +1439,60 @@ class SnippetCompositionClient
                                     'position' => 0,
                                     'length' => 3,
                                 ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules3(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'my-compo',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-deduplication',
+                        'description' => 'my description',
+                        'enabled' => true,
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'harry',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'my-index',
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 3,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highestInjected',
                             ],
                         ],
                         ],

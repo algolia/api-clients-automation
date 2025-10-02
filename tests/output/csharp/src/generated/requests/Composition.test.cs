@@ -836,6 +836,71 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "multipleBatch")]
+  public async Task MultipleBatchTest3()
+  {
+    await client.MultipleBatchAsync(
+      new BatchParams
+      {
+        Requests = new List<MultipleBatchRequest>
+        {
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new BatchCompositionAction(
+              new Composition
+              {
+                ObjectID = "my-compo",
+                Name = "my composition",
+                Behavior = new CompositionBehavior
+                {
+                  Injection = new Injection
+                  {
+                    Main = new Main
+                    {
+                      Source = new CompositionSource
+                      {
+                        Search = new CompositionSourceSearch { Index = "foo" },
+                      },
+                    },
+                    InjectedItems = new List<InjectedItem>
+                    {
+                      new InjectedItem
+                      {
+                        Key = "my-unique-injected-item-key",
+                        Source = new InjectedItemSource(
+                          new SearchSource
+                          {
+                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                          }
+                        ),
+                        Position = 2,
+                        Length = 1,
+                      },
+                    },
+                    Deduplication = new Deduplication
+                    {
+                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/*/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "putComposition")]
   public async Task PutCompositionTest()
   {
@@ -1049,6 +1114,64 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest3()
+  {
+    await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch
+                {
+                  Index = "foo",
+                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                },
+              },
+            },
+            InjectedItems = new List<InjectedItem>
+            {
+              new InjectedItem
+              {
+                Key = "my-unique-injected-item-key",
+                Source = new InjectedItemSource(
+                  new SearchSource
+                  {
+                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                  }
+                ),
+                Position = 2,
+                Length = 1,
+              },
+            },
+            Deduplication = new Deduplication
+            {
+              Positioning = Enum.Parse<DedupPositioning>("Highest"),
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "putCompositionRule")]
   public async Task PutCompositionRuleTest()
   {
@@ -1253,6 +1376,69 @@ public class CompositionClientRequestTests
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putCompositionRule")]
+  public async Task PutCompositionRuleTest3()
+  {
+    await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-deduplication",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-deduplication",
+        Description = "my description",
+        Enabled = true,
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "my-index" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "my-unique-injected-item-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
+                    }
+                  ),
+                  Position = 0,
+                  Length = 3,
+                },
+              },
+              Deduplication = new Deduplication
+              {
+                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
+              },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/compositionID/rules/rule-with-deduplication", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1491,6 +1677,87 @@ public class CompositionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "saveRules")]
+  public async Task SaveRulesTest3()
+  {
+    await client.SaveRulesAsync(
+      "my-compo",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-deduplication",
+                Description = "my description",
+                Enabled = true,
+                Conditions = new List<Condition>
+                {
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "harry",
+                  },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "my-index" },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "my-unique-injected-item-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "my-index",
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 3,
+                        },
+                      },
+                      Deduplication = new Deduplication
+                      {
+                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

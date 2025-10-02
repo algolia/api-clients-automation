@@ -763,6 +763,59 @@ void snippetFormultipleBatch2() async {
   // SEPARATOR<
 }
 
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+void snippetFormultipleBatch3() async {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.multipleBatch(
+    batchParams: BatchParams(
+      requests: [
+        MultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: Composition(
+            objectID: "my-compo",
+            name: "my composition",
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "foo",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "my-unique-injected-item-key",
+                    source: SearchSource(
+                      search: Search(
+                        index: "foo",
+                      ),
+                    ),
+                    position: 2,
+                    length: 1,
+                  ),
+                ],
+                deduplication: Deduplication(
+                  positioning: DedupPositioning.fromJson("highest"),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the putComposition method.
 //
 // putComposition
@@ -936,6 +989,56 @@ void snippetForputComposition2() async {
               ),
             ),
           ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition3() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-compo",
+    composition: Composition(
+      objectID: "my-compo",
+      name: "my composition",
+      behavior: CompositionBehavior(
+        injection: Injection(
+          main: Main(
+            source: CompositionSource(
+              search: CompositionSourceSearch(
+                index: "foo",
+                params: MainInjectionQueryParameters(
+                  filters: "brand:adidas",
+                ),
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectedItem(
+              key: "my-unique-injected-item-key",
+              source: SearchSource(
+                search: Search(
+                  index: "foo",
+                ),
+              ),
+              position: 2,
+              length: 1,
+            ),
+          ],
+          deduplication: Deduplication(
+            positioning: DedupPositioning.fromJson("highest"),
+          ),
         ),
       ),
     ),
@@ -1139,6 +1242,63 @@ void snippetForputCompositionRule2() async {
   // SEPARATOR<
 }
 
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+void snippetForputCompositionRule3() async {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putCompositionRule(
+    compositionID: "compositionID",
+    objectID: "rule-with-deduplication",
+    compositionRule: CompositionRule(
+      objectID: "rule-with-deduplication",
+      description: "my description",
+      enabled: true,
+      conditions: [
+        Condition(
+          anchoring: Anchoring.fromJson("contains"),
+          pattern: "harry",
+        ),
+      ],
+      consequence: CompositionRuleConsequence(
+        behavior: CompositionBehavior(
+          injection: Injection(
+            main: Main(
+              source: CompositionSource(
+                search: CompositionSourceSearch(
+                  index: "my-index",
+                ),
+              ),
+            ),
+            injectedItems: [
+              InjectedItem(
+                key: "my-unique-injected-item-key",
+                source: SearchSource(
+                  search: Search(
+                    index: "my-index",
+                  ),
+                ),
+                position: 0,
+                length: 3,
+              ),
+            ],
+            deduplication: Deduplication(
+              positioning: DedupPositioning.fromJson("highestInjected"),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the saveRules method.
 //
 // saveRules
@@ -1327,6 +1487,69 @@ void snippetForsaveRules2() async {
                       length: 3,
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+void snippetForsaveRules3() async {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.saveRules(
+    compositionID: "my-compo",
+    rules: CompositionRulesBatchParams(
+      requests: [
+        RulesMultipleBatchRequest(
+          action: Action.fromJson("upsert"),
+          body: CompositionRule(
+            objectID: "rule-with-deduplication",
+            description: "my description",
+            enabled: true,
+            conditions: [
+              Condition(
+                anchoring: Anchoring.fromJson("contains"),
+                pattern: "harry",
+              ),
+            ],
+            consequence: CompositionRuleConsequence(
+              behavior: CompositionBehavior(
+                injection: Injection(
+                  main: Main(
+                    source: CompositionSource(
+                      search: CompositionSourceSearch(
+                        index: "my-index",
+                      ),
+                    ),
+                  ),
+                  injectedItems: [
+                    InjectedItem(
+                      key: "my-unique-injected-item-key",
+                      source: SearchSource(
+                        search: Search(
+                          index: "my-index",
+                        ),
+                      ),
+                      position: 0,
+                      length: 3,
+                    ),
+                  ],
+                  deduplication: Deduplication(
+                    positioning: DedupPositioning.fromJson("highestInjected"),
+                  ),
                 ),
               ),
             ),

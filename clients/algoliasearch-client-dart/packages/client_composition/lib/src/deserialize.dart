@@ -25,6 +25,8 @@ import 'package:algolia_client_composition/src/model/composition_source.dart';
 import 'package:algolia_client_composition/src/model/composition_source_search.dart';
 import 'package:algolia_client_composition/src/model/compositions_search_response.dart';
 import 'package:algolia_client_composition/src/model/condition.dart';
+import 'package:algolia_client_composition/src/model/dedup_positioning.dart';
+import 'package:algolia_client_composition/src/model/deduplication.dart';
 import 'package:algolia_client_composition/src/model/delete_composition_action.dart';
 import 'package:algolia_client_composition/src/model/delete_composition_rule_action.dart';
 import 'package:algolia_client_composition/src/model/error_base.dart';
@@ -184,6 +186,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'Condition':
       return Condition.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'DedupPositioning':
+      return DedupPositioning.fromJson(value) as ReturnType;
+    case 'Deduplication':
+      return Deduplication.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'DeleteCompositionAction':
       return DeleteCompositionAction.fromJson(value as Map<String, dynamic>)
           as ReturnType;

@@ -2474,10 +2474,10 @@ paths:
 
             // Call the API
             var response = await client.PutCompositionAsync(
-              "my-metadata-compo",
+              "my-compo",
               new Composition
               {
-                ObjectID = "my-metadata-compo",
+                ObjectID = "my-compo",
                 Name = "my composition",
                 Behavior = new CompositionBehavior
                 {
@@ -2498,70 +2498,20 @@ paths:
                     {
                       new InjectedItem
                       {
-                        Key = "injectedItem1",
+                        Key = "my-unique-injected-item-key",
                         Source = new InjectedItemSource(
                           new SearchSource
                           {
-                            Search = new Algolia.Search.Models.Composition.Search
-                            {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                            },
+                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
                           }
                         ),
                         Position = 2,
                         Length = 1,
-                        Metadata = new InjectedItemMetadata
-                        {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
-                            {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
-                              {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                              },
-                            },
-                          },
-                        },
                       },
-                      new InjectedItem
-                      {
-                        Key = "externalItem",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search
-                            {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                            },
-                          }
-                        ),
-                        Position = 5,
-                        Length = 5,
-                        Metadata = new InjectedItemMetadata
-                        {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
-                            {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
-                              {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                              },
-                            },
-                          },
-                        },
-                      },
+                    },
+                    Deduplication = new Deduplication
+                    {
+                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
                     },
                   },
                 },
@@ -2577,9 +2527,9 @@ paths:
 
             // Call the API
             final response = await client.putComposition(
-              compositionID: "my-metadata-compo",
+              compositionID: "my-compo",
               composition: Composition(
-                objectID: "my-metadata-compo",
+                objectID: "my-compo",
                 name: "my composition",
                 behavior: CompositionBehavior(
                   injection: Injection(
@@ -2595,58 +2545,19 @@ paths:
                     ),
                     injectedItems: [
                       InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-injected-item-key",
                         source: SearchSource(
                           search: Search(
                             index: "foo",
-                            params: BaseInjectionQueryParameters(
-                              filters: "brand:adidas",
-                            ),
                           ),
                         ),
                         position: 2,
                         length: 1,
-                        metadata: InjectedItemMetadata(
-                          hits: InjectedItemHitsMetadata(
-                            addItemKey: true,
-                            extra: {
-                              'my-string': "string",
-                              'my-bool': true,
-                              'my-number': 42,
-                              'my-object': {
-                                'sub-key': 'sub-value',
-                              },
-                            },
-                          ),
-                        ),
-                      ),
-                      InjectedItem(
-                        key: "externalItem",
-                        source: SearchSource(
-                          search: Search(
-                            index: "foo",
-                            params: BaseInjectionQueryParameters(
-                              filters: "brand:puma",
-                            ),
-                          ),
-                        ),
-                        position: 5,
-                        length: 5,
-                        metadata: InjectedItemMetadata(
-                          hits: InjectedItemHitsMetadata(
-                            addItemKey: true,
-                            extra: {
-                              'my-string': "string",
-                              'my-bool': true,
-                              'my-number': 42,
-                              'my-object': {
-                                'sub-key': 'sub-value',
-                              },
-                            },
-                          ),
-                        ),
                       ),
                     ],
+                    deduplication: Deduplication(
+                      positioning: DedupPositioning.fromJson("highest"),
+                    ),
                   ),
                 ),
               ),
@@ -2670,25 +2581,18 @@ paths:
 
             response, err :=
             client.PutComposition(client.NewApiPutCompositionRequest(
-              "my-metadata-compo",
-              composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
+              "my-compo",
+              composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
                 composition.NewEmptyCompositionBehavior().SetInjection(
                   composition.NewEmptyInjection().SetMain(
                     composition.NewEmptyMain().SetSource(
                       composition.NewEmptyCompositionSource().SetSearch(
                         composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
                           composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                    []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+                    []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
                       composition.NewEmptySearchSource().SetSearch(
-                        composition.NewEmptySearch().SetIndex("foo").SetParams(
-                          composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-                      composition.NewEmptyInjectedItemMetadata().SetHits(
-                        composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
-                      composition.NewEmptySearchSource().SetSearch(
-                        composition.NewEmptySearch().SetIndex("foo").SetParams(
-                          composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
-                      composition.NewEmptyInjectedItemMetadata().SetHits(
-                        composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))
+                        composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
+                    composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2712,89 +2616,31 @@ paths:
             // Call the API
 
             client.putComposition(
-              "my-metadata-compo",
+              "my-compo",
               new Composition()
-                .setObjectID("my-metadata-compo")
+                .setObjectID("my-compo")
                 .setName("my composition")
                 .setBehavior(
                   new CompositionBehavior().setInjection(
-                      new Injection()
-                        .setMain(
-                          new Main().setSource(
-                            new CompositionSource().setSearch(
-                              new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
-                            )
+                    new Injection()
+                      .setMain(
+                        new Main().setSource(
+                          new CompositionSource().setSearch(
+                            new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                           )
                         )
-                        .setInjectedItems(
-                          Arrays.asList(
-                            new InjectedItem()
-                              .setKey("injectedItem1")
-                              .setSource(
-                                new SearchSource().setSearch(
-                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                )
-                              )
-                              .setPosition(2)
-                              .setLength(1)
-                              .setMetadata(
-                                new InjectedItemMetadata().setHits(
-                                    new InjectedItemHitsMetadata()
-                                      .setAddItemKey(true)
-                                      .setExtra(
-                                        new HashMap() {
-                                          {
-                                            put("my-string", "string");
-                                            put("my-bool", true);
-                                            put("my-number", 42);
-                                            put(
-                                              "my-object",
-                                              new HashMap() {
-                                                {
-                                                  put("sub-key", "sub-value");
-                                                }
-                                              }
-                                            );
-                                          }
-                                        }
-                                      )
-                                  )
-                              ),
-                            new InjectedItem()
-                              .setKey("externalItem")
-                              .setSource(
-                                new SearchSource().setSearch(
-                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
-                                )
-                              )
-                              .setPosition(5)
-                              .setLength(5)
-                              .setMetadata(
-                                new InjectedItemMetadata().setHits(
-                                    new InjectedItemHitsMetadata()
-                                      .setAddItemKey(true)
-                                      .setExtra(
-                                        new HashMap() {
-                                          {
-                                            put("my-string", "string");
-                                            put("my-bool", true);
-                                            put("my-number", 42);
-                                            put(
-                                              "my-object",
-                                              new HashMap() {
-                                                {
-                                                  put("sub-key", "sub-value");
-                                                }
-                                              }
-                                            );
-                                          }
-                                        }
-                                      )
-                                  )
-                              )
-                          )
+                      )
+                      .setInjectedItems(
+                        Arrays.asList(
+                          new InjectedItem()
+                            .setKey("my-unique-injected-item-key")
+                            .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                            .setPosition(2)
+                            .setLength(1)
                         )
-                    )
+                      )
+                      .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+                  )
                 )
             );
 
@@ -2811,49 +2657,17 @@ paths:
             // Call the API
 
             const response = await client.putComposition({
-              compositionID: 'my-metadata-compo',
+              compositionID: 'my-compo',
               composition: {
-                objectID: 'my-metadata-compo',
+                objectID: 'my-compo',
                 name: 'my composition',
                 behavior: {
                   injection: {
                     main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                     injectedItems: [
-                      {
-                        key: 'injectedItem1',
-                        source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
-                        position: 2,
-                        length: 1,
-                        metadata: {
-                          hits: {
-                            addItemKey: true,
-                            extra: {
-                              'my-string': 'string',
-                              'my-bool': true,
-                              'my-number': 42,
-                              'my-object': { 'sub-key': 'sub-value' },
-                            },
-                          },
-                        },
-                      },
-                      {
-                        key: 'externalItem',
-                        source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
-                        position: 5,
-                        length: 5,
-                        metadata: {
-                          hits: {
-                            addItemKey: true,
-                            extra: {
-                              'my-string': 'string',
-                              'my-bool': true,
-                              'my-number': 42,
-                              'my-object': { 'sub-key': 'sub-value' },
-                            },
-                          },
-                        },
-                      },
+                      { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
                     ],
+                    deduplication: { positioning: 'highest' },
                   },
                 },
               },
@@ -2877,34 +2691,36 @@ paths:
             // Call the API
 
             var response = client.putComposition(
-              compositionID = "my-external-injection-compo",
+              compositionID = "my-compo",
               composition = Composition(
-                objectID = "my-external-injection-compo",
-                name = "my first composition",
+                objectID = "my-compo",
+                name = "my composition",
                 behavior = CompositionBehavior(
                   injection = Injection(
                     main = Main(
                       source = CompositionSource(
                         search = CompositionSourceSearch(
                           index = "foo",
+                          params = MainInjectionQueryParameters(
+                            filters = "brand:adidas",
+                          ),
                         ),
                       ),
                     ),
                     injectedItems = listOf(
                       InjectedItem(
-                        key = "injectedItem1",
-                        source = ExternalSource(
-                          external = External(
+                        key = "my-unique-injected-item-key",
+                        source = SearchSource(
+                          search = Search(
                             index = "foo",
-                            ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
-                            params = BaseInjectionQueryParameters(
-                              filters = "brand:adidas",
-                            ),
                           ),
                         ),
                         position = 2,
                         length = 1,
                       ),
+                    ),
+                    deduplication = Deduplication(
+                      positioning = DedupPositioning.entries.first { it.value == "highest" },
                     ),
                   ),
                 ),
@@ -2929,8 +2745,8 @@ paths:
             // Call the API
 
             $response = $client->putComposition(
-                'my-metadata-compo',
-                ['objectID' => 'my-metadata-compo',
+                'my-compo',
+                ['objectID' => 'my-compo',
                     'name' => 'my composition',
                     'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
                         'params' => ['filters' => 'brand:adidas',
@@ -2939,41 +2755,15 @@ paths:
                     ],
                     ],
                         'injectedItems' => [
-                            ['key' => 'injectedItem1',
+                            ['key' => 'my-unique-injected-item-key',
                                 'source' => ['search' => ['index' => 'foo',
-                                    'params' => ['filters' => 'brand:adidas',
-                                    ],
                                 ],
                                 ],
                                 'position' => 2,
                                 'length' => 1,
-                                'metadata' => ['hits' => ['addItemKey' => true,
-                                    'extra' => ['my-string' => 'string',
-                                        'my-bool' => true,
-                                        'my-number' => 42,
-                                        'my-object' => ['sub-key' => 'sub-value'],
-                                    ],
-                                ],
-                                ],
                             ],
-
-                            ['key' => 'externalItem',
-                                'source' => ['search' => ['index' => 'foo',
-                                    'params' => ['filters' => 'brand:puma',
-                                    ],
-                                ],
-                                ],
-                                'position' => 5,
-                                'length' => 5,
-                                'metadata' => ['hits' => ['addItemKey' => true,
-                                    'extra' => ['my-string' => 'string',
-                                        'my-bool' => true,
-                                        'my-number' => 42,
-                                        'my-object' => ['sub-key' => 'sub-value'],
-                                    ],
-                                ],
-                                ],
-                            ],
+                        ],
+                        'deduplication' => ['positioning' => 'highest',
                         ],
                     ],
                     ],
@@ -3001,9 +2791,9 @@ paths:
             # Call the API
 
             response = client.put_composition(
-                composition_id="my-metadata-compo",
+                composition_id="my-compo",
                 composition={
-                    "objectID": "my-metadata-compo",
+                    "objectID": "my-compo",
                     "name": "my composition",
                     "behavior": {
                         "injection": {
@@ -3019,54 +2809,19 @@ paths:
                             },
                             "injectedItems": [
                                 {
-                                    "key": "injectedItem1",
+                                    "key": "my-unique-injected-item-key",
                                     "source": {
                                         "search": {
                                             "index": "foo",
-                                            "params": {
-                                                "filters": "brand:adidas",
-                                            },
                                         },
                                     },
                                     "position": 2,
                                     "length": 1,
-                                    "metadata": {
-                                        "hits": {
-                                            "addItemKey": True,
-                                            "extra": {
-                                                "my-string": "string",
-                                                "my-bool": True,
-                                                "my-number": 42,
-                                                "my-object": {"sub-key": "sub-value"},
-                                            },
-                                        },
-                                    },
-                                },
-                                {
-                                    "key": "externalItem",
-                                    "source": {
-                                        "search": {
-                                            "index": "foo",
-                                            "params": {
-                                                "filters": "brand:puma",
-                                            },
-                                        },
-                                    },
-                                    "position": 5,
-                                    "length": 5,
-                                    "metadata": {
-                                        "hits": {
-                                            "addItemKey": True,
-                                            "extra": {
-                                                "my-string": "string",
-                                                "my-bool": True,
-                                                "my-number": 42,
-                                                "my-object": {"sub-key": "sub-value"},
-                                            },
-                                        },
-                                    },
                                 },
                             ],
+                            "deduplication": {
+                                "positioning": "highest",
+                            },
                         },
                     },
                 },
@@ -3090,9 +2845,9 @@ paths:
             # Call the API
 
             response = client.put_composition(
-              "my-metadata-compo",
+              "my-compo",
               Algolia::Composition::Composition.new(
-                algolia_object_id: "my-metadata-compo",
+                algolia_object_id: "my-compo",
                 name: "my composition",
                 behavior: Algolia::Composition::CompositionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
@@ -3106,50 +2861,13 @@ paths:
                     ),
                     injected_items: [
                       Algolia::Composition::InjectedItem.new(
-                        key: "injectedItem1",
-                        source: Algolia::Composition::SearchSource.new(
-                          search: Algolia::Composition::Search.new(
-                            index: "foo",
-                            params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
-                          )
-                        ),
+                        key: "my-unique-injected-item-key",
+                        source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
                         position: 2,
-                        length: 1,
-                        metadata: Algolia::Composition::InjectedItemMetadata.new(
-                          hits: Algolia::Composition::InjectedItemHitsMetadata.new(
-                            add_item_key: true,
-                            extra: {
-                              :"my-string" => "string",
-                              :"my-bool" => true,
-                              :"my-number" => 42,
-                              :"my-object" => {:"sub-key" => "sub-value"}
-                            }
-                          )
-                        )
-                      ),
-                      Algolia::Composition::InjectedItem.new(
-                        key: "externalItem",
-                        source: Algolia::Composition::SearchSource.new(
-                          search: Algolia::Composition::Search.new(
-                            index: "foo",
-                            params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
-                          )
-                        ),
-                        position: 5,
-                        length: 5,
-                        metadata: Algolia::Composition::InjectedItemMetadata.new(
-                          hits: Algolia::Composition::InjectedItemHitsMetadata.new(
-                            add_item_key: true,
-                            extra: {
-                              :"my-string" => "string",
-                              :"my-bool" => true,
-                              :"my-number" => 42,
-                              :"my-object" => {:"sub-key" => "sub-value"}
-                            }
-                          )
-                        )
+                        length: 1
                       )
-                    ]
+                    ],
+                    deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
                   )
                 )
               )
@@ -3179,9 +2897,9 @@ paths:
 
             val response = Await.result(
               client.putComposition(
-                compositionID = "my-metadata-compo",
+                compositionID = "my-compo",
                 composition = Composition(
-                  objectID = "my-metadata-compo",
+                  objectID = "my-compo",
                   name = "my composition",
                   behavior = CompositionBehavior(
                     injection = Injection(
@@ -3200,77 +2918,20 @@ paths:
                       injectedItems = Some(
                         Seq(
                           InjectedItem(
-                            key = "injectedItem1",
+                            key = "my-unique-injected-item-key",
                             source = SearchSource(
                               search = Search(
-                                index = "foo",
-                                params = Some(
-                                  BaseInjectionQueryParameters(
-                                    filters = Some("brand:adidas")
-                                  )
-                                )
+                                index = "foo"
                               )
                             ),
                             position = 2,
-                            length = 1,
-                            metadata = Some(
-                              InjectedItemMetadata(
-                                hits = Some(
-                                  InjectedItemHitsMetadata(
-                                    addItemKey = Some(true),
-                                    extra = Some(
-                                      Map(
-                                        "my-string" -> "string",
-                                        "my-bool" -> true,
-                                        "my-number" -> 42,
-                                        "my-object" -> JObject(
-                                          List(
-                                            JField("sub-key", JString("sub-value"))
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          ),
-                          InjectedItem(
-                            key = "externalItem",
-                            source = SearchSource(
-                              search = Search(
-                                index = "foo",
-                                params = Some(
-                                  BaseInjectionQueryParameters(
-                                    filters = Some("brand:puma")
-                                  )
-                                )
-                              )
-                            ),
-                            position = 5,
-                            length = 5,
-                            metadata = Some(
-                              InjectedItemMetadata(
-                                hits = Some(
-                                  InjectedItemHitsMetadata(
-                                    addItemKey = Some(true),
-                                    extra = Some(
-                                      Map(
-                                        "my-string" -> "string",
-                                        "my-bool" -> true,
-                                        "my-number" -> 42,
-                                        "my-object" -> JObject(
-                                          List(
-                                            JField("sub-key", JString("sub-value"))
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
+                            length = 1
                           )
+                        )
+                      ),
+                      deduplication = Some(
+                        Deduplication(
+                          positioning = DedupPositioning.withName("highest")
                         )
                       )
                     )
@@ -3293,53 +2954,23 @@ paths:
             // Call the API
 
             let response = try await client.putComposition(
-                compositionID: "my-metadata-compo",
+                compositionID: "my-compo",
                 composition: Composition(
-                    objectID: "my-metadata-compo",
+                    objectID: "my-compo",
                     name: "my composition",
                     behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
                             index: "foo",
                             params: MainInjectionQueryParameters(filters: "brand:adidas")
                         ))),
-                        injectedItems: [
-                            InjectedItem(
-                                key: "injectedItem1",
-                                source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                    index: "foo",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                                ))),
-                                position: 2,
-                                length: 1,
-                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                    addItemKey: true,
-                                    extra: [
-                                        "my-string": AnyCodable("string"),
-                                        "my-bool": true,
-                                        "my-number": 42,
-                                        "my-object": ["sub-key": "sub-value"],
-                                    ]
-                                ))
-                            ),
-                            InjectedItem(
-                                key: "externalItem",
-                                source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                    index: "foo",
-                                    params: BaseInjectionQueryParameters(filters: "brand:puma")
-                                ))),
-                                position: 5,
-                                length: 5,
-                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                    addItemKey: true,
-                                    extra: [
-                                        "my-string": AnyCodable("string"),
-                                        "my-bool": true,
-                                        "my-number": 42,
-                                        "my-object": ["sub-key": "sub-value"],
-                                    ]
-                                ))
-                            ),
-                        ]
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highest)
                     ))
                 )
             )
@@ -3354,7 +2985,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}}'
+              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}}'
     delete:
       tags:
         - Compositions
@@ -3688,7 +3319,7 @@ paths:
                     Body = new BatchCompositionAction(
                       new Composition
                       {
-                        ObjectID = "my-metadata-compo",
+                        ObjectID = "my-compo",
                         Name = "my composition",
                         Behavior = new CompositionBehavior
                         {
@@ -3698,84 +3329,27 @@ paths:
                             {
                               Source = new CompositionSource
                               {
-                                Search = new CompositionSourceSearch
-                                {
-                                  Index = "foo",
-                                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                                },
+                                Search = new CompositionSourceSearch { Index = "foo" },
                               },
                             },
                             InjectedItems = new List<InjectedItem>
                             {
                               new InjectedItem
                               {
-                                Key = "injectedItem1",
+                                Key = "my-unique-injected-item-key",
                                 Source = new InjectedItemSource(
                                   new SearchSource
                                   {
-                                    Search = new Algolia.Search.Models.Composition.Search
-                                    {
-                                      Index = "foo",
-                                      Params = new BaseInjectionQueryParameters
-                                      {
-                                        Filters = "brand:adidas",
-                                      },
-                                    },
+                                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
                                   }
                                 ),
                                 Position = 2,
                                 Length = 1,
-                                Metadata = new InjectedItemMetadata
-                                {
-                                  Hits = new InjectedItemHitsMetadata
-                                  {
-                                    AddItemKey = true,
-                                    Extra = new Dictionary<string, object>
-                                    {
-                                      { "my-string", "string" },
-                                      { "my-bool", true },
-                                      { "my-number", 42 },
-                                      {
-                                        "my-object",
-                                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                                      },
-                                    },
-                                  },
-                                },
                               },
-                              new InjectedItem
-                              {
-                                Key = "externalItem",
-                                Source = new InjectedItemSource(
-                                  new SearchSource
-                                  {
-                                    Search = new Algolia.Search.Models.Composition.Search
-                                    {
-                                      Index = "foo",
-                                      Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                                    },
-                                  }
-                                ),
-                                Position = 5,
-                                Length = 5,
-                                Metadata = new InjectedItemMetadata
-                                {
-                                  Hits = new InjectedItemHitsMetadata
-                                  {
-                                    AddItemKey = true,
-                                    Extra = new Dictionary<string, object>
-                                    {
-                                      { "my-string", "string" },
-                                      { "my-bool", true },
-                                      { "my-number", 42 },
-                                      {
-                                        "my-object",
-                                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                                      },
-                                    },
-                                  },
-                                },
-                              },
+                            },
+                            Deduplication = new Deduplication
+                            {
+                              Positioning = Enum.Parse<DedupPositioning>("Highest"),
                             },
                           },
                         },
@@ -3800,7 +3374,7 @@ paths:
                   MultipleBatchRequest(
                     action: Action.fromJson("upsert"),
                     body: Composition(
-                      objectID: "my-metadata-compo",
+                      objectID: "my-compo",
                       name: "my composition",
                       behavior: CompositionBehavior(
                         injection: Injection(
@@ -3808,66 +3382,24 @@ paths:
                             source: CompositionSource(
                               search: CompositionSourceSearch(
                                 index: "foo",
-                                params: MainInjectionQueryParameters(
-                                  filters: "brand:adidas",
-                                ),
                               ),
                             ),
                           ),
                           injectedItems: [
                             InjectedItem(
-                              key: "injectedItem1",
+                              key: "my-unique-injected-item-key",
                               source: SearchSource(
                                 search: Search(
                                   index: "foo",
-                                  params: BaseInjectionQueryParameters(
-                                    filters: "brand:adidas",
-                                  ),
                                 ),
                               ),
                               position: 2,
                               length: 1,
-                              metadata: InjectedItemMetadata(
-                                hits: InjectedItemHitsMetadata(
-                                  addItemKey: true,
-                                  extra: {
-                                    'my-string': "string",
-                                    'my-bool': true,
-                                    'my-number': 42,
-                                    'my-object': {
-                                      'sub-key': 'sub-value',
-                                    },
-                                  },
-                                ),
-                              ),
-                            ),
-                            InjectedItem(
-                              key: "externalItem",
-                              source: SearchSource(
-                                search: Search(
-                                  index: "foo",
-                                  params: BaseInjectionQueryParameters(
-                                    filters: "brand:puma",
-                                  ),
-                                ),
-                              ),
-                              position: 5,
-                              length: 5,
-                              metadata: InjectedItemMetadata(
-                                hits: InjectedItemHitsMetadata(
-                                  addItemKey: true,
-                                  extra: {
-                                    'my-string': "string",
-                                    'my-bool': true,
-                                    'my-number': 42,
-                                    'my-object': {
-                                      'sub-key': 'sub-value',
-                                    },
-                                  },
-                                ),
-                              ),
                             ),
                           ],
+                          deduplication: Deduplication(
+                            positioning: DedupPositioning.fromJson("highest"),
+                          ),
                         ),
                       ),
                     ),
@@ -3897,24 +3429,16 @@ paths:
 
               composition.NewEmptyBatchParams().SetRequests(
                 []composition.MultipleBatchRequest{*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-                  composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
+                  composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
                     composition.NewEmptyCompositionBehavior().SetInjection(
                       composition.NewEmptyInjection().SetMain(
                         composition.NewEmptyMain().SetSource(
                           composition.NewEmptyCompositionSource().SetSearch(
-                            composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-                              composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                        []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem1").SetSource(composition.SearchSourceAsInjectedItemSource(
+                            composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+                        []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
                           composition.NewEmptySearchSource().SetSearch(
-                            composition.NewEmptySearch().SetIndex("foo").SetParams(
-                              composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-                          composition.NewEmptyInjectedItemMetadata().SetHits(
-                            composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("externalItem").SetSource(composition.SearchSourceAsInjectedItemSource(
-                          composition.NewEmptySearchSource().SetSearch(
-                            composition.NewEmptySearch().SetIndex("foo").SetParams(
-                              composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
-                          composition.NewEmptyInjectedItemMetadata().SetHits(
-                            composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))})))
+                            composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
+                        composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3939,98 +3463,32 @@ paths:
 
             client.multipleBatch(
               new BatchParams().setRequests(
-                  Arrays.asList(
-                    new MultipleBatchRequest()
-                      .setAction(Action.UPSERT)
-                      .setBody(
-                        new Composition()
-                          .setObjectID("my-metadata-compo")
-                          .setName("my composition")
-                          .setBehavior(
-                            new CompositionBehavior().setInjection(
-                                new Injection()
-                                  .setMain(
-                                    new Main().setSource(
-                                      new CompositionSource().setSearch(
-                                        new CompositionSourceSearch()
-                                          .setIndex("foo")
-                                          .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
-                                      )
-                                    )
-                                  )
-                                  .setInjectedItems(
-                                    Arrays.asList(
-                                      new InjectedItem()
-                                        .setKey("injectedItem1")
-                                        .setSource(
-                                          new SearchSource().setSearch(
-                                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                          )
-                                        )
-                                        .setPosition(2)
-                                        .setLength(1)
-                                        .setMetadata(
-                                          new InjectedItemMetadata().setHits(
-                                              new InjectedItemHitsMetadata()
-                                                .setAddItemKey(true)
-                                                .setExtra(
-                                                  new HashMap() {
-                                                    {
-                                                      put("my-string", "string");
-                                                      put("my-bool", true);
-                                                      put("my-number", 42);
-                                                      put(
-                                                        "my-object",
-                                                        new HashMap() {
-                                                          {
-                                                            put("sub-key", "sub-value");
-                                                          }
-                                                        }
-                                                      );
-                                                    }
-                                                  }
-                                                )
-                                            )
-                                        ),
-                                      new InjectedItem()
-                                        .setKey("externalItem")
-                                        .setSource(
-                                          new SearchSource().setSearch(
-                                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
-                                          )
-                                        )
-                                        .setPosition(5)
-                                        .setLength(5)
-                                        .setMetadata(
-                                          new InjectedItemMetadata().setHits(
-                                              new InjectedItemHitsMetadata()
-                                                .setAddItemKey(true)
-                                                .setExtra(
-                                                  new HashMap() {
-                                                    {
-                                                      put("my-string", "string");
-                                                      put("my-bool", true);
-                                                      put("my-number", 42);
-                                                      put(
-                                                        "my-object",
-                                                        new HashMap() {
-                                                          {
-                                                            put("sub-key", "sub-value");
-                                                          }
-                                                        }
-                                                      );
-                                                    }
-                                                  }
-                                                )
-                                            )
-                                        )
-                                    )
-                                  )
+                Arrays.asList(
+                  new MultipleBatchRequest()
+                    .setAction(Action.UPSERT)
+                    .setBody(
+                      new Composition()
+                        .setObjectID("my-compo")
+                        .setName("my composition")
+                        .setBehavior(
+                          new CompositionBehavior().setInjection(
+                            new Injection()
+                              .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                              .setInjectedItems(
+                                Arrays.asList(
+                                  new InjectedItem()
+                                    .setKey("my-unique-injected-item-key")
+                                    .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                                    .setPosition(2)
+                                    .setLength(1)
+                                )
                               )
+                              .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
                           )
-                      )
-                  )
+                        )
+                    )
                 )
+              )
             );
 
             // >LOG
@@ -4050,47 +3508,15 @@ paths:
                 {
                   action: 'upsert',
                   body: {
-                    objectID: 'my-metadata-compo',
+                    objectID: 'my-compo',
                     name: 'my composition',
                     behavior: {
                       injection: {
-                        main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+                        main: { source: { search: { index: 'foo' } } },
                         injectedItems: [
-                          {
-                            key: 'injectedItem1',
-                            source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
-                            position: 2,
-                            length: 1,
-                            metadata: {
-                              hits: {
-                                addItemKey: true,
-                                extra: {
-                                  'my-string': 'string',
-                                  'my-bool': true,
-                                  'my-number': 42,
-                                  'my-object': { 'sub-key': 'sub-value' },
-                                },
-                              },
-                            },
-                          },
-                          {
-                            key: 'externalItem',
-                            source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
-                            position: 5,
-                            length: 5,
-                            metadata: {
-                              hits: {
-                                addItemKey: true,
-                                extra: {
-                                  'my-string': 'string',
-                                  'my-bool': true,
-                                  'my-number': 42,
-                                  'my-object': { 'sub-key': 'sub-value' },
-                                },
-                              },
-                            },
-                          },
+                          { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
                         ],
+                        deduplication: { positioning: 'highest' },
                       },
                     },
                   },
@@ -4166,50 +3592,22 @@ paths:
             $response = $client->multipleBatch(
                 ['requests' => [
                     ['action' => 'upsert',
-                        'body' => ['objectID' => 'my-metadata-compo',
+                        'body' => ['objectID' => 'my-compo',
                             'name' => 'my composition',
                             'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
-                                'params' => ['filters' => 'brand:adidas',
-                                ],
                             ],
                             ],
                             ],
                                 'injectedItems' => [
-                                    ['key' => 'injectedItem1',
+                                    ['key' => 'my-unique-injected-item-key',
                                         'source' => ['search' => ['index' => 'foo',
-                                            'params' => ['filters' => 'brand:adidas',
-                                            ],
                                         ],
                                         ],
                                         'position' => 2,
                                         'length' => 1,
-                                        'metadata' => ['hits' => ['addItemKey' => true,
-                                            'extra' => ['my-string' => 'string',
-                                                'my-bool' => true,
-                                                'my-number' => 42,
-                                                'my-object' => ['sub-key' => 'sub-value'],
-                                            ],
-                                        ],
-                                        ],
                                     ],
-
-                                    ['key' => 'externalItem',
-                                        'source' => ['search' => ['index' => 'foo',
-                                            'params' => ['filters' => 'brand:puma',
-                                            ],
-                                        ],
-                                        ],
-                                        'position' => 5,
-                                        'length' => 5,
-                                        'metadata' => ['hits' => ['addItemKey' => true,
-                                            'extra' => ['my-string' => 'string',
-                                                'my-bool' => true,
-                                                'my-number' => 42,
-                                                'my-object' => ['sub-key' => 'sub-value'],
-                                            ],
-                                        ],
-                                        ],
-                                    ],
+                                ],
+                                'deduplication' => ['positioning' => 'highest',
                                 ],
                             ],
                             ],
@@ -4245,7 +3643,7 @@ paths:
                         {
                             "action": "upsert",
                             "body": {
-                                "objectID": "my-metadata-compo",
+                                "objectID": "my-compo",
                                 "name": "my composition",
                                 "behavior": {
                                     "injection": {
@@ -4253,66 +3651,24 @@ paths:
                                             "source": {
                                                 "search": {
                                                     "index": "foo",
-                                                    "params": {
-                                                        "filters": "brand:adidas",
-                                                    },
                                                 },
                                             },
                                         },
                                         "injectedItems": [
                                             {
-                                                "key": "injectedItem1",
+                                                "key": "my-unique-injected-item-key",
                                                 "source": {
                                                     "search": {
                                                         "index": "foo",
-                                                        "params": {
-                                                            "filters": "brand:adidas",
-                                                        },
                                                     },
                                                 },
                                                 "position": 2,
                                                 "length": 1,
-                                                "metadata": {
-                                                    "hits": {
-                                                        "addItemKey": True,
-                                                        "extra": {
-                                                            "my-string": "string",
-                                                            "my-bool": True,
-                                                            "my-number": 42,
-                                                            "my-object": {
-                                                                "sub-key": "sub-value"
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            {
-                                                "key": "externalItem",
-                                                "source": {
-                                                    "search": {
-                                                        "index": "foo",
-                                                        "params": {
-                                                            "filters": "brand:puma",
-                                                        },
-                                                    },
-                                                },
-                                                "position": 5,
-                                                "length": 5,
-                                                "metadata": {
-                                                    "hits": {
-                                                        "addItemKey": True,
-                                                        "extra": {
-                                                            "my-string": "string",
-                                                            "my-bool": True,
-                                                            "my-number": 42,
-                                                            "my-object": {
-                                                                "sub-key": "sub-value"
-                                                            },
-                                                        },
-                                                    },
-                                                },
                                             },
                                         ],
+                                        "deduplication": {
+                                            "positioning": "highest",
+                                        },
                                     },
                                 },
                             },
@@ -4344,64 +3700,26 @@ paths:
                   Algolia::Composition::MultipleBatchRequest.new(
                     action: "upsert",
                     body: Algolia::Composition::Composition.new(
-                      algolia_object_id: "my-metadata-compo",
+                      algolia_object_id: "my-compo",
                       name: "my composition",
                       behavior: Algolia::Composition::CompositionBehavior.new(
                         injection: Algolia::Composition::Injection.new(
                           main: Algolia::Composition::Main.new(
                             source: Algolia::Composition::CompositionSource.new(
-                              search: Algolia::Composition::CompositionSourceSearch.new(
-                                index: "foo",
-                                params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
-                              )
+                              search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
                             )
                           ),
                           injected_items: [
                             Algolia::Composition::InjectedItem.new(
-                              key: "injectedItem1",
+                              key: "my-unique-injected-item-key",
                               source: Algolia::Composition::SearchSource.new(
-                                search: Algolia::Composition::Search.new(
-                                  index: "foo",
-                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas")
-                                )
+                                search: Algolia::Composition::Search.new(index: "foo")
                               ),
                               position: 2,
-                              length: 1,
-                              metadata: Algolia::Composition::InjectedItemMetadata.new(
-                                hits: Algolia::Composition::InjectedItemHitsMetadata.new(
-                                  add_item_key: true,
-                                  extra: {
-                                    :"my-string" => "string",
-                                    :"my-bool" => true,
-                                    :"my-number" => 42,
-                                    :"my-object" => {:"sub-key" => "sub-value"}
-                                  }
-                                )
-                              )
-                            ),
-                            Algolia::Composition::InjectedItem.new(
-                              key: "externalItem",
-                              source: Algolia::Composition::SearchSource.new(
-                                search: Algolia::Composition::Search.new(
-                                  index: "foo",
-                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:puma")
-                                )
-                              ),
-                              position: 5,
-                              length: 5,
-                              metadata: Algolia::Composition::InjectedItemMetadata.new(
-                                hits: Algolia::Composition::InjectedItemHitsMetadata.new(
-                                  add_item_key: true,
-                                  extra: {
-                                    :"my-string" => "string",
-                                    :"my-bool" => true,
-                                    :"my-number" => 42,
-                                    :"my-object" => {:"sub-key" => "sub-value"}
-                                  }
-                                )
-                              )
+                              length: 1
                             )
-                          ]
+                          ],
+                          deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
                         )
                       )
                     )
@@ -4439,96 +3757,34 @@ paths:
                     MultipleBatchRequest(
                       action = Action.withName("upsert"),
                       body = Composition(
-                        objectID = "my-metadata-compo",
+                        objectID = "my-compo",
                         name = "my composition",
                         behavior = CompositionBehavior(
                           injection = Injection(
                             main = Main(
                               source = CompositionSource(
                                 search = CompositionSourceSearch(
-                                  index = "foo",
-                                  params = Some(
-                                    MainInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
-                                    )
-                                  )
+                                  index = "foo"
                                 )
                               )
                             ),
                             injectedItems = Some(
                               Seq(
                                 InjectedItem(
-                                  key = "injectedItem1",
+                                  key = "my-unique-injected-item-key",
                                   source = SearchSource(
                                     search = Search(
-                                      index = "foo",
-                                      params = Some(
-                                        BaseInjectionQueryParameters(
-                                          filters = Some("brand:adidas")
-                                        )
-                                      )
+                                      index = "foo"
                                     )
                                   ),
                                   position = 2,
-                                  length = 1,
-                                  metadata = Some(
-                                    InjectedItemMetadata(
-                                      hits = Some(
-                                        InjectedItemHitsMetadata(
-                                          addItemKey = Some(true),
-                                          extra = Some(
-                                            Map(
-                                              "my-string" -> "string",
-                                              "my-bool" -> true,
-                                              "my-number" -> 42,
-                                              "my-object" -> JObject(
-                                                List(
-                                                  JField("sub-key", JString("sub-value"))
-                                                )
-                                              )
-                                            )
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
-                                ),
-                                InjectedItem(
-                                  key = "externalItem",
-                                  source = SearchSource(
-                                    search = Search(
-                                      index = "foo",
-                                      params = Some(
-                                        BaseInjectionQueryParameters(
-                                          filters = Some("brand:puma")
-                                        )
-                                      )
-                                    )
-                                  ),
-                                  position = 5,
-                                  length = 5,
-                                  metadata = Some(
-                                    InjectedItemMetadata(
-                                      hits = Some(
-                                        InjectedItemHitsMetadata(
-                                          addItemKey = Some(true),
-                                          extra = Some(
-                                            Map(
-                                              "my-string" -> "string",
-                                              "my-bool" -> true,
-                                              "my-number" -> 42,
-                                              "my-object" -> JObject(
-                                                List(
-                                                  JField("sub-key", JString("sub-value"))
-                                                )
-                                              )
-                                            )
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
+                                  length = 1
                                 )
+                              )
+                            ),
+                            deduplication = Some(
+                              Deduplication(
+                                positioning = DedupPositioning.withName("highest")
                               )
                             )
                           )
@@ -4557,55 +3813,18 @@ paths:
                 .multipleBatch(batchParams: CompositionBatchParams(requests: [CompositionMultipleBatchRequest(
                     action: CompositionAction.upsert,
                     body: BatchCompositionAction.composition(Composition(
-                        objectID: "my-metadata-compo",
+                        objectID: "my-compo",
                         name: "my composition",
                         behavior: CompositionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                                index: "foo",
-                                params: MainInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
-                            injectedItems: [
-                                InjectedItem(
-                                    key: "injectedItem1",
-                                    source: InjectedItemSource.compositionSearchSource(
-                                        CompositionSearchSource(search: Search(
-                                            index: "foo",
-                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                                        ))
-                                    ),
-                                    position: 2,
-                                    length: 1,
-                                    metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                        addItemKey: true,
-                                        extra: [
-                                            "my-string": AnyCodable("string"),
-                                            "my-bool": true,
-                                            "my-number": 42,
-                                            "my-object": ["sub-key": "sub-value"],
-                                        ]
-                                    ))
-                                ),
-                                InjectedItem(
-                                    key: "externalItem",
-                                    source: InjectedItemSource.compositionSearchSource(
-                                        CompositionSearchSource(search: Search(
-                                            index: "foo",
-                                            params: BaseInjectionQueryParameters(filters: "brand:puma")
-                                        ))
-                                    ),
-                                    position: 5,
-                                    length: 5,
-                                    metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                        addItemKey: true,
-                                        extra: [
-                                            "my-string": AnyCodable("string"),
-                                            "my-bool": true,
-                                            "my-number": 42,
-                                            "my-object": ["sub-key": "sub-value"],
-                                        ]
-                                    ))
-                                ),
-                            ]
+                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-injected-item-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                position: 2,
+                                length: 1
+                            )],
+                            deduplication: Deduplication(positioning: DedupPositioning.highest)
                         ))
                     ))
                 )]))
@@ -4619,7 +3838,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}}}]}'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -4930,21 +4149,15 @@ paths:
             // Call the API
             var response = await client.PutCompositionRuleAsync(
               "compositionID",
-              "rule-with-exernal-source",
+              "rule-with-deduplication",
               new CompositionRule
               {
-                ObjectID = "rule-with-exernal-source",
+                ObjectID = "rule-with-deduplication",
                 Description = "my description",
-                Tags = new List<string> { "tag1", "tag2" },
                 Enabled = true,
-                Validity = new List<TimeRange>
-                {
-                  new TimeRange { From = 1704063600L, Until = 1704083600L },
-                },
                 Conditions = new List<Condition>
                 {
                   new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
-                  new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "potter" },
                 },
                 Consequence = new CompositionRuleConsequence
                 {
@@ -4956,32 +4169,27 @@ paths:
                       {
                         Source = new CompositionSource
                         {
-                          Search = new CompositionSourceSearch
-                          {
-                            Index = "my-index",
-                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                          },
+                          Search = new CompositionSourceSearch { Index = "my-index" },
                         },
                       },
                       InjectedItems = new List<InjectedItem>
                       {
                         new InjectedItem
                         {
-                          Key = "injectedItem",
+                          Key = "my-unique-injected-item-key",
                           Source = new InjectedItemSource(
-                            new ExternalSource
+                            new SearchSource
                             {
-                              External = new External
-                              {
-                                Index = "my-index",
-                                Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                              },
+                              Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
                             }
                           ),
                           Position = 0,
                           Length = 3,
                         },
+                      },
+                      Deduplication = new Deduplication
+                      {
+                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                       },
                     },
                   },
@@ -4999,29 +4207,15 @@ paths:
             // Call the API
             final response = await client.putCompositionRule(
               compositionID: "compositionID",
-              objectID: "rule-with-exernal-source",
+              objectID: "rule-with-deduplication",
               compositionRule: CompositionRule(
-                objectID: "rule-with-exernal-source",
+                objectID: "rule-with-deduplication",
                 description: "my description",
-                tags: [
-                  "tag1",
-                  "tag2",
-                ],
                 enabled: true,
-                validity: [
-                  TimeRange(
-                    from: 1704063600,
-                    until: 1704083600,
-                  ),
-                ],
                 conditions: [
                   Condition(
                     anchoring: Anchoring.fromJson("contains"),
                     pattern: "harry",
-                  ),
-                  Condition(
-                    anchoring: Anchoring.fromJson("contains"),
-                    pattern: "potter",
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
@@ -5031,28 +4225,24 @@ paths:
                         source: CompositionSource(
                           search: CompositionSourceSearch(
                             index: "my-index",
-                            params: MainInjectionQueryParameters(
-                              filters: "brand:adidas",
-                            ),
                           ),
                         ),
                       ),
                       injectedItems: [
                         InjectedItem(
-                          key: "injectedItem",
-                          source: ExternalSource(
-                            external_: External(
+                          key: "my-unique-injected-item-key",
+                          source: SearchSource(
+                            search: Search(
                               index: "my-index",
-                              params: BaseInjectionQueryParameters(
-                                filters: "brand:adidas",
-                              ),
-                              ordering: ExternalOrdering.fromJson("userDefined"),
                             ),
                           ),
                           position: 0,
                           length: 3,
                         ),
                       ],
+                      deduplication: Deduplication(
+                        positioning: DedupPositioning.fromJson("highestInjected"),
+                      ),
                     ),
                   ),
                 ),
@@ -5077,22 +4267,19 @@ paths:
 
             response, err :=
             client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-              "compositionID", "rule-with-exernal-source",
-              composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
-                []string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
-                []composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
-                []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter")}).SetConsequence(
+              "compositionID", "rule-with-deduplication",
+              composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
+                []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
                 composition.NewEmptyCompositionRuleConsequence().SetBehavior(
                   composition.NewEmptyCompositionBehavior().SetInjection(
                     composition.NewEmptyInjection().SetMain(
                       composition.NewEmptyMain().SetSource(
                         composition.NewEmptyCompositionSource().SetSearch(
-                          composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
-                            composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                      []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
-                        composition.NewEmptyExternalSource().SetExternal(
-                          composition.NewEmptyExternal().SetIndex("my-index").SetParams(
-                            composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))
+                          composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
+                      []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+                        composition.NewEmptySearchSource().SetSearch(
+                          composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
+                      composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected"))))))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5117,48 +4304,27 @@ paths:
 
             client.putCompositionRule(
               "compositionID",
-              "rule-with-exernal-source",
+              "rule-with-deduplication",
               new CompositionRule()
-                .setObjectID("rule-with-exernal-source")
+                .setObjectID("rule-with-deduplication")
                 .setDescription("my description")
-                .setTags(Arrays.asList("tag1", "tag2"))
                 .setEnabled(true)
-                .setValidity(Arrays.asList(new TimeRange().setFrom(1704063600L).setUntil(1704083600L)))
-                .setConditions(
-                  Arrays.asList(
-                    new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
-                    new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("potter")
-                  )
-                )
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
                     new CompositionBehavior().setInjection(
                       new Injection()
-                        .setMain(
-                          new Main().setSource(
-                            new CompositionSource().setSearch(
-                              new CompositionSourceSearch()
-                                .setIndex("my-index")
-                                .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
-                            )
-                          )
-                        )
+                        .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
                         .setInjectedItems(
                           Arrays.asList(
                             new InjectedItem()
-                              .setKey("injectedItem")
-                              .setSource(
-                                new ExternalSource().setExternal(
-                                  new External()
-                                    .setIndex("my-index")
-                                    .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                    .setOrdering(ExternalOrdering.USER_DEFINED)
-                                )
-                              )
+                              .setKey("my-unique-injected-item-key")
+                              .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
                               .setPosition(0)
                               .setLength(3)
                           )
                         )
+                        .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
                     )
                   )
                 )
@@ -5178,31 +4344,20 @@ paths:
 
             const response = await client.putCompositionRule({
               compositionID: 'compositionID',
-              objectID: 'rule-with-exernal-source',
+              objectID: 'rule-with-deduplication',
               compositionRule: {
-                objectID: 'rule-with-exernal-source',
+                objectID: 'rule-with-deduplication',
                 description: 'my description',
-                tags: ['tag1', 'tag2'],
                 enabled: true,
-                validity: [{ from: 1704063600, until: 1704083600 }],
-                conditions: [
-                  { anchoring: 'contains', pattern: 'harry' },
-                  { anchoring: 'contains', pattern: 'potter' },
-                ],
+                conditions: [{ anchoring: 'contains', pattern: 'harry' }],
                 consequence: {
                   behavior: {
                     injection: {
-                      main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                      main: { source: { search: { index: 'my-index' } } },
                       injectedItems: [
-                        {
-                          key: 'injectedItem',
-                          source: {
-                            external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
-                          },
-                          position: 0,
-                          length: 3,
-                        },
+                        { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
                       ],
+                      deduplication: { positioning: 'highestInjected' },
                     },
                   },
                 },
@@ -5228,26 +4383,15 @@ paths:
 
             var response = client.putCompositionRule(
               compositionID = "compositionID",
-              objectID = "rule-with-exernal-source",
+              objectID = "rule-with-deduplication",
               compositionRule = CompositionRule(
-                objectID = "rule-with-exernal-source",
+                objectID = "rule-with-deduplication",
                 description = "my description",
-                tags = listOf("tag1", "tag2"),
                 enabled = true,
-                validity = listOf(
-                  TimeRange(
-                    from = 1704063600L,
-                    until = 1704083600L,
-                  ),
-                ),
                 conditions = listOf(
                   Condition(
                     anchoring = Anchoring.entries.first { it.value == "contains" },
                     pattern = "harry",
-                  ),
-                  Condition(
-                    anchoring = Anchoring.entries.first { it.value == "contains" },
-                    pattern = "potter",
                   ),
                 ),
                 consequence = CompositionRuleConsequence(
@@ -5257,27 +4401,23 @@ paths:
                         source = CompositionSource(
                           search = CompositionSourceSearch(
                             index = "my-index",
-                            params = MainInjectionQueryParameters(
-                              filters = "brand:adidas",
-                            ),
                           ),
                         ),
                       ),
                       injectedItems = listOf(
                         InjectedItem(
-                          key = "injectedItem",
-                          source = ExternalSource(
-                            external = External(
+                          key = "my-unique-injected-item-key",
+                          source = SearchSource(
+                            search = Search(
                               index = "my-index",
-                              params = BaseInjectionQueryParameters(
-                                filters = "brand:adidas",
-                              ),
-                              ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
                             ),
                           ),
                           position = 0,
                           length = 3,
                         ),
+                      ),
+                      deduplication = Deduplication(
+                        positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
                       ),
                     ),
                   ),
@@ -5304,46 +4444,29 @@ paths:
 
             $response = $client->putCompositionRule(
                 'compositionID',
-                'rule-with-exernal-source',
-                ['objectID' => 'rule-with-exernal-source',
+                'rule-with-deduplication',
+                ['objectID' => 'rule-with-deduplication',
                     'description' => 'my description',
-                    'tags' => [
-                        'tag1',
-
-                        'tag2',
-                    ],
                     'enabled' => true,
-                    'validity' => [
-                        ['from' => 1704063600,
-                            'until' => 1704083600,
-                        ],
-                    ],
                     'conditions' => [
                         ['anchoring' => 'contains',
                             'pattern' => 'harry',
                         ],
-
-                        ['anchoring' => 'contains',
-                            'pattern' => 'potter',
-                        ],
                     ],
                     'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
-                        'params' => ['filters' => 'brand:adidas',
-                        ],
                     ],
                     ],
                     ],
                         'injectedItems' => [
-                            ['key' => 'injectedItem',
-                                'source' => ['external' => ['index' => 'my-index',
-                                    'params' => ['filters' => 'brand:adidas',
-                                    ],
-                                    'ordering' => 'userDefined',
+                            ['key' => 'my-unique-injected-item-key',
+                                'source' => ['search' => ['index' => 'my-index',
                                 ],
                                 ],
                                 'position' => 0,
                                 'length' => 3,
                             ],
+                        ],
+                        'deduplication' => ['positioning' => 'highestInjected',
                         ],
                     ],
                     ],
@@ -5373,29 +4496,15 @@ paths:
 
             response = client.put_composition_rule(
                 composition_id="compositionID",
-                object_id="rule-with-exernal-source",
+                object_id="rule-with-deduplication",
                 composition_rule={
-                    "objectID": "rule-with-exernal-source",
+                    "objectID": "rule-with-deduplication",
                     "description": "my description",
-                    "tags": [
-                        "tag1",
-                        "tag2",
-                    ],
                     "enabled": True,
-                    "validity": [
-                        {
-                            "from": 1704063600,
-                            "until": 1704083600,
-                        },
-                    ],
                     "conditions": [
                         {
                             "anchoring": "contains",
                             "pattern": "harry",
-                        },
-                        {
-                            "anchoring": "contains",
-                            "pattern": "potter",
                         },
                     ],
                     "consequence": {
@@ -5405,28 +4514,24 @@ paths:
                                     "source": {
                                         "search": {
                                             "index": "my-index",
-                                            "params": {
-                                                "filters": "brand:adidas",
-                                            },
                                         },
                                     },
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "injectedItem",
+                                        "key": "my-unique-injected-item-key",
                                         "source": {
-                                            "external": {
+                                            "search": {
                                                 "index": "my-index",
-                                                "params": {
-                                                    "filters": "brand:adidas",
-                                                },
-                                                "ordering": "userDefined",
                                             },
                                         },
                                         "position": 0,
                                         "length": 3,
                                     },
                                 ],
+                                "deduplication": {
+                                    "positioning": "highestInjected",
+                                },
                             },
                         },
                     },
@@ -5452,42 +4557,31 @@ paths:
 
             response = client.put_composition_rule(
               "compositionID",
-              "rule-with-exernal-source",
+              "rule-with-deduplication",
               Algolia::Composition::CompositionRule.new(
-                algolia_object_id: "rule-with-exernal-source",
+                algolia_object_id: "rule-with-deduplication",
                 description: "my description",
-                tags: ["tag1", "tag2"],
                 enabled: true,
-                validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
-                conditions: [
-                  Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
-                  Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
-                ],
+                conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
                 consequence: Algolia::Composition::CompositionRuleConsequence.new(
                   behavior: Algolia::Composition::CompositionBehavior.new(
                     injection: Algolia::Composition::Injection.new(
                       main: Algolia::Composition::Main.new(
                         source: Algolia::Composition::CompositionSource.new(
-                          search: Algolia::Composition::CompositionSourceSearch.new(
-                            index: "my-index",
-                            params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
-                          )
+                          search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
                         )
                       ),
                       injected_items: [
                         Algolia::Composition::InjectedItem.new(
-                          key: "injectedItem",
-                          source: Algolia::Composition::ExternalSource.new(
-                            external: Algolia::Composition::External.new(
-                              index: "my-index",
-                              params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
-                              ordering: "userDefined"
-                            )
+                          key: "my-unique-injected-item-key",
+                          source: Algolia::Composition::SearchSource.new(
+                            search: Algolia::Composition::Search.new(index: "my-index")
                           ),
                           position: 0,
                           length: 3
                         )
-                      ]
+                      ],
+                      deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
                     )
                   )
                 )
@@ -5519,28 +4613,15 @@ paths:
             val response = Await.result(
               client.putCompositionRule(
                 compositionID = "compositionID",
-                objectID = "rule-with-exernal-source",
+                objectID = "rule-with-deduplication",
                 compositionRule = CompositionRule(
-                  objectID = "rule-with-exernal-source",
+                  objectID = "rule-with-deduplication",
                   description = Some("my description"),
-                  tags = Some(Seq("tag1", "tag2")),
                   enabled = Some(true),
-                  validity = Some(
-                    Seq(
-                      TimeRange(
-                        from = Some(1704063600L),
-                        until = Some(1704083600L)
-                      )
-                    )
-                  ),
                   conditions = Seq(
                     Condition(
                       anchoring = Some(Anchoring.withName("contains")),
                       pattern = Some("harry")
-                    ),
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("potter")
                     )
                   ),
                   consequence = CompositionRuleConsequence(
@@ -5549,33 +4630,27 @@ paths:
                         main = Main(
                           source = CompositionSource(
                             search = CompositionSourceSearch(
-                              index = "my-index",
-                              params = Some(
-                                MainInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
-                                )
-                              )
+                              index = "my-index"
                             )
                           )
                         ),
                         injectedItems = Some(
                           Seq(
                             InjectedItem(
-                              key = "injectedItem",
-                              source = ExternalSource(
-                                external = External(
-                                  index = "my-index",
-                                  params = Some(
-                                    BaseInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
-                                    )
-                                  ),
-                                  ordering = Some(ExternalOrdering.withName("userDefined"))
+                              key = "my-unique-injected-item-key",
+                              source = SearchSource(
+                                search = Search(
+                                  index = "my-index"
                                 )
                               ),
                               position = 0,
                               length = 3
                             )
+                          )
+                        ),
+                        deduplication = Some(
+                          Deduplication(
+                            positioning = DedupPositioning.withName("highestInjected")
                           )
                         )
                       )
@@ -5600,33 +4675,24 @@ paths:
 
             let response = try await client.putCompositionRule(
                 compositionID: "compositionID",
-                objectID: "rule-with-exernal-source",
+                objectID: "rule-with-deduplication",
                 compositionRule: CompositionRule(
-                    objectID: "rule-with-exernal-source",
-                    conditions: [
-                        CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
-                        CompositionCondition(pattern: "potter", anchoring: CompositionAnchoring.contains),
-                    ],
+                    objectID: "rule-with-deduplication",
+                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "my-index",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        ),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem",
-                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                                index: "my-index",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                ordering: ExternalOrdering.userDefined
-                            ))),
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
                             position: 0,
                             length: 3
-                        )]
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
                     ))),
                     description: "my description",
-                    enabled: true,
-                    validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
-                    tags: ["tag1", "tag2"]
+                    enabled: true
                 )
             )
 
@@ -5640,7 +4706,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
+              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
     delete:
       tags:
         - Composition Rules
@@ -5975,7 +5041,7 @@ paths:
 
             // Call the API
             var response = await client.SaveRulesAsync(
-              "rule-with-exernal-source",
+              "my-compo",
               new CompositionRulesBatchParams
               {
                 Requests = new List<RulesMultipleBatchRequest>
@@ -5986,25 +5052,15 @@ paths:
                     Body = new RulesBatchCompositionAction(
                       new CompositionRule
                       {
-                        ObjectID = "rule-with-exernal-source",
+                        ObjectID = "rule-with-deduplication",
                         Description = "my description",
-                        Tags = new List<string> { "tag1", "tag2" },
                         Enabled = true,
-                        Validity = new List<TimeRange>
-                        {
-                          new TimeRange { From = 1704063600L, Until = 1704083600L },
-                        },
                         Conditions = new List<Condition>
                         {
                           new Condition
                           {
                             Anchoring = Enum.Parse<Anchoring>("Contains"),
                             Pattern = "harry",
-                          },
-                          new Condition
-                          {
-                            Anchoring = Enum.Parse<Anchoring>("Contains"),
-                            Pattern = "potter",
                           },
                         },
                         Consequence = new CompositionRuleConsequence
@@ -6017,35 +5073,30 @@ paths:
                               {
                                 Source = new CompositionSource
                                 {
-                                  Search = new CompositionSourceSearch
-                                  {
-                                    Index = "my-index",
-                                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                                  },
+                                  Search = new CompositionSourceSearch { Index = "my-index" },
                                 },
                               },
                               InjectedItems = new List<InjectedItem>
                               {
                                 new InjectedItem
                                 {
-                                  Key = "injectedItem",
+                                  Key = "my-unique-injected-item-key",
                                   Source = new InjectedItemSource(
-                                    new ExternalSource
+                                    new SearchSource
                                     {
-                                      External = new External
+                                      Search = new Algolia.Search.Models.Composition.Search
                                       {
                                         Index = "my-index",
-                                        Params = new BaseInjectionQueryParameters
-                                        {
-                                          Filters = "brand:adidas",
-                                        },
-                                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
                                       },
                                     }
                                   ),
                                   Position = 0,
                                   Length = 3,
                                 },
+                              },
+                              Deduplication = new Deduplication
+                              {
+                                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                               },
                             },
                           },
@@ -6066,33 +5117,19 @@ paths:
 
             // Call the API
             final response = await client.saveRules(
-              compositionID: "rule-with-exernal-source",
+              compositionID: "my-compo",
               rules: CompositionRulesBatchParams(
                 requests: [
                   RulesMultipleBatchRequest(
                     action: Action.fromJson("upsert"),
                     body: CompositionRule(
-                      objectID: "rule-with-exernal-source",
+                      objectID: "rule-with-deduplication",
                       description: "my description",
-                      tags: [
-                        "tag1",
-                        "tag2",
-                      ],
                       enabled: true,
-                      validity: [
-                        TimeRange(
-                          from: 1704063600,
-                          until: 1704083600,
-                        ),
-                      ],
                       conditions: [
                         Condition(
                           anchoring: Anchoring.fromJson("contains"),
                           pattern: "harry",
-                        ),
-                        Condition(
-                          anchoring: Anchoring.fromJson("contains"),
-                          pattern: "potter",
                         ),
                       ],
                       consequence: CompositionRuleConsequence(
@@ -6102,28 +5139,24 @@ paths:
                               source: CompositionSource(
                                 search: CompositionSourceSearch(
                                   index: "my-index",
-                                  params: MainInjectionQueryParameters(
-                                    filters: "brand:adidas",
-                                  ),
                                 ),
                               ),
                             ),
                             injectedItems: [
                               InjectedItem(
-                                key: "injectedItem",
-                                source: ExternalSource(
-                                  external_: External(
+                                key: "my-unique-injected-item-key",
+                                source: SearchSource(
+                                  search: Search(
                                     index: "my-index",
-                                    params: BaseInjectionQueryParameters(
-                                      filters: "brand:adidas",
-                                    ),
-                                    ordering: ExternalOrdering.fromJson("userDefined"),
                                   ),
                                 ),
                                 position: 0,
                                 length: 3,
                               ),
                             ],
+                            deduplication: Deduplication(
+                              positioning: DedupPositioning.fromJson("highestInjected"),
+                            ),
                           ),
                         ),
                       ),
@@ -6150,24 +5183,21 @@ paths:
             // Call the API
 
             response, err := client.SaveRules(client.NewApiSaveRulesRequest(
-              "rule-with-exernal-source",
+              "my-compo",
               composition.NewEmptyCompositionRulesBatchParams().SetRequests(
                 []composition.RulesMultipleBatchRequest{*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-                  composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
-                    []string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
-                    []composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
-                    []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter")}).SetConsequence(
+                  composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
+                    []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
                     composition.NewEmptyCompositionRuleConsequence().SetBehavior(
                       composition.NewEmptyCompositionBehavior().SetInjection(
                         composition.NewEmptyInjection().SetMain(
                           composition.NewEmptyMain().SetSource(
                             composition.NewEmptyCompositionSource().SetSearch(
-                              composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
-                                composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("injectedItem").SetSource(composition.ExternalSourceAsInjectedItemSource(
-                            composition.NewEmptyExternalSource().SetExternal(
-                              composition.NewEmptyExternal().SetIndex("my-index").SetParams(
-                                composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)}))))))})))
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
+                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+                            composition.NewEmptySearchSource().SetSearch(
+                              composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
+                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected"))))))))})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6191,53 +5221,34 @@ paths:
             // Call the API
 
             client.saveRules(
-              "rule-with-exernal-source",
+              "my-compo",
               new CompositionRulesBatchParams().setRequests(
                 Arrays.asList(
                   new RulesMultipleBatchRequest()
                     .setAction(Action.UPSERT)
                     .setBody(
                       new CompositionRule()
-                        .setObjectID("rule-with-exernal-source")
+                        .setObjectID("rule-with-deduplication")
                         .setDescription("my description")
-                        .setTags(Arrays.asList("tag1", "tag2"))
                         .setEnabled(true)
-                        .setValidity(Arrays.asList(new TimeRange().setFrom(1704063600L).setUntil(1704083600L)))
-                        .setConditions(
-                          Arrays.asList(
-                            new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
-                            new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("potter")
-                          )
-                        )
+                        .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
                         .setConsequence(
                           new CompositionRuleConsequence().setBehavior(
                             new CompositionBehavior().setInjection(
                               new Injection()
                                 .setMain(
-                                  new Main().setSource(
-                                    new CompositionSource().setSearch(
-                                      new CompositionSourceSearch()
-                                        .setIndex("my-index")
-                                        .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
-                                    )
-                                  )
+                                  new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))
                                 )
                                 .setInjectedItems(
                                   Arrays.asList(
                                     new InjectedItem()
-                                      .setKey("injectedItem")
-                                      .setSource(
-                                        new ExternalSource().setExternal(
-                                          new External()
-                                            .setIndex("my-index")
-                                            .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                            .setOrdering(ExternalOrdering.USER_DEFINED)
-                                        )
-                                      )
+                                      .setKey("my-unique-injected-item-key")
+                                      .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
                                       .setPosition(0)
                                       .setLength(3)
                                   )
                                 )
+                                .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
                             )
                           )
                         )
@@ -6259,35 +5270,29 @@ paths:
             // Call the API
 
             const response = await client.saveRules({
-              compositionID: 'rule-with-exernal-source',
+              compositionID: 'my-compo',
               rules: {
                 requests: [
                   {
                     action: 'upsert',
                     body: {
-                      objectID: 'rule-with-exernal-source',
+                      objectID: 'rule-with-deduplication',
                       description: 'my description',
-                      tags: ['tag1', 'tag2'],
                       enabled: true,
-                      validity: [{ from: 1704063600, until: 1704083600 }],
-                      conditions: [
-                        { anchoring: 'contains', pattern: 'harry' },
-                        { anchoring: 'contains', pattern: 'potter' },
-                      ],
+                      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
                       consequence: {
                         behavior: {
                           injection: {
-                            main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
+                            main: { source: { search: { index: 'my-index' } } },
                             injectedItems: [
                               {
-                                key: 'injectedItem',
-                                source: {
-                                  external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
-                                },
+                                key: 'my-unique-injected-item-key',
+                                source: { search: { index: 'my-index' } },
                                 position: 0,
                                 length: 3,
                               },
                             ],
+                            deduplication: { positioning: 'highestInjected' },
                           },
                         },
                       },
@@ -6315,30 +5320,19 @@ paths:
             // Call the API
 
             var response = client.saveRules(
-              compositionID = "rule-with-exernal-source",
+              compositionID = "my-compo",
               rules = CompositionRulesBatchParams(
                 requests = listOf(
                   RulesMultipleBatchRequest(
                     action = Action.entries.first { it.value == "upsert" },
                     body = CompositionRule(
-                      objectID = "rule-with-exernal-source",
+                      objectID = "rule-with-deduplication",
                       description = "my description",
-                      tags = listOf("tag1", "tag2"),
                       enabled = true,
-                      validity = listOf(
-                        TimeRange(
-                          from = 1704063600L,
-                          until = 1704083600L,
-                        ),
-                      ),
                       conditions = listOf(
                         Condition(
                           anchoring = Anchoring.entries.first { it.value == "contains" },
                           pattern = "harry",
-                        ),
-                        Condition(
-                          anchoring = Anchoring.entries.first { it.value == "contains" },
-                          pattern = "potter",
                         ),
                       ),
                       consequence = CompositionRuleConsequence(
@@ -6348,27 +5342,23 @@ paths:
                               source = CompositionSource(
                                 search = CompositionSourceSearch(
                                   index = "my-index",
-                                  params = MainInjectionQueryParameters(
-                                    filters = "brand:adidas",
-                                  ),
                                 ),
                               ),
                             ),
                             injectedItems = listOf(
                               InjectedItem(
-                                key = "injectedItem",
-                                source = ExternalSource(
-                                  external = External(
+                                key = "my-unique-injected-item-key",
+                                source = SearchSource(
+                                  search = Search(
                                     index = "my-index",
-                                    params = BaseInjectionQueryParameters(
-                                      filters = "brand:adidas",
-                                    ),
-                                    ordering = ExternalOrdering.entries.first { it.value == "userDefined" },
                                   ),
                                 ),
                                 position = 0,
                                 length = 3,
                               ),
+                            ),
+                            deduplication = Deduplication(
+                              positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
                             ),
                           ),
                         ),
@@ -6397,48 +5387,31 @@ paths:
             // Call the API
 
             $response = $client->saveRules(
-                'rule-with-exernal-source',
+                'my-compo',
                 ['requests' => [
                     ['action' => 'upsert',
-                        'body' => ['objectID' => 'rule-with-exernal-source',
+                        'body' => ['objectID' => 'rule-with-deduplication',
                             'description' => 'my description',
-                            'tags' => [
-                                'tag1',
-
-                                'tag2',
-                            ],
                             'enabled' => true,
-                            'validity' => [
-                                ['from' => 1704063600,
-                                    'until' => 1704083600,
-                                ],
-                            ],
                             'conditions' => [
                                 ['anchoring' => 'contains',
                                     'pattern' => 'harry',
                                 ],
-
-                                ['anchoring' => 'contains',
-                                    'pattern' => 'potter',
-                                ],
                             ],
                             'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
-                                'params' => ['filters' => 'brand:adidas',
-                                ],
                             ],
                             ],
                             ],
                                 'injectedItems' => [
-                                    ['key' => 'injectedItem',
-                                        'source' => ['external' => ['index' => 'my-index',
-                                            'params' => ['filters' => 'brand:adidas',
-                                            ],
-                                            'ordering' => 'userDefined',
+                                    ['key' => 'my-unique-injected-item-key',
+                                        'source' => ['search' => ['index' => 'my-index',
                                         ],
                                         ],
                                         'position' => 0,
                                         'length' => 3,
                                     ],
+                                ],
+                                'deduplication' => ['positioning' => 'highestInjected',
                                 ],
                             ],
                             ],
@@ -6470,33 +5443,19 @@ paths:
             # Call the API
 
             response = client.save_rules(
-                composition_id="rule-with-exernal-source",
+                composition_id="my-compo",
                 rules={
                     "requests": [
                         {
                             "action": "upsert",
                             "body": {
-                                "objectID": "rule-with-exernal-source",
+                                "objectID": "rule-with-deduplication",
                                 "description": "my description",
-                                "tags": [
-                                    "tag1",
-                                    "tag2",
-                                ],
                                 "enabled": True,
-                                "validity": [
-                                    {
-                                        "from": 1704063600,
-                                        "until": 1704083600,
-                                    },
-                                ],
                                 "conditions": [
                                     {
                                         "anchoring": "contains",
                                         "pattern": "harry",
-                                    },
-                                    {
-                                        "anchoring": "contains",
-                                        "pattern": "potter",
                                     },
                                 ],
                                 "consequence": {
@@ -6506,28 +5465,24 @@ paths:
                                                 "source": {
                                                     "search": {
                                                         "index": "my-index",
-                                                        "params": {
-                                                            "filters": "brand:adidas",
-                                                        },
                                                     },
                                                 },
                                             },
                                             "injectedItems": [
                                                 {
-                                                    "key": "injectedItem",
+                                                    "key": "my-unique-injected-item-key",
                                                     "source": {
-                                                        "external": {
+                                                        "search": {
                                                             "index": "my-index",
-                                                            "params": {
-                                                                "filters": "brand:adidas",
-                                                            },
-                                                            "ordering": "userDefined",
                                                         },
                                                     },
                                                     "position": 0,
                                                     "length": 3,
                                                 },
                                             ],
+                                            "deduplication": {
+                                                "positioning": "highestInjected",
+                                            },
                                         },
                                     },
                                 },
@@ -6555,46 +5510,35 @@ paths:
             # Call the API
 
             response = client.save_rules(
-              "rule-with-exernal-source",
+              "my-compo",
               Algolia::Composition::CompositionRulesBatchParams.new(
                 requests: [
                   Algolia::Composition::RulesMultipleBatchRequest.new(
                     action: "upsert",
                     body: Algolia::Composition::CompositionRule.new(
-                      algolia_object_id: "rule-with-exernal-source",
+                      algolia_object_id: "rule-with-deduplication",
                       description: "my description",
-                      tags: ["tag1", "tag2"],
                       enabled: true,
-                      validity: [Algolia::Composition::TimeRange.new(from: 1704063600, _until: 1704083600)],
-                      conditions: [
-                        Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
-                        Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
-                      ],
+                      conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
                       consequence: Algolia::Composition::CompositionRuleConsequence.new(
                         behavior: Algolia::Composition::CompositionBehavior.new(
                           injection: Algolia::Composition::Injection.new(
                             main: Algolia::Composition::Main.new(
                               source: Algolia::Composition::CompositionSource.new(
-                                search: Algolia::Composition::CompositionSourceSearch.new(
-                                  index: "my-index",
-                                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
-                                )
+                                search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
                               )
                             ),
                             injected_items: [
                               Algolia::Composition::InjectedItem.new(
-                                key: "injectedItem",
-                                source: Algolia::Composition::ExternalSource.new(
-                                  external: Algolia::Composition::External.new(
-                                    index: "my-index",
-                                    params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "brand:adidas"),
-                                    ordering: "userDefined"
-                                  )
+                                key: "my-unique-injected-item-key",
+                                source: Algolia::Composition::SearchSource.new(
+                                  search: Algolia::Composition::Search.new(index: "my-index")
                                 ),
                                 position: 0,
                                 length: 3
                               )
-                            ]
+                            ],
+                            deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
                           )
                         )
                       )
@@ -6628,33 +5572,20 @@ paths:
 
             val response = Await.result(
               client.saveRules(
-                compositionID = "rule-with-exernal-source",
+                compositionID = "my-compo",
                 rules = CompositionRulesBatchParams(
                   requests = Some(
                     Seq(
                       RulesMultipleBatchRequest(
                         action = Action.withName("upsert"),
                         body = CompositionRule(
-                          objectID = "rule-with-exernal-source",
+                          objectID = "rule-with-deduplication",
                           description = Some("my description"),
-                          tags = Some(Seq("tag1", "tag2")),
                           enabled = Some(true),
-                          validity = Some(
-                            Seq(
-                              TimeRange(
-                                from = Some(1704063600L),
-                                until = Some(1704083600L)
-                              )
-                            )
-                          ),
                           conditions = Seq(
                             Condition(
                               anchoring = Some(Anchoring.withName("contains")),
                               pattern = Some("harry")
-                            ),
-                            Condition(
-                              anchoring = Some(Anchoring.withName("contains")),
-                              pattern = Some("potter")
                             )
                           ),
                           consequence = CompositionRuleConsequence(
@@ -6663,33 +5594,27 @@ paths:
                                 main = Main(
                                   source = CompositionSource(
                                     search = CompositionSourceSearch(
-                                      index = "my-index",
-                                      params = Some(
-                                        MainInjectionQueryParameters(
-                                          filters = Some("brand:adidas")
-                                        )
-                                      )
+                                      index = "my-index"
                                     )
                                   )
                                 ),
                                 injectedItems = Some(
                                   Seq(
                                     InjectedItem(
-                                      key = "injectedItem",
-                                      source = ExternalSource(
-                                        external = External(
-                                          index = "my-index",
-                                          params = Some(
-                                            BaseInjectionQueryParameters(
-                                              filters = Some("brand:adidas")
-                                            )
-                                          ),
-                                          ordering = Some(ExternalOrdering.withName("userDefined"))
+                                      key = "my-unique-injected-item-key",
+                                      source = SearchSource(
+                                        search = Search(
+                                          index = "my-index"
                                         )
                                       ),
                                       position = 0,
                                       length = 3
                                     )
+                                  )
+                                ),
+                                deduplication = Some(
+                                  Deduplication(
+                                    positioning = DedupPositioning.withName("highestInjected")
                                   )
                                 )
                               )
@@ -6717,35 +5642,27 @@ paths:
             // Call the API
 
             let response = try await client.saveRules(
-                compositionID: "rule-with-exernal-source",
+                compositionID: "my-compo",
                 rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
                     action: CompositionAction.upsert,
                     body: RulesBatchCompositionAction.compositionRule(CompositionRule(
-                        objectID: "rule-with-exernal-source",
-                        conditions: [
-                            CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
-                            CompositionCondition(pattern: "potter", anchoring: CompositionAnchoring.contains),
-                        ],
+                        objectID: "rule-with-deduplication",
+                        conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                         consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                                index: "my-index",
-                                params: MainInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                            ),
                             injectedItems: [InjectedItem(
-                                key: "injectedItem",
-                                source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                                    index: "my-index",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
-                                ))),
+                                key: "my-unique-injected-item-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
                                 position: 0,
                                 length: 3
-                            )]
+                            )],
+                            deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
                         ))),
                         description: "my description",
-                        enabled: true,
-                        validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
-                        tags: ["tag1", "tag2"]
+                        enabled: true
                     ))
                 )])
             )
@@ -6760,7 +5677,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":["*"],"hitsPerPage":20,"maxValuesPerFacet":100,"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -9984,6 +8901,25 @@ components:
         - source
         - position
         - length
+    dedupPositioning:
+      type: string
+      enum:
+        - highest
+        - highestInjected
+      description: >
+        Deduplication positioning configures how a duplicate result should be
+        resolved between an injected item and main search results.
+
+        Current configuration supports:
+
+        - 'highest': always select the item in the highest position, and remove
+        duplicates that appear lower in the results.
+
+        - 'highestInjected': duplicate result will be moved to its highest
+        possible injected position, but not higher. 
+          If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
+      example: highest
+      default: highestInjected
     compositionBehavior:
       type: object
       additionalProperties: false
@@ -10027,6 +8963,18 @@ components:
               maxItems: 2
               items:
                 $ref: '#/components/schemas/injectedItem'
+            deduplication:
+              title: deduplication
+              type: object
+              additionalProperties: false
+              description: >-
+                Deduplication configures the methods used to resolve duplicate
+                items between main search results and injected group results.
+              properties:
+                positioning:
+                  $ref: '#/components/schemas/dedupPositioning'
+              required:
+                - positioning
           required:
             - main
       required:

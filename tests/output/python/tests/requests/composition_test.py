@@ -687,6 +687,58 @@ class TestCompositionClient:
             """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
         )
 
+    async def test_multiple_batch_3(self):
+        """
+        multipleBatch
+        """
+        _req = await self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-compo",
+                            "name": "my composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "my-unique-injected-item-key",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                        },
+                                    ],
+                                    "deduplication": {
+                                        "positioning": "highest",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}"""
+        )
+
     async def test_put_composition_(self):
         """
         putComposition
@@ -859,6 +911,55 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+        )
+
+    async def test_put_composition_3(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                    "params": {
+                                        "filters": "brand:adidas",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "my-unique-injected-item-key",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                        "deduplication": {
+                            "positioning": "highest",
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}"""
         )
 
     async def test_put_composition_rule_(self):
@@ -1051,6 +1152,64 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+        )
+
+    async def test_put_composition_rule_3(self):
+        """
+        putCompositionRule
+        """
+        _req = await self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-deduplication",
+            composition_rule={
+                "objectID": "rule-with-deduplication",
+                "description": "my description",
+                "enabled": True,
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "my-unique-injected-item-key",
+                                    "source": {
+                                        "search": {
+                                            "index": "my-index",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                            "deduplication": {
+                                "positioning": "highestInjected",
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/compositions/compositionID/rules/rule-with-deduplication"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
         )
 
     async def test_save_rules_(self):
@@ -1248,6 +1407,68 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+        )
+
+    async def test_save_rules_3(self):
+        """
+        saveRules
+        """
+        _req = await self._client.save_rules_with_http_info(
+            composition_id="my-compo",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-deduplication",
+                            "description": "my description",
+                            "enabled": True,
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "harry",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "my-index",
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "my-unique-injected-item-key",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "my-index",
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 3,
+                                            },
+                                        ],
+                                        "deduplication": {
+                                            "positioning": "highestInjected",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
         )
 
     async def test_search_(self):
@@ -2026,6 +2247,58 @@ class TestCompositionClientSync:
             """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
         )
 
+    def test_multiple_batch_3(self):
+        """
+        multipleBatch
+        """
+        _req = self._client.multiple_batch_with_http_info(
+            batch_params={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "my-compo",
+                            "name": "my composition",
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "my-unique-injected-item-key",
+                                            "source": {
+                                                "search": {
+                                                    "index": "foo",
+                                                },
+                                            },
+                                            "position": 2,
+                                            "length": 1,
+                                        },
+                                    ],
+                                    "deduplication": {
+                                        "positioning": "highest",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/*/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}"""
+        )
+
     def test_put_composition_(self):
         """
         putComposition
@@ -2198,6 +2471,55 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+        )
+
+    def test_put_composition_3(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                    "params": {
+                                        "filters": "brand:adidas",
+                                    },
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "my-unique-injected-item-key",
+                                "source": {
+                                    "search": {
+                                        "index": "foo",
+                                    },
+                                },
+                                "position": 2,
+                                "length": 1,
+                            },
+                        ],
+                        "deduplication": {
+                            "positioning": "highest",
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}"""
         )
 
     def test_put_composition_rule_(self):
@@ -2390,6 +2712,64 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+        )
+
+    def test_put_composition_rule_3(self):
+        """
+        putCompositionRule
+        """
+        _req = self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-deduplication",
+            composition_rule={
+                "objectID": "rule-with-deduplication",
+                "description": "my description",
+                "enabled": True,
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "my-unique-injected-item-key",
+                                    "source": {
+                                        "search": {
+                                            "index": "my-index",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                            "deduplication": {
+                                "positioning": "highestInjected",
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path == "/1/compositions/compositionID/rules/rule-with-deduplication"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
         )
 
     def test_save_rules_(self):
@@ -2587,6 +2967,68 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+        )
+
+    def test_save_rules_3(self):
+        """
+        saveRules
+        """
+        _req = self._client.save_rules_with_http_info(
+            composition_id="my-compo",
+            rules={
+                "requests": [
+                    {
+                        "action": "upsert",
+                        "body": {
+                            "objectID": "rule-with-deduplication",
+                            "description": "my description",
+                            "enabled": True,
+                            "conditions": [
+                                {
+                                    "anchoring": "contains",
+                                    "pattern": "harry",
+                                },
+                            ],
+                            "consequence": {
+                                "behavior": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "my-index",
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "my-unique-injected-item-key",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "my-index",
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 3,
+                                            },
+                                        ],
+                                        "deduplication": {
+                                            "positioning": "highestInjected",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
         )
 
     def test_search_(self):

@@ -749,6 +749,58 @@ def snippet_for_multiple_batch2
   # SEPARATOR<
 end
 
+# Snippet for the multipleBatch method.
+#
+# multipleBatch
+def snippet_for_multiple_batch3
+  # >SEPARATOR multipleBatch multipleBatch
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.multiple_batch(
+    Algolia::Composition::BatchParams.new(
+      requests: [
+        Algolia::Composition::MultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::Composition.new(
+            algolia_object_id: "my-compo",
+            name: "my composition",
+            behavior: Algolia::Composition::CompositionBehavior.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                  )
+                ),
+                injected_items: [
+                  Algolia::Composition::InjectedItem.new(
+                    key: "my-unique-injected-item-key",
+                    source: Algolia::Composition::SearchSource.new(
+                      search: Algolia::Composition::Search.new(index: "foo")
+                    ),
+                    position: 2,
+                    length: 1
+                  )
+                ],
+                deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the putComposition method.
 #
 # putComposition
@@ -911,6 +963,53 @@ def snippet_for_put_composition2
               )
             )
           ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition3
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-compo",
+      name: "my composition",
+      behavior: Algolia::Composition::CompositionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::Main.new(
+            source: Algolia::Composition::CompositionSource.new(
+              search: Algolia::Composition::CompositionSourceSearch.new(
+                index: "foo",
+                params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+              )
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectedItem.new(
+              key: "my-unique-injected-item-key",
+              source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+              position: 2,
+              length: 1
+            )
+          ],
+          deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
         )
       )
     )
@@ -1095,6 +1194,57 @@ def snippet_for_put_composition_rule2
   # SEPARATOR<
 end
 
+# Snippet for the putCompositionRule method.
+#
+# putCompositionRule
+def snippet_for_put_composition_rule3
+  # >SEPARATOR putCompositionRule putCompositionRule
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition_rule(
+    "compositionID",
+    "rule-with-deduplication",
+    Algolia::Composition::CompositionRule.new(
+      algolia_object_id: "rule-with-deduplication",
+      description: "my description",
+      enabled: true,
+      conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+      consequence: Algolia::Composition::CompositionRuleConsequence.new(
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "my-unique-injected-item-key",
+                source: Algolia::Composition::SearchSource.new(
+                  search: Algolia::Composition::Search.new(index: "my-index")
+                ),
+                position: 0,
+                length: 3
+              )
+            ],
+            deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
 # Snippet for the saveRules method.
 #
 # saveRules
@@ -1257,6 +1407,63 @@ def snippet_for_save_rules2
                       length: 3
                     )
                   ]
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  )
+
+  # >LOG
+  # use the class directly
+  puts(response)
+
+  # print the JSON response
+  puts(response.to_json)
+  # SEPARATOR<
+end
+
+# Snippet for the saveRules method.
+#
+# saveRules
+def snippet_for_save_rules3
+  # >SEPARATOR saveRules saveRules
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_rules(
+    "my-compo",
+    Algolia::Composition::CompositionRulesBatchParams.new(
+      requests: [
+        Algolia::Composition::RulesMultipleBatchRequest.new(
+          action: "upsert",
+          body: Algolia::Composition::CompositionRule.new(
+            algolia_object_id: "rule-with-deduplication",
+            description: "my description",
+            enabled: true,
+            conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+            consequence: Algolia::Composition::CompositionRuleConsequence.new(
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "my-unique-injected-item-key",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(index: "my-index")
+                      ),
+                      position: 0,
+                      length: 3
+                    )
+                  ],
+                  deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
                 )
               )
             )

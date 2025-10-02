@@ -544,6 +544,54 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # multipleBatch
+  def test_multiple_batch3
+    req = @client.multiple_batch_with_http_info(
+      Algolia::Composition::BatchParams.new(
+        requests: [
+          Algolia::Composition::MultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::Composition.new(
+              algolia_object_id: "my-compo",
+              name: "my composition",
+              behavior: Algolia::Composition::CompositionBehavior.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "foo")
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "my-unique-injected-item-key",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(index: "foo")
+                      ),
+                      position: 2,
+                      length: 1
+                    )
+                  ],
+                  deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/*/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # putComposition
   def test_put_composition
     req = @client.put_composition_with_http_info(
@@ -708,6 +756,49 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # putComposition
+  def test_put_composition3
+    req = @client.put_composition_with_http_info(
+      "my-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-compo",
+        name: "my composition",
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(
+                  index: "foo",
+                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectedItem.new(
+                key: "my-unique-injected-item-key",
+                source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
+                position: 2,
+                length: 1
+              )
+            ],
+            deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # putCompositionRule
   def test_put_composition_rule
     req = @client.put_composition_rule_with_http_info(
@@ -861,6 +952,53 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putCompositionRule
+  def test_put_composition_rule3
+    req = @client.put_composition_rule_with_http_info(
+      "compositionID",
+      "rule-with-deduplication",
+      Algolia::Composition::CompositionRule.new(
+        algolia_object_id: "rule-with-deduplication",
+        description: "my description",
+        enabled: true,
+        conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+        consequence: Algolia::Composition::CompositionRuleConsequence.new(
+          behavior: Algolia::Composition::CompositionBehavior.new(
+            injection: Algolia::Composition::Injection.new(
+              main: Algolia::Composition::Main.new(
+                source: Algolia::Composition::CompositionSource.new(
+                  search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+                )
+              ),
+              injected_items: [
+                Algolia::Composition::InjectedItem.new(
+                  key: "my-unique-injected-item-key",
+                  source: Algolia::Composition::SearchSource.new(
+                    search: Algolia::Composition::Search.new(index: "my-index")
+                  ),
+                  position: 0,
+                  length: 3
+                )
+              ],
+              deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/compositionID/rules/rule-with-deduplication", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}"
       ),
       JSON.parse(req.body)
     )
@@ -1029,6 +1167,59 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # saveRules
+  def test_save_rules3
+    req = @client.save_rules_with_http_info(
+      "my-compo",
+      Algolia::Composition::CompositionRulesBatchParams.new(
+        requests: [
+          Algolia::Composition::RulesMultipleBatchRequest.new(
+            action: "upsert",
+            body: Algolia::Composition::CompositionRule.new(
+              algolia_object_id: "rule-with-deduplication",
+              description: "my description",
+              enabled: true,
+              conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+              consequence: Algolia::Composition::CompositionRuleConsequence.new(
+                behavior: Algolia::Composition::CompositionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::Main.new(
+                      source: Algolia::Composition::CompositionSource.new(
+                        search: Algolia::Composition::CompositionSourceSearch.new(index: "my-index")
+                      )
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectedItem.new(
+                        key: "my-unique-injected-item-key",
+                        source: Algolia::Composition::SearchSource.new(
+                          search: Algolia::Composition::Search.new(index: "my-index")
+                        ),
+                        position: 0,
+                        length: 3
+                      )
+                    ],
+                    deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/my-compo/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
       ),
       JSON.parse(req.body)
     )
