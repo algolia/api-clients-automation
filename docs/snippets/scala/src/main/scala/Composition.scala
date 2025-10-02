@@ -836,6 +836,66 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the multipleBatch method.
+    *
+    * multipleBatch
+    */
+  def snippetForCompositionClientMultipleBatch3(): Unit = {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.multipleBatch(
+        batchParams = BatchParams(
+          requests = Seq(
+            MultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = Composition(
+                objectID = "my-compo",
+                name = "my composition",
+                behavior = CompositionBehavior(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "foo"
+                        )
+                      )
+                    ),
+                    injectedItems = Some(
+                      Seq(
+                        InjectedItem(
+                          key = "my-unique-injected-item-key",
+                          source = SearchSource(
+                            search = Search(
+                              index = "foo"
+                            )
+                          ),
+                          position = 2,
+                          length = 1
+                        )
+                      )
+                    ),
+                    deduplication = Some(
+                      Deduplication(
+                        positioning = DedupPositioning.withName("highest")
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
   /** Snippet for the putComposition method.
     *
     * putComposition
@@ -1044,6 +1104,65 @@ class SnippetCompositionClient {
                       )
                     )
                   )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition3(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-compo",
+        composition = Composition(
+          objectID = "my-compo",
+          name = "my composition",
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
+                      )
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-injected-item-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo"
+                      )
+                    ),
+                    position = 2,
+                    length = 1
+                  )
+                )
+              ),
+              deduplication = Some(
+                Deduplication(
+                  positioning = DedupPositioning.withName("highest")
                 )
               )
             )
@@ -1279,6 +1398,70 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the putCompositionRule method.
+    *
+    * putCompositionRule
+    */
+  def snippetForCompositionClientPutCompositionRule3(): Unit = {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "rule-with-deduplication",
+        compositionRule = CompositionRule(
+          objectID = "rule-with-deduplication",
+          description = Some("my description"),
+          enabled = Some(true),
+          conditions = Seq(
+            Condition(
+              anchoring = Some(Anchoring.withName("contains")),
+              pattern = Some("harry")
+            )
+          ),
+          consequence = CompositionRuleConsequence(
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "my-index"
+                    )
+                  )
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "my-unique-injected-item-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "my-index"
+                        )
+                      ),
+                      position = 0,
+                      length = 3
+                    )
+                  )
+                ),
+                deduplication = Some(
+                  Deduplication(
+                    positioning = DedupPositioning.withName("highestInjected")
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
   /** Snippet for the saveRules method.
     *
     * saveRules
@@ -1494,6 +1677,78 @@ class SnippetCompositionClient {
                               position = 0,
                               length = 3
                             )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveRules method.
+    *
+    * saveRules
+    */
+  def snippetForCompositionClientSaveRules3(): Unit = {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.saveRules(
+        compositionID = "my-compo",
+        rules = CompositionRulesBatchParams(
+          requests = Some(
+            Seq(
+              RulesMultipleBatchRequest(
+                action = Action.withName("upsert"),
+                body = CompositionRule(
+                  objectID = "rule-with-deduplication",
+                  description = Some("my description"),
+                  enabled = Some(true),
+                  conditions = Seq(
+                    Condition(
+                      anchoring = Some(Anchoring.withName("contains")),
+                      pattern = Some("harry")
+                    )
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "my-index"
+                            )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectedItem(
+                              key = "my-unique-injected-item-key",
+                              source = SearchSource(
+                                search = Search(
+                                  index = "my-index"
+                                )
+                              ),
+                              position = 0,
+                              length = 3
+                            )
+                          )
+                        ),
+                        deduplication = Some(
+                          Deduplication(
+                            positioning = DedupPositioning.withName("highestInjected")
                           )
                         )
                       )

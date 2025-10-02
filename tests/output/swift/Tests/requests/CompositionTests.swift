@@ -997,6 +997,52 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// multipleBatch
+    func testMultipleBatchTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .multipleBatchWithHTTPInfo(batchParams: CompositionBatchParams(requests: [CompositionMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: BatchCompositionAction.composition(Composition(
+                    objectID: "my-compo",
+                    name: "my composition",
+                    behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highest)
+                    ))
+                ))
+            )]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/*/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// putComposition
     func testPutCompositionTest() async throws {
         let configuration = try CompositionClientConfiguration(
@@ -1166,6 +1212,54 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// putComposition
+    func testPutCompositionTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                        index: "foo",
+                        params: MainInjectionQueryParameters(filters: "brand:adidas")
+                    ))),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                        position: 2,
+                        length: 1
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highest)
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// putCompositionRule
     func testPutCompositionRuleTest() async throws {
         let configuration = try CompositionClientConfiguration(
@@ -1320,6 +1414,55 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-exernal-source")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putCompositionRule
+    func testPutCompositionRuleTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionRuleWithHTTPInfo(
+            compositionID: "compositionID",
+            objectID: "rule-with-deduplication",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-deduplication",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                    ),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                        position: 0,
+                        length: 3
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                ))),
+                description: "my description",
+                enabled: true
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-deduplication")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1486,6 +1629,58 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-exernal-source/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "my-compo",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-deduplication",
+                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        ),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                            position: 0,
+                            length: 3
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                    ))),
+                    description: "my description",
+                    enabled: true
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)

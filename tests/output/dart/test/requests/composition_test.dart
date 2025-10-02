@@ -869,6 +869,63 @@ void main() {
     ),
   );
 
+  // multipleBatch
+  test(
+    'multipleBatch',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.multipleBatch(
+        batchParams: BatchParams(
+          requests: [
+            MultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "foo",
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: SearchSource(
+                          search: Search(
+                            index: "foo",
+                          ),
+                        ),
+                        position: 2,
+                        length: 1,
+                      ),
+                    ],
+                    deduplication: Deduplication(
+                      positioning: DedupPositioning.fromJson("highest"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/*/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}""");
+      },
+    ),
+  );
+
   // putComposition
   test(
     'putComposition',
@@ -1058,6 +1115,60 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}""");
+      },
+    ),
+  );
+
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-compo",
+        composition: Composition(
+          objectID: "my-compo",
+          name: "my composition",
+          behavior: CompositionBehavior(
+            injection: Injection(
+              main: Main(
+                source: CompositionSource(
+                  search: CompositionSourceSearch(
+                    index: "foo",
+                    params: MainInjectionQueryParameters(
+                      filters: "brand:adidas",
+                    ),
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectedItem(
+                  key: "my-unique-injected-item-key",
+                  source: SearchSource(
+                    search: Search(
+                      index: "foo",
+                    ),
+                  ),
+                  position: 2,
+                  length: 1,
+                ),
+              ],
+              deduplication: Deduplication(
+                positioning: DedupPositioning.fromJson("highest"),
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}""");
       },
     ),
   );
@@ -1267,6 +1378,68 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}""");
+      },
+    ),
+  );
+
+  // putCompositionRule
+  test(
+    'putCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putCompositionRule(
+        compositionID: "compositionID",
+        objectID: "rule-with-deduplication",
+        compositionRule: CompositionRule(
+          objectID: "rule-with-deduplication",
+          description: "my description",
+          enabled: true,
+          conditions: [
+            Condition(
+              anchoring: Anchoring.fromJson("contains"),
+              pattern: "harry",
+            ),
+          ],
+          consequence: CompositionRuleConsequence(
+            behavior: CompositionBehavior(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "my-index",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "my-unique-injected-item-key",
+                    source: SearchSource(
+                      search: Search(
+                        index: "my-index",
+                      ),
+                    ),
+                    position: 0,
+                    length: 3,
+                  ),
+                ],
+                deduplication: Deduplication(
+                  positioning: DedupPositioning.fromJson("highestInjected"),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/compositionID/rules/rule-with-deduplication');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}""");
       },
     ),
   );
@@ -1482,6 +1655,74 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""");
+      },
+    ),
+  );
+
+  // saveRules
+  test(
+    'saveRules',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveRules(
+        compositionID: "my-compo",
+        rules: CompositionRulesBatchParams(
+          requests: [
+            RulesMultipleBatchRequest(
+              action: Action.fromJson("upsert"),
+              body: CompositionRule(
+                objectID: "rule-with-deduplication",
+                description: "my description",
+                enabled: true,
+                conditions: [
+                  Condition(
+                    anchoring: Anchoring.fromJson("contains"),
+                    pattern: "harry",
+                  ),
+                ],
+                consequence: CompositionRuleConsequence(
+                  behavior: CompositionBehavior(
+                    injection: Injection(
+                      main: Main(
+                        source: CompositionSource(
+                          search: CompositionSourceSearch(
+                            index: "my-index",
+                          ),
+                        ),
+                      ),
+                      injectedItems: [
+                        InjectedItem(
+                          key: "my-unique-injected-item-key",
+                          source: SearchSource(
+                            search: Search(
+                              index: "my-index",
+                            ),
+                          ),
+                          position: 0,
+                          length: 3,
+                        ),
+                      ],
+                      deduplication: Deduplication(
+                        positioning:
+                            DedupPositioning.fromJson("highestInjected"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}""");
       },
     ),
   );

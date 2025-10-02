@@ -953,6 +953,53 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("multipleBatch")
+  void multipleBatchTest3() {
+    assertDoesNotThrow(() -> {
+      client.multipleBatch(
+        new BatchParams().setRequests(
+          Arrays.asList(
+            new MultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new Composition()
+                  .setObjectID("my-compo")
+                  .setName("my composition")
+                  .setBehavior(
+                    new CompositionBehavior().setInjection(
+                      new Injection()
+                        .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectedItem()
+                              .setKey("my-unique-injected-item-key")
+                              .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                              .setPosition(2)
+                              .setLength(1)
+                          )
+                        )
+                        .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/*/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my" +
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putComposition")
   void putCompositionTest() {
     assertDoesNotThrow(() -> {
@@ -1144,6 +1191,52 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("putComposition")
+  void putCompositionTest3() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-compo",
+        new Composition()
+          .setObjectID("my-compo")
+          .setName("my composition")
+          .setBehavior(
+            new CompositionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new Main().setSource(
+                    new CompositionSource().setSearch(
+                      new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectedItem()
+                      .setKey("my-unique-injected-item-key")
+                      .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                      .setPosition(2)
+                      .setLength(1)
+                  )
+                )
+                .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-compo\",\"name\":\"my" +
+        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putCompositionRule")
   void putCompositionRuleTest() {
     assertDoesNotThrow(() -> {
@@ -1312,6 +1405,51 @@ class CompositionClientRequestsTests {
       JSONAssert.assertEquals(
         "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
         " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putCompositionRule")
+  void putCompositionRuleTest3() {
+    assertDoesNotThrow(() -> {
+      client.putCompositionRule(
+        "compositionID",
+        "rule-with-deduplication",
+        new CompositionRule()
+          .setObjectID("rule-with-deduplication")
+          .setDescription("my description")
+          .setEnabled(true)
+          .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+          .setConsequence(
+            new CompositionRuleConsequence().setBehavior(
+              new CompositionBehavior().setInjection(
+                new Injection()
+                  .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
+                  .setInjectedItems(
+                    Arrays.asList(
+                      new InjectedItem()
+                        .setKey("my-unique-injected-item-key")
+                        .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                        .setPosition(0)
+                        .setLength(3)
+                    )
+                  )
+                  .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
+              )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/compositionID/rules/rule-with-deduplication", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
+        " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1506,6 +1644,60 @@ class CompositionClientRequestsTests {
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
         " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("saveRules")
+  void saveRulesTest3() {
+    assertDoesNotThrow(() -> {
+      client.saveRules(
+        "my-compo",
+        new CompositionRulesBatchParams().setRequests(
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-deduplication")
+                  .setDescription("my description")
+                  .setEnabled(true)
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionBehavior().setInjection(
+                        new Injection()
+                          .setMain(
+                            new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectedItem()
+                                .setKey("my-unique-injected-item-key")
+                                .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                                .setPosition(0)
+                                .setLength(3)
+                            )
+                          )
+                          .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
+                      )
+                    )
+                  )
+              )
+          )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
+        " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )

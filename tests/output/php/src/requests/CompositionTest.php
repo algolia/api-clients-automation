@@ -719,6 +719,47 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('multipleBatch')]
+    public function testMultipleBatch3(): void
+    {
+        $client = $this->getClient();
+        $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-compo',
+                        'name' => 'my composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'foo',
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highest',
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/*/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('putComposition')]
     public function testPutComposition(): void
     {
@@ -853,6 +894,45 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/my-metadata-compo',
                 'method' => 'PUT',
                 'body' => json_decode('{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putComposition')]
+    public function testPutComposition3(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highest',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}'),
             ],
         ]);
     }
@@ -1011,6 +1091,51 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule3(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'rule-with-deduplication',
+            ['objectID' => 'rule-with-deduplication',
+                'description' => 'my description',
+                'enabled' => true,
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'my-index',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highestInjected',
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/rule-with-deduplication',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('saveRules')]
     public function testSaveRules(): void
     {
@@ -1163,6 +1288,55 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/rule-with-exernal-source/rules/batch',
                 'method' => 'POST',
                 'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveRules')]
+    public function testSaveRules3(): void
+    {
+        $client = $this->getClient();
+        $client->saveRules(
+            'my-compo',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-deduplication',
+                        'description' => 'my description',
+                        'enabled' => true,
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'harry',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'my-index',
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 3,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highestInjected',
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-compo/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}'),
             ],
         ]);
     }
