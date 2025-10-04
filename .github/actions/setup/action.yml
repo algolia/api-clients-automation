@@ -26,7 +26,7 @@ runs:
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
-      uses: gradle/actions/setup-gradle@v4.4.3
+      uses: gradle/actions/setup-gradle@v4.4.4
       with:
         validate-wrappers: true
         add-job-summary: 'on-failure'
