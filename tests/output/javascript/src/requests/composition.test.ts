@@ -377,7 +377,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo' } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-external-group-key',
                     source: {
                       external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
                     },
@@ -406,7 +406,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo' } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-external-group-key',
                     source: {
                       external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } },
                     },
@@ -436,7 +436,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                     position: 2,
                     length: 1,
@@ -453,7 +453,7 @@ describe('multipleBatch', () => {
                     },
                   },
                   {
-                    key: 'externalItem',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                     position: 5,
                     length: 5,
@@ -491,7 +491,7 @@ describe('multipleBatch', () => {
                 main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
                 injectedItems: [
                   {
-                    key: 'injectedItem1',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                     position: 2,
                     length: 1,
@@ -508,7 +508,7 @@ describe('multipleBatch', () => {
                     },
                   },
                   {
-                    key: 'externalItem',
+                    key: 'my-unique-group-key',
                     source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                     position: 5,
                     length: 5,
@@ -533,6 +533,53 @@ describe('multipleBatch', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('multipleBatch', async () => {
+    const req = (await client.multipleBatch({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-compo',
+            name: 'my composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo' } } },
+                injectedItems: [
+                  { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+                ],
+                deduplication: { positioning: 'highest' },
+              },
+            },
+          },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/*/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'my-compo',
+            name: 'my composition',
+            behavior: {
+              injection: {
+                main: { source: { search: { index: 'foo' } } },
+                injectedItems: [
+                  { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+                ],
+                deduplication: { positioning: 'highest' },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putComposition', () => {
@@ -545,7 +592,9 @@ describe('putComposition', () => {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
-            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            injectedItems: [
+              { key: 'my-unique-group-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
           },
         },
       },
@@ -559,7 +608,7 @@ describe('putComposition', () => {
       behavior: {
         injection: {
           main: { source: { search: { index: 'foo' } } },
-          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          injectedItems: [{ key: 'my-unique-group-key', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
         },
       },
     });
@@ -577,7 +626,7 @@ describe('putComposition', () => {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-external-group-key',
                 source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -598,7 +647,7 @@ describe('putComposition', () => {
           main: { source: { search: { index: 'foo' } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-external-group-key',
               source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -621,7 +670,7 @@ describe('putComposition', () => {
             main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-group-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -638,7 +687,7 @@ describe('putComposition', () => {
                 },
               },
               {
-                key: 'externalItem',
+                key: 'my-unique-group-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                 position: 5,
                 length: 5,
@@ -670,7 +719,7 @@ describe('putComposition', () => {
           main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -687,7 +736,7 @@ describe('putComposition', () => {
               },
             },
             {
-              key: 'externalItem',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
               position: 5,
               length: 5,
@@ -709,6 +758,42 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-compo',
+      composition: {
+        objectID: 'my-compo',
+        name: 'my composition',
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+            injectedItems: [
+              { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
+            deduplication: { positioning: 'highest' },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-compo',
+      name: 'my composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+          injectedItems: [
+            { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+          ],
+          deduplication: { positioning: 'highest' },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {
@@ -723,7 +808,9 @@ describe('putCompositionRule', () => {
           behavior: {
             injection: {
               main: { source: { search: { index: 'foo' } } },
-              injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+              injectedItems: [
+                { key: 'my-unique-group-from-rule-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+              ],
             },
           },
         },
@@ -739,7 +826,9 @@ describe('putCompositionRule', () => {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
-            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            injectedItems: [
+              { key: 'my-unique-group-from-rule-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
           },
         },
       },
@@ -760,7 +849,7 @@ describe('putCompositionRule', () => {
               main: { source: { search: { index: 'foo' } } },
               injectedItems: [
                 {
-                  key: 'injectedItem1',
+                  key: 'my-unique-group-from-rule-key',
                   source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                   position: 2,
                   length: 1,
@@ -794,7 +883,7 @@ describe('putCompositionRule', () => {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-group-from-rule-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -838,7 +927,7 @@ describe('putCompositionRule', () => {
               main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
               injectedItems: [
                 {
-                  key: 'injectedItem',
+                  key: 'my-unique-external-group-from-rule-key',
                   source: {
                     external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                   },
@@ -870,7 +959,7 @@ describe('putCompositionRule', () => {
             main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
             injectedItems: [
               {
-                key: 'injectedItem',
+                key: 'my-unique-external-group-from-rule-key',
                 source: {
                   external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                 },
@@ -878,6 +967,56 @@ describe('putCompositionRule', () => {
                 length: 3,
               },
             ],
+          },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putCompositionRule', async () => {
+    const req = (await client.putCompositionRule({
+      compositionID: 'compositionID',
+      objectID: 'rule-with-deduplication',
+      compositionRule: {
+        objectID: 'rule-with-deduplication',
+        description: 'my description',
+        enabled: true,
+        conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+        consequence: {
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'my-index' } } },
+              injectedItems: [
+                {
+                  key: 'my-unique-injected-item-key',
+                  source: { search: { index: 'my-index' } },
+                  position: 0,
+                  length: 3,
+                },
+              ],
+              deduplication: { positioning: 'highestInjected' },
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/compositionID/rules/rule-with-deduplication');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'rule-with-deduplication',
+      description: 'my description',
+      enabled: true,
+      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index' } } },
+            injectedItems: [
+              { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
+            ],
+            deduplication: { positioning: 'highestInjected' },
           },
         },
       },
@@ -939,7 +1078,7 @@ describe('saveRules', () => {
                     main: { source: { search: { index: 'foo' } } },
                     injectedItems: [
                       {
-                        key: 'injectedItem1',
+                        key: 'my-unique-group-from-rule-key',
                         source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                         position: 2,
                         length: 1,
@@ -980,7 +1119,7 @@ describe('saveRules', () => {
                   main: { source: { search: { index: 'foo' } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem1',
+                      key: 'my-unique-group-from-rule-key',
                       source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                       position: 2,
                       length: 1,
@@ -1030,7 +1169,7 @@ describe('saveRules', () => {
                     main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
                     injectedItems: [
                       {
-                        key: 'injectedItem',
+                        key: 'my-unique-external-group-from-rule-key',
                         source: {
                           external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                         },
@@ -1069,7 +1208,7 @@ describe('saveRules', () => {
                   main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem',
+                      key: 'my-unique-external-group-from-rule-key',
                       source: {
                         external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                       },
@@ -1077,6 +1216,74 @@ describe('saveRules', () => {
                       length: 3,
                     },
                   ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveRules', async () => {
+    const req = (await client.saveRules({
+      compositionID: 'my-compo',
+      rules: {
+        requests: [
+          {
+            action: 'upsert',
+            body: {
+              objectID: 'rule-with-deduplication',
+              description: 'my description',
+              enabled: true,
+              conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+              consequence: {
+                behavior: {
+                  injection: {
+                    main: { source: { search: { index: 'my-index' } } },
+                    injectedItems: [
+                      {
+                        key: 'my-unique-injected-item-key',
+                        source: { search: { index: 'my-index' } },
+                        position: 0,
+                        length: 3,
+                      },
+                    ],
+                    deduplication: { positioning: 'highestInjected' },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-compo/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-deduplication',
+            description: 'my description',
+            enabled: true,
+            conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'my-index' } } },
+                  injectedItems: [
+                    {
+                      key: 'my-unique-injected-item-key',
+                      source: { search: { index: 'my-index' } },
+                      position: 0,
+                      length: 3,
+                    },
+                  ],
+                  deduplication: { positioning: 'highestInjected' },
                 },
               },
             },
@@ -1108,7 +1315,7 @@ describe('search', () => {
         params: {
           query: 'batman',
           injectedItems: {
-            injectedItem1: {
+            'my-unique-external-group-key': {
               items: [
                 { objectID: 'my-object-1' },
                 {
@@ -1133,7 +1340,7 @@ describe('search', () => {
       params: {
         query: 'batman',
         injectedItems: {
-          injectedItem1: {
+          'my-unique-external-group-key': {
             items: [
               { objectID: 'my-object-1' },
               {

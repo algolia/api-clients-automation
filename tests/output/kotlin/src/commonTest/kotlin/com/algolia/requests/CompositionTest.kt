@@ -656,7 +656,7 @@ class CompositionTest {
                 ),
                 injectedItems = listOf(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-group-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo",
@@ -674,7 +674,7 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/1234".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}""", it.body)
+        assertJsonBody("""{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}""", it.body)
       },
     )
   }
@@ -699,7 +699,7 @@ class CompositionTest {
                 ),
                 injectedItems = listOf(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-external-group-key",
                     source = ExternalSource(
                       external = External(
                         index = "foo",
@@ -721,7 +721,56 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/my-external-injection-compo".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}""", it.body)
+        assertJsonBody("""{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition3`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-compo",
+          composition = Composition(
+            objectID = "my-compo",
+            name = "my composition",
+            behavior = CompositionBehavior(
+              injection = Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo",
+                      params = MainInjectionQueryParameters(
+                        filters = "brand:adidas",
+                      ),
+                    ),
+                  ),
+                ),
+                injectedItems = listOf(
+                  InjectedItem(
+                    key = "my-unique-injected-item-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                      ),
+                    ),
+                    position = 2,
+                    length = 1,
+                  ),
+                ),
+                deduplication = Deduplication(
+                  positioning = DedupPositioning.entries.first { it.value == "highest" },
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-compo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}""", it.body)
       },
     )
   }
@@ -755,7 +804,7 @@ class CompositionTest {
                   ),
                   injectedItems = listOf(
                     InjectedItem(
-                      key = "injectedItem1",
+                      key = "my-unique-group-from-rule-key",
                       source = SearchSource(
                         search = Search(
                           index = "foo",
@@ -774,7 +823,7 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/compositionID/rules/ruleID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}""", it.body)
+        assertJsonBody("""{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}""", it.body)
       },
     )
   }
@@ -822,7 +871,7 @@ class CompositionTest {
                   ),
                   injectedItems = listOf(
                     InjectedItem(
-                      key = "injectedItem",
+                      key = "my-unique-external-group-from-rule-key",
                       source = ExternalSource(
                         external = External(
                           index = "my-index",
@@ -845,7 +894,63 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/compositionID/rules/rule-with-exernal-source".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}""", it.body)
+        assertJsonBody("""{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `putCompositionRule3`() = runTest {
+    client.runTest(
+      call = {
+        putCompositionRule(
+          compositionID = "compositionID",
+          objectID = "rule-with-deduplication",
+          compositionRule = CompositionRule(
+            objectID = "rule-with-deduplication",
+            description = "my description",
+            enabled = true,
+            conditions = listOf(
+              Condition(
+                anchoring = Anchoring.entries.first { it.value == "contains" },
+                pattern = "harry",
+              ),
+            ),
+            consequence = CompositionRuleConsequence(
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "my-index",
+                      ),
+                    ),
+                  ),
+                  injectedItems = listOf(
+                    InjectedItem(
+                      key = "my-unique-injected-item-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "my-index",
+                        ),
+                      ),
+                      position = 0,
+                      length = 3,
+                    ),
+                  ),
+                  deduplication = Deduplication(
+                    positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/compositionID/rules/rule-with-deduplication".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}""", it.body)
       },
     )
   }
@@ -942,7 +1047,7 @@ class CompositionTest {
                         ),
                         injectedItems = listOf(
                           InjectedItem(
-                            key = "injectedItem",
+                            key = "my-unique-external-group-from-rule-key",
                             source = ExternalSource(
                               external = External(
                                 index = "my-index",
@@ -968,7 +1073,69 @@ class CompositionTest {
       intercept = {
         assertEquals("/1/compositions/rule-with-exernal-source/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""", it.body)
+        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `saveRules3`() = runTest {
+    client.runTest(
+      call = {
+        saveRules(
+          compositionID = "my-compo",
+          rules = CompositionRulesBatchParams(
+            requests = listOf(
+              RulesMultipleBatchRequest(
+                action = Action.entries.first { it.value == "upsert" },
+                body = CompositionRule(
+                  objectID = "rule-with-deduplication",
+                  description = "my description",
+                  enabled = true,
+                  conditions = listOf(
+                    Condition(
+                      anchoring = Anchoring.entries.first { it.value == "contains" },
+                      pattern = "harry",
+                    ),
+                  ),
+                  consequence = CompositionRuleConsequence(
+                    behavior = CompositionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "my-index",
+                            ),
+                          ),
+                        ),
+                        injectedItems = listOf(
+                          InjectedItem(
+                            key = "my-unique-injected-item-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "my-index",
+                              ),
+                            ),
+                            position = 0,
+                            length = 3,
+                          ),
+                        ),
+                        deduplication = Deduplication(
+                          positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-compo/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}""", it.body)
       },
     )
   }

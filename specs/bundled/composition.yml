@@ -3531,6 +3531,25 @@ components:
         - source
         - position
         - length
+    dedupPositioning:
+      type: string
+      enum:
+        - highest
+        - highestInjected
+      description: >
+        Deduplication positioning configures how a duplicate result should be
+        resolved between an injected item and main search results.
+
+        Current configuration supports:
+
+        - 'highest': always select the item in the highest position, and remove
+        duplicates that appear lower in the results.
+
+        - 'highestInjected': duplicate result will be moved to its highest
+        possible injected position, but not higher. 
+          If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
+      example: highest
+      default: highestInjected
     compositionBehavior:
       type: object
       additionalProperties: false
@@ -3574,6 +3593,18 @@ components:
               maxItems: 2
               items:
                 $ref: '#/components/schemas/injectedItem'
+            deduplication:
+              title: deduplication
+              type: object
+              additionalProperties: false
+              description: >-
+                Deduplication configures the methods used to resolve duplicate
+                items between main search results and injected group results.
+              properties:
+                positioning:
+                  $ref: '#/components/schemas/dedupPositioning'
+              required:
+                - positioning
           required:
             - main
       required:

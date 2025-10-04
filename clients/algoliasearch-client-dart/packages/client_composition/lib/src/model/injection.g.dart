@@ -18,6 +18,11 @@ Injection _$InjectionFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => (v as List<dynamic>?)
                   ?.map((e) => InjectedItem.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          deduplication: $checkedConvert(
+              'deduplication',
+              (v) => v == null
+                  ? null
+                  : Deduplication.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -36,5 +41,6 @@ Map<String, dynamic> _$InjectionToJson(Injection instance) {
 
   writeNotNull(
       'injectedItems', instance.injectedItems?.map((e) => e.toJson()).toList());
+  writeNotNull('deduplication', instance.deduplication?.toJson());
   return val;
 }

@@ -18,6 +18,9 @@ public class Injection {
   @JsonProperty("injectedItems")
   private List<InjectedItem> injectedItems;
 
+  @JsonProperty("deduplication")
+  private Deduplication deduplication;
+
   public Injection setMain(Main main) {
     this.main = main;
     return this;
@@ -48,6 +51,17 @@ public class Injection {
     return injectedItems;
   }
 
+  public Injection setDeduplication(Deduplication deduplication) {
+    this.deduplication = deduplication;
+    return this;
+  }
+
+  /** Get deduplication */
+  @javax.annotation.Nullable
+  public Deduplication getDeduplication() {
+    return deduplication;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -57,12 +71,16 @@ public class Injection {
       return false;
     }
     Injection injection = (Injection) o;
-    return Objects.equals(this.main, injection.main) && Objects.equals(this.injectedItems, injection.injectedItems);
+    return (
+      Objects.equals(this.main, injection.main) &&
+      Objects.equals(this.injectedItems, injection.injectedItems) &&
+      Objects.equals(this.deduplication, injection.deduplication)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(main, injectedItems);
+    return Objects.hash(main, injectedItems, deduplication);
   }
 
   @Override
@@ -71,6 +89,7 @@ public class Injection {
     sb.append("class Injection {\n");
     sb.append("    main: ").append(toIndentedString(main)).append("\n");
     sb.append("    injectedItems: ").append(toIndentedString(injectedItems)).append("\n");
+    sb.append("    deduplication: ").append(toIndentedString(deduplication)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -683,7 +683,7 @@ class CompositionTest extends AnyFunSuite {
                   injectedItems = Some(
                     Seq(
                       InjectedItem(
-                        key = "injectedItem1",
+                        key = "my-unique-external-group-key",
                         source = ExternalSource(
                           external = External(
                             index = "foo",
@@ -714,7 +714,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/*/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}"""
+      """{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -747,7 +747,7 @@ class CompositionTest extends AnyFunSuite {
                   injectedItems = Some(
                     Seq(
                       InjectedItem(
-                        key = "injectedItem1",
+                        key = "my-unique-group-key",
                         source = SearchSource(
                           search = Search(
                             index = "foo",
@@ -783,7 +783,7 @@ class CompositionTest extends AnyFunSuite {
                         )
                       ),
                       InjectedItem(
-                        key = "externalItem",
+                        key = "my-unique-group-key",
                         source = SearchSource(
                           search = Search(
                             index = "foo",
@@ -834,7 +834,65 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/*/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
+      """{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("multipleBatch3") {
+    val (client, echo) = testClient()
+    val future = client.multipleBatch(
+      batchParams = BatchParams(
+        requests = Seq(
+          MultipleBatchRequest(
+            action = Action.withName("upsert"),
+            body = Composition(
+              objectID = "my-compo",
+              name = "my composition",
+              behavior = CompositionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
+                      )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-injected-item-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo"
+                          )
+                        ),
+                        position = 2,
+                        length = 1
+                      )
+                    )
+                  ),
+                  deduplication = Some(
+                    Deduplication(
+                      positioning = DedupPositioning.withName("highest")
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/*/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -859,7 +917,7 @@ class CompositionTest extends AnyFunSuite {
             injectedItems = Some(
               Seq(
                 InjectedItem(
-                  key = "injectedItem1",
+                  key = "my-unique-group-key",
                   source = SearchSource(
                     search = Search(
                       index = "foo"
@@ -881,7 +939,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/1234")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}"""
+      """{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -906,7 +964,7 @@ class CompositionTest extends AnyFunSuite {
             injectedItems = Some(
               Seq(
                 InjectedItem(
-                  key = "injectedItem1",
+                  key = "my-unique-external-group-key",
                   source = ExternalSource(
                     external = External(
                       index = "foo",
@@ -934,7 +992,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/my-external-injection-compo")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}"""
+      """{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -964,7 +1022,7 @@ class CompositionTest extends AnyFunSuite {
             injectedItems = Some(
               Seq(
                 InjectedItem(
-                  key = "injectedItem1",
+                  key = "my-unique-group-key",
                   source = SearchSource(
                     search = Search(
                       index = "foo",
@@ -1000,7 +1058,7 @@ class CompositionTest extends AnyFunSuite {
                   )
                 ),
                 InjectedItem(
-                  key = "externalItem",
+                  key = "my-unique-group-key",
                   source = SearchSource(
                     search = Search(
                       index = "foo",
@@ -1048,7 +1106,64 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/my-metadata-compo")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"externalItem","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+      """{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putComposition3") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-compo",
+      composition = Composition(
+        objectID = "my-compo",
+        name = "my composition",
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo",
+                  params = Some(
+                    MainInjectionQueryParameters(
+                      filters = Some("brand:adidas")
+                    )
+                  )
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "my-unique-injected-item-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo"
+                    )
+                  ),
+                  position = 2,
+                  length = 1
+                )
+              )
+            ),
+            deduplication = Some(
+              Deduplication(
+                positioning = DedupPositioning.withName("highest")
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1080,7 +1195,7 @@ class CompositionTest extends AnyFunSuite {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-group-from-rule-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo"
@@ -1103,7 +1218,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/compositionID/rules/ruleID")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}"""
+      """{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1135,7 +1250,7 @@ class CompositionTest extends AnyFunSuite {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem1",
+                    key = "my-unique-group-from-rule-key",
                     source = SearchSource(
                       search = Search(
                         index = "foo",
@@ -1184,7 +1299,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/compositionID/rules/rule-with-metadata")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}"""
+      """{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1236,7 +1351,7 @@ class CompositionTest extends AnyFunSuite {
               injectedItems = Some(
                 Seq(
                   InjectedItem(
-                    key = "injectedItem",
+                    key = "my-unique-external-group-from-rule-key",
                     source = ExternalSource(
                       external = External(
                         index = "my-index",
@@ -1265,7 +1380,69 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/compositionID/rules/rule-with-exernal-source")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+      """{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putCompositionRule3") {
+    val (client, echo) = testClient()
+    val future = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "rule-with-deduplication",
+      compositionRule = CompositionRule(
+        objectID = "rule-with-deduplication",
+        description = Some("my description"),
+        enabled = Some(true),
+        conditions = Seq(
+          Condition(
+            anchoring = Some(Anchoring.withName("contains")),
+            pattern = Some("harry")
+          )
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "my-index"
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-injected-item-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "my-index"
+                      )
+                    ),
+                    position = 0,
+                    length = 3
+                  )
+                )
+              ),
+              deduplication = Some(
+                Deduplication(
+                  positioning = DedupPositioning.withName("highestInjected")
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/compositionID/rules/rule-with-deduplication")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1349,7 +1526,7 @@ class CompositionTest extends AnyFunSuite {
                       injectedItems = Some(
                         Seq(
                           InjectedItem(
-                            key = "injectedItem1",
+                            key = "my-unique-group-from-rule-key",
                             source = SearchSource(
                               search = Search(
                                 index = "foo",
@@ -1402,7 +1579,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/rule-with-metadata/rules/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"injectedItem1","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}"""
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1458,7 +1635,7 @@ class CompositionTest extends AnyFunSuite {
                       injectedItems = Some(
                         Seq(
                           InjectedItem(
-                            key = "injectedItem",
+                            key = "my-unique-external-group-from-rule-key",
                             source = ExternalSource(
                               external = External(
                                 index = "my-index",
@@ -1491,7 +1668,77 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/rule-with-exernal-source/rules/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"injectedItem","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("saveRules3") {
+    val (client, echo) = testClient()
+    val future = client.saveRules(
+      compositionID = "my-compo",
+      rules = CompositionRulesBatchParams(
+        requests = Some(
+          Seq(
+            RulesMultipleBatchRequest(
+              action = Action.withName("upsert"),
+              body = CompositionRule(
+                objectID = "rule-with-deduplication",
+                description = Some("my description"),
+                enabled = Some(true),
+                conditions = Seq(
+                  Condition(
+                    anchoring = Some(Anchoring.withName("contains")),
+                    pattern = Some("harry")
+                  )
+                ),
+                consequence = CompositionRuleConsequence(
+                  behavior = CompositionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "my-index"
+                          )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-injected-item-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "my-index"
+                              )
+                            ),
+                            position = 0,
+                            length = 3
+                          )
+                        )
+                      ),
+                      deduplication = Some(
+                        Deduplication(
+                          positioning = DedupPositioning.withName("highestInjected")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1530,7 +1777,7 @@ class CompositionTest extends AnyFunSuite {
             query = Some("batman"),
             injectedItems = Some(
               Map(
-                "injectedItem1" -> ExternalInjectedItem(
+                "my-unique-external-group-key" -> ExternalInjectedItem(
                   items = Seq(
                     ExternalInjection(
                       objectID = "my-object-1"
@@ -1565,7 +1812,7 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/foo/run")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"params":{"query":"batman","injectedItems":{"injectedItem1":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
+      """{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

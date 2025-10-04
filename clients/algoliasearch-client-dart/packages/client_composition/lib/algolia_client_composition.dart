@@ -32,6 +32,8 @@ export 'src/model/composition_source.dart';
 export 'src/model/composition_source_search.dart';
 export 'src/model/compositions_search_response.dart';
 export 'src/model/condition.dart';
+export 'src/model/dedup_positioning.dart';
+export 'src/model/deduplication.dart';
 export 'src/model/delete_composition_action.dart';
 export 'src/model/delete_composition_rule_action.dart';
 export 'src/model/error_base.dart';
