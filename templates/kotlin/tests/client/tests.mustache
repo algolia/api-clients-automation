@@ -10,6 +10,7 @@ fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = r
     for (i in 1..{{.}}) {
     {{/times}}
     {{#isError}}
+    
     assertFails { 
         {{#dynamicTemplate}}{{/dynamicTemplate}}
     }.let { error ->  assertError(error, "{{{expectedError}}}".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
