@@ -742,7 +742,7 @@ def snippet_for_multiple_batch1():
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "injectedItem1",
+                                        "key": "my-unique-external-group-key",
                                         "source": {
                                             "external": {
                                                 "index": "foo",
@@ -804,7 +804,7 @@ def snippet_for_multiple_batch2():
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "injectedItem1",
+                                        "key": "my-unique-group-key",
                                         "source": {
                                             "search": {
                                                 "index": "foo",
@@ -830,7 +830,7 @@ def snippet_for_multiple_batch2():
                                         },
                                     },
                                     {
-                                        "key": "externalItem",
+                                        "key": "my-unique-group-key",
                                         "source": {
                                             "search": {
                                                 "index": "foo",
@@ -856,6 +856,64 @@ def snippet_for_multiple_batch2():
                                         },
                                     },
                                 ],
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_multiple_batch3():
+    """
+    Snippet for the multipleBatch method.
+
+    multipleBatch
+    """
+    # >SEPARATOR multipleBatch multipleBatch
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.multiple_batch(
+        batch_params={
+            "requests": [
+                {
+                    "action": "upsert",
+                    "body": {
+                        "objectID": "my-compo",
+                        "name": "my composition",
+                        "behavior": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "search": {
+                                            "index": "foo",
+                                        },
+                                    },
+                                },
+                                "injectedItems": [
+                                    {
+                                        "key": "my-unique-injected-item-key",
+                                        "source": {
+                                            "search": {
+                                                "index": "foo",
+                                            },
+                                        },
+                                        "position": 2,
+                                        "length": 1,
+                                    },
+                                ],
+                                "deduplication": {
+                                    "positioning": "highest",
+                                },
                             },
                         },
                     },
@@ -898,7 +956,7 @@ def snippet_for_put_composition():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -947,7 +1005,7 @@ def snippet_for_put_composition1():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-external-group-key",
                             "source": {
                                 "external": {
                                     "index": "foo",
@@ -1003,7 +1061,7 @@ def snippet_for_put_composition2():
                     },
                     "injectedItems": [
                         {
-                            "key": "injectedItem1",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -1027,7 +1085,7 @@ def snippet_for_put_composition2():
                             },
                         },
                         {
-                            "key": "externalItem",
+                            "key": "my-unique-group-key",
                             "source": {
                                 "search": {
                                     "index": "foo",
@@ -1051,6 +1109,61 @@ def snippet_for_put_composition2():
                             },
                         },
                     ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition3():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-compo",
+        composition={
+            "objectID": "my-compo",
+            "name": "my composition",
+            "behavior": {
+                "injection": {
+                    "main": {
+                        "source": {
+                            "search": {
+                                "index": "foo",
+                                "params": {
+                                    "filters": "brand:adidas",
+                                },
+                            },
+                        },
+                    },
+                    "injectedItems": [
+                        {
+                            "key": "my-unique-injected-item-key",
+                            "source": {
+                                "search": {
+                                    "index": "foo",
+                                },
+                            },
+                            "position": 2,
+                            "length": 1,
+                        },
+                    ],
+                    "deduplication": {
+                        "positioning": "highest",
+                    },
                 },
             },
         },
@@ -1097,7 +1210,7 @@ def snippet_for_put_composition_rule():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem1",
+                                "key": "my-unique-group-from-rule-key",
                                 "source": {
                                     "search": {
                                         "index": "foo",
@@ -1154,7 +1267,7 @@ def snippet_for_put_composition_rule1():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem1",
+                                "key": "my-unique-group-from-rule-key",
                                 "source": {
                                     "search": {
                                         "index": "foo",
@@ -1244,7 +1357,7 @@ def snippet_for_put_composition_rule2():
                         },
                         "injectedItems": [
                             {
-                                "key": "injectedItem",
+                                "key": "my-unique-external-group-from-rule-key",
                                 "source": {
                                     "external": {
                                         "index": "my-index",
@@ -1258,6 +1371,68 @@ def snippet_for_put_composition_rule2():
                                 "length": 3,
                             },
                         ],
+                    },
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition_rule3():
+    """
+    Snippet for the putCompositionRule method.
+
+    putCompositionRule
+    """
+    # >SEPARATOR putCompositionRule putCompositionRule
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition_rule(
+        composition_id="compositionID",
+        object_id="rule-with-deduplication",
+        composition_rule={
+            "objectID": "rule-with-deduplication",
+            "description": "my description",
+            "enabled": True,
+            "conditions": [
+                {
+                    "anchoring": "contains",
+                    "pattern": "harry",
+                },
+            ],
+            "consequence": {
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "my-index",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "my-unique-injected-item-key",
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                    },
+                                },
+                                "position": 0,
+                                "length": 3,
+                            },
+                        ],
+                        "deduplication": {
+                            "positioning": "highestInjected",
+                        },
                     },
                 },
             },
@@ -1358,7 +1533,7 @@ def snippet_for_save_rules1():
                                     },
                                     "injectedItems": [
                                         {
-                                            "key": "injectedItem1",
+                                            "key": "my-unique-group-from-rule-key",
                                             "source": {
                                                 "search": {
                                                     "index": "foo",
@@ -1456,7 +1631,7 @@ def snippet_for_save_rules2():
                                     },
                                     "injectedItems": [
                                         {
-                                            "key": "injectedItem",
+                                            "key": "my-unique-external-group-from-rule-key",
                                             "source": {
                                                 "external": {
                                                     "index": "my-index",
@@ -1470,6 +1645,74 @@ def snippet_for_save_rules2():
                                             "length": 3,
                                         },
                                     ],
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # use the class directly
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_rules3():
+    """
+    Snippet for the saveRules method.
+
+    saveRules
+    """
+    # >SEPARATOR saveRules saveRules
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_rules(
+        composition_id="my-compo",
+        rules={
+            "requests": [
+                {
+                    "action": "upsert",
+                    "body": {
+                        "objectID": "rule-with-deduplication",
+                        "description": "my description",
+                        "enabled": True,
+                        "conditions": [
+                            {
+                                "anchoring": "contains",
+                                "pattern": "harry",
+                            },
+                        ],
+                        "consequence": {
+                            "behavior": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "my-index",
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "my-unique-injected-item-key",
+                                            "source": {
+                                                "search": {
+                                                    "index": "my-index",
+                                                },
+                                            },
+                                            "position": 0,
+                                            "length": 3,
+                                        },
+                                    ],
+                                    "deduplication": {
+                                        "positioning": "highestInjected",
+                                    },
                                 },
                             },
                         },
@@ -1530,7 +1773,7 @@ def snippet_for_search1():
             "params": {
                 "query": "batman",
                 "injectedItems": {
-                    "injectedItem1": {
+                    "my-unique-external-group-key": {
                         "items": [
                             {
                                 "objectID": "my-object-1",

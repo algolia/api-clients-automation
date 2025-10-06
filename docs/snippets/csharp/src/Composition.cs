@@ -653,7 +653,7 @@ public class SnippetCompositionClient
                     {
                       new InjectedItem
                       {
-                        Key = "injectedItem1",
+                        Key = "my-unique-external-group-key",
                         Source = new InjectedItemSource(
                           new ExternalSource
                           {
@@ -730,7 +730,7 @@ public class SnippetCompositionClient
                     {
                       new InjectedItem
                       {
-                        Key = "injectedItem1",
+                        Key = "my-unique-group-key",
                         Source = new InjectedItemSource(
                           new SearchSource
                           {
@@ -766,7 +766,7 @@ public class SnippetCompositionClient
                       },
                       new InjectedItem
                       {
-                        Key = "externalItem",
+                        Key = "my-unique-group-key",
                         Source = new InjectedItemSource(
                           new SearchSource
                           {
@@ -797,6 +797,75 @@ public class SnippetCompositionClient
                           },
                         },
                       },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the MultipleBatch method.
+  ///
+  /// multipleBatch
+  /// </summary>
+  public async Task SnippetForCompositionClientMultipleBatch3()
+  {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.MultipleBatchAsync(
+      new BatchParams
+      {
+        Requests = new List<MultipleBatchRequest>
+        {
+          new MultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new BatchCompositionAction(
+              new Composition
+              {
+                ObjectID = "my-compo",
+                Name = "my composition",
+                Behavior = new CompositionBehavior
+                {
+                  Injection = new Injection
+                  {
+                    Main = new Main
+                    {
+                      Source = new CompositionSource
+                      {
+                        Search = new CompositionSourceSearch { Index = "foo" },
+                      },
+                    },
+                    InjectedItems = new List<InjectedItem>
+                    {
+                      new InjectedItem
+                      {
+                        Key = "my-unique-injected-item-key",
+                        Source = new InjectedItemSource(
+                          new SearchSource
+                          {
+                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                          }
+                        ),
+                        Position = 2,
+                        Length = 1,
+                      },
+                    },
+                    Deduplication = new Deduplication
+                    {
+                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
                     },
                   },
                 },
@@ -845,7 +914,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -899,7 +968,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-external-group-key",
                 Source = new InjectedItemSource(
                   new ExternalSource
                   {
@@ -962,7 +1031,7 @@ public class SnippetCompositionClient
             {
               new InjectedItem
               {
-                Key = "injectedItem1",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -995,7 +1064,7 @@ public class SnippetCompositionClient
               },
               new InjectedItem
               {
-                Key = "externalItem",
+                Key = "my-unique-group-key",
                 Source = new InjectedItemSource(
                   new SearchSource
                   {
@@ -1026,6 +1095,68 @@ public class SnippetCompositionClient
                   },
                 },
               },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition3()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch
+                {
+                  Index = "foo",
+                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                },
+              },
+            },
+            InjectedItems = new List<InjectedItem>
+            {
+              new InjectedItem
+              {
+                Key = "my-unique-injected-item-key",
+                Source = new InjectedItemSource(
+                  new SearchSource
+                  {
+                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                  }
+                ),
+                Position = 2,
+                Length = 1,
+              },
+            },
+            Deduplication = new Deduplication
+            {
+              Positioning = Enum.Parse<DedupPositioning>("Highest"),
             },
           },
         },
@@ -1076,7 +1207,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem1",
+                  Key = "my-unique-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new SearchSource
                     {
@@ -1137,7 +1268,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem1",
+                  Key = "my-unique-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new SearchSource
                     {
@@ -1231,7 +1362,7 @@ public class SnippetCompositionClient
               {
                 new InjectedItem
                 {
-                  Key = "injectedItem",
+                  Key = "my-unique-external-group-from-rule-key",
                   Source = new InjectedItemSource(
                     new ExternalSource
                     {
@@ -1246,6 +1377,73 @@ public class SnippetCompositionClient
                   Position = 0,
                   Length = 3,
                 },
+              },
+            },
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutCompositionRule method.
+  ///
+  /// putCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientPutCompositionRule3()
+  {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-deduplication",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-deduplication",
+        Description = "my description",
+        Enabled = true,
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "my-index" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "my-unique-injected-item-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
+                    }
+                  ),
+                  Position = 0,
+                  Length = 3,
+                },
+              },
+              Deduplication = new Deduplication
+              {
+                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
               },
             },
           },
@@ -1358,7 +1556,7 @@ public class SnippetCompositionClient
                       {
                         new InjectedItem
                         {
-                          Key = "injectedItem1",
+                          Key = "my-unique-group-from-rule-key",
                           Source = new InjectedItemSource(
                             new SearchSource
                             {
@@ -1474,7 +1672,7 @@ public class SnippetCompositionClient
                       {
                         new InjectedItem
                         {
-                          Key = "injectedItem",
+                          Key = "my-unique-external-group-from-rule-key",
                           Source = new InjectedItemSource(
                             new ExternalSource
                             {
@@ -1492,6 +1690,91 @@ public class SnippetCompositionClient
                           Position = 0,
                           Length = 3,
                         },
+                      },
+                    },
+                  },
+                },
+              }
+            ),
+          },
+        },
+      }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveRules method.
+  ///
+  /// saveRules
+  /// </summary>
+  public async Task SnippetForCompositionClientSaveRules3()
+  {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SaveRulesAsync(
+      "my-compo",
+      new CompositionRulesBatchParams
+      {
+        Requests = new List<RulesMultipleBatchRequest>
+        {
+          new RulesMultipleBatchRequest
+          {
+            Action = Enum.Parse<Action>("Upsert"),
+            Body = new RulesBatchCompositionAction(
+              new CompositionRule
+              {
+                ObjectID = "rule-with-deduplication",
+                Description = "my description",
+                Enabled = true,
+                Conditions = new List<Condition>
+                {
+                  new Condition
+                  {
+                    Anchoring = Enum.Parse<Anchoring>("Contains"),
+                    Pattern = "harry",
+                  },
+                },
+                Consequence = new CompositionRuleConsequence
+                {
+                  Behavior = new CompositionBehavior
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "my-index" },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "my-unique-injected-item-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "my-index",
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 3,
+                        },
+                      },
+                      Deduplication = new Deduplication
+                      {
+                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                       },
                     },
                   },
@@ -1552,7 +1835,7 @@ public class SnippetCompositionClient
           InjectedItems = new Dictionary<string, ExternalInjectedItem>
           {
             {
-              "injectedItem1",
+              "my-unique-external-group-key",
               new ExternalInjectedItem
               {
                 Items = new List<ExternalInjection>

@@ -18,12 +18,14 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.composition.models.deduplication import Deduplication
 from algoliasearch.composition.models.injected_item import InjectedItem
 from algoliasearch.composition.models.main import Main
 
 _ALIASES = {
     "main": "main",
     "injected_items": "injectedItems",
+    "deduplication": "deduplication",
 }
 
 
@@ -39,6 +41,7 @@ class Injection(BaseModel):
     main: Main
     injected_items: Optional[List[InjectedItem]] = None
     """ list of injected items of the current Composition. """
+    deduplication: Optional[Deduplication] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -81,6 +84,11 @@ class Injection(BaseModel):
         obj["injectedItems"] = (
             [InjectedItem.from_dict(_item) for _item in obj["injectedItems"]]
             if obj.get("injectedItems") is not None
+            else None
+        )
+        obj["deduplication"] = (
+            Deduplication.from_dict(obj["deduplication"])
+            if obj.get("deduplication") is not None
             else None
         )
 

@@ -62,9 +62,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "requests": [
         {
@@ -83,7 +81,7 @@
                 },
                 "injectedItems": [
                   {
-                    "key": "injectedItem1",
+                    "key": "my-unique-external-group-key",
                     "source": {
                       "external": {
                         "index": "foo",
@@ -124,7 +122,7 @@
                   },
                   "injectedItems": [
                     {
-                      "key": "injectedItem1",
+                      "key": "my-unique-external-group-key",
                       "source": {
                         "external": {
                           "index": "foo",
@@ -147,9 +145,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "requests": [
         {
@@ -171,7 +167,7 @@
                 },
                 "injectedItems": [
                   {
-                    "key": "injectedItem1",
+                    "key": "my-unique-group-key",
                     "source": {
                       "search": {
                         "index": "foo",
@@ -197,7 +193,7 @@
                     }
                   },
                   {
-                    "key": "externalItem",
+                    "key": "my-unique-group-key",
                     "source": {
                       "search": {
                         "index": "foo",
@@ -253,7 +249,7 @@
                   },
                   "injectedItems": [
                     {
-                      "key": "injectedItem1",
+                      "key": "my-unique-group-key",
                       "source": {
                         "search": {
                           "index": "foo",
@@ -279,7 +275,7 @@
                       }
                     },
                     {
-                      "key": "externalItem",
+                      "key": "my-unique-group-key",
                       "source": {
                         "search": {
                           "index": "foo",
@@ -305,6 +301,87 @@
                       }
                     }
                   ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "skipLanguages": ["kotlin"],
+    "parameters": {
+      "requests": [
+        {
+          "action": "upsert",
+          "body": {
+            "objectID": "my-compo",
+            "name": "my composition",
+            "behavior": {
+              "injection": {
+                "main": {
+                  "source": {
+                    "search": {
+                      "index": "foo"
+                    }
+                  }
+                },
+                "injectedItems": [
+                  {
+                    "key": "my-unique-injected-item-key",
+                    "source": {
+                      "search": {
+                        "index": "foo"
+                      }
+                    },
+                    "position": 2,
+                    "length": 1
+                  }
+                ],
+                "deduplication": {
+                  "positioning": "highest"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/compositions/*/batch",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "action": "upsert",
+            "body": {
+              "objectID": "my-compo",
+              "name": "my composition",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "foo"
+                      }
+                    }
+                  },
+                  "injectedItems": [
+                    {
+                      "key": "my-unique-injected-item-key",
+                      "source": {
+                        "search": {
+                          "index": "foo"
+                        }
+                      },
+                      "position": 2,
+                      "length": 1
+                    }
+                  ],
+                  "deduplication": {
+                    "positioning": "highest"
+                  }
                 }
               }
             }

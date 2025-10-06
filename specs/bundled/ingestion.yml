@@ -3583,6 +3583,7 @@ components:
         - replace
         - save
         - partial
+        - partialNoCreate
         - append
     TriggerType:
       type: string

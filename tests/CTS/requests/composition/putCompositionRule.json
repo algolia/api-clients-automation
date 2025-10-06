@@ -23,7 +23,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem1",
+                  "key": "my-unique-group-from-rule-key",
                   "source": {
                     "search": {
                       "index": "foo"
@@ -61,7 +61,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem1",
+                  "key": "my-unique-group-from-rule-key",
                   "source": {
                     "search": {
                       "index": "foo"
@@ -78,9 +78,7 @@
     }
   },
   {
-    "skipLanguages": [
-      "kotlin"
-    ],
+    "skipLanguages": ["kotlin"],
     "parameters": {
       "compositionID": "compositionID",
       "objectID": "rule-with-metadata",
@@ -104,7 +102,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem1",
+                  "key": "my-unique-group-from-rule-key",
                   "source": {
                     "search": {
                       "index": "foo",
@@ -158,7 +156,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem1",
+                  "key": "my-unique-group-from-rule-key",
                   "source": {
                     "search": {
                       "index": "foo",
@@ -197,10 +195,7 @@
       "compositionRule": {
         "objectID": "rule-with-exernal-source",
         "description": "my description",
-        "tags": [
-          "tag1",
-          "tag2"
-        ],
+        "tags": ["tag1", "tag2"],
         "enabled": true,
         "validity": [
           {
@@ -233,7 +228,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem",
+                  "key": "my-unique-external-group-from-rule-key",
                   "source": {
                     "external": {
                       "index": "my-index",
@@ -258,10 +253,7 @@
       "body": {
         "objectID": "rule-with-exernal-source",
         "description": "my description",
-        "tags": [
-          "tag1",
-          "tag2"
-        ],
+        "tags": ["tag1", "tag2"],
         "enabled": true,
         "validity": [
           {
@@ -294,7 +286,7 @@
               },
               "injectedItems": [
                 {
-                  "key": "injectedItem",
+                  "key": "my-unique-external-group-from-rule-key",
                   "source": {
                     "external": {
                       "index": "my-index",
@@ -308,6 +300,94 @@
                   "length": 3
                 }
               ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "parameters": {
+      "compositionID": "compositionID",
+      "objectID": "rule-with-deduplication",
+      "compositionRule": {
+        "objectID": "rule-with-deduplication",
+        "description": "my description",
+        "enabled": true,
+        "conditions": [
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "my-index"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "my-unique-injected-item-key",
+                  "source": {
+                    "search": {
+                      "index": "my-index"
+                    }
+                  },
+                  "position": 0,
+                  "length": 3
+                }
+              ],
+              "deduplication": {
+                "positioning": "highestInjected"
+              }
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/compositionID/rules/rule-with-deduplication",
+      "method": "PUT",
+      "body": {
+        "objectID": "rule-with-deduplication",
+        "description": "my description",
+        "enabled": true,
+        "conditions": [
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "my-index"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "my-unique-injected-item-key",
+                  "source": {
+                    "search": {
+                      "index": "my-index"
+                    }
+                  },
+                  "position": 0,
+                  "length": 3
+                }
+              ],
+              "deduplication": {
+                "positioning": "highestInjected"
+              }
             }
           }
         }

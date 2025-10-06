@@ -490,7 +490,7 @@ final class CompositionClientSnippet {
                     behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-external-group-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -528,7 +528,7 @@ final class CompositionClientSnippet {
                         ))),
                         injectedItems: [
                             InjectedItem(
-                                key: "injectedItem1",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -548,7 +548,7 @@ final class CompositionClientSnippet {
                                 ))
                             ),
                             InjectedItem(
-                                key: "externalItem",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -575,6 +575,38 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the multipleBatch method.
+    ///
+    /// multipleBatch
+    func snippetForMultipleBatch3() async throws {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client
+            .multipleBatch(batchParams: CompositionBatchParams(requests: [CompositionMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: BatchCompositionAction.composition(Composition(
+                    objectID: "my-compo",
+                    name: "my composition",
+                    behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highest)
+                    ))
+                ))
+            )]))
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the putComposition method.
     ///
     /// putComposition
@@ -592,7 +624,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -622,7 +654,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-external-group-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -659,7 +691,7 @@ final class CompositionClientSnippet {
                     ))),
                     injectedItems: [
                         InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -677,7 +709,7 @@ final class CompositionClientSnippet {
                             ))
                         ),
                         InjectedItem(
-                            key: "externalItem",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:puma")
@@ -695,6 +727,40 @@ final class CompositionClientSnippet {
                             ))
                         ),
                     ]
+                ))
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition3() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                        index: "foo",
+                        params: MainInjectionQueryParameters(filters: "brand:adidas")
+                    ))),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                        position: 2,
+                        length: 1
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highest)
                 ))
             )
         )
@@ -720,7 +786,7 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -751,7 +817,7 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -799,7 +865,7 @@ final class CompositionClientSnippet {
                         params: MainInjectionQueryParameters(filters: "brand:adidas")
                     ))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem",
+                        key: "my-unique-external-group-from-rule-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "my-index",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -813,6 +879,41 @@ final class CompositionClientSnippet {
                 enabled: true,
                 validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
                 tags: ["tag1", "tag2"]
+            )
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putCompositionRule method.
+    ///
+    /// putCompositionRule
+    func snippetForPutCompositionRule3() async throws {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putCompositionRule(
+            compositionID: "compositionID",
+            objectID: "rule-with-deduplication",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-deduplication",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                    ),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                        position: 0,
+                        length: 3
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                ))),
+                description: "my description",
+                enabled: true
             )
         )
         // >LOG
@@ -872,7 +973,7 @@ final class CompositionClientSnippet {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -922,7 +1023,7 @@ final class CompositionClientSnippet {
                             params: MainInjectionQueryParameters(filters: "brand:adidas")
                         ))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem",
+                            key: "my-unique-external-group-from-rule-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "my-index",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -936,6 +1037,44 @@ final class CompositionClientSnippet {
                     enabled: true,
                     validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
                     tags: ["tag1", "tag2"]
+                ))
+            )])
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveRules method.
+    ///
+    /// saveRules
+    func snippetForSaveRules3() async throws {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.saveRules(
+            compositionID: "my-compo",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-deduplication",
+                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        ),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                            position: 0,
+                            length: 3
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                    ))),
+                    description: "my description",
+                    enabled: true
                 ))
             )])
         )
@@ -973,7 +1112,7 @@ final class CompositionClientSnippet {
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
                 query: "batman",
-                injectedItems: ["injectedItem1": ExternalInjectedItem(items: [
+                injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                     ExternalInjection(objectID: "my-object-1"),
                     ExternalInjection(
                         objectID: "my-object-2",

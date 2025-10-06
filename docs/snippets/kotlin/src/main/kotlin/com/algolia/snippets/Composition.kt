@@ -663,7 +663,7 @@ class SnippetCompositionClient {
             ),
             injectedItems = listOf(
               InjectedItem(
-                key = "injectedItem1",
+                key = "my-unique-group-key",
                 source = SearchSource(
                   search = Search(
                     index = "foo",
@@ -708,7 +708,7 @@ class SnippetCompositionClient {
             ),
             injectedItems = listOf(
               InjectedItem(
-                key = "injectedItem1",
+                key = "my-unique-external-group-key",
                 source = ExternalSource(
                   external = External(
                     index = "foo",
@@ -721,6 +721,57 @@ class SnippetCompositionClient {
                 position = 2,
                 length = 1,
               ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition3() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.putComposition(
+      compositionID = "my-compo",
+      composition = Composition(
+        objectID = "my-compo",
+        name = "my composition",
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo",
+                  params = MainInjectionQueryParameters(
+                    filters = "brand:adidas",
+                  ),
+                ),
+              ),
+            ),
+            injectedItems = listOf(
+              InjectedItem(
+                key = "my-unique-injected-item-key",
+                source = SearchSource(
+                  search = Search(
+                    index = "foo",
+                  ),
+                ),
+                position = 2,
+                length = 1,
+              ),
+            ),
+            deduplication = Deduplication(
+              positioning = DedupPositioning.entries.first { it.value == "highest" },
             ),
           ),
         ),
@@ -764,7 +815,7 @@ class SnippetCompositionClient {
               ),
               injectedItems = listOf(
                 InjectedItem(
-                  key = "injectedItem1",
+                  key = "my-unique-group-from-rule-key",
                   source = SearchSource(
                     search = Search(
                       index = "foo",
@@ -833,7 +884,7 @@ class SnippetCompositionClient {
               ),
               injectedItems = listOf(
                 InjectedItem(
-                  key = "injectedItem",
+                  key = "my-unique-external-group-from-rule-key",
                   source = ExternalSource(
                     external = External(
                       index = "my-index",
@@ -846,6 +897,64 @@ class SnippetCompositionClient {
                   position = 0,
                   length = 3,
                 ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutCompositionRule3() {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "rule-with-deduplication",
+      compositionRule = CompositionRule(
+        objectID = "rule-with-deduplication",
+        description = "my description",
+        enabled = true,
+        conditions = listOf(
+          Condition(
+            anchoring = Anchoring.entries.first { it.value == "contains" },
+            pattern = "harry",
+          ),
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "my-index",
+                  ),
+                ),
+              ),
+              injectedItems = listOf(
+                InjectedItem(
+                  key = "my-unique-injected-item-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "my-index",
+                    ),
+                  ),
+                  position = 0,
+                  length = 3,
+                ),
+              ),
+              deduplication = Deduplication(
+                positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
               ),
             ),
           ),
@@ -955,7 +1064,7 @@ class SnippetCompositionClient {
                     ),
                     injectedItems = listOf(
                       InjectedItem(
-                        key = "injectedItem",
+                        key = "my-unique-external-group-from-rule-key",
                         source = ExternalSource(
                           external = External(
                             index = "my-index",
@@ -968,6 +1077,70 @@ class SnippetCompositionClient {
                         position = 0,
                         length = 3,
                       ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+
+    // >LOG
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveRules3() {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.saveRules(
+      compositionID = "my-compo",
+      rules = CompositionRulesBatchParams(
+        requests = listOf(
+          RulesMultipleBatchRequest(
+            action = Action.entries.first { it.value == "upsert" },
+            body = CompositionRule(
+              objectID = "rule-with-deduplication",
+              description = "my description",
+              enabled = true,
+              conditions = listOf(
+                Condition(
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                  pattern = "harry",
+                ),
+              ),
+              consequence = CompositionRuleConsequence(
+                behavior = CompositionBehavior(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "my-index",
+                        ),
+                      ),
+                    ),
+                    injectedItems = listOf(
+                      InjectedItem(
+                        key = "my-unique-injected-item-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "my-index",
+                          ),
+                        ),
+                        position = 0,
+                        length = 3,
+                      ),
+                    ),
+                    deduplication = Deduplication(
+                      positioning = DedupPositioning.entries.first { it.value == "highestInjected" },
                     ),
                   ),
                 ),

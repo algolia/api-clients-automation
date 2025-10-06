@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_composition/src/model/injected_item.dart';
 import 'package:algolia_client_composition/src/model/main.dart';
+import 'package:algolia_client_composition/src/model/deduplication.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,6 +14,7 @@ final class Injection {
   const Injection({
     required this.main,
     this.injectedItems,
+    this.deduplication,
   });
 
   @JsonKey(name: r'main')
@@ -22,15 +24,20 @@ final class Injection {
   @JsonKey(name: r'injectedItems')
   final List<InjectedItem>? injectedItems;
 
+  @JsonKey(name: r'deduplication')
+  final Deduplication? deduplication;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Injection &&
           other.main == main &&
-          other.injectedItems == injectedItems;
+          other.injectedItems == injectedItems &&
+          other.deduplication == deduplication;
 
   @override
-  int get hashCode => main.hashCode + injectedItems.hashCode;
+  int get hashCode =>
+      main.hashCode + injectedItems.hashCode + deduplication.hashCode;
 
   factory Injection.fromJson(Map<String, dynamic> json) =>
       _$InjectionFromJson(json);

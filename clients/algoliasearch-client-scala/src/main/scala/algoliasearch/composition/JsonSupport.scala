@@ -40,6 +40,7 @@ object JsonSupport {
     new AnchoringSerializer() :+
     new AroundRadiusAllSerializer() :+
     new BooleanStringSerializer() :+
+    new DedupPositioningSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
     new ExternalOrderingSerializer() :+
     new MatchLevelSerializer() :+
