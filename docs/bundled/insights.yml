@@ -20,7 +20,7 @@ info:
     from your UI and send them to the Insights API.
 
     See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/).
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
     ## Base URLs
@@ -120,7 +120,7 @@ tags:
     description: |
       Delete events related to a specific user token.
 externalDocs:
-  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
+  url: https://www.algolia.com/doc/guides/sending-events/getting-started
   description: Events
 paths:
   /{path}:
@@ -1353,7 +1353,7 @@ paths:
                     message: >-
                       Path not supported by Insights REST API. Please have a
                       look at
-                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
+                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights)
                       for the list of valid commands.
         '405':
           description: Method Not Allowed.
@@ -2280,7 +2280,7 @@ components:
         Don't use personally identifiable information in user tokens.
 
         For more information, see [User
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: test-user-1
     authenticatedUserToken:
       type: string
@@ -2300,7 +2300,7 @@ components:
         Don't use personally identifiable information in user tokens.
 
         For more information, see [User
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
     timestamp:
       type: integer

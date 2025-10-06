@@ -18,7 +18,7 @@
   * Query aggregation Algolia accepts queries on each keystroke. To ensure you have relevant analytics data, however,
   * the series of keystrokes is aggregated to keep only the latest (final) user query. This is called \"prefix\"
   * aggregation. For more information, see [Query agggregation and
-  * processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/). See the analytics
+  * processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation). See the analytics
   * implementation overview for more information about query aggregation.
   *
   * The version of the OpenAPI document: 2.0.0

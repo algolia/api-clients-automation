@@ -241,7 +241,7 @@ paths:
         debugger dashboard to see the status of your task.
 
         If you want to leverage the [pre-indexing data
-        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+        transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
         this is the recommended way of ingesting your records.
 
         This method is similar to `pushTask`, but requires an `indexName`
@@ -1158,9 +1158,8 @@ paths:
       operationId: pushTask
       externalDocs:
         url: >-
-          https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/
-        description: |
-          Related guide: Pre-indexing data transformation.
+          https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data
+        description: Pre-indexing data transformation.
       x-acl:
         - addObject
         - deleteIndex
@@ -1872,7 +1871,7 @@ paths:
         Helper: Chunks the given `objects` list in subset of 1000 elements max
         in order to make it fit in `push` requests by leveraging the
         Transformation pipeline setup in the Push connector
-        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+        (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).
       parameters:
         - in: query
           name: indexName

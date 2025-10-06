@@ -10,7 +10,7 @@ info:
 
     In your user interface, you can query the Query Suggestions indices like
     regular indices and add [suggested
-    searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/)
+    searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js)
     to guide users and speed up their search.
 
 
@@ -560,7 +560,7 @@ components:
         Analytics tags for filtering the popular searches.
 
         For more information, see [Segment your analytics
-        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       default: null
       oneOf:
         - type: array

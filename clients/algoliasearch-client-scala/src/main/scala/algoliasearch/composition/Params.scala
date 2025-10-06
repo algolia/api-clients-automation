@@ -1,6 +1,6 @@
 /** Composition API The Algolia Composition API lets you run composed search requests on your Compositions. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Composition API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -49,7 +49,7 @@ import algoliasearch.composition.SupportedLanguage._
   *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
   *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
   *   matches if it matches at least one element of the array. For more information, see
-  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   * @param page
   *   Page of search results to retrieve.
   * @param getRankingInfo
@@ -83,10 +83,10 @@ import algoliasearch.composition.SupportedLanguage._
   *   [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
   *   languages. To support this, you must place the CJK language **first** **You should always specify a query
   *   language.** If you don't specify an indexing language, the search engine uses all [supported
-  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
-  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
   * @param naturalLanguages
   *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
   *   keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
@@ -100,21 +100,21 @@ import algoliasearch.composition.SupportedLanguage._
   *   are strings that you can use to trigger matching rules.
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
-  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started/).
+  *   events](https://www.algolia.com/guides/sending-events/getting-started).
   * @param analytics
   *   Whether this search will be included in Analytics.
   * @param analyticsTags
   *   Tags to apply to the query for [segmenting analytics
-  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   * @param enableABTest
   *   Whether to enable index level A/B testing for this run request. If the composition mixes multiple indices, the A/B
   *   test is ignored.
   * @param enableReRanking
-  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This
+  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
   * @param injectedItems
   *   A list of extenrally injected objectID groups into from an external source.

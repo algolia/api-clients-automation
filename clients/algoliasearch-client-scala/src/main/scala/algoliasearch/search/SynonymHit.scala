@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -43,19 +43,19 @@ import algoliasearch.search.SynonymType._
   *   Words or phrases considered equivalent.
   * @param input
   *   Word or phrase to appear in query strings (for
-  *   [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
+  *   [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms)).
   * @param word
   *   Word or phrase to appear in query strings (for [`altcorrection1` and
-  *   `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
+  *   `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections)).
   * @param corrections
   *   Words to be matched in records.
   * @param placeholder
   *   [Placeholder
-  *   token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/)
+  *   token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders)
   *   to be put inside records.
   * @param replacements
   *   Query words that will match the [placeholder
-  *   token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
+  *   token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders).
   */
 case class SynonymHit(
     objectID: String,

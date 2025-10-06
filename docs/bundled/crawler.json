@@ -30,7 +30,7 @@
     {
       "name": "crawlers",
       "x-displayName": "Manage",
-      "description": "A crawler is an object with a name and a [configuration](#tag/config).\nUse these endpoints to create, rename, and delete crawlers.\n"
+      "description": "A crawler is an object with a name and a configuration.\nUse these endpoints to create, rename, and delete crawlers.\n"
     },
     {
       "name": "domains",
@@ -197,8 +197,12 @@
       },
       "patch": {
         "operationId": "patchCrawler",
-        "summary": "Change crawler name",
-        "description": "Change the crawler's name.\n\nWhile you _could_ use this endpoint to replace the crawler configuration,\nyou should [update it](#tag/config/operation/patchConfig) instead since configuration changes made here aren't [versioned](#tag/config/operation/listConfigVersions).\n\nIf you replace the configuration, you must provide the full configuration,\nincluding any settings you want to keep.\n",
+        "summary": "Replace crawler configuration",
+        "description": "Replaces the crawler configuration with a new one.\n\nIf you only want to change the crawler's name, you can use this operation.\nFor other configuration changes, use the \"Update configuration\" endpoint instead instead,\nbecause changes made here aren't versioned.\n\nWhen replacing the configuration, you must provide the full configuration,\nincluding any settings you want to keep.\n",
+        "externalDocs": {
+          "url": "https://www.algolia.com/doc/rest-api/crawler/patch-config",
+          "description": "Update configuration."
+        },
         "tags": [
           "crawlers"
         ],
@@ -703,7 +707,7 @@
       "get": {
         "operationId": "listConfigVersions",
         "summary": "List configuration versions",
-        "description": "Lists previous versions of the specified crawler's configuration, including who authored the change.\nEvery time you update a crawler's [configuration](#tag/config/operation/patchConfig),\na new version is added.\n",
+        "description": "Lists previous versions of the specified crawler's configuration, including who authored the change.\nEvery time you update a crawler's configuration, a new version is added.\n",
         "tags": [
           "config"
         ],
@@ -1013,7 +1017,7 @@
       },
       "fileTypes": {
         "type": "string",
-        "description": "For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).\n",
+        "description": "For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents).\n",
         "enum": [
           "doc",
           "email",
@@ -1138,7 +1142,7 @@
           },
           "schedule": {
             "type": "string",
-            "description": "How often to perform a complete crawl for this action.\n\nFor mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).\n"
+            "description": "How often to perform a complete crawl for this action.\n\nFor mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule).\n"
           },
           "selectorsToMatch": {
             "type": "array",
@@ -1285,7 +1289,7 @@
               "afterDistinct(category)",
               "afterDistinct(searchable(publisher))"
             ],
-            "description": "Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).\n\nFacets are attributes that let you categorize search results.\nThey can be used for filtering search results.\nBy default, no attribute is used for faceting.\nAttribute names are case-sensitive.\n\n**Modifiers**\n\n- `filterOnly(\"ATTRIBUTE\")`.\n  Allows the attribute to be used as a filter but doesn't evaluate the facet values.\n\n- `searchable(\"ATTRIBUTE\")`.\n  Allows searching for facet values.\n\n- `afterDistinct(\"ATTRIBUTE\")`.\n  Evaluates the facet count _after_ deduplication with `distinct`.\n  This ensures accurate facet counts.\n  You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.\n",
+            "description": "Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting).\n\nFacets are attributes that let you categorize search results.\nThey can be used for filtering search results.\nBy default, no attribute is used for faceting.\nAttribute names are case-sensitive.\n\n**Modifiers**\n\n- `filterOnly(\"ATTRIBUTE\")`.\n  Allows the attribute to be used as a filter but doesn't evaluate the facet values.\n\n- `searchable(\"ATTRIBUTE\")`.\n  Allows searching for facet values.\n\n- `afterDistinct(\"ATTRIBUTE\")`.\n  Evaluates the facet count _after_ deduplication with `distinct`.\n  This ensures accurate facet counts.\n  You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.\n",
             "default": [],
             "x-categories": [
               "Faceting"
@@ -1300,7 +1304,7 @@
               "virtual(prod_products_price_asc)",
               "dev_products_replica"
             ],
-            "description": "Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).\n\nReplicas are copies of a primary index with the same records but different settings, synonyms, or rules.\nIf you want to offer a different ranking or sorting of your search results, you'll use replica indices.\nAll index operations on a primary index are automatically forwarded to its replicas.\nTo add a replica index, you must provide the complete set of replicas to this parameter.\nIf you omit a replica from this list, the replica turns into a regular, standalone index that will no longer be synced with the primary index.\n\n**Modifier**\n\n- `virtual(\"REPLICA\")`.\n  Create a virtual replica,\n  Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).\n",
+            "description": "Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).\n\nReplicas are copies of a primary index with the same records but different settings, synonyms, or rules.\nIf you want to offer a different ranking or sorting of your search results, you'll use replica indices.\nAll index operations on a primary index are automatically forwarded to its replicas.\nTo add a replica index, you must provide the complete set of replicas to this parameter.\nIf you omit a replica from this list, the replica turns into a regular, standalone index that will no longer be synced with the primary index.\n\n**Modifier**\n\n- `virtual(\"REPLICA\")`.\n  Create a virtual replica,\n  Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).\n",
             "default": [],
             "x-categories": [
               "Ranking"
@@ -1321,7 +1325,7 @@
             "example": [
               "total_sales"
             ],
-            "description": "Attributes that can't be retrieved at query time.\n\nThis can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),\nbut don't want to include it in the search results.\nAttribute names are case-sensitive.\n",
+            "description": "Attributes that can't be retrieved at query time.\n\nThis can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data),\nbut don't want to include it in the search results.\nAttribute names are case-sensitive.\n",
             "default": [],
             "x-categories": [
               "Attributes"
@@ -1336,7 +1340,7 @@
               "wheel",
               "1X2BCD"
             ],
-            "description": "Creates a list of [words which require exact matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).\nThis also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.\n",
+            "description": "Creates a list of [words which require exact matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words).\nThis also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation) for the specified words.\n",
             "default": [],
             "x-categories": [
               "Typos"
@@ -1377,7 +1381,7 @@
                 "name"
               ]
             },
-            "description": "Searchable attributes to which Algolia should apply [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding).\nAttribute names are case-sensitive.\n\nCompound words are formed by combining two or more individual words,\nand are particularly prevalent in Germanic languages—for example, \"firefighter\".\nWith decompounding, the individual components are indexed separately.\n\nYou can specify different lists for different languages.\nDecompounding is supported for these languages:\nDutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`).\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
+            "description": "Searchable attributes to which Algolia should apply [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation) (decompounding).\nAttribute names are case-sensitive.\n\nCompound words are formed by combining two or more individual words,\nand are particularly prevalent in Germanic languages—for example, \"firefighter\".\nWith decompounding, the individual components are indexed separately.\n\nYou can specify different lists for different languages.\nDecompounding is supported for these languages:\nDutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`).\nDecompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark).\nFor example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).\n",
             "default": {},
             "x-categories": [
               "Languages"
@@ -1391,7 +1395,7 @@
             "example": [
               "ja"
             ],
-            "description": "Languages for language-specific processing steps, such as word detection and dictionary settings.\n\n**You should always specify an indexing language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
+            "description": "Languages for language-specific processing steps, such as word detection and dictionary settings.\n\n**You should always specify an indexing language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
             "default": [],
             "x-categories": [
               "Languages"
@@ -1454,7 +1458,7 @@
               "unordered(text)",
               "emails.personal"
             ],
-            "description": "Attributes used for searching. Attribute names are case-sensitive.\n\nBy default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off.\nWith a non-empty list, Algolia only returns results with matches in the selected attributes.\nIn addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first.\nTo make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`.\nAttributes with the same priority are always unordered.\n\nFor more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).\n\n**Modifier**\n\n- `unordered(\"ATTRIBUTE\")`.\n  Ignore the position of a match within the attribute.\n\nWithout a modifier, matches at the beginning of an attribute rank higher than matches at the end.\n",
+            "description": "Attributes used for searching. Attribute names are case-sensitive.\n\nBy default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off.\nWith a non-empty list, Algolia only returns results with matches in the selected attributes.\nIn addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first.\nTo make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`.\nAttributes with the same priority are always unordered.\n\nFor more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes).\n\n**Modifier**\n\n- `unordered(\"ATTRIBUTE\")`.\n  Ignore the position of a match within the attribute.\n\nWithout a modifier, matches at the beginning of an attribute rank higher than matches at the end.\n",
             "default": [],
             "x-categories": [
               "Attributes"
@@ -1464,7 +1468,7 @@
             "$ref": "#/components/schemas/userData"
           },
           "customNormalization": {
-            "description": "Characters and their normalized replacements.\nThis overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).\n",
+            "description": "Characters and their normalized replacements.\nThis overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization).\n",
             "type": "object",
             "example": {
               "default": {
@@ -1508,7 +1512,7 @@
               "desc(popularity)",
               "asc(price)"
             ],
-            "description": "Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).\nAttribute names are case-sensitive.\n\nThe custom ranking attributes decide which items are shown first if the other ranking criteria are equal.\n\nRecords with missing values for your selected custom ranking attributes are always sorted last.\nBoolean attributes are sorted based on their alphabetical order.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nIf you use two or more custom ranking attributes,\n[reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,\nor the other attributes will never be applied.\n",
+            "description": "Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking).\nAttribute names are case-sensitive.\n\nThe custom ranking attributes decide which items are shown first if the other ranking criteria are equal.\n\nRecords with missing values for your selected custom ranking attributes are always sorted last.\nBoolean attributes are sorted based on their alphabetical order.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nIf you use two or more custom ranking attributes,\n[reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision) of your first attributes,\nor the other attributes will never be applied.\n",
             "default": [],
             "x-categories": [
               "Ranking"
@@ -1554,7 +1558,7 @@
           "conten",
           "content"
         ],
-        "description": "Attributes to highlight\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).\n",
+        "description": "Attributes to highlight\nBy default, all searchable attributes are highlighted.\nUse `*` to highlight all attributes or use an empty array `[]` to turn off highlighting.\nAttribute names are case-sensitive\nWith highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`.\nYou can use this to visually highlight matching parts of a search query in your UI\nFor more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).\n",
         "x-categories": [
           "Highlighting and Snippeting"
         ]
@@ -1644,7 +1648,7 @@
         ]
       },
       "typoTolerance": {
-        "description": "Whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) is enabled and how it is applied.\n\nIf typo tolerance is true, `min`, or `strict`, [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) are also active.\n",
+        "description": "Whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance) is enabled and how it is applied.\n\nIf typo tolerance is true, `min`, or `strict`, [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation) are also active.\n",
         "oneOf": [
           {
             "type": "boolean",
@@ -1675,7 +1679,7 @@
         "example": [
           "sku"
         ],
-        "description": "Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).\nAttribute names are case-sensitive\nReturning only exact matches can help when\n- [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).\n- Reducing the number of matches when you have too many.\n  This can happen with attributes that are long blocks of text, such as product descriptions\nConsider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.\n",
+        "description": "Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).\nAttribute names are case-sensitive\nReturning only exact matches can help when\n- [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).\n- Reducing the number of matches when you have too many.\n  This can happen with attributes that are long blocks of text, such as product descriptions\nConsider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.\n",
         "default": [],
         "x-categories": [
           "Typos"
@@ -1747,7 +1751,7 @@
         "example": [
           "es"
         ],
-        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).\n",
+        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
         "default": [],
         "x-categories": [
           "Languages"
@@ -1784,7 +1788,7 @@
           "prefixAll",
           "prefixNone"
         ],
-        "description": "Determines if and how query words are interpreted as prefixes.\n\nBy default, only the last query word is treated as a prefix (`prefixLast`).\nTo turn off prefix search, use `prefixNone`.\nAvoid `prefixAll`, which treats all query words as prefixes.\nThis might lead to counterintuitive results and makes your search slower.\n\nFor more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).\n",
+        "description": "Determines if and how query words are interpreted as prefixes.\n\nBy default, only the last query word is treated as a prefix (`prefixLast`).\nTo turn off prefix search, use `prefixNone`.\nAvoid `prefixAll`, which treats all query words as prefixes.\nThis might lead to counterintuitive results and makes your search slower.\n\nFor more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).\n",
         "default": "prefixLast",
         "x-categories": [
           "Query strategy"
@@ -1799,7 +1803,7 @@
           "allOptional"
         ],
         "example": "firstWords",
-        "description": "Strategy for removing words from the query when it doesn't return any results.\nThis helps to avoid returning empty search results.\n\n- `none`.\n  No words are removed when a query doesn't return results.\n\n- `lastWords`.\n  Treat the last (then second to last, then third to last) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `firstWords`.\n  Treat the first (then second, then third) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `allOptional`.\n  Treat all words as optional.\n\nFor more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).\n",
+        "description": "Strategy for removing words from the query when it doesn't return any results.\nThis helps to avoid returning empty search results.\n\n- `none`.\n  No words are removed when a query doesn't return results.\n\n- `lastWords`.\n  Treat the last (then second to last, then third to last) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `firstWords`.\n  Treat the first (then second, then third) word as optional,\n  until there are results or at most 5 words have been removed.\n\n- `allOptional`.\n  Treat all words as optional.\n\nFor more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).\n",
         "default": "none",
         "x-categories": [
           "Query strategy"
@@ -1961,7 +1965,7 @@
           },
           {
             "type": "integer",
-            "description": "Number of members of a group of records to include in the search results.\n\n- Don't use `distinct > 1` for records that might be [promoted by rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/).\n  The number of hits won't be correct and faceting won't work as expected.\n- With `distinct > 1`, the `hitsPerPage` parameter controls the number of returned groups.\n  For example, with `hitsPerPage: 10` and `distinct: 2`, up to 20 records are returned.\n  Likewise, the `nbHits` response attribute contains the number of returned groups.\n",
+            "description": "Number of members of a group of records to include in the search results.\n\n- Don't use `distinct > 1` for records that might be [promoted by rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits).\n  The number of hits won't be correct and faceting won't work as expected.\n- With `distinct > 1`, the `hitsPerPage` parameter controls the number of returned groups.\n  For example, with `hitsPerPage: 10` and `distinct: 2`, up to 20 records are returned.\n  Likewise, the `nbHits` response attribute contains the number of returned groups.\n",
             "minimum": 0,
             "maximum": 4,
             "default": 0
@@ -2013,7 +2017,7 @@
       },
       "sortFacetValuesBy": {
         "type": "string",
-        "description": "Order in which to retrieve facet values\n- `count`.\n  Facet values are retrieved by decreasing count.\n  The count is the number of matching records containing this facet value\n- `alpha`.\n  Retrieve facet values alphabetically\nThis setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).\nFor more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).\n",
+        "description": "Order in which to retrieve facet values\n- `count`.\n  Facet values are retrieved by decreasing count.\n  The count is the number of matching records containing this facet value\n- `alpha`.\n  Retrieve facet values alphabetically\nThis setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).\nFor more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).\n",
         "default": "count",
         "x-categories": [
           "Faceting"
@@ -2193,14 +2197,14 @@
       },
       "enableReRanking": {
         "type": "boolean",
-        "description": "Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)\nThis setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.\n",
+        "description": "Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)\nThis setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.\n",
         "default": true,
         "x-categories": [
           "Filtering"
         ]
       },
       "reRankingApplyFilter": {
-        "description": "Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.\n",
+        "description": "Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to records that match these filters.\n",
         "oneOf": [
           {
             "type": "array",
@@ -2228,7 +2232,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Determines the order in which Algolia returns your results.\n\nBy default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).\nThe tie-breaking algorithm sequentially applies each criterion in the order they're specified.\nIf you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),\nyou put the sorting attribute at the top of the list.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nBefore you modify the default setting,\nyou should test your changes in the dashboard,\nand by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).\n",
+            "description": "Determines the order in which Algolia returns your results.\n\nBy default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria).\nThe tie-breaking algorithm sequentially applies each criterion in the order they're specified.\nIf you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),\nyou put the sorting attribute at the top of the list.\n\n**Modifiers**\n\n- `asc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in ascending order.\n- `desc(\"ATTRIBUTE\")`.\n  Sort the index by the values of an attribute, in descending order.\n\nBefore you modify the default setting,\nyou should test your changes in the dashboard,\nand by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).\n",
             "default": [
               "typo",
               "geo",
@@ -2701,7 +2705,7 @@
       },
       "schedule": {
         "type": "string",
-        "description": "Schedule for running the crawl.\n\nInstead of manually starting a crawl each time, you can set up a schedule for automatic crawls.\n[Use the visual UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual/) or add the `schedule` parameter to [your configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration/).\n\n`schedule` uses [Later.js syntax](https://bunkat.github.io/later/) to specify when to crawl your site.\nHere are some key things to keep in mind when using `Later.js` syntax with the Crawler:\n\n- The interval between two scheduled crawls must be at least 24 hours.\n- To crawl daily, use \"every 1 day\" instead of \"everyday\" or \"every day\".\n- If you don't specify a time, the crawl can happen any time during the scheduled day.\n- Specify times for the UTC (GMT+0) timezone\n- Include minutes when specifying a time. For example, \"at 3:00 pm\" instead of \"at 3pm\".\n- Use \"at 12:00 am\" to specify midnight, not \"at 00:00 am\".\n",
+        "description": "Schedule for running the crawl.\n\nInstead of manually starting a crawl each time, you can set up a schedule for automatic crawls.\n[Use the visual UI](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration-visual) or add the `schedule` parameter to [your configuration](https://www.algolia.com/doc/tools/crawler/getting-started/crawler-configuration).\n\n`schedule` uses [Later.js syntax](https://bunkat.github.io/later) to specify when to crawl your site.\nHere are some key things to keep in mind when using `Later.js` syntax with the Crawler:\n\n- The interval between two scheduled crawls must be at least 24 hours.\n- To crawl daily, use \"every 1 day\" instead of \"everyday\" or \"every day\".\n- If you don't specify a time, the crawl can happen any time during the scheduled day.\n- Specify times for the UTC (GMT+0) timezone\n- Include minutes when specifying a time. For example, \"at 3:00 pm\" instead of \"at 3pm\".\n- Use \"at 12:00 am\" to specify midnight, not \"at 00:00 am\".\n",
         "example": "every weekday at 12:00 pm"
       },
       "Configuration": {
@@ -2749,7 +2753,7 @@
             "maxItems": 10,
             "items": {
               "type": "string",
-              "description": "For more information, see [Enrich extracted records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data/).",
+              "description": "For more information, see [Enrich extracted records with external data](https://www.algolia.com/doc/tools/crawler/guides/enriching-extraction-with-external-data).",
               "example": "testCSV"
             }
           },
@@ -2802,7 +2806,7 @@
           },
           "initialIndexSettings": {
             "type": "object",
-            "description": "Crawler index settings.\n\nThese index settings are only applied during the first crawl of an index.\n\nAny subsequent changes won't be applied to the index.\nInstead, make changes to your index settings in the [Algolia dashboard](https://dashboard.algolia.com/explorer/configuration/).\n",
+            "description": "Crawler index settings.\n\nThese index settings are only applied during the first crawl of an index.\n\nAny subsequent changes won't be applied to the index.\nInstead, make changes to your index settings in the [Algolia dashboard](https://dashboard.algolia.com/explorer/configuration).\n",
             "additionalProperties": {
               "$ref": "#/components/schemas/indexSettings",
               "x-additionalPropertiesName": "indexName"
@@ -2811,7 +2815,7 @@
           "linkExtractor": {
             "title": "linkExtractor",
             "type": "object",
-            "description": "Function for extracting URLs from links on crawled pages.\n\nFor more information, see the [`linkExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor/).\n",
+            "description": "Function for extracting URLs from links on crawled pages.\n\nFor more information, see the [`linkExtractor` documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/link-extractor).\n",
             "properties": {
               "__type": {
                 "$ref": "#/components/schemas/configurationRecordExtractorType"
@@ -2915,7 +2919,7 @@
           },
           "blocked": {
             "type": "boolean",
-            "description": "Whether this crawler is currently blocked.\n\nIf `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard\nor by [cancelling the blocking task](#tag/tasks/operation/cancelBlockingAction).\n"
+            "description": "Whether this crawler is currently blocked.\n\nIf `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard\nor by [cancelling the blocking task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).\n"
           },
           "blockingError": {
             "type": "string",
@@ -3016,7 +3020,7 @@
       },
       "urlsCrawledGroupStatus": {
         "type": "string",
-        "description": "Crawled URL status.\n\nFor more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).\n",
+        "description": "Crawled URL status.\n\nFor more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).\n",
         "enum": [
           "DONE",
           "SKIPPED",
@@ -3025,7 +3029,7 @@
       },
       "urlsCrawledGroupCategory": {
         "type": "string",
-        "description": "Step where the status information was generated.\n\nFor more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status/).\n",
+        "description": "Step where the status information was generated.\n\nFor more information, see [Troubleshooting by crawl status](https://www.algolia.com/doc/tools/crawler/troubleshooting/crawl-status).\n",
         "enum": [
           "fetch",
           "extraction",

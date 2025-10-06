@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to
+ * Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) to
  * records that match these filters.
  */
 @JsonDeserialize(using = ReRankingApplyFilter.Deserializer.class)

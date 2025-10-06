@@ -146,7 +146,7 @@ final class SearchResponse {
   @JsonKey(name: r'userData')
   final Object? userData;
 
-  /// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  /// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
   @JsonKey(name: r'queryID')
   final String? queryID;
 

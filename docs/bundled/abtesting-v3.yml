@@ -110,9 +110,8 @@ tags:
       A/B tests are configurations one or more indices, usually your production
       index and an index with different settings that you want to test.
 externalDocs:
-  url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/
-  description: |
-    Related guide: A/B testing.
+  url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing
+  description: A/B testing.
 paths:
   /{path}:
     get:
@@ -4356,9 +4355,13 @@ components:
         Unique identifier of a task.
 
 
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task's progress with the [`task`
+        operation](https://www.algolia.com/doc/rest-api/search/get-task) and
+        this task ID.
     ABTestResponse:
       type: object
       additionalProperties: false

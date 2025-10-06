@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -41,7 +41,7 @@ sealed trait QueryType
   * prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words
   * as prefixes. This might lead to counterintuitive results and makes your search slower. For more information, see
   * [Prefix
-  * searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+  * searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
   */
 object QueryType {
   case object PrefixLast extends QueryType {
