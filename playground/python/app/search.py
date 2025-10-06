@@ -1,6 +1,4 @@
-from algoliasearch.search import __version__
-from algoliasearch.search.client import SearchClientSync, SearchClient
-from algoliasearch.search.config import SearchConfig
+from algoliasearch.search.client import SearchClient
 from asyncio import run
 from dotenv import load_dotenv
 from os import environ
