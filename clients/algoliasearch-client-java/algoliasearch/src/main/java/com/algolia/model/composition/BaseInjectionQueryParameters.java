@@ -284,7 +284,7 @@ public class BaseInjectionQueryParameters {
    * HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually
    * highlight matching parts of a search query in your UI For more information, see [Highlighting
    * and
-   * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+   * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToHighlight() {
@@ -349,7 +349,7 @@ public class BaseInjectionQueryParameters {
   /**
    * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
    * for a search query and is required for tracking [click and conversion
-   * events](https://www.algolia.com/guides/sending-events/getting-started/).
+   * events](https://www.algolia.com/guides/sending-events/getting-started).
    */
   @javax.annotation.Nullable
   public Boolean getClickAnalytics() {
@@ -416,10 +416,10 @@ public class BaseInjectionQueryParameters {
 
   /**
    * Attributes for which you want to turn off [typo
-   * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+   * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).
    * Attribute names are case-sensitive Returning only exact matches can help when - [Searching in
    * hyphenated
-   * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+   * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
    * - Reducing the number of matches when you have too many. This can happen with attributes that
    * are long blocks of text, such as product descriptions Consider alternatives such as
    * `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual
@@ -470,7 +470,7 @@ public class BaseInjectionQueryParameters {
 
   /**
    * Whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This setting only has an
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
    * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   @javax.annotation.Nullable
@@ -531,7 +531,7 @@ public class BaseInjectionQueryParameters {
    * facet:value)` Use quotes around your filters, if the facet attribute name or facet value has
    * spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
    * matches if it matches at least one element of the array. For more information, see
-   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
    */
   @javax.annotation.Nullable
   public String getFilters() {
@@ -751,10 +751,10 @@ public class BaseInjectionQueryParameters {
    * languages. To support this, you must place the CJK language **first** **You should always
    * specify a query language.** If you don't specify an indexing language, the search engine uses
    * all [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
    * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
    * can lead to unexpected search results. For more information, see [Language-specific
-   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
    */
   @javax.annotation.Nullable
   public List<SupportedLanguage> getQueryLanguages() {

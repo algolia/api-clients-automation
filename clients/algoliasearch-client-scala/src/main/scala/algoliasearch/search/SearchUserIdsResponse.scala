@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -43,7 +43,7 @@ package algoliasearch.search
   *   Page of search results to retrieve.
   * @param hitsPerPage
   *   Maximum number of hits per page. Algolia uses `page` and `hitsPerPage` to control how search results are displayed
-  *   ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)). -
+  *   ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)). -
   *   `hitsPerPage`: sets the number of search results (_hits_) displayed per page. - `page`: specifies the page number
   *   of the search results you want to retrieve. Page numbering starts at 0, so the first page is `page=0`, the second
   *   is `page=1`, and so on. For example, to display 10 results per page starting from the third page, set

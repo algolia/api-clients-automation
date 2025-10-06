@@ -15,7 +15,6 @@ final class SearchUserIdsParams {
     this.hitsPerPage,
   });
 
-  /// Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.
   @JsonKey(name: r'query')
   final String query;
 

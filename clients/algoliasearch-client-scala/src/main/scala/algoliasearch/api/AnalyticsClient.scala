@@ -212,7 +212,7 @@ class AnalyticsClient(
     * number of searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0 and null
     * add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
     * receive any events, the add-to-cart rate is null. - **0** mean there _were_ queries but no [add-to-cart
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -226,7 +226,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getAddToCartRate(
       index: String,
@@ -253,8 +253,8 @@ class AnalyticsClient(
     * position is the average of all clicked search result positions. For example, if users only ever click on the first
     * result for any search, the average click position is 1. By default, the analyzed period includes the last eight
     * days including the current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
-    * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries. The
-    * average is `null` until Algolia receives at least one click event.
+    * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The average
+    * is `null` until Algolia receives at least one click event.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -268,7 +268,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getAverageClickPosition(
       index: String,
@@ -293,8 +293,8 @@ class AnalyticsClient(
 
   /** Retrieves the positions in the search results and their associated number of clicks. This lets you check how many
     * clicks the first, second, or tenth search results receive. An average of `0` when `clickAnalytics` is enabled
-    * means Algolia didn't receive any [click
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+    * means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+    * for the queries.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -308,7 +308,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getClickPositions(
       index: String,
@@ -335,7 +335,7 @@ class AnalyticsClient(
     * breakdown. By default, the analyzed period includes the last eight days including the current day. **There's a
     * difference between a 0 and null CTR when `clickAnalytics` is enabled:** - **Null** means there were no queries:
     * since Algolia didn't receive any events, CTR is null. - **0** mean there _were_ queries but no [click
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -349,7 +349,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getClickThroughRate(
       index: String,
@@ -376,7 +376,7 @@ class AnalyticsClient(
     * breakdown. By default, the analyzed period includes the last eight days including the current day. **There's a
     * difference between a 0 and null CR when `clickAnalytics` is enabled:** - **Null** means there were no queries:
     * since Algolia didn't receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -390,7 +390,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getConversionRate(
       index: String,
@@ -429,7 +429,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getNoClickRate(
       index: String,
@@ -468,7 +468,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getNoResultsRate(
       index: String,
@@ -498,7 +498,7 @@ class AnalyticsClient(
     * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
     * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't receive any
     * events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -512,7 +512,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getPurchaseRate(
       index: String,
@@ -553,7 +553,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getRevenue(
       index: String,
@@ -591,7 +591,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getSearchesCount(
       index: String,
@@ -633,7 +633,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getSearchesNoClicks(
       index: String,
@@ -678,7 +678,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getSearchesNoResults(
       index: String,
@@ -747,7 +747,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopCountries(
       index: String,
@@ -795,7 +795,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopFilterAttributes(
       index: String,
@@ -847,7 +847,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopFilterForAttribute(
       attribute: String,
@@ -880,7 +880,7 @@ class AnalyticsClient(
 
   /** Retrieves the 1,000 most frequently used filters for a search that didn't return any results. To get the most
     * frequent searches without results, use the [Retrieve searches without
-    * results](#tag/search/operation/getSearchesNoResults) operation.
+    * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -900,7 +900,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopFiltersNoResults(
       index: String,
@@ -938,7 +938,7 @@ class AnalyticsClient(
     * Purchase rate - Revenue details for each currency **There's a difference between 0% rates and null rates:** -
     * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase
     * rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -962,7 +962,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopHits(
       index: String,
@@ -1004,7 +1004,7 @@ class AnalyticsClient(
     * (ATCR) - Purchase count - Purchase rate - Revenue details for each currency **There's a difference between 0%
     * rates and null rates:** - **Null** means there were no queries: since Algolia didn't receive any events, the rates
     * (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
-    * events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -1031,7 +1031,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getTopSearches(
       index: String,
@@ -1084,7 +1084,7 @@ class AnalyticsClient(
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
-    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     */
   def getUsersCount(
       index: String,

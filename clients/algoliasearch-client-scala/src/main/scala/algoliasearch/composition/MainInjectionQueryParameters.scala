@@ -1,6 +1,6 @@
 /** Composition API The Algolia Composition API lets you run composed search requests on your Compositions. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Composition API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -73,7 +73,7 @@ import algoliasearch.composition.SupportedLanguage._
   *   that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`. You
   *   can use this to visually highlight matching parts of a search query in your UI For more information, see
   *   [Highlighting and
-  *   snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+  *   snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
   * @param attributesToRetrieve
   *   Attributes to include in the API response To reduce the size of your response, you can retrieve only some of the
   *   attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the
@@ -88,7 +88,7 @@ import algoliasearch.composition.SupportedLanguage._
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started/).
+  *   events](https://www.algolia.com/guides/sending-events/getting-started).
   * @param decompoundQuery
   *   Whether to split compound words in the query into their building blocks For more information, see [Word
   *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
@@ -105,9 +105,9 @@ import algoliasearch.composition.SupportedLanguage._
   *   on ranking.
   * @param disableTypoToleranceOnAttributes
   *   Attributes for which you want to turn off [typo
-  *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). Attribute
+  *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance). Attribute
   *   names are case-sensitive Returning only exact matches can help when - [Searching in hyphenated
-  *   attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+  *   attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
   *   \- Reducing the number of matches when you have too many. This can happen with attributes that are long blocks of
   *   text, such as product descriptions Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms
   *   if your attributes have intentional unusual spellings that might look like typos.
@@ -116,7 +116,7 @@ import algoliasearch.composition.SupportedLanguage._
   * @param enablePersonalization
   *   Whether to enable Personalization.
   * @param enableReRanking
-  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This
+  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
   * @param enableRules
   *   Whether to enable rules.
@@ -133,7 +133,7 @@ import algoliasearch.composition.SupportedLanguage._
   *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
   *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
   *   matches if it matches at least one element of the array. For more information, see
-  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   * @param getRankingInfo
   *   Whether the search response should include detailed ranking information.
   * @param highlightPostTag
@@ -172,10 +172,10 @@ import algoliasearch.composition.SupportedLanguage._
   *   [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
   *   languages. To support this, you must place the CJK language **first** **You should always specify a query
   *   language.** If you don't specify an indexing language, the search engine uses all [supported
-  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
-  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
   * @param replaceSynonymsInHighlight
   *   Whether to replace a highlighted word with the matched synonym By default, the original words are highlighted even
   *   if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records matching
@@ -221,7 +221,7 @@ import algoliasearch.composition.SupportedLanguage._
   *   the number of matching records containing this facet value - `alpha`. Retrieve facet values alphabetically This
   *   setting doesn't influence how facet values are displayed in your UI (see `renderingContent`). For more
   *   information, see [facet value
-  *   display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+  *   display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
   * @param sumOrFiltersScores
   *   Whether to sum all filter scores If true, all filter scores are summed. Otherwise, the maximum filter score is
   *   kept. For more information, see [filter

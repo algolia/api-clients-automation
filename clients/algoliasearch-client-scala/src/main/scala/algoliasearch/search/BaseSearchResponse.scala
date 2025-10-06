@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -83,7 +83,7 @@ import org.json4s._
   *   An object with custom data. You can store up to 32kB as custom data.
   * @param queryID
   *   Unique identifier for the query. This is used for [click
-  *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
   * @param automaticInsights
   *   Whether automatic events collection is enabled for the application.
   */
