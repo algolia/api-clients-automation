@@ -83,7 +83,7 @@ Action:
       description: |
         How often to perform a complete crawl for this action.
         
-        For mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule/).
+        For mopre information, consult the [`schedule` parameter documentation](https://www.algolia.com/doc/tools/crawler/apis/configuration/schedule).
     selectorsToMatch:
       type: array
       description: |
@@ -116,7 +116,7 @@ ActionSchedule:
 fileTypes:
   type: string
   description: |
-    For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents/).
+    For more information, see [Extract data from non-HTML documents](https://www.algolia.com/doc/tools/crawler/extracting-data/non-html-documents).
   enum:
     - doc
     - email
