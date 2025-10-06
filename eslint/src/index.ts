@@ -2,7 +2,6 @@ import { endWithDot } from './rules/endWithDot.js';
 import { hasType } from './rules/hasType.js';
 import { noBigInt } from './rules/noBigInt.js';
 import { noFinalDot } from './rules/noFinalDot.js';
-import { noNewLine } from './rules/noNewLine.js';
 import { createOutOfLineRule } from './rules/outOfLineRule.js';
 import { refCommon } from './rules/refCommon.js';
 import { singleQuoteRef } from './rules/singleQuoteRef.js';
@@ -14,7 +13,6 @@ const rules = {
   'has-type': hasType,
   'no-big-int': noBigInt,
   'no-final-dot': noFinalDot,
-  'no-new-line': noNewLine,
   'out-of-line-all-of': createOutOfLineRule({ property: 'allOf' }),
   'out-of-line-any-of': createOutOfLineRule({ property: 'anyOf' }),
   'out-of-line-enum': createOutOfLineRule({ property: 'enum' }),

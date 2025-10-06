@@ -69,4 +69,5 @@ export function {{clientName}}(
   if ({{^fallbackToAliasHost}}!region || {{/fallbackToAliasHost}}(region && (typeof region !== 'string' || !REGIONS.includes(region)))) {
     throw new Error(`\`region\` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: ${REGIONS.join(', ')}`);
   }
+  
   {{/hasRegionalHost}}
