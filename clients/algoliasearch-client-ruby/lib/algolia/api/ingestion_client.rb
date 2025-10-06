@@ -11,6 +11,18 @@ module Algolia
       raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
       raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
+      if config.connect_timeout.nil?
+        config.connect_timeout = 25000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 25000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 25000
+      end
+
       @api_client = Algolia::ApiClient.new(config)
     end
 
@@ -34,22 +46,10 @@ module Algolia
         )
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, "Ingestion", opts)
-      create_with_config(config)
+      new(config)
     end
 
     def self.create_with_config(config)
-      if config.connect_timeout.nil?
-        config.connect_timeout = 25000
-      end
-
-      if config.read_timeout.nil?
-        config.read_timeout = 25000
-      end
-
-      if config.write_timeout.nil?
-        config.write_timeout = 25000
-      end
-
       new(config)
     end
 
@@ -2149,7 +2149,7 @@ module Algolia
       )
     end
 
-    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2200,7 +2200,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
     #
     # Required API Key ACLs:
     #   - addObject

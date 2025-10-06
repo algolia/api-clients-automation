@@ -46,7 +46,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.14.0';
+export const apiClientVersion = '1.15.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -417,7 +417,7 @@ export function createCompositionClient({
     },
 
     /**
-     * Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+     * Retrieves a rule by its ID.  To find the object ID of a rule, use the [`search` operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -611,7 +611,7 @@ export function createCompositionClient({
     },
 
     /**
-     * Upsert a Composition Rule for the specified composition ID.
+     * If a composition rule with the provided ID already exists, it\'s replaced. Otherwise, a new one is added.
      *
      * Required API Key ACLs:
      *  - editSettings

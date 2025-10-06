@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -67,7 +67,7 @@ import algoliasearch.search.SupportedLanguage._
   *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
   *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
   *   matches if it matches at least one element of the array. For more information, see
-  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   * @param sumOrFiltersScores
   *   Whether to sum all filter scores If true, all filter scores are summed. Otherwise, the maximum filter score is
   *   kept. For more information, see [filter
@@ -119,7 +119,7 @@ import algoliasearch.search.SupportedLanguage._
   *   impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
-  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param getRankingInfo
   *   Whether the search response should include detailed ranking information.
   * @param synonyms
@@ -127,12 +127,12 @@ import algoliasearch.search.SupportedLanguage._
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started/).
+  *   events](https://www.algolia.com/guides/sending-events/getting-started).
   * @param analytics
   *   Whether this search will be included in Analytics.
   * @param analyticsTags
   *   Tags to apply to the query for [segmenting analytics
-  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   * @param percentileComputation
   *   Whether to include this search when calculating processing-time percentiles.
   * @param enableABTest
@@ -145,14 +145,14 @@ import algoliasearch.search.SupportedLanguage._
   *   always included.
   * @param ranking
   *   Determines the order in which Algolia returns your results. By default, each entry corresponds to a [ranking
-  *   criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). The
+  *   criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria). The
   *   tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a
   *   replica index for [sorting by an
-  *   attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
+  *   attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute),
   *   you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the
   *   values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute,
   *   in descending order. Before you modify the default setting, you should test your changes in the dashboard, and by
-  *   [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
+  *   [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
   * @param relevancyStrictness
   *   Relevancy threshold below which less relevant results aren't included in the results You can only set
   *   `relevancyStrictness` on [virtual replica
@@ -164,7 +164,7 @@ import algoliasearch.search.SupportedLanguage._
   *   that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`. You
   *   can use this to visually highlight matching parts of a search query in your UI For more information, see
   *   [Highlighting and
-  *   snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+  *   snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
   * @param attributesToSnippet
   *   Attributes for which to enable snippets. Attribute names are case-sensitive Snippets provide additional context to
   *   matched words. If you enable snippets, they include 10 words, including the matched word. The matched word will
@@ -192,9 +192,9 @@ import algoliasearch.search.SupportedLanguage._
   *   matches when searching in large sets of similar numbers.
   * @param disableTypoToleranceOnAttributes
   *   Attributes for which you want to turn off [typo
-  *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). Attribute
+  *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance). Attribute
   *   names are case-sensitive Returning only exact matches can help when - [Searching in hyphenated
-  *   attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+  *   attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
   *   \- Reducing the number of matches when you have too many. This can happen with attributes that are long blocks of
   *   text, such as product descriptions Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms
   *   if your attributes have intentional unusual spellings that might look like typos.
@@ -205,10 +205,10 @@ import algoliasearch.search.SupportedLanguage._
   *   [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
   *   languages. To support this, you must place the CJK language **first** **You should always specify a query
   *   language.** If you don't specify an indexing language, the search engine uses all [supported
-  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+  *   languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
-  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+  *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
   * @param decompoundQuery
   *   Whether to split compound words in the query into their building blocks For more information, see [Word
   *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
@@ -271,14 +271,14 @@ import algoliasearch.search.SupportedLanguage._
   *   the number of matching records containing this facet value - `alpha`. Retrieve facet values alphabetically This
   *   setting doesn't influence how facet values are displayed in your UI (see `renderingContent`). For more
   *   information, see [facet value
-  *   display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+  *   display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
   * @param attributeCriteriaComputedByMinProximity
   *   Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if
   *   the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching
   *   attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute
   *   is determined by the order in the `searchableAttributes` setting.
   * @param enableReRanking
-  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This
+  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
   * @param indexName
   *   Index name (case-sensitive).

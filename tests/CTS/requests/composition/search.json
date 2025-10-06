@@ -28,7 +28,7 @@
         "params": {
           "query": "batman",
           "injectedItems": {
-            "injectedItem1": {
+            "my-unique-external-group-key": {
               "items": [
                 {
                   "objectID": "my-object-1"
@@ -57,7 +57,7 @@
         "params": {
           "query": "batman",
           "injectedItems": {
-            "injectedItem1": {
+            "my-unique-external-group-key": {
               "items": [
                 {
                   "objectID": "my-object-1"

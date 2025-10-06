@@ -122,7 +122,7 @@ public class PurchasedObjectIDsAfterSearch implements EventsItems {
   /**
    * Anonymous or pseudonymous user identifier. Don't use personally identifiable information in
    * user tokens. For more information, see [User
-   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
    */
   @javax.annotation.Nonnull
   public String getUserToken() {
@@ -139,7 +139,7 @@ public class PurchasedObjectIDsAfterSearch implements EventsItems {
    * system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from
    * before the user signed in, while providing a reliable way to identify users across sessions.
    * Don't use personally identifiable information in user tokens. For more information, see [User
-   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
    */
   @javax.annotation.Nullable
   public String getAuthenticatedUserToken() {

@@ -443,7 +443,7 @@ public class SearchResultsItem<T> {
 
   /**
    * Unique identifier for the query. This is used for [click
-   * analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   * analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
    */
   @javax.annotation.Nullable
   public String getQueryID() {

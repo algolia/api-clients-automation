@@ -13,7 +13,7 @@
   * Personalization API, you are limited to 40 API calls per second per application. The following headers provide
   * information about your current limit: - `x-ratelimit-limit`: The number of requests allowed every second. -
   * `x-ratelimit-remaining`: The number of requests remaining in the current second period. - `x-ratelimit-reset`: [Unix
-  * timestamp](https://www.unixtimestamp.com/) of the next time period. ## Version The current version of the
+  * timestamp](https://www.unixtimestamp.com) of the next time period. ## Version The current version of the
   * Personalization API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
@@ -27,7 +27,7 @@ package algoliasearch.personalization
   *
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
-  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param deletedUntil
   *   Date and time when the user profile can be safely considered to be deleted. Any events received after the
   *   `deletedUntil` date start a new user profile.

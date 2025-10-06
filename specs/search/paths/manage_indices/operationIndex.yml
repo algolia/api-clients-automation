@@ -19,7 +19,7 @@ post:
     - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
     - You can't copy to a destination index that already has replicas.
     - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-    - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+    - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
 
     **Move**
 
@@ -27,7 +27,7 @@ post:
     - When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.
       To access the original analytics in the dashboard, create an index with the original name.
     - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.
-    - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+    - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
     This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   parameters:

@@ -3139,7 +3139,7 @@ public class IngestionClient extends ApiClient {
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
    * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
    * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3170,7 +3170,7 @@ public class IngestionClient extends ApiClient {
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
    * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
    * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3194,7 +3194,7 @@ public class IngestionClient extends ApiClient {
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
    * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
    * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3215,7 +3215,7 @@ public class IngestionClient extends ApiClient {
    * providing the `watch` parameter, for asynchronous calls, you can use the observability
    * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
    * [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3233,7 +3233,7 @@ public class IngestionClient extends ApiClient {
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
    * observability endpoints and/or debugger dashboard to see the status of your task. If you want
    * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3283,7 +3283,7 @@ public class IngestionClient extends ApiClient {
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
    * observability endpoints and/or debugger dashboard to see the status of your task. If you want
    * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3311,7 +3311,7 @@ public class IngestionClient extends ApiClient {
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
    * observability endpoints and/or debugger dashboard to see the status of your task. If you want
    * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.
@@ -3335,7 +3335,7 @@ public class IngestionClient extends ApiClient {
    * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
    * observability endpoints and/or debugger dashboard to see the status of your task. If you want
    * to leverage the [pre-indexing data
-   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/),
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
    * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
    * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
    * will be returned.

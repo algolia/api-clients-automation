@@ -14,7 +14,7 @@ info:
 
 
     See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
 
 
     ## Base URLs
@@ -563,8 +563,9 @@ paths:
       description: >
         Retrieves a rule by its ID.
 
-        To find the object ID of rules, use the [`search`
-        operation](#tag/Rules/operation/searchRules).
+
+        To find the object ID of a rule, use the [`search`
+        operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
       parameters:
         - $ref: '#/components/parameters/compositionID'
         - $ref: '#/components/parameters/ObjectIDRule'
@@ -589,9 +590,10 @@ paths:
       operationId: putCompositionRule
       x-acl:
         - editSettings
-      summary: Upsert a composition rule
+      summary: Add or update a composition rule
       description: |
-        Upsert a Composition Rule for the specified composition ID.
+        If a composition rule with the provided ID already exists,
+        it's replaced. Otherwise, a new one is added.
       parameters:
         - $ref: '#/components/parameters/compositionID'
         - $ref: '#/components/parameters/ObjectIDRule'
@@ -1030,7 +1032,7 @@ components:
 
 
         For more information, see
-        [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+        [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
@@ -1117,7 +1119,7 @@ components:
 
         - Optional filters are applied _before_ custom ranking attributes (in
         the default
-        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/)).
+        [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).
 
         - Optional filters don't work with numeric attributes.
       example:
@@ -1448,7 +1450,7 @@ components:
 
         If you don't specify an indexing language, the search engine uses all
         [supported
-        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+        languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),
 
         or the languages you specified with the `ignorePlurals` or
         `removeStopWords` parameters.
@@ -1456,7 +1458,7 @@ components:
         This can lead to unexpected search results.
 
         For more information, see [Language-specific
-        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+        configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
       default: []
       x-categories:
         - Languages
@@ -1508,7 +1510,7 @@ components:
         This helps with analytics and click and conversion events.
 
         For more information, see [user
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: test-user-123
       x-categories:
         - Personalization
@@ -1519,7 +1521,7 @@ components:
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
-        events](https://www.algolia.com/guides/sending-events/getting-started/).
+        events](https://www.algolia.com/guides/sending-events/getting-started).
       default: false
       x-categories:
         - Analytics
@@ -1535,7 +1537,7 @@ components:
         type: string
       description: >-
         Tags to apply to the query for [segmenting analytics
-        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       default: []
     enableABTest:
       type: boolean
@@ -1549,7 +1551,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -2054,7 +2056,7 @@ components:
           type: object
           description: >
             [Redirect results to a
-            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/),
+            URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects),
             this this parameter is for internal use only.
           properties:
             index:
@@ -2077,7 +2079,7 @@ components:
           type: string
           description: >-
             Unique identifier for the query. This is used for [click
-            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+            analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
           example: a00dbc80a8d13c4565a442e7e2dca80a
         _automaticInsights:
           type: boolean
@@ -2625,7 +2627,7 @@ components:
         in your UI
 
         For more information, see [Highlighting and
-        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
+        snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
       x-categories:
         - Highlighting and Snippeting
     attributesToRetrieve:
@@ -2733,14 +2735,14 @@ components:
         - sku
       description: >
         Attributes for which you want to turn off [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance).
 
         Attribute names are case-sensitive
 
         Returning only exact matches can help when
 
         - [Searching in hyphenated
-        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+        attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
           This can happen with attributes that are long blocks of text, such as product descriptions
@@ -2780,7 +2782,7 @@ components:
 
 
             - Don't use `distinct > 1` for records that might be [promoted by
-            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/).
+            rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits).
               The number of hits won't be correct and faceting won't work as expected.
             - With `distinct > 1`, the `hitsPerPage` parameter controls the
             number of returned groups.
@@ -3024,7 +3026,7 @@ components:
 
 
         For more information, see [Prefix
-        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
+        searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
       default: prefixLast
       x-categories:
         - Query strategy
@@ -3090,7 +3092,7 @@ components:
           Treat all words as optional.
 
         For more information, see [Remove words to improve
-        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
+        results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
       default: none
       x-categories:
         - Query strategy
@@ -3218,12 +3220,12 @@ components:
     typoTolerance:
       description: >
         Whether [typo
-        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/)
+        tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance)
         is enabled and how it is applied.
 
 
         If typo tolerance is true, `min`, or `strict`, [word splitting and
-        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/)
+        concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation)
         are also active.
       oneOf:
         - type: boolean
@@ -3389,7 +3391,7 @@ components:
         (see `renderingContent`).
 
         For more information, see [facet value
-        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+        display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
       default: count
       x-categories:
         - Faceting
@@ -3531,6 +3533,25 @@ components:
         - source
         - position
         - length
+    dedupPositioning:
+      type: string
+      enum:
+        - highest
+        - highestInjected
+      description: >
+        Deduplication positioning configures how a duplicate result should be
+        resolved between an injected item and main search results.
+
+        Current configuration supports:
+
+        - 'highest': always select the item in the highest position, and remove
+        duplicates that appear lower in the results.
+
+        - 'highestInjected': duplicate result will be moved to its highest
+        possible injected position, but not higher. 
+          If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
+      example: highest
+      default: highestInjected
     compositionBehavior:
       type: object
       additionalProperties: false
@@ -3574,6 +3595,18 @@ components:
               maxItems: 2
               items:
                 $ref: '#/components/schemas/injectedItem'
+            deduplication:
+              title: deduplication
+              type: object
+              additionalProperties: false
+              description: >-
+                Deduplication configures the methods used to resolve duplicate
+                items between main search results and injected group results.
+              properties:
+                positioning:
+                  $ref: '#/components/schemas/dedupPositioning'
+              required:
+                - positioning
           required:
             - main
       required:
@@ -3637,9 +3670,13 @@ components:
         Unique identifier of a task.
 
 
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task's progress with the [`task`
+        operation](https://www.algolia.com/doc/rest-api/search/get-task) and
+        this task ID.
     action:
       type: string
       enum:
@@ -3817,7 +3854,7 @@ components:
 
         Algolia uses `page` and `hitsPerPage` to control how search results are
         displayed
-        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
 
 
         - `hitsPerPage`: sets the number of search results (_hits_) displayed
@@ -3841,7 +3878,7 @@ components:
 
         Algolia uses `page` and `hitsPerPage` to control how search results are
         displayed
-        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/)).
+        ([paginated](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js)).
 
 
         - `hitsPerPage`: sets the number of search results (_hits_) displayed

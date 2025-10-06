@@ -646,8 +646,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * Retrieves a rule by its ID. To find the object ID of a rule, use the [`search`
+   * operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -661,8 +661,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * Retrieves a rule by its ID. To find the object ID of a rule, use the [`search`
+   * operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -673,8 +673,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of a rule, use the [`search`
+   * operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -699,8 +699,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
-   * operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of a rule, use the [`search`
+   * operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -996,7 +996,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Upsert a Composition Rule for the specified composition ID.
+   * If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one
+   * is added.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1015,7 +1016,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Upsert a Composition Rule for the specified composition ID.
+   * If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one
+   * is added.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1031,7 +1033,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Upsert a Composition Rule for the specified composition ID.
+   * (asynchronously) If a composition rule with the provided ID already exists, it's replaced.
+   * Otherwise, a new one is added.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)
@@ -1061,7 +1064,8 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Upsert a Composition Rule for the specified composition ID.
+   * (asynchronously) If a composition rule with the provided ID already exists, it's replaced.
+   * Otherwise, a new one is added.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param objectID Unique identifier of a rule object. (required)

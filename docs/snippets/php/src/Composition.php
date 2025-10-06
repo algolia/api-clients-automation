@@ -723,7 +723,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-external-group-key',
                                     'source' => ['external' => ['index' => 'foo',
                                         'ordering' => 'userDefined',
                                         'params' => ['filters' => 'brand:adidas',
@@ -772,7 +772,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-group-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -790,7 +790,7 @@ class SnippetCompositionClient
                                     ],
                                 ],
 
-                                ['key' => 'externalItem',
+                                ['key' => 'my-unique-group-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:puma',
                                         ],
@@ -807,6 +807,52 @@ class SnippetCompositionClient
                                     ],
                                     ],
                                 ],
+                            ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the MultipleBatch method.
+     *
+     * multipleBatch
+     */
+    public function snippetForMultipleBatch3(): void
+    {
+        // >SEPARATOR multipleBatch multipleBatch
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->multipleBatch(
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'my-compo',
+                        'name' => 'my composition',
+                        'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'foo',
+                                    ],
+                                    ],
+                                    'position' => 2,
+                                    'length' => 1,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highest',
                             ],
                         ],
                         ],
@@ -843,7 +889,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                             ],
                             ],
@@ -883,7 +929,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-external-group-key',
                             'source' => ['external' => ['index' => 'foo',
                                 'ordering' => 'userDefined',
                                 'params' => ['filters' => 'brand:adidas',
@@ -928,7 +974,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -946,7 +992,7 @@ class SnippetCompositionClient
                             ],
                         ],
 
-                        ['key' => 'externalItem',
+                        ['key' => 'my-unique-group-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:puma',
                                 ],
@@ -963,6 +1009,50 @@ class SnippetCompositionClient
                             ],
                             ],
                         ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition3(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
+                    'params' => ['filters' => 'brand:adidas',
+                    ],
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'foo',
+                            ],
+                            ],
+                            'position' => 2,
+                            'length' => 1,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highest',
                     ],
                 ],
                 ],
@@ -1001,7 +1091,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-from-rule-key',
                             'source' => ['search' => ['index' => 'foo',
                             ],
                             ],
@@ -1047,7 +1137,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem1',
+                        ['key' => 'my-unique-group-from-rule-key',
                             'source' => ['search' => ['index' => 'foo',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -1121,7 +1211,7 @@ class SnippetCompositionClient
                 ],
                 ],
                     'injectedItems' => [
-                        ['key' => 'injectedItem',
+                        ['key' => 'my-unique-external-group-from-rule-key',
                             'source' => ['external' => ['index' => 'my-index',
                                 'params' => ['filters' => 'brand:adidas',
                                 ],
@@ -1131,6 +1221,56 @@ class SnippetCompositionClient
                             'position' => 0,
                             'length' => 3,
                         ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule3(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'rule-with-deduplication',
+            ['objectID' => 'rule-with-deduplication',
+                'description' => 'my description',
+                'enabled' => true,
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-injected-item-key',
+                            'source' => ['search' => ['index' => 'my-index',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                    'deduplication' => ['positioning' => 'highestInjected',
                     ],
                 ],
                 ],
@@ -1211,7 +1351,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem1',
+                                ['key' => 'my-unique-group-from-rule-key',
                                     'source' => ['search' => ['index' => 'foo',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -1289,7 +1429,7 @@ class SnippetCompositionClient
                         ],
                         ],
                             'injectedItems' => [
-                                ['key' => 'injectedItem',
+                                ['key' => 'my-unique-external-group-from-rule-key',
                                     'source' => ['external' => ['index' => 'my-index',
                                         'params' => ['filters' => 'brand:adidas',
                                         ],
@@ -1299,6 +1439,60 @@ class SnippetCompositionClient
                                     'position' => 0,
                                     'length' => 3,
                                 ],
+                            ],
+                        ],
+                        ],
+                        ],
+                    ],
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveRules method.
+     *
+     * saveRules
+     */
+    public function snippetForSaveRules3(): void
+    {
+        // >SEPARATOR saveRules saveRules
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->saveRules(
+            'my-compo',
+            ['requests' => [
+                ['action' => 'upsert',
+                    'body' => ['objectID' => 'rule-with-deduplication',
+                        'description' => 'my description',
+                        'enabled' => true,
+                        'conditions' => [
+                            ['anchoring' => 'contains',
+                                'pattern' => 'harry',
+                            ],
+                        ],
+                        'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'my-unique-injected-item-key',
+                                    'source' => ['search' => ['index' => 'my-index',
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 3,
+                                ],
+                            ],
+                            'deduplication' => ['positioning' => 'highestInjected',
                             ],
                         ],
                         ],
@@ -1355,7 +1549,7 @@ class SnippetCompositionClient
         $response = $client->search(
             'foo',
             ['params' => ['query' => 'batman',
-                'injectedItems' => ['injectedItem1' => ['items' => [
+                'injectedItems' => ['my-unique-external-group-key' => ['items' => [
                     ['objectID' => 'my-object-1',
                     ],
 

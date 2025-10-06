@@ -103,7 +103,7 @@ info:
 
 
     For more information, see [Query agggregation and
-    processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/).
+    processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation).
 
 
     See the analytics implementation overview for more information about query
@@ -148,9 +148,8 @@ tags:
     x-displayName: Users
     description: Metrics related to the users of your search.
 externalDocs:
-  url: https://www.algolia.com/doc/guides/search-analytics/overview/
-  description: |
-    Related guide: Search analytics.
+  url: https://www.algolia.com/doc/guides/search-analytics/overview
+  description: Search analytics.
 paths:
   /{path}:
     get:
@@ -1115,7 +1114,7 @@ paths:
         events, the rates (CTR, CR, ATCR, purchase rate) are null.
 
         - **0% rates** mean there _were_ queries but no [click or conversion
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -2824,7 +2823,7 @@ paths:
         events, the rates (CTR, CR, ATCR, purchase rate) are null.
 
         - **0% rates** mean there _were_ queries but no [click or conversion
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -3094,9 +3093,8 @@ paths:
         - The analyzed period includes the last eight days including the current
         day.
       externalDocs:
-        url: https://www.algolia.com/doc/guides/search-analytics/guides/usertoken/
-        description: |
-          Related guide: Distinguish users for analytics.
+        url: https://www.algolia.com/doc/guides/search-analytics/guides/usertoken
+        description: Distinguish users for analytics.
       parameters:
         - $ref: '#/components/parameters/Index'
         - $ref: '#/components/parameters/StartDate'
@@ -3897,7 +3895,8 @@ paths:
 
 
         To get the most frequent searches without results, use the [Retrieve
-        searches without results](#tag/search/operation/getSearchesNoResults)
+        searches without
+        results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results)
         operation.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -4436,7 +4435,7 @@ paths:
 
         An average of `null` when `clickAnalytics` is enabled means Algolia
         didn't receive any [click
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         for the queries.
 
         The average is `null` until Algolia receives at least one click event.
@@ -4727,7 +4726,7 @@ paths:
 
         An average of `0` when `clickAnalytics` is enabled means Algolia didn't
         receive any [click
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         for the queries.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -4998,7 +4997,7 @@ paths:
         events, CTR is null.
 
         - **0** mean there _were_ queries but no [click
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -5298,7 +5297,7 @@ paths:
         events, CR is null.
 
         - **0** mean there _were_ queries but no [conversion
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -5607,7 +5606,7 @@ paths:
         events, the add-to-cart rate is null.
 
         - **0** mean there _were_ queries but no [add-to-cart
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -5916,7 +5915,7 @@ paths:
         events, the purchase rate is null.
 
         - **0** mean there _were_ queries but no [purchase conversion
-        events](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -6840,7 +6839,7 @@ components:
         Tags must be URL-encoded.
 
         For more information, see [Segment your analytics
-        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       example: device:mobile%20phone
       schema:
         type: string

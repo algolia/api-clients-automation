@@ -13,11 +13,14 @@ module Algolia
       # list of injected items of the current Composition.
       attr_accessor :injected_items
 
+      attr_accessor :deduplication
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :main => :main,
-          :injected_items => :injectedItems
+          :injected_items => :injectedItems,
+          :deduplication => :deduplication
         }
       end
 
@@ -25,7 +28,8 @@ module Algolia
       def self.types_mapping
         {
           :main => :"Main",
-          :injected_items => :"Array<InjectedItem>"
+          :injected_items => :"Array<InjectedItem>",
+          :deduplication => :"Deduplication"
         }
       end
 
@@ -70,6 +74,10 @@ module Algolia
             self.injected_items = value
           end
         end
+
+        if attributes.key?(:deduplication)
+          self.deduplication = attributes[:deduplication]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -78,7 +86,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           main == other.main &&
-          injected_items == other.injected_items
+          injected_items == other.injected_items &&
+          deduplication == other.deduplication
       end
 
       # @see the `==` method
@@ -90,7 +99,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [main, injected_items].hash
+        [main, injected_items, deduplication].hash
       end
 
       # Builds the object from hash

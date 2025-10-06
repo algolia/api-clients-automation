@@ -11,6 +11,18 @@ module Algolia
       raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
       raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
+      if config.connect_timeout.nil?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 30000
+      end
+
       @api_client = Algolia::ApiClient.new(config)
     end
 
@@ -27,22 +39,10 @@ module Algolia
         .shuffle
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, "Composition", opts)
-      create_with_config(config)
+      new(config)
     end
 
     def self.create_with_config(config)
-      if config.connect_timeout.nil?
-        config.connect_timeout = 2000
-      end
-
-      if config.read_timeout.nil?
-        config.read_timeout = 5000
-      end
-
-      if config.write_timeout.nil?
-        config.write_timeout = 30000
-      end
-
       new(config)
     end
 
@@ -386,7 +386,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::Composition")
     end
 
-    # Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    # Retrieves a rule by its ID.  To find the object ID of a rule, use the [`search` operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -426,7 +426,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    # Retrieves a rule by its ID.  To find the object ID of a rule, use the [`search` operation](https://www.algolia.com/doc/rest-api/composition/search-composition-rules).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -648,7 +648,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
     end
 
-    # Upsert a Composition Rule for the specified composition ID.
+    # If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one is added.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -692,7 +692,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Upsert a Composition Rule for the specified composition ID.
+    # If a composition rule with the provided ID already exists, it's replaced. Otherwise, a new one is added.
     #
     # Required API Key ACLs:
     #   - editSettings

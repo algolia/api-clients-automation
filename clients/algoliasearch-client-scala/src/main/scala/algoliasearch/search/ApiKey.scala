@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -52,7 +52,7 @@ import algoliasearch.search.Acl._
   *   Maximum number of results this API key can retrieve in one query. By default, there's no limit.
   * @param maxQueriesPerIPPerHour
   *   Maximum number of API requests allowed per IP address or [user
-  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) per hour. If this limit is reached,
+  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) per hour. If this limit is reached,
   *   the API returns an error with status code `429`. By default, there's no limit.
   * @param queryParameters
   *   Query parameters to add when making API requests with this API key. To restrict this API key to specific IP

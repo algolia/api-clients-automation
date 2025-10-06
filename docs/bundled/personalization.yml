@@ -77,7 +77,7 @@ info:
 
     second period.
 
-    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com/) of
+    - `x-ratelimit-reset`: [Unix timestamp](https://www.unixtimestamp.com) of
 
     the next time period.
 
@@ -118,9 +118,8 @@ tags:
 
       and how much each facet and event type impact the personalization.
 externalDocs:
-  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
-  description: |
-    Related guide: Algolia Personalization.
+  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization
+  description: Algolia Personalization.
 paths:
   /{path}:
     get:
@@ -2203,7 +2202,7 @@ components:
         This helps with analytics and click and conversion events.
 
         For more information, see [user
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       example: test-user-123
       x-categories:
         - Personalization

@@ -538,7 +538,7 @@ export async function snippetForMultipleBatch1(): Promise<void> {
               main: { source: { search: { index: 'foo' } } },
               injectedItems: [
                 {
-                  key: 'injectedItem1',
+                  key: 'my-unique-external-group-key',
                   source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
                   position: 2,
                   length: 1,
@@ -578,7 +578,7 @@ export async function snippetForMultipleBatch2(): Promise<void> {
               main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
               injectedItems: [
                 {
-                  key: 'injectedItem1',
+                  key: 'my-unique-group-key',
                   source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                   position: 2,
                   length: 1,
@@ -595,7 +595,7 @@ export async function snippetForMultipleBatch2(): Promise<void> {
                   },
                 },
                 {
-                  key: 'externalItem',
+                  key: 'my-unique-group-key',
                   source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
                   position: 5,
                   length: 5,
@@ -612,6 +612,42 @@ export async function snippetForMultipleBatch2(): Promise<void> {
                   },
                 },
               ],
+            },
+          },
+        },
+      },
+    ],
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the multipleBatch method.
+//
+// multipleBatch
+export async function snippetForMultipleBatch3(): Promise<void> {
+  // >SEPARATOR multipleBatch multipleBatch
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.multipleBatch({
+    requests: [
+      {
+        action: 'upsert',
+        body: {
+          objectID: 'my-compo',
+          name: 'my composition',
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'foo' } } },
+              injectedItems: [
+                { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+              ],
+              deduplication: { positioning: 'highest' },
             },
           },
         },
@@ -642,7 +678,7 @@ export async function snippetForPutComposition(): Promise<void> {
       behavior: {
         injection: {
           main: { source: { search: { index: 'foo' } } },
-          injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+          injectedItems: [{ key: 'my-unique-group-key', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
         },
       },
     },
@@ -673,7 +709,7 @@ export async function snippetForPutComposition1(): Promise<void> {
           main: { source: { search: { index: 'foo' } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-external-group-key',
               source: { external: { index: 'foo', ordering: 'userDefined', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -709,7 +745,7 @@ export async function snippetForPutComposition2(): Promise<void> {
           main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
           injectedItems: [
             {
-              key: 'injectedItem1',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
               position: 2,
               length: 1,
@@ -726,7 +762,7 @@ export async function snippetForPutComposition2(): Promise<void> {
               },
             },
             {
-              key: 'externalItem',
+              key: 'my-unique-group-key',
               source: { search: { index: 'foo', params: { filters: 'brand:puma' } } },
               position: 5,
               length: 5,
@@ -743,6 +779,38 @@ export async function snippetForPutComposition2(): Promise<void> {
               },
             },
           ],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition3(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-compo',
+    composition: {
+      objectID: 'my-compo',
+      name: 'my composition',
+      behavior: {
+        injection: {
+          main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
+          injectedItems: [
+            { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+          ],
+          deduplication: { positioning: 'highest' },
         },
       },
     },
@@ -773,7 +841,9 @@ export async function snippetForPutCompositionRule(): Promise<void> {
         behavior: {
           injection: {
             main: { source: { search: { index: 'foo' } } },
-            injectedItems: [{ key: 'injectedItem1', source: { search: { index: 'foo' } }, position: 2, length: 1 }],
+            injectedItems: [
+              { key: 'my-unique-group-from-rule-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
+            ],
           },
         },
       },
@@ -807,7 +877,7 @@ export async function snippetForPutCompositionRule1(): Promise<void> {
             main: { source: { search: { index: 'foo' } } },
             injectedItems: [
               {
-                key: 'injectedItem1',
+                key: 'my-unique-group-from-rule-key',
                 source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                 position: 2,
                 length: 1,
@@ -864,7 +934,7 @@ export async function snippetForPutCompositionRule2(): Promise<void> {
             main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
             injectedItems: [
               {
-                key: 'injectedItem',
+                key: 'my-unique-external-group-from-rule-key',
                 source: {
                   external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                 },
@@ -872,6 +942,43 @@ export async function snippetForPutCompositionRule2(): Promise<void> {
                 length: 3,
               },
             ],
+          },
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+export async function snippetForPutCompositionRule3(): Promise<void> {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putCompositionRule({
+    compositionID: 'compositionID',
+    objectID: 'rule-with-deduplication',
+    compositionRule: {
+      objectID: 'rule-with-deduplication',
+      description: 'my description',
+      enabled: true,
+      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index' } } },
+            injectedItems: [
+              { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
+            ],
+            deduplication: { positioning: 'highestInjected' },
           },
         },
       },
@@ -939,7 +1046,7 @@ export async function snippetForSaveRules1(): Promise<void> {
                   main: { source: { search: { index: 'foo' } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem1',
+                      key: 'my-unique-group-from-rule-key',
                       source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } },
                       position: 2,
                       length: 1,
@@ -1002,7 +1109,7 @@ export async function snippetForSaveRules2(): Promise<void> {
                   main: { source: { search: { index: 'my-index', params: { filters: 'brand:adidas' } } } },
                   injectedItems: [
                     {
-                      key: 'injectedItem',
+                      key: 'my-unique-external-group-from-rule-key',
                       source: {
                         external: { index: 'my-index', params: { filters: 'brand:adidas' }, ordering: 'userDefined' },
                       },
@@ -1010,6 +1117,54 @@ export async function snippetForSaveRules2(): Promise<void> {
                       length: 3,
                     },
                   ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  // >LOG
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveRules method.
+//
+// saveRules
+export async function snippetForSaveRules3(): Promise<void> {
+  // >SEPARATOR saveRules saveRules
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.saveRules({
+    compositionID: 'my-compo',
+    rules: {
+      requests: [
+        {
+          action: 'upsert',
+          body: {
+            objectID: 'rule-with-deduplication',
+            description: 'my description',
+            enabled: true,
+            conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+            consequence: {
+              behavior: {
+                injection: {
+                  main: { source: { search: { index: 'my-index' } } },
+                  injectedItems: [
+                    {
+                      key: 'my-unique-injected-item-key',
+                      source: { search: { index: 'my-index' } },
+                      position: 0,
+                      length: 3,
+                    },
+                  ],
+                  deduplication: { positioning: 'highestInjected' },
                 },
               },
             },
@@ -1057,7 +1212,7 @@ export async function snippetForSearch1(): Promise<void> {
       params: {
         query: 'batman',
         injectedItems: {
-          injectedItem1: {
+          'my-unique-external-group-key': {
             items: [
               { objectID: 'my-object-1' },
               {

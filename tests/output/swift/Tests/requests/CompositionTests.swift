@@ -884,7 +884,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-external-group-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -902,7 +902,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}"
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -936,7 +936,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         ))),
                         injectedItems: [
                             InjectedItem(
-                                key: "injectedItem1",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -956,7 +956,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                                 ))
                             ),
                             InjectedItem(
-                                key: "externalItem",
+                                key: "my-unique-group-key",
                                 source: InjectedItemSource.compositionSearchSource(
                                     CompositionSearchSource(search: Search(
                                         index: "foo",
@@ -985,7 +985,53 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}"
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/*/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// multipleBatch
+    func testMultipleBatchTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .multipleBatchWithHTTPInfo(batchParams: CompositionBatchParams(requests: [CompositionMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: BatchCompositionAction.composition(Composition(
+                    objectID: "my-compo",
+                    name: "my composition",
+                    behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highest)
+                    ))
+                ))
+            )]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1014,7 +1060,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -1029,7 +1075,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"1234\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}"
+        let expectedBodyData = "{\"objectID\":\"1234\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1058,7 +1104,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-external-group-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -1076,7 +1122,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}"
+        let expectedBodyData = "{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1109,7 +1155,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     ))),
                     injectedItems: [
                         InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -1127,7 +1173,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                             ))
                         ),
                         InjectedItem(
-                            key: "externalItem",
+                            key: "my-unique-group-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:puma")
@@ -1154,13 +1200,61 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"externalItem\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}"
+        let expectedBodyData = "{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/my-metadata-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putComposition
+    func testPutCompositionTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                        index: "foo",
+                        params: MainInjectionQueryParameters(filters: "brand:adidas")
+                    ))),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                        position: 2,
+                        length: 1
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highest)
+                ))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1184,7 +1278,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource
                             .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
                         position: 2,
@@ -1199,7 +1293,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}"
+        let expectedBodyData = "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1229,7 +1323,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                     main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem1",
+                        key: "my-unique-group-from-rule-key",
                         source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                             index: "foo",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -1255,7 +1349,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}"
+        let expectedBodyData = "{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1291,7 +1385,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         params: MainInjectionQueryParameters(filters: "brand:adidas")
                     ))),
                     injectedItems: [InjectedItem(
-                        key: "injectedItem",
+                        key: "my-unique-external-group-from-rule-key",
                         source: InjectedItemSource.externalSource(ExternalSource(external: External(
                             index: "my-index",
                             params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -1313,13 +1407,62 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}"
+        let expectedBodyData = "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-exernal-source")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putCompositionRule
+    func testPutCompositionRuleTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionRuleWithHTTPInfo(
+            compositionID: "compositionID",
+            objectID: "rule-with-deduplication",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-deduplication",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                    ),
+                    injectedItems: [InjectedItem(
+                        key: "my-unique-injected-item-key",
+                        source: InjectedItemSource
+                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                        position: 0,
+                        length: 3
+                    )],
+                    deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                ))),
+                description: "my description",
+                enabled: true
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-deduplication")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1392,7 +1535,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem1",
+                            key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
                                 index: "foo",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas")
@@ -1419,7 +1562,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"injectedItem1\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}}]}"
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-metadata\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1456,7 +1599,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                             params: MainInjectionQueryParameters(filters: "brand:adidas")
                         ))),
                         injectedItems: [InjectedItem(
-                            key: "injectedItem",
+                            key: "my-unique-external-group-from-rule-key",
                             source: InjectedItemSource.externalSource(ExternalSource(external: External(
                                 index: "my-index",
                                 params: BaseInjectionQueryParameters(filters: "brand:adidas"),
@@ -1479,13 +1622,65 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"injectedItem\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}"
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/rule-with-exernal-source/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveRules
+    func testSaveRulesTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveRulesWithHTTPInfo(
+            compositionID: "my-compo",
+            rules: CompositionRulesBatchParams(requests: [RulesMultipleBatchRequest(
+                action: CompositionAction.upsert,
+                body: RulesBatchCompositionAction.compositionRule(CompositionRule(
+                    objectID: "rule-with-deduplication",
+                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
+                        main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        ),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                            position: 0,
+                            length: 3
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                    ))),
+                    description: "my description",
+                    enabled: true
+                ))
+            )])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -1534,7 +1729,7 @@ final class CompositionClientRequestsTests: XCTestCase {
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
                 query: "batman",
-                injectedItems: ["injectedItem1": ExternalInjectedItem(items: [
+                injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                     ExternalInjection(objectID: "my-object-1"),
                     ExternalInjection(
                         objectID: "my-object-2",
@@ -1554,7 +1749,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"injectedItem1\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}"
+        let expectedBodyData = "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"my-unique-external-group-key\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

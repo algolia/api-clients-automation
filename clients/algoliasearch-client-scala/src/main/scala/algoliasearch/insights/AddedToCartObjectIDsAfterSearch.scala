@@ -3,7 +3,7 @@
   * personalization, smarter search results, and analytics that help you optimize your user experience. ## Client
   * libraries Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the
   * Insights API. See: [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/). ## Base URLs
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem). ## Base URLs
   * The base URLs for making requests to the Insights API are: - `https://insights.us.algolia.io` -
   * `https://insights.de.algolia.io` - `https//insights.algolia.io` (routes requests to the closest of the above
   * servers, based on your geographical location) **All requests must use HTTPS.** ## Authentication To authenticate
@@ -46,13 +46,13 @@ import algoliasearch.insights.ConversionEvent._
   *   Object IDs of the records that are part of the event.
   * @param userToken
   *   Anonymous or pseudonymous user identifier. Don't use personally identifiable information in user tokens. For more
-  *   information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param authenticatedUserToken
   *   Identifier for authenticated users. When the user signs in, you can get an identifier from your system and send it
   *   as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while
   *   providing a reliable way to identify users across sessions. Don't use personally identifiable information in user
   *   tokens. For more information, see [User
-  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param currency
   *   Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
   * @param objectData

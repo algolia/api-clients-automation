@@ -7,9 +7,9 @@ info:
     ## Client libraries
 
     Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.
-    The official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/).
+    The official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla).
 
-    See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+    See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
 
     ## Base URLs
 
@@ -96,18 +96,16 @@ security:
 tags:
   - name: recommendations
     x-displayName: Recommendations
-    description: Retrieve recommendations from a pre-trained AI model. You can train models in the [Algolia dashboard](https://dashboard.algolia.com/recommend/).
+    description: Retrieve recommendations from a pre-trained AI model. You can train models in the [Algolia dashboard](https://dashboard.algolia.com/recommend).
     externalDocs:
-      url: https://www.algolia.com/doc/guides/algolia-recommend/overview/
-      description: |
-        Related guide: Algolia Recommend.
+      url: https://www.algolia.com/doc/guides/algolia-recommend/overview
+      description: Algolia Recommend.
   - name: rules
     x-displayName: Rules
     description: Curate your recommendations with rules, which are _if_-_then_ statements.
     externalDocs:
-      url: https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/
-      description: |
-        Related guide: Recommend Rules.
+      url: https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules
+      description: Recommend Rules.
 x-tagGroups:
   - name: Recommend
     tags:

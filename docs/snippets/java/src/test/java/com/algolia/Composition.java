@@ -584,7 +584,7 @@ class SnippetCompositionClient {
                       .setInjectedItems(
                         Arrays.asList(
                           new InjectedItem()
-                            .setKey("injectedItem1")
+                            .setKey("my-unique-external-group-key")
                             .setSource(
                               new ExternalSource().setExternal(
                                 new External()
@@ -640,7 +640,7 @@ class SnippetCompositionClient {
                           .setInjectedItems(
                             Arrays.asList(
                               new InjectedItem()
-                                .setKey("injectedItem1")
+                                .setKey("my-unique-group-key")
                                 .setSource(
                                   new SearchSource().setSearch(
                                     new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -672,7 +672,7 @@ class SnippetCompositionClient {
                                     )
                                 ),
                               new InjectedItem()
-                                .setKey("externalItem")
+                                .setKey("my-unique-group-key")
                                 .setSource(
                                   new SearchSource().setSearch(
                                     new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -715,6 +715,48 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the multipleBatch method.
+  //
+  // multipleBatch
+  void snippetForMultipleBatch3() throws Exception {
+    // >SEPARATOR multipleBatch multipleBatch
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.multipleBatch(
+      new BatchParams().setRequests(
+        Arrays.asList(
+          new MultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new Composition()
+                .setObjectID("my-compo")
+                .setName("my composition")
+                .setBehavior(
+                  new CompositionBehavior().setInjection(
+                    new Injection()
+                      .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                      .setInjectedItems(
+                        Arrays.asList(
+                          new InjectedItem()
+                            .setKey("my-unique-injected-item-key")
+                            .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                            .setPosition(2)
+                            .setLength(1)
+                        )
+                      )
+                      .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+                  )
+                )
+            )
+        )
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the putComposition method.
   //
   // putComposition
@@ -736,7 +778,7 @@ class SnippetCompositionClient {
               .setInjectedItems(
                 Arrays.asList(
                   new InjectedItem()
-                    .setKey("injectedItem1")
+                    .setKey("my-unique-group-key")
                     .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                     .setPosition(2)
                     .setLength(1)
@@ -770,7 +812,7 @@ class SnippetCompositionClient {
               .setInjectedItems(
                 Arrays.asList(
                   new InjectedItem()
-                    .setKey("injectedItem1")
+                    .setKey("my-unique-external-group-key")
                     .setSource(
                       new ExternalSource().setExternal(
                         new External()
@@ -817,7 +859,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-group-key")
                       .setSource(
                         new SearchSource().setSearch(
                           new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -849,7 +891,7 @@ class SnippetCompositionClient {
                           )
                       ),
                     new InjectedItem()
-                      .setKey("externalItem")
+                      .setKey("my-unique-group-key")
                       .setSource(
                         new SearchSource().setSearch(
                           new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
@@ -889,6 +931,47 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition3() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.putComposition(
+      "my-compo",
+      new Composition()
+        .setObjectID("my-compo")
+        .setName("my composition")
+        .setBehavior(
+          new CompositionBehavior().setInjection(
+            new Injection()
+              .setMain(
+                new Main().setSource(
+                  new CompositionSource().setSearch(
+                    new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                  )
+                )
+              )
+              .setInjectedItems(
+                Arrays.asList(
+                  new InjectedItem()
+                    .setKey("my-unique-injected-item-key")
+                    .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
+                    .setPosition(2)
+                    .setLength(1)
+                )
+              )
+              .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
   // Snippet for the putCompositionRule method.
   //
   // putCompositionRule
@@ -912,7 +995,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem1")
+                      .setKey("my-unique-group-from-rule-key")
                       .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
                       .setPosition(2)
                       .setLength(1)
@@ -949,7 +1032,7 @@ class SnippetCompositionClient {
                     .setInjectedItems(
                       Arrays.asList(
                         new InjectedItem()
-                          .setKey("injectedItem1")
+                          .setKey("my-unique-group-from-rule-key")
                           .setSource(
                             new SearchSource().setSearch(
                               new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
@@ -1030,7 +1113,7 @@ class SnippetCompositionClient {
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectedItem()
-                      .setKey("injectedItem")
+                      .setKey("my-unique-external-group-from-rule-key")
                       .setSource(
                         new ExternalSource().setExternal(
                           new External()
@@ -1043,6 +1126,46 @@ class SnippetCompositionClient {
                       .setLength(3)
                   )
                 )
+            )
+          )
+        )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the putCompositionRule method.
+  //
+  // putCompositionRule
+  void snippetForPutCompositionRule3() throws Exception {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.putCompositionRule(
+      "compositionID",
+      "rule-with-deduplication",
+      new CompositionRule()
+        .setObjectID("rule-with-deduplication")
+        .setDescription("my description")
+        .setEnabled(true)
+        .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+        .setConsequence(
+          new CompositionRuleConsequence().setBehavior(
+            new CompositionBehavior().setInjection(
+              new Injection()
+                .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectedItem()
+                      .setKey("my-unique-injected-item-key")
+                      .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                      .setPosition(0)
+                      .setLength(3)
+                  )
+                )
+                .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
             )
           )
         )
@@ -1116,7 +1239,7 @@ class SnippetCompositionClient {
                               .setInjectedItems(
                                 Arrays.asList(
                                   new InjectedItem()
-                                    .setKey("injectedItem1")
+                                    .setKey("my-unique-group-from-rule-key")
                                     .setSource(
                                       new SearchSource().setSearch(
                                         new Search()
@@ -1206,7 +1329,7 @@ class SnippetCompositionClient {
                         .setInjectedItems(
                           Arrays.asList(
                             new InjectedItem()
-                              .setKey("injectedItem")
+                              .setKey("my-unique-external-group-from-rule-key")
                               .setSource(
                                 new ExternalSource().setExternal(
                                   new External()
@@ -1219,6 +1342,55 @@ class SnippetCompositionClient {
                               .setLength(3)
                           )
                         )
+                    )
+                  )
+                )
+            )
+        )
+      )
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveRules method.
+  //
+  // saveRules
+  void snippetForSaveRules3() throws Exception {
+    // >SEPARATOR saveRules saveRules
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    client.saveRules(
+      "my-compo",
+      new CompositionRulesBatchParams().setRequests(
+        Arrays.asList(
+          new RulesMultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new CompositionRule()
+                .setObjectID("rule-with-deduplication")
+                .setDescription("my description")
+                .setEnabled(true)
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                .setConsequence(
+                  new CompositionRuleConsequence().setBehavior(
+                    new CompositionBehavior().setInjection(
+                      new Injection()
+                        .setMain(
+                          new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))
+                        )
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectedItem()
+                              .setKey("my-unique-injected-item-key")
+                              .setSource(new SearchSource().setSearch(new Search().setIndex("my-index")))
+                              .setPosition(0)
+                              .setLength(3)
+                          )
+                        )
+                        .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
                     )
                   )
                 )
@@ -1262,7 +1434,7 @@ class SnippetCompositionClient {
               new HashMap() {
                 {
                   put(
-                    "injectedItem1",
+                    "my-unique-external-group-key",
                     new ExternalInjectedItem().setItems(
                         Arrays.asList(
                           new ExternalInjection().setObjectID("my-object-1"),

@@ -1,7 +1,7 @@
 /** Search API The Algolia Search API lets you search, configure, and manage your indices and records. ## Client
   * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
-  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
-  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ##
   * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
@@ -56,7 +56,7 @@ import algoliasearch.search.SupportedLanguage._
   *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
   *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
   *   matches if it matches at least one element of the array. For more information, see
-  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+  *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
   * @param sumOrFiltersScores
   *   Whether to sum all filter scores If true, all filter scores are summed. Otherwise, the maximum filter score is
   *   kept. For more information, see [filter
@@ -108,7 +108,7 @@ import algoliasearch.search.SupportedLanguage._
   *   impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
-  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
   * @param getRankingInfo
   *   Whether the search response should include detailed ranking information.
   * @param synonyms
@@ -116,12 +116,12 @@ import algoliasearch.search.SupportedLanguage._
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started/).
+  *   events](https://www.algolia.com/guides/sending-events/getting-started).
   * @param analytics
   *   Whether this search will be included in Analytics.
   * @param analyticsTags
   *   Tags to apply to the query for [segmenting analytics
-  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
   * @param percentileComputation
   *   Whether to include this search when calculating processing-time percentiles.
   * @param enableABTest

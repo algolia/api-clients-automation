@@ -22,6 +22,7 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     protected static $modelTypes = [
         'main' => '\Algolia\AlgoliaSearch\Model\Composition\Main',
         'injectedItems' => '\Algolia\AlgoliaSearch\Model\Composition\InjectedItem[]',
+        'deduplication' => '\Algolia\AlgoliaSearch\Model\Composition\Deduplication',
     ];
 
     /**
@@ -32,6 +33,7 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     protected static $modelFormats = [
         'main' => null,
         'injectedItems' => null,
+        'deduplication' => null,
     ];
 
     /**
@@ -43,6 +45,7 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     protected static $attributeMap = [
         'main' => 'main',
         'injectedItems' => 'injectedItems',
+        'deduplication' => 'deduplication',
     ];
 
     /**
@@ -53,6 +56,7 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     protected static $setters = [
         'main' => 'setMain',
         'injectedItems' => 'setInjectedItems',
+        'deduplication' => 'setDeduplication',
     ];
 
     /**
@@ -63,6 +67,7 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     protected static $getters = [
         'main' => 'getMain',
         'injectedItems' => 'getInjectedItems',
+        'deduplication' => 'getDeduplication',
     ];
 
     /**
@@ -84,6 +89,9 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
         }
         if (isset($data['injectedItems'])) {
             $this->container['injectedItems'] = $data['injectedItems'];
+        }
+        if (isset($data['deduplication'])) {
+            $this->container['deduplication'] = $data['deduplication'];
         }
     }
 
@@ -209,6 +217,30 @@ class Injection extends AbstractModel implements ModelInterface, \ArrayAccess, \
     public function setInjectedItems($injectedItems)
     {
         $this->container['injectedItems'] = $injectedItems;
+
+        return $this;
+    }
+
+    /**
+     * Gets deduplication.
+     *
+     * @return null|Deduplication
+     */
+    public function getDeduplication()
+    {
+        return $this->container['deduplication'] ?? null;
+    }
+
+    /**
+     * Sets deduplication.
+     *
+     * @param null|Deduplication $deduplication deduplication
+     *
+     * @return self
+     */
+    public function setDeduplication($deduplication)
+    {
+        $this->container['deduplication'] = $deduplication;
 
         return $this;
     }
