@@ -32,6 +32,9 @@ export function assertValidTimeouts(expectedCount: number): void {
 
       // languages are not consistent yet for the delay between requests
       switch (lang) {
+        case 'csharp':
+          // csharp clock is worse than my childhood mickey mouse watch
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 800);
         case 'javascript':
           expect(state.duration[3 * i] * 4).to.be.closeTo(state.duration[3 * i + 1], 300);
           break;
