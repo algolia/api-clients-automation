@@ -11,9 +11,8 @@ post:
     This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
   operationId: pushTask
   externalDocs:
-    url: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/
-    description: |
-      Related guide: Pre-indexing data transformation.
+    url: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data
+    description: Pre-indexing data transformation.
   x-acl:
     - addObject
     - deleteIndex

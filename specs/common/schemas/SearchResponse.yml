@@ -128,7 +128,7 @@ baseSearchResponse:
       title: redirect
       type: object
       description: |
-        [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/), this this parameter is for internal use only.
+        [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects), this this parameter is for internal use only.
       properties:
         index:
           type: array
@@ -148,7 +148,7 @@ baseSearchResponse:
       $ref: './IndexSettings.yml#/userData'
     queryID:
       type: string
-      description: Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+      description: Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
       example: 'a00dbc80a8d13c4565a442e7e2dca80a'
     _automaticInsights:
       type: boolean

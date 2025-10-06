@@ -9,10 +9,10 @@ post:
     - search
   summary: Search an index
   description: |
-    Searches a single index and returns matching search results (_hits_).
+    Searches a single index and returns matching search results as hits.
 
     This method lets you retrieve up to 1,000 hits.
-    If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+    If you need more, use the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse) or increase the `paginatedLimitedTo` index setting.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
