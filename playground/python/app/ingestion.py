@@ -7,10 +7,13 @@ from dotenv import load_dotenv
 
 load_dotenv("../.env")
 
+
 async def main():
     print("IngestionClient version", __version__)
 
-    client = IngestionClient(environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY"), "eu")
+    client = IngestionClient(
+        environ.get("ALGOLIA_APPLICATION_ID"), environ.get("ALGOLIA_ADMIN_KEY"), "eu"
+    )
 
     print("client initialized", client)
 

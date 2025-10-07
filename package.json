@@ -18,7 +18,6 @@
     "cli": "yarn workspace scripts start",
     "docker:setup": "./scripts/docker/setup.sh",
     "fix:json": "eslint --ext=json . --fix",
-    "fix:mustache": "eslint --ext=mustache templates/**/tests/ --fix",
     "github-actions:lint": "eslint --ext=yml .github/",
     "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build",
     "playground:browser": "yarn workspace javascript-browser-playground start",
@@ -31,22 +30,21 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.22.0",
+    "@openapitools/openapi-generator-cli": "2.24.0",
     "@redocly/cli": "1.29.0",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
-    "eslint-plugin-yml": "1.18.0",
+    "eslint-plugin-yml": "1.19.0",
     "husky": "9.1.7",
-    "lint-staged": "16.2.0",
-    "oxlint": "1.16.0",
+    "lint-staged": "16.2.3",
+    "oxlint": "1.20.0",
     "prettier": "3.6.2",
-    "prettier-plugin-java": "2.7.4",
+    "prettier-plugin-java": "2.7.5",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
-    "typescript": "5.9.2"
+    "typescript": "5.9.3"
   },
-  "packageManager": "yarn@4.10.0",
   "engines": {
     "node": "^22.0.0",
     "yarn": "^4.0.0"

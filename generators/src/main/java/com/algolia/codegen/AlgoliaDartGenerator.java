@@ -47,7 +47,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       packageFolder = libName;
       setPubDescription(
         "A Dart package for Algolia. Enables seamless integration for instant search, typo" +
-        " tolerance & user insights, and more, in Dart/Flutter apps."
+          " tolerance & user insights, and more, in Dart/Flutter apps."
       );
     } else {
       String packageName = client.replace("-", "_");
@@ -56,9 +56,9 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
       setApiNameSuffix(Helpers.API_SUFFIX);
       setPubDescription(
         "A sub-package of the AlgoliaSearch library, offering " +
-        client.replace("-", " ") +
-        "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
-        " apps."
+          client.replace("-", " ") +
+          "-specific functionalities for enhanced search and discovery in Dart/Flutter" +
+          " apps."
       );
     }
     setPubName(libName);

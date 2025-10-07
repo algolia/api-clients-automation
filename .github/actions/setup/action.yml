@@ -19,14 +19,14 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4.7.1
+      uses: actions/setup-java@v5
       with:
         distribution: zulu
         java-version-file: config/.java-version
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
-      uses: gradle/actions/setup-gradle@v4.4.3
+      uses: gradle/actions/setup-gradle@v5.0.0
       with:
         validate-wrappers: true
         add-job-summary: 'on-failure'
@@ -34,7 +34,7 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.28.0/google-java-format-1.28.0-all-deps.jar" > /tmp/java-formatter.jar
+      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.29.0/google-java-format-1.29.0-all-deps.jar" > /tmp/java-formatter.jar
 
     # JavaScript for monorepo and tooling
     - name: Install Node
@@ -202,11 +202,11 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.57.2" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.58.3" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: nicklockwood/SwiftFormat
         ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}

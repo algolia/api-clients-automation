@@ -104,17 +104,17 @@ public class TestsRequest extends TestsGenerator {
 
         throw new CTSException(
           "operationId '" +
-          operationId +
-          "' does not exist in the " +
-          client +
-          " tests suite, please create the file:" +
-          " 'tests/CTS/requests/" +
-          client +
-          "/" +
-          operationId +
-          ".json'.\n" +
-          "You can read more on the documentation:" +
-          " https://api-clients-automation.netlify.app/docs/testing/common-test-suite"
+            operationId +
+            "' does not exist in the " +
+            client +
+            " tests suite, please create the file:" +
+            " 'tests/CTS/requests/" +
+            client +
+            "/" +
+            operationId +
+            ".json'.\n" +
+            "You can read more on the documentation:" +
+            " https://api-clients-automation.netlify.app/docs/testing/common-test-suite"
         );
       }
       Request[] op = cts.get(operationId);
@@ -126,10 +126,10 @@ public class TestsRequest extends TestsGenerator {
         if (req.skipLanguages != null && req.skipLanguages.contains(language)) {
           System.out.println(
             "Skipping request test " +
-            (req.testName == null ? operationId : req.testName) +
-            " for language " +
-            language +
-            ", please fix this"
+              (req.testName == null ? operationId : req.testName) +
+              " for language " +
+              language +
+              ", please fix this"
           );
           continue;
         }

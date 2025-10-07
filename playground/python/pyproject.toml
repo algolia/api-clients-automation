@@ -11,8 +11,8 @@ repository = "https://github.com/algolia/api-clients-automation"
 [tool.poetry.dependencies]
 python = ">= 3.8.1"
 algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
-ruff = "== 0.11.7"
-pyright = "== 1.1.391"
+ruff = "== 0.13.3"
+pyright = "== 1.1.406"
 python-dotenv = "== 1.0.1"
 
 [tool.poetry.scripts]
