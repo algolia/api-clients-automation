@@ -396,19 +396,19 @@ public class ParametersWithDataType {
         } else {
           throw new CTSException(
             "Parameter '" +
-            entry.getKey() +
-            "' not found in '" +
-            paramName +
-            "'. Available properties are: " +
-            spec
-              .getVars()
-              .stream()
-              .map(v -> v.baseName)
-              .collect(Collectors.joining(", ")) +
-            (spec.getAdditionalPropertiesIsAnyType() ? " (and any additional properties)" : "") +
-            ". Or you might have a type conflict in the spec for '" +
-            baseType +
-            "'"
+              entry.getKey() +
+              "' not found in '" +
+              paramName +
+              "'. Available properties are: " +
+              spec
+                .getVars()
+                .stream()
+                .map(v -> v.baseName)
+                .collect(Collectors.joining(", ")) +
+              (spec.getAdditionalPropertiesIsAnyType() ? " (and any additional properties)" : "") +
+              ". Or you might have a type conflict in the spec for '" +
+              baseType +
+              "'"
           );
         }
       } else {
