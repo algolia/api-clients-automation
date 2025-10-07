@@ -133,5 +133,4 @@ class RecommendTest extends AnyFunSuite {
       assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
-
 }

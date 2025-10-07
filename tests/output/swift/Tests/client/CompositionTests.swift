@@ -41,8 +41,8 @@ final class CompositionClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [RetryableHost(url: URL(string: "http://" +
-                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6678"
-            )!)],
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6678")!)],
             compression: .gzip
         )
         let transporter = Transporter(configuration: configuration)
@@ -99,8 +99,8 @@ final class CompositionClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [RetryableHost(url: URL(string: "http://" +
-                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6683"
-            )!)]
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = CompositionClient(configuration: configuration, transporter: transporter)

@@ -1,5 +1,6 @@
-import type { Rule } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { Rule } from 'algoliasearch';
 
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

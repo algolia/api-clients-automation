@@ -4,6 +4,7 @@ from algoliasearch.search.client import SearchClientSync
 # You need an API key with `deleteIndex`
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
+
 # List all indices
 indices = _client.list_indices()
 

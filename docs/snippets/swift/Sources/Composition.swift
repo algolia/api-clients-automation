@@ -901,7 +901,8 @@ final class CompositionClientSnippet {
                 objectID: "rule-with-deduplication",
                 conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                    main: CompositionMain(
+                        source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
                     ),
                     injectedItems: [InjectedItem(
                         key: "my-unique-injected-item-key",

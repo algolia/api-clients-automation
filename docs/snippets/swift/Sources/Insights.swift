@@ -365,8 +365,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client
-            .pushEvents(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEvents(insightsEvents: InsightsEvents(events: [EventsItems
                     .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
                         eventName: "Product Clicked",
                         eventType: ClickEvent.click,
@@ -377,8 +376,7 @@ final class InsightsClientSnippet {
                         userToken: "user-123456",
                         authenticatedUserToken: "user-123456",
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -427,8 +425,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client
-            .pushEvents(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEvents(insightsEvents: InsightsEvents(events: [EventsItems
                     .convertedObjectIDsAfterSearch(ConvertedObjectIDsAfterSearch(
                         eventName: "Product Purchased",
                         eventType: ConversionEvent.conversion,
@@ -438,8 +435,7 @@ final class InsightsClientSnippet {
                         userToken: "user-123456",
                         authenticatedUserToken: "user-123456",
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -477,8 +473,7 @@ final class InsightsClientSnippet {
 
         // Call the API
         let response = try await client
-            .pushEvents(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEvents(insightsEvents: InsightsEvents(events: [EventsItems
                     .addedToCartObjectIDsAfterSearch(AddedToCartObjectIDsAfterSearch(
                         eventName: "Product Added To Cart",
                         eventType: ConversionEvent.conversion,
@@ -502,8 +497,7 @@ final class InsightsClientSnippet {
                             ),
                         ],
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }

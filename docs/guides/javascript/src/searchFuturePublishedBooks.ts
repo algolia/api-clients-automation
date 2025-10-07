@@ -1,5 +1,6 @@
-import type { SearchParams } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { SearchParams } from 'algoliasearch';
 
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

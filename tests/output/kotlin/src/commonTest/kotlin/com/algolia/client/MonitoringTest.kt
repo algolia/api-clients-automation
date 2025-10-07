@@ -14,17 +14,17 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class MonitoringTest {
 
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Monitoring (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -37,11 +37,10 @@ class MonitoringTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = MonitoringClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -56,9 +55,7 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "my-app-id", apiKey = "my-api-key")
     client.runTest(
       call = {
-        customDelete(
-          path = "test",
-        )
+        customDelete(path = "test")
       },
       intercept = {
         assertEquals("status.algolia.com", it.url.host)
@@ -71,9 +68,7 @@ class MonitoringTest {
     val client = MonitoringClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -81,20 +76,18 @@ class MonitoringTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

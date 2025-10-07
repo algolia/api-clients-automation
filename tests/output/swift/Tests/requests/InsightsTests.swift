@@ -303,8 +303,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -444,8 +443,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -528,8 +526,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -571,8 +568,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -614,8 +610,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -723,8 +718,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [EventsItems
                     .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
                         eventName: "Product Clicked",
                         eventType: ClickEvent.click,
@@ -735,8 +729,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                         userToken: "user-123456",
                         authenticatedUserToken: "user-123456",
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -815,8 +808,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [EventsItems
                     .convertedObjectIDsAfterSearch(ConvertedObjectIDsAfterSearch(
                         eventName: "Product Purchased",
                         eventType: ConversionEvent.conversion,
@@ -826,8 +818,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                         userToken: "user-123456",
                         authenticatedUserToken: "user-123456",
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -895,8 +886,7 @@ final class InsightsClientRequestsTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [EventsItems
                     .addedToCartObjectIDsAfterSearch(AddedToCartObjectIDsAfterSearch(
                         eventName: "Product Added To Cart",
                         eventType: ConversionEvent.conversion,
@@ -920,8 +910,7 @@ final class InsightsClientRequestsTests: XCTestCase {
                             ),
                         ],
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

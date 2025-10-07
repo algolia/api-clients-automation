@@ -5,6 +5,7 @@ import com.algolia.client.api.CompositionClient
 import com.algolia.client.configuration.*
 import com.algolia.client.extensions.*
 import com.algolia.client.model.composition.*
+import com.algolia.client.model.composition.RequestBody
 import com.algolia.client.transport.*
 import com.algolia.utils.*
 import io.ktor.http.*
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class CompositionTest {
 
@@ -22,9 +24,7 @@ class CompositionTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        customGet(
-          path = "test",
-        )
+        customGet(path = "test")
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -37,9 +37,7 @@ class CompositionTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        customPost(
-          path = "test",
-        )
+        customPost(path = "test")
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
@@ -56,10 +54,7 @@ class CompositionTest {
           path = "1/test/gzip",
           parameters = mapOf(),
           body = buildJsonObject {
-            put(
-              "message",
-              JsonPrimitive("this is a compressed body"),
-            )
+            put("message", JsonPrimitive("this is a compressed body"))
           },
         )
       },
@@ -74,11 +69,10 @@ class CompositionTest {
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = CompositionClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Composition (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -91,11 +85,10 @@ class CompositionTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = CompositionClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -110,9 +103,7 @@ class CompositionTest {
     val client = CompositionClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -120,20 +111,18 @@ class CompositionTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

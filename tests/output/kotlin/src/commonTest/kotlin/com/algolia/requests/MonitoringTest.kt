@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class MonitoringTest {
 
@@ -24,9 +25,7 @@ class MonitoringTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -40,10 +39,7 @@ class MonitoringTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -60,9 +56,7 @@ class MonitoringTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -76,10 +70,7 @@ class MonitoringTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -124,9 +115,7 @@ class MonitoringTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -144,10 +133,7 @@ class MonitoringTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -168,10 +154,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -197,10 +180,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -226,10 +206,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -256,10 +233,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -286,10 +260,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -315,10 +286,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -344,10 +312,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -373,10 +338,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -402,10 +364,7 @@ class MonitoringTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -429,9 +388,7 @@ class MonitoringTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -449,10 +406,7 @@ class MonitoringTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -471,9 +425,7 @@ class MonitoringTest {
   fun `getClusterIncidents`() = runTest {
     client.runTest(
       call = {
-        getClusterIncidents(
-          clusters = "c1-de",
-        )
+        getClusterIncidents(clusters = "c1-de")
       },
       intercept = {
         assertEquals("/1/incidents/c1-de".toPathSegments(), it.url.pathSegments)
@@ -489,9 +441,7 @@ class MonitoringTest {
   fun `getClusterStatus`() = runTest {
     client.runTest(
       call = {
-        getClusterStatus(
-          clusters = "c1-de",
-        )
+        getClusterStatus(clusters = "c1-de")
       },
       intercept = {
         assertEquals("/1/status/c1-de".toPathSegments(), it.url.pathSegments)
@@ -523,9 +473,7 @@ class MonitoringTest {
   fun `getIndexingTime`() = runTest {
     client.runTest(
       call = {
-        getIndexingTime(
-          clusters = "c1-de",
-        )
+        getIndexingTime(clusters = "c1-de")
       },
       intercept = {
         assertEquals("/1/indexing/c1-de".toPathSegments(), it.url.pathSegments)
@@ -541,9 +489,7 @@ class MonitoringTest {
   fun `getLatency`() = runTest {
     client.runTest(
       call = {
-        getLatency(
-          clusters = "c1-de",
-        )
+        getLatency(clusters = "c1-de")
       },
       intercept = {
         assertEquals("/1/latency/c1-de".toPathSegments(), it.url.pathSegments)
@@ -559,10 +505,7 @@ class MonitoringTest {
   fun `getMetrics`() = runTest {
     client.runTest(
       call = {
-        getMetrics(
-          metric = Metric.entries.first { it.value == "avg_build_time" },
-          period = Period.entries.first { it.value == "minute" },
-        )
+        getMetrics(metric = Metric.entries.first { it.value == "avg_build_time" }, period = Period.entries.first { it.value == "minute" })
       },
       intercept = {
         assertEquals("/1/infrastructure/avg_build_time/period/minute".toPathSegments(), it.url.pathSegments)
@@ -578,9 +521,7 @@ class MonitoringTest {
   fun `getReachability`() = runTest {
     client.runTest(
       call = {
-        getReachability(
-          clusters = "c1-de",
-        )
+        getReachability(clusters = "c1-de")
       },
       intercept = {
         assertEquals("/1/reachability/c1-de/probes".toPathSegments(), it.url.pathSegments)

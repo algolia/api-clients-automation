@@ -58,5 +58,4 @@ class SearchTest extends AnyFunSuite {
       )
     }
   }
-
 }

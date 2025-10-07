@@ -7,6 +7,7 @@ _client = IngestionClientSync(
     "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
 )
 
+
 with open("records.json") as f:
     records = json.load(f)
 

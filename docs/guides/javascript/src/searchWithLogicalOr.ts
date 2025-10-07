@@ -1,5 +1,6 @@
-import type { OptionalWords, SearchParamsObject } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { OptionalWords, SearchParamsObject } from 'algoliasearch';
 
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 const query = 'the query';

@@ -2,11 +2,11 @@ package org.example
 import com.algolia.client.api.IngestionClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
-
 import com.algolia.client.model.ingestion.*
 
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import java.io.File
 
 suspend fun main() {

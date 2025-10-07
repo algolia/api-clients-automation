@@ -18,8 +18,5 @@ suspend fun searchWithRuleContexts() {
     ruleContexts = listOf(platformTag),
   )
 
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

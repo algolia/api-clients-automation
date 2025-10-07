@@ -14,17 +14,17 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AnalyticsTest {
 
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Analytics (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -37,11 +37,10 @@ class AnalyticsTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -56,9 +55,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key")
     client.runTest(
       call = {
-        getAverageClickPosition(
-          index = "my-index",
-        )
+        getAverageClickPosition(index = "my-index")
       },
       intercept = {
         assertEquals("analytics.algolia.com", it.url.host)
@@ -71,9 +68,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key", "de")
     client.runTest(
       call = {
-        customPost(
-          path = "test",
-        )
+        customPost(path = "test")
       },
       intercept = {
         assertEquals("analytics.de.algolia.com", it.url.host)
@@ -91,10 +86,9 @@ class AnalyticsTest {
   @Test
   fun `getAverageClickPosition throws without index`() = runTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     assertFails {
-      client.getClickPositions(
-        index = empty(),
-      )
+      client.getClickPositions(index = empty())
     }.let { error -> assertError(error, "Parameter `index` is required when calling `getClickPositions`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
@@ -103,9 +97,7 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -113,20 +105,18 @@ class AnalyticsTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

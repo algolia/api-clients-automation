@@ -5,7 +5,6 @@ import java.time.{Instant, LocalDateTime, ZoneOffset}
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.search.SearchParamsObject
 
 def searchRecentlyPublishedBooks(): Future[Unit] = {

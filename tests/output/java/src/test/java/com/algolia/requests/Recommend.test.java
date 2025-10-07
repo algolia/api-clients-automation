@@ -756,7 +756,7 @@ class RecommendClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"indexName\":\"cts_e2e_browse\",\"objectID\":\"Æon" +
-        " Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}",
+          " Flux\",\"model\":\"related-products\",\"threshold\":20.0,\"maxRecommendations\":2}]}",
         req.body,
         JSONCompareMode.STRICT
       )

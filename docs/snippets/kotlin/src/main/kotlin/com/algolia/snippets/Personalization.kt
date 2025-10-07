@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.PersonalizationClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
-
 // IMPORT<
 import com.algolia.client.model.personalization.*
 import kotlinx.serialization.json.*
@@ -18,9 +17,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/minimal",
-    )
+    var response = client.customDelete(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -36,10 +33,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters"),
-    )
+    var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
     // Use the response
@@ -55,9 +49,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/minimal",
-    )
+    var response = client.customGet(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -73,10 +65,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters with space"),
-    )
+    var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
     // Use the response
@@ -120,9 +109,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPost(
-      path = "test/minimal",
-    )
+    var response = client.customPost(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -142,10 +129,7 @@ class SnippetPersonalizationClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -167,10 +151,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -197,10 +178,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -227,10 +205,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -257,10 +232,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -287,10 +259,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -317,10 +286,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -347,10 +313,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -377,10 +340,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -407,10 +367,7 @@ class SnippetPersonalizationClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -433,9 +390,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPut(
-      path = "test/minimal",
-    )
+    var response = client.customPut(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -455,10 +410,7 @@ class SnippetPersonalizationClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -476,9 +428,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteUserProfile(
-      userToken = "UserToken",
-    )
+    var response = client.deleteUserProfile(userToken = "UserToken")
 
     // >LOG
     // Use the response
@@ -510,9 +460,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getUserTokenProfile(
-      userToken = "UserToken",
-    )
+    var response = client.getUserTokenProfile(userToken = "UserToken")
 
     // >LOG
     // Use the response
@@ -528,9 +476,7 @@ class SnippetPersonalizationClient {
     val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    client.setClientApiKey(
-      apiKey = "updated-api-key",
-    )
+    client.setClientApiKey(apiKey = "updated-api-key")
 
     // >LOG
     // SEPARATOR<

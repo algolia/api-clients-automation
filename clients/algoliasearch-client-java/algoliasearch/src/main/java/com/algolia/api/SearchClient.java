@@ -6675,12 +6675,12 @@ public class SearchClient extends ApiClient {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
     return searchAsync(params, innerType).thenApply(searchResponses ->
-        searchResponses
-          .getResults()
-          .stream()
-          .map(res -> (SearchResponse<T>) res)
-          .collect(Collectors.toList())
-      );
+      searchResponses
+        .getResults()
+        .stream()
+        .map(res -> (SearchResponse<T>) res)
+        .collect(Collectors.toList())
+    );
   }
 
   /**
@@ -6760,12 +6760,12 @@ public class SearchClient extends ApiClient {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
     return searchAsync(params, Hit.class).thenApply(searchResponses ->
-        searchResponses
-          .getResults()
-          .stream()
-          .map(res -> (SearchForFacetValuesResponse) res)
-          .collect(Collectors.toList())
-      );
+      searchResponses
+        .getResults()
+        .stream()
+        .map(res -> (SearchForFacetValuesResponse) res)
+        .collect(Collectors.toList())
+    );
   }
 
   /**

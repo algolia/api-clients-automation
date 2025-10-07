@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class IngestionTest {
 
@@ -378,9 +379,7 @@ class IngestionTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -394,10 +393,7 @@ class IngestionTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -414,9 +410,7 @@ class IngestionTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -430,10 +424,7 @@ class IngestionTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -478,9 +469,7 @@ class IngestionTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -498,10 +487,7 @@ class IngestionTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -522,10 +508,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -551,10 +534,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -580,10 +560,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -610,10 +587,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -640,10 +614,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -669,10 +640,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -698,10 +666,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -727,10 +692,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -756,10 +718,7 @@ class IngestionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -783,9 +742,7 @@ class IngestionTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -803,10 +760,7 @@ class IngestionTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -825,9 +779,7 @@ class IngestionTest {
   fun `deleteAuthentication`() = runTest {
     client.runTest(
       call = {
-        deleteAuthentication(
-          authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -843,9 +795,7 @@ class IngestionTest {
   fun `deleteDestination`() = runTest {
     client.runTest(
       call = {
-        deleteDestination(
-          destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -861,9 +811,7 @@ class IngestionTest {
   fun `deleteSource`() = runTest {
     client.runTest(
       call = {
-        deleteSource(
-          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -879,9 +827,7 @@ class IngestionTest {
   fun `deleteTask`() = runTest {
     client.runTest(
       call = {
-        deleteTask(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -897,9 +843,7 @@ class IngestionTest {
   fun `deleteTaskV1`() = runTest {
     client.runTest(
       call = {
-        deleteTaskV1(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -915,9 +859,7 @@ class IngestionTest {
   fun `deleteTransformation`() = runTest {
     client.runTest(
       call = {
-        deleteTransformation(
-          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        deleteTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -933,9 +875,7 @@ class IngestionTest {
   fun `disableTask`() = runTest {
     client.runTest(
       call = {
-        disableTask(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        disableTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable".toPathSegments(), it.url.pathSegments)
@@ -951,9 +891,7 @@ class IngestionTest {
   fun `disableTaskV1`() = runTest {
     client.runTest(
       call = {
-        disableTaskV1(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        disableTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable".toPathSegments(), it.url.pathSegments)
@@ -969,9 +907,7 @@ class IngestionTest {
   fun `enableTask`() = runTest {
     client.runTest(
       call = {
-        enableTask(
-          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-        )
+        enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
       },
       intercept = {
         assertEquals("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable".toPathSegments(), it.url.pathSegments)
@@ -987,9 +923,7 @@ class IngestionTest {
   fun `enableTaskV1`() = runTest {
     client.runTest(
       call = {
-        enableTaskV1(
-          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-        )
+        enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
       },
       intercept = {
         assertEquals("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable".toPathSegments(), it.url.pathSegments)
@@ -1005,9 +939,7 @@ class IngestionTest {
   fun `getAuthentication`() = runTest {
     client.runTest(
       call = {
-        getAuthentication(
-          authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1023,9 +955,7 @@ class IngestionTest {
   fun `getDestination`() = runTest {
     client.runTest(
       call = {
-        getDestination(
-          destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1041,10 +971,7 @@ class IngestionTest {
   fun `getEvent`() = runTest {
     client.runTest(
       call = {
-        getEvent(
-          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-        )
+        getEvent(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f", eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
       },
       intercept = {
         assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c".toPathSegments(), it.url.pathSegments)
@@ -1060,9 +987,7 @@ class IngestionTest {
   fun `getRun`() = runTest {
     client.runTest(
       call = {
-        getRun(
-          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getRun(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1078,9 +1003,7 @@ class IngestionTest {
   fun `getSource`() = runTest {
     client.runTest(
       call = {
-        getSource(
-          sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-        )
+        getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
       },
       intercept = {
         assertEquals("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac".toPathSegments(), it.url.pathSegments)
@@ -1096,9 +1019,7 @@ class IngestionTest {
   fun `getTask`() = runTest {
     client.runTest(
       call = {
-        getTask(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1114,9 +1035,7 @@ class IngestionTest {
   fun `getTaskV1`() = runTest {
     client.runTest(
       call = {
-        getTaskV1(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1132,9 +1051,7 @@ class IngestionTest {
   fun `getTransformation`() = runTest {
     client.runTest(
       call = {
-        getTransformation(
-          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
@@ -1164,14 +1081,7 @@ class IngestionTest {
   fun `getAuthentications with query params1`() = runTest {
     client.runTest(
       call = {
-        listAuthentications(
-          itemsPerPage = 2,
-          page = 1,
-          type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
-          platform = listOf(PlatformNone.entries.first { it.value == "none" }),
-          sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
-          order = OrderKeys.entries.first { it.value == "asc" },
-        )
+        listAuthentications(itemsPerPage = 2, page = 1, type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }), platform = listOf(PlatformNone.entries.first { it.value == "none" }), sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" }, order = OrderKeys.entries.first { it.value == "asc" })
       },
       intercept = {
         assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
@@ -1204,9 +1114,7 @@ class IngestionTest {
   fun `getEvents`() = runTest {
     client.runTest(
       call = {
-        listEvents(
-          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        listEvents(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events".toPathSegments(), it.url.pathSegments)
@@ -1300,13 +1208,7 @@ class IngestionTest {
   fun `list with every parameters1`() = runTest {
     client.runTest(
       call = {
-        listTransformations(
-          itemsPerPage = 2,
-          page = 1,
-          sort = TransformationSortKeys.entries.first { it.value == "createdAt" },
-          order = OrderKeys.entries.first { it.value == "asc" },
-          type = TransformationType.entries.first { it.value == "noCode" },
-        )
+        listTransformations(itemsPerPage = 2, page = 1, sort = TransformationSortKeys.entries.first { it.value == "createdAt" }, order = OrderKeys.entries.first { it.value == "asc" }, type = TransformationType.entries.first { it.value == "noCode" })
       },
       intercept = {
         assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
@@ -1575,9 +1477,7 @@ class IngestionTest {
   fun `runTask`() = runTest {
     client.runTest(
       call = {
-        runTask(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        runTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
@@ -1593,9 +1493,7 @@ class IngestionTest {
   fun `runTaskV1`() = runTest {
     client.runTest(
       call = {
-        runTaskV1(
-          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        runTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run".toPathSegments(), it.url.pathSegments)
@@ -1731,9 +1629,7 @@ class IngestionTest {
   fun `triggerDockerSourceDiscover`() = runTest {
     client.runTest(
       call = {
-        triggerDockerSourceDiscover(
-          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        triggerDockerSourceDiscover(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover".toPathSegments(), it.url.pathSegments)
@@ -1756,10 +1652,7 @@ class IngestionTest {
               code = "foo",
             ),
             sampleRecord = buildJsonObject {
-              put(
-                "bar",
-                JsonPrimitive("baz"),
-              )
+              put("bar", JsonPrimitive("baz"))
             },
           ),
         )
@@ -1783,10 +1676,7 @@ class IngestionTest {
               code = "foo",
             ),
             sampleRecord = buildJsonObject {
-              put(
-                "bar",
-                JsonPrimitive("baz"),
-              )
+              put("bar", JsonPrimitive("baz"))
             },
             authentications = listOf(
               AuthenticationCreate(
@@ -1824,10 +1714,7 @@ class IngestionTest {
               code = "foo",
             ),
             sampleRecord = buildJsonObject {
-              put(
-                "bar",
-                JsonPrimitive("baz"),
-              )
+              put("bar", JsonPrimitive("baz"))
             },
           ),
         )
@@ -1852,10 +1739,7 @@ class IngestionTest {
               code = "foo",
             ),
             sampleRecord = buildJsonObject {
-              put(
-                "bar",
-                JsonPrimitive("baz"),
-              )
+              put("bar", JsonPrimitive("baz"))
             },
             authentications = listOf(
               AuthenticationCreate(

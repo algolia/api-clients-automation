@@ -75,7 +75,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"acl\":[\"search\",\"addObject\"],\"description\":\"my new api" +
-        " key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",
+          " key\",\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -175,29 +175,29 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.ADD_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "bar");
-                      put("foo", "1");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "bar");
+                    put("foo", "1");
                   }
-                ),
-              new BatchRequest()
-                .setAction(Action.ADD_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "baz");
-                      put("foo", "2");
-                    }
+                }
+              ),
+            new BatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "baz");
+                    put("foo", "2");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -219,18 +219,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.CLEAR)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.CLEAR)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -248,18 +248,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.DELETE)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.DELETE)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -277,18 +277,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.DELETE_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.DELETE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -310,18 +310,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.PARTIAL_UPDATE_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.PARTIAL_UPDATE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -343,18 +343,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -376,18 +376,18 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(
-            Arrays.asList(
-              new BatchRequest()
-                .setAction(Action.UPDATE_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new BatchRequest()
+              .setAction(Action.UPDATE_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-            )
+                }
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1760,19 +1760,19 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.multipleBatch(
         new BatchParams().setRequests(
-            Arrays.asList(
-              new MultipleBatchRequest()
-                .setAction(Action.ADD_OBJECT)
-                .setBody(
-                  new HashMap() {
-                    {
-                      put("key", "value");
-                    }
+          Arrays.asList(
+            new MultipleBatchRequest()
+              .setAction(Action.ADD_OBJECT)
+              .setBody(
+                new HashMap() {
+                  {
+                    put("key", "value");
                   }
-                )
-                .setIndexName("theIndexName")
-            )
+                }
+              )
+              .setIndexName("theIndexName")
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2102,7 +2102,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"name\":\"Black" +
-        " T-shirt\",\"color\":\"#000000||black\",\"availableIn\":\"https://source.unsplash.com/100x100/?paris||Paris\",\"objectID\":\"myID\"}",
+          " T-shirt\",\"color\":\"#000000||black\",\"availableIn\":\"https://source.unsplash.com/100x100/?paris||Paris\",\"objectID\":\"myID\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2270,7 +2270,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"director-rule\",\"conditions\":[{\"pattern\":\"{facet:director}" +
-        " director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}",
+          " director\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"restrictSearchableAttributes\":[\"title\",\"book_id\"],\"automaticFacetFilters\":[{\"facet\":\"director\"}],\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"director\"}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2289,12 +2289,12 @@ class SearchClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setPattern("harry potter").setAnchoring(Anchoring.CONTAINS)))
           .setConsequence(
             new Consequence().setUserData(
-                new HashMap() {
-                  {
-                    put("promo_content", "20% OFF on all Harry Potter books!");
-                  }
+              new HashMap() {
+                {
+                  put("promo_content", "20% OFF on all Harry Potter books!");
                 }
-              )
+              }
+            )
           )
       );
     });
@@ -2304,8 +2304,8 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"harry-potter-rule\",\"conditions\":[{\"pattern\":\"harry" +
-        " potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20%" +
-        " OFF on all Harry Potter books!\"}}}",
+          " potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"userData\":{\"promo_content\":\"20%" +
+          " OFF on all Harry Potter books!\"}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2349,12 +2349,12 @@ class SearchClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setPattern("help").setAnchoring(Anchoring.CONTAINS)))
           .setConsequence(
             new Consequence().setUserData(
-                new HashMap() {
-                  {
-                    put("redirect", "https://www.algolia.com/support");
-                  }
+              new HashMap() {
+                {
+                  put("redirect", "https://www.algolia.com/support");
                 }
-              )
+              }
+            )
           )
       );
     });
@@ -2468,7 +2468,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"promote-harry-potter-box-set\",\"conditions\":[{\"pattern\":\"Harry" +
-        " Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}",
+          " Potter\",\"anchoring\":\"contains\"}],\"consequence\":{\"promote\":[{\"objectID\":\"HP-12345\",\"position\":0}]}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2536,8 +2536,8 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"conditions\":[{\"pattern\":\"brand:" +
-        " {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter" +
-        " on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}",
+          " {facet:brand}\",\"anchoring\":\"contains\",\"alternatives\":false}],\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"brand\"}],\"query\":{\"remove\":[\"brand:\",\"{facet:brand}\"]}}},\"description\":\"filter" +
+          " on brand: {brand}\",\"objectID\":\"tagged-brand-rule\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2652,7 +2652,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price" +
-        " < 10\"}}}",
+          " < 10\"}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2686,7 +2686,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"gluten-free-rule\",\"conditions\":[{\"pattern\":\"gluten-free\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"NOT" +
-        " allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}",
+          " allergens:gluten\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"gluten-free\"}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2718,7 +2718,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"diet-rule\",\"conditions\":[{\"pattern\":\"diet\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"filters\":\"'low-carb'" +
-        " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
+          " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2749,7 +2749,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb'" +
-        " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
+          " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2775,7 +2775,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"a-rule-id\",\"conditions\":[{\"context\":\"mobile\"}],\"consequence\":{\"params\":{\"filters\":\"release_date" +
-        " >= 1577836800\"}}}",
+          " >= 1577836800\"}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2994,7 +2994,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "[{\"objectID\":\"toaster\",\"conditions\":[{\"pattern\":\"toaster\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"toaster\"]},\"filters\":\"product_type:toaster\"}}},{\"objectID\":\"cheap\",\"conditions\":[{\"pattern\":\"cheap\",\"anchoring\":\"contains\"}],\"consequence\":{\"params\":{\"query\":{\"remove\":[\"cheap\"]},\"filters\":\"price" +
-        " < 15\"}}}]",
+          " < 15\"}}}]",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -3184,7 +3184,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom" +
-        " Cruise OR actor:Scarlett Johansson\"}]}",
+          " Cruise OR actor:Scarlett Johansson\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -3571,11 +3571,11 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"filters\":\"editor:'visual" +
-        " studio' OR" +
-        " editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
-        " studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
-        " studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
-        " studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}",
+          " studio' OR" +
+          " editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
+          " studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
+          " studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual" +
+          " studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -3588,104 +3588,104 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams().setRequests(
-            Arrays.asList(
-              new SearchForHits()
-                .setAdvancedSyntax(true)
-                .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
-                .setAllowTyposOnNumericTokens(true)
-                .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM))
-                .setAnalytics(true)
-                .setAnalyticsTags(Arrays.asList(""))
-                .setAroundLatLng("")
-                .setAroundLatLngViaIP(true)
-                .setAroundPrecision(AroundPrecision.of(0))
-                .setAroundRadius(AroundRadiusAll.ALL)
-                .setAttributeCriteriaComputedByMinProximity(true)
-                .setAttributesToHighlight(Arrays.asList(""))
-                .setAttributesToRetrieve(Arrays.asList(""))
-                .setAttributesToSnippet(Arrays.asList(""))
-                .setClickAnalytics(true)
-                .setDecompoundQuery(true)
-                .setDisableExactOnAttributes(Arrays.asList(""))
-                .setDisableTypoToleranceOnAttributes(Arrays.asList(""))
-                .setDistinct(Distinct.of(0))
-                .setEnableABTest(true)
-                .setEnablePersonalization(true)
-                .setEnableReRanking(true)
-                .setEnableRules(true)
-                .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
-                .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(""))))
-                .setFacetingAfterDistinct(true)
-                .setFacets(Arrays.asList(""))
-                .setFilters("")
-                .setGetRankingInfo(true)
-                .setHighlightPostTag("")
-                .setHighlightPreTag("")
-                .setHitsPerPage(1)
-                .setIgnorePlurals(IgnorePlurals.of(false))
-                .setIndexName("theIndexName")
-                .setInsideBoundingBox(
-                  InsideBoundingBox.of(
-                    Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
-                  )
+          Arrays.asList(
+            new SearchForHits()
+              .setAdvancedSyntax(true)
+              .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
+              .setAllowTyposOnNumericTokens(true)
+              .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM))
+              .setAnalytics(true)
+              .setAnalyticsTags(Arrays.asList(""))
+              .setAroundLatLng("")
+              .setAroundLatLngViaIP(true)
+              .setAroundPrecision(AroundPrecision.of(0))
+              .setAroundRadius(AroundRadiusAll.ALL)
+              .setAttributeCriteriaComputedByMinProximity(true)
+              .setAttributesToHighlight(Arrays.asList(""))
+              .setAttributesToRetrieve(Arrays.asList(""))
+              .setAttributesToSnippet(Arrays.asList(""))
+              .setClickAnalytics(true)
+              .setDecompoundQuery(true)
+              .setDisableExactOnAttributes(Arrays.asList(""))
+              .setDisableTypoToleranceOnAttributes(Arrays.asList(""))
+              .setDistinct(Distinct.of(0))
+              .setEnableABTest(true)
+              .setEnablePersonalization(true)
+              .setEnableReRanking(true)
+              .setEnableRules(true)
+              .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
+              .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(""))))
+              .setFacetingAfterDistinct(true)
+              .setFacets(Arrays.asList(""))
+              .setFilters("")
+              .setGetRankingInfo(true)
+              .setHighlightPostTag("")
+              .setHighlightPreTag("")
+              .setHitsPerPage(1)
+              .setIgnorePlurals(IgnorePlurals.of(false))
+              .setIndexName("theIndexName")
+              .setInsideBoundingBox(
+                InsideBoundingBox.of(
+                  Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
                 )
-                .setInsidePolygon(
-                  Arrays.asList(
-                    Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
-                    Arrays.asList(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
-                  )
+              )
+              .setInsidePolygon(
+                Arrays.asList(
+                  Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
+                  Arrays.asList(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
                 )
-                .setLength(1)
-                .setMaxValuesPerFacet(0)
-                .setMinProximity(1)
-                .setMinWordSizefor1Typo(0)
-                .setMinWordSizefor2Typos(0)
-                .setMinimumAroundRadius(1)
-                .setNaturalLanguages(Arrays.asList(SupportedLanguage.FR))
-                .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
-                .setOffset(0)
-                .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
-                .setOptionalWords(OptionalWords.of(Arrays.asList("")))
-                .setPage(0)
-                .setPercentileComputation(true)
-                .setPersonalizationImpact(0)
-                .setQuery("")
-                .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
-                .setQueryType(QueryType.PREFIX_ALL)
-                .setRanking(Arrays.asList(""))
-                .setReRankingApplyFilter(ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of(""))))
-                .setRelevancyStrictness(0)
-                .setRemoveStopWords(RemoveStopWords.of(true))
-                .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
-                .setRenderingContent(
-                  new RenderingContent().setFacetOrdering(
-                      new FacetOrdering()
-                        .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
-                        .setValues(
-                          new HashMap() {
-                            {
-                              put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
-                            }
-                          }
-                        )
+              )
+              .setLength(1)
+              .setMaxValuesPerFacet(0)
+              .setMinProximity(1)
+              .setMinWordSizefor1Typo(0)
+              .setMinWordSizefor2Typos(0)
+              .setMinimumAroundRadius(1)
+              .setNaturalLanguages(Arrays.asList(SupportedLanguage.FR))
+              .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
+              .setOffset(0)
+              .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
+              .setOptionalWords(OptionalWords.of(Arrays.asList("")))
+              .setPage(0)
+              .setPercentileComputation(true)
+              .setPersonalizationImpact(0)
+              .setQuery("")
+              .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
+              .setQueryType(QueryType.PREFIX_ALL)
+              .setRanking(Arrays.asList(""))
+              .setReRankingApplyFilter(ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of(""))))
+              .setRelevancyStrictness(0)
+              .setRemoveStopWords(RemoveStopWords.of(true))
+              .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
+              .setRenderingContent(
+                new RenderingContent().setFacetOrdering(
+                  new FacetOrdering()
+                    .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+                    .setValues(
+                      new HashMap() {
+                        {
+                          put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
+                        }
+                      }
                     )
                 )
-                .setReplaceSynonymsInHighlight(true)
-                .setResponseFields(Arrays.asList(""))
-                .setRestrictHighlightAndSnippetArrays(true)
-                .setRestrictSearchableAttributes(Arrays.asList(""))
-                .setRuleContexts(Arrays.asList(""))
-                .setSimilarQuery("")
-                .setSnippetEllipsisText("")
-                .setSortFacetValuesBy("")
-                .setSumOrFiltersScores(true)
-                .setSynonyms(true)
-                .setTagFilters(TagFilters.of(Arrays.asList(TagFilters.of(""))))
-                .setType(SearchTypeDefault.DEFAULT)
-                .setTypoTolerance(TypoToleranceEnum.MIN)
-                .setUserToken("")
-            )
-          ),
+              )
+              .setReplaceSynonymsInHighlight(true)
+              .setResponseFields(Arrays.asList(""))
+              .setRestrictHighlightAndSnippetArrays(true)
+              .setRestrictSearchableAttributes(Arrays.asList(""))
+              .setRuleContexts(Arrays.asList(""))
+              .setSimilarQuery("")
+              .setSnippetEllipsisText("")
+              .setSortFacetValuesBy("")
+              .setSumOrFiltersScores(true)
+              .setSynonyms(true)
+              .setTagFilters(TagFilters.of(Arrays.asList(TagFilters.of(""))))
+              .setType(SearchTypeDefault.DEFAULT)
+              .setTypoTolerance(TypoToleranceEnum.MIN)
+              .setUserToken("")
+          )
+        ),
         Hit.class
       );
     });
@@ -3971,7 +3971,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR" +
-        " company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}",
+          " company:Facebook<score=1>)\",\"sumOrFiltersScores\":false}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -3996,7 +3996,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"filters\":\"(company:Google<score=3> OR company:Amazon<score=2> OR" +
-        " company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}",
+          " company:Facebook<score=1>)\",\"sumOrFiltersScores\":true}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -4650,7 +4650,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi" +
-        " Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}",
+          " Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -4741,8 +4741,8 @@ class SearchClientRequestsTests {
           .setQuery("query")
           .setFilters(
             "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published" +
-            " AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND" +
-            " author:\"John Doe\""
+              " AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND" +
+              " author:\"John Doe\""
           ),
         Hit.class
       );
@@ -4753,8 +4753,8 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"query\":\"query\",\"filters\":\"available = 1 AND (category:Book OR NOT" +
-        " category:Ebook) AND _tags:published AND publication_date:1441745506 TO" +
-        " 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}",
+          " category:Ebook) AND _tags:published AND publication_date:1441745506 TO" +
+          " 1441755506 AND inStock > 0 AND author:\\\"John Doe\\\"\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -6111,16 +6111,16 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setDictionarySettings(
         new DictionarySettingsParams().setDisableStandardEntries(
-            new StandardEntries().setPlurals(
-                new HashMap() {
-                  {
-                    put("fr", false);
-                    put("en", false);
-                    put("ru", true);
-                  }
-                }
-              )
+          new StandardEntries().setPlurals(
+            new HashMap() {
+              {
+                put("fr", false);
+                put("en", false);
+                put("ru", true);
+              }
+            }
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -6141,31 +6141,31 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setDictionarySettings(
         new DictionarySettingsParams().setDisableStandardEntries(
-            new StandardEntries()
-              .setPlurals(
-                new HashMap() {
-                  {
-                    put("fr", false);
-                    put("en", false);
-                    put("ru", true);
-                  }
+          new StandardEntries()
+            .setPlurals(
+              new HashMap() {
+                {
+                  put("fr", false);
+                  put("en", false);
+                  put("ru", true);
                 }
-              )
-              .setStopwords(
-                new HashMap() {
-                  {
-                    put("fr", false);
-                  }
+              }
+            )
+            .setStopwords(
+              new HashMap() {
+                {
+                  put("fr", false);
                 }
-              )
-              .setCompounds(
-                new HashMap() {
-                  {
-                    put("ru", true);
-                  }
+              }
+            )
+            .setCompounds(
+              new HashMap() {
+                {
+                  put("ru", true);
                 }
-              )
-          )
+              }
+            )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -7193,16 +7193,16 @@ class SearchClientRequestsTests {
           .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.LAST_WORDS)
           .setRenderingContent(
             new RenderingContent().setFacetOrdering(
-                new FacetOrdering()
-                  .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
-                  .setValues(
-                    new HashMap() {
-                      {
-                        put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
-                      }
+              new FacetOrdering()
+                .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+                .setValues(
+                  new HashMap() {
+                    {
+                      put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
                     }
-                  )
-              )
+                  }
+                )
+            )
           )
           .setReplaceSynonymsInHighlight(true)
           .setReplicas(Arrays.asList(""))
@@ -7895,12 +7895,12 @@ class SearchClientRequestsTests {
       client.setSettings(
         "theIndexName",
         new IndexSettings().setDecompoundedAttributes(
-            new HashMap() {
-              {
-                put("de", Arrays.asList("name"));
-              }
+          new HashMap() {
+            {
+              put("de", Arrays.asList("name"));
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -7916,13 +7916,13 @@ class SearchClientRequestsTests {
       client.setSettings(
         "theIndexName",
         new IndexSettings().setDecompoundedAttributes(
-            new HashMap() {
-              {
-                put("de", Arrays.asList("name_de", "description_de"));
-                put("fi", Arrays.asList("name_fi", "description_fi"));
-              }
+          new HashMap() {
+            {
+              put("de", Arrays.asList("name_de", "description_de"));
+              put("fi", Arrays.asList("name_fi", "description_fi"));
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -7956,19 +7956,19 @@ class SearchClientRequestsTests {
       client.setSettings(
         "theIndexName",
         new IndexSettings().setCustomNormalization(
-            new HashMap() {
-              {
-                put(
-                  "default",
-                  new HashMap() {
-                    {
-                      put("ä", "ae");
-                    }
+          new HashMap() {
+            {
+              put(
+                "default",
+                new HashMap() {
+                  {
+                    put("ä", "ae");
                   }
-                );
-              }
+                }
+              );
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -8277,12 +8277,12 @@ class SearchClientRequestsTests {
       client.setSettings(
         "theIndexName",
         new IndexSettings().setUserData(
-            new HashMap() {
-              {
-                put("extraData", "This is the custom data that you want to store in your index");
-              }
+          new HashMap() {
+            {
+              put("extraData", "This is the custom data that you want to store in your index");
             }
-          )
+          }
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -8304,25 +8304,22 @@ class SearchClientRequestsTests {
       client.setSettings(
         "theIndexName",
         new IndexSettings().setRenderingContent(
-            new RenderingContent().setFacetOrdering(
-                new FacetOrdering()
-                  .setFacets(new Facets().setOrder(Arrays.asList("size", "brand")))
-                  .setValues(
-                    new HashMap() {
-                      {
-                        put(
-                          "brand",
-                          new Value()
-                            .setOrder(Arrays.asList("uniqlo"))
-                            .setHide(Arrays.asList("muji"))
-                            .setSortRemainingBy(SortRemainingBy.COUNT)
-                        );
-                        put("size", new Value().setOrder(Arrays.asList("S", "M", "L")).setSortRemainingBy(SortRemainingBy.HIDDEN));
-                      }
-                    }
-                  )
+          new RenderingContent().setFacetOrdering(
+            new FacetOrdering()
+              .setFacets(new Facets().setOrder(Arrays.asList("size", "brand")))
+              .setValues(
+                new HashMap() {
+                  {
+                    put(
+                      "brand",
+                      new Value().setOrder(Arrays.asList("uniqlo")).setHide(Arrays.asList("muji")).setSortRemainingBy(SortRemainingBy.COUNT)
+                    );
+                    put("size", new Value().setOrder(Arrays.asList("S", "M", "L")).setSortRemainingBy(SortRemainingBy.HIDDEN));
+                  }
+                }
               )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();

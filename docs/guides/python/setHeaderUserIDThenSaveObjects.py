@@ -6,6 +6,7 @@ playlists = []  # Your records
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
+
 for playlist in playlists:
     try:
         playlist_user_id = playlist["userID"]

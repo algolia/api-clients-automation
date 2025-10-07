@@ -6,7 +6,6 @@ import scala.concurrent.duration.Duration
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.search.SearchParamsObject
 
 val getBuyerAccountId: () => String = () => {

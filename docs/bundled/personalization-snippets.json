@@ -201,42 +201,42 @@
       "default": "import com.algolia.client.api.PersonalizationClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(\n  path = \"test/minimal\",\n)",
-      "allow del method for a custom path with all parameters": "var response = client.customDelete(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n)"
+      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "var response = client.customDelete(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters\"))"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "var response = client.customGet(\n  path = \"test/minimal\",\n)",
-      "allow get method for a custom path with all parameters": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters with space\"),\n)",
+      "allow get method for a custom path with minimal parameters": "var response = client.customGet(path = \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "var response = client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
       "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overriden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "var response = client.customPost(\n  path = \"test/minimal\",\n)",
-      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)",
-      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
+      "allow post method for a custom path with minimal parameters": "var response = client.customPost(path = \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)",
+      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "var response = client.customPut(\n  path = \"test/minimal\",\n)",
-      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)"
+      "allow put method for a custom path with minimal parameters": "var response = client.customPut(path = \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)"
     },
     "deleteUserProfile": {
-      "default": "var response = client.deleteUserProfile(\n  userToken = \"UserToken\",\n)"
+      "default": "var response = client.deleteUserProfile(userToken = \"UserToken\")"
     },
     "getPersonalizationStrategy": {
       "default": "var response = client.getPersonalizationStrategy()"
     },
     "getUserTokenProfile": {
-      "default": "var response = client.getUserTokenProfile(\n  userToken = \"UserToken\",\n)"
+      "default": "var response = client.getUserTokenProfile(userToken = \"UserToken\")"
     },
     "setClientApiKey": {
-      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+      "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
     },
     "setPersonalizationStrategy": {
       "default": "var response = client.setPersonalizationStrategy(\n  personalizationStrategyParams = PersonalizationStrategyParams(\n    eventsScoring = listOf(\n      EventsScoring(\n        score = 42,\n        eventName = \"Algolia\",\n        eventType = EventType.entries.first { it.value == \"click\" },\n      ),\n    ),\n    facetsScoring = listOf(\n      FacetsScoring(\n        score = 42,\n        facetName = \"Event\",\n      ),\n    ),\n    personalizationImpact = 42,\n  ),\n)"

@@ -14,8 +14,8 @@ final class SearchClientClientBenchmark: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [RetryableHost(url: URL(string: "http://" +
-                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6682"
-            )!)]
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6682")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)

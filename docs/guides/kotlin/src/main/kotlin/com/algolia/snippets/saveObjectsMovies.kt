@@ -3,7 +3,7 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
-
+import com.algolia.client.extensions.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -17,10 +17,7 @@ suspend fun main() {
   val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
   try {
-    client.saveObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-      objects = movies,
-    )
+    client.saveObjects(indexName = "<YOUR_INDEX_NAME>", objects = movies)
   } catch (e: Exception) {
     println(e.message)
   }

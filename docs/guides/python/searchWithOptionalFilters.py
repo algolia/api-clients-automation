@@ -1,4 +1,5 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.search_params import SearchParams
 
 
@@ -10,6 +11,7 @@ def _reduce_labels_to_filters(_labels):
 labels = []  # A list of labels
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 optional_filters = _reduce_labels_to_filters(labels)
 search_params = SearchParams(

@@ -1268,5 +1268,4 @@ class SearchTest extends AnyFunSuite {
       assert(parse(write(res)) == parse("{\"status\":\"published\"}"))
     }
   }
-
 }

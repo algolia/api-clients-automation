@@ -6,7 +6,6 @@ import scala.concurrent.duration.Duration
 // >IMPORT
 import algoliasearch.api.AbtestingV3Client
 import algoliasearch.config.*
-
 // IMPORT<
 import algoliasearch.abtestingv3.*
 

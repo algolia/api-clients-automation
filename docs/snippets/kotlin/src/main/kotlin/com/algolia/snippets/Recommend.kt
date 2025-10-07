@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.RecommendClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
-
 // IMPORT<
 import com.algolia.client.model.recommend.*
 import kotlinx.serialization.json.*
@@ -18,10 +17,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.batchRecommendRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.entries.first { it.value == "related-products" },
-    )
+    var response = client.batchRecommendRules(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" })
 
     // >LOG
     // Use the response
@@ -37,9 +33,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/minimal",
-    )
+    var response = client.customDelete(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -55,10 +49,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters"),
-    )
+    var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
     // Use the response
@@ -74,9 +65,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/minimal",
-    )
+    var response = client.customGet(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -92,10 +81,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters with space"),
-    )
+    var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
     // Use the response
@@ -139,9 +125,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customPost(
-      path = "test/minimal",
-    )
+    var response = client.customPost(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -161,10 +145,7 @@ class SnippetRecommendClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -186,10 +167,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -216,10 +194,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -246,10 +221,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -276,10 +248,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -306,10 +275,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -336,10 +302,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -366,10 +329,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -396,10 +356,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -426,10 +383,7 @@ class SnippetRecommendClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -452,9 +406,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customPut(
-      path = "test/minimal",
-    )
+    var response = client.customPut(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -474,10 +426,7 @@ class SnippetRecommendClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -495,11 +444,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteRecommendRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.entries.first { it.value == "related-products" },
-      objectID = "objectID",
-    )
+    var response = client.deleteRecommendRule(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
 
     // >LOG
     // Use the response
@@ -515,11 +460,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getRecommendRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.entries.first { it.value == "related-products" },
-      objectID = "objectID",
-    )
+    var response = client.getRecommendRule(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
 
     // >LOG
     // Use the response
@@ -535,11 +476,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getRecommendStatus(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.entries.first { it.value == "related-products" },
-      taskID = 12345L,
-    )
+    var response = client.getRecommendStatus(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, taskID = 12345L)
 
     // >LOG
     // Use the response
@@ -822,10 +759,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.searchRecommendRules(
-      indexName = "<YOUR_INDEX_NAME>",
-      model = RecommendModels.entries.first { it.value == "related-products" },
-    )
+    var response = client.searchRecommendRules(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" })
 
     // >LOG
     // Use the response
@@ -841,9 +775,7 @@ class SnippetRecommendClient {
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    client.setClientApiKey(
-      apiKey = "updated-api-key",
-    )
+    client.setClientApiKey(apiKey = "updated-api-key")
 
     // >LOG
     // SEPARATOR<

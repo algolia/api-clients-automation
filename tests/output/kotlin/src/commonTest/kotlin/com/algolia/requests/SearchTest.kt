@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class SearchTest {
 
@@ -71,10 +72,7 @@ class SearchTest {
           indexName = "indexName",
           objectID = "uniqueID",
           body = buildJsonObject {
-            put(
-              "key",
-              JsonPrimitive("value"),
-            )
+            put("key", JsonPrimitive("value"))
           },
         )
       },
@@ -162,27 +160,15 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("bar"),
-                  )
-                  put(
-                    "foo",
-                    JsonPrimitive("1"),
-                  )
+                  put("key", JsonPrimitive("bar"))
+                  put("foo", JsonPrimitive("1"))
                 },
               ),
               BatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("baz"),
-                  )
-                  put(
-                    "foo",
-                    JsonPrimitive("2"),
-                  )
+                  put("key", JsonPrimitive("baz"))
+                  put("foo", JsonPrimitive("2"))
                 },
               ),
             ),
@@ -208,10 +194,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "clear" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -237,10 +220,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "delete" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -266,10 +246,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "deleteObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -295,10 +272,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "partialUpdateObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -324,10 +298,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "partialUpdateObjectNoCreate" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -353,10 +324,7 @@ class SearchTest {
               BatchRequest(
                 action = Action.entries.first { it.value == "updateObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
               ),
             ),
@@ -468,9 +436,7 @@ class SearchTest {
                 body = DictionaryEntry(
                   objectID = "1",
                   language = SupportedLanguage.entries.first { it.value == "en" },
-                  additionalProperties = mapOf(
-                    "additional" to JsonPrimitive("try me"),
-                  ),
+                  additionalProperties = mapOf("additional" to JsonPrimitive("try me")),
                 ),
               ),
             ),
@@ -491,9 +457,7 @@ class SearchTest {
   fun `browse with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        browse(
-          indexName = "cts_e2e_browse",
-        )
+        browse(indexName = "cts_e2e_browse")
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/browse".toPathSegments(), it.url.pathSegments)
@@ -548,9 +512,7 @@ class SearchTest {
   fun `clearObjects`() = runTest {
     client.runTest(
       call = {
-        clearObjects(
-          indexName = "theIndexName",
-        )
+        clearObjects(indexName = "theIndexName")
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/clear".toPathSegments(), it.url.pathSegments)
@@ -566,9 +528,7 @@ class SearchTest {
   fun `clearRules`() = runTest {
     client.runTest(
       call = {
-        clearRules(
-          indexName = "indexName",
-        )
+        clearRules(indexName = "indexName")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/clear".toPathSegments(), it.url.pathSegments)
@@ -584,9 +544,7 @@ class SearchTest {
   fun `clearSynonyms`() = runTest {
     client.runTest(
       call = {
-        clearSynonyms(
-          indexName = "indexName",
-        )
+        clearSynonyms(indexName = "indexName")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/clear".toPathSegments(), it.url.pathSegments)
@@ -602,9 +560,7 @@ class SearchTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -618,10 +574,7 @@ class SearchTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -638,9 +591,7 @@ class SearchTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -654,10 +605,7 @@ class SearchTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -702,9 +650,7 @@ class SearchTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -722,10 +668,7 @@ class SearchTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -746,10 +689,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -775,10 +715,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -804,10 +741,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -834,10 +768,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -864,10 +795,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -893,10 +821,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -922,10 +847,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -951,10 +873,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -980,10 +899,7 @@ class SearchTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -1007,9 +923,7 @@ class SearchTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -1027,10 +941,7 @@ class SearchTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -1049,9 +960,7 @@ class SearchTest {
   fun `deleteApiKey`() = runTest {
     client.runTest(
       call = {
-        deleteApiKey(
-          key = "myTestApiKey",
-        )
+        deleteApiKey(key = "myTestApiKey")
       },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
@@ -1088,9 +997,7 @@ class SearchTest {
   fun `deleteIndex`() = runTest {
     client.runTest(
       call = {
-        deleteIndex(
-          indexName = "theIndexName",
-        )
+        deleteIndex(indexName = "theIndexName")
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName".toPathSegments(), it.url.pathSegments)
@@ -1106,10 +1013,7 @@ class SearchTest {
   fun `deleteObject`() = runTest {
     client.runTest(
       call = {
-        deleteObject(
-          indexName = "<YOUR_INDEX_NAME>",
-          objectID = "uniqueID",
-        )
+        deleteObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID")
       },
       intercept = {
         assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -1125,10 +1029,7 @@ class SearchTest {
   fun `delete rule simple case`() = runTest {
     client.runTest(
       call = {
-        deleteRule(
-          indexName = "indexName",
-          objectID = "id1",
-        )
+        deleteRule(indexName = "indexName", objectID = "id1")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/id1".toPathSegments(), it.url.pathSegments)
@@ -1142,10 +1043,7 @@ class SearchTest {
   fun `delete rule with simple characters to encode in objectID1`() = runTest {
     client.runTest(
       call = {
-        deleteRule(
-          indexName = "indexName",
-          objectID = "test/with/slash",
-        )
+        deleteRule(indexName = "indexName", objectID = "test/with/slash")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/test%2Fwith%2Fslash".toPathSegments(), it.url.pathSegments)
@@ -1161,9 +1059,7 @@ class SearchTest {
   fun `deleteSource`() = runTest {
     client.runTest(
       call = {
-        deleteSource(
-          source = "theSource",
-        )
+        deleteSource(source = "theSource")
       },
       intercept = {
         assertEquals("/1/security/sources/theSource".toPathSegments(), it.url.pathSegments)
@@ -1179,10 +1075,7 @@ class SearchTest {
   fun `deleteSynonym`() = runTest {
     client.runTest(
       call = {
-        deleteSynonym(
-          indexName = "indexName",
-          objectID = "id1",
-        )
+        deleteSynonym(indexName = "indexName", objectID = "id1")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/id1".toPathSegments(), it.url.pathSegments)
@@ -1198,9 +1091,7 @@ class SearchTest {
   fun `getApiKey`() = runTest {
     client.runTest(
       call = {
-        getApiKey(
-          key = "myTestApiKey",
-        )
+        getApiKey(key = "myTestApiKey")
       },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
@@ -1216,9 +1107,7 @@ class SearchTest {
   fun `getAppTask`() = runTest {
     client.runTest(
       call = {
-        getAppTask(
-          taskID = 123L,
-        )
+        getAppTask(taskID = 123L)
       },
       intercept = {
         assertEquals("/1/task/123".toPathSegments(), it.url.pathSegments)
@@ -1280,12 +1169,7 @@ class SearchTest {
   fun `getLogs with parameters1`() = runTest {
     client.runTest(
       call = {
-        getLogs(
-          offset = 5,
-          length = 10,
-          indexName = "theIndexName",
-          type = LogType.entries.first { it.value == "all" },
-        )
+        getLogs(offset = 5, length = 10, indexName = "theIndexName", type = LogType.entries.first { it.value == "all" })
       },
       intercept = {
         assertEquals("/1/logs".toPathSegments(), it.url.pathSegments)
@@ -1302,11 +1186,7 @@ class SearchTest {
   fun `getObject`() = runTest {
     client.runTest(
       call = {
-        getObject(
-          indexName = "theIndexName",
-          objectID = "uniqueID",
-          attributesToRetrieve = listOf("attr1", "attr2"),
-        )
+        getObject(indexName = "theIndexName", objectID = "uniqueID", attributesToRetrieve = listOf("attr1", "attr2"))
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -1321,10 +1201,7 @@ class SearchTest {
   fun `search with a real object1`() = runTest {
     client.runTest(
       call = {
-        getObject(
-          indexName = "cts_e2e_browse",
-          objectID = "Batman and Robin",
-        )
+        getObject(indexName = "cts_e2e_browse", objectID = "Batman and Robin")
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/Batman%20and%20Robin".toPathSegments(), it.url.pathSegments)
@@ -1416,10 +1293,7 @@ class SearchTest {
   fun `getRule`() = runTest {
     client.runTest(
       call = {
-        getRule(
-          indexName = "cts_e2e_browse",
-          objectID = "qr-1725004648916",
-        )
+        getRule(indexName = "cts_e2e_browse", objectID = "qr-1725004648916")
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/rules/qr-1725004648916".toPathSegments(), it.url.pathSegments)
@@ -1435,10 +1309,7 @@ class SearchTest {
   fun `getSettings`() = runTest {
     client.runTest(
       call = {
-        getSettings(
-          indexName = "cts_e2e_settings",
-          getVersion = 2,
-        )
+        getSettings(indexName = "cts_e2e_settings", getVersion = 2)
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_settings/settings".toPathSegments(), it.url.pathSegments)
@@ -1471,10 +1342,7 @@ class SearchTest {
   fun `getSynonym`() = runTest {
     client.runTest(
       call = {
-        getSynonym(
-          indexName = "indexName",
-          objectID = "id1",
-        )
+        getSynonym(indexName = "indexName", objectID = "id1")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/id1".toPathSegments(), it.url.pathSegments)
@@ -1490,10 +1358,7 @@ class SearchTest {
   fun `getTask`() = runTest {
     client.runTest(
       call = {
-        getTask(
-          indexName = "theIndexName",
-          taskID = 123L,
-        )
+        getTask(indexName = "theIndexName", taskID = 123L)
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/task/123".toPathSegments(), it.url.pathSegments)
@@ -1525,9 +1390,7 @@ class SearchTest {
   fun `getUserId`() = runTest {
     client.runTest(
       call = {
-        getUserId(
-          userID = "uniqueID",
-        )
+        getUserId(userID = "uniqueID")
       },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -1557,9 +1420,7 @@ class SearchTest {
   fun `hasPendingMappings with parameters1`() = runTest {
     client.runTest(
       call = {
-        hasPendingMappings(
-          getClusters = true,
-        )
+        hasPendingMappings(getClusters = true)
       },
       intercept = {
         assertEquals("/1/clusters/mapping/pending".toPathSegments(), it.url.pathSegments)
@@ -1622,10 +1483,7 @@ class SearchTest {
   fun `listIndices with parameters1`() = runTest {
     client.runTest(
       call = {
-        listIndices(
-          page = 8,
-          hitsPerPage = 3,
-        )
+        listIndices(page = 8, hitsPerPage = 3)
       },
       intercept = {
         assertEquals("/1/indexes".toPathSegments(), it.url.pathSegments)
@@ -1656,10 +1514,7 @@ class SearchTest {
   fun `listUserIds with parameters1`() = runTest {
     client.runTest(
       call = {
-        listUserIds(
-          page = 8,
-          hitsPerPage = 100,
-        )
+        listUserIds(page = 8, hitsPerPage = 100)
       },
       intercept = {
         assertEquals("/1/clusters/mapping".toPathSegments(), it.url.pathSegments)
@@ -1682,10 +1537,7 @@ class SearchTest {
               MultipleBatchRequest(
                 action = Action.entries.first { it.value == "addObject" },
                 body = buildJsonObject {
-                  put(
-                    "key",
-                    JsonPrimitive("value"),
-                  )
+                  put("key", JsonPrimitive("value"))
                 },
                 indexName = "theIndexName",
               ),
@@ -1774,10 +1626,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive("new value"),
-            )
+            put("attributeId", JsonPrimitive("new value"))
           },
         )
       },
@@ -1797,10 +1646,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive(1),
-            )
+            put("attributeId", JsonPrimitive(1))
           },
         )
       },
@@ -1820,10 +1666,7 @@ class SearchTest {
           indexName = "theIndexName",
           objectID = "uniqueID",
           attributesToUpdate = buildJsonObject {
-            put(
-              "attributeId",
-              JsonPrimitive(true),
-            )
+            put("attributeId", JsonPrimitive(true))
           },
         )
       },
@@ -1875,10 +1718,7 @@ class SearchTest {
             put(
               "attributeId",
               buildJsonObject {
-                put(
-                  "nested",
-                  JsonPrimitive("value"),
-                )
+                put("nested", JsonPrimitive("value"))
               },
             )
           },
@@ -1932,14 +1772,8 @@ class SearchTest {
             put(
               "categoryPageId",
               buildJsonObject {
-                put(
-                  "_operation",
-                  JsonPrimitive("Add"),
-                )
-                put(
-                  "value",
-                  JsonPrimitive("men-clothing-pants"),
-                )
+                put("_operation", JsonPrimitive("Add"))
+                put("value", JsonPrimitive("men-clothing-pants"))
               },
             )
           },
@@ -1964,14 +1798,8 @@ class SearchTest {
             put(
               "categoryPageId",
               buildJsonObject {
-                put(
-                  "_operation",
-                  JsonPrimitive("Remove"),
-                )
-                put(
-                  "value",
-                  JsonPrimitive("men-clothing-pants"),
-                )
+                put("_operation", JsonPrimitive("Remove"))
+                put("value", JsonPrimitive("men-clothing-pants"))
               },
             )
           },
@@ -1991,9 +1819,7 @@ class SearchTest {
   fun `removeUserId`() = runTest {
     client.runTest(
       call = {
-        removeUserId(
-          userID = "uniqueID",
-        )
+        removeUserId(userID = "uniqueID")
       },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -2032,9 +1858,7 @@ class SearchTest {
   fun `restoreApiKey`() = runTest {
     client.runTest(
       call = {
-        restoreApiKey(
-          key = "ALGOLIA_API_KEY",
-        )
+        restoreApiKey(key = "ALGOLIA_API_KEY")
       },
       intercept = {
         assertEquals("/1/keys/ALGOLIA_API_KEY/restore".toPathSegments(), it.url.pathSegments)
@@ -2053,22 +1877,10 @@ class SearchTest {
         saveObject(
           indexName = "<YOUR_INDEX_NAME>",
           body = buildJsonObject {
-            put(
-              "name",
-              JsonPrimitive("Black T-shirt"),
-            )
-            put(
-              "color",
-              JsonPrimitive("#000000||black"),
-            )
-            put(
-              "availableIn",
-              JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
-            )
-            put(
-              "objectID",
-              JsonPrimitive("myID"),
-            )
+            put("name", JsonPrimitive("Black T-shirt"))
+            put("color", JsonPrimitive("#000000||black"))
+            put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
+            put("objectID", JsonPrimitive("myID"))
           },
         )
       },
@@ -2156,10 +1968,7 @@ class SearchTest {
               ),
               filterPromotes = false,
               userData = buildJsonObject {
-                put(
-                  "algolia",
-                  JsonPrimitive("aloglia"),
-                )
+                put("algolia", JsonPrimitive("aloglia"))
               },
               promote = listOf(
                 PromoteObjectID(
@@ -2295,10 +2104,7 @@ class SearchTest {
             ),
             consequence = Consequence(
               userData = buildJsonObject {
-                put(
-                  "promo_content",
-                  JsonPrimitive("20% OFF on all Harry Potter books!"),
-                )
+                put("promo_content", JsonPrimitive("20% OFF on all Harry Potter books!"))
               },
             ),
           ),
@@ -2361,10 +2167,7 @@ class SearchTest {
             ),
             consequence = Consequence(
               userData = buildJsonObject {
-                put(
-                  "redirect",
-                  JsonPrimitive("https://www.algolia.com/support"),
-                )
+                put("redirect", JsonPrimitive("https://www.algolia.com/support"))
               },
             ),
           ),
@@ -3025,10 +2828,7 @@ class SearchTest {
                 ),
                 filterPromotes = false,
                 userData = buildJsonObject {
-                  put(
-                    "algolia",
-                    JsonPrimitive("aloglia"),
-                  )
+                  put("algolia", JsonPrimitive("aloglia"))
                 },
                 promote = listOf(
                   PromoteObjectID(
@@ -3785,10 +3585,7 @@ class SearchTest {
   fun `get searchForFacetValues results with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        searchForFacetValues(
-          indexName = "indexName",
-          facetName = "facetName",
-        )
+        searchForFacetValues(indexName = "indexName", facetName = "facetName")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/facets/facetName/query".toPathSegments(), it.url.pathSegments)
@@ -3867,9 +3664,7 @@ class SearchTest {
   fun `search with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(
-          indexName = "indexName",
-        )
+        searchSingleIndex(indexName = "indexName")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
@@ -3883,9 +3678,7 @@ class SearchTest {
   fun `search with special characters in indexName1`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(
-          indexName = "cts_e2e_space in index",
-        )
+        searchSingleIndex(indexName = "cts_e2e_space in index")
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_space%20in%20index/query".toPathSegments(), it.url.pathSegments)
@@ -6447,9 +6240,7 @@ class SearchTest {
   fun `searchSynonyms with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        searchSynonyms(
-          indexName = "indexName",
-        )
+        searchSynonyms(indexName = "indexName")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/search".toPathSegments(), it.url.pathSegments)
@@ -7628,10 +7419,7 @@ class SearchTest {
             customRanking = listOf("algolia"),
             decompoundQuery = false,
             decompoundedAttributes = buildJsonObject {
-              put(
-                "algolia",
-                JsonPrimitive("aloglia"),
-              )
+              put("algolia", JsonPrimitive("aloglia"))
             },
             disableExactOnAttributes = listOf("algolia"),
             disablePrefixOnAttributes = listOf("algolia"),
@@ -8535,14 +8323,7 @@ class SearchTest {
           indexName = "theIndexName",
           indexSettings = IndexSettings(
             decompoundedAttributes = buildJsonObject {
-              put(
-                "de",
-                JsonArray(
-                  listOf(
-                    JsonPrimitive("name"),
-                  ),
-                ),
-              )
+              put("de", JsonArray(listOf(JsonPrimitive("name"))))
             },
           ),
         )

@@ -49,8 +49,8 @@ public interface GetTopHitsResponse {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf TopHitsResponseWithRevenueAnalytics (error: " +
-            e.getMessage() +
-            ") (type: TopHitsResponseWithRevenueAnalytics)"
+              e.getMessage() +
+              ") (type: TopHitsResponseWithRevenueAnalytics)"
           );
         }
       }

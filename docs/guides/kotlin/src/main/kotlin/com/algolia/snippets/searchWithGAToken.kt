@@ -15,16 +15,10 @@ suspend fun searchWithGAToken() {
   val userToken = getGoogleAnalyticsUserIdFromBrowserCookie("_ga")
   var searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", userToken = userToken)
 
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 
   val loggedInUser: String? = null
   searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", userToken = loggedInUser ?: userToken)
 
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

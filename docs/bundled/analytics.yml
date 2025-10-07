@@ -263,9 +263,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -492,9 +490,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -721,9 +717,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -946,9 +940,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1239,9 +1231,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTopSearches(
-              index = "index",
-            )
+            var response = client.getTopSearches(index = "index")
 
 
             // >LOG
@@ -1514,9 +1504,7 @@ paths:
 
             // Call the API
 
-            var response = client.getSearchesCount(
-              index = "index",
-            )
+            var response = client.getSearchesCount(index = "index")
 
 
             // >LOG
@@ -1786,9 +1774,7 @@ paths:
 
             // Call the API
 
-            var response = client.getSearchesNoResults(
-              index = "index",
-            )
+            var response = client.getSearchesNoResults(index = "index")
 
 
             // >LOG
@@ -2067,9 +2053,7 @@ paths:
 
             // Call the API
 
-            var response = client.getSearchesNoClicks(
-              index = "index",
-            )
+            var response = client.getSearchesNoClicks(index = "index")
 
 
             // >LOG
@@ -2358,9 +2342,7 @@ paths:
 
             // Call the API
 
-            var response = client.getNoResultsRate(
-              index = "index",
-            )
+            var response = client.getNoResultsRate(index = "index")
 
 
             // >LOG
@@ -2648,9 +2630,7 @@ paths:
 
             // Call the API
 
-            var response = client.getNoClickRate(
-              index = "index",
-            )
+            var response = client.getNoClickRate(index = "index")
 
 
             // >LOG
@@ -2946,9 +2926,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTopHits(
-              index = "index",
-            )
+            var response = client.getTopHits(index = "index")
 
 
             // >LOG
@@ -3237,9 +3215,7 @@ paths:
 
             // Call the API
 
-            var response = client.getUsersCount(
-              index = "index",
-            )
+            var response = client.getUsersCount(index = "index")
 
 
             // >LOG
@@ -3492,9 +3468,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTopFilterAttributes(
-              index = "index",
-            )
+            var response = client.getTopFilterAttributes(index = "index")
 
 
             // >LOG
@@ -3755,10 +3729,8 @@ paths:
 
             // Call the API
 
-            var response = client.getTopFilterForAttribute(
-              attribute = "myAttribute",
-              index = "index",
-            )
+            var response = client.getTopFilterForAttribute(attribute =
+            "myAttribute", index = "index")
 
 
             // >LOG
@@ -4019,9 +3991,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTopFiltersNoResults(
-              index = "index",
-            )
+            var response = client.getTopFiltersNoResults(index = "index")
 
 
             // >LOG
@@ -4290,9 +4260,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTopCountries(
-              index = "index",
-            )
+            var response = client.getTopCountries(index = "index")
 
 
             // >LOG
@@ -4586,9 +4554,7 @@ paths:
 
             // Call the API
 
-            var response = client.getAverageClickPosition(
-              index = "index",
-            )
+            var response = client.getAverageClickPosition(index = "index")
 
 
             // >LOG
@@ -4852,9 +4818,7 @@ paths:
 
             // Call the API
 
-            var response = client.getClickPositions(
-              index = "index",
-            )
+            var response = client.getClickPositions(index = "index")
 
 
             // >LOG
@@ -5152,9 +5116,7 @@ paths:
 
             // Call the API
 
-            var response = client.getClickThroughRate(
-              index = "index",
-            )
+            var response = client.getClickThroughRate(index = "index")
 
 
             // >LOG
@@ -5451,9 +5413,7 @@ paths:
 
             // Call the API
 
-            var response = client.getConversionRate(
-              index = "index",
-            )
+            var response = client.getConversionRate(index = "index")
 
 
             // >LOG
@@ -5760,9 +5720,7 @@ paths:
 
             // Call the API
 
-            var response = client.getAddToCartRate(
-              index = "index",
-            )
+            var response = client.getAddToCartRate(index = "index")
 
 
             // >LOG
@@ -6069,9 +6027,7 @@ paths:
 
             // Call the API
 
-            var response = client.getPurchaseRate(
-              index = "index",
-            )
+            var response = client.getPurchaseRate(index = "index")
 
 
             // >LOG
@@ -6345,9 +6301,7 @@ paths:
 
             // Call the API
 
-            var response = client.getRevenue(
-              index = "index",
-            )
+            var response = client.getRevenue(index = "index")
 
 
             // >LOG
@@ -6596,9 +6550,7 @@ paths:
 
             // Call the API
 
-            var response = client.getStatus(
-              index = "index",
-            )
+            var response = client.getStatus(index = "index")
 
 
             // >LOG

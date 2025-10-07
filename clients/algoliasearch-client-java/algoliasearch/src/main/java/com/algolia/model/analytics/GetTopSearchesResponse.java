@@ -38,8 +38,8 @@ public interface GetTopSearchesResponse {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf TopSearchesResponseWithAnalytics (error: " +
-            e.getMessage() +
-            ") (type: TopSearchesResponseWithAnalytics)"
+              e.getMessage() +
+              ") (type: TopSearchesResponseWithAnalytics)"
           );
         }
       }
@@ -51,8 +51,8 @@ public interface GetTopSearchesResponse {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf TopSearchesResponseWithRevenueAnalytics (error: " +
-            e.getMessage() +
-            ") (type: TopSearchesResponseWithRevenueAnalytics)"
+              e.getMessage() +
+              ") (type: TopSearchesResponseWithRevenueAnalytics)"
           );
         }
       }

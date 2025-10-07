@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.IngestionClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
-
 // IMPORT<
 import com.algolia.client.model.ingestion.*
 import kotlinx.serialization.json.*
@@ -387,9 +386,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/minimal",
-    )
+    var response = client.customDelete(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -405,10 +402,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters"),
-    )
+    var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
     // Use the response
@@ -424,9 +418,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/minimal",
-    )
+    var response = client.customGet(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -442,10 +434,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters with space"),
-    )
+    var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
     // Use the response
@@ -489,9 +478,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPost(
-      path = "test/minimal",
-    )
+    var response = client.customPost(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -511,10 +498,7 @@ class SnippetIngestionClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -536,10 +520,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -566,10 +547,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -596,10 +574,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -626,10 +601,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -656,10 +628,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -686,10 +655,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -716,10 +682,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -746,10 +709,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -776,10 +736,7 @@ class SnippetIngestionClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -802,9 +759,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPut(
-      path = "test/minimal",
-    )
+    var response = client.customPut(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -824,10 +779,7 @@ class SnippetIngestionClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -845,9 +797,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteAuthentication(
-      authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -863,9 +813,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteDestination(
-      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -881,9 +829,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteSource(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -899,9 +845,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -917,9 +861,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteTaskV1(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -935,9 +877,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteTransformation(
-      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.deleteTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -953,9 +893,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.disableTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.disableTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -971,9 +909,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.disableTaskV1(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.disableTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -989,9 +925,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.enableTask(
-      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-    )
+    var response = client.enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
     // >LOG
     // Use the response
@@ -1007,9 +941,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.enableTaskV1(
-      taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-    )
+    var response = client.enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
     // >LOG
     // Use the response
@@ -1025,9 +957,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getAuthentication(
-      authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1043,9 +973,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getDestination(
-      destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1061,10 +989,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getEvent(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-      eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
-    )
+    var response = client.getEvent(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f", eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 
     // >LOG
     // Use the response
@@ -1080,9 +1005,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getRun(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getRun(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1098,9 +1021,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getSource(
-      sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-    )
+    var response = client.getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
     // >LOG
     // Use the response
@@ -1116,9 +1037,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1134,9 +1053,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getTaskV1(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1152,9 +1069,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getTransformation(
-      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.getTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1186,14 +1101,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.listAuthentications(
-      itemsPerPage = 2,
-      page = 1,
-      type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
-      platform = listOf(PlatformNone.entries.first { it.value == "none" }),
-      sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
-      order = OrderKeys.entries.first { it.value == "asc" },
-    )
+    var response = client.listAuthentications(itemsPerPage = 2, page = 1, type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }), platform = listOf(PlatformNone.entries.first { it.value == "none" }), sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" }, order = OrderKeys.entries.first { it.value == "asc" })
 
     // >LOG
     // Use the response
@@ -1225,9 +1133,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.listEvents(
-      runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.listEvents(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1323,13 +1229,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.listTransformations(
-      itemsPerPage = 2,
-      page = 1,
-      sort = TransformationSortKeys.entries.first { it.value == "createdAt" },
-      order = OrderKeys.entries.first { it.value == "asc" },
-      type = TransformationType.entries.first { it.value == "noCode" },
-    )
+    var response = client.listTransformations(itemsPerPage = 2, page = 1, sort = TransformationSortKeys.entries.first { it.value == "createdAt" }, order = OrderKeys.entries.first { it.value == "asc" }, type = TransformationType.entries.first { it.value == "noCode" })
 
     // >LOG
     // Use the response
@@ -1603,9 +1503,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.runTask(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.runTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1621,9 +1519,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.runTaskV1(
-      taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.runTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1759,9 +1655,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    client.setClientApiKey(
-      apiKey = "updated-api-key",
-    )
+    client.setClientApiKey(apiKey = "updated-api-key")
 
     // >LOG
     // SEPARATOR<
@@ -1775,9 +1669,7 @@ class SnippetIngestionClient {
     val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.triggerDockerSourceDiscover(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
+    var response = client.triggerDockerSourceDiscover(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     // >LOG
     // Use the response
@@ -1800,10 +1692,7 @@ class SnippetIngestionClient {
           code = "foo",
         ),
         sampleRecord = buildJsonObject {
-          put(
-            "bar",
-            JsonPrimitive("baz"),
-          )
+          put("bar", JsonPrimitive("baz"))
         },
       ),
     )
@@ -1829,10 +1718,7 @@ class SnippetIngestionClient {
           code = "foo",
         ),
         sampleRecord = buildJsonObject {
-          put(
-            "bar",
-            JsonPrimitive("baz"),
-          )
+          put("bar", JsonPrimitive("baz"))
         },
         authentications = listOf(
           AuthenticationCreate(
@@ -1870,10 +1756,7 @@ class SnippetIngestionClient {
           code = "foo",
         ),
         sampleRecord = buildJsonObject {
-          put(
-            "bar",
-            JsonPrimitive("baz"),
-          )
+          put("bar", JsonPrimitive("baz"))
         },
       ),
     )
@@ -1900,10 +1783,7 @@ class SnippetIngestionClient {
           code = "foo",
         ),
         sampleRecord = buildJsonObject {
-          put(
-            "bar",
-            JsonPrimitive("baz"),
-          )
+          put("bar", JsonPrimitive("baz"))
         },
         authentications = listOf(
           AuthenticationCreate(

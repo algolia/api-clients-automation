@@ -1,4 +1,5 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.index_settings import IndexSettings
 
 

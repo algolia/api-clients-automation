@@ -58,16 +58,14 @@ final class RecommendClientRequestsTestsE2E: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .relatedQuery(RelatedQuery(
                             indexName: "cts_e2e_browse",
                             threshold: 20.0,
                             maxRecommendations: 2,
                             model: RelatedModel.relatedProducts,
                             objectID: "Æon Flux"
-                        )),
-                ])
+                        ))])
             )
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),

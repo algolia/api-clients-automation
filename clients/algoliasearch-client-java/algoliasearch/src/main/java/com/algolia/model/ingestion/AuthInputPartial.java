@@ -59,8 +59,8 @@ public interface AuthInputPartial {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf AuthGoogleServiceAccountPartial (error: " +
-            e.getMessage() +
-            ") (type: AuthGoogleServiceAccountPartial)"
+              e.getMessage() +
+              ") (type: AuthGoogleServiceAccountPartial)"
           );
         }
       }

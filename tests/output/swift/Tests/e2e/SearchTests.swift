@@ -121,10 +121,8 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         }
 
         let response: Response<SearchResponses<Hit>> = try await client
-            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
-                SearchQuery
-                    .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
-            ]))
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery
+                    .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index"))]))
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),
             expected: "{\"results\":[{\"hits\":[],\"page\":0,\"nbHits\":0,\"nbPages\":0,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"\",\"params\":\"\",\"index\":\"cts_e2e_search_empty_index\",\"renderingContent\":{}}]}"
@@ -141,16 +139,14 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         }
 
         let response: Response<SearchResponses<Hit>> = try await client
-            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
-                SearchQuery
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [SearchQuery
                     .searchForHits(SearchForHits(
                         query: "vim",
                         attributesToRetrieve: ["*"],
                         attributesToHighlight: ["*"],
                         attributesToSnippet: ["*:20"],
                         indexName: "cts_e2e_highlight_snippet_results"
-                    )),
-            ]))
+                    ))]))
         try XCTLenientAssertEqual(
             received: XCTUnwrap(response.body),
             expected: "{\"results\":[{\"hits\":[{\"editor\":{\"name\":\"vim\",\"type\":\"beforeneovim\"},\"names\":[\"vim\",\":q\"],\"_snippetResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\"}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\"},{\"value\":\":q\",\"matchLevel\":\"none\"}]},\"_highlightResult\":{\"editor\":{\"name\":{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},\"type\":{\"value\":\"beforeneovim\",\"matchLevel\":\"none\",\"matchedWords\":[]}},\"names\":[{\"value\":\"<em>vim</em>\",\"matchLevel\":\"full\",\"fullyHighlighted\":true,\"matchedWords\":[\"vim\"]},{\"value\":\":q\",\"matchLevel\":\"none\",\"matchedWords\":[]}]}}],\"nbHits\":1,\"page\":0,\"nbPages\":1,\"hitsPerPage\":20,\"exhaustiveNbHits\":true,\"exhaustiveTypo\":true,\"exhaustive\":{\"nbHits\":true,\"typo\":true},\"query\":\"vim\",\"index\":\"cts_e2e_highlight_snippet_results\",\"renderingContent\":{}}]}"

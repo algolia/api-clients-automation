@@ -51,8 +51,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client
-            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [
-                EventsItems
+            .pushEventsWithHTTPInfo(insightsEvents: InsightsEvents(events: [EventsItems
                     .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
                         eventName: "Product Clicked",
                         eventType: ClickEvent.click,
@@ -63,8 +62,7 @@ final class InsightsClientClientTests: XCTestCase {
                         userToken: "user-123456",
                         authenticatedUserToken: "user-123456",
                         timestamp: Int64(1_641_290_601_962)
-                    )),
-            ]))
+                    ))]))
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
@@ -111,8 +109,8 @@ final class InsightsClientClientTests: XCTestCase {
             apiKey: "test-api-key",
             region: Region(rawValue: "us"),
             hosts: [RetryableHost(url: URL(string: "http://" +
-                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6683"
-            )!)]
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = InsightsClient(configuration: configuration, transporter: transporter)

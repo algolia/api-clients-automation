@@ -6,7 +6,6 @@ import scala.concurrent.duration.Duration
 // >IMPORT
 import algoliasearch.api.PersonalizationClient
 import algoliasearch.config.*
-
 // IMPORT<
 import algoliasearch.personalization.*
 

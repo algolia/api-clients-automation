@@ -11,6 +11,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class CompositionTest {
 
@@ -25,9 +26,7 @@ class CompositionTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -41,10 +40,7 @@ class CompositionTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -61,9 +57,7 @@ class CompositionTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -77,10 +71,7 @@ class CompositionTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -125,9 +116,7 @@ class CompositionTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -145,10 +134,7 @@ class CompositionTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -169,10 +155,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -198,10 +181,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -227,10 +207,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -257,10 +234,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -287,10 +261,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -316,10 +287,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -345,10 +313,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -374,10 +339,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -403,10 +365,7 @@ class CompositionTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -430,9 +389,7 @@ class CompositionTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -450,10 +407,7 @@ class CompositionTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -472,9 +426,7 @@ class CompositionTest {
   fun `deleteComposition`() = runTest {
     client.runTest(
       call = {
-        deleteComposition(
-          compositionID = "1234",
-        )
+        deleteComposition(compositionID = "1234")
       },
       intercept = {
         assertEquals("/1/compositions/1234".toPathSegments(), it.url.pathSegments)
@@ -490,10 +442,7 @@ class CompositionTest {
   fun `deleteCompositionRule`() = runTest {
     client.runTest(
       call = {
-        deleteCompositionRule(
-          compositionID = "1234",
-          objectID = "5678",
-        )
+        deleteCompositionRule(compositionID = "1234", objectID = "5678")
       },
       intercept = {
         assertEquals("/1/compositions/1234/rules/5678".toPathSegments(), it.url.pathSegments)
@@ -509,9 +458,7 @@ class CompositionTest {
   fun `getComposition`() = runTest {
     client.runTest(
       call = {
-        getComposition(
-          compositionID = "foo",
-        )
+        getComposition(compositionID = "foo")
       },
       intercept = {
         assertEquals("/1/compositions/foo".toPathSegments(), it.url.pathSegments)
@@ -527,10 +474,7 @@ class CompositionTest {
   fun `getRule`() = runTest {
     client.runTest(
       call = {
-        getRule(
-          compositionID = "foo",
-          objectID = "123",
-        )
+        getRule(compositionID = "foo", objectID = "123")
       },
       intercept = {
         assertEquals("/1/compositions/foo/rules/123".toPathSegments(), it.url.pathSegments)
@@ -546,10 +490,7 @@ class CompositionTest {
   fun `getTask`() = runTest {
     client.runTest(
       call = {
-        getTask(
-          compositionID = "foo",
-          taskID = 42L,
-        )
+        getTask(compositionID = "foo", taskID = 42L)
       },
       intercept = {
         assertEquals("/1/compositions/foo/task/42".toPathSegments(), it.url.pathSegments)

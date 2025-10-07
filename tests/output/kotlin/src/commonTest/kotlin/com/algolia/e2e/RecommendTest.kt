@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class RecommendTest {
 

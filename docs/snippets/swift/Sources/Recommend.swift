@@ -422,15 +422,13 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .relatedQuery(RelatedQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
                         model: RelatedModel.relatedProducts,
                         objectID: "objectID"
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -445,16 +443,14 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .relatedQuery(RelatedQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 20.0,
                         maxRecommendations: 2,
                         model: RelatedModel.relatedProducts,
                         objectID: "Æon Flux"
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -469,8 +465,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .relatedQuery(RelatedQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
@@ -487,8 +482,7 @@ final class RecommendClientSnippet {
                                 .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
                             query: "myQuery"
                         )
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -503,16 +497,14 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .trendingItemsQuery(TrendingItemsQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
                         facetName: "facet",
                         facetValue: "value",
                         model: TrendingItemsModel.trendingItems
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -527,8 +519,7 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .trendingItemsQuery(TrendingItemsQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.1,
@@ -546,8 +537,7 @@ final class RecommendClientSnippet {
                                 .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
                             query: "myQuery"
                         )
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }
@@ -640,15 +630,13 @@ final class RecommendClientSnippet {
 
         // Call the API
         let response = try await client
-            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                     .boughtTogetherQuery(BoughtTogetherQuery(
                         indexName: "<YOUR_INDEX_NAME>",
                         threshold: 42.7,
                         model: FbtModel.boughtTogether,
                         objectID: "objectID1"
-                    )),
-            ]))
+                    ))]))
         // >LOG
         // SEPARATOR<
     }

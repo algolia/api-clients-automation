@@ -5,7 +5,6 @@ package com.algolia.snippets
 import com.algolia.client.api.QuerySuggestionsClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
-
 // IMPORT<
 import com.algolia.client.model.querysuggestions.*
 import kotlinx.serialization.json.*
@@ -51,9 +50,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/minimal",
-    )
+    var response = client.customDelete(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -69,10 +66,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters"),
-    )
+    var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
     // Use the response
@@ -88,9 +82,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/minimal",
-    )
+    var response = client.customGet(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -106,10 +98,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters with space"),
-    )
+    var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
     // Use the response
@@ -153,9 +142,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPost(
-      path = "test/minimal",
-    )
+    var response = client.customPost(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -175,10 +162,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -200,10 +184,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -230,10 +211,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -260,10 +238,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -290,10 +265,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -320,10 +292,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -350,10 +319,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -380,10 +346,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -410,10 +373,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -440,10 +400,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -466,9 +423,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.customPut(
-      path = "test/minimal",
-    )
+    var response = client.customPut(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -488,10 +443,7 @@ class SnippetQuerySuggestionsClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -509,9 +461,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.deleteConfig(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.deleteConfig(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -543,9 +493,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getConfig(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.getConfig(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -561,9 +509,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getConfigStatus(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.getConfigStatus(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -579,9 +525,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    var response = client.getLogFile(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.getLogFile(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -597,9 +541,7 @@ class SnippetQuerySuggestionsClient {
     val client = QuerySuggestionsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
 
     // Call the API
-    client.setClientApiKey(
-      apiKey = "updated-api-key",
-    )
+    client.setClientApiKey(apiKey = "updated-api-key")
 
     // >LOG
     // SEPARATOR<

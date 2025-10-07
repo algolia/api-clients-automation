@@ -104,8 +104,8 @@ final class AnalyticsClientClientTests: XCTestCase {
             apiKey: "test-api-key",
             region: Region(rawValue: "us"),
             hosts: [RetryableHost(url: URL(string: "http://" +
-                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") + ":6683"
-            )!)]
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6683")!)]
         )
         let transporter = Transporter(configuration: configuration)
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)

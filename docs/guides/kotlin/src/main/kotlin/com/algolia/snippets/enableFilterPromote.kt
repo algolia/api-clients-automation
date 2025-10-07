@@ -1,3 +1,4 @@
+import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*

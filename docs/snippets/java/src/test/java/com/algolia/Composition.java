@@ -618,98 +618,98 @@ class SnippetCompositionClient {
     // Call the API
     client.multipleBatch(
       new BatchParams().setRequests(
-          Arrays.asList(
-            new MultipleBatchRequest()
-              .setAction(Action.UPSERT)
-              .setBody(
-                new Composition()
-                  .setObjectID("my-metadata-compo")
-                  .setName("my composition")
-                  .setBehavior(
-                    new CompositionBehavior().setInjection(
-                        new Injection()
-                          .setMain(
-                            new Main().setSource(
-                              new CompositionSource().setSearch(
-                                new CompositionSourceSearch()
-                                  .setIndex("foo")
-                                  .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+        Arrays.asList(
+          new MultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new Composition()
+                .setObjectID("my-metadata-compo")
+                .setName("my composition")
+                .setBehavior(
+                  new CompositionBehavior().setInjection(
+                    new Injection()
+                      .setMain(
+                        new Main().setSource(
+                          new CompositionSource().setSearch(
+                            new CompositionSourceSearch()
+                              .setIndex("foo")
+                              .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                          )
+                        )
+                      )
+                      .setInjectedItems(
+                        Arrays.asList(
+                          new InjectedItem()
+                            .setKey("my-unique-group-key")
+                            .setSource(
+                              new SearchSource().setSearch(
+                                new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                               )
                             )
-                          )
-                          .setInjectedItems(
-                            Arrays.asList(
-                              new InjectedItem()
-                                .setKey("my-unique-group-key")
-                                .setSource(
-                                  new SearchSource().setSearch(
-                                    new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                  )
-                                )
-                                .setPosition(2)
-                                .setLength(1)
-                                .setMetadata(
-                                  new InjectedItemMetadata().setHits(
-                                      new InjectedItemHitsMetadata()
-                                        .setAddItemKey(true)
-                                        .setExtra(
+                            .setPosition(2)
+                            .setLength(1)
+                            .setMetadata(
+                              new InjectedItemMetadata().setHits(
+                                new InjectedItemHitsMetadata()
+                                  .setAddItemKey(true)
+                                  .setExtra(
+                                    new HashMap() {
+                                      {
+                                        put("my-string", "string");
+                                        put("my-bool", true);
+                                        put("my-number", 42);
+                                        put(
+                                          "my-object",
                                           new HashMap() {
                                             {
-                                              put("my-string", "string");
-                                              put("my-bool", true);
-                                              put("my-number", 42);
-                                              put(
-                                                "my-object",
-                                                new HashMap() {
-                                                  {
-                                                    put("sub-key", "sub-value");
-                                                  }
-                                                }
-                                              );
+                                              put("sub-key", "sub-value");
                                             }
                                           }
-                                        )
-                                    )
-                                ),
-                              new InjectedItem()
-                                .setKey("my-unique-group-key")
-                                .setSource(
-                                  new SearchSource().setSearch(
-                                    new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                                        );
+                                      }
+                                    }
                                   )
-                                )
-                                .setPosition(5)
-                                .setLength(5)
-                                .setMetadata(
-                                  new InjectedItemMetadata().setHits(
-                                      new InjectedItemHitsMetadata()
-                                        .setAddItemKey(true)
-                                        .setExtra(
-                                          new HashMap() {
-                                            {
-                                              put("my-string", "string");
-                                              put("my-bool", true);
-                                              put("my-number", 42);
-                                              put(
-                                                "my-object",
-                                                new HashMap() {
-                                                  {
-                                                    put("sub-key", "sub-value");
-                                                  }
-                                                }
-                                              );
-                                            }
-                                          }
-                                        )
-                                    )
-                                )
+                              )
+                            ),
+                          new InjectedItem()
+                            .setKey("my-unique-group-key")
+                            .setSource(
+                              new SearchSource().setSearch(
+                                new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                              )
                             )
-                          )
+                            .setPosition(5)
+                            .setLength(5)
+                            .setMetadata(
+                              new InjectedItemMetadata().setHits(
+                                new InjectedItemHitsMetadata()
+                                  .setAddItemKey(true)
+                                  .setExtra(
+                                    new HashMap() {
+                                      {
+                                        put("my-string", "string");
+                                        put("my-bool", true);
+                                        put("my-number", 42);
+                                        put(
+                                          "my-object",
+                                          new HashMap() {
+                                            {
+                                              put("sub-key", "sub-value");
+                                            }
+                                          }
+                                        );
+                                      }
+                                    }
+                                  )
+                              )
+                            )
+                        )
                       )
                   )
-              )
-          )
+                )
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -848,83 +848,83 @@ class SnippetCompositionClient {
         .setName("my composition")
         .setBehavior(
           new CompositionBehavior().setInjection(
-              new Injection()
-                .setMain(
-                  new Main().setSource(
-                    new CompositionSource().setSearch(
-                      new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+            new Injection()
+              .setMain(
+                new Main().setSource(
+                  new CompositionSource().setSearch(
+                    new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                  )
+                )
+              )
+              .setInjectedItems(
+                Arrays.asList(
+                  new InjectedItem()
+                    .setKey("my-unique-group-key")
+                    .setSource(
+                      new SearchSource().setSearch(
+                        new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                      )
                     )
-                  )
-                )
-                .setInjectedItems(
-                  Arrays.asList(
-                    new InjectedItem()
-                      .setKey("my-unique-group-key")
-                      .setSource(
-                        new SearchSource().setSearch(
-                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                        )
-                      )
-                      .setPosition(2)
-                      .setLength(1)
-                      .setMetadata(
-                        new InjectedItemMetadata().setHits(
-                            new InjectedItemHitsMetadata()
-                              .setAddItemKey(true)
-                              .setExtra(
-                                new HashMap() {
-                                  {
-                                    put("my-string", "string");
-                                    put("my-bool", true);
-                                    put("my-number", 42);
-                                    put(
-                                      "my-object",
-                                      new HashMap() {
-                                        {
-                                          put("sub-key", "sub-value");
-                                        }
-                                      }
-                                    );
+                    .setPosition(2)
+                    .setLength(1)
+                    .setMetadata(
+                      new InjectedItemMetadata().setHits(
+                        new InjectedItemHitsMetadata()
+                          .setAddItemKey(true)
+                          .setExtra(
+                            new HashMap() {
+                              {
+                                put("my-string", "string");
+                                put("my-bool", true);
+                                put("my-number", 42);
+                                put(
+                                  "my-object",
+                                  new HashMap() {
+                                    {
+                                      put("sub-key", "sub-value");
+                                    }
                                   }
-                                }
-                              )
-                          )
-                      ),
-                    new InjectedItem()
-                      .setKey("my-unique-group-key")
-                      .setSource(
-                        new SearchSource().setSearch(
-                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
-                        )
-                      )
-                      .setPosition(5)
-                      .setLength(5)
-                      .setMetadata(
-                        new InjectedItemMetadata().setHits(
-                            new InjectedItemHitsMetadata()
-                              .setAddItemKey(true)
-                              .setExtra(
-                                new HashMap() {
-                                  {
-                                    put("my-string", "string");
-                                    put("my-bool", true);
-                                    put("my-number", 42);
-                                    put(
-                                      "my-object",
-                                      new HashMap() {
-                                        {
-                                          put("sub-key", "sub-value");
-                                        }
-                                      }
-                                    );
-                                  }
-                                }
-                              )
+                                );
+                              }
+                            }
                           )
                       )
-                  )
+                    ),
+                  new InjectedItem()
+                    .setKey("my-unique-group-key")
+                    .setSource(
+                      new SearchSource().setSearch(
+                        new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                      )
+                    )
+                    .setPosition(5)
+                    .setLength(5)
+                    .setMetadata(
+                      new InjectedItemMetadata().setHits(
+                        new InjectedItemHitsMetadata()
+                          .setAddItemKey(true)
+                          .setExtra(
+                            new HashMap() {
+                              {
+                                put("my-string", "string");
+                                put("my-bool", true);
+                                put("my-number", 42);
+                                put(
+                                  "my-object",
+                                  new HashMap() {
+                                    {
+                                      put("sub-key", "sub-value");
+                                    }
+                                  }
+                                );
+                              }
+                            }
+                          )
+                      )
+                    )
                 )
-            )
+              )
+          )
         )
     );
     // >LOG
@@ -1026,47 +1026,47 @@ class SnippetCompositionClient {
         .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
         .setConsequence(
           new CompositionRuleConsequence().setBehavior(
-              new CompositionBehavior().setInjection(
-                  new Injection()
-                    .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
-                    .setInjectedItems(
-                      Arrays.asList(
-                        new InjectedItem()
-                          .setKey("my-unique-group-from-rule-key")
-                          .setSource(
-                            new SearchSource().setSearch(
-                              new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                            )
-                          )
-                          .setPosition(2)
-                          .setLength(1)
-                          .setMetadata(
-                            new InjectedItemMetadata().setHits(
-                                new InjectedItemHitsMetadata()
-                                  .setAddItemKey(true)
-                                  .setExtra(
+            new CompositionBehavior().setInjection(
+              new Injection()
+                .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectedItem()
+                      .setKey("my-unique-group-from-rule-key")
+                      .setSource(
+                        new SearchSource().setSearch(
+                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                        )
+                      )
+                      .setPosition(2)
+                      .setLength(1)
+                      .setMetadata(
+                        new InjectedItemMetadata().setHits(
+                          new InjectedItemHitsMetadata()
+                            .setAddItemKey(true)
+                            .setExtra(
+                              new HashMap() {
+                                {
+                                  put("my-string", "string");
+                                  put("my-bool", true);
+                                  put("my-number", 42);
+                                  put(
+                                    "my-object",
                                     new HashMap() {
                                       {
-                                        put("my-string", "string");
-                                        put("my-bool", true);
-                                        put("my-number", 42);
-                                        put(
-                                          "my-object",
-                                          new HashMap() {
-                                            {
-                                              put("sub-key", "sub-value");
-                                            }
-                                          }
-                                        );
+                                        put("sub-key", "sub-value");
                                       }
                                     }
-                                  )
-                              )
-                          )
+                                  );
+                                }
+                              }
+                            )
+                        )
                       )
-                    )
+                  )
                 )
             )
+          )
         )
     );
     // >LOG
@@ -1222,64 +1222,60 @@ class SnippetCompositionClient {
     client.saveRules(
       "rule-with-metadata",
       new CompositionRulesBatchParams().setRequests(
-          Arrays.asList(
-            new RulesMultipleBatchRequest()
-              .setAction(Action.UPSERT)
-              .setBody(
-                new CompositionRule()
-                  .setObjectID("rule-with-metadata")
-                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
-                  .setConsequence(
-                    new CompositionRuleConsequence().setBehavior(
-                        new CompositionBehavior().setInjection(
-                            new Injection()
-                              .setMain(
-                                new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo")))
+        Arrays.asList(
+          new RulesMultipleBatchRequest()
+            .setAction(Action.UPSERT)
+            .setBody(
+              new CompositionRule()
+                .setObjectID("rule-with-metadata")
+                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
+                .setConsequence(
+                  new CompositionRuleConsequence().setBehavior(
+                    new CompositionBehavior().setInjection(
+                      new Injection()
+                        .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectedItem()
+                              .setKey("my-unique-group-from-rule-key")
+                              .setSource(
+                                new SearchSource().setSearch(
+                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                                )
                               )
-                              .setInjectedItems(
-                                Arrays.asList(
-                                  new InjectedItem()
-                                    .setKey("my-unique-group-from-rule-key")
-                                    .setSource(
-                                      new SearchSource().setSearch(
-                                        new Search()
-                                          .setIndex("foo")
-                                          .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                      )
-                                    )
-                                    .setPosition(2)
-                                    .setLength(1)
-                                    .setMetadata(
-                                      new InjectedItemMetadata().setHits(
-                                          new InjectedItemHitsMetadata()
-                                            .setAddItemKey(true)
-                                            .setExtra(
-                                              new HashMap() {
-                                                {
-                                                  put("my-string", "string");
-                                                  put("my-bool", true);
-                                                  put("my-number", 42);
-                                                  put(
-                                                    "my-object",
-                                                    new HashMap() {
-                                                      {
-                                                        put("sub-key", "sub-value");
-                                                      }
-                                                    }
-                                                  );
-                                                }
+                              .setPosition(2)
+                              .setLength(1)
+                              .setMetadata(
+                                new InjectedItemMetadata().setHits(
+                                  new InjectedItemHitsMetadata()
+                                    .setAddItemKey(true)
+                                    .setExtra(
+                                      new HashMap() {
+                                        {
+                                          put("my-string", "string");
+                                          put("my-bool", true);
+                                          put("my-number", 42);
+                                          put(
+                                            "my-object",
+                                            new HashMap() {
+                                              {
+                                                put("sub-key", "sub-value");
                                               }
-                                            )
-                                        )
+                                            }
+                                          );
+                                        }
+                                      }
                                     )
                                 )
                               )
                           )
-                      )
+                        )
+                    )
                   )
-              )
-          )
+                )
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -1428,42 +1424,42 @@ class SnippetCompositionClient {
     client.search(
       "foo",
       new RequestBody().setParams(
-          new Params()
-            .setQuery("batman")
-            .setInjectedItems(
-              new HashMap() {
-                {
-                  put(
-                    "my-unique-external-group-key",
-                    new ExternalInjectedItem().setItems(
-                        Arrays.asList(
-                          new ExternalInjection().setObjectID("my-object-1"),
-                          new ExternalInjection()
-                            .setObjectID("my-object-2")
-                            .setMetadata(
-                              new HashMap() {
-                                {
-                                  put("my-string", "string");
-                                  put("my-bool", true);
-                                  put("my-number", 42);
-                                  put(
-                                    "my-object",
-                                    new HashMap() {
-                                      {
-                                        put("sub-key", "sub-value");
-                                      }
-                                    }
-                                  );
+        new Params()
+          .setQuery("batman")
+          .setInjectedItems(
+            new HashMap() {
+              {
+                put(
+                  "my-unique-external-group-key",
+                  new ExternalInjectedItem().setItems(
+                    Arrays.asList(
+                      new ExternalInjection().setObjectID("my-object-1"),
+                      new ExternalInjection()
+                        .setObjectID("my-object-2")
+                        .setMetadata(
+                          new HashMap() {
+                            {
+                              put("my-string", "string");
+                              put("my-bool", true);
+                              put("my-number", 42);
+                              put(
+                                "my-object",
+                                new HashMap() {
+                                  {
+                                    put("sub-key", "sub-value");
+                                  }
                                 }
-                              }
-                            )
+                              );
+                            }
+                          }
                         )
-                      )
-                  );
-                }
+                    )
+                  )
+                );
               }
-            )
-        ),
+            }
+          )
+      ),
       Hit.class
     );
     // >LOG

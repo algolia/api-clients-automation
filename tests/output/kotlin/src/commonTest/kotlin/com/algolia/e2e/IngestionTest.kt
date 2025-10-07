@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class IngestionTest {
 
@@ -32,9 +33,7 @@ class IngestionTest {
   fun `enableTask`() = runTest {
     client.runTest(
       call = {
-        enableTask(
-          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-        )
+        enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
       },
       response = {
         JSONAssert.assertEquals("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}", Json.encodeToString(it), JSONCompareMode.LENIENT)
@@ -46,9 +45,7 @@ class IngestionTest {
   fun `enableTaskV1`() = runTest {
     client.runTest(
       call = {
-        enableTaskV1(
-          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-        )
+        enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
       },
       response = {
         JSONAssert.assertEquals("{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}", Json.encodeToString(it), JSONCompareMode.LENIENT)
@@ -60,9 +57,7 @@ class IngestionTest {
   fun `getSource`() = runTest {
     client.runTest(
       call = {
-        getSource(
-          sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
-        )
+        getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
       },
       response = {
         JSONAssert.assertEquals("{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}", Json.encodeToString(it), JSONCompareMode.LENIENT)
@@ -74,14 +69,7 @@ class IngestionTest {
   fun `getAuthentications with query params1`() = runTest {
     client.runTest(
       call = {
-        listAuthentications(
-          itemsPerPage = 2,
-          page = 1,
-          type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
-          platform = listOf(PlatformNone.entries.first { it.value == "none" }),
-          sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
-          order = OrderKeys.entries.first { it.value == "asc" },
-        )
+        listAuthentications(itemsPerPage = 2, page = 1, type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }), platform = listOf(PlatformNone.entries.first { it.value == "none" }), sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" }, order = OrderKeys.entries.first { it.value == "asc" })
       },
       response = {
         JSONAssert.assertEquals("{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}", Json.encodeToString(it), JSONCompareMode.LENIENT)

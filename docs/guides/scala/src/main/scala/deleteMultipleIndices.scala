@@ -4,7 +4,6 @@ import scala.concurrent.Future
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.search.{Action, BatchParams, MultipleBatchRequest}
 
 def deleteMultipleIndices(): Future[Unit] = {

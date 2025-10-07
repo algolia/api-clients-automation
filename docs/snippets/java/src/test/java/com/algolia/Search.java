@@ -120,29 +120,29 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.ADD_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "bar");
-                    put("foo", "1");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.ADD_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "bar");
+                  put("foo", "1");
                 }
-              ),
-            new BatchRequest()
-              .setAction(Action.ADD_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "baz");
-                    put("foo", "2");
-                  }
+              }
+            ),
+          new BatchRequest()
+            .setAction(Action.ADD_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "baz");
+                  put("foo", "2");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -160,18 +160,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.CLEAR)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.CLEAR)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -189,18 +189,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.DELETE)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.DELETE)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -218,18 +218,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.DELETE_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.DELETE_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -247,18 +247,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.PARTIAL_UPDATE_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.PARTIAL_UPDATE_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -276,18 +276,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -305,18 +305,18 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
-          Arrays.asList(
-            new BatchRequest()
-              .setAction(Action.UPDATE_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new BatchRequest()
+            .setAction(Action.UPDATE_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-          )
+              }
+            )
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -1609,19 +1609,19 @@ class SnippetSearchClient {
     // Call the API
     client.multipleBatch(
       new BatchParams().setRequests(
-          Arrays.asList(
-            new MultipleBatchRequest()
-              .setAction(Action.ADD_OBJECT)
-              .setBody(
-                new HashMap() {
-                  {
-                    put("key", "value");
-                  }
+        Arrays.asList(
+          new MultipleBatchRequest()
+            .setAction(Action.ADD_OBJECT)
+            .setBody(
+              new HashMap() {
+                {
+                  put("key", "value");
                 }
-              )
-              .setIndexName("<YOUR_INDEX_NAME>")
-          )
+              }
+            )
+            .setIndexName("<YOUR_INDEX_NAME>")
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -2561,12 +2561,12 @@ class SnippetSearchClient {
         .setConditions(Arrays.asList(new Condition().setPattern("harry potter").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
           new Consequence().setUserData(
-              new HashMap() {
-                {
-                  put("promo_content", "20% OFF on all Harry Potter books!");
-                }
+            new HashMap() {
+              {
+                put("promo_content", "20% OFF on all Harry Potter books!");
               }
-            )
+            }
+          )
         )
     );
     // >LOG
@@ -2611,12 +2611,12 @@ class SnippetSearchClient {
         .setConditions(Arrays.asList(new Condition().setPattern("help").setAnchoring(Anchoring.CONTAINS)))
         .setConsequence(
           new Consequence().setUserData(
-              new HashMap() {
-                {
-                  put("redirect", "https://www.algolia.com/support");
-                }
+            new HashMap() {
+              {
+                put("redirect", "https://www.algolia.com/support");
               }
-            )
+            }
+          )
         )
     );
     // >LOG
@@ -3616,104 +3616,104 @@ class SnippetSearchClient {
     // Call the API
     client.search(
       new SearchMethodParams().setRequests(
-          Arrays.asList(
-            new SearchForHits()
-              .setAdvancedSyntax(true)
-              .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
-              .setAllowTyposOnNumericTokens(true)
-              .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM))
-              .setAnalytics(true)
-              .setAnalyticsTags(Arrays.asList(""))
-              .setAroundLatLng("")
-              .setAroundLatLngViaIP(true)
-              .setAroundPrecision(AroundPrecision.of(0))
-              .setAroundRadius(AroundRadiusAll.ALL)
-              .setAttributeCriteriaComputedByMinProximity(true)
-              .setAttributesToHighlight(Arrays.asList(""))
-              .setAttributesToRetrieve(Arrays.asList(""))
-              .setAttributesToSnippet(Arrays.asList(""))
-              .setClickAnalytics(true)
-              .setDecompoundQuery(true)
-              .setDisableExactOnAttributes(Arrays.asList(""))
-              .setDisableTypoToleranceOnAttributes(Arrays.asList(""))
-              .setDistinct(Distinct.of(0))
-              .setEnableABTest(true)
-              .setEnablePersonalization(true)
-              .setEnableReRanking(true)
-              .setEnableRules(true)
-              .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
-              .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(""))))
-              .setFacetingAfterDistinct(true)
-              .setFacets(Arrays.asList(""))
-              .setFilters("")
-              .setGetRankingInfo(true)
-              .setHighlightPostTag("")
-              .setHighlightPreTag("")
-              .setHitsPerPage(1)
-              .setIgnorePlurals(IgnorePlurals.of(false))
-              .setIndexName("<YOUR_INDEX_NAME>")
-              .setInsideBoundingBox(
-                InsideBoundingBox.of(
-                  Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
-                )
+        Arrays.asList(
+          new SearchForHits()
+            .setAdvancedSyntax(true)
+            .setAdvancedSyntaxFeatures(Arrays.asList(AdvancedSyntaxFeatures.EXACT_PHRASE))
+            .setAllowTyposOnNumericTokens(true)
+            .setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM))
+            .setAnalytics(true)
+            .setAnalyticsTags(Arrays.asList(""))
+            .setAroundLatLng("")
+            .setAroundLatLngViaIP(true)
+            .setAroundPrecision(AroundPrecision.of(0))
+            .setAroundRadius(AroundRadiusAll.ALL)
+            .setAttributeCriteriaComputedByMinProximity(true)
+            .setAttributesToHighlight(Arrays.asList(""))
+            .setAttributesToRetrieve(Arrays.asList(""))
+            .setAttributesToSnippet(Arrays.asList(""))
+            .setClickAnalytics(true)
+            .setDecompoundQuery(true)
+            .setDisableExactOnAttributes(Arrays.asList(""))
+            .setDisableTypoToleranceOnAttributes(Arrays.asList(""))
+            .setDistinct(Distinct.of(0))
+            .setEnableABTest(true)
+            .setEnablePersonalization(true)
+            .setEnableReRanking(true)
+            .setEnableRules(true)
+            .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
+            .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(""))))
+            .setFacetingAfterDistinct(true)
+            .setFacets(Arrays.asList(""))
+            .setFilters("")
+            .setGetRankingInfo(true)
+            .setHighlightPostTag("")
+            .setHighlightPreTag("")
+            .setHitsPerPage(1)
+            .setIgnorePlurals(IgnorePlurals.of(false))
+            .setIndexName("<YOUR_INDEX_NAME>")
+            .setInsideBoundingBox(
+              InsideBoundingBox.of(
+                Arrays.asList(Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201), Arrays.asList(40.9234, 2.1185, 38.643, 1.9916))
               )
-              .setInsidePolygon(
-                Arrays.asList(
-                  Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
-                  Arrays.asList(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
-                )
+            )
+            .setInsidePolygon(
+              Arrays.asList(
+                Arrays.asList(47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9),
+                Arrays.asList(40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104)
               )
-              .setLength(1)
-              .setMaxValuesPerFacet(0)
-              .setMinProximity(1)
-              .setMinWordSizefor1Typo(0)
-              .setMinWordSizefor2Typos(0)
-              .setMinimumAroundRadius(1)
-              .setNaturalLanguages(Arrays.asList(SupportedLanguage.FR))
-              .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
-              .setOffset(0)
-              .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
-              .setOptionalWords(OptionalWords.of(Arrays.asList("")))
-              .setPage(0)
-              .setPercentileComputation(true)
-              .setPersonalizationImpact(0)
-              .setQuery("")
-              .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
-              .setQueryType(QueryType.PREFIX_ALL)
-              .setRanking(Arrays.asList(""))
-              .setReRankingApplyFilter(ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of(""))))
-              .setRelevancyStrictness(0)
-              .setRemoveStopWords(RemoveStopWords.of(true))
-              .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
-              .setRenderingContent(
-                new RenderingContent().setFacetOrdering(
-                    new FacetOrdering()
-                      .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
-                      .setValues(
-                        new HashMap() {
-                          {
-                            put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
-                          }
-                        }
-                      )
+            )
+            .setLength(1)
+            .setMaxValuesPerFacet(0)
+            .setMinProximity(1)
+            .setMinWordSizefor1Typo(0)
+            .setMinWordSizefor2Typos(0)
+            .setMinimumAroundRadius(1)
+            .setNaturalLanguages(Arrays.asList(SupportedLanguage.FR))
+            .setNumericFilters(NumericFilters.of(Arrays.asList(NumericFilters.of(""))))
+            .setOffset(0)
+            .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of(""))))
+            .setOptionalWords(OptionalWords.of(Arrays.asList("")))
+            .setPage(0)
+            .setPercentileComputation(true)
+            .setPersonalizationImpact(0)
+            .setQuery("")
+            .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
+            .setQueryType(QueryType.PREFIX_ALL)
+            .setRanking(Arrays.asList(""))
+            .setReRankingApplyFilter(ReRankingApplyFilter.of(Arrays.asList(ReRankingApplyFilter.of(""))))
+            .setRelevancyStrictness(0)
+            .setRemoveStopWords(RemoveStopWords.of(true))
+            .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
+            .setRenderingContent(
+              new RenderingContent().setFacetOrdering(
+                new FacetOrdering()
+                  .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+                  .setValues(
+                    new HashMap() {
+                      {
+                        put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
+                      }
+                    }
                   )
               )
-              .setReplaceSynonymsInHighlight(true)
-              .setResponseFields(Arrays.asList(""))
-              .setRestrictHighlightAndSnippetArrays(true)
-              .setRestrictSearchableAttributes(Arrays.asList(""))
-              .setRuleContexts(Arrays.asList(""))
-              .setSimilarQuery("")
-              .setSnippetEllipsisText("")
-              .setSortFacetValuesBy("")
-              .setSumOrFiltersScores(true)
-              .setSynonyms(true)
-              .setTagFilters(TagFilters.of(Arrays.asList(TagFilters.of(""))))
-              .setType(SearchTypeDefault.DEFAULT)
-              .setTypoTolerance(TypoToleranceEnum.MIN)
-              .setUserToken("")
-          )
-        ),
+            )
+            .setReplaceSynonymsInHighlight(true)
+            .setResponseFields(Arrays.asList(""))
+            .setRestrictHighlightAndSnippetArrays(true)
+            .setRestrictSearchableAttributes(Arrays.asList(""))
+            .setRuleContexts(Arrays.asList(""))
+            .setSimilarQuery("")
+            .setSnippetEllipsisText("")
+            .setSortFacetValuesBy("")
+            .setSumOrFiltersScores(true)
+            .setSynonyms(true)
+            .setTagFilters(TagFilters.of(Arrays.asList(TagFilters.of(""))))
+            .setType(SearchTypeDefault.DEFAULT)
+            .setTypoTolerance(TypoToleranceEnum.MIN)
+            .setUserToken("")
+        )
+      ),
       Hit.class
     );
     // >LOG
@@ -4755,8 +4755,8 @@ class SnippetSearchClient {
         .setQuery("query")
         .setFilters(
           "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND" +
-          " publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John" +
-          " Doe\""
+            " publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John" +
+            " Doe\""
         ),
       Hit.class
     );
@@ -6121,16 +6121,16 @@ class SnippetSearchClient {
     // Call the API
     client.setDictionarySettings(
       new DictionarySettingsParams().setDisableStandardEntries(
-          new StandardEntries().setPlurals(
-              new HashMap() {
-                {
-                  put("fr", false);
-                  put("en", false);
-                  put("ru", true);
-                }
-              }
-            )
+        new StandardEntries().setPlurals(
+          new HashMap() {
+            {
+              put("fr", false);
+              put("en", false);
+              put("ru", true);
+            }
+          }
         )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -6147,31 +6147,31 @@ class SnippetSearchClient {
     // Call the API
     client.setDictionarySettings(
       new DictionarySettingsParams().setDisableStandardEntries(
-          new StandardEntries()
-            .setPlurals(
-              new HashMap() {
-                {
-                  put("fr", false);
-                  put("en", false);
-                  put("ru", true);
-                }
+        new StandardEntries()
+          .setPlurals(
+            new HashMap() {
+              {
+                put("fr", false);
+                put("en", false);
+                put("ru", true);
               }
-            )
-            .setStopwords(
-              new HashMap() {
-                {
-                  put("fr", false);
-                }
+            }
+          )
+          .setStopwords(
+            new HashMap() {
+              {
+                put("fr", false);
               }
-            )
-            .setCompounds(
-              new HashMap() {
-                {
-                  put("ru", true);
-                }
+            }
+          )
+          .setCompounds(
+            new HashMap() {
+              {
+                put("ru", true);
               }
-            )
-        )
+            }
+          )
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7064,16 +7064,16 @@ class SnippetSearchClient {
         .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.LAST_WORDS)
         .setRenderingContent(
           new RenderingContent().setFacetOrdering(
-              new FacetOrdering()
-                .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
-                .setValues(
-                  new HashMap() {
-                    {
-                      put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
-                    }
+            new FacetOrdering()
+              .setFacets(new Facets().setOrder(Arrays.asList("a", "b")))
+              .setValues(
+                new HashMap() {
+                  {
+                    put("a", new Value().setOrder(Arrays.asList("b")).setSortRemainingBy(SortRemainingBy.COUNT));
                   }
-                )
-            )
+                }
+              )
+          )
         )
         .setReplaceSynonymsInHighlight(true)
         .setReplicas(Arrays.asList(""))
@@ -7771,12 +7771,12 @@ class SnippetSearchClient {
     client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setDecompoundedAttributes(
-          new HashMap() {
-            {
-              put("de", Arrays.asList("name"));
-            }
+        new HashMap() {
+          {
+            put("de", Arrays.asList("name"));
           }
-        )
+        }
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7794,13 +7794,13 @@ class SnippetSearchClient {
     client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setDecompoundedAttributes(
-          new HashMap() {
-            {
-              put("de", Arrays.asList("name_de", "description_de"));
-              put("fi", Arrays.asList("name_fi", "description_fi"));
-            }
+        new HashMap() {
+          {
+            put("de", Arrays.asList("name_de", "description_de"));
+            put("fi", Arrays.asList("name_fi", "description_fi"));
           }
-        )
+        }
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -7832,19 +7832,19 @@ class SnippetSearchClient {
     client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setCustomNormalization(
-          new HashMap() {
-            {
-              put(
-                "default",
-                new HashMap() {
-                  {
-                    put("ä", "ae");
-                  }
+        new HashMap() {
+          {
+            put(
+              "default",
+              new HashMap() {
+                {
+                  put("ä", "ae");
                 }
-              );
-            }
+              }
+            );
           }
-        )
+        }
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -8179,12 +8179,12 @@ class SnippetSearchClient {
     client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setUserData(
-          new HashMap() {
-            {
-              put("extraData", "This is the custom data that you want to store in your index");
-            }
+        new HashMap() {
+          {
+            put("extraData", "This is the custom data that you want to store in your index");
           }
-        )
+        }
+      )
     );
     // >LOG
     // SEPARATOR<
@@ -8202,25 +8202,22 @@ class SnippetSearchClient {
     client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRenderingContent(
-          new RenderingContent().setFacetOrdering(
-              new FacetOrdering()
-                .setFacets(new Facets().setOrder(Arrays.asList("size", "brand")))
-                .setValues(
-                  new HashMap() {
-                    {
-                      put(
-                        "brand",
-                        new Value()
-                          .setOrder(Arrays.asList("uniqlo"))
-                          .setHide(Arrays.asList("muji"))
-                          .setSortRemainingBy(SortRemainingBy.COUNT)
-                      );
-                      put("size", new Value().setOrder(Arrays.asList("S", "M", "L")).setSortRemainingBy(SortRemainingBy.HIDDEN));
-                    }
-                  }
-                )
+        new RenderingContent().setFacetOrdering(
+          new FacetOrdering()
+            .setFacets(new Facets().setOrder(Arrays.asList("size", "brand")))
+            .setValues(
+              new HashMap() {
+                {
+                  put(
+                    "brand",
+                    new Value().setOrder(Arrays.asList("uniqlo")).setHide(Arrays.asList("muji")).setSortRemainingBy(SortRemainingBy.COUNT)
+                  );
+                  put("size", new Value().setOrder(Arrays.asList("S", "M", "L")).setSortRemainingBy(SortRemainingBy.HIDDEN));
+                }
+              }
             )
         )
+      )
     );
     // >LOG
     // SEPARATOR<

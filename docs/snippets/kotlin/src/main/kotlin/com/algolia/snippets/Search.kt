@@ -6,7 +6,6 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
-
 // IMPORT<
 import com.algolia.client.model.search.*
 import kotlinx.serialization.json.*
@@ -68,10 +67,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       body = buildJsonObject {
-        put(
-          "key",
-          JsonPrimitive("value"),
-        )
+        put("key", JsonPrimitive("value"))
       },
     )
 
@@ -159,27 +155,15 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "addObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("bar"),
-              )
-              put(
-                "foo",
-                JsonPrimitive("1"),
-              )
+              put("key", JsonPrimitive("bar"))
+              put("foo", JsonPrimitive("1"))
             },
           ),
           BatchRequest(
             action = Action.entries.first { it.value == "addObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("baz"),
-              )
-              put(
-                "foo",
-                JsonPrimitive("2"),
-              )
+              put("key", JsonPrimitive("baz"))
+              put("foo", JsonPrimitive("2"))
             },
           ),
         ),
@@ -207,10 +191,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "clear" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -238,10 +219,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "delete" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -269,10 +247,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "deleteObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -300,10 +275,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "partialUpdateObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -331,10 +303,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "partialUpdateObjectNoCreate" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -362,10 +331,7 @@ class SnippetSearchClient {
           BatchRequest(
             action = Action.entries.first { it.value == "updateObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
           ),
         ),
@@ -480,9 +446,7 @@ class SnippetSearchClient {
             body = DictionaryEntry(
               objectID = "1",
               language = SupportedLanguage.entries.first { it.value == "en" },
-              additionalProperties = mapOf(
-                "additional" to JsonPrimitive("try me"),
-              ),
+              additionalProperties = mapOf("additional" to JsonPrimitive("try me")),
             ),
           ),
         ),
@@ -503,9 +467,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.browse(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.browse(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -564,9 +526,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.clearObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.clearObjects(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -582,9 +542,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.clearRules(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.clearRules(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -600,9 +558,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.clearSynonyms(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.clearSynonyms(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -618,9 +574,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/minimal",
-    )
+    var response = client.customDelete(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -636,10 +590,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customDelete(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters"),
-    )
+    var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
     // Use the response
@@ -655,9 +606,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/minimal",
-    )
+    var response = client.customGet(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -673,10 +622,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customGet(
-      path = "test/all",
-      parameters = mapOf("query" to "parameters with space"),
-    )
+    var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
     // Use the response
@@ -720,9 +666,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customPost(
-      path = "test/minimal",
-    )
+    var response = client.customPost(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -742,10 +686,7 @@ class SnippetSearchClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -767,10 +708,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -797,10 +735,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -827,10 +762,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -857,10 +789,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         headers = buildMap {
@@ -887,10 +816,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -917,10 +843,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -947,10 +870,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -977,10 +897,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -1007,10 +924,7 @@ class SnippetSearchClient {
       path = "test/requestOptions",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "facet",
-          JsonPrimitive("filters"),
-        )
+        put("facet", JsonPrimitive("filters"))
       },
       requestOptions = RequestOptions(
         urlParameters = buildMap {
@@ -1033,9 +947,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.customPut(
-      path = "test/minimal",
-    )
+    var response = client.customPut(path = "test/minimal")
 
     // >LOG
     // Use the response
@@ -1055,10 +967,7 @@ class SnippetSearchClient {
       path = "test/all",
       parameters = mapOf("query" to "parameters"),
       body = buildJsonObject {
-        put(
-          "body",
-          JsonPrimitive("parameters"),
-        )
+        put("body", JsonPrimitive("parameters"))
       },
     )
 
@@ -1076,9 +985,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteApiKey(
-      key = "myTestApiKey",
-    )
+    var response = client.deleteApiKey(key = "myTestApiKey")
 
     // >LOG
     // Use the response
@@ -1115,9 +1022,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.deleteIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -1133,10 +1038,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-    )
+    var response = client.deleteObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID")
 
     // >LOG
     // Use the response
@@ -1152,10 +1054,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectIDs = listOf("1", "2"),
-    )
+    var response = client.deleteObjects(indexName = "<YOUR_INDEX_NAME>", objectIDs = listOf("1", "2"))
 
     // >LOG
     // Use the response
@@ -1171,10 +1070,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-    )
+    var response = client.deleteRule(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
     // Use the response
@@ -1190,10 +1086,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "test/with/slash",
-    )
+    var response = client.deleteRule(indexName = "<YOUR_INDEX_NAME>", objectID = "test/with/slash")
 
     // >LOG
     // Use the response
@@ -1209,9 +1102,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteSource(
-      source = "theSource",
-    )
+    var response = client.deleteSource(source = "theSource")
 
     // >LOG
     // Use the response
@@ -1227,10 +1118,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.deleteSynonym(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-    )
+    var response = client.deleteSynonym(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
     // Use the response
@@ -1406,9 +1294,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getApiKey(
-      key = "myTestApiKey",
-    )
+    var response = client.getApiKey(key = "myTestApiKey")
 
     // >LOG
     // Use the response
@@ -1424,9 +1310,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getAppTask(
-      taskID = 123L,
-    )
+    var response = client.getAppTask(taskID = 123L)
 
     // >LOG
     // Use the response
@@ -1490,12 +1374,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getLogs(
-      offset = 5,
-      length = 10,
-      indexName = "<YOUR_INDEX_NAME>",
-      type = LogType.entries.first { it.value == "all" },
-    )
+    var response = client.getLogs(offset = 5, length = 10, indexName = "<YOUR_INDEX_NAME>", type = LogType.entries.first { it.value == "all" })
 
     // >LOG
     // Use the response
@@ -1511,11 +1390,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "uniqueID",
-      attributesToRetrieve = listOf("attr1", "attr2"),
-    )
+    var response = client.getObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID", attributesToRetrieve = listOf("attr1", "attr2"))
 
     // >LOG
     // Use the response
@@ -1531,10 +1406,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getObject(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "Batman and Robin",
-    )
+    var response = client.getObject(indexName = "<YOUR_INDEX_NAME>", objectID = "Batman and Robin")
 
     // >LOG
     // Use the response
@@ -1630,10 +1502,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getRule(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "qr-1725004648916",
-    )
+    var response = client.getRule(indexName = "<YOUR_INDEX_NAME>", objectID = "qr-1725004648916")
 
     // >LOG
     // Use the response
@@ -1649,10 +1518,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      getVersion = 2,
-    )
+    var response = client.getSettings(indexName = "<YOUR_INDEX_NAME>", getVersion = 2)
 
     // >LOG
     // Use the response
@@ -1684,10 +1550,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getSynonym(
-      indexName = "<YOUR_INDEX_NAME>",
-      objectID = "id1",
-    )
+    var response = client.getSynonym(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
     // Use the response
@@ -1703,10 +1566,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getTask(
-      indexName = "<YOUR_INDEX_NAME>",
-      taskID = 123L,
-    )
+    var response = client.getTask(indexName = "<YOUR_INDEX_NAME>", taskID = 123L)
 
     // >LOG
     // Use the response
@@ -1738,9 +1598,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.getUserId(
-      userID = "uniqueID",
-    )
+    var response = client.getUserId(userID = "uniqueID")
 
     // >LOG
     // Use the response
@@ -1772,9 +1630,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.hasPendingMappings(
-      getClusters = true,
-    )
+    var response = client.hasPendingMappings(getClusters = true)
 
     // >LOG
     // Use the response
@@ -1790,9 +1646,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.indexExists(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -1808,9 +1662,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.indexExists(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -1826,9 +1678,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.indexExists(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -1892,10 +1742,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.listIndices(
-      page = 8,
-      hitsPerPage = 3,
-    )
+    var response = client.listIndices(page = 8, hitsPerPage = 3)
 
     // >LOG
     // Use the response
@@ -1927,10 +1774,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.listUserIds(
-      page = 8,
-      hitsPerPage = 100,
-    )
+    var response = client.listUserIds(page = 8, hitsPerPage = 100)
 
     // >LOG
     // Use the response
@@ -1952,10 +1796,7 @@ class SnippetSearchClient {
           MultipleBatchRequest(
             action = Action.entries.first { it.value == "addObject" },
             body = buildJsonObject {
-              put(
-                "key",
-                JsonPrimitive("value"),
-              )
+              put("key", JsonPrimitive("value"))
             },
             indexName = "<YOUR_INDEX_NAME>",
           ),
@@ -2048,10 +1889,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToUpdate = buildJsonObject {
-        put(
-          "attributeId",
-          JsonPrimitive("new value"),
-        )
+        put("attributeId", JsonPrimitive("new value"))
       },
     )
 
@@ -2073,10 +1911,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToUpdate = buildJsonObject {
-        put(
-          "attributeId",
-          JsonPrimitive(1),
-        )
+        put("attributeId", JsonPrimitive(1))
       },
     )
 
@@ -2098,10 +1933,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID",
       attributesToUpdate = buildJsonObject {
-        put(
-          "attributeId",
-          JsonPrimitive(true),
-        )
+        put("attributeId", JsonPrimitive(true))
       },
     )
 
@@ -2157,10 +1989,7 @@ class SnippetSearchClient {
         put(
           "attributeId",
           buildJsonObject {
-            put(
-              "nested",
-              JsonPrimitive("value"),
-            )
+            put("nested", JsonPrimitive("value"))
           },
         )
       },
@@ -2218,14 +2047,8 @@ class SnippetSearchClient {
         put(
           "categoryPageId",
           buildJsonObject {
-            put(
-              "_operation",
-              JsonPrimitive("Add"),
-            )
-            put(
-              "value",
-              JsonPrimitive("men-clothing-pants"),
-            )
+            put("_operation", JsonPrimitive("Add"))
+            put("value", JsonPrimitive("men-clothing-pants"))
           },
         )
       },
@@ -2252,14 +2075,8 @@ class SnippetSearchClient {
         put(
           "categoryPageId",
           buildJsonObject {
-            put(
-              "_operation",
-              JsonPrimitive("Remove"),
-            )
-            put(
-              "value",
-              JsonPrimitive("men-clothing-pants"),
-            )
+            put("_operation", JsonPrimitive("Remove"))
+            put("value", JsonPrimitive("men-clothing-pants"))
           },
         )
       },
@@ -2283,24 +2100,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Adam"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("name", JsonPrimitive("Adam"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("2"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Benoit"),
-          )
+          put("objectID", JsonPrimitive("2"))
+          put("name", JsonPrimitive("Benoit"))
         },
       ),
       createIfNotExists = true,
@@ -2324,24 +2129,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("3"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Cyril"),
-          )
+          put("objectID", JsonPrimitive("3"))
+          put("name", JsonPrimitive("Cyril"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("4"),
-          )
-          put(
-            "name",
-            JsonPrimitive("David"),
-          )
+          put("objectID", JsonPrimitive("4"))
+          put("name", JsonPrimitive("David"))
         },
       ),
       createIfNotExists = false,
@@ -2361,9 +2154,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.removeUserId(
-      userID = "uniqueID",
-    )
+    var response = client.removeUserId(userID = "uniqueID")
 
     // >LOG
     // Use the response
@@ -2383,104 +2174,44 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Adam"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("name", JsonPrimitive("Adam"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("2"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Benoit"),
-          )
+          put("objectID", JsonPrimitive("2"))
+          put("name", JsonPrimitive("Benoit"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("3"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Cyril"),
-          )
+          put("objectID", JsonPrimitive("3"))
+          put("name", JsonPrimitive("Cyril"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("4"),
-          )
-          put(
-            "name",
-            JsonPrimitive("David"),
-          )
+          put("objectID", JsonPrimitive("4"))
+          put("name", JsonPrimitive("David"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("5"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Eva"),
-          )
+          put("objectID", JsonPrimitive("5"))
+          put("name", JsonPrimitive("Eva"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("6"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Fiona"),
-          )
+          put("objectID", JsonPrimitive("6"))
+          put("name", JsonPrimitive("Fiona"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("7"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Gael"),
-          )
+          put("objectID", JsonPrimitive("7"))
+          put("name", JsonPrimitive("Gael"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("8"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Hugo"),
-          )
+          put("objectID", JsonPrimitive("8"))
+          put("name", JsonPrimitive("Hugo"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("9"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Igor"),
-          )
+          put("objectID", JsonPrimitive("9"))
+          put("name", JsonPrimitive("Igor"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("10"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Julia"),
-          )
+          put("objectID", JsonPrimitive("10"))
+          put("name", JsonPrimitive("Julia"))
         },
       ),
       batchSize = 3,
@@ -2504,24 +2235,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Adam"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("name", JsonPrimitive("Adam"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("2"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Benoit"),
-          )
+          put("objectID", JsonPrimitive("2"))
+          put("name", JsonPrimitive("Benoit"))
         },
       ),
       batchSize = 77,
@@ -2546,24 +2265,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("fine"),
-          )
-          put(
-            "body",
-            JsonPrimitive("small obj"),
-          )
+          put("objectID", JsonPrimitive("fine"))
+          put("body", JsonPrimitive("small obj"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("toolarge"),
-          )
-          put(
-            "body",
-            JsonPrimitive("something bigger than 10KB"),
-          )
+          put("objectID", JsonPrimitive("toolarge"))
+          put("body", JsonPrimitive("something bigger than 10KB"))
         },
       ),
     )
@@ -2605,9 +2312,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.restoreApiKey(
-      key = "ALGOLIA_API_KEY",
-    )
+    var response = client.restoreApiKey(key = "ALGOLIA_API_KEY")
 
     // >LOG
     // Use the response
@@ -2626,22 +2331,10 @@ class SnippetSearchClient {
     var response = client.saveObject(
       indexName = "<YOUR_INDEX_NAME>",
       body = buildJsonObject {
-        put(
-          "name",
-          JsonPrimitive("Black T-shirt"),
-        )
-        put(
-          "color",
-          JsonPrimitive("#000000||black"),
-        )
-        put(
-          "availableIn",
-          JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
-        )
-        put(
-          "objectID",
-          JsonPrimitive("myID"),
-        )
+        put("name", JsonPrimitive("Black T-shirt"))
+        put("color", JsonPrimitive("#000000||black"))
+        put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
+        put("objectID", JsonPrimitive("myID"))
       },
     )
 
@@ -2663,24 +2356,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Adam"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("name", JsonPrimitive("Adam"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("2"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Benoit"),
-          )
+          put("objectID", JsonPrimitive("2"))
+          put("name", JsonPrimitive("Benoit"))
         },
       ),
     )
@@ -2703,24 +2384,12 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Adam"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("name", JsonPrimitive("Adam"))
         },
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("2"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Benoit"),
-          )
+          put("objectID", JsonPrimitive("2"))
+          put("name", JsonPrimitive("Benoit"))
         },
       ),
     )
@@ -2743,26 +2412,11 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "visibility",
-            JsonPrimitive("public"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Hot 100 Billboard Charts"),
-          )
-          put(
-            "playlistId",
-            JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-          )
-          put(
-            "createdAt",
-            JsonPrimitive("1500240452"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("visibility", JsonPrimitive("public"))
+          put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+          put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+          put("createdAt", JsonPrimitive("1500240452"))
         },
       ),
     )
@@ -2785,26 +2439,11 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       objects = listOf(
         buildJsonObject {
-          put(
-            "objectID",
-            JsonPrimitive("1"),
-          )
-          put(
-            "visibility",
-            JsonPrimitive("public"),
-          )
-          put(
-            "name",
-            JsonPrimitive("Hot 100 Billboard Charts"),
-          )
-          put(
-            "playlistId",
-            JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-          )
-          put(
-            "createdAt",
-            JsonPrimitive("1500240452"),
-          )
+          put("objectID", JsonPrimitive("1"))
+          put("visibility", JsonPrimitive("public"))
+          put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+          put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+          put("createdAt", JsonPrimitive("1500240452"))
         },
       ),
       waitForTasks = false,
@@ -2902,10 +2541,7 @@ class SnippetSearchClient {
           ),
           filterPromotes = false,
           userData = buildJsonObject {
-            put(
-              "algolia",
-              JsonPrimitive("aloglia"),
-            )
+            put("algolia", JsonPrimitive("aloglia"))
           },
           promote = listOf(
             PromoteObjectID(
@@ -3046,10 +2682,7 @@ class SnippetSearchClient {
         ),
         consequence = Consequence(
           userData = buildJsonObject {
-            put(
-              "promo_content",
-              JsonPrimitive("20% OFF on all Harry Potter books!"),
-            )
+            put("promo_content", JsonPrimitive("20% OFF on all Harry Potter books!"))
           },
         ),
       ),
@@ -3116,10 +2749,7 @@ class SnippetSearchClient {
         ),
         consequence = Consequence(
           userData = buildJsonObject {
-            put(
-              "redirect",
-              JsonPrimitive("https://www.algolia.com/support"),
-            )
+            put("redirect", JsonPrimitive("https://www.algolia.com/support"))
           },
         ),
       ),
@@ -3813,10 +3443,7 @@ class SnippetSearchClient {
             ),
             filterPromotes = false,
             userData = buildJsonObject {
-              put(
-                "algolia",
-                JsonPrimitive("aloglia"),
-              )
+              put("algolia", JsonPrimitive("aloglia"))
             },
             promote = listOf(
               PromoteObjectID(
@@ -4606,10 +4233,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.searchForFacetValues(
-      indexName = "<YOUR_INDEX_NAME>",
-      facetName = "facetName",
-    )
+    var response = client.searchForFacetValues(indexName = "<YOUR_INDEX_NAME>", facetName = "facetName")
 
     // >LOG
     // Use the response
@@ -4692,9 +4316,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -4710,9 +4332,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.searchSingleIndex(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -7527,9 +7147,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.searchSynonyms(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    var response = client.searchSynonyms(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
     // Use the response
@@ -7592,9 +7210,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    client.setClientApiKey(
-      apiKey = "updated-api-key",
-    )
+    client.setClientApiKey(apiKey = "updated-api-key")
 
     // >LOG
     // SEPARATOR<
@@ -8826,10 +8442,7 @@ class SnippetSearchClient {
         customRanking = listOf("algolia"),
         decompoundQuery = false,
         decompoundedAttributes = buildJsonObject {
-          put(
-            "algolia",
-            JsonPrimitive("aloglia"),
-          )
+          put("algolia", JsonPrimitive("aloglia"))
         },
         disableExactOnAttributes = listOf("algolia"),
         disablePrefixOnAttributes = listOf("algolia"),
@@ -9821,14 +9434,7 @@ class SnippetSearchClient {
       indexName = "<YOUR_INDEX_NAME>",
       indexSettings = IndexSettings(
         decompoundedAttributes = buildJsonObject {
-          put(
-            "de",
-            JsonArray(
-              listOf(
-                JsonPrimitive("name"),
-              ),
-            ),
-          )
+          put("de", JsonArray(listOf(JsonPrimitive("name"))))
         },
       ),
     )
@@ -10479,10 +10085,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.waitForApiKey(
-      key = "api-key-add-operation-test-kotlin",
-      operation = ApiKeyOperation.entries.first { it.value == "add" },
-    )
+    var response = client.waitForApiKey(key = "api-key-add-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "add" })
 
     // >LOG
     // Use the response
@@ -10526,10 +10129,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.waitForApiKey(
-      key = "api-key-delete-operation-test-kotlin",
-      operation = ApiKeyOperation.entries.first { it.value == "delete" },
-    )
+    var response = client.waitForApiKey(key = "api-key-delete-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "delete" })
 
     // >LOG
     // Use the response
@@ -10545,9 +10145,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.waitForAppTask(
-      taskID = 123L,
-    )
+    var response = client.waitForAppTask(taskID = 123L)
 
     // >LOG
     // Use the response
@@ -10563,10 +10161,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response = client.waitForTask(
-      indexName = "<YOUR_INDEX_NAME>",
-      taskID = 123L,
-    )
+    var response = client.waitForTask(indexName = "<YOUR_INDEX_NAME>", taskID = 123L)
 
     // >LOG
     // Use the response

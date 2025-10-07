@@ -6,7 +6,6 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
-
 import com.algolia.client.model.search.BrowseParamsObject
 import com.algolia.client.model.search.IndexSettings
 
@@ -45,11 +44,7 @@ suspend fun saveImageClassificationsAndSettings() {
     val records = images.map { Json.encodeToJsonElement(it).jsonObject }
 
     // Update records with image classifications
-    client.partialUpdateObjects(
-      indexName = "<YOUR_INDEX_NAME>",
-      objects = records,
-      createIfNotExists = true,
-    )
+    client.partialUpdateObjects(indexName = "<YOUR_INDEX_NAME>", objects = records, createIfNotExists = true)
 
     val facets = mutableListOf<String>()
     val attributes = mutableListOf<String>()
@@ -66,19 +61,14 @@ suspend fun saveImageClassificationsAndSettings() {
       }
     }
 
-    val currentSettings = client.getSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-    )
+    val currentSettings = client.getSettings(indexName = "<YOUR_INDEX_NAME>")
 
     val settings = IndexSettings(
       searchableAttributes = currentSettings.searchableAttributes?.plus(attributes),
       attributesForFaceting = currentSettings.attributesForFaceting?.plus(facets),
     )
 
-    client.setSettings(
-      indexName = "<YOUR_INDEX_NAME>",
-      indexSettings = settings,
-    )
+    client.setSettings(indexName = "<YOUR_INDEX_NAME>", indexSettings = settings)
   } catch (e: Exception) {
     println(e.message)
   }

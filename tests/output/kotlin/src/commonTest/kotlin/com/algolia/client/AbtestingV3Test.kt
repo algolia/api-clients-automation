@@ -14,17 +14,17 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AbtestingV3Test {
 
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = AbtestingV3Client(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; AbtestingV3 (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -37,11 +37,10 @@ class AbtestingV3Test {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = AbtestingV3Client(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -56,9 +55,7 @@ class AbtestingV3Test {
     val client = AbtestingV3Client(appId = "my-app-id", apiKey = "my-api-key", "us")
     client.runTest(
       call = {
-        getABTest(
-          id = 123,
-        )
+        getABTest(id = 123)
       },
       intercept = {
         assertEquals("analytics.us.algolia.com", it.url.host)
@@ -78,9 +75,7 @@ class AbtestingV3Test {
     val client = AbtestingV3Client(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -88,20 +83,18 @@ class AbtestingV3Test {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

@@ -134,5 +134,4 @@ class AbtestingV3Test extends AnyFunSuite {
       assert(parse(write(res)) == parse("{\"headerAPIKeyValue\":\"updated-api-key\"}"))
     }
   }
-
 }

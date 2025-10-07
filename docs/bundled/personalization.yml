@@ -237,9 +237,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -465,9 +463,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -693,9 +689,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -917,9 +911,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1176,9 +1168,7 @@ paths:
 
             // Call the API
 
-            var response = client.getUserTokenProfile(
-              userToken = "UserToken",
-            )
+            var response = client.getUserTokenProfile(userToken = "UserToken")
 
 
             // >LOG
@@ -1441,9 +1431,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteUserProfile(
-              userToken = "UserToken",
-            )
+            var response = client.deleteUserProfile(userToken = "UserToken")
 
 
             // >LOG

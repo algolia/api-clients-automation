@@ -1,9 +1,11 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.consequence import Consequence
 from algoliasearch.search.models.rule import Rule
 from algoliasearch.search.models.time_range import TimeRange
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 object_id = "a-rule-id"
 

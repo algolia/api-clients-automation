@@ -6,7 +6,6 @@ import scala.concurrent.duration.Duration
 // >IMPORT
 import algoliasearch.api.MonitoringClient
 import algoliasearch.config.*
-
 // IMPORT<
 import algoliasearch.monitoring.*
 

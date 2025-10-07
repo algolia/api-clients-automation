@@ -161,7 +161,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\\\"Brand\\\"" +
-        " and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+          " and value=\\\"Algolia\\\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -220,7 +220,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
-        " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
+          " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -250,7 +250,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
-        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+          " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -299,7 +299,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"schedule\",\"cron\":\"*" +
-        " * * * *\"},\"action\":\"replace\"}",
+          " * * * *\"},\"action\":\"replace\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1554,7 +1554,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
-        " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
+          " *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1584,7 +1584,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"destinationID\":\"destinationID\",\"cron\":\"* * * *" +
-        " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
+          " *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}",
         req.body,
         JSONCompareMode.STRICT
       )

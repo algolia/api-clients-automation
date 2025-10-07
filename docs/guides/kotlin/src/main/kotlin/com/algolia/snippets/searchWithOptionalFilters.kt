@@ -17,8 +17,5 @@ suspend fun searchWithOptionalFilters() {
   val optionalFilters = reduceLabelsToFilters(labels)
   val searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", optionalFilters = optionalFilters)
 
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

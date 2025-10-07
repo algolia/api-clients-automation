@@ -903,94 +903,94 @@
       "default": "var response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    type = TransformationType.entries.first { it.value == \"code\" },\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(\n  path = \"test/minimal\",\n)",
-      "allow del method for a custom path with all parameters": "var response = client.customDelete(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n)"
+      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "var response = client.customDelete(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters\"))"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "var response = client.customGet(\n  path = \"test/minimal\",\n)",
-      "allow get method for a custom path with all parameters": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters with space\"),\n)",
+      "allow get method for a custom path with minimal parameters": "var response = client.customGet(path = \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "var response = client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
       "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overriden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "var response = client.customPost(\n  path = \"test/minimal\",\n)",
-      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)",
-      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"facet\",\n      JsonPrimitive(\"filters\"),\n    )\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
+      "allow post method for a custom path with minimal parameters": "var response = client.customPost(path = \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)",
+      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
+      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
+      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "var response = client.customPut(\n  path = \"test/minimal\",\n)",
-      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\n      \"body\",\n      JsonPrimitive(\"parameters\"),\n    )\n  },\n)"
+      "allow put method for a custom path with minimal parameters": "var response = client.customPut(path = \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)"
     },
     "deleteAuthentication": {
-      "default": "var response = client.deleteAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteAuthentication(authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "deleteDestination": {
-      "default": "var response = client.deleteDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteDestination(destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "deleteSource": {
-      "default": "var response = client.deleteSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteSource(sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "deleteTask": {
-      "default": "var response = client.deleteTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteTask(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "deleteTaskV1": {
-      "default": "var response = client.deleteTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteTaskV1(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "deleteTransformation": {
-      "default": "var response = client.deleteTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.deleteTransformation(transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "disableTask": {
-      "default": "var response = client.disableTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.disableTask(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "disableTaskV1": {
-      "default": "var response = client.disableTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.disableTaskV1(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "enableTask": {
-      "default": "var response = client.enableTask(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
+      "default": "var response = client.enableTask(taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
     "enableTaskV1": {
-      "default": "var response = client.enableTaskV1(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)"
+      "default": "var response = client.enableTaskV1(taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
     },
     "getAuthentication": {
-      "default": "var response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getAuthentication(authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "getDestination": {
-      "default": "var response = client.getDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getDestination(destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "getEvent": {
-      "default": "var response = client.getEvent(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)"
+      "default": "var response = client.getEvent(runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\")"
     },
     "getRun": {
-      "default": "var response = client.getRun(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getRun(runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "getSource": {
-      "default": "var response = client.getSource(\n  sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)"
+      "default": "var response = client.getSource(sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\")"
     },
     "getTask": {
-      "default": "var response = client.getTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getTask(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "getTaskV1": {
-      "default": "var response = client.getTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getTaskV1(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "getTransformation": {
-      "default": "var response = client.getTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.getTransformation(transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "listAuthentications": {
       "getAuthentications": "var response = client.listAuthentications()",
-      "getAuthentications with query params": "var response = client.listAuthentications(\n  itemsPerPage = 2,\n  page = 1,\n  type = listOf(AuthenticationType.entries.first { it.value == \"basic\" }, AuthenticationType.entries.first { it.value == \"algolia\" }),\n  platform = listOf(PlatformNone.entries.first { it.value == \"none\" }),\n  sort = AuthenticationSortKeys.entries.first { it.value == \"createdAt\" },\n  order = OrderKeys.entries.first { it.value == \"asc\" },\n)"
+      "getAuthentications with query params": "var response = client.listAuthentications(itemsPerPage = 2, page = 1, type = listOf(AuthenticationType.entries.first { it.value == \"basic\" }, AuthenticationType.entries.first { it.value == \"algolia\" }), platform = listOf(PlatformNone.entries.first { it.value == \"none\" }), sort = AuthenticationSortKeys.entries.first { it.value == \"createdAt\" }, order = OrderKeys.entries.first { it.value == \"asc\" })"
     },
     "listDestinations": {
       "default": "var response = client.listDestinations()"
     },
     "listEvents": {
-      "default": "var response = client.listEvents(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.listEvents(runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "listRuns": {
       "default": "var response = client.listRuns()"
@@ -1006,7 +1006,7 @@
     },
     "listTransformations": {
       "listTransformations": "var response = client.listTransformations()",
-      "list with every parameters": "var response = client.listTransformations(\n  itemsPerPage = 2,\n  page = 1,\n  sort = TransformationSortKeys.entries.first { it.value == \"createdAt\" },\n  order = OrderKeys.entries.first { it.value == \"asc\" },\n  type = TransformationType.entries.first { it.value == \"noCode\" },\n)"
+      "list with every parameters": "var response = client.listTransformations(itemsPerPage = 2, page = 1, sort = TransformationSortKeys.entries.first { it.value == \"createdAt\" }, order = OrderKeys.entries.first { it.value == \"asc\" }, type = TransformationType.entries.first { it.value == \"noCode\" })"
     },
     "push": {
       "global push": "var response = client.push(\n  indexName = \"<YOUR_INDEX_NAME>\",\n  pushTaskPayload = PushTaskPayload(\n    action = Action.entries.first { it.value == \"addObject\" },\n    records = listOf(\n      PushTaskRecords(\n        objectID = \"o\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"bar\"),\n          \"foo\" to JsonPrimitive(\"1\"),\n        ),\n      ),\n      PushTaskRecords(\n        objectID = \"k\",\n        additionalProperties = mapOf(\n          \"key\" to JsonPrimitive(\"baz\"),\n          \"foo\" to JsonPrimitive(\"2\"),\n        ),\n      ),\n    ),\n  ),\n)",
@@ -1025,10 +1025,10 @@
       "default": "var response = client.runSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  runSourcePayload = RunSourcePayload(\n    indexToInclude = listOf(\"products_us\", \"products eu\"),\n    entityIDs = listOf(\"1234\", \"5678\"),\n    entityType = EntityType.entries.first { it.value == \"product\" },\n  ),\n)"
     },
     "runTask": {
-      "default": "var response = client.runTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.runTask(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "runTaskV1": {
-      "default": "var response = client.runTaskV1(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.runTaskV1(taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "searchAuthentications": {
       "default": "var response = client.searchAuthentications(\n  authenticationSearch = AuthenticationSearch(\n    authenticationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"),\n  ),\n)"
@@ -1049,18 +1049,18 @@
       "default": "var response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"),\n  ),\n)"
     },
     "setClientApiKey": {
-      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\",\n)"
+      "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
     },
     "triggerDockerSourceDiscover": {
-      "default": "var response = client.triggerDockerSourceDiscover(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)"
+      "default": "var response = client.triggerDockerSourceDiscover(sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
     },
     "tryTransformation": {
-      "tryTransformation": "var response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n  ),\n)",
-      "with authentications": "var response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n    authentications = listOf(\n      AuthenticationCreate(\n        type = AuthenticationType.entries.first { it.value == \"oauth\" },\n        name = \"authName\",\n        input = AuthOAuth(\n          url = \"http://test.oauth\",\n          clientId = \"myID\",\n          clientSecret = \"mySecret\",\n        ),\n      ),\n    ),\n  ),\n)"
+      "tryTransformation": "var response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\"bar\", JsonPrimitive(\"baz\"))\n    },\n  ),\n)",
+      "with authentications": "var response = client.tryTransformation(\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\"bar\", JsonPrimitive(\"baz\"))\n    },\n    authentications = listOf(\n      AuthenticationCreate(\n        type = AuthenticationType.entries.first { it.value == \"oauth\" },\n        name = \"authName\",\n        input = AuthOAuth(\n          url = \"http://test.oauth\",\n          clientId = \"myID\",\n          clientSecret = \"mySecret\",\n        ),\n      ),\n    ),\n  ),\n)"
     },
     "tryTransformationBeforeUpdate": {
-      "tryTransformationBeforeUpdate": "var response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n  ),\n)",
-      "existing with authentications": "var response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n    authentications = listOf(\n      AuthenticationCreate(\n        type = AuthenticationType.entries.first { it.value == \"oauth\" },\n        name = \"authName\",\n        input = AuthOAuth(\n          url = \"http://test.oauth\",\n          clientId = \"myID\",\n          clientSecret = \"mySecret\",\n        ),\n      ),\n    ),\n  ),\n)"
+      "tryTransformationBeforeUpdate": "var response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\"bar\", JsonPrimitive(\"baz\"))\n    },\n  ),\n)",
+      "existing with authentications": "var response = client.tryTransformationBeforeUpdate(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationTry = TransformationTry(\n    type = TransformationType.entries.first { it.value == \"code\" },\n    input = TransformationCode(\n      code = \"foo\",\n    ),\n    sampleRecord = buildJsonObject {\n      put(\"bar\", JsonPrimitive(\"baz\"))\n    },\n    authentications = listOf(\n      AuthenticationCreate(\n        type = AuthenticationType.entries.first { it.value == \"oauth\" },\n        name = \"authName\",\n        input = AuthOAuth(\n          url = \"http://test.oauth\",\n          clientId = \"myID\",\n          clientSecret = \"mySecret\",\n        ),\n      ),\n    ),\n  ),\n)"
     },
     "updateAuthentication": {
       "default": "var response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = \"newName\",\n  ),\n)"

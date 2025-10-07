@@ -270,9 +270,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -507,9 +505,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -744,9 +740,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -977,9 +971,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1259,42 +1251,42 @@ paths:
             client.search(
               "foo",
               new RequestBody().setParams(
-                  new Params()
-                    .setQuery("batman")
-                    .setInjectedItems(
-                      new HashMap() {
-                        {
-                          put(
-                            "my-unique-external-group-key",
-                            new ExternalInjectedItem().setItems(
-                                Arrays.asList(
-                                  new ExternalInjection().setObjectID("my-object-1"),
-                                  new ExternalInjection()
-                                    .setObjectID("my-object-2")
-                                    .setMetadata(
-                                      new HashMap() {
-                                        {
-                                          put("my-string", "string");
-                                          put("my-bool", true);
-                                          put("my-number", 42);
-                                          put(
-                                            "my-object",
-                                            new HashMap() {
-                                              {
-                                                put("sub-key", "sub-value");
-                                              }
-                                            }
-                                          );
+                new Params()
+                  .setQuery("batman")
+                  .setInjectedItems(
+                    new HashMap() {
+                      {
+                        put(
+                          "my-unique-external-group-key",
+                          new ExternalInjectedItem().setItems(
+                            Arrays.asList(
+                              new ExternalInjection().setObjectID("my-object-1"),
+                              new ExternalInjection()
+                                .setObjectID("my-object-2")
+                                .setMetadata(
+                                  new HashMap() {
+                                    {
+                                      put("my-string", "string");
+                                      put("my-bool", true);
+                                      put("my-number", 42);
+                                      put(
+                                        "my-object",
+                                        new HashMap() {
+                                          {
+                                            put("sub-key", "sub-value");
+                                          }
                                         }
-                                      }
-                                    )
+                                      );
+                                    }
+                                  }
                                 )
-                              )
-                          );
-                        }
+                            )
+                          )
+                        );
                       }
-                    )
-                ),
+                    }
+                  )
+              ),
               Hit.class
             );
 
@@ -2304,9 +2296,7 @@ paths:
 
             // Call the API
 
-            var response = client.getComposition(
-              compositionID = "foo",
-            )
+            var response = client.getComposition(compositionID = "foo")
 
 
             // >LOG
@@ -3116,9 +3106,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteComposition(
-              compositionID = "1234",
-            )
+            var response = client.deleteComposition(compositionID = "1234")
 
 
             // >LOG
@@ -3971,10 +3959,8 @@ paths:
 
             // Call the API
 
-            var response = client.getRule(
-              compositionID = "foo",
-              objectID = "123",
-            )
+            var response = client.getRule(compositionID = "foo", objectID =
+            "123")
 
 
             // >LOG
@@ -4682,7 +4668,8 @@ paths:
                     objectID: "rule-with-deduplication",
                     conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
                         ),
                         injectedItems: [InjectedItem(
                             key: "my-unique-injected-item-key",
@@ -4848,10 +4835,8 @@ paths:
 
             // Call the API
 
-            var response = client.deleteCompositionRule(
-              compositionID = "1234",
-              objectID = "5678",
-            )
+            var response = client.deleteCompositionRule(compositionID = "1234",
+            objectID = "5678")
 
 
             // >LOG
@@ -6150,10 +6135,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTask(
-              compositionID = "foo",
-              taskID = 42L,
-            )
+            var response = client.getTask(compositionID = "foo", taskID = 42L)
 
 
             // >LOG

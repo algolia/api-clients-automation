@@ -1,8 +1,10 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.browse_response import BrowseResponse
 
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 records = []
 

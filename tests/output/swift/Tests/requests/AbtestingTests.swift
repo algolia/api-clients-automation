@@ -345,8 +345,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -486,8 +485,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -570,8 +568,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -613,8 +610,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -656,8 +652,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters

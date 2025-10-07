@@ -4,7 +4,6 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
-
 import com.algolia.client.model.search.*
 
 val getAllAppIDConfigurations: () -> Map<String, String> = {
@@ -20,10 +19,7 @@ suspend fun saveObjectsMCM() {
     val client = SearchClient(appID, apiKey)
 
     try {
-      client.saveObjects(
-        indexName = "<YOUR_INDEX_NAME>",
-        objects = playlists,
-      )
+      client.saveObjects(indexName = "<YOUR_INDEX_NAME>", objects = playlists)
     } catch (e: Exception) {
       throw Exception("Error for appID $appID: ${e.message}")
     }

@@ -6,6 +6,7 @@ from algoliasearch.search.client import SearchClientSync
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
+
 date = datetime.datetime.now() - datetime.timedelta(days=365)
 date_timestamp = int(time.mktime(date.timetuple()))
 search_params = {

@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AbtestingV3Test {
 
@@ -61,9 +62,7 @@ class AbtestingV3Test {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -77,10 +76,7 @@ class AbtestingV3Test {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -97,9 +93,7 @@ class AbtestingV3Test {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -113,10 +107,7 @@ class AbtestingV3Test {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -161,9 +152,7 @@ class AbtestingV3Test {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -181,10 +170,7 @@ class AbtestingV3Test {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -205,10 +191,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -234,10 +217,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -263,10 +243,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -293,10 +270,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -323,10 +297,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -352,10 +323,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -381,10 +349,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -410,10 +375,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -439,10 +401,7 @@ class AbtestingV3Test {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -466,9 +425,7 @@ class AbtestingV3Test {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -486,10 +443,7 @@ class AbtestingV3Test {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -508,9 +462,7 @@ class AbtestingV3Test {
   fun `deleteABTest`() = runTest {
     client.runTest(
       call = {
-        deleteABTest(
-          id = 42,
-        )
+        deleteABTest(id = 42)
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -561,9 +513,7 @@ class AbtestingV3Test {
   fun `getABTest`() = runTest {
     client.runTest(
       call = {
-        getABTest(
-          id = 42,
-        )
+        getABTest(id = 42)
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -579,9 +529,7 @@ class AbtestingV3Test {
   fun `getTimeseries`() = runTest {
     client.runTest(
       call = {
-        getTimeseries(
-          id = 42,
-        )
+        getTimeseries(id = 42)
       },
       intercept = {
         assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
@@ -611,13 +559,7 @@ class AbtestingV3Test {
   fun `listABTests with parameters1`() = runTest {
     client.runTest(
       call = {
-        listABTests(
-          offset = 0,
-          limit = 21,
-          indexPrefix = "cts_e2e ab",
-          indexSuffix = "t",
-          direction = Direction.entries.first { it.value == "asc" },
-        )
+        listABTests(offset = 0, limit = 21, indexPrefix = "cts_e2e ab", indexSuffix = "t", direction = Direction.entries.first { it.value == "asc" })
       },
       intercept = {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
@@ -671,9 +613,7 @@ class AbtestingV3Test {
   fun `stopABTest`() = runTest {
     client.runTest(
       call = {
-        stopABTest(
-          id = 42,
-        )
+        stopABTest(id = 42)
       },
       intercept = {
         assertEquals("/3/abtests/42/stop".toPathSegments(), it.url.pathSegments)

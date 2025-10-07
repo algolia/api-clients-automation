@@ -324,8 +324,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -462,8 +461,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"isItWorking\":\"true\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -544,8 +542,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -586,8 +583,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -628,8 +624,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}"
-            .data(using: .utf8)
-        )
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -788,15 +783,13 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .relatedQuery(RelatedQuery(
                             indexName: "indexName",
                             threshold: 42.1,
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID"
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -827,16 +820,14 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .relatedQuery(RelatedQuery(
                             indexName: "cts_e2e_browse",
                             threshold: 20.0,
                             maxRecommendations: 2,
                             model: RelatedModel.relatedProducts,
                             objectID: "Æon Flux"
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -867,8 +858,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .relatedQuery(RelatedQuery(
                             indexName: "indexName",
                             threshold: 42.1,
@@ -885,8 +875,7 @@ final class RecommendClientRequestsTests: XCTestCase {
                                     .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
                                 query: "myQuery"
                             )
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -917,16 +906,14 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .trendingItemsQuery(TrendingItemsQuery(
                             indexName: "indexName",
                             threshold: 42.1,
                             facetName: "facet",
                             facetValue: "value",
                             model: TrendingItemsModel.trendingItems
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -957,8 +944,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .trendingItemsQuery(TrendingItemsQuery(
                             indexName: "indexName",
                             threshold: 42.1,
@@ -976,8 +962,7 @@ final class RecommendClientRequestsTests: XCTestCase {
                                     .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")]),
                                 query: "myQuery"
                             )
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1114,15 +1099,13 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(
-                getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .boughtTogetherQuery(BoughtTogetherQuery(
                             indexName: "indexName1",
                             threshold: 42.7,
                             model: FbtModel.boughtTogether,
                             objectID: "objectID1"
-                        )),
-                ])
+                        ))])
             )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

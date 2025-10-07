@@ -14,17 +14,17 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class PersonalizationTest {
 
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = PersonalizationClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Personalization (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -37,11 +37,10 @@ class PersonalizationTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = PersonalizationClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -75,9 +74,7 @@ class PersonalizationTest {
     val client = PersonalizationClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -85,20 +82,18 @@ class PersonalizationTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

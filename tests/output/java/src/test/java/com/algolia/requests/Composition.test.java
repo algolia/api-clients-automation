@@ -777,8 +777,8 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"foo\",\"name\":\"my" +
-        " first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"bar\"}}}}}}},{\"action\":\"delete\",\"body\":{\"objectID\":\"baz\"}}]}",
+          " first" +
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"bar\"}}}}}}},{\"action\":\"delete\",\"body\":{\"objectID\":\"baz\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -831,8 +831,8 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-external-injection-compo\",\"name\":\"my" +
-        " first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}",
+          " first" +
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -845,98 +845,98 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.multipleBatch(
         new BatchParams().setRequests(
-            Arrays.asList(
-              new MultipleBatchRequest()
-                .setAction(Action.UPSERT)
-                .setBody(
-                  new Composition()
-                    .setObjectID("my-metadata-compo")
-                    .setName("my composition")
-                    .setBehavior(
-                      new CompositionBehavior().setInjection(
-                          new Injection()
-                            .setMain(
-                              new Main().setSource(
-                                new CompositionSource().setSearch(
-                                  new CompositionSourceSearch()
-                                    .setIndex("foo")
-                                    .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+          Arrays.asList(
+            new MultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new Composition()
+                  .setObjectID("my-metadata-compo")
+                  .setName("my composition")
+                  .setBehavior(
+                    new CompositionBehavior().setInjection(
+                      new Injection()
+                        .setMain(
+                          new Main().setSource(
+                            new CompositionSource().setSearch(
+                              new CompositionSourceSearch()
+                                .setIndex("foo")
+                                .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                            )
+                          )
+                        )
+                        .setInjectedItems(
+                          Arrays.asList(
+                            new InjectedItem()
+                              .setKey("my-unique-group-key")
+                              .setSource(
+                                new SearchSource().setSearch(
+                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
                                 )
                               )
-                            )
-                            .setInjectedItems(
-                              Arrays.asList(
-                                new InjectedItem()
-                                  .setKey("my-unique-group-key")
-                                  .setSource(
-                                    new SearchSource().setSearch(
-                                      new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                    )
-                                  )
-                                  .setPosition(2)
-                                  .setLength(1)
-                                  .setMetadata(
-                                    new InjectedItemMetadata().setHits(
-                                        new InjectedItemHitsMetadata()
-                                          .setAddItemKey(true)
-                                          .setExtra(
+                              .setPosition(2)
+                              .setLength(1)
+                              .setMetadata(
+                                new InjectedItemMetadata().setHits(
+                                  new InjectedItemHitsMetadata()
+                                    .setAddItemKey(true)
+                                    .setExtra(
+                                      new HashMap() {
+                                        {
+                                          put("my-string", "string");
+                                          put("my-bool", true);
+                                          put("my-number", 42);
+                                          put(
+                                            "my-object",
                                             new HashMap() {
                                               {
-                                                put("my-string", "string");
-                                                put("my-bool", true);
-                                                put("my-number", 42);
-                                                put(
-                                                  "my-object",
-                                                  new HashMap() {
-                                                    {
-                                                      put("sub-key", "sub-value");
-                                                    }
-                                                  }
-                                                );
+                                                put("sub-key", "sub-value");
                                               }
                                             }
-                                          )
-                                      )
-                                  ),
-                                new InjectedItem()
-                                  .setKey("my-unique-group-key")
-                                  .setSource(
-                                    new SearchSource().setSearch(
-                                      new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                                          );
+                                        }
+                                      }
                                     )
-                                  )
-                                  .setPosition(5)
-                                  .setLength(5)
-                                  .setMetadata(
-                                    new InjectedItemMetadata().setHits(
-                                        new InjectedItemHitsMetadata()
-                                          .setAddItemKey(true)
-                                          .setExtra(
-                                            new HashMap() {
-                                              {
-                                                put("my-string", "string");
-                                                put("my-bool", true);
-                                                put("my-number", 42);
-                                                put(
-                                                  "my-object",
-                                                  new HashMap() {
-                                                    {
-                                                      put("sub-key", "sub-value");
-                                                    }
-                                                  }
-                                                );
-                                              }
-                                            }
-                                          )
-                                      )
-                                  )
+                                )
+                              ),
+                            new InjectedItem()
+                              .setKey("my-unique-group-key")
+                              .setSource(
+                                new SearchSource().setSearch(
+                                  new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                                )
                               )
-                            )
+                              .setPosition(5)
+                              .setLength(5)
+                              .setMetadata(
+                                new InjectedItemMetadata().setHits(
+                                  new InjectedItemHitsMetadata()
+                                    .setAddItemKey(true)
+                                    .setExtra(
+                                      new HashMap() {
+                                        {
+                                          put("my-string", "string");
+                                          put("my-bool", true);
+                                          put("my-number", 42);
+                                          put(
+                                            "my-object",
+                                            new HashMap() {
+                                              {
+                                                put("sub-key", "sub-value");
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
+                                    )
+                                )
+                              )
+                          )
                         )
                     )
-                )
-            )
+                  )
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -945,7 +945,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-metadata-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -992,7 +992,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"my-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1031,7 +1031,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"1234\",\"name\":\"my first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1077,7 +1077,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-external-injection-compo\",\"name\":\"my first" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-key\",\"source\":{\"external\":{\"index\":\"foo\",\"ordering\":\"userDefined\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1095,85 +1095,83 @@ class CompositionClientRequestsTests {
           .setName("my composition")
           .setBehavior(
             new CompositionBehavior().setInjection(
-                new Injection()
-                  .setMain(
-                    new Main().setSource(
-                      new CompositionSource().setSearch(
-                        new CompositionSourceSearch()
-                          .setIndex("foo")
-                          .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+              new Injection()
+                .setMain(
+                  new Main().setSource(
+                    new CompositionSource().setSearch(
+                      new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectedItem()
+                      .setKey("my-unique-group-key")
+                      .setSource(
+                        new SearchSource().setSearch(
+                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                        )
                       )
-                    )
-                  )
-                  .setInjectedItems(
-                    Arrays.asList(
-                      new InjectedItem()
-                        .setKey("my-unique-group-key")
-                        .setSource(
-                          new SearchSource().setSearch(
-                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                          )
-                        )
-                        .setPosition(2)
-                        .setLength(1)
-                        .setMetadata(
-                          new InjectedItemMetadata().setHits(
-                              new InjectedItemHitsMetadata()
-                                .setAddItemKey(true)
-                                .setExtra(
-                                  new HashMap() {
-                                    {
-                                      put("my-string", "string");
-                                      put("my-bool", true);
-                                      put("my-number", 42);
-                                      put(
-                                        "my-object",
-                                        new HashMap() {
-                                          {
-                                            put("sub-key", "sub-value");
-                                          }
-                                        }
-                                      );
+                      .setPosition(2)
+                      .setLength(1)
+                      .setMetadata(
+                        new InjectedItemMetadata().setHits(
+                          new InjectedItemHitsMetadata()
+                            .setAddItemKey(true)
+                            .setExtra(
+                              new HashMap() {
+                                {
+                                  put("my-string", "string");
+                                  put("my-bool", true);
+                                  put("my-number", 42);
+                                  put(
+                                    "my-object",
+                                    new HashMap() {
+                                      {
+                                        put("sub-key", "sub-value");
+                                      }
                                     }
-                                  }
-                                )
-                            )
-                        ),
-                      new InjectedItem()
-                        .setKey("my-unique-group-key")
-                        .setSource(
-                          new SearchSource().setSearch(
-                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
-                          )
-                        )
-                        .setPosition(5)
-                        .setLength(5)
-                        .setMetadata(
-                          new InjectedItemMetadata().setHits(
-                              new InjectedItemHitsMetadata()
-                                .setAddItemKey(true)
-                                .setExtra(
-                                  new HashMap() {
-                                    {
-                                      put("my-string", "string");
-                                      put("my-bool", true);
-                                      put("my-number", 42);
-                                      put(
-                                        "my-object",
-                                        new HashMap() {
-                                          {
-                                            put("sub-key", "sub-value");
-                                          }
-                                        }
-                                      );
-                                    }
-                                  }
-                                )
+                                  );
+                                }
+                              }
                             )
                         )
-                    )
+                      ),
+                    new InjectedItem()
+                      .setKey("my-unique-group-key")
+                      .setSource(
+                        new SearchSource().setSearch(
+                          new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:puma"))
+                        )
+                      )
+                      .setPosition(5)
+                      .setLength(5)
+                      .setMetadata(
+                        new InjectedItemMetadata().setHits(
+                          new InjectedItemHitsMetadata()
+                            .setAddItemKey(true)
+                            .setExtra(
+                              new HashMap() {
+                                {
+                                  put("my-string", "string");
+                                  put("my-bool", true);
+                                  put("my-number", 42);
+                                  put(
+                                    "my-object",
+                                    new HashMap() {
+                                      {
+                                        put("sub-key", "sub-value");
+                                      }
+                                    }
+                                  );
+                                }
+                              }
+                            )
+                        )
+                      )
                   )
-              )
+                )
+            )
           )
       );
     });
@@ -1183,7 +1181,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-metadata-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1229,7 +1227,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-compo\",\"name\":\"my" +
-        " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1289,47 +1287,47 @@ class CompositionClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
           .setConsequence(
             new CompositionRuleConsequence().setBehavior(
-                new CompositionBehavior().setInjection(
-                    new Injection()
-                      .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
-                      .setInjectedItems(
-                        Arrays.asList(
-                          new InjectedItem()
-                            .setKey("my-unique-group-from-rule-key")
-                            .setSource(
-                              new SearchSource().setSearch(
-                                new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                              )
-                            )
-                            .setPosition(2)
-                            .setLength(1)
-                            .setMetadata(
-                              new InjectedItemMetadata().setHits(
-                                  new InjectedItemHitsMetadata()
-                                    .setAddItemKey(true)
-                                    .setExtra(
+              new CompositionBehavior().setInjection(
+                new Injection()
+                  .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                  .setInjectedItems(
+                    Arrays.asList(
+                      new InjectedItem()
+                        .setKey("my-unique-group-from-rule-key")
+                        .setSource(
+                          new SearchSource().setSearch(
+                            new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                          )
+                        )
+                        .setPosition(2)
+                        .setLength(1)
+                        .setMetadata(
+                          new InjectedItemMetadata().setHits(
+                            new InjectedItemHitsMetadata()
+                              .setAddItemKey(true)
+                              .setExtra(
+                                new HashMap() {
+                                  {
+                                    put("my-string", "string");
+                                    put("my-bool", true);
+                                    put("my-number", 42);
+                                    put(
+                                      "my-object",
                                       new HashMap() {
                                         {
-                                          put("my-string", "string");
-                                          put("my-bool", true);
-                                          put("my-number", 42);
-                                          put(
-                                            "my-object",
-                                            new HashMap() {
-                                              {
-                                                put("sub-key", "sub-value");
-                                              }
-                                            }
-                                          );
+                                          put("sub-key", "sub-value");
                                         }
                                       }
-                                    )
-                                )
-                            )
+                                    );
+                                  }
+                                }
+                              )
+                          )
                         )
-                      )
+                    )
                   )
               )
+            )
           )
       );
     });
@@ -1404,7 +1402,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
-        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
+          " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1449,7 +1447,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
-        " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}",
+          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1505,64 +1503,60 @@ class CompositionClientRequestsTests {
       client.saveRules(
         "rule-with-metadata",
         new CompositionRulesBatchParams().setRequests(
-            Arrays.asList(
-              new RulesMultipleBatchRequest()
-                .setAction(Action.UPSERT)
-                .setBody(
-                  new CompositionRule()
-                    .setObjectID("rule-with-metadata")
-                    .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
-                    .setConsequence(
-                      new CompositionRuleConsequence().setBehavior(
-                          new CompositionBehavior().setInjection(
-                              new Injection()
-                                .setMain(
-                                  new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo")))
+          Arrays.asList(
+            new RulesMultipleBatchRequest()
+              .setAction(Action.UPSERT)
+              .setBody(
+                new CompositionRule()
+                  .setObjectID("rule-with-metadata")
+                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
+                  .setConsequence(
+                    new CompositionRuleConsequence().setBehavior(
+                      new CompositionBehavior().setInjection(
+                        new Injection()
+                          .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectedItem()
+                                .setKey("my-unique-group-from-rule-key")
+                                .setSource(
+                                  new SearchSource().setSearch(
+                                    new Search().setIndex("foo").setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
+                                  )
                                 )
-                                .setInjectedItems(
-                                  Arrays.asList(
-                                    new InjectedItem()
-                                      .setKey("my-unique-group-from-rule-key")
-                                      .setSource(
-                                        new SearchSource().setSearch(
-                                          new Search()
-                                            .setIndex("foo")
-                                            .setParams(new BaseInjectionQueryParameters().setFilters("brand:adidas"))
-                                        )
-                                      )
-                                      .setPosition(2)
-                                      .setLength(1)
-                                      .setMetadata(
-                                        new InjectedItemMetadata().setHits(
-                                            new InjectedItemHitsMetadata()
-                                              .setAddItemKey(true)
-                                              .setExtra(
-                                                new HashMap() {
-                                                  {
-                                                    put("my-string", "string");
-                                                    put("my-bool", true);
-                                                    put("my-number", 42);
-                                                    put(
-                                                      "my-object",
-                                                      new HashMap() {
-                                                        {
-                                                          put("sub-key", "sub-value");
-                                                        }
-                                                      }
-                                                    );
-                                                  }
+                                .setPosition(2)
+                                .setLength(1)
+                                .setMetadata(
+                                  new InjectedItemMetadata().setHits(
+                                    new InjectedItemHitsMetadata()
+                                      .setAddItemKey(true)
+                                      .setExtra(
+                                        new HashMap() {
+                                          {
+                                            put("my-string", "string");
+                                            put("my-bool", true);
+                                            put("my-number", 42);
+                                            put(
+                                              "my-object",
+                                              new HashMap() {
+                                                {
+                                                  put("sub-key", "sub-value");
                                                 }
-                                              )
-                                          )
+                                              }
+                                            );
+                                          }
+                                        }
                                       )
                                   )
                                 )
                             )
-                        )
+                          )
+                      )
                     )
-                )
-            )
+                  )
+              )
           )
+        )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1643,7 +1637,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-exernal-source\",\"description\":\"my" +
-        " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
+          " description\",\"tags\":[\"tag1\",\"tag2\"],\"enabled\":true,\"validity\":[{\"from\":1704063600,\"until\":1704083600}],\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"anchoring\":\"contains\",\"pattern\":\"potter\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-external-group-from-rule-key\",\"source\":{\"external\":{\"index\":\"my-index\",\"params\":{\"filters\":\"brand:adidas\"},\"ordering\":\"userDefined\"}},\"position\":0,\"length\":3}]}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1697,7 +1691,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
-        " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
+          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1723,42 +1717,42 @@ class CompositionClientRequestsTests {
       client.search(
         "foo",
         new RequestBody().setParams(
-            new Params()
-              .setQuery("batman")
-              .setInjectedItems(
-                new HashMap() {
-                  {
-                    put(
-                      "my-unique-external-group-key",
-                      new ExternalInjectedItem().setItems(
-                          Arrays.asList(
-                            new ExternalInjection().setObjectID("my-object-1"),
-                            new ExternalInjection()
-                              .setObjectID("my-object-2")
-                              .setMetadata(
-                                new HashMap() {
-                                  {
-                                    put("my-string", "string");
-                                    put("my-bool", true);
-                                    put("my-number", 42);
-                                    put(
-                                      "my-object",
-                                      new HashMap() {
-                                        {
-                                          put("sub-key", "sub-value");
-                                        }
-                                      }
-                                    );
+          new Params()
+            .setQuery("batman")
+            .setInjectedItems(
+              new HashMap() {
+                {
+                  put(
+                    "my-unique-external-group-key",
+                    new ExternalInjectedItem().setItems(
+                      Arrays.asList(
+                        new ExternalInjection().setObjectID("my-object-1"),
+                        new ExternalInjection()
+                          .setObjectID("my-object-2")
+                          .setMetadata(
+                            new HashMap() {
+                              {
+                                put("my-string", "string");
+                                put("my-bool", true);
+                                put("my-number", 42);
+                                put(
+                                  "my-object",
+                                  new HashMap() {
+                                    {
+                                      put("sub-key", "sub-value");
+                                    }
                                   }
-                                }
-                              )
+                                );
+                              }
+                            }
                           )
-                        )
-                    );
-                  }
+                      )
+                    )
+                  );
                 }
-              )
-          ),
+              }
+            )
+        ),
         Hit.class
       );
     });

@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class SearchTest {
 
@@ -22,9 +23,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        customGet(
-          path = "test",
-        )
+        customGet(path = "test")
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -37,9 +36,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        searchSingleIndex(
-          indexName = "indexName",
-        )
+        searchSingleIndex(indexName = "indexName")
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -52,9 +49,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key")
     client.runTest(
       call = {
-        customPost(
-          path = "test",
-        )
+        customPost(path = "test")
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
@@ -67,9 +62,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6677), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6678))))
     client.runTest(
       call = {
-        customGet(
-          path = "1/test/retry/kotlin",
-        )
+        customGet(path = "1/test/retry/kotlin")
       },
 
       response = {
@@ -83,9 +76,7 @@ class SearchTest {
   fun `tests the retry strategy on timeout`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
     assertFails {
-      client.customGet(
-        path = "1/test/hang/kotlin",
-      )
+      client.customGet(path = "1/test/hang/kotlin")
     }.let { error -> assertError(error, "Error\\(s\\) while processing the retry strategy. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
@@ -94,9 +85,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6671), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6672), Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6673))))
     client.runTest(
       call = {
-        customPost(
-          path = "1/test/error/kotlin",
-        )
+        customPost(path = "1/test/error/kotlin")
       },
 
       response = {
@@ -115,10 +104,7 @@ class SearchTest {
           path = "1/test/gzip",
           parameters = mapOf(),
           body = buildJsonObject {
-            put(
-              "message",
-              JsonPrimitive("this is a compressed body"),
-            )
+            put("message", JsonPrimitive("this is a compressed body"))
           },
         )
       },
@@ -133,11 +119,10 @@ class SearchTest {
   @Test
   fun `calls api with default read timeouts`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customGet(
-          path = "1/test",
-        )
+        customGet(path = "1/test")
       },
       intercept = {
         assertEquals(2000, it.connectTimeout)
@@ -149,11 +134,10 @@ class SearchTest {
   @Test
   fun `calls api with default write timeouts`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         assertEquals(2000, it.connectTimeout)
@@ -167,9 +151,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
     client.runTest(
       call = {
-        getSettings(
-          indexName = "cts_e2e_unknownField_kotlin",
-        )
+        getSettings(indexName = "cts_e2e_unknownField_kotlin")
       },
 
       response = {
@@ -184,10 +166,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6686))))
     client.runTest(
       call = {
-        getRule(
-          indexName = "cts_e2e_unknownFieldNested_kotlin",
-          objectID = "ruleObjectID",
-        )
+        getRule(indexName = "cts_e2e_unknownFieldNested_kotlin", objectID = "ruleObjectID")
       },
 
       response = {
@@ -200,11 +179,10 @@ class SearchTest {
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -217,11 +195,10 @@ class SearchTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -236,10 +213,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6680))))
     client.runTest(
       call = {
-        deleteObjects(
-          indexName = "cts_e2e_deleteObjects_kotlin",
-          objectIDs = listOf("1", "2"),
-        )
+        deleteObjects(indexName = "cts_e2e_deleteObjects_kotlin", objectIDs = listOf("1", "2"))
       },
 
       response = {
@@ -252,6 +226,7 @@ class SearchTest {
   @Test
   fun `api key basic`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -272,6 +247,7 @@ class SearchTest {
   @Test
   fun `with searchParams`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -303,6 +279,7 @@ class SearchTest {
   @Test
   fun `with filters`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -320,6 +297,7 @@ class SearchTest {
   @Test
   fun `with visible_by filter`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -337,6 +315,7 @@ class SearchTest {
   @Test
   fun `with userID`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -354,6 +333,7 @@ class SearchTest {
   @Test
   fun `mcm with filters`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -371,6 +351,7 @@ class SearchTest {
   @Test
   fun `mcm with user token`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     client.runTest(
       call = {
         generateSecuredApiKey(
@@ -390,9 +371,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        indexExists(
-          indexName = "indexExistsYES",
-        )
+        indexExists(indexName = "indexExistsYES")
       },
 
       response = {
@@ -406,9 +385,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        indexExists(
-          indexName = "indexExistsNO",
-        )
+        indexExists(indexName = "indexExistsNO")
       },
 
       response = {
@@ -421,9 +398,7 @@ class SearchTest {
   fun `indexExistsWithError`() = runTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     assertFails {
-      client.indexExists(
-        indexName = "indexExistsERROR",
-      )
+      client.indexExists(indexName = "indexExistsERROR")
     }.let { error -> assertError(error, "Client request\\(GET http://%localhost%:6681/1/indexes/indexExistsERROR/settings\\) invalid: 403 Forbidden. Text: \"\\{\"message\":\"Invalid API key\"\\}\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
@@ -432,9 +407,11 @@ class SearchTest {
     assertFails {
       val client = SearchClient(appId = "", apiKey = "")
     }.let { error -> assertError(error, "`appId` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+
     assertFails {
       val client = SearchClient(appId = "", apiKey = "my-api-key")
     }.let { error -> assertError(error, "`appId` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+
     assertFails {
       val client = SearchClient(appId = "my-app-id", apiKey = "")
     }.let { error -> assertError(error, "`apiKey` is missing.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
@@ -443,16 +420,16 @@ class SearchTest {
   @Test
   fun `'addApiKey' throws with invalid parameters`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     assertFails {
-      client.addApiKey(
-        apiKey = empty(),
-      )
+      client.addApiKey(apiKey = empty())
     }.let { error -> assertError(error, "Parameter `apiKey` is required when calling `addApiKey`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `'addOrUpdateObject' throws with invalid parameters`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
+
     assertFails {
       client.addOrUpdateObject(
         indexName = empty(),
@@ -461,6 +438,7 @@ class SearchTest {
         },
       )
     }.let { error -> assertError(error, "Parameter `indexName` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+
     assertFails {
       client.addOrUpdateObject(
         indexName = "my-index-name",
@@ -469,12 +447,9 @@ class SearchTest {
         },
       )
     }.let { error -> assertError(error, "Parameter `objectID` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
+
     assertFails {
-      client.addOrUpdateObject(
-        indexName = "my-index-name",
-        objectID = "my-object-id",
-        body = empty(),
-      )
+      client.addOrUpdateObject(indexName = "my-index-name", objectID = "my-object-id", body = empty())
     }.let { error -> assertError(error, "Parameter `body` is required when calling `addOrUpdateObject`.".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
@@ -487,24 +462,12 @@ class SearchTest {
           indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
           createIfNotExists = true,
@@ -527,24 +490,12 @@ class SearchTest {
           indexName = "cts_e2e_partialUpdateObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("3"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Cyril"),
-              )
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("4"),
-              )
-              put(
-                "name",
-                JsonPrimitive("David"),
-              )
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
             },
           ),
           createIfNotExists = false,
@@ -567,104 +518,44 @@ class SearchTest {
           indexName = "cts_e2e_replace_all_objects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("3"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Cyril"),
-              )
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("4"),
-              )
-              put(
-                "name",
-                JsonPrimitive("David"),
-              )
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("5"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Eva"),
-              )
+              put("objectID", JsonPrimitive("5"))
+              put("name", JsonPrimitive("Eva"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("6"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Fiona"),
-              )
+              put("objectID", JsonPrimitive("6"))
+              put("name", JsonPrimitive("Fiona"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("7"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Gael"),
-              )
+              put("objectID", JsonPrimitive("7"))
+              put("name", JsonPrimitive("Gael"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("8"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hugo"),
-              )
+              put("objectID", JsonPrimitive("8"))
+              put("name", JsonPrimitive("Hugo"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("9"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Igor"),
-              )
+              put("objectID", JsonPrimitive("9"))
+              put("name", JsonPrimitive("Igor"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("10"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Julia"),
-              )
+              put("objectID", JsonPrimitive("10"))
+              put("name", JsonPrimitive("Julia"))
             },
           ),
           batchSize = 3,
@@ -687,24 +578,12 @@ class SearchTest {
           indexName = "cts_e2e_replace_all_objects_scopes_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
           batchSize = 77,
@@ -727,24 +606,12 @@ class SearchTest {
         indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
         objects = listOf(
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("fine"),
-            )
-            put(
-              "body",
-              JsonPrimitive("small obj"),
-            )
+            put("objectID", JsonPrimitive("fine"))
+            put("body", JsonPrimitive("small obj"))
           },
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("toolarge"),
-            )
-            put(
-              "body",
-              JsonPrimitive("something bigger than 10KB"),
-            )
+            put("objectID", JsonPrimitive("toolarge"))
+            put("body", JsonPrimitive("something bigger than 10KB"))
           },
         ),
       )
@@ -760,24 +627,12 @@ class SearchTest {
           indexName = "cts_e2e_saveObjects_kotlin",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Adam"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
             },
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("2"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Benoit"),
-              )
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
             },
           ),
         )
@@ -798,24 +653,12 @@ class SearchTest {
         indexName = "cts_e2e_saveObjects_kotlin",
         objects = listOf(
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("1"),
-            )
-            put(
-              "name",
-              JsonPrimitive("Adam"),
-            )
+            put("objectID", JsonPrimitive("1"))
+            put("name", JsonPrimitive("Adam"))
           },
           buildJsonObject {
-            put(
-              "objectID",
-              JsonPrimitive("2"),
-            )
-            put(
-              "name",
-              JsonPrimitive("Benoit"),
-            )
+            put("objectID", JsonPrimitive("2"))
+            put("name", JsonPrimitive("Benoit"))
           },
         ),
       )
@@ -831,26 +674,11 @@ class SearchTest {
           indexName = "playlists",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "visibility",
-                JsonPrimitive("public"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hot 100 Billboard Charts"),
-              )
-              put(
-                "playlistId",
-                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-              )
-              put(
-                "createdAt",
-                JsonPrimitive("1500240452"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("visibility", JsonPrimitive("public"))
+              put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+              put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+              put("createdAt", JsonPrimitive("1500240452"))
             },
           ),
         )
@@ -869,26 +697,11 @@ class SearchTest {
           indexName = "playlists",
           objects = listOf(
             buildJsonObject {
-              put(
-                "objectID",
-                JsonPrimitive("1"),
-              )
-              put(
-                "visibility",
-                JsonPrimitive("public"),
-              )
-              put(
-                "name",
-                JsonPrimitive("Hot 100 Billboard Charts"),
-              )
-              put(
-                "playlistId",
-                JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"),
-              )
-              put(
-                "createdAt",
-                JsonPrimitive("1500240452"),
-              )
+              put("objectID", JsonPrimitive("1"))
+              put("visibility", JsonPrimitive("public"))
+              put("name", JsonPrimitive("Hot 100 Billboard Charts"))
+              put("playlistId", JsonPrimitive("d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f"))
+              put("createdAt", JsonPrimitive("1500240452"))
             },
           ),
           waitForTasks = false,
@@ -932,9 +745,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -942,20 +753,18 @@ class SearchTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {
@@ -970,10 +779,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        waitForApiKey(
-          key = "api-key-add-operation-test-kotlin",
-          operation = ApiKeyOperation.entries.first { it.value == "add" },
-        )
+        waitForApiKey(key = "api-key-add-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "add" })
       },
 
       response = {
@@ -1015,10 +821,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        waitForApiKey(
-          key = "api-key-delete-operation-test-kotlin",
-          operation = ApiKeyOperation.entries.first { it.value == "delete" },
-        )
+        waitForApiKey(key = "api-key-delete-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "delete" })
       },
 
       response = {
@@ -1032,9 +835,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        waitForAppTask(
-          taskID = 123L,
-        )
+        waitForAppTask(taskID = 123L)
       },
 
       response = {
@@ -1049,10 +850,7 @@ class SearchTest {
     val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6681))))
     client.runTest(
       call = {
-        waitForTask(
-          indexName = "wait-task-kotlin",
-          taskID = 123L,
-        )
+        waitForTask(indexName = "wait-task-kotlin", taskID = 123L)
       },
 
       response = {

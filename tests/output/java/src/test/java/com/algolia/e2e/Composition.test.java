@@ -44,8 +44,8 @@ class CompositionClientRequestsTestsE2E {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"items\":[{\"objectID\":\"id1\",\"name\":\"my first" +
-        " composition\",\"description\":\"the first ever composition from the" +
-        " client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",
+          " composition\",\"description\":\"the first ever composition from the" +
+          " client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",
         json.writeValueAsString(res),
         JSONCompareMode.LENIENT
       )

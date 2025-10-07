@@ -6,7 +6,6 @@ import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
-
 import com.algolia.client.model.search.*
 
 suspend fun savePopularRecords() {
@@ -27,8 +26,5 @@ suspend fun savePopularRecords() {
       }
     }
   })
-  client.saveObjects(
-    indexName = "<YOUR_INDEX_NAME>",
-    objects = records,
-  )
+  client.saveObjects(indexName = "<YOUR_INDEX_NAME>", objects = records)
 }

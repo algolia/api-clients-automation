@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class RecommendTest {
 
@@ -24,10 +25,7 @@ class RecommendTest {
   fun `batch recommend rules`() = runTest {
     client.runTest(
       call = {
-        batchRecommendRules(
-          indexName = "indexName",
-          model = RecommendModels.entries.first { it.value == "related-products" },
-        )
+        batchRecommendRules(indexName = "indexName", model = RecommendModels.entries.first { it.value == "related-products" })
       },
       intercept = {
         assertEquals("/1/indexes/indexName/related-products/recommend/rules/batch".toPathSegments(), it.url.pathSegments)
@@ -43,9 +41,7 @@ class RecommendTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -59,10 +55,7 @@ class RecommendTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -79,9 +72,7 @@ class RecommendTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -95,10 +86,7 @@ class RecommendTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -143,9 +131,7 @@ class RecommendTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -163,10 +149,7 @@ class RecommendTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -187,10 +170,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -216,10 +196,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -245,10 +222,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -275,10 +249,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -305,10 +276,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -334,10 +302,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -363,10 +328,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -392,10 +354,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -421,10 +380,7 @@ class RecommendTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -448,9 +404,7 @@ class RecommendTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -468,10 +422,7 @@ class RecommendTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -490,11 +441,7 @@ class RecommendTest {
   fun `deleteRecommendRule`() = runTest {
     client.runTest(
       call = {
-        deleteRecommendRule(
-          indexName = "indexName",
-          model = RecommendModels.entries.first { it.value == "related-products" },
-          objectID = "objectID",
-        )
+        deleteRecommendRule(indexName = "indexName", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/related-products/recommend/rules/objectID".toPathSegments(), it.url.pathSegments)
@@ -510,11 +457,7 @@ class RecommendTest {
   fun `getRecommendRule`() = runTest {
     client.runTest(
       call = {
-        getRecommendRule(
-          indexName = "indexName",
-          model = RecommendModels.entries.first { it.value == "related-products" },
-          objectID = "objectID",
-        )
+        getRecommendRule(indexName = "indexName", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
       },
       intercept = {
         assertEquals("/1/indexes/indexName/related-products/recommend/rules/objectID".toPathSegments(), it.url.pathSegments)
@@ -530,11 +473,7 @@ class RecommendTest {
   fun `getRecommendStatus`() = runTest {
     client.runTest(
       call = {
-        getRecommendStatus(
-          indexName = "indexName",
-          model = RecommendModels.entries.first { it.value == "related-products" },
-          taskID = 12345L,
-        )
+        getRecommendStatus(indexName = "indexName", model = RecommendModels.entries.first { it.value == "related-products" }, taskID = 12345L)
       },
       intercept = {
         assertEquals("/1/indexes/indexName/related-products/task/12345".toPathSegments(), it.url.pathSegments)
@@ -803,10 +742,7 @@ class RecommendTest {
   fun `searchRecommendRules`() = runTest {
     client.runTest(
       call = {
-        searchRecommendRules(
-          indexName = "indexName",
-          model = RecommendModels.entries.first { it.value == "related-products" },
-        )
+        searchRecommendRules(indexName = "indexName", model = RecommendModels.entries.first { it.value == "related-products" })
       },
       intercept = {
         assertEquals("/1/indexes/indexName/related-products/recommend/rules/search".toPathSegments(), it.url.pathSegments)

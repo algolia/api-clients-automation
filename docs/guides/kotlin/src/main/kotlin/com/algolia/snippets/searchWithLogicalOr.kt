@@ -13,8 +13,5 @@ suspend fun searchWithLogicalOr() {
     query = query,
     optionalWords = OptionalWords.of(optionalWords),
   )
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

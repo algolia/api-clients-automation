@@ -1,5 +1,6 @@
-import type { SearchParams } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { SearchParams } from 'algoliasearch';
 
 const getGoogleAnalyticsUserIdFromBrowserCookie = (_: string) => {
   return ''; // Implement your logic here

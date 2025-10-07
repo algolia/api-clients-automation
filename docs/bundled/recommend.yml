@@ -265,9 +265,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -502,9 +500,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -739,9 +735,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -972,9 +966,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1433,15 +1425,13 @@ paths:
             // Call the API
 
             let response = try await client
-                .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
-                    RecommendationsRequest
+                .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest
                         .relatedQuery(RelatedQuery(
                             indexName: "<YOUR_INDEX_NAME>",
                             threshold: 42.1,
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID"
-                        )),
-                ]))
+                        ))]))
             // >LOG
         - lang: cURL
           label: curl
@@ -1592,11 +1582,9 @@ paths:
 
             // Call the API
 
-            var response = client.getRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              objectID = "objectID",
-            )
+            var response = client.getRecommendRule(indexName =
+            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
+            it.value == "related-products" }, objectID = "objectID")
 
 
             // >LOG
@@ -1857,11 +1845,9 @@ paths:
 
             // Call the API
 
-            var response = client.deleteRecommendRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              objectID = "objectID",
-            )
+            var response = client.deleteRecommendRule(indexName =
+            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
+            it.value == "related-products" }, objectID = "objectID")
 
 
             // >LOG
@@ -2149,11 +2135,9 @@ paths:
 
             // Call the API
 
-            var response = client.getRecommendStatus(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              taskID = 12345L,
-            )
+            var response = client.getRecommendStatus(indexName =
+            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
+            it.value == "related-products" }, taskID = 12345L)
 
 
             // >LOG
@@ -2486,10 +2470,9 @@ paths:
 
             // Call the API
 
-            var response = client.searchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-            )
+            var response = client.searchRecommendRules(indexName =
+            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
+            it.value == "related-products" })
 
 
             // >LOG
@@ -2773,10 +2756,9 @@ paths:
 
             // Call the API
 
-            var response = client.batchRecommendRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-            )
+            var response = client.batchRecommendRules(indexName =
+            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
+            it.value == "related-products" })
 
 
             // >LOG

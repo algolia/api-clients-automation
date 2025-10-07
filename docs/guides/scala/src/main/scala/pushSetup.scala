@@ -4,7 +4,6 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 
 import algoliasearch.api.IngestionClient
 import algoliasearch.config.*
-
 import algoliasearch.config.*
 import algoliasearch.ingestion.*
 

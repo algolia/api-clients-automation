@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class QuerySuggestionsTest {
 
@@ -58,9 +59,7 @@ class QuerySuggestionsTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -74,10 +73,7 @@ class QuerySuggestionsTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -94,9 +90,7 @@ class QuerySuggestionsTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -110,10 +104,7 @@ class QuerySuggestionsTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -158,9 +149,7 @@ class QuerySuggestionsTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -178,10 +167,7 @@ class QuerySuggestionsTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -202,10 +188,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -231,10 +214,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -260,10 +240,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -290,10 +267,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -320,10 +294,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -349,10 +320,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -378,10 +346,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -407,10 +372,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -436,10 +398,7 @@ class QuerySuggestionsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -463,9 +422,7 @@ class QuerySuggestionsTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -483,10 +440,7 @@ class QuerySuggestionsTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -505,9 +459,7 @@ class QuerySuggestionsTest {
   fun `deleteConfig`() = runTest {
     client.runTest(
       call = {
-        deleteConfig(
-          indexName = "theIndexName",
-        )
+        deleteConfig(indexName = "theIndexName")
       },
       intercept = {
         assertEquals("/1/configs/theIndexName".toPathSegments(), it.url.pathSegments)
@@ -539,9 +491,7 @@ class QuerySuggestionsTest {
   fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
       call = {
-        getConfig(
-          indexName = "cts_e2e_browse_query_suggestions",
-        )
+        getConfig(indexName = "cts_e2e_browse_query_suggestions")
       },
       intercept = {
         assertEquals("/1/configs/cts_e2e_browse_query_suggestions".toPathSegments(), it.url.pathSegments)
@@ -557,9 +507,7 @@ class QuerySuggestionsTest {
   fun `getConfigStatus`() = runTest {
     client.runTest(
       call = {
-        getConfigStatus(
-          indexName = "theIndexName",
-        )
+        getConfigStatus(indexName = "theIndexName")
       },
       intercept = {
         assertEquals("/1/configs/theIndexName/status".toPathSegments(), it.url.pathSegments)
@@ -575,9 +523,7 @@ class QuerySuggestionsTest {
   fun `getLogFile`() = runTest {
     client.runTest(
       call = {
-        getLogFile(
-          indexName = "theIndexName",
-        )
+        getLogFile(indexName = "theIndexName")
       },
       intercept = {
         assertEquals("/1/logs/theIndexName".toPathSegments(), it.url.pathSegments)

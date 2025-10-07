@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.json.*
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AnalyticsTest {
 
@@ -25,9 +26,7 @@ class AnalyticsTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/minimal",
-        )
+        customDelete(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -41,10 +40,7 @@ class AnalyticsTest {
   fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customDelete(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters"),
-        )
+        customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -61,9 +57,7 @@ class AnalyticsTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/minimal",
-        )
+        customGet(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -77,10 +71,7 @@ class AnalyticsTest {
   fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
-        customGet(
-          path = "test/all",
-          parameters = mapOf("query" to "parameters with space"),
-        )
+        customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
       },
       intercept = {
         assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
@@ -125,9 +116,7 @@ class AnalyticsTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(
-          path = "test/minimal",
-        )
+        customPost(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -145,10 +134,7 @@ class AnalyticsTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -169,10 +155,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -198,10 +181,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -227,10 +207,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -257,10 +234,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             headers = buildMap {
@@ -287,10 +261,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -316,10 +287,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -345,10 +313,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -374,10 +339,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -403,10 +365,7 @@ class AnalyticsTest {
           path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "facet",
-              JsonPrimitive("filters"),
-            )
+            put("facet", JsonPrimitive("filters"))
           },
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -430,9 +389,7 @@ class AnalyticsTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(
-          path = "test/minimal",
-        )
+        customPut(path = "test/minimal")
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -450,10 +407,7 @@ class AnalyticsTest {
           path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
-            put(
-              "body",
-              JsonPrimitive("parameters"),
-            )
+            put("body", JsonPrimitive("parameters"))
           },
         )
       },
@@ -472,9 +426,7 @@ class AnalyticsTest {
   fun `get getAddToCartRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getAddToCartRate(
-          index = "index",
-        )
+        getAddToCartRate(index = "index")
       },
       intercept = {
         assertEquals("/2/conversions/addToCartRate".toPathSegments(), it.url.pathSegments)
@@ -489,12 +441,7 @@ class AnalyticsTest {
   fun `get getAddToCartRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getAddToCartRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getAddToCartRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/conversions/addToCartRate".toPathSegments(), it.url.pathSegments)
@@ -511,9 +458,7 @@ class AnalyticsTest {
   fun `get getAverageClickPosition with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getAverageClickPosition(
-          index = "index",
-        )
+        getAverageClickPosition(index = "index")
       },
       intercept = {
         assertEquals("/2/clicks/averageClickPosition".toPathSegments(), it.url.pathSegments)
@@ -528,12 +473,7 @@ class AnalyticsTest {
   fun `get getAverageClickPosition with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getAverageClickPosition(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getAverageClickPosition(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/clicks/averageClickPosition".toPathSegments(), it.url.pathSegments)
@@ -550,9 +490,7 @@ class AnalyticsTest {
   fun `get getClickPositions with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getClickPositions(
-          index = "index",
-        )
+        getClickPositions(index = "index")
       },
       intercept = {
         assertEquals("/2/clicks/positions".toPathSegments(), it.url.pathSegments)
@@ -567,12 +505,7 @@ class AnalyticsTest {
   fun `get getClickPositions with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getClickPositions(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getClickPositions(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/clicks/positions".toPathSegments(), it.url.pathSegments)
@@ -589,9 +522,7 @@ class AnalyticsTest {
   fun `get getClickThroughRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getClickThroughRate(
-          index = "index",
-        )
+        getClickThroughRate(index = "index")
       },
       intercept = {
         assertEquals("/2/clicks/clickThroughRate".toPathSegments(), it.url.pathSegments)
@@ -606,12 +537,7 @@ class AnalyticsTest {
   fun `get getClickThroughRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getClickThroughRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getClickThroughRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/clicks/clickThroughRate".toPathSegments(), it.url.pathSegments)
@@ -628,9 +554,7 @@ class AnalyticsTest {
   fun `get getConversationRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getConversionRate(
-          index = "index",
-        )
+        getConversionRate(index = "index")
       },
       intercept = {
         assertEquals("/2/conversions/conversionRate".toPathSegments(), it.url.pathSegments)
@@ -645,12 +569,7 @@ class AnalyticsTest {
   fun `get getConversationRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getConversionRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getConversionRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/conversions/conversionRate".toPathSegments(), it.url.pathSegments)
@@ -667,9 +586,7 @@ class AnalyticsTest {
   fun `get getNoClickRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getNoClickRate(
-          index = "index",
-        )
+        getNoClickRate(index = "index")
       },
       intercept = {
         assertEquals("/2/searches/noClickRate".toPathSegments(), it.url.pathSegments)
@@ -684,12 +601,7 @@ class AnalyticsTest {
   fun `get getNoClickRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getNoClickRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getNoClickRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches/noClickRate".toPathSegments(), it.url.pathSegments)
@@ -706,9 +618,7 @@ class AnalyticsTest {
   fun `get getNoResultsRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getNoResultsRate(
-          index = "index",
-        )
+        getNoResultsRate(index = "index")
       },
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
@@ -723,12 +633,7 @@ class AnalyticsTest {
   fun `get getNoResultsRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getNoResultsRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getNoResultsRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
@@ -745,9 +650,7 @@ class AnalyticsTest {
   fun `get getPurchaseRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getPurchaseRate(
-          index = "index",
-        )
+        getPurchaseRate(index = "index")
       },
       intercept = {
         assertEquals("/2/conversions/purchaseRate".toPathSegments(), it.url.pathSegments)
@@ -762,12 +665,7 @@ class AnalyticsTest {
   fun `get getPurchaseRate with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getPurchaseRate(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getPurchaseRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/conversions/purchaseRate".toPathSegments(), it.url.pathSegments)
@@ -784,9 +682,7 @@ class AnalyticsTest {
   fun `get getRevenue with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getRevenue(
-          index = "index",
-        )
+        getRevenue(index = "index")
       },
       intercept = {
         assertEquals("/2/conversions/revenue".toPathSegments(), it.url.pathSegments)
@@ -801,12 +697,7 @@ class AnalyticsTest {
   fun `get getRevenue with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getRevenue(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getRevenue(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/conversions/revenue".toPathSegments(), it.url.pathSegments)
@@ -823,9 +714,7 @@ class AnalyticsTest {
   fun `get getSearchesCount with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesCount(
-          index = "index",
-        )
+        getSearchesCount(index = "index")
       },
       intercept = {
         assertEquals("/2/searches/count".toPathSegments(), it.url.pathSegments)
@@ -840,12 +729,7 @@ class AnalyticsTest {
   fun `get getSearchesCount with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getSearchesCount(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getSearchesCount(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches/count".toPathSegments(), it.url.pathSegments)
@@ -862,9 +746,7 @@ class AnalyticsTest {
   fun `get getSearchesNoClicks with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoClicks(
-          index = "index",
-        )
+        getSearchesNoClicks(index = "index")
       },
       intercept = {
         assertEquals("/2/searches/noClicks".toPathSegments(), it.url.pathSegments)
@@ -879,14 +761,7 @@ class AnalyticsTest {
   fun `get getSearchesNoClicks with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoClicks(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getSearchesNoClicks(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches/noClicks".toPathSegments(), it.url.pathSegments)
@@ -903,9 +778,7 @@ class AnalyticsTest {
   fun `get getSearchesNoResults with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoResults(
-          index = "index",
-        )
+        getSearchesNoResults(index = "index")
       },
       intercept = {
         assertEquals("/2/searches/noResults".toPathSegments(), it.url.pathSegments)
@@ -920,14 +793,7 @@ class AnalyticsTest {
   fun `get getSearchesNoResults with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoResults(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getSearchesNoResults(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches/noResults".toPathSegments(), it.url.pathSegments)
@@ -944,9 +810,7 @@ class AnalyticsTest {
   fun `get getStatus with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getStatus(
-          index = "index",
-        )
+        getStatus(index = "index")
       },
       intercept = {
         assertEquals("/2/status".toPathSegments(), it.url.pathSegments)
@@ -963,9 +827,7 @@ class AnalyticsTest {
   fun `get getTopCountries with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopCountries(
-          index = "index",
-        )
+        getTopCountries(index = "index")
       },
       intercept = {
         assertEquals("/2/countries".toPathSegments(), it.url.pathSegments)
@@ -980,14 +842,7 @@ class AnalyticsTest {
   fun `get getTopCountries with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getTopCountries(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopCountries(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/countries".toPathSegments(), it.url.pathSegments)
@@ -1004,9 +859,7 @@ class AnalyticsTest {
   fun `get getTopFilterAttributes with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopFilterAttributes(
-          index = "index",
-        )
+        getTopFilterAttributes(index = "index")
       },
       intercept = {
         assertEquals("/2/filters".toPathSegments(), it.url.pathSegments)
@@ -1021,15 +874,7 @@ class AnalyticsTest {
   fun `get getTopFilterAttributes with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getTopFilterAttributes(
-          index = "index",
-          search = "mySearch",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopFilterAttributes(index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/filters".toPathSegments(), it.url.pathSegments)
@@ -1046,10 +891,7 @@ class AnalyticsTest {
   fun `get getTopFilterForAttribute with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopFilterForAttribute(
-          attribute = "myAttribute",
-          index = "index",
-        )
+        getTopFilterForAttribute(attribute = "myAttribute", index = "index")
       },
       intercept = {
         assertEquals("/2/filters/myAttribute".toPathSegments(), it.url.pathSegments)
@@ -1064,10 +906,7 @@ class AnalyticsTest {
   fun `get getTopFilterForAttribute with minimal parameters and multiple attributes1`() = runTest {
     client.runTest(
       call = {
-        getTopFilterForAttribute(
-          attribute = "myAttribute1,myAttribute2",
-          index = "index",
-        )
+        getTopFilterForAttribute(attribute = "myAttribute1,myAttribute2", index = "index")
       },
       intercept = {
         assertEquals("/2/filters/myAttribute1%2CmyAttribute2".toPathSegments(), it.url.pathSegments)
@@ -1082,16 +921,7 @@ class AnalyticsTest {
   fun `get getTopFilterForAttribute with all parameters2`() = runTest {
     client.runTest(
       call = {
-        getTopFilterForAttribute(
-          attribute = "myAttribute",
-          index = "index",
-          search = "mySearch",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopFilterForAttribute(attribute = "myAttribute", index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/filters/myAttribute".toPathSegments(), it.url.pathSegments)
@@ -1106,16 +936,7 @@ class AnalyticsTest {
   fun `get getTopFilterForAttribute with all parameters and multiple attributes3`() = runTest {
     client.runTest(
       call = {
-        getTopFilterForAttribute(
-          attribute = "myAttribute1,myAttribute2",
-          index = "index",
-          search = "mySearch",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopFilterForAttribute(attribute = "myAttribute1,myAttribute2", index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/filters/myAttribute1%2CmyAttribute2".toPathSegments(), it.url.pathSegments)
@@ -1132,9 +953,7 @@ class AnalyticsTest {
   fun `get getTopFiltersNoResults with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopFiltersNoResults(
-          index = "index",
-        )
+        getTopFiltersNoResults(index = "index")
       },
       intercept = {
         assertEquals("/2/filters/noResults".toPathSegments(), it.url.pathSegments)
@@ -1149,15 +968,7 @@ class AnalyticsTest {
   fun `get getTopFiltersNoResults with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getTopFiltersNoResults(
-          index = "index",
-          search = "mySearch",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopFiltersNoResults(index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/filters/noResults".toPathSegments(), it.url.pathSegments)
@@ -1174,9 +985,7 @@ class AnalyticsTest {
   fun `get getTopHits with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopHits(
-          index = "index",
-        )
+        getTopHits(index = "index")
       },
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
@@ -1191,17 +1000,7 @@ class AnalyticsTest {
   fun `get getTopHits with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getTopHits(
-          index = "index",
-          search = "mySearch",
-          clickAnalytics = true,
-          revenueAnalytics = true,
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopHits(index = "index", search = "mySearch", clickAnalytics = true, revenueAnalytics = true, startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
@@ -1218,9 +1017,7 @@ class AnalyticsTest {
   fun `get getTopSearches with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopSearches(
-          index = "index",
-        )
+        getTopSearches(index = "index")
       },
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
@@ -1235,18 +1032,7 @@ class AnalyticsTest {
   fun `get getTopSearches with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getTopSearches(
-          index = "index",
-          clickAnalytics = true,
-          revenueAnalytics = true,
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          orderBy = OrderBy.entries.first { it.value == "searchCount" },
-          direction = Direction.entries.first { it.value == "asc" },
-          limit = 21,
-          offset = 42,
-          tags = "tag",
-        )
+        getTopSearches(index = "index", clickAnalytics = true, revenueAnalytics = true, startDate = "1999-09-19", endDate = "2001-01-01", orderBy = OrderBy.entries.first { it.value == "searchCount" }, direction = Direction.entries.first { it.value == "asc" }, limit = 21, offset = 42, tags = "tag")
       },
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
@@ -1263,9 +1049,7 @@ class AnalyticsTest {
   fun `get getUsersCount with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getUsersCount(
-          index = "index",
-        )
+        getUsersCount(index = "index")
       },
       intercept = {
         assertEquals("/2/users/count".toPathSegments(), it.url.pathSegments)
@@ -1280,12 +1064,7 @@ class AnalyticsTest {
   fun `get getUsersCount with all parameters1`() = runTest {
     client.runTest(
       call = {
-        getUsersCount(
-          index = "index",
-          startDate = "1999-09-19",
-          endDate = "2001-01-01",
-          tags = "tag",
-        )
+        getUsersCount(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
       },
       intercept = {
         assertEquals("/2/users/count".toPathSegments(), it.url.pathSegments)

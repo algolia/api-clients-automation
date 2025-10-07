@@ -2123,8 +2123,7 @@ final class SearchClientSnippet {
                 objectID: "clearance-category-filter",
                 conditions: [SearchCondition(pattern: "", anchoring: SearchAnchoring.`is`, context: "landing")],
                 consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
-                        .string("clearance:true")
-                ))
+                        .string("clearance:true")))
             )
         )
         // >LOG
@@ -2169,8 +2168,7 @@ final class SearchClientSnippet {
                 objectID: "tomato-fruit",
                 conditions: [SearchCondition(pattern: "tomato", anchoring: SearchAnchoring.contains)],
                 consequence: SearchConsequence(params: SearchConsequenceParams(optionalFilters: SearchOptionalFilters
-                        .string("food_group:fruit")
-                ))
+                        .string("food_group:fruit")))
             )
         )
         // >LOG
@@ -2332,8 +2330,7 @@ final class SearchClientSnippet {
                 conditions: [SearchCondition(pattern: "{facet:color}")],
                 consequence: SearchConsequence(
                     params: SearchConsequenceParams(automaticFacetFilters: SearchAutomaticFacetFilters
-                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")])
-                    )
+                        .arrayOfSearchAutomaticFacetFilter([SearchAutomaticFacetFilter(facet: "color")]))
                 )
             )
         )
@@ -2538,8 +2535,7 @@ final class SearchClientSnippet {
             rule: Rule(
                 objectID: "a-rule-id",
                 consequence: SearchConsequence(params: SearchConsequenceParams(aroundRadius: SearchAroundRadius
-                        .int(1000)
-                )),
+                        .int(1000))),
                 validity: [SearchTimeRange(from: Int64(1_577_836_800), until: Int64(1_577_836_800))]
             )
         )
@@ -2562,8 +2558,7 @@ final class SearchClientSnippet {
             rule: Rule(
                 objectID: "a-rule-id",
                 consequence: SearchConsequence(params: SearchConsequenceParams(aroundRadius: SearchAroundRadius
-                        .int(1000)
-                )),
+                        .int(1000))),
                 validity: [SearchTimeRange(from: Int64(1_577_836_800))]
             )
         )
@@ -2846,10 +2841,8 @@ final class SearchClientSnippet {
 
         // Call the API
         let response: SearchResponses<Hit> = try await client
-            .search(searchMethodParams: SearchMethodParams(requests: [
-                SearchQuery
-                    .searchForHits(SearchForHits(indexName: "<YOUR_INDEX_NAME>")),
-            ]))
+            .search(searchMethodParams: SearchMethodParams(requests: [SearchQuery
+                    .searchForHits(SearchForHits(indexName: "<YOUR_INDEX_NAME>"))]))
         // >LOG
         // SEPARATOR<
     }
@@ -3632,8 +3625,7 @@ final class SearchClientSnippet {
                                 SearchFacetFilters.string("author:Stephen King"),
                                 SearchFacetFilters.string("genre:Horror"),
                             ]),
-                        ])
-                ))
+                        ])))
         )
         // >LOG
         // SEPARATOR<
@@ -3745,8 +3737,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
                 .searchSearchParamsObject(SearchSearchParamsObject(facetFilters: SearchFacetFilters
-                        .string("category:-Ebook")
-                ))
+                        .string("category:-Ebook")))
         )
         // >LOG
         // SEPARATOR<
@@ -3900,8 +3891,7 @@ final class SearchClientSnippet {
                             65.73828125,
                             25.905859247243498,
                             128.8046875,
-                        ]])
-                ))
+                        ]])))
         )
         // >LOG
         // SEPARATOR<
@@ -3950,8 +3940,7 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>",
             searchParams: SearchSearchParams
                 .searchSearchParamsObject(SearchSearchParamsObject(optionalFilters: SearchOptionalFilters
-                        .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])
-                ))
+                        .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])))
         )
         // >LOG
         // SEPARATOR<
@@ -3974,8 +3963,7 @@ final class SearchClientSnippet {
                             SearchOptionalFilters.string("brand:Apple<score=3>"),
                             SearchOptionalFilters.string("brand:Samsung<score=2>"),
                             SearchOptionalFilters.string("brand:-Huawei"),
-                        ])
-                ))
+                        ])))
         )
         // >LOG
         // SEPARATOR<
@@ -3997,8 +3985,7 @@ final class SearchClientSnippet {
                         .arrayOfSearchOptionalFilters([
                             SearchOptionalFilters.string("brand:Apple<score=2>"),
                             SearchOptionalFilters.string("type:tablet"),
-                        ])
-                ))
+                        ])))
         )
         // >LOG
         // SEPARATOR<
@@ -4167,8 +4154,7 @@ final class SearchClientSnippet {
                         .arrayOfSearchFacetFilters([
                             SearchFacetFilters.string("user:user42"),
                             SearchFacetFilters.string("user:public"),
-                        ])
-                ))
+                        ])))
         )
         // >LOG
         // SEPARATOR<
@@ -6131,8 +6117,7 @@ final class SearchClientSnippet {
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
             indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance
-                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)
-            ),
+                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min)),
             forwardToReplicas: true
         )
         // >LOG
@@ -6169,8 +6154,7 @@ final class SearchClientSnippet {
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
             indexSettings: IndexSettings(ignorePlurals: SearchIgnorePlurals
-                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
-            ),
+                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])),
             forwardToReplicas: true
         )
         // >LOG
@@ -6207,8 +6191,7 @@ final class SearchClientSnippet {
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
             indexSettings: IndexSettings(removeStopWords: SearchRemoveStopWords
-                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
-            ),
+                .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])),
             forwardToReplicas: true
         )
         // >LOG

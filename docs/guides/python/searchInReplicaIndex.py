@@ -3,6 +3,7 @@ from algoliasearch.search.client import SearchClientSync
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
+
 query = "query"
 
 # 1. Change the sort dynamically based on the UI events

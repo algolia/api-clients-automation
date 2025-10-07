@@ -143,9 +143,9 @@ class SearchClientClientTests {
       });
       assertEquals(
         "Error(s) while processing the retry strategy. If the error persists, please visit our" +
-        " help center https://alg.li/support-unreachable-hosts or reach out to the Algolia" +
-        " Support team: https://alg.li/support\n" +
-        "Caused by: java.net.SocketTimeoutException: timeout",
+          " help center https://alg.li/support-unreachable-hosts or reach out to the Algolia" +
+          " Support team: https://alg.li/support\n" +
+          "Caused by: java.net.SocketTimeoutException: timeout",
         exception.getMessage()
       );
     }
@@ -1380,7 +1380,7 @@ class SearchClientClientTests {
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
           "{\"value\":\"api-key-add-operation-test-java\",\"description\":\"my new api" +
-          " key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+            " key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
         )
@@ -1424,8 +1424,8 @@ class SearchClientClientTests {
       assertDoesNotThrow(() ->
         JSONAssert.assertEquals(
           "{\"value\":\"api-key-update-operation-test-java\",\"description\":\"my" +
-          " updated api" +
-          " key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+            " updated api" +
+            " key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
           json.writeValueAsString(res),
           JSONCompareMode.STRICT
         )

@@ -243,9 +243,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -490,9 +488,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -737,9 +733,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -980,9 +974,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1981,9 +1973,7 @@ paths:
 
             // Call the API
 
-            var response = client.getABTest(
-              id = 42,
-            )
+            var response = client.getABTest(id = 42)
 
 
             // >LOG
@@ -2241,9 +2231,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteABTest(
-              id = 42,
-            )
+            var response = client.deleteABTest(id = 42)
 
 
             // >LOG
@@ -2504,9 +2492,7 @@ paths:
 
             // Call the API
 
-            var response = client.stopABTest(
-              id = 42,
-            )
+            var response = client.stopABTest(id = 42)
 
 
             // >LOG
@@ -3683,9 +3669,7 @@ paths:
 
             // Call the API
 
-            var response = client.getTimeseries(
-              id = 42,
-            )
+            var response = client.getTimeseries(id = 42)
 
 
             // >LOG

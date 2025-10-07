@@ -1,5 +1,6 @@
-import type { OptionalFilters, SearchParams } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { OptionalFilters, SearchParams } from 'algoliasearch';
 
 const labels: string[] = []; // A list of labels
 

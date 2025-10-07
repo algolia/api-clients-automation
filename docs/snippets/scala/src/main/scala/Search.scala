@@ -7,7 +7,6 @@ import scala.concurrent.duration.Duration
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 // IMPORT<
 import algoliasearch.search.*
 

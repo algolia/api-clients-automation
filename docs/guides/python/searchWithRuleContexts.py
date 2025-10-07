@@ -1,4 +1,5 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.search_params import SearchParams
 
 
@@ -8,6 +9,7 @@ def _get_platform_tag() -> str:
 
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 # get the buyer account information
 platform_tag = _get_platform_tag()

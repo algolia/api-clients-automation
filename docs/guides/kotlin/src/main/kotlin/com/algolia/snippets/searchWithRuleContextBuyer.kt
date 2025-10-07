@@ -16,8 +16,5 @@ suspend fun searchWithRuleContextBuyer() {
   val buyer = getBuyerAccountId()
   val searchParams = SearchParamsObject(query = "<YOUR_SEARCH_QUERY>", ruleContexts = listOf(buyer))
 
-  client.searchSingleIndex(
-    indexName = "<YOUR_INDEX_NAME>",
-    searchParams = searchParams,
-  )
+  client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

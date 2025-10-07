@@ -4,7 +4,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.config.RequestOptions
 
 val getAllAppIDConfigurations: () => Map[String, String] = () => {

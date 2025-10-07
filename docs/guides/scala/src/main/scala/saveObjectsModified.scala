@@ -11,7 +11,6 @@ import org.json4s.jvalue2extractable
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.search.JsonSupport
 
 def saveObjectsModified(): Future[Unit] = {

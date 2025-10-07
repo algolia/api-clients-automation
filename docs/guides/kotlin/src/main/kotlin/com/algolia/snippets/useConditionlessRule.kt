@@ -24,9 +24,5 @@ suspend fun useConditionlessRule() {
     ),
   )
 
-  client.saveRule(
-    indexName = "<YOUR_INDEX_NAME>",
-    objectID = objectID,
-    rule = rule,
-  )
+  client.saveRule(indexName = "<YOUR_INDEX_NAME>", objectID = objectID, rule = rule)
 }

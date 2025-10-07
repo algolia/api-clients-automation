@@ -190,9 +190,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -415,9 +413,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -640,9 +636,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -861,9 +855,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1287,9 +1279,7 @@ paths:
 
             // Call the API
 
-            var response = client.getClusterStatus(
-              clusters = "c1-de",
-            )
+            var response = client.getClusterStatus(clusters = "c1-de")
 
 
             // >LOG
@@ -1719,9 +1709,7 @@ paths:
 
             // Call the API
 
-            var response = client.getClusterIncidents(
-              clusters = "c1-de",
-            )
+            var response = client.getClusterIncidents(clusters = "c1-de")
 
 
             // >LOG
@@ -2159,9 +2147,7 @@ paths:
 
             // Call the API
 
-            var response = client.getLatency(
-              clusters = "c1-de",
-            )
+            var response = client.getLatency(clusters = "c1-de")
 
 
             // >LOG
@@ -2379,9 +2365,7 @@ paths:
 
             // Call the API
 
-            var response = client.getIndexingTime(
-              clusters = "c1-de",
-            )
+            var response = client.getIndexingTime(clusters = "c1-de")
 
 
             // >LOG
@@ -2599,9 +2583,7 @@ paths:
 
             // Call the API
 
-            var response = client.getReachability(
-              clusters = "c1-de",
-            )
+            var response = client.getReachability(clusters = "c1-de")
 
 
             // >LOG
@@ -2830,10 +2812,9 @@ paths:
 
             // Call the API
 
-            var response = client.getMetrics(
-              metric = Metric.entries.first { it.value == "avg_build_time" },
-              period = Period.entries.first { it.value == "minute" },
-            )
+            var response = client.getMetrics(metric = Metric.entries.first {
+            it.value == "avg_build_time" }, period = Period.entries.first {
+            it.value == "minute" })
 
 
             // >LOG

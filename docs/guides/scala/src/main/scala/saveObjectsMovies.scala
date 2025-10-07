@@ -5,7 +5,6 @@ import scala.concurrent.{Await, ExecutionContextExecutor}
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
 import algoliasearch.extension.SearchClientExtensions
-
 import algoliasearch.search.JsonSupport
 import algoliasearch.extension.SearchClientExtensions
 

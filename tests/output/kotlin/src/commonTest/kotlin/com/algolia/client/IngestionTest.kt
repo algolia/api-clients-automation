@@ -22,20 +22,17 @@ class IngestionTest {
   fun `can handle HTML error`() = runTest {
     val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
     assertFails {
-      client.customGet(
-        path = "1/html-error",
-      )
+      client.customGet(path = "1/html-error")
     }.let { error -> assertError(error, "Client request\\(GET http://%localhost%:6676/1/html-error\\) invalid: 429 Too Many Requests. Text: \"<html><body>429 Too Many Requests</body></html>\"".replace("%localhost%", if (System.getenv("CI") == "true") "localhost" else "host.docker.internal")) }
   }
 
   @Test
   fun `calls api with default read timeouts`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customGet(
-          path = "1/test",
-        )
+        customGet(path = "1/test")
       },
       intercept = {
         assertEquals(25000, it.connectTimeout)
@@ -47,11 +44,10 @@ class IngestionTest {
   @Test
   fun `calls api with default write timeouts`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         assertEquals(25000, it.connectTimeout)
@@ -65,9 +61,7 @@ class IngestionTest {
     val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6676))))
     client.runTest(
       call = {
-        customGet(
-          path = "1/long-wait",
-        )
+        customGet(path = "1/long-wait")
       },
 
       response = {
@@ -80,6 +74,7 @@ class IngestionTest {
   @Test
   fun `endpoint level timeout`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
         validateSourceBeforeUpdate(
@@ -99,6 +94,7 @@ class IngestionTest {
   @Test
   fun `can override endpoint level timeout`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
         validateSourceBeforeUpdate(
@@ -121,11 +117,10 @@ class IngestionTest {
   @Test
   fun `calls api with correct user agent`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Ingestion (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$".toRegex()
@@ -138,11 +133,10 @@ class IngestionTest {
   @Test
   fun `the user agent contains the latest version`() = runTest {
     val client = IngestionClient(appId = "appId", apiKey = "apiKey", region = "us")
+
     client.runTest(
       call = {
-        customPost(
-          path = "1/test",
-        )
+        customPost(path = "1/test")
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.30.0\\).*".toRegex()
@@ -157,9 +151,7 @@ class IngestionTest {
     val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "us")
     client.runTest(
       call = {
-        getSource(
-          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
+        getSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
       },
       intercept = {
         assertEquals("data.us.algolia.com", it.url.host)
@@ -179,9 +171,7 @@ class IngestionTest {
     val client = IngestionClient(appId = "test-app-id", apiKey = "test-api-key", "us", options = ClientOptions(hosts = listOf(Host(url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", protocol = "http", port = 6683))))
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/1",
-        )
+        customGet(path = "check-api-key/1")
       },
 
       response = {
@@ -189,20 +179,18 @@ class IngestionTest {
         JSONAssert.assertEquals("""{"headerAPIKeyValue":"test-api-key"}""", Json.encodeToString(Json.encodeToJsonElement(it)), JSONCompareMode.STRICT)
       },
     )
+
     client.runTest(
       call = {
-        setClientApiKey(
-          apiKey = "updated-api-key",
-        )
+        setClientApiKey(apiKey = "updated-api-key")
       },
       intercept = {
       },
     )
+
     client.runTest(
       call = {
-        customGet(
-          path = "check-api-key/2",
-        )
+        customGet(path = "check-api-key/2")
       },
 
       response = {

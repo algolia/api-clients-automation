@@ -29,8 +29,8 @@ public interface EventsItems {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf AddedToCartObjectIDsAfterSearch (error: " +
-            e.getMessage() +
-            ") (type: AddedToCartObjectIDsAfterSearch)"
+              e.getMessage() +
+              ") (type: AddedToCartObjectIDsAfterSearch)"
           );
         }
       }
@@ -42,8 +42,8 @@ public interface EventsItems {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf PurchasedObjectIDsAfterSearch (error: " +
-            e.getMessage() +
-            ") (type: PurchasedObjectIDsAfterSearch)"
+              e.getMessage() +
+              ") (type: PurchasedObjectIDsAfterSearch)"
           );
         }
       }
@@ -84,8 +84,8 @@ public interface EventsItems {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf ConvertedObjectIDsAfterSearch (error: " +
-            e.getMessage() +
-            ") (type: ConvertedObjectIDsAfterSearch)"
+              e.getMessage() +
+              ") (type: ConvertedObjectIDsAfterSearch)"
           );
         }
       }

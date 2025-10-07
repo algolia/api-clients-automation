@@ -1,5 +1,6 @@
-import type { IndexSettings } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { IndexSettings } from 'algoliasearch';
 
 const playlists: Record<string, any>[] = [
   /* Your records */

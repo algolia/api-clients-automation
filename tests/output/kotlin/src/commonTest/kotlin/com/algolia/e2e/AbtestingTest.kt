@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AbtestingTest {
 
@@ -32,12 +33,7 @@ class AbtestingTest {
   fun `listABTests with parameters1`() = runTest {
     client.runTest(
       call = {
-        listABTests(
-          offset = 0,
-          limit = 21,
-          indexPrefix = "cts_e2e ab",
-          indexSuffix = "t",
-        )
+        listABTests(offset = 0, limit = 21, indexPrefix = "cts_e2e ab", indexSuffix = "t")
       },
       response = {
         JSONAssert.assertEquals("{\"abtests\":[{\"abTestID\":85635,\"createdAt\":\"2024-05-13T10:12:27.739233Z\",\"endAt\":\"2124-05-13T00:00:00Z\",\"name\":\"cts_e2e_abtest\",\"status\":\"active\",\"variants\":[{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"this abtest is used for api client automation tests and will expire in 2124\",\"index\":\"cts_e2e_search_facet\",\"purchaseCount\":0,\"trafficPercentage\":25},{\"addToCartCount\":0,\"clickCount\":0,\"conversionCount\":0,\"description\":\"\",\"index\":\"cts_e2e abtest\",\"purchaseCount\":0,\"trafficPercentage\":75}]}],\"count\":1,\"total\":1}", Json.encodeToString(it), JSONCompareMode.LENIENT)

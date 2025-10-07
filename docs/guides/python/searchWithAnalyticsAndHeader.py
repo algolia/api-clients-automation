@@ -1,9 +1,11 @@
 from algoliasearch.search.client import SearchClientSync
 from json import loads
+
 from algoliasearch.search.models.search_params import SearchParams
 
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 """
 '94.228.178.246' should be replaced with your user's IP address.

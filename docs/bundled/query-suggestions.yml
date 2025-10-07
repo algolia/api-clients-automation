@@ -218,9 +218,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -447,9 +445,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -676,9 +672,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -901,9 +895,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1762,9 +1754,7 @@ paths:
 
             // Call the API
 
-            var response = client.getConfig(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.getConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -2416,9 +2406,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteConfig(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.deleteConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -2683,9 +2671,8 @@ paths:
 
             // Call the API
 
-            var response = client.getConfigStatus(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.getConfigStatus(indexName =
+            "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -2943,9 +2930,7 @@ paths:
 
             // Call the API
 
-            var response = client.getLogFile(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.getLogFile(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG

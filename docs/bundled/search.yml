@@ -384,9 +384,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -624,9 +622,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -864,9 +860,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -1100,9 +1094,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1357,9 +1349,8 @@ paths:
 
             // Call the API
 
-            var response = client.searchSingleIndex(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.searchSingleIndex(indexName =
+            "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -2011,10 +2002,8 @@ paths:
 
             // Call the API
 
-            var response = client.searchForFacetValues(
-              indexName = "<YOUR_INDEX_NAME>",
-              facetName = "facetName",
-            )
+            var response = client.searchForFacetValues(indexName =
+            "<YOUR_INDEX_NAME>", facetName = "facetName")
 
 
             // >LOG
@@ -2320,9 +2309,7 @@ paths:
 
             // Call the API
 
-            var response = client.browse(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.browse(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -2657,22 +2644,10 @@ paths:
             var response = client.saveObject(
               indexName = "<YOUR_INDEX_NAME>",
               body = buildJsonObject {
-                put(
-                  "name",
-                  JsonPrimitive("Black T-shirt"),
-                )
-                put(
-                  "color",
-                  JsonPrimitive("#000000||black"),
-                )
-                put(
-                  "availableIn",
-                  JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"),
-                )
-                put(
-                  "objectID",
-                  JsonPrimitive("myID"),
-                )
+                put("name", JsonPrimitive("Black T-shirt"))
+                put("color", JsonPrimitive("#000000||black"))
+                put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
+                put("objectID", JsonPrimitive("myID"))
               },
             )
 
@@ -2969,9 +2944,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteIndex(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.deleteIndex(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -3259,11 +3232,9 @@ paths:
 
             // Call the API
 
-            var response = client.getObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToRetrieve = listOf("attr1", "attr2"),
-            )
+            var response = client.getObject(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "uniqueID", attributesToRetrieve = listOf("attr1",
+            "attr2"))
 
 
             // >LOG
@@ -3575,10 +3546,7 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               body = buildJsonObject {
-                put(
-                  "key",
-                  JsonPrimitive("value"),
-                )
+                put("key", JsonPrimitive("value"))
               },
             )
 
@@ -3848,10 +3816,8 @@ paths:
 
             // Call the API
 
-            var response = client.deleteObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-            )
+            var response = client.deleteObject(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "uniqueID")
 
 
             // >LOG
@@ -4398,9 +4364,7 @@ paths:
 
             // Call the API
 
-            var response = client.clearObjects(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.clearObjects(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -4746,10 +4710,7 @@ paths:
               indexName = "<YOUR_INDEX_NAME>",
               objectID = "uniqueID",
               attributesToUpdate = buildJsonObject {
-                put(
-                  "attributeId",
-                  JsonPrimitive("new value"),
-                )
+                put("attributeId", JsonPrimitive("new value"))
               },
             )
 
@@ -5040,29 +5001,29 @@ paths:
             client.batch(
               "<YOUR_INDEX_NAME>",
               new BatchWriteParams().setRequests(
-                  Arrays.asList(
-                    new BatchRequest()
-                      .setAction(Action.ADD_OBJECT)
-                      .setBody(
-                        new HashMap() {
-                          {
-                            put("key", "bar");
-                            put("foo", "1");
-                          }
+                Arrays.asList(
+                  new BatchRequest()
+                    .setAction(Action.ADD_OBJECT)
+                    .setBody(
+                      new HashMap() {
+                        {
+                          put("key", "bar");
+                          put("foo", "1");
                         }
-                      ),
-                    new BatchRequest()
-                      .setAction(Action.ADD_OBJECT)
-                      .setBody(
-                        new HashMap() {
-                          {
-                            put("key", "baz");
-                            put("foo", "2");
-                          }
+                      }
+                    ),
+                  new BatchRequest()
+                    .setAction(Action.ADD_OBJECT)
+                    .setBody(
+                      new HashMap() {
+                        {
+                          put("key", "baz");
+                          put("foo", "2");
                         }
-                      )
-                  )
+                      }
+                    )
                 )
+              )
             );
 
             // >LOG
@@ -5111,27 +5072,15 @@ paths:
                   BatchRequest(
                     action = Action.entries.first { it.value == "addObject" },
                     body = buildJsonObject {
-                      put(
-                        "key",
-                        JsonPrimitive("bar"),
-                      )
-                      put(
-                        "foo",
-                        JsonPrimitive("1"),
-                      )
+                      put("key", JsonPrimitive("bar"))
+                      put("foo", JsonPrimitive("1"))
                     },
                   ),
                   BatchRequest(
                     action = Action.entries.first { it.value == "addObject" },
                     body = buildJsonObject {
-                      put(
-                        "key",
-                        JsonPrimitive("baz"),
-                      )
-                      put(
-                        "foo",
-                        JsonPrimitive("2"),
-                      )
+                      put("key", JsonPrimitive("baz"))
+                      put("foo", JsonPrimitive("2"))
                     },
                   ),
                 ),
@@ -5503,19 +5452,19 @@ paths:
 
             client.multipleBatch(
               new BatchParams().setRequests(
-                  Arrays.asList(
-                    new MultipleBatchRequest()
-                      .setAction(Action.ADD_OBJECT)
-                      .setBody(
-                        new HashMap() {
-                          {
-                            put("key", "value");
-                          }
+                Arrays.asList(
+                  new MultipleBatchRequest()
+                    .setAction(Action.ADD_OBJECT)
+                    .setBody(
+                      new HashMap() {
+                        {
+                          put("key", "value");
                         }
-                      )
-                      .setIndexName("<YOUR_INDEX_NAME>")
-                  )
+                      }
+                    )
+                    .setIndexName("<YOUR_INDEX_NAME>")
                 )
+              )
             );
 
             // >LOG
@@ -5557,10 +5506,7 @@ paths:
                   MultipleBatchRequest(
                     action = Action.entries.first { it.value == "addObject" },
                     body = buildJsonObject {
-                      put(
-                        "key",
-                        JsonPrimitive("value"),
-                      )
+                      put("key", JsonPrimitive("value"))
                     },
                     indexName = "<YOUR_INDEX_NAME>",
                   ),
@@ -6223,10 +6169,8 @@ paths:
 
             // Call the API
 
-            var response = client.getSettings(
-              indexName = "<YOUR_INDEX_NAME>",
-              getVersion = 2,
-            )
+            var response = client.getSettings(indexName = "<YOUR_INDEX_NAME>",
+            getVersion = 2)
 
 
             // >LOG
@@ -6794,10 +6738,8 @@ paths:
 
             // Call the API
 
-            var response = client.getSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-            )
+            var response = client.getSynonym(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "id1")
 
 
             // >LOG
@@ -7405,10 +7347,8 @@ paths:
 
             // Call the API
 
-            var response = client.deleteSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-            )
+            var response = client.deleteSynonym(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "id1")
 
 
             // >LOG
@@ -8086,9 +8026,7 @@ paths:
 
             // Call the API
 
-            var response = client.clearSynonyms(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.clearSynonyms(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -8356,9 +8294,8 @@ paths:
 
             // Call the API
 
-            var response = client.searchSynonyms(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.searchSynonyms(indexName =
+            "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -9150,9 +9087,7 @@ paths:
 
             // Call the API
 
-            var response = client.getApiKey(
-              key = "myTestApiKey",
-            )
+            var response = client.getApiKey(key = "myTestApiKey")
 
 
             // >LOG
@@ -9742,9 +9677,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteApiKey(
-              key = "myTestApiKey",
-            )
+            var response = client.deleteApiKey(key = "myTestApiKey")
 
 
             // >LOG
@@ -10000,9 +9933,7 @@ paths:
 
             // Call the API
 
-            var response = client.restoreApiKey(
-              key = "ALGOLIA_API_KEY",
-            )
+            var response = client.restoreApiKey(key = "ALGOLIA_API_KEY")
 
 
             // >LOG
@@ -10255,10 +10186,8 @@ paths:
 
             // Call the API
 
-            var response = client.getRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "qr-1725004648916",
-            )
+            var response = client.getRule(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "qr-1725004648916")
 
 
             // >LOG
@@ -10897,10 +10826,8 @@ paths:
 
             // Call the API
 
-            var response = client.deleteRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-            )
+            var response = client.deleteRule(indexName = "<YOUR_INDEX_NAME>",
+            objectID = "id1")
 
 
             // >LOG
@@ -11677,9 +11604,7 @@ paths:
 
             // Call the API
 
-            var response = client.clearRules(
-              indexName = "<YOUR_INDEX_NAME>",
-            )
+            var response = client.clearRules(indexName = "<YOUR_INDEX_NAME>")
 
 
             // >LOG
@@ -13277,16 +13202,16 @@ paths:
 
             client.setDictionarySettings(
               new DictionarySettingsParams().setDisableStandardEntries(
-                  new StandardEntries().setPlurals(
-                      new HashMap() {
-                        {
-                          put("fr", false);
-                          put("en", false);
-                          put("ru", true);
-                        }
-                      }
-                    )
+                new StandardEntries().setPlurals(
+                  new HashMap() {
+                    {
+                      put("fr", false);
+                      put("en", false);
+                      put("ru", true);
+                    }
+                  }
                 )
+              )
             );
 
             // >LOG
@@ -14985,9 +14910,7 @@ paths:
 
             // Call the API
 
-            var response = client.getUserId(
-              userID = "uniqueID",
-            )
+            var response = client.getUserId(userID = "uniqueID")
 
 
             // >LOG
@@ -15239,9 +15162,7 @@ paths:
 
             // Call the API
 
-            var response = client.removeUserId(
-              userID = "uniqueID",
-            )
+            var response = client.removeUserId(userID = "uniqueID")
 
 
             // >LOG
@@ -17202,9 +17123,7 @@ paths:
 
             // Call the API
 
-            var response = client.deleteSource(
-              source = "theSource",
-            )
+            var response = client.deleteSource(source = "theSource")
 
 
             // >LOG
@@ -17863,9 +17782,7 @@ paths:
 
             // Call the API
 
-            var response = client.getAppTask(
-              taskID = 123L,
-            )
+            var response = client.getAppTask(taskID = 123L)
 
 
             // >LOG
@@ -18132,10 +18049,8 @@ paths:
 
             // Call the API
 
-            var response = client.getTask(
-              indexName = "<YOUR_INDEX_NAME>",
-              taskID = 123L,
-            )
+            var response = client.getTask(indexName = "<YOUR_INDEX_NAME>",
+            taskID = 123L)
 
 
             // >LOG

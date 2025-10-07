@@ -1,4 +1,5 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.browse_response import BrowseResponse
 from algoliasearch.search.models.index_settings import IndexSettings
 
@@ -9,6 +10,7 @@ def _get_image_labels(image_url, object_id, score_limit):
 
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 records = []
 

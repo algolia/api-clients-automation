@@ -1,4 +1,5 @@
 from algoliasearch.search.client import SearchClientSync
+
 from algoliasearch.search.models.search_params import SearchParams
 
 
@@ -8,6 +9,7 @@ def _get_buyer_account_id() -> str:
 
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
 
 # get the buyer account information
 buyer = _get_buyer_account_id()

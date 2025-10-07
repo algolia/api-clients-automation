@@ -248,9 +248,7 @@ paths:
 
             // Call the API
 
-            var response = client.customGet(
-              path = "test/minimal",
-            )
+            var response = client.customGet(path = "test/minimal")
 
 
             // >LOG
@@ -490,9 +488,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPost(
-              path = "test/minimal",
-            )
+            var response = client.customPost(path = "test/minimal")
 
 
             // >LOG
@@ -732,9 +728,7 @@ paths:
 
             // Call the API
 
-            var response = client.customPut(
-              path = "test/minimal",
-            )
+            var response = client.customPut(path = "test/minimal")
 
 
             // >LOG
@@ -970,9 +964,7 @@ paths:
 
             // Call the API
 
-            var response = client.customDelete(
-              path = "test/minimal",
-            )
+            var response = client.customDelete(path = "test/minimal")
 
 
             // >LOG
@@ -1897,8 +1889,7 @@ paths:
             // Call the API
 
             let response = try await client
-                .pushEvents(insightsEvents: InsightsEvents(events: [
-                    EventsItems
+                .pushEvents(insightsEvents: InsightsEvents(events: [EventsItems
                         .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
                             eventName: "Product Clicked",
                             eventType: ClickEvent.click,
@@ -1909,8 +1900,7 @@ paths:
                             userToken: "user-123456",
                             authenticatedUserToken: "user-123456",
                             timestamp: Int64(1_641_290_601_962)
-                        )),
-                ]))
+                        ))]))
             // >LOG
         - lang: cURL
           label: curl
@@ -2063,9 +2053,7 @@ paths:
 
             // Call the API
 
-            client.deleteUserToken(
-              userToken = "test-user-1",
-            )
+            client.deleteUserToken(userToken = "test-user-1")
 
 
             // >LOG

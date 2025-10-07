@@ -6,6 +6,7 @@ playlists = []  # Your records
 
 _client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
+
 _client.save_objects(
     index_name="<YOUR_INDEX_NAME>",
     objects=playlists,

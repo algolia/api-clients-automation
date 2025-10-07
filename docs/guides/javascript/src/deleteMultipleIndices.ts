@@ -1,5 +1,6 @@
-import type { MultipleBatchRequest } from 'algoliasearch';
 import { algoliasearch } from 'algoliasearch';
+
+import type { MultipleBatchRequest } from 'algoliasearch';
 
 // You need an API key with `deleteIndex`
 const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

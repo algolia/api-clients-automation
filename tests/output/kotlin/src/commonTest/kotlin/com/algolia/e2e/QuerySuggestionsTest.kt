@@ -14,6 +14,7 @@ import kotlinx.serialization.json.*
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class QuerySuggestionsTest {
 
@@ -32,9 +33,7 @@ class QuerySuggestionsTest {
   fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
       call = {
-        getConfig(
-          indexName = "cts_e2e_browse_query_suggestions",
-        )
+        getConfig(indexName = "cts_e2e_browse_query_suggestions")
       },
       response = {
         JSONAssert.assertEquals("{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}", Json.encodeToString(it), JSONCompareMode.LENIENT)
