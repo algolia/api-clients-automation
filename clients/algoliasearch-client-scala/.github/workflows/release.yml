@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - '*'
 
 jobs:
   release:
@@ -16,17 +18,11 @@ jobs:
         with:
           fetch-tags: true
 
-      - name: checkout the release tag
-        run: |
-          TAG=$(sed -n 's/.*version := "\(.*\)"/\1/p' version.sbt)
-          echo "Checking out tag $TAG"
-          git checkout "v$TAG"
-
       - name: Install Java
         uses: actions/setup-java@v5
         with:
           distribution: zulu
-          java-version: 11
+          java-version: 17
           cache: sbt
 
       - name: Compile
