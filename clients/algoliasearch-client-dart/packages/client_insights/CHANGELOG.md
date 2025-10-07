@@ -1,3 +1,9 @@
+## [1.38.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.37.0...1.38.0)
+
+- [7de94353f](https://github.com/algolia/api-clients-automation/commit/7de94353f) feat(specs): add compositions deduplication setting ([#5418](https://github.com/algolia/api-clients-automation/pull/5418)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8bee10f1a](https://github.com/algolia/api-clients-automation/commit/8bee10f1a) fix(clients): add a default idleConnTimeout ([#5442](https://github.com/algolia/api-clients-automation/pull/5442)) by [@millotp](https://github.com/millotp/)
+- [01261eceb](https://github.com/algolia/api-clients-automation/commit/01261eceb) chore(deps): dependencies 2025-09-29 ([#5393](https://github.com/algolia/api-clients-automation/pull/5393)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.37.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.36.1...1.37.0)
 
 - [ca25c44e2](https://github.com/algolia/api-clients-automation/commit/ca25c44e2) chore(deps): dependencies 2025-09-08 ([#5310](https://github.com/algolia/api-clients-automation/pull/5310)) by [@algolia-bot](https://github.com/algolia-bot/)
