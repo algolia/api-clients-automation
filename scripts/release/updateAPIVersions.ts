@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 
 import clientsConfig from '../../config/clients.config.json' with { type: 'json' };
-import { CI, exists, setVerbose, toAbsolutePath } from '../common.ts';
+import { exists, toAbsolutePath } from '../common.ts';
 import { getGitHubUrl, getLanguageFolder } from '../config.ts';
 import type { Language } from '../types.ts';
 
@@ -59,7 +59,6 @@ export async function updateAPIVersions(versions: Versions, changelog: Changelog
     }
 
     if (lang === 'javascript' && releaseType) {
-      setVerbose(CI);
       await updateJavaScriptPackages(releaseType);
     }
 
