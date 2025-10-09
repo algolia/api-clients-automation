@@ -14,5 +14,6 @@
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
 {{/hasCustomHosts}}
+{{#hasTransformationRegion}}client.SetTransformationRegion("{{{transformationRegion}}}");{{/hasTransformationRegion}}
 {{#useEchoRequester}}
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}), _echo);{{/useEchoRequester}}
