@@ -7,6 +7,7 @@ method:
       - javascript
       - php
       - python
+      - csharp
     tags:
       - Records
     operationId: saveObjectsWithTransformation
