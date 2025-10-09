@@ -2,10 +2,8 @@ name: Publish jar
 
 on:
   push:
-    branches:
-      - main
     tags:
-      - '*'
+      - v*
 
 jobs:
   release:
