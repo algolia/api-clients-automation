@@ -9,6 +9,7 @@ method:
       - java
       - php
       - python
+      - csharp
     operationId: replaceAllObjectsWithTransformation
     summary: Replace all records in an index
     description: |
