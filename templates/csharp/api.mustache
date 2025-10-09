@@ -162,7 +162,8 @@ namespace Algolia.Search.Clients;
       /// if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
       /// </summary>
       /// <param name="region">The region ("us" or "eu")</param>
-      public void SetTransformationRegion(string region)
+      /// <param name="factory">Logger factory</param>
+      public void SetTransformationRegion(string region, ILoggerFactory factory = null)
       {
         if (string.IsNullOrWhiteSpace(region))
         {
@@ -174,10 +175,6 @@ namespace Algolia.Search.Clients;
         {
           throw new ArgumentException("AppId and ApiKey are required for transformation pipeline");
         }
-
-        var factory = _logger != null ? 
-          (_logger as ILogger<SearchClient>)?.Logger?.LoggerFactory : 
-          NullLoggerFactory.Instance;
 
         _ingestionTransporter = new IngestionClient(
           _transport._algoliaConfig.AppId,
