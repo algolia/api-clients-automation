@@ -13,6 +13,9 @@ using Algolia.Search.Http;
 using Algolia.Search.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+{{#isSearchClient}}
+using Algolia.Search.Clients;  // For IngestionClient
+{{/isSearchClient}}
 
 namespace Algolia.Search.Clients;
 
@@ -84,6 +87,9 @@ namespace Algolia.Search.Clients;
   {
       internal HttpTransport _transport;
       private readonly ILogger<{{apiPackageName}}Client> _logger;
+      {{#isSearchClient}}
+      private IIngestionClient _ingestionTransporter;
+      {{/isSearchClient}}
 
       /// <summary>
       /// Create a new {{apiPackageName}} client for the given appID and apiKey.
@@ -149,6 +155,38 @@ namespace Algolia.Search.Clients;
       {
         _transport._algoliaConfig.SetClientApiKey(apiKey);
       }
+
+      {{#isSearchClient}}
+      /// <summary>
+      /// Sets the region of the transformation pipeline. This is required to be called
+      /// if you wish to leverage the transformation pipeline (via the *WithTransformation methods).
+      /// </summary>
+      /// <param name="region">The region ("us" or "eu")</param>
+      public void SetTransformationRegion(string region)
+      {
+        if (string.IsNullOrWhiteSpace(region))
+        {
+          throw new ArgumentException("`region` must be provided when leveraging the transformation pipeline");
+        }
+        
+        if (string.IsNullOrWhiteSpace(_transport._algoliaConfig.AppId) || 
+            string.IsNullOrWhiteSpace(_transport._algoliaConfig.ApiKey))
+        {
+          throw new ArgumentException("AppId and ApiKey are required for transformation pipeline");
+        }
+
+        var factory = _logger != null ? 
+          (_logger as ILogger<SearchClient>)?.Logger?.LoggerFactory : 
+          NullLoggerFactory.Instance;
+
+        _ingestionTransporter = new IngestionClient(
+          _transport._algoliaConfig.AppId,
+          _transport._algoliaConfig.ApiKey,
+          region,
+          factory
+        );
+      }
+      {{/isSearchClient}}
   
 
       {{#operation}}
