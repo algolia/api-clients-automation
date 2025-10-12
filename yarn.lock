@@ -1191,13 +1191,13 @@ __metadata:
   linkType: hard
 
 "@napi-rs/wasm-runtime@npm:^1.0.5":
-  version: 1.0.6
-  resolution: "@napi-rs/wasm-runtime@npm:1.0.6"
+  version: 1.0.7
+  resolution: "@napi-rs/wasm-runtime@npm:1.0.7"
   dependencies:
     "@emnapi/core": "npm:^1.5.0"
     "@emnapi/runtime": "npm:^1.5.0"
     "@tybys/wasm-util": "npm:^0.10.1"
-  checksum: 10/7d44eec63c3416b5e7d0eda5f0fc78d05a96445a5d80357b8906a8513e07359d76f9c9285f3a0a0ec0861b444e887744e4b0824c69963344578c5fe672a7bf7a
+  checksum: 10/6bc32d32d486d07b83220a9b7b2b715e39acacbacef0011ebca05c00b41d80a0535123da10fea7a7d6d7e206712bb50dc50ac3cf88b770754d44378570fb5c05
   languageName: node
   linkType: hard
 
@@ -2464,11 +2464,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 24.7.0
-  resolution: "@types/node@npm:24.7.0"
+  version: 24.7.2
+  resolution: "@types/node@npm:24.7.2"
   dependencies:
     undici-types: "npm:~7.14.0"
-  checksum: 10/db0b77e9b132906cdf0350661df660c970e924093ccaa781472d61bc5c448f3d15514b15f55b4df6827254a041aad2418339fe00d45ef10687557ffc0f026d47
+  checksum: 10/62073022f7fc11363683e6ce82332193129c3053e7f973127a83b0daa5d755ecf5806d310f5a7c78375e6c3d309aa15b4ae87c4c1797a9eec091425d36098b60
   languageName: node
   linkType: hard
 
@@ -3123,9 +3123,14 @@ __metadata:
   linkType: hard
 
 "bare-events@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "bare-events@npm:2.7.0"
-  checksum: 10/5287b470f8b9c9c1522da922e615e0238abae10323c0b4bb2c43e4f24d486e15fb4562d7b75d0c882606af6effb483c3117bb6569c911417a4fb7fd94d59d251
+  version: 2.8.0
+  resolution: "bare-events@npm:2.8.0"
+  peerDependencies:
+    bare-abort-controller: "*"
+  peerDependenciesMeta:
+    bare-abort-controller:
+      optional: true
+  checksum: 10/3b3330593daa5bcbae9d62696cc6b77883c99f551412bd03cc7aee6ff5e5a8ea1a442069642b3c45c3dcdadbb732028f173ea2aaf9d418a19df3262b681bf9b6
   languageName: node
   linkType: hard
 
@@ -3137,11 +3142,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.8.9":
-  version: 2.8.12
-  resolution: "baseline-browser-mapping@npm:2.8.12"
+  version: 2.8.16
+  resolution: "baseline-browser-mapping@npm:2.8.16"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10/9e7f9ac5625e8bf48cf63e24994c015266734af915bdc4f5ee4282962084df096387ea4f5bb9dc8f8f6d6aa9e81ed356f448ca1611391bda5a251687b8fa078e
+  checksum: 10/52a5807591daeffc810b783b1afa20c4017dd94e5bb74934bcde4dd408758e492610e330cfe6e609a0f0bde5ce210dd934271540fb931389d6838db17ec8cfef
   languageName: node
   linkType: hard
 
@@ -3371,9 +3376,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001746":
-  version: 1.0.30001748
-  resolution: "caniuse-lite@npm:1.0.30001748"
-  checksum: 10/f0eccb1993b17259e0a838687d9fbabb880685019783dd158e6369f926e0e63386d8793a13600d749e976268ab757db992b8fc13c3a8993ea9e58d60ce4d1608
+  version: 1.0.30001750
+  resolution: "caniuse-lite@npm:1.0.30001750"
+  checksum: 10/2b912758d817cd2c2c179246e282f8b598695ec733bc446183e1d381eada60889c4770a1dfd86075e046a43d55f9922e2eaed1501347fcb12a38716cc14be297
   languageName: node
   linkType: hard
 
@@ -3758,9 +3763,9 @@ __metadata:
   linkType: hard
 
 "core-js@npm:^3.32.1":
-  version: 3.45.1
-  resolution: "core-js@npm:3.45.1"
-  checksum: 10/b9dca79b1af8bb4f0d4af0752ea98d694fe157abaf55513fd4084df32dfd4398f0fc57898b32cdb643c1cecb87b9231c2a2ce535797c80ae328eac6d6078ee61
+  version: 3.46.0
+  resolution: "core-js@npm:3.46.0"
+  checksum: 10/82993ca487c6cbbf8bbf00e45eeb9705eb63dc2f9c90d7f35696733efbc3f4b52426e1f8dbef0f0b68ea16caa21e4f44cc5490e08120e1cad4a72b031ed8adaa
   languageName: node
   linkType: hard
 
@@ -4011,9 +4016,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.227":
-  version: 1.5.232
-  resolution: "electron-to-chromium@npm:1.5.232"
-  checksum: 10/4e3aade7b84c91b54b8704259ae2e34fd50aef01240512f3b3f23a04c8480a489f6eae4594f04130a668f51d8d62b8c3fb39c56e0cf380f98a1e0401db23e2ac
+  version: 1.5.234
+  resolution: "electron-to-chromium@npm:1.5.234"
+  checksum: 10/58ea98f920ab88cbf02337f50a78bbff224e0cb171a40bc8d0cd53bb7c7119190c5ff281604b237abebb03d6fac05b52b21a4b9ca32221be76ca62f2019d5559
   languageName: node
   linkType: hard
 
@@ -4632,9 +4637,9 @@ __metadata:
   linkType: hard
 
 "exponential-backoff@npm:^3.1.1":
-  version: 3.1.2
-  resolution: "exponential-backoff@npm:3.1.2"
-  checksum: 10/ca2f01f1aa4dafd3f3917bd531ab5be08c6f5f4b2389d2e974f903de3cbeb50b9633374353516b6afd70905775e33aba11afab1232d3acf0aa2963b98a611c51
+  version: 3.1.3
+  resolution: "exponential-backoff@npm:3.1.3"
+  checksum: 10/ca25962b4bbab943b7c4ed0b5228e263833a5063c65e1cdeac4be9afad350aae5466e8e619b5051f4f8d37b2144a2d6e8fcc771b6cc82934f7dade2f964f652c
   languageName: node
   linkType: hard
 
@@ -7796,7 +7801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.7.3":
+"semver@npm:7.7.3, semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.5.4, semver@npm:^7.6.0":
   version: 7.7.3
   resolution: "semver@npm:7.7.3"
   bin:
@@ -7811,15 +7816,6 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10/1ef3a85bd02a760c6ef76a45b8c1ce18226de40831e02a00bad78485390b98b6ccaa31046245fc63bba4a47a6a592b6c7eedc65cc47126e60489f9cc1ce3ed7e
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.5.4, semver@npm:^7.6.0":
-  version: 7.7.2
-  resolution: "semver@npm:7.7.2"
-  bin:
-    semver: bin/semver.js
-  checksum: 10/7a24cffcaa13f53c09ce55e05efe25cd41328730b2308678624f8b9f5fc3093fc4d189f47950f0b811ff8f3c3039c24a2c36717ba7961615c682045bf03e1dda
   languageName: node
   linkType: hard
 
