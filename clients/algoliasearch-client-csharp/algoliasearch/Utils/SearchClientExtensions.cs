@@ -1431,7 +1431,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`transformation.region` must be provided at client instantiation before calling this method."
+        "`setTransformationRegion` must have been called before calling this method."
       );
     }
 
@@ -1489,7 +1489,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`transformation.region` must be provided at client instantiation before calling this method."
+        "`setTransformationRegion` must have been called before calling this method."
       );
     }
 
@@ -1550,7 +1550,7 @@ public partial class SearchClient : ISearchClient
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
-        "`transformation.region` must be provided at client instantiation before calling this method."
+        "`setTransformationRegion` must have been called before calling this method."
       );
     }
 
