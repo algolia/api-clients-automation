@@ -15,6 +15,10 @@ type Run = {
   retried: boolean;
 };
 
+function useTagForRelease(language: Language): boolean {
+  return language === 'scala' || language === 'dart';
+}
+
 async function fetchAllRuns(runs: Run[]): Promise<void> {
   const octokit = getOctokit();
 
@@ -28,7 +32,7 @@ async function fetchAllRuns(runs: Run[]): Promise<void> {
           repo: getClientsConfigField(ciRun.language, 'gitRepoId'),
           workflow_id: 'release.yml',
           per_page: 1,
-          branch: ciRun.language === 'dart' ? undefined : getTargetBranch(ciRun.language),
+          branch: useTagForRelease(ciRun.language) ? undefined : getTargetBranch(ciRun.language),
         });
 
         if (workflowRun.data.workflow_runs.length === 0) {
