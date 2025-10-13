@@ -45,7 +45,7 @@ info:
     - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
       The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
-    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).
 
     ## Request format
 

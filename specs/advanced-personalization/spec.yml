@@ -29,7 +29,7 @@ info:
     - `x-algolia-application-id`. Your Algolia application ID.
     - `x-algolia-api-key`. An API key with the `search`, `browse` and `recommendation` ACL permissions.
 
-    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).
 
     ## Request format
 

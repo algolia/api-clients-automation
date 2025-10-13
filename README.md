@@ -47,16 +47,17 @@ yarn docker:setup
 
 The CLI allows you to make changes locally and run commands through the docker container.
 
-- [Specs CLI commands](https://api-clients-automation.netlify.app/docs/CLI/specs-commands)
-- [Clients CLI commands](https://api-clients-automation.netlify.app/docs/CLI/clients-commands)
+- [Generate CLI commands](https://api-clients-automation.netlify.app/docs/CLI/generate-commands)
+- [Build CLI commands](https://api-clients-automation.netlify.app/docs/CLI/build-commands)
 - [CTS CLI commands](https://api-clients-automation.netlify.app/docs/CLI/cts-commands)
+- [Release CLI commands](https://api-clients-automation.netlify.app/docs/CLI/release-commands)
 
 ### Guides and requirements
 
 Read the guides and requirements to:
 
-- [Add a new client](https://api-clients-automation.netlify.app/docs/add-new-api-client)
-- [Add a new language](https://api-clients-automation.netlify.app/docs/add-new-api-language)
+- [Add a new client](https://api-clients-automation.netlify.app/docs/add-a-new-api/write-a-specification)
+- [Add a new language](https://api-clients-automation.netlify.app/docs/add-a-new-language)
 
 ### Tests
 

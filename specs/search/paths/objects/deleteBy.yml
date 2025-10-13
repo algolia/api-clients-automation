@@ -16,7 +16,7 @@ post:
 
     This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   externalDocs:
-    url: https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-
+    url: https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query
     description: Should I use the deleteBy method for deleting records.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
