@@ -96,8 +96,8 @@ __metadata:
     eslint-plugin-json: "npm:4.0.1"
     eslint-plugin-yml: "npm:1.19.0"
     husky: "npm:9.1.7"
-    lint-staged: "npm:16.2.3"
-    oxlint: "npm:1.20.0"
+    lint-staged: "npm:16.2.4"
+    oxlint: "npm:1.22.0"
     prettier: "npm:3.6.2"
     prettier-plugin-java: "npm:2.7.5"
     prettier-plugin-organize-imports: "npm:4.3.0"
@@ -1778,58 +1778,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-arm64@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/darwin-arm64@npm:1.20.0"
+"@oxlint/darwin-arm64@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/darwin-arm64@npm:1.22.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/darwin-x64@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/darwin-x64@npm:1.20.0"
+"@oxlint/darwin-x64@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/darwin-x64@npm:1.22.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-gnu@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/linux-arm64-gnu@npm:1.20.0"
+"@oxlint/linux-arm64-gnu@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/linux-arm64-gnu@npm:1.22.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-arm64-musl@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/linux-arm64-musl@npm:1.20.0"
+"@oxlint/linux-arm64-musl@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/linux-arm64-musl@npm:1.22.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-gnu@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/linux-x64-gnu@npm:1.20.0"
+"@oxlint/linux-x64-gnu@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/linux-x64-gnu@npm:1.22.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@oxlint/linux-x64-musl@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/linux-x64-musl@npm:1.20.0"
+"@oxlint/linux-x64-musl@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/linux-x64-musl@npm:1.22.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@oxlint/win32-arm64@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/win32-arm64@npm:1.20.0"
+"@oxlint/win32-arm64@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/win32-arm64@npm:1.22.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@oxlint/win32-x64@npm:1.20.0":
-  version: 1.20.0
-  resolution: "@oxlint/win32-x64@npm:1.20.0"
+"@oxlint/win32-x64@npm:1.22.0":
+  version: 1.22.0
+  resolution: "@oxlint/win32-x64@npm:1.22.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2472,12 +2472,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.18.8":
-  version: 22.18.8
-  resolution: "@types/node@npm:22.18.8"
+"@types/node@npm:22.18.10":
+  version: 22.18.10
+  resolution: "@types/node@npm:22.18.10"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10/dc8e883680993bebf45ac641af6648fd88a8d6ec0e375ff737221eef6c93b6a4d20311dfc070bb595095adbf9a2a411a9b3d9230a763eb744bb1d8ca831c331c
+  checksum: 10/07e9ce07767c48fc4860c78d2d9c90a87ef6fa30fa065beb2fd838ae1ba6fe787218f344a01cb14b4bf0a97cdfea5488fcbfbd343ccd07ab97154bceeb394f2f
   languageName: node
   linkType: hard
 
@@ -4295,17 +4295,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:6.1.1":
-  version: 6.1.1
-  resolution: "eslint-plugin-react-hooks@npm:6.1.1"
+"eslint-plugin-react-hooks@npm:7.0.0":
+  version: 7.0.0
+  resolution: "eslint-plugin-react-hooks@npm:7.0.0"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/parser": "npm:^7.24.4"
+    hermes-parser: "npm:^0.25.1"
     zod: "npm:^3.22.4 || ^4.0.0"
     zod-validation-error: "npm:^3.0.3 || ^4.0.0"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
-  checksum: 10/dcd74dbff0f18ba5aa1d36f0e414628f99c25f14e5bd7ce8205d719dd488adca7530d15ea429ffbc94b09ab6d499160a2e3d2a9a9d9a72f9d517c79e6b472ba6
+  checksum: 10/756ad90ec6390bafa8037f86ab72d98af55c25e13b69e15bdac634724c8af7a87eb6993b643665e930d67635d52c8aa55b0e7a1d47e3c4e42a3b66950b2069fb
   languageName: node
   linkType: hard
 
@@ -5310,6 +5311,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hermes-estree@npm:0.25.1":
+  version: 0.25.1
+  resolution: "hermes-estree@npm:0.25.1"
+  checksum: 10/7b1eca98b264a25632064cffa5771360d30cf452e77db1e191f9913ee45cf78c292b2dbca707e92fb71b0870abb97e94b506a5ab80abd96ba237fee169b601fe
+  languageName: node
+  linkType: hard
+
+"hermes-parser@npm:^0.25.1":
+  version: 0.25.1
+  resolution: "hermes-parser@npm:0.25.1"
+  dependencies:
+    hermes-estree: "npm:0.25.1"
+  checksum: 10/805efc05691420f236654349872c70731121791fa54de521c7ee51059eae34f84dd19f22ee846741dcb60372f8fb5335719b96b4ecb010d2aed7d872f2eff9cc
+  languageName: node
+  linkType: hard
+
 "hogan.js@npm:^3.0.2":
   version: 3.0.2
   resolution: "hogan.js@npm:3.0.2"
@@ -5763,7 +5780,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:4.1.0"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     eslint: "npm:9.37.0"
-    eslint-plugin-react-hooks: "npm:6.1.1"
+    eslint-plugin-react-hooks: "npm:7.0.0"
     eslint-plugin-react-refresh: "npm:0.4.23"
     globals: "npm:16.4.0"
     instantsearch.css: "npm:^8.5.1"
@@ -5949,9 +5966,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.64.2":
-  version: 5.64.2
-  resolution: "knip@npm:5.64.2"
+"knip@npm:5.64.3":
+  version: 5.64.3
+  resolution: "knip@npm:5.64.3"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5971,7 +5988,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/a97dfcf417e1e16e69f26d104fde656d588a38fb44621b681a5d040e1e03d1d52abfe20d2f0e73c91f623bdf93910112eaf25c5e7bae164e345d6830473638ef
+  checksum: 10/e8b0b02c9bb248c15c2252b36a6018111a83c28be8450f830877d72579a906310d2f0fe70c126e10ed4c92a3643aff822309a86347ff8bf85510c901212d57f8
   languageName: node
   linkType: hard
 
@@ -5994,20 +6011,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:16.2.3":
-  version: 16.2.3
-  resolution: "lint-staged@npm:16.2.3"
+"lint-staged@npm:16.2.4":
+  version: 16.2.4
+  resolution: "lint-staged@npm:16.2.4"
   dependencies:
     commander: "npm:^14.0.1"
     listr2: "npm:^9.0.4"
     micromatch: "npm:^4.0.8"
-    nano-spawn: "npm:^1.0.3"
+    nano-spawn: "npm:^2.0.0"
     pidtree: "npm:^0.6.0"
     string-argv: "npm:^0.3.2"
     yaml: "npm:^2.8.1"
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10/7c83cb478aa8004eecc8c91d633abe2865ffc037957ae9ee2669e49b76b76fe3512ba431277efc29cec7a38641e7d8a62f3378a41b624c88bde6fbef5524e2cb
+  checksum: 10/e4ce8e6b07fc2c1d96962dafaab483271b2359b6f22f74324ba0f827ad6383caa2800651379f36b2570cfa74b27354e0db9316be69795636a0c53fa3fd599b79
   languageName: node
   linkType: hard
 
@@ -6476,10 +6493,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nano-spawn@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "nano-spawn@npm:1.0.3"
-  checksum: 10/72c56e68ae733c81c459a338fd51e2aa3be06b1cca746c2abe83df7acfac7eee008b01833f5a8781f4ac9fc1eafd23036a44755257a669dfcc2ff2453850822a
+"nano-spawn@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "nano-spawn@npm:2.0.0"
+  checksum: 10/117d35d7bd85b146908de5d3d1177d2b2ee3174e5d884d6bc9555583bf6e50a265f4038b5c134b7cdd768a10d53598ccde5c00d6f55e25e7eed31b86b8d29646
   languageName: node
   linkType: hard
 
@@ -6841,18 +6858,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oxlint@npm:1.20.0":
-  version: 1.20.0
-  resolution: "oxlint@npm:1.20.0"
+"oxlint@npm:1.22.0":
+  version: 1.22.0
+  resolution: "oxlint@npm:1.22.0"
   dependencies:
-    "@oxlint/darwin-arm64": "npm:1.20.0"
-    "@oxlint/darwin-x64": "npm:1.20.0"
-    "@oxlint/linux-arm64-gnu": "npm:1.20.0"
-    "@oxlint/linux-arm64-musl": "npm:1.20.0"
-    "@oxlint/linux-x64-gnu": "npm:1.20.0"
-    "@oxlint/linux-x64-musl": "npm:1.20.0"
-    "@oxlint/win32-arm64": "npm:1.20.0"
-    "@oxlint/win32-x64": "npm:1.20.0"
+    "@oxlint/darwin-arm64": "npm:1.22.0"
+    "@oxlint/darwin-x64": "npm:1.22.0"
+    "@oxlint/linux-arm64-gnu": "npm:1.22.0"
+    "@oxlint/linux-arm64-musl": "npm:1.22.0"
+    "@oxlint/linux-x64-gnu": "npm:1.22.0"
+    "@oxlint/linux-x64-musl": "npm:1.22.0"
+    "@oxlint/win32-arm64": "npm:1.22.0"
+    "@oxlint/win32-x64": "npm:1.22.0"
   peerDependencies:
     oxlint-tsgolint: ">=0.2.0"
   dependenciesMeta:
@@ -6878,7 +6895,7 @@ __metadata:
   bin:
     oxc_language_server: bin/oxc_language_server
     oxlint: bin/oxlint
-  checksum: 10/768b634c54604c65ede51b780989ca7eb2997f370351bafd6a2b34dd4d4b3c9c38835f18ed9e67da30afd5d43953458c66cefb7e4129ee5da0ea3b31ee480893
+  checksum: 10/db07d8ebbade2184611b018c1b8ce9c3f4573bcdb123e7278b33ca231601a54d265a4c96812e01424f2a9c5bd16f06d0b61c06d4f9b3997cd5ff680606682ed0
   languageName: node
   linkType: hard
 
@@ -7766,7 +7783,7 @@ __metadata:
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
     "@types/js-yaml": "npm:4.0.9"
-    "@types/node": "npm:22.18.8"
+    "@types/node": "npm:22.18.10"
     "@types/semver": "npm:7.7.1"
     "@types/spinnies": "npm:0.5.3"
     chai: "npm:6.2.0"
@@ -7780,9 +7797,9 @@ __metadata:
     fs-extra: "npm:11.3.2"
     httpsnippet: "npm:3.0.9"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.64.2"
+    knip: "npm:5.64.3"
     micromatch: "npm:4.0.8"
-    semver: "npm:7.7.2"
+    semver: "npm:7.7.3"
     spinnies: "npm:0.5.1"
     typescript: "npm:5.9.3"
     vitest: "npm:3.2.4"
@@ -7796,12 +7813,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.7.2, semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.5.4, semver@npm:^7.6.0":
-  version: 7.7.2
-  resolution: "semver@npm:7.7.2"
+"semver@npm:7.7.3":
+  version: 7.7.3
+  resolution: "semver@npm:7.7.3"
   bin:
     semver: bin/semver.js
-  checksum: 10/7a24cffcaa13f53c09ce55e05efe25cd41328730b2308678624f8b9f5fc3093fc4d189f47950f0b811ff8f3c3039c24a2c36717ba7961615c682045bf03e1dda
+  checksum: 10/8dbc3168e057a38fc322af909c7f5617483c50caddba135439ff09a754b20bdd6482a5123ff543dad4affa488ecf46ec5fb56d61312ad20bb140199b88dfaea9
   languageName: node
   linkType: hard
 
@@ -7811,6 +7828,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10/1ef3a85bd02a760c6ef76a45b8c1ce18226de40831e02a00bad78485390b98b6ccaa31046245fc63bba4a47a6a592b6c7eedc65cc47126e60489f9cc1ce3ed7e
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.3.5, semver@npm:^7.5.2, semver@npm:^7.5.4, semver@npm:^7.6.0":
+  version: 7.7.2
+  resolution: "semver@npm:7.7.2"
+  bin:
+    semver: bin/semver.js
+  checksum: 10/7a24cffcaa13f53c09ce55e05efe25cd41328730b2308678624f8b9f5fc3093fc4d189f47950f0b811ff8f3c3039c24a2c36717ba7961615c682045bf03e1dda
   languageName: node
   linkType: hard
 
