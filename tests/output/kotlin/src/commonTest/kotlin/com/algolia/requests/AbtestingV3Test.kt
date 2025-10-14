@@ -28,13 +28,7 @@ class AbtestingV3Test {
       call = {
         addABTests(
           addABTestsRequest = AddABTestsRequest(
-            endAt = "2022-12-31T00:00:00.000Z",
             name = "myABTest",
-            metrics = listOf(
-              CreateMetric(
-                name = "myMetric",
-              ),
-            ),
             variants = listOf(
               AbTestsVariant(
                 index = "AB_TEST_1",
@@ -45,13 +39,19 @@ class AbtestingV3Test {
                 trafficPercentage = 50,
               ),
             ),
+            metrics = listOf(
+              CreateMetric(
+                name = "myMetric",
+              ),
+            ),
+            endAt = "2022-12-31T00:00:00.000Z",
           ),
         )
       },
       intercept = {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""", it.body)
+        assertJsonBody("""{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"endAt":"2022-12-31T00:00:00.000Z"}""", it.body)
       },
     )
   }
@@ -578,14 +578,7 @@ class AbtestingV3Test {
       call = {
         scheduleABTest(
           scheduleABTestsRequest = ScheduleABTestsRequest(
-            endAt = "2022-12-31T00:00:00.000Z",
-            scheduledAt = "2022-11-31T00:00:00.000Z",
             name = "myABTest",
-            metrics = listOf(
-              CreateMetric(
-                name = "myMetric",
-              ),
-            ),
             variants = listOf(
               AbTestsVariant(
                 index = "AB_TEST_1",
@@ -596,13 +589,20 @@ class AbtestingV3Test {
                 trafficPercentage = 50,
               ),
             ),
+            metrics = listOf(
+              CreateMetric(
+                name = "myMetric",
+              ),
+            ),
+            scheduledAt = "2022-11-31T00:00:00.000Z",
+            endAt = "2022-12-31T00:00:00.000Z",
           ),
         )
       },
       intercept = {
         assertEquals("/3/abtests/schedule".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""", it.body)
+        assertJsonBody("""{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}""", it.body)
       },
     )
   }

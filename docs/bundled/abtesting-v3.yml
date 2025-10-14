@@ -183,8 +183,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -428,8 +429,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -673,8 +675,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -912,9 +915,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1165,14 +1168,14 @@ paths:
             var response = await client.AddABTestsAsync(
               new AddABTestsRequest
               {
-                EndAt = "2022-12-31T00:00:00.000Z",
                 Name = "myABTest",
-                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
                 Variants = new List<AddABTestsVariant>
                 {
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
                 },
+                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+                EndAt = "2022-12-31T00:00:00.000Z",
               }
             );
             // >LOG
@@ -1188,13 +1191,7 @@ paths:
             // Call the API
             final response = await client.addABTests(
               addABTestsRequest: AddABTestsRequest(
-                endAt: "2022-12-31T00:00:00.000Z",
                 name: "myABTest",
-                metrics: [
-                  CreateMetric(
-                    name: "myMetric",
-                  ),
-                ],
                 variants: [
                   AbTestsVariant(
                     index: "AB_TEST_1",
@@ -1205,6 +1202,12 @@ paths:
                     trafficPercentage: 50,
                   ),
                 ],
+                metrics: [
+                  CreateMetric(
+                    name: "myMetric",
+                  ),
+                ],
+                endAt: "2022-12-31T00:00:00.000Z",
               ),
             );
             // >LOG
@@ -1225,13 +1228,11 @@ paths:
 
             // Call the API
 
-            response, err := client.AddABTests(client.NewApiAddABTestsRequest(
-
-              abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
-                []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).SetVariants(
-                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            response, err := client.AddABTests(context.Background(), "myABTest",
+              []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))},
+              []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}, "2022-12-31T00:00:00.000Z", nil)
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1257,15 +1258,15 @@ paths:
 
             client.addABTests(
               new AddABTestsRequest()
-                .setEndAt("2022-12-31T00:00:00.000Z")
                 .setName("myABTest")
-                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
                 .setVariants(
                   Arrays.asList(
                     new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
                 )
+                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+                .setEndAt("2022-12-31T00:00:00.000Z")
             );
 
             // >LOG
@@ -1283,13 +1284,13 @@ paths:
             // Call the API
 
             const response = await client.addABTests({
-              endAt: '2022-12-31T00:00:00.000Z',
               name: 'myABTest',
-              metrics: [{ name: 'myMetric' }],
               variants: [
                 { index: 'AB_TEST_1', trafficPercentage: 30 },
                 { index: 'AB_TEST_2', trafficPercentage: 50 },
               ],
+              metrics: [{ name: 'myMetric' }],
+              endAt: '2022-12-31T00:00:00.000Z',
             });
 
 
@@ -1311,13 +1312,7 @@ paths:
 
             var response = client.addABTests(
               addABTestsRequest = AddABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
                 name = "myABTest",
-                metrics = listOf(
-                  CreateMetric(
-                    name = "myMetric",
-                  ),
-                ),
                 variants = listOf(
                   AbTestsVariant(
                     index = "AB_TEST_1",
@@ -1328,6 +1323,12 @@ paths:
                     trafficPercentage = 50,
                   ),
                 ),
+                metrics = listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
+                endAt = "2022-12-31T00:00:00.000Z",
               ),
             )
 
@@ -1349,12 +1350,7 @@ paths:
             // Call the API
 
             $response = $client->addABTests(
-                ['endAt' => '2022-12-31T00:00:00.000Z',
-                    'name' => 'myABTest',
-                    'metrics' => [
-                        ['name' => 'myMetric',
-                        ],
-                    ],
+                ['name' => 'myABTest',
                     'variants' => [
                         ['index' => 'AB_TEST_1',
                             'trafficPercentage' => 30,
@@ -1364,6 +1360,11 @@ paths:
                             'trafficPercentage' => 50,
                         ],
                     ],
+                    'metrics' => [
+                        ['name' => 'myMetric',
+                        ],
+                    ],
+                    'endAt' => '2022-12-31T00:00:00.000Z',
                 ],
             );
 
@@ -1390,13 +1391,7 @@ paths:
 
             response = client.add_ab_tests(
                 add_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
                     "name": "myABTest",
-                    "metrics": [
-                        {
-                            "name": "myMetric",
-                        },
-                    ],
                     "variants": [
                         {
                             "index": "AB_TEST_1",
@@ -1407,6 +1402,12 @@ paths:
                             "trafficPercentage": 50,
                         },
                     ],
+                    "metrics": [
+                        {
+                            "name": "myMetric",
+                        },
+                    ],
+                    "endAt": "2022-12-31T00:00:00.000Z",
                 },
             )
 
@@ -1429,13 +1430,13 @@ paths:
 
             response = client.add_ab_tests(
               Algolia::AbtestingV3::AddABTestsRequest.new(
-                end_at: "2022-12-31T00:00:00.000Z",
                 name: "myABTest",
-                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
                 variants: [
                   Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
                   Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-                ]
+                ],
+                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+                end_at: "2022-12-31T00:00:00.000Z"
               )
             )
 
@@ -1464,13 +1465,7 @@ paths:
             val response = Await.result(
               client.addABTests(
                 addABTestsRequest = AddABTestsRequest(
-                  endAt = "2022-12-31T00:00:00.000Z",
                   name = "myABTest",
-                  metrics = Seq(
-                    CreateMetric(
-                      name = "myMetric"
-                    )
-                  ),
                   variants = Seq(
                     AbTestsVariant(
                       index = "AB_TEST_1",
@@ -1480,7 +1475,13 @@ paths:
                       index = "AB_TEST_2",
                       trafficPercentage = 50
                     )
-                  )
+                  ),
+                  metrics = Seq(
+                    CreateMetric(
+                      name = "myMetric"
+                    )
+                  ),
+                  endAt = "2022-12-31T00:00:00.000Z"
                 )
               ),
               Duration(100, "sec")
@@ -1659,8 +1660,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListABTests(client.NewApiListABTestsRequest())
+            response, err := client.ListABTests(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -1913,8 +1913,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetABTest(client.NewApiGetABTestRequest(
-              42))
+            response, err := client.GetABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2170,9 +2170,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteABTest(client.NewApiDeleteABTestRequest(
-              42))
+            response, err := client.DeleteABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2432,8 +2431,8 @@ paths:
 
             // Call the API
 
-            response, err := client.StopABTest(client.NewApiStopABTestRequest(
-              42))
+            response, err := client.StopABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2695,15 +2694,15 @@ paths:
             var response = await client.ScheduleABTestAsync(
               new ScheduleABTestsRequest
               {
-                EndAt = "2022-12-31T00:00:00.000Z",
-                ScheduledAt = "2022-11-31T00:00:00.000Z",
                 Name = "myABTest",
-                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
                 Variants = new List<AddABTestsVariant>
                 {
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
                 },
+                Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+                ScheduledAt = "2022-11-31T00:00:00.000Z",
+                EndAt = "2022-12-31T00:00:00.000Z",
               }
             );
             // >LOG
@@ -2719,14 +2718,7 @@ paths:
             // Call the API
             final response = await client.scheduleABTest(
               scheduleABTestsRequest: ScheduleABTestsRequest(
-                endAt: "2022-12-31T00:00:00.000Z",
-                scheduledAt: "2022-11-31T00:00:00.000Z",
                 name: "myABTest",
-                metrics: [
-                  CreateMetric(
-                    name: "myMetric",
-                  ),
-                ],
                 variants: [
                   AbTestsVariant(
                     index: "AB_TEST_1",
@@ -2737,6 +2729,13 @@ paths:
                     trafficPercentage: 50,
                   ),
                 ],
+                metrics: [
+                  CreateMetric(
+                    name: "myMetric",
+                  ),
+                ],
+                scheduledAt: "2022-11-31T00:00:00.000Z",
+                endAt: "2022-12-31T00:00:00.000Z",
               ),
             );
             // >LOG
@@ -2757,19 +2756,19 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-              abtestingV3.NewEmptyScheduleABTestsRequest().
-                SetEndAt("2022-12-31T00:00:00.000Z").
-                SetScheduledAt("2022-11-31T00:00:00.000Z").
-                SetName("myABTest").
-                SetMetrics(
-                  []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).
-                SetVariants(
-                  []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                    abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                    abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-            ))
+            response, err := client.ScheduleABTest(
+              context.Background(),
+              "myABTest",
+              []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))},
+              []abtestingV3.CreateMetric{
+                *abtestingV3.NewEmptyCreateMetric().SetName("myMetric"),
+              },
+              "2022-11-31T00:00:00.000Z",
+              "2022-12-31T00:00:00.000Z",
+              nil,
+            )
 
             if err != nil {
               // handle the eventual error
@@ -2796,16 +2795,16 @@ paths:
 
             client.scheduleABTest(
               new ScheduleABTestsRequest()
-                .setEndAt("2022-12-31T00:00:00.000Z")
-                .setScheduledAt("2022-11-31T00:00:00.000Z")
                 .setName("myABTest")
-                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
                 .setVariants(
                   Arrays.asList(
                     new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
                 )
+                .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+                .setScheduledAt("2022-11-31T00:00:00.000Z")
+                .setEndAt("2022-12-31T00:00:00.000Z")
             );
 
             // >LOG
@@ -2823,14 +2822,14 @@ paths:
             // Call the API
 
             const response = await client.scheduleABTest({
-              endAt: '2022-12-31T00:00:00.000Z',
-              scheduledAt: '2022-11-31T00:00:00.000Z',
               name: 'myABTest',
-              metrics: [{ name: 'myMetric' }],
               variants: [
                 { index: 'AB_TEST_1', trafficPercentage: 30 },
                 { index: 'AB_TEST_2', trafficPercentage: 50 },
               ],
+              metrics: [{ name: 'myMetric' }],
+              scheduledAt: '2022-11-31T00:00:00.000Z',
+              endAt: '2022-12-31T00:00:00.000Z',
             });
 
 
@@ -2852,14 +2851,7 @@ paths:
 
             var response = client.scheduleABTest(
               scheduleABTestsRequest = ScheduleABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                scheduledAt = "2022-11-31T00:00:00.000Z",
                 name = "myABTest",
-                metrics = listOf(
-                  CreateMetric(
-                    name = "myMetric",
-                  ),
-                ),
                 variants = listOf(
                   AbTestsVariant(
                     index = "AB_TEST_1",
@@ -2870,6 +2862,13 @@ paths:
                     trafficPercentage = 50,
                   ),
                 ),
+                metrics = listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
+                scheduledAt = "2022-11-31T00:00:00.000Z",
+                endAt = "2022-12-31T00:00:00.000Z",
               ),
             )
 
@@ -2891,13 +2890,7 @@ paths:
             // Call the API
 
             $response = $client->scheduleABTest(
-                ['endAt' => '2022-12-31T00:00:00.000Z',
-                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                    'name' => 'myABTest',
-                    'metrics' => [
-                        ['name' => 'myMetric',
-                        ],
-                    ],
+                ['name' => 'myABTest',
                     'variants' => [
                         ['index' => 'AB_TEST_1',
                             'trafficPercentage' => 30,
@@ -2907,6 +2900,12 @@ paths:
                             'trafficPercentage' => 50,
                         ],
                     ],
+                    'metrics' => [
+                        ['name' => 'myMetric',
+                        ],
+                    ],
+                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                    'endAt' => '2022-12-31T00:00:00.000Z',
                 ],
             );
 
@@ -2933,14 +2932,7 @@ paths:
 
             response = client.schedule_ab_test(
                 schedule_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
-                    "scheduledAt": "2022-11-31T00:00:00.000Z",
                     "name": "myABTest",
-                    "metrics": [
-                        {
-                            "name": "myMetric",
-                        },
-                    ],
                     "variants": [
                         {
                             "index": "AB_TEST_1",
@@ -2951,6 +2943,13 @@ paths:
                             "trafficPercentage": 50,
                         },
                     ],
+                    "metrics": [
+                        {
+                            "name": "myMetric",
+                        },
+                    ],
+                    "scheduledAt": "2022-11-31T00:00:00.000Z",
+                    "endAt": "2022-12-31T00:00:00.000Z",
                 },
             )
 
@@ -2973,14 +2972,14 @@ paths:
 
             response = client.schedule_ab_test(
               Algolia::AbtestingV3::ScheduleABTestsRequest.new(
-                end_at: "2022-12-31T00:00:00.000Z",
-                scheduled_at: "2022-11-31T00:00:00.000Z",
                 name: "myABTest",
-                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
                 variants: [
                   Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
                   Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-                ]
+                ],
+                metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+                scheduled_at: "2022-11-31T00:00:00.000Z",
+                end_at: "2022-12-31T00:00:00.000Z"
               )
             )
 
@@ -3009,14 +3008,7 @@ paths:
             val response = Await.result(
               client.scheduleABTest(
                 scheduleABTestsRequest = ScheduleABTestsRequest(
-                  endAt = "2022-12-31T00:00:00.000Z",
-                  scheduledAt = "2022-11-31T00:00:00.000Z",
                   name = "myABTest",
-                  metrics = Seq(
-                    CreateMetric(
-                      name = "myMetric"
-                    )
-                  ),
                   variants = Seq(
                     AbTestsVariant(
                       index = "AB_TEST_1",
@@ -3026,7 +3018,14 @@ paths:
                       index = "AB_TEST_2",
                       trafficPercentage = 50
                     )
-                  )
+                  ),
+                  metrics = Seq(
+                    CreateMetric(
+                      name = "myMetric"
+                    )
+                  ),
+                  scheduledAt = "2022-11-31T00:00:00.000Z",
+                  endAt = "2022-12-31T00:00:00.000Z"
                 )
               ),
               Duration(100, "sec")
@@ -3219,15 +3218,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.EstimateABTest(client.NewApiEstimateABTestRequest(
-
-              abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
-                abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
-                  abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric("conversionRate")))).SetVariants(
-                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            response, err := client.EstimateABTest(context.Background(),
+              abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+                abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EFFECT_METRIC_CONVERSION_RATE)),
+              []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3614,9 +3610,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTimeseries(client.NewApiGetTimeseriesRequest(
-              42))
+            response, err := client.GetTimeseries(context.Background(), 42, nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)

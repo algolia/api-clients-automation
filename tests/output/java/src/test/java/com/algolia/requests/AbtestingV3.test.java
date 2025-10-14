@@ -48,15 +48,15 @@ class AbtestingV3ClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.addABTests(
         new AddABTestsRequest()
-          .setEndAt("2022-12-31T00:00:00.000Z")
           .setName("myABTest")
-          .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
           .setVariants(
             Arrays.asList(
               new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
               new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
             )
           )
+          .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+          .setEndAt("2022-12-31T00:00:00.000Z")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -64,7 +64,7 @@ class AbtestingV3ClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"myMetric\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"metrics\":[{\"name\":\"myMetric\"}],\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -802,16 +802,16 @@ class AbtestingV3ClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.scheduleABTest(
         new ScheduleABTestsRequest()
-          .setEndAt("2022-12-31T00:00:00.000Z")
-          .setScheduledAt("2022-11-31T00:00:00.000Z")
           .setName("myABTest")
-          .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
           .setVariants(
             Arrays.asList(
               new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
               new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
             )
           )
+          .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+          .setScheduledAt("2022-11-31T00:00:00.000Z")
+          .setEndAt("2022-12-31T00:00:00.000Z")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -819,7 +819,7 @@ class AbtestingV3ClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"myMetric\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"metrics\":[{\"name\":\"myMetric\"}],\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
         req.body,
         JSONCompareMode.STRICT
       )

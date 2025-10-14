@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func searchWithAnalyticsAndHeader() {
@@ -24,8 +26,7 @@ func searchWithAnalyticsAndHeader() {
 			SetAnalytics(true),
 	)
 
-	_, err = client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-		"<YOUR_INDEX_NAME>").WithSearchParams(searchParams), search.WithHeaderParam("X-Forwarded-For", ip))
+	_, err = client.SearchSingleIndex(context.Background(), "<YOUR_INDEX_NAME>", searchParams, search.WithHeaderParam("X-Forwarded-For", ip))
 	if err != nil {
 		panic(err)
 	}

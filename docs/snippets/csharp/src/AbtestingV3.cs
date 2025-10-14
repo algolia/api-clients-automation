@@ -29,14 +29,14 @@ public class SnippetAbtestingV3Client
     var response = await client.AddABTestsAsync(
       new AddABTestsRequest
       {
-        EndAt = "2022-12-31T00:00:00.000Z",
         Name = "myABTest",
-        Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+        EndAt = "2022-12-31T00:00:00.000Z",
       }
     );
     // >LOG
@@ -712,15 +712,15 @@ public class SnippetAbtestingV3Client
     var response = await client.ScheduleABTestAsync(
       new ScheduleABTestsRequest
       {
-        EndAt = "2022-12-31T00:00:00.000Z",
-        ScheduledAt = "2022-11-31T00:00:00.000Z",
         Name = "myABTest",
-        Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
         },
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "myMetric" } },
+        ScheduledAt = "2022-11-31T00:00:00.000Z",
+        EndAt = "2022-12-31T00:00:00.000Z",
       }
     );
     // >LOG

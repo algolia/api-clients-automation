@@ -1,9 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func getAllAppIDConfigurations() ([]struct{ appID, apiKey string }, error) {
@@ -31,8 +32,7 @@ func saveObjectsMCM() {
 			return
 		}
 
-		_, err = client.SaveObjects(
-			"<YOUR_INDEX_NAME>", playlists)
+		_, err = client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", playlists)
 		if err != nil {
 			panic(err)
 		}

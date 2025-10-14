@@ -2,6 +2,7 @@
 package requests
 
 import (
+	"context"
 	"encoding/json"
 	"gotests/tests"
 	"testing"
@@ -9,7 +10,7 @@ import (
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
-	abtestingV3 "github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting-v3"
+	abtestingV3 "github.com/algolia/algoliasearch-client-go/v4/algolia/next/abtesting-v3"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -38,13 +39,11 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 	_ = echo
 
 	t.Run("addABTests with minimal parameters", func(t *testing.T) {
-		_, err := client.AddABTests(client.NewApiAddABTestsRequest(
-
-			abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
-				[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).SetVariants(
-				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+		_, err := client.AddABTests(context.Background(), "myABTest",
+			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))},
+			[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}, "2022-12-31T00:00:00.000Z", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests", echo.Path)
@@ -53,7 +52,7 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(
 			*echo.Body,
-			`{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
+			`{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"endAt":"2022-12-31T00:00:00.000Z"}`,
 		)
 	})
 }
@@ -65,8 +64,7 @@ func TestAbtestingV3_CustomDelete(t *testing.T) {
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -75,8 +73,7 @@ func TestAbtestingV3_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete(context.Background(), "test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -101,8 +98,7 @@ func TestAbtestingV3_CustomGet(t *testing.T) {
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -111,8 +107,7 @@ func TestAbtestingV3_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet(context.Background(), "test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -129,10 +124,15 @@ func TestAbtestingV3_CustomGet(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+		_, err := client.CustomGet(
+			context.Background(),
 			"test/all",
-		).WithParameters(map[string]any{"query": "to be overridden"}), abtestingV3.WithQueryParam("query", "parameters with space"), abtestingV3.WithQueryParam("and an array",
-			[]string{"array", "with spaces"}), abtestingV3.WithHeaderParam("x-header-1", "spaces are left alone"))
+			map[string]any{"query": "to be overridden"},
+			abtestingV3.WithQueryParam("query", "parameters with space"),
+			abtestingV3.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}),
+			abtestingV3.WithHeaderParam("x-header-1", "spaces are left alone"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -164,8 +164,7 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -175,8 +174,11 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(
+			context.Background(),
+			"test/all",
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -194,9 +196,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("query", "myQueryParameter"))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("query", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -214,9 +219,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("query2", "myQueryParameter"))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("query2", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -234,9 +242,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -261,9 +272,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -288,9 +302,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("isItWorking", true))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("isItWorking", true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -308,9 +325,12 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("myParam", 2))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("myParam", 2),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -328,10 +348,13 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("myParam",
-			[]string{"b and c", "d"}))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("myParam",
+				[]string{"b and c", "d"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -349,10 +372,13 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("myParam",
-			[]bool{true, true, false}))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("myParam",
+				[]bool{true, true, false}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -370,10 +396,13 @@ func TestAbtestingV3_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtestingV3.WithQueryParam("myParam",
-			[]int32{1, 2}))
+			abtestingV3.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			abtestingV3.WithQueryParam("myParam",
+				[]int{1, 2}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -399,8 +428,7 @@ func TestAbtestingV3_CustomPut(t *testing.T) {
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -410,8 +438,11 @@ func TestAbtestingV3_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(
+			context.Background(),
+			"test/all",
+			abtestingV3.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -437,8 +468,7 @@ func TestAbtestingV3_DeleteABTest(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteABTest", func(t *testing.T) {
-		_, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
-			42))
+		_, err := client.DeleteABTest(context.Background(), 42)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/42", echo.Path)
@@ -455,14 +485,12 @@ func TestAbtestingV3_EstimateABTest(t *testing.T) {
 	_ = echo
 
 	t.Run("estimate AB Test sample size", func(t *testing.T) {
-		_, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
-
-			abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
-				abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
-					abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric("conversionRate")))).SetVariants(
-				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+		_, err := client.EstimateABTest(context.Background(),
+			abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+				abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EFFECT_METRIC_CONVERSION_RATE)),
+			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/estimate", echo.Path)
@@ -483,8 +511,7 @@ func TestAbtestingV3_GetABTest(t *testing.T) {
 	_ = echo
 
 	t.Run("getABTest", func(t *testing.T) {
-		_, err := client.GetABTest(client.NewApiGetABTestRequest(
-			42))
+		_, err := client.GetABTest(context.Background(), 42)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/42", echo.Path)
@@ -501,8 +528,7 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 	_ = echo
 
 	t.Run("getTimeseries", func(t *testing.T) {
-		_, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
-			42))
+		_, err := client.GetTimeseries(context.Background(), 42, nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/42/timeseries", echo.Path)
@@ -519,7 +545,7 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 	_ = echo
 
 	t.Run("listABTests with minimal parameters", func(t *testing.T) {
-		_, err := client.ListABTests(client.NewApiListABTestsRequest())
+		_, err := client.ListABTests(context.Background(), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests", echo.Path)
@@ -529,12 +555,13 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 	})
 	t.Run("listABTests with parameters", func(t *testing.T) {
 		_, err := client.ListABTests(
-			client.NewApiListABTestsRequest().
+			context.Background(),
+			abtestingV3.NewListABTestsOptions().
 				WithOffset(0).
 				WithLimit(21).
 				WithIndexPrefix("cts_e2e ab").
 				WithIndexSuffix("t").
-				WithDirection(abtestingV3.Direction("asc")),
+				WithDirection(abtestingV3.DIRECTION_ASC),
 		)
 		require.NoError(t, err)
 
@@ -563,18 +590,19 @@ func TestAbtestingV3_ScheduleABTest(t *testing.T) {
 	_ = echo
 
 	t.Run("scheduleABTest with minimal parameters", func(t *testing.T) {
-		_, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-			abtestingV3.NewEmptyScheduleABTestsRequest().
-				SetEndAt("2022-12-31T00:00:00.000Z").
-				SetScheduledAt("2022-11-31T00:00:00.000Z").
-				SetName("myABTest").
-				SetMetrics(
-					[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).
-				SetVariants(
-					[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-						abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-						abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-		))
+		_, err := client.ScheduleABTest(
+			context.Background(),
+			"myABTest",
+			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))},
+			[]abtestingV3.CreateMetric{
+				*abtestingV3.NewEmptyCreateMetric().SetName("myMetric"),
+			},
+			"2022-11-31T00:00:00.000Z",
+			"2022-12-31T00:00:00.000Z",
+			nil,
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/schedule", echo.Path)
@@ -583,7 +611,7 @@ func TestAbtestingV3_ScheduleABTest(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(
 			*echo.Body,
-			`{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
+			`{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}`,
 		)
 	})
 }
@@ -595,8 +623,7 @@ func TestAbtestingV3_StopABTest(t *testing.T) {
 	_ = echo
 
 	t.Run("stopABTest", func(t *testing.T) {
-		_, err := client.StopABTest(client.NewApiStopABTestRequest(
-			42))
+		_, err := client.StopABTest(context.Background(), 42)
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/42/stop", echo.Path)

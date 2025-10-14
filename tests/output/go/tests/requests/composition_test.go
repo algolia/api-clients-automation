@@ -2,6 +2,7 @@
 package requests
 
 import (
+	"context"
 	"encoding/json"
 	"gotests/tests"
 	"testing"
@@ -9,8 +10,9 @@ import (
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/composition"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createCompositionClient(t *testing.T) (*composition.APIClient, *tests.EchoRequester) {
@@ -37,8 +39,7 @@ func TestComposition_CustomDelete(t *testing.T) {
 	_ = echo
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/minimal"))
+		_, err := client.CustomDelete(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -47,8 +48,7 @@ func TestComposition_CustomDelete(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}))
+		_, err := client.CustomDelete(context.Background(), "test/all", map[string]any{"query": "parameters"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -73,8 +73,7 @@ func TestComposition_CustomGet(t *testing.T) {
 	_ = echo
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/minimal"))
+		_, err := client.CustomGet(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -83,8 +82,7 @@ func TestComposition_CustomGet(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters with space"}))
+		_, err := client.CustomGet(context.Background(), "test/all", map[string]any{"query": "parameters with space"})
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -101,10 +99,15 @@ func TestComposition_CustomGet(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
-		_, err := client.CustomGet(client.NewApiCustomGetRequest(
+		_, err := client.CustomGet(
+			context.Background(),
 			"test/all",
-		).WithParameters(map[string]any{"query": "to be overridden"}), composition.WithQueryParam("query", "parameters with space"), composition.WithQueryParam("and an array",
-			[]string{"array", "with spaces"}), composition.WithHeaderParam("x-header-1", "spaces are left alone"))
+			map[string]any{"query": "to be overridden"},
+			composition.WithQueryParam("query", "parameters with space"),
+			composition.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}),
+			composition.WithHeaderParam("x-header-1", "spaces are left alone"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -136,8 +139,7 @@ func TestComposition_CustomPost(t *testing.T) {
 	_ = echo
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/minimal"))
+		_, err := client.CustomPost(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -147,8 +149,11 @@ func TestComposition_CustomPost(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPost(
+			context.Background(),
+			"test/all",
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -166,9 +171,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("query", "myQueryParameter"))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("query", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -186,9 +194,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("query2", "myQueryParameter"))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("query2", "myQueryParameter"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -206,9 +217,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -233,9 +247,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -260,9 +277,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("isItWorking", true))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("isItWorking", true),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -280,9 +300,12 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam", 2))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("myParam", 2),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -300,10 +323,13 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
-			[]string{"b and c", "d"}))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("myParam",
+				[]string{"b and c", "d"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -321,10 +347,13 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
-			[]bool{true, true, false}))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("myParam",
+				[]bool{true, true, false}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -342,10 +371,13 @@ func TestComposition_CustomPost(t *testing.T) {
 		}
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
-		_, err := client.CustomPost(client.NewApiCustomPostRequest(
+		_, err := client.CustomPost(
+			context.Background(),
 			"test/requestOptions",
-		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), composition.WithQueryParam("myParam",
-			[]int32{1, 2}))
+			composition.NewCustomPostOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
+			composition.WithQueryParam("myParam",
+				[]int{1, 2}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/requestOptions", echo.Path)
@@ -371,8 +403,7 @@ func TestComposition_CustomPut(t *testing.T) {
 	_ = echo
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/minimal"))
+		_, err := client.CustomPut(context.Background(), "test/minimal", nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/minimal", echo.Path)
@@ -382,8 +413,11 @@ func TestComposition_CustomPut(t *testing.T) {
 		ja.Assertf(*echo.Body, `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
-		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"test/all").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
+		_, err := client.CustomPut(
+			context.Background(),
+			"test/all",
+			composition.NewCustomPutOptions().WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/test/all", echo.Path)
@@ -409,8 +443,7 @@ func TestComposition_DeleteComposition(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteComposition", func(t *testing.T) {
-		_, err := client.DeleteComposition(client.NewApiDeleteCompositionRequest(
-			"1234"))
+		_, err := client.DeleteComposition(context.Background(), "1234")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/1234", echo.Path)
@@ -427,8 +460,7 @@ func TestComposition_DeleteCompositionRule(t *testing.T) {
 	_ = echo
 
 	t.Run("deleteCompositionRule", func(t *testing.T) {
-		_, err := client.DeleteCompositionRule(client.NewApiDeleteCompositionRuleRequest(
-			"1234", "5678"))
+		_, err := client.DeleteCompositionRule(context.Background(), "1234", "5678")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/1234/rules/5678", echo.Path)
@@ -445,8 +477,7 @@ func TestComposition_GetComposition(t *testing.T) {
 	_ = echo
 
 	t.Run("getComposition", func(t *testing.T) {
-		_, err := client.GetComposition(client.NewApiGetCompositionRequest(
-			"foo"))
+		_, err := client.GetComposition(context.Background(), "foo")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo", echo.Path)
@@ -463,8 +494,7 @@ func TestComposition_GetRule(t *testing.T) {
 	_ = echo
 
 	t.Run("getRule", func(t *testing.T) {
-		_, err := client.GetRule(client.NewApiGetRuleRequest(
-			"foo", "123"))
+		_, err := client.GetRule(context.Background(), "foo", "123")
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/rules/123", echo.Path)
@@ -481,8 +511,7 @@ func TestComposition_GetTask(t *testing.T) {
 	_ = echo
 
 	t.Run("getTask", func(t *testing.T) {
-		_, err := client.GetTask(client.NewApiGetTaskRequest(
-			"foo", 42))
+		_, err := client.GetTask(context.Background(), "foo", 42)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/task/42", echo.Path)
@@ -499,7 +528,7 @@ func TestComposition_ListCompositions(t *testing.T) {
 	_ = echo
 
 	t.Run("listCompositions", func(t *testing.T) {
-		_, err := client.ListCompositions(client.NewApiListCompositionsRequest())
+		_, err := client.ListCompositions(context.Background(), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions", echo.Path)
@@ -508,7 +537,7 @@ func TestComposition_ListCompositions(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("listCompositions", func(t *testing.T) {
-		_, err := client.ListCompositions(client.NewApiListCompositionsRequest())
+		_, err := client.ListCompositions(context.Background(), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions", echo.Path)
@@ -525,21 +554,20 @@ func TestComposition_MultipleBatch(t *testing.T) {
 	_ = echo
 
 	t.Run("multipleBatch", func(t *testing.T) {
-		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			composition.NewEmptyBatchParams().SetRequests(
-				[]composition.MultipleBatchRequest{
-					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-						composition.NewEmptyComposition().SetObjectID("foo").SetName("my first composition").SetBehavior(
-							composition.NewEmptyCompositionBehavior().SetInjection(
-								composition.NewEmptyInjection().SetMain(
-									composition.NewEmptyMain().SetSource(
-										composition.NewEmptyCompositionSource().SetSearch(
-											composition.NewEmptyCompositionSourceSearch().SetIndex("bar")))))))),
-					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("delete")).SetBody(composition.DeleteCompositionActionAsBatchCompositionAction(
-						composition.NewEmptyDeleteCompositionAction().SetObjectID("baz"))),
-				}),
-		))
+		_, err := client.MultipleBatch(
+			context.Background(),
+			[]composition.MultipleBatchRequest{
+				*composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionAsBatchCompositionAction(
+					composition.NewEmptyComposition().SetObjectID("foo").SetName("my first composition").SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("bar")))))))),
+				*composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_DELETE).SetBody(composition.DeleteCompositionActionAsBatchCompositionAction(
+					composition.NewEmptyDeleteCompositionAction().SetObjectID("baz"))),
+			},
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
@@ -552,23 +580,22 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
-		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			composition.NewEmptyBatchParams().SetRequests(
-				[]composition.MultipleBatchRequest{
-					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-						composition.NewEmptyComposition().SetObjectID("my-external-injection-compo").SetName("my first composition").SetBehavior(
-							composition.NewEmptyCompositionBehavior().SetInjection(
-								composition.NewEmptyInjection().SetMain(
-									composition.NewEmptyMain().SetSource(
-										composition.NewEmptyCompositionSource().SetSearch(
-											composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
-										composition.NewEmptyExternalSource().SetExternal(
-											composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
-												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)}))))),
-				}),
-		))
+		_, err := client.MultipleBatch(
+			context.Background(),
+			[]composition.MultipleBatchRequest{
+				*composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionAsBatchCompositionAction(
+					composition.NewEmptyComposition().SetObjectID("my-external-injection-compo").SetName("my first composition").SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
+									composition.NewEmptyExternalSource().SetExternal(
+										composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.EXTERNAL_ORDERING_USER_DEFINED).SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1)}))))),
+			},
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
@@ -581,31 +608,30 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
-		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			composition.NewEmptyBatchParams().SetRequests(
-				[]composition.MultipleBatchRequest{
-					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-						composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
-							composition.NewEmptyCompositionBehavior().SetInjection(
-								composition.NewEmptyInjection().SetMain(
-									composition.NewEmptyMain().SetSource(
-										composition.NewEmptyCompositionSource().SetSearch(
-											composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-												composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-										composition.NewEmptySearchSource().SetSearch(
-											composition.NewEmptySearch().SetIndex("foo").SetParams(
-												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-										composition.NewEmptyInjectedItemMetadata().SetHits(
-											composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-										composition.NewEmptySearchSource().SetSearch(
-											composition.NewEmptySearch().SetIndex("foo").SetParams(
-												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
-										composition.NewEmptyInjectedItemMetadata().SetHits(
-											composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))}))))),
-				}),
-		))
+		_, err := client.MultipleBatch(
+			context.Background(),
+			[]composition.MultipleBatchRequest{
+				*composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionAsBatchCompositionAction(
+					composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+											composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+									composition.NewEmptyInjectedItemMetadata().SetHits(
+										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))), *composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
+									composition.NewEmptyInjectedItemMetadata().SetHits(
+										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))}))))),
+			},
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
@@ -618,23 +644,22 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
-		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-			composition.NewEmptyBatchParams().SetRequests(
-				[]composition.MultipleBatchRequest{
-					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-						composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-							composition.NewEmptyCompositionBehavior().SetInjection(
-								composition.NewEmptyInjection().SetMain(
-									composition.NewEmptyMain().SetSource(
-										composition.NewEmptyCompositionSource().SetSearch(
-											composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-										composition.NewEmptySearchSource().SetSearch(
-											composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
-									composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest"))))))),
-				}),
-		))
+		_, err := client.MultipleBatch(
+			context.Background(),
+			[]composition.MultipleBatchRequest{
+				*composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionAsBatchCompositionAction(
+					composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
+						composition.NewEmptyCompositionBehavior().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
+								composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST)))))),
+			},
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
@@ -655,20 +680,18 @@ func TestComposition_PutComposition(t *testing.T) {
 	_ = echo
 
 	t.Run("putComposition", func(t *testing.T) {
-		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
-			"1234",
-			composition.NewEmptyComposition().SetObjectID("1234").SetName("my first composition").SetBehavior(
-				composition.NewEmptyCompositionBehavior().SetInjection(
-					composition.NewEmptyInjection().SetMain(
-						composition.NewEmptyMain().SetSource(
-							composition.NewEmptyCompositionSource().SetSearch(
-								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-						[]composition.InjectedItem{
-							*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-								composition.NewEmptySearchSource().SetSearch(
-									composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
-						}),
-				))))
+		_, err := client.PutComposition(context.Background(), "1234", "1234", "my first composition",
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+					[]composition.InjectedItem{
+						*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
+					}),
+			), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/1234", echo.Path)
@@ -681,21 +704,19 @@ func TestComposition_PutComposition(t *testing.T) {
 		)
 	})
 	t.Run("putComposition", func(t *testing.T) {
-		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
-			"my-external-injection-compo",
-			composition.NewEmptyComposition().SetObjectID("my-external-injection-compo").SetName("my first composition").SetBehavior(
-				composition.NewEmptyCompositionBehavior().SetInjection(
-					composition.NewEmptyInjection().SetMain(
-						composition.NewEmptyMain().SetSource(
-							composition.NewEmptyCompositionSource().SetSearch(
-								composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-						[]composition.InjectedItem{
-							*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
-								composition.NewEmptyExternalSource().SetExternal(
-									composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
-										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1),
-						}),
-				))))
+		_, err := client.PutComposition(context.Background(), "my-external-injection-compo", "my-external-injection-compo", "my first composition",
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+					[]composition.InjectedItem{
+						*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
+							composition.NewEmptyExternalSource().SetExternal(
+								composition.NewEmptyExternal().SetIndex("foo").SetOrdering(composition.EXTERNAL_ORDERING_USER_DEFINED).SetParams(
+									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1),
+					}),
+			), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/my-external-injection-compo", echo.Path)
@@ -708,30 +729,28 @@ func TestComposition_PutComposition(t *testing.T) {
 		)
 	})
 	t.Run("putComposition", func(t *testing.T) {
-		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
-			"my-metadata-compo",
-			composition.NewEmptyComposition().SetObjectID("my-metadata-compo").SetName("my composition").SetBehavior(
-				composition.NewEmptyCompositionBehavior().SetInjection(
-					composition.NewEmptyInjection().SetMain(
-						composition.NewEmptyMain().SetSource(
-							composition.NewEmptyCompositionSource().SetSearch(
-								composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-									composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-						[]composition.InjectedItem{
-							*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-								composition.NewEmptySearchSource().SetSearch(
-									composition.NewEmptySearch().SetIndex("foo").SetParams(
-										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-								composition.NewEmptyInjectedItemMetadata().SetHits(
-									composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
-							*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-								composition.NewEmptySearchSource().SetSearch(
-									composition.NewEmptySearch().SetIndex("foo").SetParams(
-										composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
-								composition.NewEmptyInjectedItemMetadata().SetHits(
-									composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
-						}),
-				))))
+		_, err := client.PutComposition(context.Background(), "my-metadata-compo", "my-metadata-compo", "my composition",
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+								composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+					[]composition.InjectedItem{
+						*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo").SetParams(
+									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+							composition.NewEmptyInjectedItemMetadata().SetHits(
+								composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
+						*composition.NewEmptyInjectedItem().SetKey("my-unique-group-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo").SetParams(
+									composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:puma"))))).SetPosition(5).SetLength(5).SetMetadata(
+							composition.NewEmptyInjectedItemMetadata().SetHits(
+								composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
+					}),
+			), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/my-metadata-compo", echo.Path)
@@ -744,22 +763,20 @@ func TestComposition_PutComposition(t *testing.T) {
 		)
 	})
 	t.Run("putComposition", func(t *testing.T) {
-		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
-			"my-compo",
-			composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-				composition.NewEmptyCompositionBehavior().SetInjection(
-					composition.NewEmptyInjection().SetMain(
-						composition.NewEmptyMain().SetSource(
-							composition.NewEmptyCompositionSource().SetSearch(
-								composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-									composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-						[]composition.InjectedItem{
-							*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-								composition.NewEmptySearchSource().SetSearch(
-									composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
-						}).
-						SetDeduplication(
-							composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))
+		_, err := client.PutComposition(context.Background(), "my-compo", "my-compo", "my composition",
+			composition.NewEmptyCompositionBehavior().SetInjection(
+				composition.NewEmptyInjection().SetMain(
+					composition.NewEmptyMain().SetSource(
+						composition.NewEmptyCompositionSource().SetSearch(
+							composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+								composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+					[]composition.InjectedItem{
+						*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+							composition.NewEmptySearchSource().SetSearch(
+								composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
+					}).
+					SetDeduplication(
+						composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST))), nil)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/my-compo", echo.Path)
@@ -780,25 +797,21 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 	_ = echo
 
 	t.Run("putCompositionRule", func(t *testing.T) {
-		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-			"compositionID", "ruleID",
+		_, err := client.PutCompositionRule(context.Background(), "compositionID", "ruleID",
 			composition.NewEmptyCompositionRule().SetObjectID("ruleID").SetConditions(
-				[]composition.Condition{
-					*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test"),
-				}).
-				SetConsequence(
-					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-						composition.NewEmptyCompositionBehavior().SetInjection(
-							composition.NewEmptyInjection().SetMain(
-								composition.NewEmptyMain().SetSource(
-									composition.NewEmptyCompositionSource().SetSearch(
-										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-								[]composition.InjectedItem{
-									*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-										composition.NewEmptySearchSource().SetSearch(
-											composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
-								}),
-						)))))
+				[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_IS).SetPattern("test")}).SetConsequence(
+				composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+							[]composition.InjectedItem{
+								*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
+							}),
+					))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/compositionID/rules/ruleID", echo.Path)
@@ -811,28 +824,24 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
-		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-			"compositionID", "rule-with-metadata",
+		_, err := client.PutCompositionRule(context.Background(), "compositionID", "rule-with-metadata",
 			composition.NewEmptyCompositionRule().SetObjectID("rule-with-metadata").SetConditions(
-				[]composition.Condition{
-					*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test"),
-				}).
-				SetConsequence(
-					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-						composition.NewEmptyCompositionBehavior().SetInjection(
-							composition.NewEmptyInjection().SetMain(
-								composition.NewEmptyMain().SetSource(
-									composition.NewEmptyCompositionSource().SetSearch(
-										composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-								[]composition.InjectedItem{
-									*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-										composition.NewEmptySearchSource().SetSearch(
-											composition.NewEmptySearch().SetIndex("foo").SetParams(
-												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-										composition.NewEmptyInjectedItemMetadata().SetHits(
-											composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
-								}),
-						)))))
+				[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_IS).SetPattern("test")}).SetConsequence(
+				composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+							[]composition.InjectedItem{
+								*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("foo").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+									composition.NewEmptyInjectedItemMetadata().SetHits(
+										composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}}))),
+							}),
+					))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-metadata", echo.Path)
@@ -845,14 +854,13 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
-		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-			"compositionID", "rule-with-exernal-source",
+		_, err := client.PutCompositionRule(context.Background(), "compositionID", "rule-with-exernal-source",
 			composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
 				[]string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
 				[]composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
 				[]composition.Condition{
-					*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
-					*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter"),
+					*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry"),
+					*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("potter"),
 				}).
 				SetConsequence(
 					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
@@ -866,9 +874,9 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 									*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
 										composition.NewEmptyExternalSource().SetExternal(
 											composition.NewEmptyExternal().SetIndex("my-index").SetParams(
-												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3),
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.EXTERNAL_ORDERING_USER_DEFINED)))).SetPosition(0).SetLength(3),
 								}),
-						)))))
+						))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-exernal-source", echo.Path)
@@ -881,7 +889,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
-		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
+		_, err := client.PutCompositionRule(
+			context.Background(),
 			"compositionID",
 			"rule-with-deduplication",
 			composition.NewEmptyCompositionRule().
@@ -890,7 +899,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 				SetEnabled(true).
 				SetConditions(
 					[]composition.Condition{
-						*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
+						*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry"),
 					}).
 				SetConsequence(
 					composition.NewEmptyCompositionRuleConsequence().SetBehavior(
@@ -905,8 +914,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 											composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3),
 								}).
 								SetDeduplication(
-									composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))),
-		))
+									composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST_INJECTED))))),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-deduplication", echo.Path)
@@ -927,20 +936,18 @@ func TestComposition_SaveRules(t *testing.T) {
 	_ = echo
 
 	t.Run("saveRules", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"foo",
-			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
-				[]composition.RulesMultipleBatchRequest{
-					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-						composition.NewEmptyCompositionRule().SetObjectID("123").SetConditions(
-							[]composition.Condition{*composition.NewEmptyCondition().SetPattern("a")}).SetConsequence(
-							composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-								composition.NewEmptyCompositionBehavior().SetInjection(
-									composition.NewEmptyInjection().SetMain(
-										composition.NewEmptyMain().SetSource(
-											composition.NewEmptyCompositionSource().SetSearch(
-												composition.NewEmptyCompositionSourceSearch().SetIndex("<YOUR_INDEX_NAME>"))))))))),
-				}),
+		_, err := client.SaveRules(context.Background(), "foo", utils.ToPtr(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("123").SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetPattern("a")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+							composition.NewEmptyCompositionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("<YOUR_INDEX_NAME>"))))))))),
+			},
 		))
 		require.NoError(t, err)
 
@@ -954,26 +961,24 @@ func TestComposition_SaveRules(t *testing.T) {
 		)
 	})
 	t.Run("saveRules", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"rule-with-metadata",
-			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
-				[]composition.RulesMultipleBatchRequest{
-					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-						composition.NewEmptyCompositionRule().SetObjectID("rule-with-metadata").SetConditions(
-							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("is")).SetPattern("test")}).SetConsequence(
-							composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-								composition.NewEmptyCompositionBehavior().SetInjection(
-									composition.NewEmptyInjection().SetMain(
-										composition.NewEmptyMain().SetSource(
-											composition.NewEmptyCompositionSource().SetSearch(
-												composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-										[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-											composition.NewEmptySearchSource().SetSearch(
-												composition.NewEmptySearch().SetIndex("foo").SetParams(
-													composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
-											composition.NewEmptyInjectedItemMetadata().SetHits(
-												composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))),
-				}),
+		_, err := client.SaveRules(context.Background(), "rule-with-metadata", utils.ToPtr(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-metadata").SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_IS).SetPattern("test")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+							composition.NewEmptyCompositionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+										composition.NewEmptySearchSource().SetSearch(
+											composition.NewEmptySearch().SetIndex("foo").SetParams(
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas"))))).SetPosition(2).SetLength(1).SetMetadata(
+										composition.NewEmptyInjectedItemMetadata().SetHits(
+											composition.NewEmptyInjectedItemHitsMetadata().SetAddItemKey(true).SetExtra(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})))})))))),
+			},
 		))
 		require.NoError(t, err)
 
@@ -987,27 +992,25 @@ func TestComposition_SaveRules(t *testing.T) {
 		)
 	})
 	t.Run("saveRules", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"rule-with-exernal-source",
-			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
-				[]composition.RulesMultipleBatchRequest{
-					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-						composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
-							[]string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
-							[]composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
-							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("potter")}).SetConsequence(
-							composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-								composition.NewEmptyCompositionBehavior().SetInjection(
-									composition.NewEmptyInjection().SetMain(
-										composition.NewEmptyMain().SetSource(
-											composition.NewEmptyCompositionSource().SetSearch(
-												composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
-													composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-										[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
-											composition.NewEmptyExternalSource().SetExternal(
-												composition.NewEmptyExternal().SetIndex("my-index").SetParams(
-													composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.ExternalOrdering("userDefined"))))).SetPosition(0).SetLength(3)})))))),
-				}),
+		_, err := client.SaveRules(context.Background(), "rule-with-exernal-source", utils.ToPtr(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-exernal-source").SetDescription("my description").SetTags(
+						[]string{"tag1", "tag2"}).SetEnabled(true).SetValidity(
+						[]composition.TimeRange{*composition.NewEmptyTimeRange().SetFrom(1704063600).SetUntil(1704083600)}).SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry"), *composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("potter")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+							composition.NewEmptyCompositionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("my-index").SetParams(
+												composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.ExternalSourceAsInjectedItemSource(
+										composition.NewEmptyExternalSource().SetExternal(
+											composition.NewEmptyExternal().SetIndex("my-index").SetParams(
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("brand:adidas")).SetOrdering(composition.EXTERNAL_ORDERING_USER_DEFINED)))).SetPosition(0).SetLength(3)})))))),
+			},
 		))
 		require.NoError(t, err)
 
@@ -1021,24 +1024,22 @@ func TestComposition_SaveRules(t *testing.T) {
 		)
 	})
 	t.Run("saveRules", func(t *testing.T) {
-		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"my-compo",
-			composition.NewEmptyCompositionRulesBatchParams().SetRequests(
-				[]composition.RulesMultipleBatchRequest{
-					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-						composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
-							composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-								composition.NewEmptyCompositionBehavior().SetInjection(
-									composition.NewEmptyInjection().SetMain(
-										composition.NewEmptyMain().SetSource(
-											composition.NewEmptyCompositionSource().SetSearch(
-												composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
-										[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-											composition.NewEmptySearchSource().SetSearch(
-												composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
-										composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))),
-				}),
+		_, err := client.SaveRules(context.Background(), "my-compo", utils.ToPtr(
+			[]composition.RulesMultipleBatchRequest{
+				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+					composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry")}).SetConsequence(
+						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+							composition.NewEmptyCompositionBehavior().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+										composition.NewEmptySearchSource().SetSearch(
+											composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
+									composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST_INJECTED))))))),
+			},
 		))
 		require.NoError(t, err)
 
@@ -1060,10 +1061,8 @@ func TestComposition_Search(t *testing.T) {
 	_ = echo
 
 	t.Run("search", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
-			"foo",
-			composition.NewEmptyRequestBody().SetParams(
-				composition.NewEmptyParams().SetQuery("batman"))))
+		_, err := client.Search(context.Background(), "foo",
+			composition.NewEmptyParams().SetQuery("batman"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
@@ -1073,15 +1072,14 @@ func TestComposition_Search(t *testing.T) {
 		ja.Assertf(*echo.Body, `{"params":{"query":"batman"}}`)
 	})
 	t.Run("search", func(t *testing.T) {
-		_, err := client.Search(client.NewApiSearchRequest(
+		_, err := client.Search(
+			context.Background(),
 			"foo",
-			composition.NewEmptyRequestBody().SetParams(
-				composition.NewEmptyParams().
-					SetQuery("batman").
-					SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
-						[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
-			),
-		))
+			composition.NewEmptyParams().
+				SetQuery("batman").
+				SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
+					[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
+		)
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
@@ -1102,9 +1100,7 @@ func TestComposition_SearchCompositionRules(t *testing.T) {
 	_ = echo
 
 	t.Run("searchCompositionRules", func(t *testing.T) {
-		_, err := client.SearchCompositionRules(client.NewApiSearchCompositionRulesRequest(
-			"foo").WithSearchCompositionRulesParams(
-			composition.NewEmptySearchCompositionRulesParams().SetQuery("batman")))
+		_, err := client.SearchCompositionRules(context.Background(), "foo", composition.NewSearchCompositionRulesOptions().WithQuery("batman"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/rules/search", echo.Path)
@@ -1122,10 +1118,8 @@ func TestComposition_SearchForFacetValues(t *testing.T) {
 	_ = echo
 
 	t.Run("searchForFacetValues", func(t *testing.T) {
-		_, err := client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-			"foo", "brand").WithSearchForFacetValuesRequest(
-			composition.NewEmptySearchForFacetValuesRequest().SetParams(
-				composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))
+		_, err := client.SearchForFacetValues(context.Background(), "foo", "brand",
+			composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/compositions/foo/facets/brand/query", echo.Path)

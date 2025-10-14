@@ -172,8 +172,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -399,8 +400,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -626,8 +628,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -847,9 +850,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1129,14 +1132,16 @@ paths:
 
             // Call the API
 
-            response, err := client.Push(client.NewApiPushRequest(
+            response, err := client.Push(
+              context.Background(),
               "<YOUR_INDEX_NAME>",
-              ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-                []ingestion.PushTaskRecords{
-                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
-                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
-                }),
-            ))
+              ingestion.ACTION_ADD_OBJECT,
+              []ingestion.PushTaskRecords{
+                *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+                *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+              },
+              nil,
+            )
 
             if err != nil {
               // handle the eventual error
@@ -1491,8 +1496,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListAuthentications(client.NewApiListAuthenticationsRequest())
+            response, err := client.ListAuthentications(context.Background(),
+            nil)
 
             if err != nil {
               // handle the eventual error
@@ -1734,14 +1739,14 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
-              ingestion.NewEmptyAuthenticationCreate().
-                SetType(ingestion.AuthenticationType("oauth")).
-                SetName("authName").
-                SetInput(ingestion.AuthOAuthAsAuthInput(
-                  ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
-            ))
+            response, err := client.CreateAuthentication(
+              context.Background(),
+              ingestion.AUTHENTICATION_TYPE_OAUTH,
+              "authName",
+              ingestion.AuthOAuthAsAuthInput(
+                ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")),
+              nil,
+            )
 
             if err != nil {
               // handle the eventual error
@@ -2041,11 +2046,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(
-
-              ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+            response, err := client.SearchAuthentications(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2309,9 +2311,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetAuthentication(client.NewApiGetAuthenticationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetAuthentication(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2551,10 +2553,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(
+            response, err := client.UpdateAuthentication(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyAuthenticationUpdate().SetName("newName")))
+              ingestion.NewUpdateAuthenticationOptions().WithName("newName"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2813,9 +2817,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteAuthentication(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3067,8 +3071,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListDestinations(client.NewApiListDestinationsRequest())
+            response, err := client.ListDestinations(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -3304,11 +3307,15 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateDestination(client.NewApiCreateDestinationRequest(
+            response, err := client.CreateDestination(
+              context.Background(),
+              ingestion.DESTINATION_TYPE_SEARCH,
+              "destinationName",
+              ingestion.NewEmptyDestinationInput().
+                SetIndexName("<YOUR_INDEX_NAME>"),
+              ingestion.NewCreateDestinationOptions().WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+            )
 
-              ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType("search")).SetName("destinationName").SetInput(
-                ingestion.NewEmptyDestinationInput().SetIndexName("<YOUR_INDEX_NAME>")).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3606,11 +3613,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchDestinations(client.NewApiSearchDestinationsRequest(
-
-              ingestion.NewEmptyDestinationSearch().SetDestinationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+            response, err := client.SearchDestinations(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3876,9 +3880,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetDestination(client.NewApiGetDestinationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetDestination(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4118,10 +4122,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateDestination(client.NewApiUpdateDestinationRequest(
+            response, err := client.UpdateDestination(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyDestinationUpdate().SetName("newName")))
+              ingestion.NewUpdateDestinationOptions().WithName("newName"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4380,9 +4386,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteDestination(client.NewApiDeleteDestinationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteDestination(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4632,8 +4638,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListSources(client.NewApiListSourcesRequest())
+            response, err := client.ListSources(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -4879,21 +4884,21 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateSource(client.NewApiCreateSourceRequest(
-              ingestion.NewEmptySourceCreate().
-                SetType(ingestion.SourceType("commercetools")).
-                SetName("sourceName").
-                SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-                  ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-                    []string{"myStore"}).SetLocales(
-                    []string{
-                      "de",
-                    }).
-                    SetUrl("http://commercetools.com").
-                    SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).
-                SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-            ))
+            response, err := client.CreateSource(
+              context.Background(),
+              ingestion.SOURCE_TYPE_COMMERCETOOLS,
+              "sourceName",
+              ingestion.NewCreateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(
+                ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+                  []string{"myStore"}).SetLocales(
+                  []string{
+                    "de",
+                  }).
+                  SetUrl("http://commercetools.com").
+                  SetProjectKey("keyID").
+                  SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"),
+              )).WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+            )
 
             if err != nil {
               // handle the eventual error
@@ -5253,21 +5258,17 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
-              ingestion.NewEmptySourceCreate().
-                SetType(ingestion.SourceType("commercetools")).
-                SetName("sourceName").
-                SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-                  ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-                    []string{"myStore"}).SetLocales(
-                    []string{
-                      "de",
-                    }).
-                    SetUrl("http://commercetools.com").SetProjectKey("keyID"))).
-                SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-            ),
-
+            response, err := client.ValidateSource(
+              context.Background(),
+              ingestion.SOURCE_TYPE_COMMERCETOOLS,
+              "sourceName",
+              ingestion.NewValidateSourceOptions().WithInput(ingestion.SourceCommercetoolsAsSourceInput(
+                ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+                  []string{"myStore"}).SetLocales(
+                  []string{
+                    "de",
+                  }).
+                  SetUrl("http://commercetools.com").SetProjectKey("keyID"))).WithAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
             )
 
             if err != nil {
@@ -5607,11 +5608,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchSources(client.NewApiSearchSourcesRequest(
-
-              ingestion.NewEmptySourceSearch().SetSourceIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})))
+            response, err := client.SearchSources(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5874,8 +5872,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetSource(client.NewApiGetSourceRequest(
-              "75eeb306-51d3-4e5e-a279-3c92bd8893ac"))
+            response, err := client.GetSource(context.Background(),
+            "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6114,10 +6113,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateSource(client.NewApiUpdateSourceRequest(
+            response, err := client.UpdateSource(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptySourceUpdate().SetName("newName")))
+              ingestion.NewUpdateSourceOptions().WithName("newName"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6376,9 +6377,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteSource(client.NewApiDeleteSourceRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteSource(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6625,10 +6626,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+            response, err := client.ValidateSourceBeforeUpdate(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptySourceUpdate().SetName("newName")))
+              ingestion.NewValidateSourceBeforeUpdateOptions().WithName("newName"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6892,8 +6895,9 @@ paths:
             // Call the API
 
             response, err :=
-            client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            client.TriggerDockerSourceDiscover(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7156,11 +7160,14 @@ paths:
 
             // Call the API
 
-            response, err := client.RunSource(client.NewApiRunSourceRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f").WithRunSourcePayload(
-              ingestion.NewEmptyRunSourcePayload().SetIndexToInclude(
-                []string{"products_us", "products eu"}).SetEntityIDs(
-                []string{"1234", "5678"}).SetEntityType(ingestion.EntityType("product"))))
+            response, err := client.RunSource(
+              context.Background(),
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewRunSourceOptions().WithIndexToInclude(
+                []string{"products_us", "products eu"}).WithEntityIDs(
+                []string{"1234", "5678"}).WithEntityType(ingestion.ENTITY_TYPE_PRODUCT),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7478,7 +7485,7 @@ paths:
 
             // Call the API
 
-            response, err := client.ListTasks(client.NewApiListTasksRequest())
+            response, err := client.ListTasks(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -7709,9 +7716,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CreateTask(client.NewApiCreateTaskRequest(
+            response, err := client.CreateTask(context.Background(), "search",
+            "destinationID", ingestion.ACTION_TYPE_REPLACE, nil)
 
-              ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7983,10 +7990,8 @@ paths:
 
             // Call the API
 
-            response, err := client.SearchTasks(client.NewApiSearchTasksRequest(
-
-              ingestion.NewEmptyTaskSearch().SetTaskIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+            response, err := client.SearchTasks(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8271,8 +8276,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetTask(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8513,9 +8519,14 @@ paths:
 
             // Call the API
 
-            response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
+            response, err := client.ReplaceTask(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetAction(ingestion.ActionType("replace"))))
+              "destinationID",
+              ingestion.ACTION_TYPE_REPLACE,
+              nil,
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -8778,9 +8789,12 @@ paths:
 
             // Call the API
 
-            response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
+            response, err := client.UpdateTask(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTaskUpdate().SetEnabled(false).SetCron("* * * * *")))
+              ingestion.NewUpdateTaskOptions().WithEnabled(false).WithCron("* * * * *"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9037,8 +9051,9 @@ paths:
 
             // Call the API
 
-            response, err := client.DeleteTask(client.NewApiDeleteTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteTask(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9283,8 +9298,9 @@ paths:
 
             // Call the API
 
-            response, err := client.RunTask(client.NewApiRunTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.RunTask(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9570,14 +9586,16 @@ paths:
 
             // Call the API
 
-            response, err := client.PushTask(client.NewApiPushTaskRequest(
+            response, err := client.PushTask(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-                []ingestion.PushTaskRecords{
-                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
-                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
-                }),
-            ))
+              ingestion.ACTION_ADD_OBJECT,
+              []ingestion.PushTaskRecords{
+                *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+                *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+              },
+              nil,
+            )
 
             if err != nil {
               // handle the eventual error
@@ -9920,8 +9938,9 @@ paths:
 
             // Call the API
 
-            response, err := client.EnableTask(client.NewApiEnableTaskRequest(
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
+            response, err := client.EnableTask(context.Background(),
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10158,8 +10177,9 @@ paths:
 
             // Call the API
 
-            response, err := client.DisableTask(client.NewApiDisableTaskRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DisableTask(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10415,8 +10435,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListTasksV1(client.NewApiListTasksV1Request())
+            response, err := client.ListTasksV1(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -10654,16 +10673,10 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-              ingestion.NewEmptyTaskCreateV1().
-                SetSourceID("search").
-                SetDestinationID("destinationName").
-                SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-                  ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).
-                SetAction(ingestion.ActionType("replace")),
-            ))
-
+            response, err := client.CreateTaskV1(context.Background(), "search",
+            "destinationName",
+            ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+              ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.ON_DEMAND_TRIGGER_TYPE_ON_DEMAND)), ingestion.ACTION_TYPE_REPLACE, nil)
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10965,11 +10978,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchTasksV1(client.NewApiSearchTasksV1Request(
-
-              ingestion.NewEmptyTaskSearch().SetTaskIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+            response, err := client.SearchTasksV1(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11257,8 +11267,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTaskV1(client.NewApiGetTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetTaskV1(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11498,10 +11509,12 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateTaskV1(client.NewApiUpdateTaskV1Request(
+            response, err := client.UpdateTaskV1(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTaskUpdateV1().SetEnabled(false)))
+              ingestion.NewUpdateTaskV1Options().WithEnabled(false),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -11757,9 +11770,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteTaskV1(client.NewApiDeleteTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteTaskV1(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12005,8 +12018,9 @@ paths:
 
             // Call the API
 
-            response, err := client.RunTaskV1(client.NewApiRunTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.RunTaskV1(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12246,9 +12260,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.EnableTaskV1(client.NewApiEnableTaskV1Request(
-              "76ab4c2a-ce17-496f-b7a6-506dc59ee498"))
+            response, err := client.EnableTaskV1(context.Background(),
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12486,9 +12500,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DisableTaskV1(client.NewApiDisableTaskV1Request(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DisableTaskV1(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12738,8 +12752,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListTransformations(client.NewApiListTransformationsRequest())
+            response, err := client.ListTransformations(context.Background(),
+            nil)
 
             if err != nil {
               // handle the eventual error
@@ -12971,13 +12985,13 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CreateTransformation(client.NewApiCreateTransformationRequest(
+            response, err := client.CreateTransformation(
+              context.Background(),
+              "bar",
+              ingestion.NewCreateTransformationOptions().WithInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).WithType(ingestion.TRANSFORMATION_TYPE_CODE).WithDescription("baz"),
+            )
 
-              ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().
-                  SetCode("foo"),
-              )).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13273,14 +13287,14 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.TryTransformation(client.NewApiTryTransformationRequest(
-              ingestion.NewEmptyTransformationTry().
-                SetType(ingestion.TransformationType("code")).
-                SetInput(ingestion.TransformationCodeAsTransformationInput(
-                  ingestion.NewEmptyTransformationCode().SetCode("foo"))).
-                SetSampleRecord(map[string]any{"bar": "baz"}),
-            ))
+            response, err := client.TryTransformation(
+              context.Background(),
+              map[string]any{"bar": "baz"},
+              ingestion.NewTryTransformationOptions().
+                WithType(ingestion.TRANSFORMATION_TYPE_CODE).
+                WithInput(ingestion.TransformationCodeAsTransformationInput(
+                  ingestion.NewEmptyTransformationCode().SetCode("foo"))),
+            )
 
             if err != nil {
               // handle the eventual error
@@ -13585,11 +13599,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchTransformations(client.NewApiSearchTransformationsRequest(
-
-              ingestion.NewEmptyTransformationSearch().SetTransformationIDs(
-                []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})))
+            response, err := client.SearchTransformations(context.Background(),
+              []string{"6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"})
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13873,9 +13884,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetTransformation(client.NewApiGetTransformationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetTransformation(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14117,13 +14128,14 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
+            response, err := client.UpdateTransformation(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().
-                  SetCode("foo"),
-              )).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
+              "bar",
+              ingestion.NewUpdateTransformationOptions().WithInput(ingestion.TransformationCodeAsTransformationInput(
+                ingestion.NewEmptyTransformationCode().SetCode("foo"))).WithType(ingestion.TRANSFORMATION_TYPE_CODE).WithDescription("baz"),
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14413,9 +14425,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteTransformation(client.NewApiDeleteTransformationRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.DeleteTransformation(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14662,15 +14674,15 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
+            response, err := client.TryTransformationBeforeUpdate(
+              context.Background(),
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationTry().
-                SetType(ingestion.TransformationType("code")).
-                SetInput(ingestion.TransformationCodeAsTransformationInput(
-                  ingestion.NewEmptyTransformationCode().SetCode("foo"))).
-                SetSampleRecord(map[string]any{"bar": "baz"}),
-            ))
+              map[string]any{"bar": "baz"},
+              ingestion.NewTryTransformationBeforeUpdateOptions().
+                WithType(ingestion.TRANSFORMATION_TYPE_CODE).
+                WithInput(ingestion.TransformationCodeAsTransformationInput(
+                  ingestion.NewEmptyTransformationCode().SetCode("foo"))),
+            )
 
             if err != nil {
               // handle the eventual error
@@ -14985,7 +14997,7 @@ paths:
 
             // Call the API
 
-            response, err := client.ListRuns(client.NewApiListRunsRequest())
+            response, err := client.ListRuns(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -15214,8 +15226,9 @@ paths:
 
             // Call the API
 
-            response, err := client.GetRun(client.NewApiGetRunRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.GetRun(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15486,8 +15499,9 @@ paths:
 
             // Call the API
 
-            response, err := client.ListEvents(client.NewApiListEventsRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
+            response, err := client.ListEvents(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -15723,8 +15737,10 @@ paths:
 
             // Call the API
 
-            response, err := client.GetEvent(client.NewApiGetEventRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c"))
+            response, err := client.GetEvent(context.Background(),
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
+
             if err != nil {
               // handle the eventual error
               panic(err)

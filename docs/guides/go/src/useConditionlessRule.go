@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
@@ -25,8 +27,7 @@ func useConditionlessRule() {
 			}},
 		)
 
-	_, err = client.SaveRule(client.NewApiSaveRuleRequest(
-		"<YOUR_INDEX_NAME>", objectID, rule))
+	_, err = client.SaveRule(context.Background(), "<YOUR_INDEX_NAME>", objectID, rule, nil)
 	if err != nil {
 		panic(err)
 	}

@@ -1,10 +1,11 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"os"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveObjectsChunks() {
@@ -31,8 +32,7 @@ func saveObjectsChunks() {
 	for beginIndex := 0; beginIndex < len(records); beginIndex += chunkSize {
 		chunk := records[beginIndex:min(beginIndex+chunkSize, len(records))]
 
-		_, err = client.SaveObjects(
-			"<YOUR_INDEX_NAME>", chunk)
+		_, err = client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", chunk)
 		if err != nil {
 			panic(err)
 		}

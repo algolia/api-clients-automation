@@ -16,12 +16,12 @@ class TestAbtestingClient < Test::Unit::TestCase
   def test_add_ab_tests
     req = @client.add_ab_tests_with_http_info(
       Algolia::Abtesting::AddABTestsRequest.new(
-        end_at: "2022-12-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
           Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
           Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-        ]
+        ],
+        end_at: "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -31,7 +31,7 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"endAt\":\"2022-12-31T00:00:00.000Z\"}"
       ),
       JSON.parse(req.body)
     )
@@ -392,13 +392,13 @@ class TestAbtestingClient < Test::Unit::TestCase
   def test_schedule_ab_test
     req = @client.schedule_ab_test_with_http_info(
       Algolia::Abtesting::ScheduleABTestsRequest.new(
-        end_at: "2022-12-31T00:00:00.000Z",
-        scheduled_at: "2022-11-31T00:00:00.000Z",
         name: "myABTest",
         variants: [
           Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
           Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-        ]
+        ],
+        scheduled_at: "2022-11-31T00:00:00.000Z",
+        end_at: "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -408,7 +408,7 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"endAt\":\"2022-12-31T00:00:00.000Z\"}"
       ),
       JSON.parse(req.body)
     )

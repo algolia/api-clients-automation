@@ -34,13 +34,7 @@ class SnippetAbtestingV3Client {
     val response = Await.result(
       client.addABTests(
         addABTestsRequest = AddABTestsRequest(
-          endAt = "2022-12-31T00:00:00.000Z",
           name = "myABTest",
-          metrics = Seq(
-            CreateMetric(
-              name = "myMetric"
-            )
-          ),
           variants = Seq(
             AbTestsVariant(
               index = "AB_TEST_1",
@@ -50,7 +44,13 @@ class SnippetAbtestingV3Client {
               index = "AB_TEST_2",
               trafficPercentage = 50
             )
-          )
+          ),
+          metrics = Seq(
+            CreateMetric(
+              name = "myMetric"
+            )
+          ),
+          endAt = "2022-12-31T00:00:00.000Z"
         )
       ),
       Duration(100, "sec")
@@ -759,14 +759,7 @@ class SnippetAbtestingV3Client {
     val response = Await.result(
       client.scheduleABTest(
         scheduleABTestsRequest = ScheduleABTestsRequest(
-          endAt = "2022-12-31T00:00:00.000Z",
-          scheduledAt = "2022-11-31T00:00:00.000Z",
           name = "myABTest",
-          metrics = Seq(
-            CreateMetric(
-              name = "myMetric"
-            )
-          ),
           variants = Seq(
             AbTestsVariant(
               index = "AB_TEST_1",
@@ -776,7 +769,14 @@ class SnippetAbtestingV3Client {
               index = "AB_TEST_2",
               trafficPercentage = 50
             )
-          )
+          ),
+          metrics = Seq(
+            CreateMetric(
+              name = "myMetric"
+            )
+          ),
+          scheduledAt = "2022-11-31T00:00:00.000Z",
+          endAt = "2022-12-31T00:00:00.000Z"
         )
       ),
       Duration(100, "sec")

@@ -48,7 +48,6 @@ class AbtestingClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.addABTests(
         new AddABTestsRequest()
-          .setEndAt("2022-12-31T00:00:00.000Z")
           .setName("myABTest")
           .setVariants(
             Arrays.asList(
@@ -56,6 +55,7 @@ class AbtestingClientRequestsTests {
               new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
             )
           )
+          .setEndAt("2022-12-31T00:00:00.000Z")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -63,7 +63,7 @@ class AbtestingClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -789,8 +789,6 @@ class AbtestingClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.scheduleABTest(
         new ScheduleABTestsRequest()
-          .setEndAt("2022-12-31T00:00:00.000Z")
-          .setScheduledAt("2022-11-31T00:00:00.000Z")
           .setName("myABTest")
           .setVariants(
             Arrays.asList(
@@ -798,6 +796,8 @@ class AbtestingClientRequestsTests {
               new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
             )
           )
+          .setScheduledAt("2022-11-31T00:00:00.000Z")
+          .setEndAt("2022-12-31T00:00:00.000Z")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -805,7 +805,7 @@ class AbtestingClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"endAt\":\"2022-12-31T00:00:00.000Z\"}",
         req.body,
         JSONCompareMode.STRICT
       )

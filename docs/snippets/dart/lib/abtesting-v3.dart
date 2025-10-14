@@ -18,13 +18,7 @@ void snippetForaddABTests() async {
   // Call the API
   final response = await client.addABTests(
     addABTestsRequest: AddABTestsRequest(
-      endAt: "2022-12-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [
-        CreateMetric(
-          name: "myMetric",
-        ),
-      ],
       variants: [
         AbTestsVariant(
           index: "AB_TEST_1",
@@ -35,6 +29,12 @@ void snippetForaddABTests() async {
           trafficPercentage: 50,
         ),
       ],
+      metrics: [
+        CreateMetric(
+          name: "myMetric",
+        ),
+      ],
+      endAt: "2022-12-31T00:00:00.000Z",
     ),
   );
   // >LOG
@@ -672,14 +672,7 @@ void snippetForscheduleABTest() async {
   // Call the API
   final response = await client.scheduleABTest(
     scheduleABTestsRequest: ScheduleABTestsRequest(
-      endAt: "2022-12-31T00:00:00.000Z",
-      scheduledAt: "2022-11-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [
-        CreateMetric(
-          name: "myMetric",
-        ),
-      ],
       variants: [
         AbTestsVariant(
           index: "AB_TEST_1",
@@ -690,6 +683,13 @@ void snippetForscheduleABTest() async {
           trafficPercentage: 50,
         ),
       ],
+      metrics: [
+        CreateMetric(
+          name: "myMetric",
+        ),
+      ],
+      scheduledAt: "2022-11-31T00:00:00.000Z",
+      endAt: "2022-12-31T00:00:00.000Z",
     ),
   );
   // >LOG

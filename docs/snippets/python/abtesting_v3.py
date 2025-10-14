@@ -21,13 +21,7 @@ def snippet_for_add_ab_tests():
     # Call the API
     response = client.add_ab_tests(
         add_ab_tests_request={
-            "endAt": "2022-12-31T00:00:00.000Z",
             "name": "myABTest",
-            "metrics": [
-                {
-                    "name": "myMetric",
-                },
-            ],
             "variants": [
                 {
                     "index": "AB_TEST_1",
@@ -38,6 +32,12 @@ def snippet_for_add_ab_tests():
                     "trafficPercentage": 50,
                 },
             ],
+            "metrics": [
+                {
+                    "name": "myMetric",
+                },
+            ],
+            "endAt": "2022-12-31T00:00:00.000Z",
         },
     )
 
@@ -766,14 +766,7 @@ def snippet_for_schedule_ab_test():
     # Call the API
     response = client.schedule_ab_test(
         schedule_ab_tests_request={
-            "endAt": "2022-12-31T00:00:00.000Z",
-            "scheduledAt": "2022-11-31T00:00:00.000Z",
             "name": "myABTest",
-            "metrics": [
-                {
-                    "name": "myMetric",
-                },
-            ],
             "variants": [
                 {
                     "index": "AB_TEST_1",
@@ -784,6 +777,13 @@ def snippet_for_schedule_ab_test():
                     "trafficPercentage": 50,
                 },
             ],
+            "metrics": [
+                {
+                    "name": "myMetric",
+                },
+            ],
+            "scheduledAt": "2022-11-31T00:00:00.000Z",
+            "endAt": "2022-12-31T00:00:00.000Z",
         },
     )
 

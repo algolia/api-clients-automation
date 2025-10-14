@@ -4,7 +4,7 @@
       "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.Abtesting;"
     },
     "addABTests": {
-      "default": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+      "default": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n  }\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
@@ -46,7 +46,7 @@
       "listABTests with parameters": "var response = await client.ListABTestsAsync(0, 21, \"cts_e2e ab\", \"t\");"
     },
     "scheduleABTest": {
-      "default": "var response = await client.ScheduleABTestAsync(\n  new ScheduleABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    ScheduledAt = \"2022-11-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+      "default": "var response = await client.ScheduleABTestAsync(\n  new ScheduleABTestsRequest\n  {\n    Name = \"myABTest\",\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n    ScheduledAt = \"2022-11-31T00:00:00.000Z\",\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n  }\n);"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -61,58 +61,58 @@
   "dart": {},
   "go": {
     "import": {
-      "default": "import (\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting\""
+      "default": "import (\n\t\"context\"\n\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/next/abtesting\"\n)"
     },
     "addABTests": {
-      "default": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtesting.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.AddABTests(context.Background(), \"myABTest\",\n  []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}, \"2022-12-31T00:00:00.000Z\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(context.Background(), \"test/all\", map[string]any{\"query\": \"parameters\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\",\n).WithParameters(map[string]any{\"query\": \"to be overridden\"}), abtesting.WithQueryParam(\"query\", \"parameters with space\"), abtesting.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), abtesting.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(context.Background(), \"test/all\", map[string]any{\"query\": \"parameters with space\"})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions should be escaped too": "response, err := client.CustomGet(\n  context.Background(),\n  \"test/all\",\n  map[string]any{\"query\": \"to be overridden\"},\n  abtesting.WithQueryParam(\"query\", \"parameters with space\"),\n  abtesting.WithQueryParam(\"and an array\",\n    []string{\"array\", \"with spaces\"}),\n  abtesting.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), abtesting.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/all\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"query\", \"myQueryParameter\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"query2\", \"myQueryParameter\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"isItWorking\", true),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"myParam\", 2),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"myParam\",\n    []string{\"b and c\", \"d\"}),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"myParam\",\n    []bool{true, true, false}),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(\n  context.Background(),\n  \"test/requestOptions\",\n  abtesting.NewCustomPostOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}),\n  abtesting.WithQueryParam(\"myParam\",\n    []int{1, 2}),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(context.Background(), \"test/minimal\", nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(\n  context.Background(),\n  \"test/all\",\n  abtesting.NewCustomPutOptions().WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteABTest": {
-      "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.DeleteABTest(context.Background(), 42)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "estimateABTest": {
-      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(\n      abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(\n      abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n      abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.EstimateABTest(context.Background(),\n  abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(\n    abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(\n    abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EFFECT_METRIC_CONVERSION_RATE)),\n  []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getABTest": {
-      "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.GetABTest(context.Background(), 42)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
-      "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "listABTests with parameters": "response, err := client.ListABTests(\n  client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix(\"cts_e2e ab\").WithIndexSuffix(\"t\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "listABTests with minimal parameters": "response, err := client.ListABTests(context.Background(), nil)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "listABTests with parameters": "response, err := client.ListABTests(\n  context.Background(),\n  abtesting.NewListABTestsOptions().WithOffset(0).WithLimit(21).WithIndexPrefix(\"cts_e2e ab\").WithIndexSuffix(\"t\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "scheduleABTest": {
-      "default": "response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n  abtesting.NewEmptyScheduleABTestsRequest().\n    SetEndAt(\"2022-12-31T00:00:00.000Z\").\n    SetScheduledAt(\"2022-11-31T00:00:00.000Z\").\n    SetName(\"myABTest\").\n    SetVariants(\n      []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n        abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n        abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.ScheduleABTest(context.Background(), \"myABTest\",\n  []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(\n    abtesting.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}, \"2022-11-31T00:00:00.000Z\", \"2022-12-31T00:00:00.000Z\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
-      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "err = client.SetClientApiKey(\"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "stopABTest": {
-      "default": "response, err := client.StopABTest(client.NewApiStopABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.StopABTest(context.Background(), 42)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := abtesting.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", abtesting.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
@@ -123,7 +123,7 @@
       "default": "import com.algolia.api.AbtestingClient;\nimport com.algolia.config.*;"
     },
     "addABTests": {
-      "default": "client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+      "default": "client.addABTests(\n  new AddABTestsRequest()\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
@@ -165,7 +165,7 @@
       "listABTests with parameters": "client.listABTests(0, 21, \"cts_e2e ab\", \"t\");"
     },
     "scheduleABTest": {
-      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+      "default": "client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setName(\"myABTest\")\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
@@ -182,7 +182,7 @@
       "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "addABTests": {
-      "default": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+      "default": "const response = await client.addABTests({\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n  endAt: '2022-12-31T00:00:00.000Z',\n});"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
@@ -224,7 +224,7 @@
       "listABTests with parameters": "const response = await client.listABTests({ offset: 0, limit: 21, indexPrefix: 'cts_e2e ab', indexSuffix: 't' });"
     },
     "scheduleABTest": {
-      "default": "const response = await client.scheduleABTest({\n  endAt: '2022-12-31T00:00:00.000Z',\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+      "default": "const response = await client.scheduleABTest({\n  name: 'myABTest',\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  endAt: '2022-12-31T00:00:00.000Z',\n});"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
@@ -241,7 +241,7 @@
       "default": "import com.algolia.client.api.AbtestingClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*"
     },
     "addABTests": {
-      "default": "var response = client.addABTests(\n  addABTestsRequest = AddABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
+      "default": "var response = client.addABTests(\n  addABTestsRequest = AddABTestsRequest(\n    name = \"myABTest\",\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n    endAt = \"2022-12-31T00:00:00.000Z\",\n  ),\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
@@ -283,7 +283,7 @@
       "listABTests with parameters": "var response = client.listABTests(offset = 0, limit = 21, indexPrefix = \"cts_e2e ab\", indexSuffix = \"t\")"
     },
     "scheduleABTest": {
-      "default": "var response = client.scheduleABTest(\n  scheduleABTestsRequest = ScheduleABTestsRequest(\n    endAt = \"2022-12-31T00:00:00.000Z\",\n    scheduledAt = \"2022-11-31T00:00:00.000Z\",\n    name = \"myABTest\",\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n  ),\n)"
+      "default": "var response = client.scheduleABTest(\n  scheduleABTestsRequest = ScheduleABTestsRequest(\n    name = \"myABTest\",\n    variants = listOf(\n      AbTestsVariant(\n        index = \"AB_TEST_1\",\n        trafficPercentage = 30,\n      ),\n      AbTestsVariant(\n        index = \"AB_TEST_2\",\n        trafficPercentage = 50,\n      ),\n    ),\n    scheduledAt = \"2022-11-31T00:00:00.000Z\",\n    endAt = \"2022-12-31T00:00:00.000Z\",\n  ),\n)"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
@@ -300,7 +300,7 @@
       "default": "use Algolia\\AlgoliaSearch\\Api\\AbtestingClient;"
     },
     "addABTests": {
-      "default": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+      "default": "$response = $client->addABTests(\n    ['name' => 'myABTest',\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n        'endAt' => '2022-12-31T00:00:00.000Z',\n    ],\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
@@ -342,7 +342,7 @@
       "listABTests with parameters": "$response = $client->listABTests(\n    0,\n    21,\n    'cts_e2e ab',\n    't',\n);"
     },
     "scheduleABTest": {
-      "default": "$response = $client->scheduleABTest(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'scheduledAt' => '2022-11-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+      "default": "$response = $client->scheduleABTest(\n    ['name' => 'myABTest',\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n        'scheduledAt' => '2022-11-31T00:00:00.000Z',\n        'endAt' => '2022-12-31T00:00:00.000Z',\n    ],\n);"
     },
     "setClientApiKey": {
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
@@ -359,7 +359,7 @@
       "default": "from algoliasearch.abtesting.client import AbtestingClientSync\nfrom json import loads"
     },
     "addABTests": {
-      "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+      "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n    },\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
@@ -401,7 +401,7 @@
       "listABTests with parameters": "response = client.list_ab_tests(\n    offset=0,\n    limit=21,\n    index_prefix=\"cts_e2e ab\",\n    index_suffix=\"t\",\n)"
     },
     "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"name\": \"myABTest\",\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n    },\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
@@ -418,7 +418,7 @@
       "default": "require \"algolia\""
     },
     "addABTests": {
-      "default": "response = client.add_ab_tests(\n  Algolia::Abtesting::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+      "default": "response = client.add_ab_tests(\n  Algolia::Abtesting::AddABTestsRequest.new(\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ],\n    end_at: \"2022-12-31T00:00:00.000Z\"\n  )\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
@@ -460,7 +460,7 @@
       "listABTests with parameters": "response = client.list_ab_tests(0, 21, \"cts_e2e ab\", \"t\")"
     },
     "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n  Algolia::Abtesting::ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+      "default": "response = client.schedule_ab_test(\n  Algolia::Abtesting::ScheduleABTestsRequest.new(\n    name: \"myABTest\",\n    variants: [\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::Abtesting::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ],\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    end_at: \"2022-12-31T00:00:00.000Z\"\n  )\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
@@ -477,7 +477,7 @@
       "default": "import algoliasearch.api.AbtestingClient\nimport algoliasearch.config.*"
     },
     "addABTests": {
-      "default": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      name = \"myABTest\",\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      ),\n      endAt = \"2022-12-31T00:00:00.000Z\"\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -519,7 +519,7 @@
       "listABTests with parameters": "val response = Await.result(\n  client.listABTests(\n    offset = Some(0),\n    limit = Some(21),\n    indexPrefix = Some(\"cts_e2e ab\"),\n    indexSuffix = Some(\"t\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "scheduleABTest": {
-      "default": "val response = Await.result(\n  client.scheduleABTest(\n    scheduleABTestsRequest = ScheduleABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      scheduledAt = \"2022-11-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "default": "val response = Await.result(\n  client.scheduleABTest(\n    scheduleABTestsRequest = ScheduleABTestsRequest(\n      name = \"myABTest\",\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      ),\n      scheduledAt = \"2022-11-31T00:00:00.000Z\",\n      endAt = \"2022-12-31T00:00:00.000Z\"\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"

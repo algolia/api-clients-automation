@@ -1,11 +1,12 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveObjectsMovies() {
@@ -39,8 +40,7 @@ func saveObjectsMovies() {
 	}
 
 	// push data to algolia
-	result, err := client.SaveObjects(
-		"<YOUR_INDEX_NAME>", movies)
+	result, err := client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", movies)
 	if err != nil {
 		panic(err)
 	}

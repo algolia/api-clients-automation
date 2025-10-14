@@ -15,13 +15,13 @@ def snippet_for_add_ab_tests
   # Call the API
   response = client.add_ab_tests(
     Algolia::AbtestingV3::AddABTestsRequest.new(
-      end_at: "2022-12-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
       variants: [
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-      ]
+      ],
+      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+      end_at: "2022-12-31T00:00:00.000Z"
     )
   )
 
@@ -593,14 +593,14 @@ def snippet_for_schedule_ab_test
   # Call the API
   response = client.schedule_ab_test(
     Algolia::AbtestingV3::ScheduleABTestsRequest.new(
-      end_at: "2022-12-31T00:00:00.000Z",
-      scheduled_at: "2022-11-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
       variants: [
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-      ]
+      ],
+      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+      scheduled_at: "2022-11-31T00:00:00.000Z",
+      end_at: "2022-12-31T00:00:00.000Z"
     )
   )
 

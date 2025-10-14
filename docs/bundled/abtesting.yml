@@ -165,8 +165,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -392,8 +393,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -619,8 +621,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -840,9 +843,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1080,13 +1083,13 @@ paths:
             var response = await client.AddABTestsAsync(
               new AddABTestsRequest
               {
-                EndAt = "2022-12-31T00:00:00.000Z",
                 Name = "myABTest",
                 Variants = new List<AddABTestsVariant>
                 {
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
                 },
+                EndAt = "2022-12-31T00:00:00.000Z",
               }
             );
             // >LOG
@@ -1107,12 +1110,10 @@ paths:
 
             // Call the API
 
-            response, err := client.AddABTests(client.NewApiAddABTestsRequest(
-
-              abtesting.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetVariants(
-                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            response, err := client.AddABTests(context.Background(), "myABTest",
+              []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}, "2022-12-31T00:00:00.000Z")
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1138,7 +1139,6 @@ paths:
 
             client.addABTests(
               new AddABTestsRequest()
-                .setEndAt("2022-12-31T00:00:00.000Z")
                 .setName("myABTest")
                 .setVariants(
                   Arrays.asList(
@@ -1146,6 +1146,7 @@ paths:
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
                 )
+                .setEndAt("2022-12-31T00:00:00.000Z")
             );
 
             // >LOG
@@ -1163,12 +1164,12 @@ paths:
             // Call the API
 
             const response = await client.addABTests({
-              endAt: '2022-12-31T00:00:00.000Z',
               name: 'myABTest',
               variants: [
                 { index: 'AB_TEST_1', trafficPercentage: 30 },
                 { index: 'AB_TEST_2', trafficPercentage: 50 },
               ],
+              endAt: '2022-12-31T00:00:00.000Z',
             });
 
 
@@ -1190,7 +1191,6 @@ paths:
 
             var response = client.addABTests(
               addABTestsRequest = AddABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
                 name = "myABTest",
                 variants = listOf(
                   AbTestsVariant(
@@ -1202,6 +1202,7 @@ paths:
                     trafficPercentage = 50,
                   ),
                 ),
+                endAt = "2022-12-31T00:00:00.000Z",
               ),
             )
 
@@ -1223,8 +1224,7 @@ paths:
             // Call the API
 
             $response = $client->addABTests(
-                ['endAt' => '2022-12-31T00:00:00.000Z',
-                    'name' => 'myABTest',
+                ['name' => 'myABTest',
                     'variants' => [
                         ['index' => 'AB_TEST_1',
                             'trafficPercentage' => 30,
@@ -1234,6 +1234,7 @@ paths:
                             'trafficPercentage' => 50,
                         ],
                     ],
+                    'endAt' => '2022-12-31T00:00:00.000Z',
                 ],
             );
 
@@ -1260,7 +1261,6 @@ paths:
 
             response = client.add_ab_tests(
                 add_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
                     "name": "myABTest",
                     "variants": [
                         {
@@ -1272,6 +1272,7 @@ paths:
                             "trafficPercentage": 50,
                         },
                     ],
+                    "endAt": "2022-12-31T00:00:00.000Z",
                 },
             )
 
@@ -1294,12 +1295,12 @@ paths:
 
             response = client.add_ab_tests(
               Algolia::Abtesting::AddABTestsRequest.new(
-                end_at: "2022-12-31T00:00:00.000Z",
                 name: "myABTest",
                 variants: [
                   Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
                   Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-                ]
+                ],
+                end_at: "2022-12-31T00:00:00.000Z"
               )
             )
 
@@ -1328,7 +1329,6 @@ paths:
             val response = Await.result(
               client.addABTests(
                 addABTestsRequest = AddABTestsRequest(
-                  endAt = "2022-12-31T00:00:00.000Z",
                   name = "myABTest",
                   variants = Seq(
                     AbTestsVariant(
@@ -1339,7 +1339,8 @@ paths:
                       index = "AB_TEST_2",
                       trafficPercentage = 50
                     )
-                  )
+                  ),
+                  endAt = "2022-12-31T00:00:00.000Z"
                 )
               ),
               Duration(100, "sec")
@@ -1492,8 +1493,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListABTests(client.NewApiListABTestsRequest())
+            response, err := client.ListABTests(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -1728,8 +1728,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetABTest(client.NewApiGetABTestRequest(
-              42))
+            response, err := client.GetABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1967,9 +1967,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteABTest(client.NewApiDeleteABTestRequest(
-              42))
+            response, err := client.DeleteABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2211,8 +2210,8 @@ paths:
 
             // Call the API
 
-            response, err := client.StopABTest(client.NewApiStopABTestRequest(
-              42))
+            response, err := client.StopABTest(context.Background(), 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2461,14 +2460,14 @@ paths:
             var response = await client.ScheduleABTestAsync(
               new ScheduleABTestsRequest
               {
-                EndAt = "2022-12-31T00:00:00.000Z",
-                ScheduledAt = "2022-11-31T00:00:00.000Z",
                 Name = "myABTest",
                 Variants = new List<AddABTestsVariant>
                 {
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
                   new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
                 },
+                ScheduledAt = "2022-11-31T00:00:00.000Z",
+                EndAt = "2022-12-31T00:00:00.000Z",
               }
             );
             // >LOG
@@ -2489,18 +2488,11 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-              abtesting.NewEmptyScheduleABTestsRequest().
-                SetEndAt("2022-12-31T00:00:00.000Z").
-                SetScheduledAt("2022-11-31T00:00:00.000Z").
-                SetName("myABTest").
-                SetVariants(
-                  []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-                    abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-                    abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-            ))
-
+            response, err := client.ScheduleABTest(context.Background(),
+            "myABTest",
+              []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}, "2022-11-31T00:00:00.000Z", "2022-12-31T00:00:00.000Z")
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2526,8 +2518,6 @@ paths:
 
             client.scheduleABTest(
               new ScheduleABTestsRequest()
-                .setEndAt("2022-12-31T00:00:00.000Z")
-                .setScheduledAt("2022-11-31T00:00:00.000Z")
                 .setName("myABTest")
                 .setVariants(
                   Arrays.asList(
@@ -2535,6 +2525,8 @@ paths:
                     new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
                   )
                 )
+                .setScheduledAt("2022-11-31T00:00:00.000Z")
+                .setEndAt("2022-12-31T00:00:00.000Z")
             );
 
             // >LOG
@@ -2552,13 +2544,13 @@ paths:
             // Call the API
 
             const response = await client.scheduleABTest({
-              endAt: '2022-12-31T00:00:00.000Z',
-              scheduledAt: '2022-11-31T00:00:00.000Z',
               name: 'myABTest',
               variants: [
                 { index: 'AB_TEST_1', trafficPercentage: 30 },
                 { index: 'AB_TEST_2', trafficPercentage: 50 },
               ],
+              scheduledAt: '2022-11-31T00:00:00.000Z',
+              endAt: '2022-12-31T00:00:00.000Z',
             });
 
 
@@ -2580,8 +2572,6 @@ paths:
 
             var response = client.scheduleABTest(
               scheduleABTestsRequest = ScheduleABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                scheduledAt = "2022-11-31T00:00:00.000Z",
                 name = "myABTest",
                 variants = listOf(
                   AbTestsVariant(
@@ -2593,6 +2583,8 @@ paths:
                     trafficPercentage = 50,
                   ),
                 ),
+                scheduledAt = "2022-11-31T00:00:00.000Z",
+                endAt = "2022-12-31T00:00:00.000Z",
               ),
             )
 
@@ -2614,9 +2606,7 @@ paths:
             // Call the API
 
             $response = $client->scheduleABTest(
-                ['endAt' => '2022-12-31T00:00:00.000Z',
-                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                    'name' => 'myABTest',
+                ['name' => 'myABTest',
                     'variants' => [
                         ['index' => 'AB_TEST_1',
                             'trafficPercentage' => 30,
@@ -2626,6 +2616,8 @@ paths:
                             'trafficPercentage' => 50,
                         ],
                     ],
+                    'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                    'endAt' => '2022-12-31T00:00:00.000Z',
                 ],
             );
 
@@ -2652,8 +2644,6 @@ paths:
 
             response = client.schedule_ab_test(
                 schedule_ab_tests_request={
-                    "endAt": "2022-12-31T00:00:00.000Z",
-                    "scheduledAt": "2022-11-31T00:00:00.000Z",
                     "name": "myABTest",
                     "variants": [
                         {
@@ -2665,6 +2655,8 @@ paths:
                             "trafficPercentage": 50,
                         },
                     ],
+                    "scheduledAt": "2022-11-31T00:00:00.000Z",
+                    "endAt": "2022-12-31T00:00:00.000Z",
                 },
             )
 
@@ -2687,13 +2679,13 @@ paths:
 
             response = client.schedule_ab_test(
               Algolia::Abtesting::ScheduleABTestsRequest.new(
-                end_at: "2022-12-31T00:00:00.000Z",
-                scheduled_at: "2022-11-31T00:00:00.000Z",
                 name: "myABTest",
                 variants: [
                   Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
                   Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-                ]
+                ],
+                scheduled_at: "2022-11-31T00:00:00.000Z",
+                end_at: "2022-12-31T00:00:00.000Z"
               )
             )
 
@@ -2722,8 +2714,6 @@ paths:
             val response = Await.result(
               client.scheduleABTest(
                 scheduleABTestsRequest = ScheduleABTestsRequest(
-                  endAt = "2022-12-31T00:00:00.000Z",
-                  scheduledAt = "2022-11-31T00:00:00.000Z",
                   name = "myABTest",
                   variants = Seq(
                     AbTestsVariant(
@@ -2734,7 +2724,9 @@ paths:
                       index = "AB_TEST_2",
                       trafficPercentage = 50
                     )
-                  )
+                  ),
+                  scheduledAt = "2022-11-31T00:00:00.000Z",
+                  endAt = "2022-12-31T00:00:00.000Z"
                 )
               ),
               Duration(100, "sec")
@@ -2895,16 +2887,13 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.EstimateABTest(client.NewApiEstimateABTestRequest(
-
-              abtesting.NewEmptyEstimateABTestRequest().SetConfiguration(
-                abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(
-                  abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(
-                  abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EffectMetric("conversionRate")))).SetVariants(
-                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+            response, err := client.EstimateABTest(context.Background(),
+              abtesting.NewEmptyEstimateConfiguration().SetEmptySearch(
+                abtesting.NewEmptyEmptySearch().SetExclude(true)).SetMinimumDetectableEffect(
+                abtesting.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtesting.EFFECT_METRIC_CONVERSION_RATE)),
+              []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})
             if err != nil {
               // handle the eventual error
               panic(err)

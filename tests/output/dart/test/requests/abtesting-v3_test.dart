@@ -16,13 +16,7 @@ void main() {
       ),
       call: (client) => client.addABTests(
         addABTestsRequest: AddABTestsRequest(
-          endAt: "2022-12-31T00:00:00.000Z",
           name: "myABTest",
-          metrics: [
-            CreateMetric(
-              name: "myMetric",
-            ),
-          ],
           variants: [
             AbTestsVariant(
               index: "AB_TEST_1",
@@ -33,13 +27,19 @@ void main() {
               trafficPercentage: 50,
             ),
           ],
+          metrics: [
+            CreateMetric(
+              name: "myMetric",
+            ),
+          ],
+          endAt: "2022-12-31T00:00:00.000Z",
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/3/abtests');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""");
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"endAt":"2022-12-31T00:00:00.000Z"}""");
       },
     ),
   );
@@ -743,14 +743,7 @@ void main() {
       ),
       call: (client) => client.scheduleABTest(
         scheduleABTestsRequest: ScheduleABTestsRequest(
-          endAt: "2022-12-31T00:00:00.000Z",
-          scheduledAt: "2022-11-31T00:00:00.000Z",
           name: "myABTest",
-          metrics: [
-            CreateMetric(
-              name: "myMetric",
-            ),
-          ],
           variants: [
             AbTestsVariant(
               index: "AB_TEST_1",
@@ -761,13 +754,20 @@ void main() {
               trafficPercentage: 50,
             ),
           ],
+          metrics: [
+            CreateMetric(
+              name: "myMetric",
+            ),
+          ],
+          scheduledAt: "2022-11-31T00:00:00.000Z",
+          endAt: "2022-12-31T00:00:00.000Z",
         ),
       ),
       intercept: (request) {
         expectPath(request.path, '/3/abtests/schedule');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""");
+            """{"name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"metrics":[{"name":"myMetric"}],"scheduledAt":"2022-11-31T00:00:00.000Z","endAt":"2022-12-31T00:00:00.000Z"}""");
       },
     ),
   );

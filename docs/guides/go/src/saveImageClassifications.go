@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveImageClassifications() {
@@ -28,22 +30,27 @@ func saveImageClassifications() {
 
 	images := []Image{}
 
-	err = client.BrowseObjects("<YOUR_INDEX_NAME>", search.BrowseParamsObject{}, search.WithAggregator(func(res any, err error) {
-		if err != nil {
-			panic(err)
-		}
+	err = client.BrowseObjects(
+		context.Background(),
+		"<YOUR_INDEX_NAME>",
+		search.BrowseParamsObject{},
+		search.WithAggregator(func(res any, err error) {
+			if err != nil {
+				panic(err)
+			}
 
-		browseRes, ok := res.(search.BrowseResponse)
-		if !ok {
-			panic("Invalid response")
-		}
+			browseRes, ok := res.(search.BrowseResponse)
+			if !ok {
+				panic("Invalid response")
+			}
 
-		for _, hit := range browseRes.Hits {
-			props := hit.AdditionalProperties
-			imageURL, _ := props["imageURL"].(string)
-			images = append(images, getImageLabels(imageURL, hit.GetObjectID(), 0.5))
-		}
-	}))
+			for _, hit := range browseRes.Hits {
+				props := hit.AdditionalProperties
+				imageURL, _ := props["imageURL"].(string)
+				images = append(images, getImageLabels(imageURL, hit.GetObjectID(), 0.5))
+			}
+		}),
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -57,8 +64,7 @@ func saveImageClassifications() {
 		}
 	}
 
-	_, err = client.PartialUpdateObjects(
-		"<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
+	_, err = client.PartialUpdateObjects(context.Background(), "<YOUR_INDEX_NAME>", records, search.WithCreateIfNotExists(true))
 	if err != nil {
 		panic(err)
 	}

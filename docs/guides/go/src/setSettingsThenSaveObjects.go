@@ -1,9 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func getAppIDFor(_ string) (string, error) {
@@ -45,14 +46,12 @@ func setSettingsThenSaveObjects() {
 			AttributesForFaceting: []string{"filterOnly(user)"},
 		}
 
-		_, err = client.SetSettings(client.NewApiSetSettingsRequest(
-			"<YOUR_INDEX_NAME>", settings))
+		_, err = client.SetSettings(context.Background(), "<YOUR_INDEX_NAME>", settings, nil)
 		if err != nil {
 			panic(err)
 		}
 
-		_, err = client.SaveObjects(
-			"<YOUR_INDEX_NAME>", playlists)
+		_, err = client.SaveObjects(context.Background(), "<YOUR_INDEX_NAME>", playlists)
 		if err != nil {
 			panic(err)
 		}

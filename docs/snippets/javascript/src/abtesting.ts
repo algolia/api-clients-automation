@@ -15,12 +15,12 @@ export async function snippetForAddABTests(): Promise<void> {
 
   // Call the API
   const response = await client.addABTests({
-    endAt: '2022-12-31T00:00:00.000Z',
     name: 'myABTest',
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
+    endAt: '2022-12-31T00:00:00.000Z',
   });
 
   // >LOG
@@ -522,13 +522,13 @@ export async function snippetForScheduleABTest(): Promise<void> {
 
   // Call the API
   const response = await client.scheduleABTest({
-    endAt: '2022-12-31T00:00:00.000Z',
-    scheduledAt: '2022-11-31T00:00:00.000Z',
     name: 'myABTest',
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
+    scheduledAt: '2022-11-31T00:00:00.000Z',
+    endAt: '2022-12-31T00:00:00.000Z',
   });
 
   // >LOG

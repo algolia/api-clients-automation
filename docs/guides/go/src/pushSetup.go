@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/ingestion"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func push() {
@@ -29,9 +31,7 @@ func push() {
 	}
 
 	// setting `watch` to `true` will make the call synchronous
-	resp, err := client.PushTask(client.NewApiPushTaskRequest(
-		"YOUR_TASK_ID",
-		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(records)).WithWatch(true))
+	resp, err := client.PushTask(context.Background(), "YOUR_TASK_ID", ingestion.ACTION_ADD_OBJECT, records, utils.ToPtr(true))
 	if err != nil {
 		panic(err)
 	}

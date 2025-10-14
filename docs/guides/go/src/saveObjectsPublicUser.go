@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func saveObjectsPublicUser() {
@@ -14,7 +16,13 @@ func saveObjectsPublicUser() {
 	}
 
 	_, err = client.SaveObjects(
-		"<YOUR_INDEX_NAME>", playlists, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
+		context.Background(),
+		"<YOUR_INDEX_NAME>",
+		playlists,
+		search.WithWaitForTasks(false),
+		search.WithBatchSize(1000),
+		search.WithHeaderParam("X-Algolia-User-ID", "*"),
+	)
 	if err != nil {
 		panic(err)
 	}

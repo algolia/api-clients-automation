@@ -213,8 +213,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "test/minimal"))
+            response, err := client.CustomGet(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -448,8 +449,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "test/minimal"))
+            response, err := client.CustomPost(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -683,8 +685,9 @@ paths:
 
             // Call the API
 
-            response, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "test/minimal"))
+            response, err := client.CustomPut(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -912,9 +915,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "test/minimal"))
+            response, err := client.CustomDelete(context.Background(),
+            "test/minimal", nil)
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1221,15 +1224,14 @@ paths:
 
             // Call the API
 
-            response, err := client.Search(client.NewApiSearchRequest(
+            response, err := client.Search(
+              context.Background(),
               "foo",
-              composition.NewEmptyRequestBody().SetParams(
-                composition.NewEmptyParams().
-                  SetQuery("batman").
-                  SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
-                    []composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
-              ),
-            ))
+              composition.NewEmptyParams().
+                SetQuery("batman").
+                SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
+                  []composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
+            )
 
             if err != nil {
               // handle the eventual error
@@ -1708,11 +1710,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "foo", "brand").WithSearchForFacetValuesRequest(
-              composition.NewEmptySearchForFacetValuesRequest().SetParams(
-                composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))))
+            response, err := client.SearchForFacetValues(context.Background(),
+            "foo", "brand",
+              composition.NewEmptySearchForFacetValuesParams().SetMaxFacetHits(10))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2003,8 +2003,7 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.ListCompositions(client.NewApiListCompositionsRequest())
+            response, err := client.ListCompositions(context.Background(), nil)
 
             if err != nil {
               // handle the eventual error
@@ -2242,9 +2241,8 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.GetComposition(client.NewApiGetCompositionRequest(
-              "foo"))
+            response, err := client.GetComposition(context.Background(), "foo")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2574,23 +2572,21 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.PutComposition(client.NewApiPutCompositionRequest(
-              "my-compo",
-              composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-                composition.NewEmptyCompositionBehavior().SetInjection(
-                  composition.NewEmptyInjection().SetMain(
-                    composition.NewEmptyMain().SetSource(
-                      composition.NewEmptyCompositionSource().SetSearch(
-                        composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-                          composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                    []composition.InjectedItem{
-                      *composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-                        composition.NewEmptySearchSource().SetSearch(
-                          composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
-                    }).
-                    SetDeduplication(
-                      composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))
+            response, err := client.PutComposition(context.Background(),
+            "my-compo", "my-compo", "my composition",
+              composition.NewEmptyCompositionBehavior().SetInjection(
+                composition.NewEmptyInjection().SetMain(
+                  composition.NewEmptyMain().SetSource(
+                    composition.NewEmptyCompositionSource().SetSearch(
+                      composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
+                        composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
+                  []composition.InjectedItem{
+                    *composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+                      composition.NewEmptySearchSource().SetSearch(
+                        composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
+                  }).
+                  SetDeduplication(
+                    composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST))), nil)
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3055,9 +3051,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteComposition(client.NewApiDeleteCompositionRequest(
-              "1234"))
+            response, err := client.DeleteComposition(context.Background(),
+            "1234")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -3420,24 +3416,22 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.MultipleBatch(client.NewApiMultipleBatchRequest(
-
-              composition.NewEmptyBatchParams().SetRequests(
-                []composition.MultipleBatchRequest{
-                  *composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-                    composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-                      composition.NewEmptyCompositionBehavior().SetInjection(
-                        composition.NewEmptyInjection().SetMain(
-                          composition.NewEmptyMain().SetSource(
-                            composition.NewEmptyCompositionSource().SetSearch(
-                              composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
-                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-                            composition.NewEmptySearchSource().SetSearch(
-                              composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
-                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest"))))))),
-                }),
-            ))
+            response, err := client.MultipleBatch(
+              context.Background(),
+              []composition.MultipleBatchRequest{
+                *composition.NewEmptyMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionAsBatchCompositionAction(
+                  composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
+                    composition.NewEmptyCompositionBehavior().SetInjection(
+                      composition.NewEmptyInjection().SetMain(
+                        composition.NewEmptyMain().SetSource(
+                          composition.NewEmptyCompositionSource().SetSearch(
+                            composition.NewEmptyCompositionSourceSearch().SetIndex("foo")))).SetInjectedItems(
+                        []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+                          composition.NewEmptySearchSource().SetSearch(
+                            composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
+                        composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST)))))),
+              },
+            )
 
             if err != nil {
               // handle the eventual error
@@ -3913,8 +3907,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetRule(client.NewApiGetRuleRequest(
-              "foo", "123"))
+            response, err := client.GetRule(context.Background(), "foo", "123")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4265,12 +4259,11 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-              "compositionID", "rule-with-deduplication",
+            response, err := client.PutCompositionRule(context.Background(),
+            "compositionID", "rule-with-deduplication",
               composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
                 []composition.Condition{
-                  *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
+                  *composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry"),
                 }).
                 SetConsequence(
                   composition.NewEmptyCompositionRuleConsequence().SetBehavior(
@@ -4285,7 +4278,7 @@ paths:
                               composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3),
                         }).
                         SetDeduplication(
-                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected"))))))))
+                          composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST_INJECTED))))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4794,9 +4787,9 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.DeleteCompositionRule(client.NewApiDeleteCompositionRuleRequest(
-              "1234", "5678"))
+            response, err := client.DeleteCompositionRule(context.Background(),
+            "1234", "5678")
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5187,24 +5180,23 @@ paths:
 
             // Call the API
 
-            response, err := client.SaveRules(client.NewApiSaveRulesRequest(
-              "my-compo",
-              composition.NewEmptyCompositionRulesBatchParams().SetRequests(
-                []composition.RulesMultipleBatchRequest{
-                  *composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
-                    composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-                      []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
-                      composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-                        composition.NewEmptyCompositionBehavior().SetInjection(
-                          composition.NewEmptyInjection().SetMain(
-                            composition.NewEmptyMain().SetSource(
-                              composition.NewEmptyCompositionSource().SetSearch(
-                                composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
-                            []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-                              composition.NewEmptySearchSource().SetSearch(
-                                composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
-                            composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))),
-                }),
+            response, err := client.SaveRules(context.Background(), "my-compo",
+            utils.ToPtr(
+              []composition.RulesMultipleBatchRequest{
+                *composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.ACTION_UPSERT).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
+                  composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
+                    []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.ANCHORING_CONTAINS).SetPattern("harry")}).SetConsequence(
+                    composition.NewEmptyCompositionRuleConsequence().SetBehavior(
+                      composition.NewEmptyCompositionBehavior().SetInjection(
+                        composition.NewEmptyInjection().SetMain(
+                          composition.NewEmptyMain().SetSource(
+                            composition.NewEmptyCompositionSource().SetSearch(
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("my-index")))).SetInjectedItems(
+                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
+                            composition.NewEmptySearchSource().SetSearch(
+                              composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
+                          composition.NewEmptyDeduplication().SetPositioning(composition.DEDUP_POSITIONING_HIGHEST_INJECTED))))))),
+              },
             ))
 
             if err != nil {
@@ -5815,10 +5807,10 @@ paths:
 
             // Call the API
 
-            response, err :=
-            client.SearchCompositionRules(client.NewApiSearchCompositionRulesRequest(
-              "foo").WithSearchCompositionRulesParams(
-              composition.NewEmptySearchCompositionRulesParams().SetQuery("batman")))
+            response, err := client.SearchCompositionRules(context.Background(),
+            "foo",
+            composition.NewSearchCompositionRulesOptions().WithQuery("batman"))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6099,8 +6091,8 @@ paths:
 
             // Call the API
 
-            response, err := client.GetTask(client.NewApiGetTaskRequest(
-              "foo", 42))
+            response, err := client.GetTask(context.Background(), "foo", 42)
+
             if err != nil {
               // handle the eventual error
               panic(err)

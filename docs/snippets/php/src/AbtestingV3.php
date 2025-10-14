@@ -24,12 +24,7 @@ class SnippetAbtestingV3Client
 
         // Call the API
         $response = $client->addABTests(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'name' => 'myABTest',
-                'metrics' => [
-                    ['name' => 'myMetric',
-                    ],
-                ],
+            ['name' => 'myABTest',
                 'variants' => [
                     ['index' => 'AB_TEST_1',
                         'trafficPercentage' => 30,
@@ -39,6 +34,11 @@ class SnippetAbtestingV3Client
                         'trafficPercentage' => 50,
                     ],
                 ],
+                'metrics' => [
+                    ['name' => 'myMetric',
+                    ],
+                ],
+                'endAt' => '2022-12-31T00:00:00.000Z',
             ],
         );
 
@@ -705,13 +705,7 @@ class SnippetAbtestingV3Client
 
         // Call the API
         $response = $client->scheduleABTest(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                'name' => 'myABTest',
-                'metrics' => [
-                    ['name' => 'myMetric',
-                    ],
-                ],
+            ['name' => 'myABTest',
                 'variants' => [
                     ['index' => 'AB_TEST_1',
                         'trafficPercentage' => 30,
@@ -721,6 +715,12 @@ class SnippetAbtestingV3Client
                         'trafficPercentage' => 50,
                     ],
                 ],
+                'metrics' => [
+                    ['name' => 'myMetric',
+                    ],
+                ],
+                'scheduledAt' => '2022-11-31T00:00:00.000Z',
+                'endAt' => '2022-12-31T00:00:00.000Z',
             ],
         );
 

@@ -16,13 +16,13 @@ class TestAbtestingV3Client < Test::Unit::TestCase
   def test_add_ab_tests
     req = @client.add_ab_tests_with_http_info(
       Algolia::AbtestingV3::AddABTestsRequest.new(
-        end_at: "2022-12-31T00:00:00.000Z",
         name: "myABTest",
-        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
         variants: [
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-        ]
+        ],
+        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+        end_at: "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -32,7 +32,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"myMetric\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"metrics\":[{\"name\":\"myMetric\"}],\"endAt\":\"2022-12-31T00:00:00.000Z\"}"
       ),
       JSON.parse(req.body)
     )
@@ -410,14 +410,14 @@ class TestAbtestingV3Client < Test::Unit::TestCase
   def test_schedule_ab_test
     req = @client.schedule_ab_test_with_http_info(
       Algolia::AbtestingV3::ScheduleABTestsRequest.new(
-        end_at: "2022-12-31T00:00:00.000Z",
-        scheduled_at: "2022-11-31T00:00:00.000Z",
         name: "myABTest",
-        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
         variants: [
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-        ]
+        ],
+        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "myMetric")],
+        scheduled_at: "2022-11-31T00:00:00.000Z",
+        end_at: "2022-12-31T00:00:00.000Z"
       )
     )
 
@@ -427,7 +427,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"myMetric\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+        "{\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"metrics\":[{\"name\":\"myMetric\"}],\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"endAt\":\"2022-12-31T00:00:00.000Z\"}"
       ),
       JSON.parse(req.body)
     )

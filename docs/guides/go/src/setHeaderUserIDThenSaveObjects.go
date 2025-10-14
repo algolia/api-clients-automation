@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"context"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
 func setHeaderUserIDThenSaveObjects() {
@@ -17,6 +19,7 @@ func setHeaderUserIDThenSaveObjects() {
 		playlistUserID := playlist["userID"]
 
 		_, err := client.SaveObjects(
+			context.Background(),
 			"<YOUR_INDEX_NAME>",
 			playlists,
 			search.WithWaitForTasks(false),

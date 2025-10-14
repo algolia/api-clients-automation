@@ -19,13 +19,7 @@ class SnippetAbtestingV3Client {
     // Call the API
     var response = client.addABTests(
       addABTestsRequest = AddABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
         name = "myABTest",
-        metrics = listOf(
-          CreateMetric(
-            name = "myMetric",
-          ),
-        ),
         variants = listOf(
           AbTestsVariant(
             index = "AB_TEST_1",
@@ -36,6 +30,12 @@ class SnippetAbtestingV3Client {
             trafficPercentage = 50,
           ),
         ),
+        metrics = listOf(
+          CreateMetric(
+            name = "myMetric",
+          ),
+        ),
+        endAt = "2022-12-31T00:00:00.000Z",
       ),
     )
 
@@ -581,14 +581,7 @@ class SnippetAbtestingV3Client {
     // Call the API
     var response = client.scheduleABTest(
       scheduleABTestsRequest = ScheduleABTestsRequest(
-        endAt = "2022-12-31T00:00:00.000Z",
-        scheduledAt = "2022-11-31T00:00:00.000Z",
         name = "myABTest",
-        metrics = listOf(
-          CreateMetric(
-            name = "myMetric",
-          ),
-        ),
         variants = listOf(
           AbTestsVariant(
             index = "AB_TEST_1",
@@ -599,6 +592,13 @@ class SnippetAbtestingV3Client {
             trafficPercentage = 50,
           ),
         ),
+        metrics = listOf(
+          CreateMetric(
+            name = "myMetric",
+          ),
+        ),
+        scheduledAt = "2022-11-31T00:00:00.000Z",
+        endAt = "2022-12-31T00:00:00.000Z",
       ),
     )
 

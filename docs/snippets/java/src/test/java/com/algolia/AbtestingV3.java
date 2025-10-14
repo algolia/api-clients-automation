@@ -20,15 +20,15 @@ class SnippetAbtestingV3Client {
     // Call the API
     client.addABTests(
       new AddABTestsRequest()
-        .setEndAt("2022-12-31T00:00:00.000Z")
         .setName("myABTest")
-        .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
         .setVariants(
           Arrays.asList(
             new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
         )
+        .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+        .setEndAt("2022-12-31T00:00:00.000Z")
     );
     // >LOG
     // SEPARATOR<
@@ -560,16 +560,16 @@ class SnippetAbtestingV3Client {
     // Call the API
     client.scheduleABTest(
       new ScheduleABTestsRequest()
-        .setEndAt("2022-12-31T00:00:00.000Z")
-        .setScheduledAt("2022-11-31T00:00:00.000Z")
         .setName("myABTest")
-        .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
         .setVariants(
           Arrays.asList(
             new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
         )
+        .setMetrics(Arrays.asList(new CreateMetric().setName("myMetric")))
+        .setScheduledAt("2022-11-31T00:00:00.000Z")
+        .setEndAt("2022-12-31T00:00:00.000Z")
     );
     // >LOG
     // SEPARATOR<
