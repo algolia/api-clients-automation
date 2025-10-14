@@ -13,10 +13,10 @@ params:
       $ref: '../../params/Composition.yml#/getRankingInfo'
     relevancyStrictness:
       $ref: '../../params/Search.yml#/relevancyStrictness'
-    facets:
-      $ref: '../../params/Search.yml#/facets'
     facetFilters:
       $ref: '../../params/Search.yml#/facetFilters'
+    facets:
+      $ref: '../../params/Composition.yml#/facets'
     optionalFilters:
       $ref: '../../params/Search.yml#/optionalFilters'
     numericFilters:
