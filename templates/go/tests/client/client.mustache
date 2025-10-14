@@ -5,7 +5,7 @@ import (
   "encoding/json"
   "net/url"
   "testing"
-  "regexp"
+  "time"
 
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
@@ -16,9 +16,12 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
 func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
+  t.Helper()
+
   echo := &tests.EchoRequester{}
   cfg := {{clientPrefix}}.{{clientName}}Configuration{
     Configuration: transport.Configuration{

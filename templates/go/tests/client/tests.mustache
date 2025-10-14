@@ -29,7 +29,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{#dynamicTemplate}}{{/dynamicTemplate}}
   require.NoError(t, err)
   {{#testUserAgent}}
-    require.Regexp(t, regexp.MustCompile(`{{{match.value}}}`), echo.Header.Get("User-Agent"))
+    require.Regexp(t, `{{{match.value}}}`, echo.Header.Get("User-Agent"))
   {{/testUserAgent}}
   {{#testTimeouts}}
     require.Equal(t, int64({{{matchConnectTimeout}}}), echo.ConnectTimeout.Milliseconds())

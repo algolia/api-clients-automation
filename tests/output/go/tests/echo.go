@@ -31,6 +31,7 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 	e.Header = req.Header
 	e.Timeout = timeout
 	e.ConnectTimeout = connectTimeout
+
 	if req.Body != nil {
 		body, _ := io.ReadAll(req.Body)
 		strBody := string(body)
@@ -39,8 +40,10 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 		e.Body = nil
 	}
 
-	var queryValues = strings.Split(req.URL.RawQuery, "&")
+	queryValues := strings.Split(req.URL.RawQuery, "&")
+
 	e.Query = url.Values{}
+
 	for _, queryValue := range queryValues {
 		split := strings.Split(queryValue, "=")
 		if len(split) == 2 {
@@ -49,36 +52,43 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 	}
 
 	return &http.Response{
-		StatusCode: 200,
+		StatusCode: http.StatusOK,
 		Body:       io.NopCloser(bytes.NewBufferString("")),
 	}, nil
 }
 
 func ZeroValue[T any]() T {
 	var v T
+
 	return v
 }
 
 func Union(t *testing.T, expected any, received any) any {
 	t.Helper()
+
 	if expected != nil {
 		require.NotNil(t, received, expected)
 	}
 
-	switch expected.(type) {
+	switch exp := expected.(type) {
 	case map[string]any:
 		res := map[string]any{}
-		for key, val := range expected.(map[string]any) {
+
+		for key, val := range exp {
 			require.Contains(t, received.(map[string]any), key)
 			res[key] = Union(t, val, received.(map[string]any)[key])
 		}
+
 		return res
 	case []any:
 		res := []any{}
-		require.GreaterOrEqual(t, len(received.([]any)), len(expected.([]any)))
-		for i, val := range expected.([]any) {
+
+		require.GreaterOrEqual(t, len(received.([]any)), len(exp))
+
+		for i, val := range exp {
 			res = append(res, Union(t, val, received.([]any)[i]))
 		}
+
 		return res
 	default:
 		return received
