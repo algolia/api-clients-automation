@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/libraries/java/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/sdk/install#java" target="_blank">Documentation</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-java/issues" target="_blank">Report a bug</a>  •
@@ -68,7 +68,7 @@ client.search(
 );
 ```
 
-For full documentation, visit the **[Algolia Java API Client](https://www.algolia.com/doc/libraries/java/)**.
+For full documentation, visit the **[Algolia Java API Client](https://www.algolia.com/doc/libraries/sdk/install#java)**.
 
 ## ❓ Troubleshooting
 

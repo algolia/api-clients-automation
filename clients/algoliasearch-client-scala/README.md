@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/libraries/scala/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/sdk/install#scala" target="_blank">Documentation</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="https://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-scala/issues" target="_blank">Report a bug</a>  •
@@ -115,7 +115,7 @@ val response = client.search(
 val value = Await.result(response, Duration(100, "sec"))
 ```
 
-For full documentation, visit the **[Algolia Scala API Client](https://www.algolia.com/doc/libraries/scala/)**.
+For full documentation, visit the **[Algolia Scala API Client](https://www.algolia.com/doc/libraries/sdk/install#scala)**.
 
 ## ❓ Troubleshooting
 

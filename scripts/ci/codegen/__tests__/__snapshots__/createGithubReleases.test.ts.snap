@@ -17,7 +17,7 @@ exports[`createGithubRelease > generates a release 1`] = `
 
 **Full Changelog**: https://github.com/algolia/algoliasearch-client-dart/compare/5.19.0...5.20.0
 
-→ [Browse the Algolia documentation](https://www.algolia.com/doc/libraries/dart)
+→ [Browse the Algolia documentation](https://www.algolia.com/doc/libraries/sdk/install#dart)
 ",
         "name": "5.20.0",
         "owner": "algolia",
