@@ -1,3 +1,7 @@
+## [4.28.2](https://github.com/algolia/algoliasearch-client-go/compare/4.28.1...4.28.2)
+
+- [9a92b3269](https://github.com/algolia/api-clients-automation/commit/9a92b3269) chore(deps): dependencies 2025-10-13 ([#5453](https://github.com/algolia/api-clients-automation/pull/5453)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.28.1](https://github.com/algolia/algoliasearch-client-go/compare/4.28.0...4.28.1)
 
 - [4d9286b50](https://github.com/algolia/api-clients-automation/commit/4d9286b50) fix(clients): use DefaultMaxIdleTimeout ([#5447](https://github.com/algolia/api-clients-automation/pull/5447)) by [@naonao2323](https://github.com/naonao2323/)

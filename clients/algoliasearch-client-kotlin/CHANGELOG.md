@@ -1,3 +1,7 @@
+## [3.31.2](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.31.1...3.31.2)
+
+- [9a92b3269](https://github.com/algolia/api-clients-automation/commit/9a92b3269) chore(deps): dependencies 2025-10-13 ([#5453](https://github.com/algolia/api-clients-automation/pull/5453)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.31.1](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.31.0...3.31.1)
 
 - [940048904](https://github.com/algolia/api-clients-automation/commit/940048904) fix(scripts): checkout tag on release ([#5446](https://github.com/algolia/api-clients-automation/pull/5446)) by [@millotp](https://github.com/millotp/)

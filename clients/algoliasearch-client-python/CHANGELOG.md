@@ -1,3 +1,7 @@
+## [4.29.1](https://github.com/algolia/algoliasearch-client-python/compare/4.29.0...4.29.1)
+
+- [9a92b3269](https://github.com/algolia/api-clients-automation/commit/9a92b3269) chore(deps): dependencies 2025-10-13 ([#5453](https://github.com/algolia/api-clients-automation/pull/5453)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.29.0](https://github.com/algolia/algoliasearch-client-python/compare/4.28.0...4.29.0)
 
 - [7de94353f](https://github.com/algolia/api-clients-automation/commit/7de94353f) feat(specs): add compositions deduplication setting ([#5418](https://github.com/algolia/api-clients-automation/pull/5418)) by [@ben-kalmus](https://github.com/ben-kalmus/)

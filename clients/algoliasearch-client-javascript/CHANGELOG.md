@@ -1,3 +1,8 @@
+## [5.40.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.40.0...5.40.1)
+
+- [9a92b3269](https://github.com/algolia/api-clients-automation/commit/9a92b3269) chore(deps): dependencies 2025-10-13 ([#5453](https://github.com/algolia/api-clients-automation/pull/5453)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [ac940e40c](https://github.com/algolia/api-clients-automation/commit/ac940e40c) fix(clients): forward requestOptions to searchForHits ([#5473](https://github.com/algolia/api-clients-automation/pull/5473)) by [@millotp](https://github.com/millotp/)
+
 ## [5.40.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.39.0...5.40.0)
 
 - [7de94353f](https://github.com/algolia/api-clients-automation/commit/7de94353f) feat(specs): add compositions deduplication setting ([#5418](https://github.com/algolia/api-clients-automation/pull/5418)) by [@ben-kalmus](https://github.com/ben-kalmus/)
