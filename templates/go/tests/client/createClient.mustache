@@ -8,6 +8,9 @@ cfg = {{clientPrefix}}.{{clientName}}Configuration{
     {{#hasCustomHosts}}
     Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/customHosts}} },
     {{/hasCustomHosts}}
+    {{#hasCustomWriteTimeout}}
+    WriteTimeout: {{writeTimeout}},
+    {{/hasCustomWriteTimeout}}
     {{#gzipEncoding}}
     Compression: compression.GZIP,
     {{/gzipEncoding}}

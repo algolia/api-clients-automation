@@ -2,6 +2,9 @@ _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{
         {{#hasCustomHosts}}
         {{#isError}}    {{/isError}}_config.hosts = HostsCollection([{{#customHosts}}Host(url='localhost' if environ.get('CI') == 'true' else 'host.docker.internal', scheme='http', port={{port}}){{^-last}},{{/-last}}{{/customHosts}}])
         {{/hasCustomHosts}}
+        {{#hasCustomWriteTimeout}}
+        {{#isError}}    {{/isError}}_config.write_timeout = {{writeTimeout}}
+        {{/hasCustomWriteTimeout}}
         {{#hasTransformationRegion}}
         {{#isError}}    {{/isError}}_config.set_transformation_region("{{{transformationRegion}}}")
         {{/hasTransformationRegion}}

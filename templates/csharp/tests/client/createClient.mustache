@@ -1,5 +1,6 @@
-{{#hasCustomHosts}}
+{{#hasCustomClientCreate}}
 {{clientPrefix}}Config _config = new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}) {
+{{#hasCustomHosts}}
   CustomHosts = new List<StatefulHost>
     {
       {{#customHosts}}new () {
@@ -11,8 +12,12 @@
         Accept = CallType.Read | CallType.Write,
       }{{^-last}},{{/-last}}{{/customHosts}}
   }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
+{{/hasCustomHosts}}
+{{#hasCustomWriteTimeout}}
+  WriteTimeout = {{writeTimeout}}
+{{/hasCustomWriteTimeout}}
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
-{{/hasCustomHosts}}
+{{/hasCustomClientCreate}}
 {{#useEchoRequester}}
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(new {{clientPrefix}}Config("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}), _echo);{{/useEchoRequester}}

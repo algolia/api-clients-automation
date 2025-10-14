@@ -85,7 +85,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, String region, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(region), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts(region));
     }
     
     {{/hasRegionalHost}}
@@ -95,7 +95,7 @@ public class {{classname}} extends ApiClient {
     }
 
     public {{classname}}(String appId, String apiKey, ClientOptions options) {
-      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}), Duration.ofMillis({{{x-timeouts.server.connect}}}L), Duration.ofMillis({{{x-timeouts.server.read}}}L), Duration.ofMillis({{{x-timeouts.server.write}}}L));
+      super(appId, apiKey, "{{{baseName}}}", options, getDefaultHosts({{#hostWithAppID}}appId{{/hostWithAppID}}));
     }
     {{/hasRegionalHost}}
 
@@ -218,7 +218,7 @@ public class {{classname}} extends ApiClient {
         {{#headerParams}}.addHeader("{{baseName}}", {{paramName}}){{/headerParams}}    
           {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.addQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.addQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
         .build();
-    return executeAsync(request, {{#vendorExtensions.x-timeouts}}new RequestOptions().setReadTimeout(Duration.ofMillis({{{read}}}L)).setWriteTimeout(Duration.ofMillis({{{write}}}L)).setConnectTimeout(Duration.ofMillis({{{connect}}}L)).mergeRight({{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}}, {{#vendorExtensions}}{{#x-is-generic}}{{{returnType}}}.class, innerType{{/x-is-generic}}{{/vendorExtensions}}{{^vendorExtensions.x-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<{{{.}}}>(){}{{/returnType}}{{/vendorExtensions.x-is-generic}});
+    return executeAsync(request, new RequestOptions(){{#vendorExtensions.x-timeouts.server}}.setReadTimeout(clientOptions.getReadTimeout() != null ? clientOptions.getReadTimeout() : Duration.ofMillis({{{read}}}L)).setWriteTimeout(clientOptions.getWriteTimeout() != null ? clientOptions.getWriteTimeout() : Duration.ofMillis({{{write}}}L)).setConnectTimeout(clientOptions.getConnectTimeout() != null ? clientOptions.getConnectTimeout() : Duration.ofMillis({{{connect}}}L)){{/vendorExtensions.x-timeouts.server}}.mergeRight(requestOptions), {{#vendorExtensions}}{{#x-is-generic}}{{{returnType}}}.class, innerType{{/x-is-generic}}{{/vendorExtensions}}{{^vendorExtensions.x-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<{{{.}}}>(){}{{/returnType}}{{/vendorExtensions.x-is-generic}});
   }
 
   {{! This case only sets `requestOptions` as optional }}

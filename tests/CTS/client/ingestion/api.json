@@ -78,6 +78,38 @@
     ]
   },
   {
+    "testName": "calls api with custom write timeouts",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "writeTimeout": 3355
+        }
+      },
+      {
+        "type": "method",
+        "method": "validateSourceBeforeUpdate",
+        "parameters": {
+          "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "sourceUpdate": {
+            "name": "newName"
+          }
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 180000,
+            "responseTimeout": 3355
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "can leave call opened for a long time",
     "autoCreateClient": false,
     "steps": [
