@@ -14,9 +14,9 @@ post:
     It's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),
     and then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).
 
-    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   externalDocs:
-    url: https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-
+    url: https://support.algolia.com/hc/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query
     description: Should I use the deleteBy method for deleting records.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

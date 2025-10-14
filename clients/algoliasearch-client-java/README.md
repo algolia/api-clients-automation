@@ -6,7 +6,7 @@
 <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your Java project</h4>
 
   <p align="center">
-    <a href="https://search.maven.org/artifact/com.algolia/algoliasearch/"><img src="https://img.shields.io/maven-central/v/com.algolia/algoliasearch.svg" alt="CircleCI"></img></a>
+    <a href="https://central.sonatype.com/artifact/com.algolia/algoliasearch"><img src="https://img.shields.io/maven-central/v/com.algolia/algoliasearch.svg" alt="CircleCI"></img></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="Licence"></img></a>
   </p>
 </p>
@@ -16,7 +16,6 @@
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-java/issues" target="_blank">Report a bug</a>  •
-  <a href="https://www.algolia.com/doc/api-client/troubleshooting/faq/java/" target="_blank">FAQ</a>  •
   <a href="https://alg.li/support" target="_blank">Support</a>
 </p>
 
@@ -73,7 +72,7 @@ For full documentation, visit the **[Algolia Java API Client](https://www.algoli
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/java/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://support.algolia.com/hc/sections/15061037630609-API-Client-FAQs) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
 ## Contributing
 

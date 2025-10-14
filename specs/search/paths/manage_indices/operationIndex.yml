@@ -29,7 +29,7 @@ post:
     - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.
     - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
-    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

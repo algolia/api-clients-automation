@@ -102,8 +102,8 @@ post:
                 items:
                   type: string
                 example:
-                  - https://blog.algolia.com/challenging-migration-heroku-google-kubernetes-engine/
-                  - https://blog.algolia.com/tale-two-engines-algolia-unity/
+                  - https://www.algolia.com/blog/engineering/challenging-migration-heroku-google-kubernetes-engine
+                  - https://www.algolia.com/blog/engineering/a-tale-of-two-engines-algolia-unity
               externalData:
                 type: object
                 description: |

@@ -11,7 +11,7 @@ post:
     If a rule with the specified object ID doesn't exist, Algolia creates a new one.
     Otherwise, existing rules are replaced.
 
-    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   x-codegen-request-body-name: rules
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
