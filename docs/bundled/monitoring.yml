@@ -35,7 +35,7 @@ info:
 
 
     You can find your application ID and API key in the [Algolia
-    dashboard](https://dashboard.algolia.com/account).
+    dashboard](https://dashboard.algolia.com/account/api-keys).
 
 
     Other endpoints don't require authentication.

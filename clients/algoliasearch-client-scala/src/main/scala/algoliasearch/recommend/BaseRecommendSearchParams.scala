@@ -15,8 +15,8 @@
   * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
   * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
-  * dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must be JSON objects. ##
-  * Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
+  * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request bodies must be JSON objects.
+  * ## Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
   * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
   * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
   * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
@@ -106,7 +106,7 @@ import algoliasearch.recommend.SupportedLanguage._
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started).
+  *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
   * @param analytics
   *   Whether this search will be included in Analytics.
   * @param analyticsTags

@@ -14,9 +14,9 @@
   * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
   * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
-  * dashboard](https://dashboard.algolia.com/account). ## Request format Depending on the endpoint, request bodies are
-  * either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters for GET and
-  * DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
+  * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Depending on the endpoint, request
+  * bodies are either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters
+  * for GET and DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
   * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
   * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. Arrays as query parameters must be one of: - A
   * comma-separated string: `attributesToRetrieve=title,description` - A URL-encoded JSON array:
@@ -122,7 +122,7 @@ import algoliasearch.search.SupportedLanguage._
   * @param clickAnalytics
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/guides/sending-events/getting-started).
+  *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
   * @param analytics
   *   Whether this search will be included in Analytics.
   * @param analyticsTags

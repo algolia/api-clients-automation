@@ -75,7 +75,7 @@ info:
       The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
-    dashboard](https://dashboard.algolia.com/account).
+    dashboard](https://dashboard.algolia.com/account/api-keys).
 
 
     ## Request format
@@ -217,7 +217,7 @@ tags:
       Records are schemaless JSON objects.
 
       When adding or updating many records, check the [indexing rate
-      limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+      limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: >-
         https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data
@@ -657,7 +657,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Add a new record (with auto-generated object ID)
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -902,10 +902,10 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       externalDocs:
         url: >-
-          https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-
+          https://support.algolia.com/hc/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query
         description: Should I use the deleteBy method for deleting records.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -939,7 +939,7 @@ paths:
         and rules.
 
         This operation is resource-intensive and subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -1026,7 +1026,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ObjectID'
@@ -1077,7 +1077,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       x-codegen-request-body-name: batchWriteParams
@@ -1120,7 +1120,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       summary: Batch indexing operations on multiple indices
       requestBody:
         required: true
@@ -1480,7 +1480,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ForwardToReplicas'
@@ -1897,7 +1897,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       x-codegen-request-body-name: rules
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -2838,7 +2838,7 @@ paths:
         - Up to 1,000 API requests per server are logged.
 
         - This request counts towards your [operations
-        quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+        quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
         but doesn't appear in the logs itself.
       summary: Retrieve log entries
       parameters:
@@ -3155,7 +3155,7 @@ paths:
 
 
         This operation is subject to [indexing rate
-        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+        limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -4869,7 +4869,7 @@ components:
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
-        events](https://www.algolia.com/guides/sending-events/getting-started).
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started).
       default: false
       x-categories:
         - Analytics
@@ -6160,7 +6160,7 @@ components:
               description: >-
                 Whether the facet count is exhaustive (`true`) or approximate
                 (`false`). See the [related
-                discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+                discussion](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
             facetValues:
               type: boolean
               title: facetValues
@@ -6710,7 +6710,7 @@ components:
               count:
                 description: >-
                   Number of records with this facet value. [The count may be
-                  approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+                  approximated](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
                 type: integer
         exhaustiveFacetsCount:
           type: boolean
@@ -6718,7 +6718,7 @@ components:
             Whether the facet count is exhaustive (true) or approximate (false).
 
             For more information, see [Why are my facet and hit counts not
-            accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+            accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
     searchResult:

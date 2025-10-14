@@ -75,7 +75,7 @@ info:
       The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
-    dashboard](https://dashboard.algolia.com/account).
+    dashboard](https://dashboard.algolia.com/account/api-keys).
 
 
     ## Request format
@@ -1251,7 +1251,7 @@ components:
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
-        events](https://www.algolia.com/guides/sending-events/getting-started).
+        events](https://www.algolia.com/doc/guides/sending-events/getting-started).
       default: false
       x-categories:
         - Analytics
@@ -3156,7 +3156,7 @@ components:
               description: >-
                 Whether the facet count is exhaustive (`true`) or approximate
                 (`false`). See the [related
-                discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+                discussion](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
             facetValues:
               type: boolean
               title: facetValues

@@ -14,9 +14,9 @@
   * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
   * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
-  * dashboard](https://dashboard.algolia.com/account). ## Request format Depending on the endpoint, request bodies are
-  * either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters for GET and
-  * DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
+  * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Depending on the endpoint, request
+  * bodies are either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters
+  * for GET and DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
   * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
   * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. Arrays as query parameters must be one of: - A
   * comma-separated string: `attributesToRetrieve=title,description` - A URL-encoded JSON array:
@@ -40,7 +40,7 @@ package algoliasearch.search
   * @param exhaustiveFacetsCount
   *   Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet
   *   and hit counts not
-  *   accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+  *   accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
   * @param processingTimeMS
   *   Time the server took to process the request, in milliseconds.
   */

@@ -380,7 +380,7 @@ public class SearchClient extends ApiClient {
    * updates reduces latency and increases data integrity. - Actions are applied in the order
    * they're specified. - Actions are equivalent to the individual API requests of the same name.
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -398,7 +398,7 @@ public class SearchClient extends ApiClient {
    * updates reduces latency and increases data integrity. - Actions are applied in the order
    * they're specified. - Actions are equivalent to the individual API requests of the same name.
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -413,7 +413,7 @@ public class SearchClient extends ApiClient {
    * Batching index updates reduces latency and increases data integrity. - Actions are applied in
    * the order they're specified. - Actions are equivalent to the individual API requests of the
    * same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -443,7 +443,7 @@ public class SearchClient extends ApiClient {
    * Batching index updates reduces latency and increases data integrity. - Actions are applied in
    * the order they're specified. - Actions are equivalent to the individual API requests of the
    * same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
@@ -822,7 +822,7 @@ public class SearchClient extends ApiClient {
   /**
    * Deletes only the records from an index while keeping settings, synonyms, and rules. This
    * operation is resource-intensive and subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -836,7 +836,7 @@ public class SearchClient extends ApiClient {
   /**
    * Deletes only the records from an index while keeping settings, synonyms, and rules. This
    * operation is resource-intensive and subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -848,7 +848,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
    * rules. This operation is resource-intensive and subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -866,7 +866,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
    * rules. This operation is resource-intensive and subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1570,7 +1570,7 @@ public class SearchClient extends ApiClient {
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1593,7 +1593,7 @@ public class SearchClient extends ApiClient {
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1610,7 +1610,7 @@ public class SearchClient extends ApiClient {
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -1642,7 +1642,7 @@ public class SearchClient extends ApiClient {
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
@@ -2320,7 +2320,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
@@ -2344,7 +2344,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
@@ -2365,7 +2365,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2381,7 +2381,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2395,7 +2395,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
@@ -2432,7 +2432,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
@@ -2454,7 +2454,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2470,7 +2470,7 @@ public class SearchClient extends ApiClient {
    * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
    * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
    * counts towards your [operations
-   * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
+   * quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations)
    * but doesn't appear in the logs itself.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3605,7 +3605,7 @@ public class SearchClient extends ApiClient {
    * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
    * applied in the order they are specified. - Actions are equivalent to the individual API
    * requests of the same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3621,7 +3621,7 @@ public class SearchClient extends ApiClient {
    * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
    * applied in the order they are specified. - Actions are equivalent to the individual API
    * requests of the same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3634,7 +3634,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
    * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
    * individual API requests of the same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3655,7 +3655,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
    * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
    * individual API requests of the same name. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3682,7 +3682,7 @@ public class SearchClient extends ApiClient {
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3716,7 +3716,7 @@ public class SearchClient extends ApiClient {
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3745,7 +3745,7 @@ public class SearchClient extends ApiClient {
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3788,7 +3788,7 @@ public class SearchClient extends ApiClient {
    * the existing index and copy the data to the replica indices. - Related guide: [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
@@ -3827,7 +3827,7 @@ public class SearchClient extends ApiClient {
    * the operation, for example, increment or decrement step, value to add or remove. When updating
    * multiple attributes or using multiple operations targeting the same record, you should use a
    * single partial update for faster processing. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3874,7 +3874,7 @@ public class SearchClient extends ApiClient {
    * the operation, for example, increment or decrement step, value to add or remove. When updating
    * multiple attributes or using multiple operations targeting the same record, you should use a
    * single partial update for faster processing. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3918,7 +3918,7 @@ public class SearchClient extends ApiClient {
    * the operation, for example, increment or decrement step, value to add or remove. When updating
    * multiple attributes or using multiple operations targeting the same record, you should use a
    * single partial update for faster processing. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -3962,7 +3962,7 @@ public class SearchClient extends ApiClient {
    * the operation, for example, increment or decrement step, value to add or remove. When updating
    * multiple attributes or using multiple operations targeting the same record, you should use a
    * single partial update for faster processing. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4004,7 +4004,7 @@ public class SearchClient extends ApiClient {
    * add or remove. When updating multiple attributes or using multiple operations targeting the
    * same record, you should use a single partial update for faster processing. This operation is
    * subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4064,7 +4064,7 @@ public class SearchClient extends ApiClient {
    * add or remove. When updating multiple attributes or using multiple operations targeting the
    * same record, you should use a single partial update for faster processing. This operation is
    * subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4109,7 +4109,7 @@ public class SearchClient extends ApiClient {
    * add or remove. When updating multiple attributes or using multiple operations targeting the
    * same record, you should use a single partial update for faster processing. This operation is
    * subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4154,7 +4154,7 @@ public class SearchClient extends ApiClient {
    * add or remove. When updating multiple attributes or using multiple operations targeting the
    * same record, you should use a single partial update for faster processing. This operation is
    * subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique record identifier. (required)
@@ -4341,7 +4341,7 @@ public class SearchClient extends ApiClient {
    * To add, update, or replace multiple records, use the [`batch`
    * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4365,7 +4365,7 @@ public class SearchClient extends ApiClient {
    * To add, update, or replace multiple records, use the [`batch`
    * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4387,7 +4387,7 @@ public class SearchClient extends ApiClient {
    * or replace multiple records, use the [`batch`
    * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4420,7 +4420,7 @@ public class SearchClient extends ApiClient {
    * or replace multiple records, use the [`batch`
    * operation](https://www.algolia.com/doc/rest-api/search/batch). This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param body The record. A schemaless object with attributes that are useful in the context of
@@ -4602,7 +4602,7 @@ public class SearchClient extends ApiClient {
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
    * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4627,7 +4627,7 @@ public class SearchClient extends ApiClient {
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
    * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4649,7 +4649,7 @@ public class SearchClient extends ApiClient {
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
    * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4666,7 +4666,7 @@ public class SearchClient extends ApiClient {
    * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
    * creates a new one. Otherwise, existing rules are replaced. This operation is subject to
    * [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4680,7 +4680,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
    * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4716,7 +4716,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
    * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4738,7 +4738,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
    * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4758,7 +4758,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
    * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced. This
    * operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
@@ -4949,7 +4949,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
    * synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4973,7 +4973,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
    * synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -4994,7 +4994,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
    * synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -5013,7 +5013,7 @@ public class SearchClient extends ApiClient {
   /**
    * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
    * synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -5026,7 +5026,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
    * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -5061,7 +5061,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
    * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -5082,7 +5082,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
    * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
@@ -5101,7 +5101,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
    * Otherwise, existing synonyms are replaced. This operation is subject to [indexing rate
-   * limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+   * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)

@@ -59,7 +59,7 @@ public class SearchForFacetValuesResults {
   /**
    * Whether the facet count is exhaustive (true) or approximate (false). For more information, see
    * [Why are my facet and hit counts not
-   * accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+   * accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
    */
   @javax.annotation.Nonnull
   public Boolean getExhaustiveFacetsCount() {

@@ -428,7 +428,7 @@ public class Params {
   /**
    * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
    * for a search query and is required for tracking [click and conversion
-   * events](https://www.algolia.com/guides/sending-events/getting-started).
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
   @javax.annotation.Nullable
   public Boolean getClickAnalytics() {

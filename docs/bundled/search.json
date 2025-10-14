@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Search API",
-    "description": "The Algolia Search API lets you search, configure, and manage your indices and records.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\nThe official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla).\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Search API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed as query parameters for GET and DELETE requests,\nand in the request body for POST and PUT requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\nArrays as query parameters must be one of:\n\n- A comma-separated string: `attributesToRetrieve=title,description`\n- A URL-encoded JSON array: `attributesToRetrieve=%5B%22title%22,%22description%22%D`\n\n## Response status and errors\n\nThe Search API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Search API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "The Algolia Search API lets you search, configure, and manage your indices and records.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\nThe official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla).\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Search API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed as query parameters for GET and DELETE requests,\nand in the request body for POST and PUT requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\nArrays as query parameters must be one of:\n\n- A comma-separated string: `attributesToRetrieve=title,description`\n- A URL-encoded JSON array: `attributesToRetrieve=%5B%22title%22,%22description%22%D`\n\n## Response status and errors\n\nThe Search API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Search API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -89,7 +89,7 @@
     },
     {
       "name": "Records",
-      "description": "Add, update, and delete records from your indices.\n\nRecords are individual items in your index.\nWhen they match a search query, they're returned as search results, in the order determined by your ranking.\nRecords are schemaless JSON objects.\nWhen adding or updating many records, check the [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+      "description": "Add, update, and delete records from your indices.\n\nRecords are individual items in your index.\nWhen they match a search query, they're returned as search results, in the order determined by your ranking.\nRecords are schemaless JSON objects.\nWhen adding or updating many records, check the [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
       "externalDocs": {
         "url": "https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data",
         "description": "Prepare your records."
@@ -571,7 +571,7 @@
         "x-acl": [
           "addObject"
         ],
-        "description": "Adds a record to an index or replaces it.\n\n- If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index.\n- If a record with the specified object ID exists, the existing record is replaced.\n- If a record with the specified object ID doesn't exist, a new record is added to your index.\n- If you add a record to an index that doesn't exist yet, a new index is created.\n\nTo update _some_ attributes of a record, use the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).\nTo add, update, or replace multiple records, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Adds a record to an index or replaces it.\n\n- If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index.\n- If a record with the specified object ID exists, the existing record is replaced.\n- If a record with the specified object ID doesn't exist, a new record is added to your index.\n- If you add a record to an index that doesn't exist yet, a new index is created.\n\nTo update _some_ attributes of a record, use the [`partial` operation](https://www.algolia.com/doc/rest-api/search/partial-update-object).\nTo add, update, or replace multiple records, use the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "summary": "Add a new record (with auto-generated object ID)",
         "parameters": [
           {
@@ -832,9 +832,9 @@
           "deleteIndex"
         ],
         "summary": "Delete records matching a filter",
-        "description": "This operation doesn't accept empty filters.\n\nThis operation is resource-intensive.\nYou should only use it if you can't get the object IDs of the records you want to delete.\nIt's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),\nand then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "This operation doesn't accept empty filters.\n\nThis operation is resource-intensive.\nYou should only use it if you can't get the object IDs of the records you want to delete.\nIt's more efficient to get a list of object IDs with the [`browse` operation](https://www.algolia.com/doc/rest-api/search/browse),\nand then delete the records using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "externalDocs": {
-          "url": "https://support.algolia.com/hc/en-us/articles/16385098766353-Should-I-use-the-deleteby-method-for-deleting-records-matching-a-query-",
+          "url": "https://support.algolia.com/hc/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query",
           "description": "Should I use the deleteBy method for deleting records."
         },
         "parameters": [
@@ -881,7 +881,7 @@
           "deleteIndex"
         ],
         "summary": "Delete all records from an index",
-        "description": "Deletes only the records from an index while keeping settings, synonyms, and rules.\nThis operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Deletes only the records from an index while keeping settings, synonyms, and rules.\nThis operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -918,7 +918,7 @@
         ],
         "summary": "Add or update attributes",
         "x-codegen-request-body-name": "attributesToUpdate",
-        "description": "Adds new attributes to a record, or updates existing ones.\n\n- If a record with the specified object ID doesn't exist,\n  a new record is added to the index **if** `createIfNotExists` is true.\n- If the index doesn't exist yet, this method creates a new index.\n- You can use any first-level attribute but not nested attributes.\n  If you specify a nested attribute, this operation replaces its first-level ancestor.\n\nTo update an attribute without pushing the entire record, you can use these built-in operations.\nThese operations can be helpful if you don't have access to your initial data.\n\n- Increment: increment a numeric attribute\n- Decrement: decrement a numeric attribute\n- Add: append a number or string element to an array attribute\n- Remove: remove all matching number or string elements from an array attribute made of numbers or strings\n- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present\n- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.\n- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.\n\nYou can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:\n\n- _operation: the operation to apply on the attribute\n- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.\n\nWhen updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Adds new attributes to a record, or updates existing ones.\n\n- If a record with the specified object ID doesn't exist,\n  a new record is added to the index **if** `createIfNotExists` is true.\n- If the index doesn't exist yet, this method creates a new index.\n- You can use any first-level attribute but not nested attributes.\n  If you specify a nested attribute, this operation replaces its first-level ancestor.\n\nTo update an attribute without pushing the entire record, you can use these built-in operations.\nThese operations can be helpful if you don't have access to your initial data.\n\n- Increment: increment a numeric attribute\n- Decrement: decrement a numeric attribute\n- Add: append a number or string element to an array attribute\n- Remove: remove all matching number or string elements from an array attribute made of numbers or strings\n- AddUnique: add a number or string element to an array attribute made of numbers or strings only if it's not already present\n- IncrementFrom: increment a numeric integer attribute only if the provided value matches the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the current value of the attribute is 1, the engine ignores the update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom value of 0.\n- IncrementSet: increment a numeric integer attribute only if the provided value is greater than the current value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet value of 2 for the version attribute, and the current value of the attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only creates it if you pass an IncrementSet value greater than 0.\n\nYou can specify an operation by providing an object with the attribute to update as the key and its value being an object with the following properties:\n\n- _operation: the operation to apply on the attribute\n- value: the right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.\n\nWhen updating multiple attributes or using multiple operations targeting the same record, you should use a single partial update for faster processing.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -975,7 +975,7 @@
         "operationId": "batch",
         "x-mcp-tool": true,
         "summary": "Batch indexing operations on one index",
-        "description": "Adds, updates, or deletes records in one index with a single API request.\n\nBatching index updates reduces latency and increases data integrity.\n\n- Actions are applied in the order they're specified.\n- Actions are equivalent to the individual API requests of the same name.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Adds, updates, or deletes records in one index with a single API request.\n\nBatching index updates reduces latency and increases data integrity.\n\n- Actions are applied in the order they're specified.\n- Actions are equivalent to the individual API requests of the same name.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -1025,7 +1025,7 @@
         ],
         "operationId": "multipleBatch",
         "x-mcp-tool": true,
-        "description": "Adds, updates, or deletes records in multiple indices with a single API request.\n\n- Actions are applied in the order they are specified.\n- Actions are equivalent to the individual API requests of the same name.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Adds, updates, or deletes records in multiple indices with a single API request.\n\n- Actions are applied in the order they are specified.\n- Actions are equivalent to the individual API requests of the same name.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "summary": "Batch indexing operations on multiple indices",
         "requestBody": {
           "required": true,
@@ -1516,7 +1516,7 @@
           "editSettings"
         ],
         "summary": "Create or replace synonyms",
-        "description": "If a synonym with the `objectID` doesn't exist, Algolia adds a new one.\nOtherwise, existing synonyms are replaced.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "If a synonym with the `objectID` doesn't exist, Algolia adds a new one.\nOtherwise, existing synonyms are replaced.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -2100,7 +2100,7 @@
           "editSettings"
         ],
         "summary": "Create or update rules",
-        "description": "Create or update multiple rules.\n\nIf a rule with the specified object ID doesn't exist, Algolia creates a new one.\nOtherwise, existing rules are replaced.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Create or update multiple rules.\n\nIf a rule with the specified object ID doesn't exist, Algolia creates a new one.\nOtherwise, existing rules are replaced.\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "x-codegen-request-body-name": "rules",
         "parameters": [
           {
@@ -3400,7 +3400,7 @@
         "x-acl": [
           "logs"
         ],
-        "description": "The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).\n\n- Logs are held for the last seven days.\n- Up to 1,000 API requests per server are logged.\n- This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself.\n",
+        "description": "The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).\n\n- Logs are held for the last seven days.\n- Up to 1,000 API requests per server are logged.\n- This request counts towards your [operations quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations) but doesn't appear in the logs itself.\n",
         "summary": "Retrieve log entries",
         "parameters": [
           {
@@ -3710,7 +3710,7 @@
           "addObject"
         ],
         "summary": "Copy or move an index",
-        "description": "Copies or moves (renames) an index within the same Algolia application.\n\n- Existing destination indices are overwritten, except for their analytics data.\n- If the destination index doesn't exist yet, it'll be created.\n- This operation is resource-intensive.\n\n**Copy**\n\n- Copying a source index that doesn't exist creates a new index with 0 records and default settings.\n- The API keys of the source index are merged with the existing keys in the destination index.\n- You can't copy the `enableReRanking`, `mode`, and `replicas` settings.\n- You can't copy to a destination index that already has replicas.\n- Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).\n- Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)\n\n**Move**\n\n- Moving a source index that doesn't exist is ignored without returning an error.\n- When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.\n  To access the original analytics in the dashboard, create an index with the original name.\n- If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.\n- Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Copies or moves (renames) an index within the same Algolia application.\n\n- Existing destination indices are overwritten, except for their analytics data.\n- If the destination index doesn't exist yet, it'll be created.\n- This operation is resource-intensive.\n\n**Copy**\n\n- Copying a source index that doesn't exist creates a new index with 0 records and default settings.\n- The API keys of the source index are merged with the existing keys in the destination index.\n- You can't copy the `enableReRanking`, `mode`, and `replicas` settings.\n- You can't copy to a destination index that already has replicas.\n- Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).\n- Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)\n\n**Move**\n\n- Moving a source index that doesn't exist is ignored without returning an error.\n- When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.\n  To access the original analytics in the dashboard, create an index with the original name.\n- If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.\n- Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -5484,7 +5484,7 @@
       },
       "clickAnalytics": {
         "type": "boolean",
-        "description": "Whether to include a `queryID` attribute in the response\nThe query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started).\n",
+        "description": "Whether to include a `queryID` attribute in the response\nThe query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).\n",
         "default": false,
         "x-categories": [
           "Analytics"
@@ -6612,7 +6612,7 @@
               "facetsCount": {
                 "type": "boolean",
                 "title": "facetsCount",
-                "description": "Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-)."
+                "description": "Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate)."
               },
               "facetValues": {
                 "type": "boolean",
@@ -7280,7 +7280,7 @@
                   "$ref": "#/components/schemas/highlightedValue"
                 },
                 "count": {
-                  "description": "Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).",
+                  "description": "Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).",
                   "type": "integer"
                 }
               }
@@ -7288,7 +7288,7 @@
           },
           "exhaustiveFacetsCount": {
             "type": "boolean",
-            "description": "Whether the facet count is exhaustive (true) or approximate (false).\nFor more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).\n"
+            "description": "Whether the facet count is exhaustive (true) or approximate (false).\nFor more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).\n"
           },
           "processingTimeMS": {
             "$ref": "#/components/schemas/processingTimeMS"

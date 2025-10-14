@@ -8,14 +8,15 @@
   * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
   * permissions to make the request. The required access control list (ACL) to make a request is listed in each
   * endpoint's reference. You can find your application ID and API key in the [Algolia
-  * dashboard](https://dashboard.algolia.com/account). ## Rate limits You can make up to **100 requests per minute per
-  * app** to the A/B testing API. The response includes headers with information about the limits. ## Parameters Query
-  * parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII
-  * characters must be UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The
-  * A/B testing API returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order
-  * of attributes in the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status.
-  * Server errors are indicated by a `5xx` status. Error responses have a `message` property with more information. ##
-  * Version The current version of the A/B Testing API is version 3, as indicated by the `/3/` in each endpoint's URL.
+  * dashboard](https://dashboard.algolia.com/account/api-keys). ## Rate limits You can make up to **100 requests per
+  * minute per app** to the A/B testing API. The response includes headers with information about the limits. ##
+  * Parameters Query parameters must be
+  * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
+  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The A/B testing API
+  * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
+  * the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
+  * indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The current
+  * version of the A/B Testing API is version 3, as indicated by the `/3/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 3.0.0
   *

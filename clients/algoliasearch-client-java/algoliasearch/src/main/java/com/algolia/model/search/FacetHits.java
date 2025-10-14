@@ -48,7 +48,7 @@ public class FacetHits {
 
   /**
    * Number of records with this facet value. [The count may be
-   * approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+   * approximated](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
    */
   @javax.annotation.Nonnull
   public Integer getCount() {
