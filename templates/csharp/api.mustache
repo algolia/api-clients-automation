@@ -14,7 +14,7 @@ using Algolia.Search.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 {{#isSearchClient}}
-using Algolia.Search.Clients;  // For IngestionClient
+using Algolia.Search.Clients;
 {{/isSearchClient}}
 
 namespace Algolia.Search.Clients;
@@ -25,7 +25,7 @@ namespace Algolia.Search.Clients;
   /// <summary>
   /// Represents a collection of functions to interact with the API endpoints
   /// </summary>
-  {{> visibility}} {{#isSearchClient}}partial {{/isSearchClient}}interface {{interfacePrefix}}{{classname}}
+  {{> visibility}} {{#isSearchClient}}partial {{/isSearchClient}}{{#isIngestionClient}}partial {{/isIngestionClient}}interface {{interfacePrefix}}{{classname}}
   {
       {{#operation}}
       /// <summary>
