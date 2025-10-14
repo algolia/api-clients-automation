@@ -24,11 +24,11 @@ apic build specs <client... | all>
 
 ### Available options
 
-| Option     | Command          | Description                                                    |
-| ---------- | :--------------- | :------------------------------------------------------------- |
-| verbose    | -v, --verbose    | Make the process verbose, display logs from third party tools  |
-| skip cache | -s, --skip-cache | Skip cache checking to force building specs                    |
-| docs       | -d, --docs       | Builds the specs for the Algolia doc, which embeds the snippets|
+| Option     | Command          | Description                                                     |
+| ---------- | :--------------- | :-------------------------------------------------------------- |
+| verbose    | -v, --verbose    | Make the process verbose, display logs from third party tools   |
+| skip cache | -s, --skip-cache | Skip cache checking to force building specs                     |
+| docs       | -d, --docs       | Builds the specs for the Algolia doc, which embeds the snippets |
 
 ## Build specs
 

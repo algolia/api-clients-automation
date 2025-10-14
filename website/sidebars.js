@@ -28,7 +28,11 @@ const sidebars = {
           type: 'category',
           label: 'Add a new API',
           collapsed: false,
-          items: ['add-a-new-api/write-a-specification', 'add-a-new-api/generate-your-client', 'add-a-new-api/api-documentation-guidelines'],
+          items: [
+            'add-a-new-api/write-a-specification',
+            'add-a-new-api/generate-your-client',
+            'add-a-new-api/api-documentation-guidelines',
+          ],
         },
         'add-a-new-language',
         {

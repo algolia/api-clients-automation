@@ -9,7 +9,6 @@
     organizationName: 'Algolia',
     projectName: 'Algolia API clients automation',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'throw',
 
     presets: [
       [
@@ -96,5 +95,11 @@
           copyright: `Copyright © ${new Date().getFullYear()} Algolia | Built with Docusaurus.`,
         },
       }),
+    markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'throw',
+        onBrokenMarkdownImages: 'throw',
+      },
+    },
   }
 );

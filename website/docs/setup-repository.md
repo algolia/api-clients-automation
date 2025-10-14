@@ -7,6 +7,7 @@ title: Setup repository
 :::info
 
 Make sure to have:
+
 - [Docker installed so you don't have to install the tooling for every API clients](https://docs.docker.com/desktop/mac/install/)
 - [jq because it's nice](https://jqlang.github.io/jq/download/)
 
@@ -26,7 +27,7 @@ We use multiple docker images to simplify the build. There is [one base image](h
 yarn docker:setup
 ```
 
-## Tooling 
+## Tooling
 
 :::info
 

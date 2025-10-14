@@ -10,9 +10,9 @@
   --ifm-color-primary: #5468ff;
   --ifm-footer-background-color: #f5f5fa;
   --ifm-menu-color-background-active: var(--ifm-color-emphasis-200);
-  --ifm-font-family-base: Open Sans, system-ui, BlinkMacSystemFont,
-    -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-    Droid Sans, Helvetica Neue, sans-serif;
+  --ifm-font-family-base:
+    Open Sans, system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 html[data-theme='dark'] {
