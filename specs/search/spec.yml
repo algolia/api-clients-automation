@@ -156,7 +156,7 @@ tags:
       Records are individual items in your index.
       When they match a search query, they're returned as search results, in the order determined by your ranking.
       Records are schemaless JSON objects.
-      When adding or updating many records, check the [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+      When adding or updating many records, check the [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
       url: https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data
       description: Prepare your records.

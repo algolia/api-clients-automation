@@ -12,7 +12,7 @@ post:
     - Actions are applied in the order they're specified.
     - Actions are equivalent to the individual API requests of the same name.
 
-    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    This operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   x-codegen-request-body-name: batchWriteParams

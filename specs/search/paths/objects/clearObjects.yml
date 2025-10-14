@@ -7,7 +7,7 @@ post:
   summary: Delete all records from an index
   description: |
     Deletes only the records from an index while keeping settings, synonyms, and rules.
-    This operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+    This operation is resource-intensive and subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:

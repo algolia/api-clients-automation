@@ -9,7 +9,7 @@ get:
 
     - Logs are held for the last seven days.
     - Up to 1,000 API requests per server are logged.
-    - This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/17245378392977-How-does-Algolia-count-records-and-operations) but doesn't appear in the logs itself.
+    - This request counts towards your [operations quota](https://support.algolia.com/hc/articles/17245378392977-How-does-Algolia-count-records-and-operations) but doesn't appear in the logs itself.
   summary: Retrieve log entries
   parameters:
     - name: offset
