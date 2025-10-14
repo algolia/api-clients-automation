@@ -70,7 +70,7 @@ For full documentation, visit the **[online documentation](https://api-clients-a
 
 ## ❓ Troubleshooting
 
-Encountering an issue with the API clients? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers to the most common issues and gotchas with the client.
+Encountering an issue with the API clients? Before reaching out to support, we recommend heading to our [FAQ](https://support.algolia.com/hc/sections/15061037630609-API-Client-FAQs) where you will find answers to the most common issues and gotchas with the client.
 
 You can also [open an issue on GitHub](https://github.com/algolia/api-clients-automation/issues/new/choose).
 
