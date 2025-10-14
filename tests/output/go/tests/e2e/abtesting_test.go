@@ -7,10 +7,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
 )
@@ -22,8 +21,10 @@ func createE2EAbtestingClient(t *testing.T) *abtesting.APIClient {
 	if appID == "" && os.Getenv("CI") != "true" {
 		err := godotenv.Load("../../../../.env")
 		require.NoError(t, err)
+
 		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
 	}
+
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client, err := abtesting.NewClient(appID, apiKey, abtesting.US)
 	require.NoError(t, err)
@@ -32,21 +33,30 @@ func createE2EAbtestingClient(t *testing.T) *abtesting.APIClient {
 }
 
 func TestAbtestingE2E_ListABTests(t *testing.T) {
+	t.Parallel()
 	t.Run("listABTests with parameters", func(t *testing.T) {
+		t.Parallel()
+
 		client := createE2EAbtestingClient(t)
-		res, err := client.ListABTests(client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix("cts_e2e ab").WithIndexSuffix("t"))
+		res, err := client.ListABTests(
+			client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix("cts_e2e ab").WithIndexSuffix("t"),
+		)
 		require.NoError(t, err)
+
 		_ = res
 
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
 
 		var rawBodyMap any
+
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
 		expectedBodyRaw := `{"abtests":[{"abTestID":85635,"createdAt":"2024-05-13T10:12:27.739233Z","endAt":"2124-05-13T00:00:00Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"this abtest is used for api client automation tests and will expire in 2124","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}`
+
 		var expectedBody any
+
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 

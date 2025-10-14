@@ -7,10 +7,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
 )
@@ -22,8 +21,10 @@ func createE2ESuggestionsClient(t *testing.T) *suggestions.APIClient {
 	if appID == "" && os.Getenv("CI") != "true" {
 		err := godotenv.Load("../../../../.env")
 		require.NoError(t, err)
+
 		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
 	}
+
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client, err := suggestions.NewClient(appID, apiKey, suggestions.US)
 	require.NoError(t, err)
@@ -32,22 +33,29 @@ func createE2ESuggestionsClient(t *testing.T) *suggestions.APIClient {
 }
 
 func TestSuggestionsE2E_GetConfig(t *testing.T) {
+	t.Parallel()
 	t.Run("Retrieve QS config e2e", func(t *testing.T) {
+		t.Parallel()
+
 		client := createE2ESuggestionsClient(t)
 		res, err := client.GetConfig(client.NewApiGetConfigRequest(
 			"cts_e2e_browse_query_suggestions"))
 		require.NoError(t, err)
+
 		_ = res
 
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
 
 		var rawBodyMap any
+
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
 		expectedBodyRaw := `{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}`
+
 		var expectedBody any
+
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 

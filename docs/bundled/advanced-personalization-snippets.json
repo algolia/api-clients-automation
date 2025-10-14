@@ -17,7 +17,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
       "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
-      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overriden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overridden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",

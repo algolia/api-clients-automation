@@ -21,8 +21,8 @@ func deleteMultipleIndices() {
 	}
 
 	// Primary indices don't have a `primary` key
-	primaryIndices := make([]search.FetchedIndex, len(indices.Items))
-	replicaIndices := make([]search.FetchedIndex, len(indices.Items))
+	primaryIndices := make([]search.FetchedIndex, 0, len(indices.Items))
+	replicaIndices := make([]search.FetchedIndex, 0, len(indices.Items))
 
 	for _, index := range indices.Items {
 		if index.Primary == nil {
@@ -34,7 +34,7 @@ func deleteMultipleIndices() {
 
 	// Delete primary indices first
 	if len(primaryIndices) > 0 {
-		requests := make([]search.MultipleBatchRequest, len(primaryIndices))
+		requests := make([]search.MultipleBatchRequest, 0, len(primaryIndices))
 
 		for _, index := range primaryIndices {
 			requests = append(requests, search.MultipleBatchRequest{
@@ -55,7 +55,7 @@ func deleteMultipleIndices() {
 
 	// Now, delete replica indices
 	if len(replicaIndices) > 0 {
-		requests := make([]search.MultipleBatchRequest, len(primaryIndices))
+		requests := make([]search.MultipleBatchRequest, 0, len(primaryIndices))
 
 		for _, index := range primaryIndices {
 			requests = append(requests, search.MultipleBatchRequest{

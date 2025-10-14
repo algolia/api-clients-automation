@@ -58,7 +58,7 @@ describe('customGet', () => {
 
   test('requestOptions should be escaped too', async () => {
     const req = (await client.customGet(
-      { path: 'test/all', parameters: { query: 'to be overriden' } },
+      { path: 'test/all', parameters: { query: 'to be overridden' } },
       {
         queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },
         headers: { 'x-header-1': 'spaces are left alone' },

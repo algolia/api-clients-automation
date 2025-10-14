@@ -2491,11 +2491,16 @@ paths:
 
             response, err :=
             client.ScheduleABTest(client.NewApiScheduleABTestRequest(
+              abtesting.NewEmptyScheduleABTestsRequest().
+                SetEndAt("2022-12-31T00:00:00.000Z").
+                SetScheduledAt("2022-11-31T00:00:00.000Z").
+                SetName("myABTest").
+                SetVariants(
+                  []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+                    abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+                    abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+            ))
 
-              abtesting.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetVariants(
-                []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-                  abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
             if err != nil {
               // handle the eventual error
               panic(err)

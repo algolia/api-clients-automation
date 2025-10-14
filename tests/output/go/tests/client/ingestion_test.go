@@ -3,13 +3,11 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
@@ -17,6 +15,8 @@ import (
 )
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
@@ -32,14 +32,21 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// can handle HTML error
+// can handle HTML error.
 func TestIngestionapi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *ingestion.APIClient
-	var cfg ingestion.IngestionConfiguration
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
@@ -57,10 +64,13 @@ func TestIngestionapi0(t *testing.T) {
 	require.EqualError(t, err, "API error [429] Too Many Requests")
 }
 
-// calls api with default read timeouts
+// calls api with default read timeouts.
 func TestIngestionapi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -71,10 +81,13 @@ func TestIngestionapi1(t *testing.T) {
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
 }
 
-// calls api with default write timeouts
+// calls api with default write timeouts.
 func TestIngestionapi2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -85,14 +98,21 @@ func TestIngestionapi2(t *testing.T) {
 	require.Equal(t, int64(25000), echo.Timeout.Milliseconds())
 }
 
-// can leave call opened for a long time
+// can leave call opened for a long time.
 func TestIngestionapi3(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *ingestion.APIClient
-	var cfg ingestion.IngestionConfiguration
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
@@ -113,10 +133,13 @@ func TestIngestionapi3(t *testing.T) {
 	require.JSONEq(t, `{"message":"OK"}`, string(rawBody))
 }
 
-// endpoint level timeout
+// endpoint level timeout.
 func TestIngestionapi4(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -128,10 +151,13 @@ func TestIngestionapi4(t *testing.T) {
 	require.Equal(t, int64(180000), echo.Timeout.Milliseconds())
 }
 
-// can override endpoint level timeout
+// can override endpoint level timeout.
 func TestIngestionapi5(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -143,40 +169,57 @@ func TestIngestionapi5(t *testing.T) {
 	require.Equal(t, int64(3456), echo.Timeout.Milliseconds())
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestIngestioncommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestIngestioncommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createIngestionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// uses the correct region
+// uses the correct region.
 func TestIngestionparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *ingestion.APIClient
-	var cfg ingestion.IngestionConfiguration
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
@@ -195,14 +238,21 @@ func TestIngestionparameters0(t *testing.T) {
 	require.Equal(t, "data.us.algolia.com", echo.Host)
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestIngestionparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *ingestion.APIClient
-	var cfg ingestion.IngestionConfiguration
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
@@ -217,14 +267,21 @@ func TestIngestionparameters1(t *testing.T) {
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
-// switch API key
+// switch API key.
 func TestIngestionsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *ingestion.APIClient
-	var cfg ingestion.IngestionConfiguration
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{

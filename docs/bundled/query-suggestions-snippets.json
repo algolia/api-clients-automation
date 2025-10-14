@@ -13,7 +13,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "var response = await client.CustomGetAsync(\"test/minimal\");",
       "allow get method for a custom path with all parameters": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters with space\" } }\n);",
-      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overriden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
+      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overridden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "var response = await client.CustomPostAsync(\"test/minimal\");",
@@ -60,10 +60,10 @@
   "dart": {},
   "go": {
     "import": {
-      "default": "import suggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
+      "default": "import (\n\tsuggestions \"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions\""
     },
     "createConfig": {
-      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.CreateConfig(client.NewApiCreateConfigRequest(\n\n  suggestions.NewEmptyConfigurationWithIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        {\"facetA\", \"facetB\"},\n        {\"facetC\"},\n      })}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -72,20 +72,20 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"to be overriden\"}), suggestions.WithQueryParam(\"query\", \"parameters with space\"), suggestions.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), suggestions.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\",\n).WithParameters(map[string]any{\"query\": \"to be overridden\"}), suggestions.WithQueryParam(\"query\", \"parameters with space\"), suggestions.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), suggestions.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), suggestions.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customPut": {
       "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -110,7 +110,7 @@
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "updateConfig": {
-      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        []string{\"facetA\", \"facetB\"},\n        []string{\"facetC\"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(\n  \"<YOUR_INDEX_NAME>\",\n  suggestions.NewEmptyConfiguration().SetSourceIndices(\n    []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName(\"<YOUR_INDEX_NAME>\").SetFacets(\n      []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute(\"test\")}).SetGenerate(\n      [][]string{\n        {\"facetA\", \"facetB\"},\n        {\"facetC\"},\n      })}).SetLanguages(suggestions.ArrayOfStringAsLanguages(\n    []string{\"french\"})).SetExclude(\n    []string{\"test\"})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "init": {
       "default": "client, err := suggestions.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", suggestions.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
@@ -130,7 +130,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
       "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
-      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overriden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
@@ -188,7 +188,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
       "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
-      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overriden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overridden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
@@ -246,7 +246,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "var response = client.customGet(path = \"test/minimal\")",
       "allow get method for a custom path with all parameters": "var response = client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
-      "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overriden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
+      "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overridden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "var response = client.customPost(path = \"test/minimal\")",
@@ -304,7 +304,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
       "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
-      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overriden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
@@ -362,7 +362,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "response = client.custom_get(\n    path=\"test/minimal\",\n)",
       "allow get method for a custom path with all parameters": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters with space\",\n    },\n)",
-      "requestOptions should be escaped too": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"to be overriden\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-header-1\":\"spaces are left alone\"}\"\"\"),\n        \"query_parameters\": loads(\n            \"\"\"{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}\"\"\"\n        ),\n    },\n)"
+      "requestOptions should be escaped too": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"to be overridden\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-header-1\":\"spaces are left alone\"}\"\"\"),\n        \"query_parameters\": loads(\n            \"\"\"{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}\"\"\"\n        ),\n    },\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "response = client.custom_post(\n    path=\"test/minimal\",\n)",
@@ -420,7 +420,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
       "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
-      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overriden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overridden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
@@ -478,7 +478,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
       "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
-      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overriden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overridden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -536,7 +536,7 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "let response = try await client.customGet(path: \"test/minimal\")",
       "allow get method for a custom path with all parameters": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters with space\")]\n)",
-      "requestOptions should be escaped too": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"to be overriden\")],\n    requestOptions: RequestOptions(\n        headers: [\"x-header-1\": \"spaces are left alone\"],\n\n        queryParameters: [\"query\": \"parameters with space\", \"and an array\": [\"array\", \"with spaces\"]]\n    )\n)"
+      "requestOptions should be escaped too": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"to be overridden\")],\n    requestOptions: RequestOptions(\n        headers: [\"x-header-1\": \"spaces are left alone\"],\n\n        queryParameters: [\"query\": \"parameters with space\", \"and an array\": [\"array\", \"with spaces\"]]\n    )\n)"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "let response = try await client.customPost(path: \"test/minimal\")",

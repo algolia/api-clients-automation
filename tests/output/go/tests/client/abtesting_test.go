@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
@@ -16,6 +14,8 @@ import (
 )
 
 func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
@@ -31,40 +31,57 @@ func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestAbtestingcommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAbtestingClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestAbtestingcommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAbtestingClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// fallbacks to the alias when region is not given
+// fallbacks to the alias when region is not given.
 func TestAbtestingparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtesting.APIClient
-	var cfg abtesting.AbtestingConfiguration
+
+	var (
+		client *abtesting.APIClient
+		cfg    abtesting.AbtestingConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtesting.AbtestingConfiguration{
@@ -82,14 +99,21 @@ func TestAbtestingparameters0(t *testing.T) {
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
 
-// uses the correct region
+// uses the correct region.
 func TestAbtestingparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtesting.APIClient
-	var cfg abtesting.AbtestingConfiguration
+
+	var (
+		client *abtesting.APIClient
+		cfg    abtesting.AbtestingConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtesting.AbtestingConfiguration{
@@ -108,14 +132,21 @@ func TestAbtestingparameters1(t *testing.T) {
 	require.Equal(t, "analytics.us.algolia.com", echo.Host)
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestAbtestingparameters2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtesting.APIClient
-	var cfg abtesting.AbtestingConfiguration
+
+	var (
+		client *abtesting.APIClient
+		cfg    abtesting.AbtestingConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtesting.AbtestingConfiguration{
@@ -130,14 +161,21 @@ func TestAbtestingparameters2(t *testing.T) {
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
-// switch API key
+// switch API key.
 func TestAbtestingsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtesting.APIClient
-	var cfg abtesting.AbtestingConfiguration
+
+	var (
+		client *abtesting.APIClient
+		cfg    abtesting.AbtestingConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtesting.AbtestingConfiguration{

@@ -1,6 +1,8 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
 
 func reduceLabelsToFilters(_ []string) (search.OptionalFilters, error) {
 	return search.OptionalFilters{}, nil // Implement your logic here

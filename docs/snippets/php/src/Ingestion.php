@@ -517,7 +517,7 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->customGet(
             'test/all',
-            ['query' => 'to be overriden',
+            ['query' => 'to be overridden',
             ],
             [
                 'queryParameters' => [

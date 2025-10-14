@@ -640,7 +640,7 @@ class SnippetSearchClient {
     // Call the API
     var response = client.customGet(
       path = "test/all",
-      parameters = mapOf("query" to "to be overriden"),
+      parameters = mapOf("query" to "to be overridden"),
       requestOptions = RequestOptions(
         urlParameters = buildMap {
           put("query", "parameters with space")

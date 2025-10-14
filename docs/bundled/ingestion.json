@@ -3376,7 +3376,7 @@
       },
       "Event": {
         "type": "object",
-        "description": "An event describe a step of the task execution flow..",
+        "description": "An event describe a step of the task execution flow.",
         "additionalProperties": false,
         "properties": {
           "eventID": {

@@ -2567,7 +2567,15 @@ paths:
             // Call the API
 
             response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-              "<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
+              "<YOUR_INDEX_NAME>",
+              map[string]any{
+                "name":        "Black T-shirt",
+                "color":       "#000000||black",
+                "availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+                "objectID":    "myID",
+              },
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4975,7 +4983,12 @@ paths:
             response, err := client.Batch(client.NewApiBatchRequest(
               "<YOUR_INDEX_NAME>",
               search.NewEmptyBatchWriteParams().SetRequests(
-                []search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
+                []search.BatchRequest{
+                  *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}),
+                  *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"}),
+                }),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5427,7 +5440,11 @@ paths:
             client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
               search.NewEmptyBatchParams().SetRequests(
-                []search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
+                []search.MultipleBatchRequest{
+                  *search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>"),
+                }),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6388,7 +6405,11 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
+              search.NewEmptyIndexSettings().
+                SetPaginationLimitedTo(10).
+                SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false"))),
+            ).WithForwardToReplicas(true))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6981,7 +7002,7 @@ paths:
             response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
               "<YOUR_INDEX_NAME>", "id1",
               search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-                []string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
+                []string{"car", "vehicle", "auto"})).WithForwardToReplicas(true))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -7597,7 +7618,7 @@ paths:
             client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
               "<YOUR_INDEX_NAME>",
               []search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-                []string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
+                []string{"car", "vehicle", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
                 []string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
             if err != nil {
               // handle the eventual error
@@ -12200,10 +12221,14 @@ paths:
             client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
               search.DictionaryType("plurals"),
               search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-                []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-                  search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-                    []string{"believe", "algolia"}).SetDecomposition(
-                    []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
+                []search.BatchDictionaryEntriesRequest{
+                  *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+                    search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
+                      []string{"believe", "algolia"}).SetDecomposition(
+                      []string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled"))),
+                }),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -22394,10 +22419,10 @@ components:
             Whether the filter is disjunctive or conjunctive.
 
 
-            If true the filter has multiple matches, multiple occurences are
+            If true the filter has multiple matches, multiple occurrences are
             combined with the logical `OR` operation.
 
-            If false, multiple occurences are combined with the logical `AND`
+            If false, multiple occurrences are combined with the logical `AND`
             operation.
       required:
         - facet
@@ -23123,7 +23148,7 @@ components:
       description: Date of publish RFC 3339 format.
     Event:
       type: object
-      description: An event describe a step of the task execution flow..
+      description: An event describe a step of the task execution flow.
       additionalProperties: false
       properties:
         eventID:

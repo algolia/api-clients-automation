@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
+) // IMPORT<
 
 func SnippetForBatchRecommendRulesOfRecommend() {
 	/*
@@ -34,6 +34,7 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfRecommend() {
 	/*
 	   Snippet for the customDelete method.
@@ -62,6 +63,7 @@ func SnippetForCustomDeleteOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfRecommend1() {
 	/*
 	   Snippet for the customDelete method.
@@ -90,6 +92,7 @@ func SnippetForCustomDeleteOfRecommend1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfRecommend() {
 	/*
 	   Snippet for the customGet method.
@@ -118,6 +121,7 @@ func SnippetForCustomGetOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfRecommend1() {
 	/*
 	   Snippet for the customGet method.
@@ -146,6 +150,7 @@ func SnippetForCustomGetOfRecommend1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfRecommend2() {
 	/*
 	   Snippet for the customGet method.
@@ -163,7 +168,8 @@ func SnippetForCustomGetOfRecommend2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), recommend.WithQueryParam("query", "parameters with space"), recommend.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), recommend.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -175,6 +181,7 @@ func SnippetForCustomGetOfRecommend2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend() {
 	/*
 	   Snippet for the customPost method.
@@ -203,6 +210,7 @@ func SnippetForCustomPostOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend1() {
 	/*
 	   Snippet for the customPost method.
@@ -231,6 +239,7 @@ func SnippetForCustomPostOfRecommend1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend2() {
 	/*
 	   Snippet for the customPost method.
@@ -248,7 +257,8 @@ func SnippetForCustomPostOfRecommend2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -259,6 +269,7 @@ func SnippetForCustomPostOfRecommend2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend3() {
 	/*
 	   Snippet for the customPost method.
@@ -276,7 +287,8 @@ func SnippetForCustomPostOfRecommend3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,6 +299,7 @@ func SnippetForCustomPostOfRecommend3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend4() {
 	/*
 	   Snippet for the customPost method.
@@ -304,7 +317,8 @@ func SnippetForCustomPostOfRecommend4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -315,6 +329,7 @@ func SnippetForCustomPostOfRecommend4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend5() {
 	/*
 	   Snippet for the customPost method.
@@ -332,7 +347,8 @@ func SnippetForCustomPostOfRecommend5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -343,6 +359,7 @@ func SnippetForCustomPostOfRecommend5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend6() {
 	/*
 	   Snippet for the customPost method.
@@ -360,7 +377,8 @@ func SnippetForCustomPostOfRecommend6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,6 +389,7 @@ func SnippetForCustomPostOfRecommend6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend7() {
 	/*
 	   Snippet for the customPost method.
@@ -388,7 +407,8 @@ func SnippetForCustomPostOfRecommend7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -399,6 +419,7 @@ func SnippetForCustomPostOfRecommend7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend8() {
 	/*
 	   Snippet for the customPost method.
@@ -416,7 +437,8 @@ func SnippetForCustomPostOfRecommend8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -428,6 +450,7 @@ func SnippetForCustomPostOfRecommend8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend9() {
 	/*
 	   Snippet for the customPost method.
@@ -445,7 +468,8 @@ func SnippetForCustomPostOfRecommend9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -457,6 +481,7 @@ func SnippetForCustomPostOfRecommend9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfRecommend10() {
 	/*
 	   Snippet for the customPost method.
@@ -474,7 +499,8 @@ func SnippetForCustomPostOfRecommend10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), recommend.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -486,6 +512,7 @@ func SnippetForCustomPostOfRecommend10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfRecommend() {
 	/*
 	   Snippet for the customPut method.
@@ -514,6 +541,7 @@ func SnippetForCustomPutOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfRecommend1() {
 	/*
 	   Snippet for the customPut method.
@@ -542,6 +570,7 @@ func SnippetForCustomPutOfRecommend1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteRecommendRuleOfRecommend() {
 	/*
 	   Snippet for the deleteRecommendRule method.
@@ -570,6 +599,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendRuleOfRecommend() {
 	/*
 	   Snippet for the getRecommendRule method.
@@ -598,6 +628,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendStatusOfRecommend() {
 	/*
 	   Snippet for the getRecommendStatus method.
@@ -626,6 +657,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -657,6 +689,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend1() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -688,6 +721,7 @@ func SnippetForGetRecommendationsOfRecommend1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend2() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -723,6 +757,7 @@ func SnippetForGetRecommendationsOfRecommend2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend3() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -754,6 +789,7 @@ func SnippetForGetRecommendationsOfRecommend3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend4() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -789,6 +825,7 @@ func SnippetForGetRecommendationsOfRecommend4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend5() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -821,6 +858,7 @@ func SnippetForGetRecommendationsOfRecommend5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend6() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -861,6 +899,7 @@ func SnippetForGetRecommendationsOfRecommend6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRecommendationsOfRecommend7() {
 	/*
 	   Snippet for the getRecommendations method.
@@ -892,6 +931,7 @@ func SnippetForGetRecommendationsOfRecommend7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchRecommendRulesOfRecommend() {
 	/*
 	   Snippet for the searchRecommendRules method.
@@ -920,6 +960,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfRecommend() {
 	/*
 	   Snippet for the setClientApiKey method.

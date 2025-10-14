@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring"
+) // IMPORT<
 
 func SnippetForCustomDeleteOfMonitoring() {
 	/*
@@ -34,6 +34,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfMonitoring1() {
 	/*
 	   Snippet for the customDelete method.
@@ -62,6 +63,7 @@ func SnippetForCustomDeleteOfMonitoring1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfMonitoring() {
 	/*
 	   Snippet for the customGet method.
@@ -90,6 +92,7 @@ func SnippetForCustomGetOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfMonitoring1() {
 	/*
 	   Snippet for the customGet method.
@@ -118,6 +121,7 @@ func SnippetForCustomGetOfMonitoring1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfMonitoring2() {
 	/*
 	   Snippet for the customGet method.
@@ -135,7 +139,8 @@ func SnippetForCustomGetOfMonitoring2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), monitoring.WithQueryParam("query", "parameters with space"), monitoring.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), monitoring.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -147,6 +152,7 @@ func SnippetForCustomGetOfMonitoring2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring() {
 	/*
 	   Snippet for the customPost method.
@@ -175,6 +181,7 @@ func SnippetForCustomPostOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring1() {
 	/*
 	   Snippet for the customPost method.
@@ -203,6 +210,7 @@ func SnippetForCustomPostOfMonitoring1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring2() {
 	/*
 	   Snippet for the customPost method.
@@ -220,7 +228,8 @@ func SnippetForCustomPostOfMonitoring2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -231,6 +240,7 @@ func SnippetForCustomPostOfMonitoring2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring3() {
 	/*
 	   Snippet for the customPost method.
@@ -248,7 +258,8 @@ func SnippetForCustomPostOfMonitoring3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -259,6 +270,7 @@ func SnippetForCustomPostOfMonitoring3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring4() {
 	/*
 	   Snippet for the customPost method.
@@ -276,7 +288,8 @@ func SnippetForCustomPostOfMonitoring4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,6 +300,7 @@ func SnippetForCustomPostOfMonitoring4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring5() {
 	/*
 	   Snippet for the customPost method.
@@ -304,7 +318,8 @@ func SnippetForCustomPostOfMonitoring5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -315,6 +330,7 @@ func SnippetForCustomPostOfMonitoring5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring6() {
 	/*
 	   Snippet for the customPost method.
@@ -332,7 +348,8 @@ func SnippetForCustomPostOfMonitoring6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -343,6 +360,7 @@ func SnippetForCustomPostOfMonitoring6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring7() {
 	/*
 	   Snippet for the customPost method.
@@ -360,7 +378,8 @@ func SnippetForCustomPostOfMonitoring7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,6 +390,7 @@ func SnippetForCustomPostOfMonitoring7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring8() {
 	/*
 	   Snippet for the customPost method.
@@ -388,7 +408,8 @@ func SnippetForCustomPostOfMonitoring8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -400,6 +421,7 @@ func SnippetForCustomPostOfMonitoring8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring9() {
 	/*
 	   Snippet for the customPost method.
@@ -417,7 +439,8 @@ func SnippetForCustomPostOfMonitoring9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -429,6 +452,7 @@ func SnippetForCustomPostOfMonitoring9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfMonitoring10() {
 	/*
 	   Snippet for the customPost method.
@@ -446,7 +470,8 @@ func SnippetForCustomPostOfMonitoring10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), monitoring.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -458,6 +483,7 @@ func SnippetForCustomPostOfMonitoring10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfMonitoring() {
 	/*
 	   Snippet for the customPut method.
@@ -486,6 +512,7 @@ func SnippetForCustomPutOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfMonitoring1() {
 	/*
 	   Snippet for the customPut method.
@@ -514,6 +541,7 @@ func SnippetForCustomPutOfMonitoring1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClusterIncidentsOfMonitoring() {
 	/*
 	   Snippet for the getClusterIncidents method.
@@ -542,6 +570,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClusterStatusOfMonitoring() {
 	/*
 	   Snippet for the getClusterStatus method.
@@ -570,6 +599,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetIncidentsOfMonitoring() {
 	/*
 	   Snippet for the getIncidents method.
@@ -597,6 +627,7 @@ func SnippetForGetIncidentsOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetIndexingTimeOfMonitoring() {
 	/*
 	   Snippet for the getIndexingTime method.
@@ -625,6 +656,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetLatencyOfMonitoring() {
 	/*
 	   Snippet for the getLatency method.
@@ -653,6 +685,7 @@ func SnippetForGetLatencyOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetMetricsOfMonitoring() {
 	/*
 	   Snippet for the getMetrics method.
@@ -681,6 +714,7 @@ func SnippetForGetMetricsOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetReachabilityOfMonitoring() {
 	/*
 	   Snippet for the getReachability method.
@@ -709,6 +743,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetServersOfMonitoring() {
 	/*
 	   Snippet for the getServers method.
@@ -736,6 +771,7 @@ func SnippetForGetServersOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetStatusOfMonitoring() {
 	/*
 	   Snippet for the getStatus method.
@@ -763,6 +799,7 @@ func SnippetForGetStatusOfMonitoring() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfMonitoring() {
 	/*
 	   Snippet for the setClientApiKey method.

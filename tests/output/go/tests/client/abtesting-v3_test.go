@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	abtestingV3 "github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting-v3"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
@@ -16,6 +14,8 @@ import (
 )
 
 func createAbtestingV3Client(t *testing.T) (*abtestingV3.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := abtestingV3.AbtestingV3Configuration{
 		Configuration: transport.Configuration{
@@ -31,40 +31,57 @@ func createAbtestingV3Client(t *testing.T) (*abtestingV3.APIClient, *tests.EchoR
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestAbtestingV3commonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAbtestingV3Client(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; AbtestingV3 (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; AbtestingV3 (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestAbtestingV3commonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAbtestingV3Client(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// uses the correct region
+// uses the correct region.
 func TestAbtestingV3parameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtestingV3.APIClient
-	var cfg abtestingV3.AbtestingV3Configuration
+
+	var (
+		client *abtestingV3.APIClient
+		cfg    abtestingV3.AbtestingV3Configuration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtestingV3.AbtestingV3Configuration{
@@ -83,14 +100,21 @@ func TestAbtestingV3parameters0(t *testing.T) {
 	require.Equal(t, "analytics.us.algolia.com", echo.Host)
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestAbtestingV3parameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtestingV3.APIClient
-	var cfg abtestingV3.AbtestingV3Configuration
+
+	var (
+		client *abtestingV3.APIClient
+		cfg    abtestingV3.AbtestingV3Configuration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtestingV3.AbtestingV3Configuration{
@@ -105,14 +129,21 @@ func TestAbtestingV3parameters1(t *testing.T) {
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
-// switch API key
+// switch API key.
 func TestAbtestingV3setClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *abtestingV3.APIClient
-	var cfg abtestingV3.AbtestingV3Configuration
+
+	var (
+		client *abtestingV3.APIClient
+		cfg    abtestingV3.AbtestingV3Configuration
+	)
+
 	_ = client
 	_ = echo
 	cfg = abtestingV3.AbtestingV3Configuration{

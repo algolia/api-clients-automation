@@ -140,7 +140,7 @@ class AbtestingTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
-      parameters = Some(Map("query" -> "to be overriden")),
+      parameters = Some(Map("query" -> "to be overridden")),
       requestOptions = Some(
         RequestOptions
           .builder()

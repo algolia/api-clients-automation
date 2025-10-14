@@ -1132,7 +1132,12 @@ paths:
             response, err := client.Push(client.NewApiPushRequest(
               "<YOUR_INDEX_NAME>",
               ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+                []ingestion.PushTaskRecords{
+                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+                }),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1731,9 +1736,13 @@ paths:
 
             response, err :=
             client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
+              ingestion.NewEmptyAuthenticationCreate().
+                SetType(ingestion.AuthenticationType("oauth")).
+                SetName("authName").
+                SetInput(ingestion.AuthOAuthAsAuthInput(
+                  ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+            ))
 
-              ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-                ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4872,11 +4881,20 @@ paths:
 
             response, err :=
             client.CreateSource(client.NewApiCreateSourceRequest(
+              ingestion.NewEmptySourceCreate().
+                SetType(ingestion.SourceType("commercetools")).
+                SetName("sourceName").
+                SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+                  ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+                    []string{"myStore"}).SetLocales(
+                    []string{
+                      "de",
+                    }).
+                    SetUrl("http://commercetools.com").
+                    SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).
+                SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+            ))
 
-              ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-                ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-                  []string{"myStore"}).SetLocales(
-                  []string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5237,10 +5255,21 @@ paths:
 
             response, err :=
             client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
-              ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-                ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-                  []string{"myStore"}).SetLocales(
-                  []string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+              ingestion.NewEmptySourceCreate().
+                SetType(ingestion.SourceType("commercetools")).
+                SetName("sourceName").
+                SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+                  ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+                    []string{"myStore"}).SetLocales(
+                    []string{
+                      "de",
+                    }).
+                    SetUrl("http://commercetools.com").SetProjectKey("keyID"))).
+                SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+            ),
+
+            )
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -9544,7 +9573,12 @@ paths:
             response, err := client.PushTask(client.NewApiPushTaskRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-                []ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+                []ingestion.PushTaskRecords{
+                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+                  *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+                }),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -10622,9 +10656,14 @@ paths:
 
             response, err :=
             client.CreateTaskV1(client.NewApiCreateTaskV1Request(
+              ingestion.NewEmptyTaskCreateV1().
+                SetSourceID("search").
+                SetDestinationID("destinationName").
+                SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+                  ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).
+                SetAction(ingestion.ActionType("replace")),
+            ))
 
-              ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-                ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -12936,7 +12975,9 @@ paths:
             client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
               ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
+                ingestion.NewEmptyTransformationCode().
+                  SetCode("foo"),
+              )).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -13234,9 +13275,13 @@ paths:
 
             response, err :=
             client.TryTransformation(client.NewApiTryTransformationRequest(
+              ingestion.NewEmptyTransformationTry().
+                SetType(ingestion.TransformationType("code")).
+                SetInput(ingestion.TransformationCodeAsTransformationInput(
+                  ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+                SetSampleRecord(map[string]any{"bar": "baz"}),
+            ))
 
-              ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14076,7 +14121,9 @@ paths:
             client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
               ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
+                ingestion.NewEmptyTransformationCode().
+                  SetCode("foo"),
+              )).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14618,8 +14665,13 @@ paths:
             response, err :=
             client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-                ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
+              ingestion.NewEmptyTransformationTry().
+                SetType(ingestion.TransformationType("code")).
+                SetInput(ingestion.TransformationCodeAsTransformationInput(
+                  ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+                SetSampleRecord(map[string]any{"bar": "baz"}),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -16336,7 +16388,7 @@ components:
       description: Date of publish RFC 3339 format.
     Event:
       type: object
-      description: An event describe a step of the task execution flow..
+      description: An event describe a step of the task execution flow.
       additionalProperties: false
       properties:
         eventID:

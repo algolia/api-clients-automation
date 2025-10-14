@@ -7,10 +7,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
 )
@@ -22,8 +21,10 @@ func createE2ERecommendClient(t *testing.T) *recommend.APIClient {
 	if appID == "" && os.Getenv("CI") != "true" {
 		err := godotenv.Load("../../../../.env")
 		require.NoError(t, err)
+
 		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
 	}
+
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client, err := recommend.NewClient(appID, apiKey)
 	require.NoError(t, err)
@@ -32,7 +33,10 @@ func createE2ERecommendClient(t *testing.T) *recommend.APIClient {
 }
 
 func TestRecommendE2E_GetRecommendations(t *testing.T) {
+	t.Parallel()
 	t.Run("get recommendations with e2e to check oneOf model", func(t *testing.T) {
+		t.Parallel()
+
 		client := createE2ERecommendClient(t)
 		res, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
@@ -40,17 +44,21 @@ func TestRecommendE2E_GetRecommendations(t *testing.T) {
 				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
 					recommend.NewEmptyRelatedQuery().SetIndexName("cts_e2e_browse").SetObjectID("Æon Flux").SetModel(recommend.RelatedModel("related-products")).SetThreshold(20.0).SetMaxRecommendations(2))})))
 		require.NoError(t, err)
+
 		_ = res
 
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
 
 		var rawBodyMap any
+
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
 		expectedBodyRaw := `{"results":[{"exhaustive":{"nbHits":true,"typo":true},"exhaustiveNbHits":true,"exhaustiveTypo":true,"index":"cts_e2e_browse","page":0,"nbHits":2,"nbPages":1,"hitsPerPage":2,"hits":[{"objectID":"The Transformers: The Movie","_highlightResult":{"genres":[{"matchLevel":"none","matchedWords":[],"value":"Animated"},{"matchLevel":"none","matchedWords":[],"value":"Action"},{"matchLevel":"none","matchedWords":[],"value":"Science Fiction"}],"href":{"matchLevel":"none","matchedWords":[],"value":"The_Transformers:_The_Movie"}},"_score":100.0,"cast":["Judd Nelson","Leonard Nimoy","Robert Stack","Orson Welles","Michael Bell","Eric Idle","Chris Latta","Peter Cullen","Frank Welker","Neil Ross","Paul Eiding"],"extract":"The Transformers: The Movie is a 1986 animated science fiction action film based on the Transformers television series. It was released in North America on August 8, 1986, and in the United Kingdom on December 12, 1986. It was co-produced and directed by Nelson Shin, who also produced the television series. The screenplay was written by Ron Friedman, who created Bionic Six a year later.","title":"The Transformers: The Movie","year":1986},{"objectID":"Treasure Planet","_score":90.56,"title":"Treasure Planet","year":2002}]}]}`
+
 		var expectedBody any
+
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 

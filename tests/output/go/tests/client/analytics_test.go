@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
@@ -16,6 +14,8 @@ import (
 )
 
 func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
@@ -31,40 +31,57 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestAnalyticscommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestAnalyticscommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// fallbacks to the alias when region is not given
+// fallbacks to the alias when region is not given.
 func TestAnalyticsparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *analytics.APIClient
-	var cfg analytics.AnalyticsConfiguration
+
+	var (
+		client *analytics.APIClient
+		cfg    analytics.AnalyticsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = analytics.AnalyticsConfiguration{
@@ -82,14 +99,21 @@ func TestAnalyticsparameters0(t *testing.T) {
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
 
-// uses the correct region
+// uses the correct region.
 func TestAnalyticsparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *analytics.APIClient
-	var cfg analytics.AnalyticsConfiguration
+
+	var (
+		client *analytics.APIClient
+		cfg    analytics.AnalyticsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = analytics.AnalyticsConfiguration{
@@ -108,14 +132,21 @@ func TestAnalyticsparameters1(t *testing.T) {
 	require.Equal(t, "analytics.de.algolia.com", echo.Host)
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestAnalyticsparameters2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *analytics.APIClient
-	var cfg analytics.AnalyticsConfiguration
+
+	var (
+		client *analytics.APIClient
+		cfg    analytics.AnalyticsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = analytics.AnalyticsConfiguration{
@@ -130,10 +161,13 @@ func TestAnalyticsparameters2(t *testing.T) {
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
-// getAverageClickPosition throws without index
+// getAverageClickPosition throws without index.
 func TestAnalyticsparameters3(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createAnalyticsClient(t)
 	_ = echo
@@ -142,14 +176,21 @@ func TestAnalyticsparameters3(t *testing.T) {
 	require.EqualError(t, err, "Parameter `index` is required when calling `GetClickPositions`.")
 }
 
-// switch API key
+// switch API key.
 func TestAnalyticssetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *analytics.APIClient
-	var cfg analytics.AnalyticsConfiguration
+
+	var (
+		client *analytics.APIClient
+		cfg    analytics.AnalyticsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = analytics.AnalyticsConfiguration{

@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring"
@@ -16,6 +14,8 @@ import (
 )
 
 func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
@@ -30,40 +30,57 @@ func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoReq
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestMonitoringcommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestMonitoringcommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// use the correct host
+// use the correct host.
 func TestMonitoringparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *monitoring.APIClient
-	var cfg monitoring.MonitoringConfiguration
+
+	var (
+		client *monitoring.APIClient
+		cfg    monitoring.MonitoringConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = monitoring.MonitoringConfiguration{
@@ -81,14 +98,21 @@ func TestMonitoringparameters0(t *testing.T) {
 	require.Equal(t, "status.algolia.com", echo.Host)
 }
 
-// switch API key
+// switch API key.
 func TestMonitoringsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *monitoring.APIClient
-	var cfg monitoring.MonitoringConfiguration
+
+	var (
+		client *monitoring.APIClient
+		cfg    monitoring.MonitoringConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = monitoring.MonitoringConfiguration{

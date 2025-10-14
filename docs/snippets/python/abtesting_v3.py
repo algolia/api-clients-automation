@@ -166,7 +166,7 @@ def snippet_for_custom_get2():
     response = client.custom_get(
         path="test/all",
         parameters={
-            "query": "to be overriden",
+            "query": "to be overridden",
         },
         request_options={
             "headers": loads("""{"x-header-1":"spaces are left alone"}"""),

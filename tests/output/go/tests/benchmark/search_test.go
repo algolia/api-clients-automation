@@ -2,25 +2,31 @@
 package benchmark
 
 import (
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
-// benchmark the search method
+// benchmark the search method.
 func TestSearchbenchmark0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -32,6 +38,7 @@ func TestSearchbenchmark0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
+
 	for i := 0; i < 2000; i++ {
 		res, err = client.Search(client.NewApiSearchRequest(
 

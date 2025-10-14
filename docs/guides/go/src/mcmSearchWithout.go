@@ -11,7 +11,7 @@ func mcmSearchWithout() {
 		return "", nil // Implement your logic here
 	}
 
-	getIndexingApiKeyFor := func(_ string) (string, error) {
+	getIndexingAPIKeyFor := func(_ string) (string, error) {
 		return "", nil // Implement your logic here
 	}
 
@@ -20,18 +20,21 @@ func mcmSearchWithout() {
 	appID, err := getAppIDFor("user42")
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
-	apiKey, err := getIndexingApiKeyFor("user42")
+	apiKey, err := getIndexingAPIKeyFor("user42")
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
 	client, err := search.NewClient(appID, apiKey)
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 

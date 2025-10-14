@@ -2759,12 +2759,18 @@ paths:
 
             response, err :=
             client.ScheduleABTest(client.NewApiScheduleABTestRequest(
+              abtestingV3.NewEmptyScheduleABTestsRequest().
+                SetEndAt("2022-12-31T00:00:00.000Z").
+                SetScheduledAt("2022-11-31T00:00:00.000Z").
+                SetName("myABTest").
+                SetMetrics(
+                  []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).
+                SetVariants(
+                  []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                    abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+                    abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+            ))
 
-              abtestingV3.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
-                []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).SetVariants(
-                []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-                  abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
             if err != nil {
               // handle the eventual error
               panic(err)

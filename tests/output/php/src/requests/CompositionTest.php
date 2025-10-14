@@ -111,7 +111,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
         $client = $this->getClient();
         $client->customGet(
             'test/all',
-            ['query' => 'to be overriden',
+            ['query' => 'to be overridden',
             ],
             [
                 'queryParameters' => [

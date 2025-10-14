@@ -7,10 +7,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
 )
@@ -22,8 +21,10 @@ func createE2ECompositionClient(t *testing.T) *composition.APIClient {
 	if appID == "" && os.Getenv("CI") != "true" {
 		err := godotenv.Load("../../../../.env")
 		require.NoError(t, err)
+
 		appID = os.Getenv("METIS_APPLICATION_ID")
 	}
+
 	apiKey := os.Getenv("METIS_API_KEY")
 	client, err := composition.NewClient(appID, apiKey)
 	require.NoError(t, err)
@@ -32,21 +33,28 @@ func createE2ECompositionClient(t *testing.T) *composition.APIClient {
 }
 
 func TestCompositionE2E_ListCompositions(t *testing.T) {
+	t.Parallel()
 	t.Run("listCompositions", func(t *testing.T) {
+		t.Parallel()
+
 		client := createE2ECompositionClient(t)
 		res, err := client.ListCompositions(client.NewApiListCompositionsRequest())
 		require.NoError(t, err)
+
 		_ = res
 
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
 
 		var rawBodyMap any
+
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
 		expectedBodyRaw := `{"items":[{"objectID":"id1","name":"my first composition","description":"the first ever composition from the client","behavior":{"injection":{"main":{"source":{"search":{"index":"cts_e2e_small"}}}}}}],"nbPages":1}`
+
 		var expectedBody any
+
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 

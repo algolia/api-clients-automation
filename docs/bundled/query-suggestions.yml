@@ -1326,8 +1326,9 @@ paths:
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
-                    []string{"facetA", "facetB"},
-                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
+                    {"facetA", "facetB"},
+                    {"facetC"},
+                  })}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
                 []string{"french"})).SetExclude(
                 []string{"test"})))
             if err != nil {
@@ -1964,8 +1965,9 @@ paths:
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("<YOUR_INDEX_NAME>").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
-                    []string{"facetA", "facetB"},
-                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
+                    {"facetA", "facetB"},
+                    {"facetC"},
+                  })}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
                 []string{"french"})).SetExclude(
                 []string{"test"})))
             if err != nil {
