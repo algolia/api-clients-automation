@@ -1,4 +1,6 @@
 func TestSearch_GenerateSecuredApiKey(t *testing.T) {
+  t.Parallel()
+
 	client, echo := createSearchClient(t)
 	_ = echo
 
@@ -18,6 +20,8 @@ func TestSearch_GenerateSecuredApiKey(t *testing.T) {
 }
 
 func TestSearch_GetSecuredApiKeyRemainingVaildity(t *testing.T) {
+  t.Parallel()
+
 	client, echo := createSearchClient(t)
 	_ = echo
 

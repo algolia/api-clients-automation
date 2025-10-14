@@ -11,7 +11,6 @@ import (
 	"strings"
   {{#isSearchClient}}
   "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
   "cmp"
   "crypto/hmac"
 	"crypto/sha256"
@@ -24,6 +23,7 @@ import (
   "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
 type config struct {
@@ -208,7 +208,7 @@ func (r requestOption) waitForApiKey() {}
 
 func (i iterableOption) waitForApiKey() {}
 
-// WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE)
+// WithApiKey necessary to know if an `update` operation has been processed, compare fields of the response with it. (optional - mandatory if operation is UPDATE).
 func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 	return waitForApiKeyOption(func(c *config) {
 		c.apiKey = apiKey
@@ -503,6 +503,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
   if res == nil {
     return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
   }
+  defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
 			return {{#returnType}}returnValue, {{/returnType}}c.decodeError(res, resBody)

@@ -11,16 +11,14 @@ import (
   "io"
   "net/http"
   "net/url"
-  "reflect"
   "regexp"
   "runtime"
-  "strings"
   "slices"
+  "strings"
   "time"
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 )
 
@@ -150,9 +148,26 @@ func getUserAgent() string {
   return fmt.Sprintf("Algolia for Go ({{{packageVersion}}}); Go (%s); {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}} ({{{packageVersion}}})", runtime.Version())
 }
 
-// AddDefaultHeader adds a new HTTP header to the default header in the request
+// AddDefaultHeader adds a new HTTP header to the default header in the request.
 func (c *APIClient) AddDefaultHeader(key string, value string) {
 	c.cfg.DefaultHeader[key] = value
+}
+
+// Allow modification of underlying config for alternate implementations and testing.
+// Caution: modifying the configuration while live can cause data races and potentially unwanted behavior.
+func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration {
+	return c.cfg
+}
+
+// Allow update of stored API key used to authenticate requests.
+func (c *APIClient) SetClientApiKey(apiKey string) error {
+  if c.cfg == nil {
+    return errors.New("client config is not set")
+  }
+	
+  c.cfg.ApiKey = apiKey
+
+  return nil
 }
 
 // callAPI do the request.
@@ -170,24 +185,7 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool, requ
 	return resp, body, nil
 }
 
-// Allow modification of underlying config for alternate implementations and testing
-// Caution: modifying the configuration while live can cause data races and potentially unwanted behavior
-func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration {
-	return c.cfg
-}
-
-// Allow update of stored API key used to authenticate requests.
-func (c *APIClient) SetClientApiKey(apiKey string) error {
-  if c.cfg == nil {
-    return errors.New("client config is not set")
-  }
-	
-  c.cfg.ApiKey = apiKey
-
-  return nil
-}
-
-// prepareRequest build the request
+// prepareRequest build the request.
 func (c *APIClient) prepareRequest(
 	ctx context.Context,
 	path string, method string,
@@ -222,7 +220,7 @@ func (c *APIClient) prepareRequest(
 	if body != nil {
 		bodyReader = body
 	}
-	req, err = http.NewRequest(method, url.String(), bodyReader)
+	req, err = http.NewRequestWithContext(ctx, method, url.String(), bodyReader)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create http request: %w", err)
 	}
@@ -272,8 +270,10 @@ func (c *APIClient) decode(v any, b []byte) error {
     } else {
       return errors.New("unknown type with GetActualInstance but no unmarshalObj.UnmarshalJSON defined")
     }
-  } else if err := json.Unmarshal(b, v); err != nil { // simple model
-    return fmt.Errorf("failed to unmarshal response body: %w", err)
+  } else { // simple model
+    if err := json.Unmarshal(b, v); err != nil {
+      return fmt.Errorf("failed to unmarshal response body: %w", err)
+    }
   }
 
   return nil
@@ -306,12 +306,12 @@ func (c *APIClient) decodeError(res *http.Response, body []byte) error {
   return apiErr
 }
 
-// Prevent trying to import "fmt"
+// Prevent trying to import "fmt".
 func reportError(format string, a ...any) error {
 	return fmt.Errorf(format, a...)
 }
 
-// Set request body from an any
+// Set request body from an any.
 func setBody(body any, c compression.Compression) (*bytes.Buffer, error) {
 	if body == nil {
 		return nil, nil
@@ -350,9 +350,9 @@ func setBody(body any, c compression.Compression) (*bytes.Buffer, error) {
 }
 
 type APIError struct {
-	Message string
-  Status int
-  AdditionalProperties map[string]any
+	Message string                      `json:"message"`
+  Status int                          `json:"status"`
+  AdditionalProperties map[string]any `json:"-"`
 }
 
 func (e APIError) Error() string {

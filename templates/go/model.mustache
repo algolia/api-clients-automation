@@ -5,10 +5,8 @@ package {{packageName}}
 import (
 	"encoding/json"
   "fmt"
+  
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
-{{#imports}}
-	"{{import}}"
-{{/imports}}
 )
 
 {{#model}}
@@ -16,7 +14,7 @@ import (
 {{> model_enum}}
 {{/isEnum}}
 {{^isEnum}}
-{{#oneOf}}{{#-first}}{{> model_oneof}}{{/-first}}{{/oneOf}}{{^oneOf}}{{#anyOf}}{{#-first}}{{> model_anyof}}{{/-first}}{{/anyOf}}{{^anyOf}}{{> model_simple}}{{/anyOf}}{{/oneOf}}
+{{#oneOf}}{{#-first}}{{> model_oneof}}{{/-first}}{{/oneOf}}{{^oneOf}}{{> model_simple}}{{/oneOf}}
 {{/isEnum}}
 {{/model}}
 {{/models}}

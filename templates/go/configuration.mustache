@@ -3,7 +3,6 @@ package {{packageName}}
 
 import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 )
 
 {{#hasRegionalHost}}
@@ -18,7 +17,7 @@ const (
 )
 {{/hasRegionalHost}}
 
-// {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration stores the configuration of the API client
+// {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration stores the configuration of the API client.
 type {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration struct {
 	transport.Configuration
   

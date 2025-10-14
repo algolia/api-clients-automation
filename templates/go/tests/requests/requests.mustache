@@ -13,6 +13,7 @@ import (
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
@@ -35,6 +36,8 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *t
 
 {{#blocksRequests}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
+    t.Parallel()
+
     client, echo := create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t)
     _ = echo
 
