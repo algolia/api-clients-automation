@@ -110,7 +110,7 @@ mainInjectionQueryParameters:
         facetingAfterDistinct:
           $ref: '../../params/Search.yml#/facetingAfterDistinct'
         facets:
-          $ref: '../../params/Search.yml#/facets'
+          $ref: '../../params/Composition.yml#/facets'
         hitsPerPage:
           $ref: '../../params/Search.yml#/hitsPerPage'
         maxValuesPerFacet:
