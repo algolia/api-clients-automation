@@ -20,6 +20,10 @@ class Snippet{{client}} {
     // Call the API
     {{> tests/method}};
     // >LOG
+    {{#hasResponse}}
+    // print the response
+    System.out.println(response);
+    {{/hasResponse}}
     // SEPARATOR<
   }
 
