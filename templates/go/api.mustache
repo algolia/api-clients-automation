@@ -365,6 +365,7 @@ func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{param
   if res == nil {
     return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
   }
+  defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
 			return {{#returnType}}returnValue, {{/returnType}}c.decodeError(res, resBody)

@@ -151,7 +151,10 @@ public abstract class TestsGenerator {
 
     if (AlgoliaGoGenerator.canFlattenBody(ope) && ope.bodyParam != null) {
       List<CodegenProperty> vars = ope.bodyParam.getVars();
-      bodyPropsOptional = (int) vars.stream().filter(p -> !p.required).count();
+      bodyPropsOptional = (int) vars
+        .stream()
+        .filter(p -> !p.required)
+        .count();
       isBodyTooBig = vars.isEmpty();
 
       Map<String, Object> paramBody = parameters;

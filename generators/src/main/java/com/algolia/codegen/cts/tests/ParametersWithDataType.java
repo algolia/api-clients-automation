@@ -578,7 +578,7 @@ public class ParametersWithDataType {
           case "Double":
             return "float64";
           case "Integer":
-            return "int32";
+            return "int";
           case "Long":
             return "int64";
           case "Boolean":
@@ -787,7 +787,11 @@ public class ParametersWithDataType {
 
   private void sortParameters(IJsonSchemaValidationProperties spec, List<Map<String, Object>> parameters) {
     // Store ordered params from the spec
-    var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
+    var orderedParams = spec
+      .getVars()
+      .stream()
+      .map(v -> v.baseName)
+      .toList();
 
     // Create a map to store the indices of each string in orderedParams
     Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size()).boxed().collect(Collectors.toMap(orderedParams::get, i -> i));

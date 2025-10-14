@@ -1,46 +1,3 @@
-func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) (bool, error), opts ...IterableOption) (*T, error) {
-	conf := config{
-		headerParams: map[string]string{},
-		maxRetries: -1,
-		timeout:    func(count int) time.Duration {
-      return 0 * time.Millisecond
-    },
-	}
-
-	for _, opt := range opts {
-		opt.apply(&conf)
-	}
-
-	var executor func(*T, error) (*T, error)
-
-	retryCount := 0
-
-	executor = func(previousResponse *T, previousError error) (*T, error) {
-		response, responseErr := execute(previousResponse, previousError)
-
-		retryCount++
-
-		if conf.aggregator != nil {
-			conf.aggregator(response, responseErr)
-		}
-
-    canStop, err := validate(response, responseErr)
-    if canStop || err != nil {
-      return response, err
-    }
-
-		if conf.maxRetries >= 0 && retryCount >= conf.maxRetries {
-			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, conf.maxRetries))
-		}
-
-		time.Sleep(conf.timeout(retryCount))
-
-		return executor(response, responseErr)
-	}
-
-	return executor(nil, nil)
-}
-
 // SearchForHits calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
 // Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
 func (c *APIClient) SearchForHits(ctx context.Context, requests []SearchQuery, strategy *SearchStrategy, opts ...RequestOption) ([]SearchResponse, error) {
@@ -266,7 +223,7 @@ func (c *APIClient) BrowseObjects(
 	opts ...IterableOption,
 ) error {
 	if browseParams.HitsPerPage == nil {
-    browseParams.HitsPerPage = utils.ToPtr(int32(1000))
+    browseParams.HitsPerPage = utils.ToPtr(1000)
   }
 
 	_, err := CreateIterable( //nolint:wrapcheck
@@ -297,7 +254,7 @@ func (c *APIClient) BrowseRules(
 	optionalParams *SearchRulesOptions,
 	opts ...IterableOption,
 ) error {
-	hitsPerPage := int32(1000)
+	hitsPerPage := 1000
   if optionalParams == nil {
     optionalParams = NewSearchRulesOptions()
   }
@@ -314,13 +271,13 @@ func (c *APIClient) BrowseRules(
 			}
 
 			if optionalParams.Page == nil {
-				optionalParams.Page = utils.ToPtr(int32(0))
+				optionalParams.Page = utils.ToPtr(0)
 			}
 
 			return c.SearchRules(ctx, indexName, optionalParams, toRequestOptions(opts)...)
 		},
 		func(response *SearchRulesResponse, err error) (bool, error) {
-			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
+			return err != nil || (response != nil && len(response.Hits) < hitsPerPage), err
 		},
 		opts...,
 	)
@@ -336,7 +293,7 @@ func (c *APIClient) BrowseSynonyms(
 	optionalParams *SearchSynonymsOptions,
 	opts ...IterableOption,
 ) error {
-	hitsPerPage := int32(1000)
+	hitsPerPage := 1000
   if optionalParams == nil {
     optionalParams = NewSearchSynonymsOptions()
   }
@@ -345,7 +302,7 @@ func (c *APIClient) BrowseSynonyms(
 	}
 
 	if optionalParams.Page == nil {
-		optionalParams.Page = utils.ToPtr(int32(0))
+		optionalParams.Page = utils.ToPtr(0)
 	}
 
 	_, err := CreateIterable( //nolint:wrapcheck
@@ -359,7 +316,7 @@ func (c *APIClient) BrowseSynonyms(
 			return c.SearchSynonyms(ctx, indexName, optionalParams,	toRequestOptions(opts)...)
 		},
 		func(response *SearchSynonymsResponse, err error) (bool, error) {
-			return err != nil || (response != nil && len(response.Hits) < int(hitsPerPage)), err
+			return err != nil || (response != nil && len(response.Hits) < hitsPerPage), err
 		},
 		opts...,
 	)
@@ -540,7 +497,7 @@ func (c *APIClient) ChunkedBatch(ctx context.Context, indexName string, objects 
 
 // ReplaceAllObjectsWithTransformation is similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must have been passed to the client instantiation method.
 // See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
-func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsWithTransformationResponse, error) {
+func (c *APIClient) ReplaceAllObjectsWithTransformation(ctx context.Context, indexName string, objects []map[string]any, opts ...ReplaceAllObjectsOption) (*ReplaceAllObjectsWithTransformationResponse, error) {
 	if c.ingestionTransporter == nil {
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
 	}
@@ -558,49 +515,49 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(indexName string, object
 
 	opts = append(opts, WithWaitForTasks(true))
 
-	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
+	copyResp, err := c.OperationIndex(ctx, indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
 	if err != nil {
 		return nil, err
 	}
 
-	watchResp, err := c.ingestionTransporter.ChunkedPush(tmpIndexName, objects, ingestion.Action(ACTION_ADD_OBJECT), &indexName, toIngestionChunkedBatchOptions(replaceAllObjectsToChunkBatchOptions(opts))...)
+	watchResp, err := c.ingestionTransporter.ChunkedPush(ctx, tmpIndexName, objects, ingestion.Action(ACTION_ADD_OBJECT), &indexName, toIngestionChunkedBatchOptions(replaceAllObjectsToChunkBatchOptions(opts))...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err //nolint:wrapcheck
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope(conf.scopes))), toRequestOptions(opts)...)
+	copyResp, err = c.OperationIndex(ctx, indexName, OPERATION_TYPE_COPY, tmpIndexName, &conf.scopes, toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)), toRequestOptions(opts)...)
+	moveResp, err := c.OperationIndex(ctx, tmpIndexName, OPERATION_TYPE_MOVE, indexName, nil, toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
+	_, err = c.WaitForTask(ctx, tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
 		return nil, err
 	}
@@ -645,7 +602,7 @@ func (c *APIClient) ReplaceAllObjects(ctx context.Context, indexName string, obj
 		return nil, err
 	}
 
-	batchResp, err := c.ChunkedBatch(ctx, tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBactchOptions(opts)...)
+	batchResp, err := c.ChunkedBatch(ctx, tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBatchOptions(opts)...)
 	if err != nil {
 		_, _ = c.DeleteIndex(ctx, tmpIndexName)
 
@@ -698,7 +655,7 @@ func (c *APIClient) ReplaceAllObjects(ctx context.Context, indexName string, obj
 // error. When encountering a network error, a non-nil error is returned along
 // with false.
 func (c *APIClient) IndexExists(ctx context.Context, indexName string) (bool, error) {
-	_, err := c.GetSettings(ctx, indexName)
+	_, err := c.GetSettings(ctx, indexName, nil)
 	if err == nil {
 		return true, nil
 	}
@@ -711,33 +668,28 @@ func (c *APIClient) IndexExists(ctx context.Context, indexName string) (bool, er
 	return false, err
 }
 
-/*
-Helper: Similar to the `SaveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
-
-	@param indexName string - the index name to save objects into.
-	@param objects []map[string]any - List of objects to save.
-	@param opts ...ChunkedBatchOption - Optional parameters for the request.
-	@return []BatchResponse - List of batch responses.
-	@return error - Error if any.
-*/
-func (c *APIClient) SaveObjectsWithTransformation(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]ingestion.WatchResponse, error) {
+// Helper: Similar to the `SaveObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client's config at instantiation.
+//
+// Parameters:
+//	 - indexName string - the index name to save objects into.
+//	 - objects []map[string]any - List of objects to save.
+//	 - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
+func (c *APIClient) SaveObjectsWithTransformation(ctx context.Context, indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]ingestion.WatchResponse, error) {
 	if c.ingestionTransporter == nil {
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
 	}
 
-	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(ACTION_ADD_OBJECT), nil, toIngestionChunkedBatchOptions(opts)...) //nolint:wrapcheck
+	return c.ingestionTransporter.ChunkedPush(ctx, indexName, objects, ingestion.Action(ACTION_ADD_OBJECT), nil, toIngestionChunkedBatchOptions(opts)...) //nolint:wrapcheck
 }
 
-/*
-Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
-
-	@param indexName string - the index name to save objects into.
-	@param objects []map[string]any - List of objects to save.
-	@param opts ...ChunkedBatchOption - Optional parameters for the request.
-	@return []BatchResponse - List of batch responses.
-	@return error - Error if any.
-*/
-func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]ingestion.WatchResponse, error) {
+// Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
+// 
+// Parameters:
+//   - ctx context.Context - The context to use for the request.
+//   - indexName string - the index name to save objects into.
+//   - objects []map[string]any - List of objects to save.
+//   - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
+func (c *APIClient) PartialUpdateObjectsWithTransformation(ctx context.Context, indexName string, objects []map[string]any, opts ...PartialUpdateObjectsOption) ([]ingestion.WatchResponse, error) {
 	if c.ingestionTransporter == nil {
 		return nil, reportError("`region` must be provided at client instantiation before calling this method.")
 	}
@@ -759,5 +711,5 @@ func (c *APIClient) PartialUpdateObjectsWithTransformation(indexName string, obj
 		action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
 	}
 
-	return c.ingestionTransporter.ChunkedPush(indexName, objects, ingestion.Action(action), nil, toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) //nolint:wrapcheck
+	return c.ingestionTransporter.ChunkedPush(ctx, indexName, objects, ingestion.Action(action), nil, toIngestionChunkedBatchOptions(partialUpdateObjectsToChunkedBatchOptions(opts))...) //nolint:wrapcheck
 }

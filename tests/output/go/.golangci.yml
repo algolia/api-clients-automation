@@ -13,6 +13,7 @@ linters:
     - goconst
     - godoclint
     - gomoddirectives
+    - ineffassign
     - ireturn
     - lll
     - maintidx

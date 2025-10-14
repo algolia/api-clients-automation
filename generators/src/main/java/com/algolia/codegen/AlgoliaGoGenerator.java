@@ -49,6 +49,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     typeMapping.put("AnyType", "any");
 
     modelNameMapping.put("range", "modelRange");
+    typeMapping.put("integer", "int");
 
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
@@ -85,7 +86,10 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     Timeouts.enrichBundle(openAPI, additionalProperties);
     additionalProperties.put(
       "appDescription",
-      Arrays.stream(openAPI.getInfo().getDescription().split("\n")).map(line -> "// " + line).collect(Collectors.joining("\n")).trim()
+      Arrays.stream(openAPI.getInfo().getDescription().split("\n"))
+        .map(line -> "// " + line)
+        .collect(Collectors.joining("\n"))
+        .trim()
     );
   }
 
@@ -127,7 +131,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       String modelName = entry.getKey();
       CodegenModel model = entry.getValue().getModels().get(0).getModel();
 
-      // for some reason the property additionalPropertiesIsAnyType is not propagated to the
+      // for some reason the property additionalPropertiesIsAnyType is not propagated
+      // to the
       // property
       for (CodegenProperty prop : model.getVars()) {
         ModelsMap propertyModel = models.get(prop.datatypeWithEnum);
@@ -154,7 +159,12 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
       // clean up the description
       String[] lines = ope.unescapedNotes.split("\n");
-      ope.notes = (lines[0] + "\n" + Arrays.stream(lines).skip(1).map(line -> "// " + line).collect(Collectors.joining("\n"))).trim();
+      ope.notes = (lines[0] +
+        "\n" +
+        Arrays.stream(lines)
+          .skip(1)
+          .map(line -> "// " + line)
+          .collect(Collectors.joining("\n"))).trim();
 
       // enrich the params
       for (CodegenParameter param : ope.optionalParams) {
@@ -171,15 +181,13 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
         CodegenParameter param = ope.optionalParams.get(0);
 
         // move it to required, it's easier to handle im mustache
-        ope.hasOptionalParams = false;
         ope.optionalParams.clear();
 
-        ope.hasRequiredParams = true;
         ope.requiredParams.add(param);
       }
     }
 
-    ModelPruner.removeOrphans(this, operations, models);
+    ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
@@ -218,10 +226,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
 
       if (prop.required) {
         ope.requiredParams.add(param);
-        ope.hasRequiredParams = true;
       } else {
         ope.optionalParams.add(param);
-        ope.hasOptionalParams = true;
       }
       ope.allParams.add(param);
     }
