@@ -20,7 +20,7 @@
   {{{value}}}
 {{/isBoolean}}
 {{#isEnum}}
-  {{{objectName}}}.{{#lambda.javaEnum}}{{{value}}}{{/lambda.javaEnum}}
+  {{{objectName}}}.{{#lambda.toEnum}}{{{value}}}{{/lambda.toEnum}}
 {{/isEnum}}
 {{#isArray}}
   Arrays.asList({{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}})

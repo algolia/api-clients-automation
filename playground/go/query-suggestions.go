@@ -1,19 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
+	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/next/query-suggestions"
 )
 
-func testQuerySuggestions(appID, apiKey string) int {
+func testQuerySuggestions(ctx context.Context, appID, apiKey string) int {
 	suggestionsClient, err := suggestions.NewClient(appID, apiKey, suggestions.US)
 	if err != nil {
 		panic(err)
 	}
 
-	// if there is no params for the requests, we don't need to give empty request instance such as `suggestionsClient.NewApiGetAllConfigsRequest()`.
-	querySuggestionsIndex, err := suggestionsClient.GetAllConfigs()
+	querySuggestionsIndex, err := suggestionsClient.GetAllConfigs(ctx)
 	if err != nil {
 		fmt.Printf("request error with GetAllConfigs: %v\n", err)
 		return 1

@@ -32,6 +32,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
   private final Map<String, CodegenOperation> operations;
 
   private final Map<String, Snippet> snippets;
+  private final String language;
 
   public DynamicSnippetLambda(
     DefaultCodegen generator,
@@ -41,6 +42,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
     String client
   ) {
     this.operations = operations;
+    this.language = language;
     this.paramsType = new ParametersWithDataType(models, language, client, true);
 
     JsonNode snippetsFile = Helpers.readJsonFile("tests/CTS/guides/" + client + ".json");
@@ -74,7 +76,7 @@ public class DynamicSnippetLambda implements Mustache.Lambda {
 
     // set the method attributes
     Map<String, Object> context = (Map<String, Object>) fragment.context();
-    snippet.addMethodCall(context, paramsType, operation);
+    snippet.addMethodCall(language, context, paramsType, operation);
 
     writer.write(adaptor.compileTemplate(executor, context, "tests/method.mustache"));
   }

@@ -1,18 +1,20 @@
-// {{generationBanner}}
 package client
+
+// {{generationBanner}}
 
 import (
   "encoding/json"
   "net/url"
   "testing"
-  "time"
+  "regexp"
+  "context"
 
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
 
   "gotests/tests"
 
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/next/{{clientImport}}"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"

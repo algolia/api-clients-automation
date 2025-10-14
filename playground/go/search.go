@@ -1,20 +1,20 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-	// "github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/next/search"
 )
 
-func testSearch(appID, apiKey string) int {
+func testSearch(ctx context.Context, appID, apiKey string) int {
 	// indexName := getEnvWithDefault("SEARCH_INDEX", "test_index")
 	searchClient, err := search.NewClient(appID, apiKey)
 	if err != nil {
 		panic(err)
 	}
 
-	err = searchClient.BrowseObjects("test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
+	err = searchClient.BrowseObjects(ctx, "test-flag", *search.NewEmptyBrowseParamsObject(), search.WithAggregator(func(res any, err error) {
 		if err != nil {
 			panic(err)
 		}
@@ -24,31 +24,18 @@ func testSearch(appID, apiKey string) int {
 		panic(err)
 	}
 
-	// config := search.SearchConfiguration{
-	// 	Configuration: transport.Configuration{
-	// 		AppID:  appID,
-	// 		ApiKey: apiKey,
-	// 	},
-	// }
-	//
-	// config.WithTransformation("eu")
-	//
-	// fmt.Println(config.Transformation.Region)
-	//
-	// searchClient, err := search.NewClientWithConfig(config)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	//
-	// watchResponse, err := searchClient.SaveObjectsWithTransformation("foo", []map[string]any{{"objectID": "foobarbaz"}}, search.WithWaitForTasks(true))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	//
-	// fmt.Printf("%#v\n", watchResponse)
+	// old way
+	//searchClient.Search(searchClient.NewApiSearchRequest(search.NewSearchMethodParams([]search.SearchQuery{
+	//	*search.SearchForHitsAsSearchQuery(search.NewSearchForHits("indexName", search.WithSearchForHitsQuery("foo"))),
+	//})))
+
+	// new way
+	//searchClient.Search(ctx, []search.SearchQuery{
+	//	search.NewSearchForHits("indexName").WithQuery("foo"),
+	//}, nil)
 
 	/*
-		response, err := searchClient.AddOrUpdateObject(
+		response, err := searchClient.AddOrUpdateObject(ctx,
 			searchClient.NewApiAddOrUpdateObjectRequest(
 				indexName,
 				"1",
@@ -63,12 +50,12 @@ func testSearch(appID, apiKey string) int {
 			panic(err)
 		}
 
-		_, err = searchClient.WaitForTask(indexName, *response.TaskID)
+		_, err = searchClient.WaitForTask(ctx, indexName, *response.TaskID)
 		if err != nil {
 			panic(err)
 		}
 
-		searchResponse, err := searchClient.Search(
+		searchResponse, err := searchClient.Search(ctx,
 			searchClient.NewApiSearchRequest(
 				search.NewSearchMethodParams(
 					[]search.SearchQuery{

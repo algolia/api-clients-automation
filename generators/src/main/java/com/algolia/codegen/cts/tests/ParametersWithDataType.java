@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaGoGenerator;
 import com.algolia.codegen.AlgoliaSwiftGenerator;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
@@ -60,7 +61,7 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec = null;
     String paramName = null;
     // special case if there is only bodyParam which is not an array
-    if (operation != null && operation.allParams.size() == 1 && operation.bodyParams.size() == 1 && !operation.bodyParam.isArray) {
+    if (operation != null && operation.allParams.size() == 1 && operation.bodyParam != null && !operation.bodyParam.isArray) {
       spec = operation.bodyParam;
       paramName = operation.bodyParam.paramName;
     }
@@ -83,11 +84,28 @@ public class ParametersWithDataType {
               throw new CTSException("Parameter " + param.getKey() + " not found in the root parameter");
             }
           }
-          Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
-          parametersWithDataType.add(paramWithType);
-          parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          if (
+            language.equals("go") &&
+            specParam != null &&
+            specParam.isBodyParam &&
+            operation != null &&
+            operation.bodyParam != null &&
+            operation.bodyParam.isModel &&
+            operation.bodyParam.getVars().size() > 0 &&
+            AlgoliaGoGenerator.canFlattenBody(operation)
+          ) {
+            // flatten the body params by skipping one level
+            flattenBodyParams((Map<String, Object>) param.getValue(), operation, parametersWithDataType);
+          } else {
+            Map<String, Object> paramWithType = traverseParams(param.getKey(), param.getValue(), specParam, "", 0, false);
+            parametersWithDataType.add(paramWithType);
+            parametersWithDataTypeMap.put((String) paramWithType.get("key"), paramWithType);
+          }
         }
       }
+    } else if (language.equals("go") && parameters != null && operation.bodyParam.getVars().size() > 0) {
+      // also flatten when the body is the only parameter
+      flattenBodyParams(parameters, operation, parametersWithDataType);
     } else {
       Map<String, Object> paramWithType = traverseParams(paramName, parameters, spec, "", 0, false);
       parametersWithDataType.add(paramWithType);
@@ -103,6 +121,22 @@ public class ParametersWithDataType {
 
   private String toJSONWithVar(Map<String, Object> parameters) throws JsonProcessingException {
     return Json.mapper().writeValueAsString(parameters).replaceAll("\"\\$var: (.*?)\"", "$1");
+  }
+
+  private void flattenBodyParams(
+    Map<String, Object> parameters,
+    CodegenOperation operation,
+    List<Map<String, Object>> parametersWithDataType
+  ) throws CTSException {
+    for (String nestedParam : parameters.keySet()) {
+      for (CodegenProperty prop : operation.bodyParam.getVars()) {
+        if (prop.baseName.equals(nestedParam)) {
+          Map<String, Object> paramWithType = traverseParams(prop.baseName, parameters.get(nestedParam), prop, "", 0, false);
+          parametersWithDataType.add(paramWithType);
+          break;
+        }
+      }
+    }
   }
 
   private Map<String, Object> traverseParams(
@@ -418,19 +452,7 @@ public class ParametersWithDataType {
     }
 
     if (language.equals("swift")) {
-      // Store ordered params from the spec
-      var orderedParams = spec
-        .getVars()
-        .stream()
-        .map(v -> v.baseName)
-        .toList();
-
-      // Create a map to store the indices of each string in orderedParams
-      Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size())
-        .boxed()
-        .collect(Collectors.toMap(orderedParams::get, i -> i));
-
-      values.sort(Comparator.comparing(value -> indexMap.getOrDefault((String) value.get("key"), Integer.MAX_VALUE)));
+      sortParameters(spec, values);
     }
 
     var hasAdditionalProperties = values
@@ -556,7 +578,7 @@ public class ParametersWithDataType {
           case "Double":
             return "float64";
           case "Integer":
-            return "int32";
+            return "int";
           case "Long":
             return "int64";
           case "Boolean":
@@ -761,5 +783,19 @@ public class ParametersWithDataType {
     if (!(values instanceof List)) return true;
 
     return ((List) values).contains(value);
+  }
+
+  private void sortParameters(IJsonSchemaValidationProperties spec, List<Map<String, Object>> parameters) {
+    // Store ordered params from the spec
+    var orderedParams = spec
+      .getVars()
+      .stream()
+      .map(v -> v.baseName)
+      .toList();
+
+    // Create a map to store the indices of each string in orderedParams
+    Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size()).boxed().collect(Collectors.toMap(orderedParams::get, i -> i));
+
+    parameters.sort(Comparator.comparing(param -> indexMap.getOrDefault((String) param.get("key"), Integer.MAX_VALUE)));
   }
 }

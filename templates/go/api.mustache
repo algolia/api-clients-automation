@@ -1,11 +1,11 @@
-// {{{generationBanner}}}
+{{{appDescription}}}
 package {{packageName}}
+
+// {{{generationBanner}}}
 
 {{#operations}}
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -28,7 +28,6 @@ import (
 
 type config struct {
 	// -- Request options for API calls
-	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
   timeouts transport.RequestConfiguration
@@ -73,12 +72,6 @@ type requestOption func(*config)
 
 func (r requestOption) apply(c *config) {
 	r(c)
-}
-
-func WithContext(ctx context.Context) requestOption {
-	return requestOption(func(c *config) {
-		c.context = ctx
-	})
 }
 
 func WithHeaderParam(key string, value any) requestOption {
@@ -308,195 +301,64 @@ func replaceAllObjectsToChunkBatchOptions(opts []ReplaceAllObjectsOption) []Chun
 {{/isSearchClient}}
 
 {{#operation}}
+{{#hasOptionalParams}}
+// {{operationId}}Options represents the optional params for the API call.
+type {{operationId}}Options struct {
+  {{#optionalParams}}
+	{{nameInPascalCase}} {{^isFreeFormObject}}{{^isMap}}*{{/isMap}}{{/isFreeFormObject}}{{{dataType}}}
+  {{/optionalParams}}
+}
+
+{{#isDeprecated}}
+// Deprecated: {{operationId}}Options is deprecated
+{{/isDeprecated}}
+// New{{operationId}}Options creates an instance of the {{operationId}}Options used to add optional parameters to {{operationId}}WithOptions.
+func New{{{operationId}}}Options() *{{operationId}}Options {
+	return &{{operationId}}Options{}
+}
+
+{{#optionalParams}}
+// With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} {{#description}}{{{.}}}{{/description}}{{^description}}adds the {{paramName}} to the Api{{operationId}}Request and returns the request for chaining.{{/description}}
+{{#isDeprecated}}
+// Deprecated: With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} is deprecated
+{{/isDeprecated}}
+func (o *{{operationId}}Options) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{#isModel}}*{{/isModel}}{{{dataType}}}) *{{operationId}}Options {
+	o.{{nameInPascalCase}} = {{^isModel}}{{^isMap}}&{{/isMap}}{{/isModel}}{{paramName}}
+	return o
+}
+{{/optionalParams}}
+
+{{/hasOptionalParams}}
+
+// {{operationId}} {{{notes}}}
+  {{#vendorExtensions}}
+  {{#x-acl.0}}
+//
+// Required API Key ACLs:{{/x-acl.0}}
+   {{#x-acl}}
+//  - {{.}}
+  {{/x-acl}}
+  {{/vendorExtensions}}
   {{#hasParams}}
-func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) UnmarshalJSON(b []byte) error {
-	req := map[string]json.RawMessage{}
-	err := json.Unmarshal(b, &req)
-	if err != nil {
-		return fmt.Errorf("cannot unmarshal request: %w", err)
-	}
-  {{#allParams}}
-	if v, ok := req["{{#isQueryParam}}{{baseName}}{{/isQueryParam}}{{^isQueryParam}}{{paramName}}{{/isQueryParam}}"]; ok {
-		err = json.Unmarshal(v, &r.{{paramName}})
-		if err != nil {
-      err = json.Unmarshal(b, &r.{{paramName}})
-      if err != nil {
-			  return fmt.Errorf("cannot unmarshal {{paramName}}: %w", err)
-      }
-		}
-	} {{#isBodyParam}}{{#required}}else {
-    err = json.Unmarshal(b, &r.{{paramName}})
-    if err != nil {
-      return fmt.Errorf("cannot unmarshal body parameter {{paramName}}: %w", err)
-    }
-  }{{/required}}{{/isBodyParam}}
-  {{/allParams}}
-
-  return nil
-}
-
-// {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request represents the request with all the parameters for the API call.
-type {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request struct {
-{{#allParams}}
-	{{paramName}} {{^required}}{{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isEnumRef}}*{{/isEnumRef}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{/required}}{{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{{dataType}}}
-{{/allParams}}
-}
-
-{{#isDeprecated}}
-// Deprecated
-{{/isDeprecated}}
-//New{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request creates an instance of the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request to be used for the API call.
-func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}} {{^isPathParam}}{{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{/isPathParam}}{{{dataType}}} {{^-last}},{{/-last}}{{/requiredParams}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
-	return {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request{
-		{{#requiredParams}}
-		{{paramName}}: {{paramName}},
-		{{/requiredParams}}
-	}
-}
-
-{{#allParams}}
-{{^required}}
-// With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
-{{#isDeprecated}}
-// Deprecated
-{{/isDeprecated}}
-func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
-	r.{{paramName}} = {{#isPrimitiveType}}{{^isMap}}&{{/isMap}}{{/isPrimitiveType}}{{paramName}}
-	return r
-}
-
-{{/required}}
-{{/allParams}}
-{{/hasParams}}
-/*
-{{operationId}} calls the API and returns the raw response from it.
-  {{#notes}}
-
-    {{{unescapedNotes}}}
-  {{/notes}}
-  {{#vendorExtensions}}
-    {{#x-acl.0}}
-
-      Required API Key ACLs:{{/x-acl.0}}
-    {{#x-acl}}
-      - {{.}}
-    {{/x-acl}}
-  {{/vendorExtensions}}
-
-  Request can be constructed by NewApi{{operationId}}Request with parameters below.
-  {{#allParams}}
-    @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
-  {{/allParams}}
-  @param opts ...RequestOption - Optional parameters for the API call
-  @return *http.Response - The raw response from the API
-  @return []byte - The raw response body from the API
-  @return error - An error if the API call fails
+// Parameters:
+  {{/hasParams}}
+  {{#requiredParams}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}}
+  {{/requiredParams}}
+  {{#optionalParams}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
+  {{/optionalParams}}
+//  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
   {{#isDeprecated}}
-
-    Deprecated
+//
+// Deprecated: {{operationId}} is deprecated
   {{/isDeprecated}}
-  */
-func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) (*http.Response, []byte, error) {
-  {{#vendorExtensions}}
-  requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
-  {{/vendorExtensions}}
-
-	{{#allParams}}
-	{{#required}}
-  {{#isString}}
-	if r.{{paramName}} == "" { 
-    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-  }{{/isString}}{{#isContainer}}
-  if len(r.{{paramName}}) == 0 { 
-    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-  }{{/isContainer}}{{#isMap}}
-  if len(r.{{paramName}}) == 0 { 
-    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-  }{{/isMap}}{{^isPrimitiveType}}{{^isContainer}}{{^isMap}}{{^isEnumRef}}
-  if r.{{paramName}} == nil {
-	  return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
-	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
-	{{/required}}
-	{{/allParams}}
-
-  conf := config{
-    context:      context.Background(),
-    queryParams:  url.Values{},
-    headerParams: map[string]string{},
-    {{#vendorExtensions.x-timeouts}}
-    timeouts: transport.RequestConfiguration{
-      ReadTimeout:  utils.ToPtr({{read}} * time.Millisecond),
-      WriteTimeout: utils.ToPtr({{write}} * time.Millisecond),
-      ConnectTimeout: utils.ToPtr({{connect}} * time.Millisecond),
-    },
-    {{/vendorExtensions.x-timeouts}}
-  }
-
-  {{#vendorExtensions.x-is-custom-request}}
-    {{#queryParams}}
-      {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
-          for k, v := range r.{{paramName}} {
-           conf.queryParams.Set(k, utils.QueryParameterToString(v))
-          }
-      {{^required}} } {{/required}}
-    {{/queryParams}}
-  {{/vendorExtensions.x-is-custom-request}}
-  {{^vendorExtensions.x-is-custom-request}}
-	{{#queryParams}}
-	{{#required}}
-	conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
-	{{/required}}
-  {{^required}}
-  if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
-  }
-  {{/required}}
-	{{/queryParams}}
-  {{/vendorExtensions.x-is-custom-request}}
-  {{#headerParams}}
-	{{#required}}
-	conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
-	{{/required}}
-  {{^required}}
-  if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
-  }
-  {{/required}}
-{{/headerParams}}
-
-  // optional params if any
-  for _, opt := range opts {
-    opt.apply(&conf)
-  }
-
-  var postBody any
-
-{{#bodyParams}}
-  // body params{{^required}}
-  if utils.IsNilOrEmpty(r.{{paramName}}) {
-    postBody = "{}"
-  } else { {{/required}}
-    postBody = r.{{paramName}}{{^required}}
-   } {{/required}}
-{{/bodyParams}}
-	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, postBody, conf.headerParams, conf.queryParams)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}},{{/vendorExtensions}}conf.timeouts)
-}
-
-/*
-{{operationId}} casts the HTTP response body to a defined struct.
-{{> operation_description}}
-func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
-    var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
+  var returnValue {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
 
-  res, resBody, err := c.{{nickname}}WithHTTPInfo({{#hasParams}}r, {{/hasParams}}opts...)
+  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx, {{#requiredParams}}{{paramName}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams, {{/hasOptionalParams}}opts...)
   if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
@@ -514,9 +376,162 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 	if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
 	}
-
 	{{/returnType}}
 	return {{#returnType}}returnValue, {{/returnType}}nil
+}
+
+// {{operationId}}WithHTTPInfo calls the API and returns the raw response from it.
+// {{{notes}}}
+  {{#vendorExtensions}}
+  {{#x-acl.0}}
+//
+// Required API Key ACLs:{{/x-acl.0}}
+   {{#x-acl}}
+//  - {{.}}
+  {{/x-acl}}
+  {{/vendorExtensions}}
+  {{#hasParams}}
+//
+// Parameters:
+  {{/hasParams}}
+  {{#requiredParams}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}}
+  {{/requiredParams}}
+  {{#optionalParams}}
+//  - {{paramName}} {{#description}}- {{{.}}}{{/description}} (in optionalParams)
+  {{/optionalParams}}
+//  - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
+  {{#isDeprecated}}
+//
+// Deprecated: {{operationId}} is deprecated
+  {{/isDeprecated}}
+func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#requiredParams}}{{paramName}} {{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{^required}}{{^isMap}}*{{/isMap}}{{/required}}{{{dataType}}}, {{/requiredParams}}{{#hasOptionalParams}}optionalParams *{{operationId}}Options, {{/hasOptionalParams}}opts ...RequestOption) (*http.Response, []byte, error) {
+  {{#vendorExtensions}}
+  requestPath := "{{{path}}}"{{#pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString({{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString({{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  {{/vendorExtensions}}
+
+	{{#allParams}}
+	{{#required}}
+  {{#isString}}
+	if {{paramName}} == "" { 
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isString}}{{#isContainer}}
+  if len({{paramName}}) == 0 { 
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isContainer}}{{#isMap}}
+  if len({{paramName}}) == 0 { 
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+  }{{/isMap}}{{^isPrimitiveType}}{{^isContainer}}{{^isMap}}{{^isEnumRef}}
+  if {{paramName}} == nil {
+	  return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
+	{{/required}}
+	{{/allParams}}
+
+  conf := config{
+    queryParams:  url.Values{},
+    headerParams: map[string]string{},
+    {{#vendorExtensions.x-timeouts}}
+    timeouts: transport.RequestConfiguration{
+      ReadTimeout:  utils.ToPtr({{read}} * time.Millisecond),
+      WriteTimeout: utils.ToPtr({{write}} * time.Millisecond),
+      ConnectTimeout: utils.ToPtr({{connect}} * time.Millisecond),
+    },
+    {{/vendorExtensions.x-timeouts}}
+  }
+
+  {{#vendorExtensions.x-is-custom-request}}
+    {{#queryParams}}
+      {{^required}}if {{#hasOptionalParams}}optionalParams != nil && {{/hasOptionalParams}}!utils.IsNilOrEmpty({{> param_name}}) { {{/required}}
+          for k, v := range {{> param_name}} {
+           conf.queryParams.Set(k, utils.QueryParameterToString(v))
+          }
+      {{^required}} } {{/required}}
+    {{/queryParams}}
+  {{/vendorExtensions.x-is-custom-request}}
+  {{^vendorExtensions.x-is-custom-request}}
+	{{#queryParams}}
+	{{#required}}
+	conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}{{paramName}}))
+	{{/required}}
+  {{^required}}
+  if {{#hasOptionalParams}}optionalParams != nil && {{/hasOptionalParams}}!utils.IsNilOrEmpty({{> param_name}}) {
+    conf.queryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}*{{/isFreeFormObject}}{{> param_name}}))
+  }
+  {{/required}}
+	{{/queryParams}}
+  {{/vendorExtensions.x-is-custom-request}}
+  {{#headerParams}}
+	{{#required}}
+	conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}{{paramName}})
+	{{/required}}
+  {{^required}}
+  if {{#hasOptionalParams}}optionalParams != nil && {{/hasOptionalParams}}!utils.IsNilOrEmpty({{> param_name}}) {
+    conf.headerParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}*{{/isFreeFormObject}}{{> param_name}})
+  }
+  {{/required}}
+{{/headerParams}}
+
+  // optional params if any
+  for _, opt := range opts {
+    opt.apply(&conf)
+  }
+
+{{#bodyParams}}
+  // body params
+  {{#vendorExtensions.x-flat-body}}
+  postBody := struct{
+    {{#vars}}
+    {{name}} {{^required}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/required}}{{#required}}{{#isModel}}*{{/isModel}}{{/required}}{{{dataType}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
+    {{/vars}}
+  }{
+    {{#vars}}
+    {{#required}}
+    {{name}}: {{nameInLowerCase}},
+    {{/required}}
+    {{^hasOptionalParams}}
+    {{^required}}
+    {{name}}: {{nameInLowerCase}},
+    {{/required}}
+    {{/hasOptionalParams}}
+    {{/vars}}
+  }
+  {{#hasOptionalParams}}
+  if optionalParams != nil {
+    {{#vars}}
+    {{^required}}
+    postBody.{{name}} = optionalParams.{{nameInPascalCase}}
+    {{/required}}
+    {{/vars}}
+  }
+  {{/hasOptionalParams}}
+  {{/vendorExtensions.x-flat-body}}
+  {{^vendorExtensions.x-flat-body}}
+  {{#required}}
+  postBody := {{paramName}}
+  {{/required}}
+  {{^required}}
+  var postBody any = "{}"
+  {{#hasOptionalParams}}
+  if optionalParams != nil {
+    postBody = optionalParams.{{nameInPascalCase}}
+  }
+  {{/hasOptionalParams}}
+  {{^hasOptionalParams}}
+  if !utils.IsNilOrEmpty({{paramName}}) {
+    postBody = {{paramName}}
+  }
+  {{/hasOptionalParams}}
+  {{/required}}
+  {{/vendorExtensions.x-flat-body}}
+{{/bodyParams}}
+	req, err := c.prepareRequest(ctx, requestPath, http.Method{{httpMethod}}, {{^bodyParams}}nil{{/bodyParams}}{{#bodyParams}}postBody{{/bodyParams}}, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}},{{/vendorExtensions}}conf.timeouts)
 }
 
 {{/operation}}

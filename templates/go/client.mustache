@@ -1,5 +1,6 @@
-// {{{generationBanner}}}
 package {{packageName}}
+
+// {{{generationBanner}}}
 
 import (
   "bytes"
@@ -311,7 +312,7 @@ func reportError(format string, a ...any) error {
 	return fmt.Errorf(format, a...)
 }
 
-// Set request body from an any.
+// Set request body from an any
 func setBody(body any, c compression.Compression) (*bytes.Buffer, error) {
 	if body == nil {
 		return nil, nil

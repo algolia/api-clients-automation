@@ -50,6 +50,10 @@ linters:
     presets:
       - comments
       - std-error-handling
+    rules:
+      - path: api_search.go
+        linters:
+          - wrapcheck
 formatters:
   enable:
     - gofmt

@@ -39,7 +39,8 @@ public class Snippet {
     return sb.toString();
   }
 
-  public void addMethodCall(Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope) throws CTSException {
+  public void addMethodCall(String language, Map<String, Object> context, ParametersWithDataType paramsType, CodegenOperation ope)
+    throws CTSException {
     // for dynamic snippets, we need to reset the context because the order of generation is random
     context.put("method", method);
     context.put("returnType", null);
@@ -53,11 +54,12 @@ public class Snippet {
     }
 
     try {
+      boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
       context.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
       context.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());
-      context.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+      context.put("isHelper", isHelper);
       context.put("hasRequestOptions", requestOptions != null);
 
       if (requestOptions != null) {
@@ -85,6 +87,8 @@ public class Snippet {
           context.put("hasResponse", false);
         }
       }
+
+      TestsGenerator.setOptionalParameters(language, ope, context, parameters, isHelper);
 
       paramsType.enhanceParameters(parameters, context, ope);
     } catch (CTSException e) {

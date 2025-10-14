@@ -88,8 +88,8 @@
     "folder": "clients/algoliasearch-client-go",
     "gitRepoId": "algoliasearch-client-go",
     "packageVersion": "4.28.1",
-    "modelFolder": "algolia",
-    "apiFolder": "algolia",
+    "modelFolder": "algolia/next",
+    "apiFolder": "algolia/next",
     "dockerImage": "apic_base",
     "tests": {
       "extension": "_test.go",

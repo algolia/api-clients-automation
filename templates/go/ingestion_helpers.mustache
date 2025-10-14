@@ -1,15 +1,13 @@
-/*
-ChunkedPush Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
-
-	@param indexName string - the index name to save objects into.
-	@param objects []map[string]any - List of objects to save.
-	@param action Action - The action to perform on the objects.
-	@param referenceIndexName *string - This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
-	@param opts ...ChunkedBatchOption - Optional parameters for the request.
-	@return []WatchResponse - List of push responses.
-	@return error - Error if any.
-*/
-func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, action Action, referenceIndexName *string, opts ...ChunkedBatchOption) ([]WatchResponse, error) {
+// ChunkedPush Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+//
+// Parameters:
+//   - transformationID - Unique identifier of a transformation.
+//   - indexName string - the index name to save objects into.
+//   - objects []map[string]any - List of objects to save.
+//   - action Action - The action to perform on the objects.
+//   - referenceIndexName *string - This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
+//   - opts - Optional parameters for the API call (e.g. WithHeaderParam, WithReadTimeout...)
+func (c *APIClient) ChunkedPush(ctx context.Context, indexName string, objects []map[string]any, action Action, referenceIndexName *string, opts ...ChunkedBatchOption) ([]WatchResponse, error) {
 	conf := config{
 		headerParams: map[string]string{},
 		waitForTasks: false,
@@ -45,18 +43,12 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 				return nil, reportError("unable to unmarshal the given `objects` to an `[]PushTaskRecords` payload: %w", err)
 			}
 
-      request := c.NewApiPushRequest(
-					indexName,
-					NewEmptyPushTaskPayload().
-						SetAction(action).
-						SetRecords(pushRecords),
-				)
+			opts := NewPushOptions()
+			if referenceIndexName != nil {
+				opts = opts.WithReferenceIndexName(*referenceIndexName)
+			}
 
-      if referenceIndexName != nil {
-        request = request.WithReferenceIndexName(*referenceIndexName)
-      }
-
-			resp, err := c.Push(request)
+			resp, err := c.Push(ctx, indexName, action, pushRecords, opts)
 			if err != nil {
 				return nil, err //nolint: wrapcheck
 			}
@@ -64,7 +56,6 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 			responses = append(responses, *resp)
 			records = make([]map[string]any, 0, len(objects)%conf.batchSize)
 		}
-
 
 		if conf.waitForTasks && len(responses) > 0 && (len(responses)%waitBatchSize == 0 || i == len(objects)-1) {
 			var waitableResponses []WatchResponse
@@ -82,7 +73,7 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 							return nil, reportError("received unexpected response from the push endpoint, eventID must not be undefined")
 						}
 
-						return c.GetEvent(c.NewApiGetEventRequest(resp.RunID, *resp.EventID))
+						return c.GetEvent(ctx, resp.RunID, *resp.EventID)
 					},
 					func(response *Event, err error) (bool, error) {
 						var apiErr *APIError

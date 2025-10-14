@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaGoGenerator;
 import com.algolia.codegen.cts.manager.CTSManager;
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
@@ -11,9 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import org.apache.commons.lang3.ArrayUtils;
-import org.openapitools.codegen.CodegenModel;
-import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.SupportingFile;
+import org.openapitools.codegen.*;
 
 public abstract class TestsGenerator {
 
@@ -129,5 +128,73 @@ public abstract class TestsGenerator {
       requestOptions.put("timeouts", timeouts);
       output.put("requestOptions", requestOptions);
     }
+  }
+
+  public static void setOptionalParameters(
+    String language,
+    CodegenOperation ope,
+    Map<String, Object> test,
+    Map<String, Object> parameters,
+    boolean isHelper
+  ) {
+    if (!"go".equals(language)) return;
+
+    boolean isBodyRequired = ope.bodyParam != null && ope.bodyParam.required;
+    boolean alreadyInlinedBody = ope.allParams.size() == 1 && ope.bodyParam != null && !ope.bodyParam.isArray;
+    // I can't figure out the correct condition for this one so it's harcoded for now
+    boolean isSFFV =
+      "searchForFacetValues".equals(ope.operationId) && !ope.tags.isEmpty() && "composition".equals(ope.tags.get(0).getName());
+
+    int bodyPropsOptional = 0;
+    boolean isBodyTooBig = false;
+    boolean actuallyHasOptional = false;
+
+    if (AlgoliaGoGenerator.canFlattenBody(ope) && ope.bodyParam != null) {
+      List<CodegenProperty> vars = ope.bodyParam.getVars();
+      bodyPropsOptional = (int) vars
+        .stream()
+        .filter(p -> !p.required)
+        .count();
+      isBodyTooBig = vars.isEmpty();
+
+      Map<String, Object> paramBody = parameters;
+      if (!alreadyInlinedBody) {
+        Object paramObj = parameters.get(ope.bodyParam.paramName);
+        if (paramObj instanceof String) {
+          actuallyHasOptional = !isBodyRequired;
+        } else if (paramObj instanceof Map) {
+          paramBody = (Map<String, Object>) paramObj;
+        }
+      }
+
+      for (CodegenProperty prop : vars) {
+        if (!prop.required && paramBody != null && paramBody.containsKey(prop.baseName)) {
+          actuallyHasOptional = true;
+        }
+      }
+    }
+
+    for (CodegenParameter param : ope.allParams) {
+      if (!param.required && parameters.containsKey(param.baseName)) {
+        actuallyHasOptional = true;
+        break;
+      }
+    }
+
+    int totalOptional = ope.optionalParams.size() + bodyPropsOptional;
+
+    // hasOptionalWrapper if there is more that one optional param, after the body has been
+    // flattened.
+    boolean hasOptionalWrapper = totalOptional > 1 && actuallyHasOptional && !isSFFV;
+    boolean hasInlineOptional = ((totalOptional == 1 || isSFFV) && actuallyHasOptional) || isBodyTooBig;
+    boolean hasNilOptional = totalOptional > 0 && !actuallyHasOptional && !isHelper;
+    if (isBodyTooBig && !isBodyRequired) {
+      boolean isBodySet = alreadyInlinedBody ? !parameters.isEmpty() : parameters.containsKey(ope.bodyParam.paramName);
+      hasNilOptional = !isBodySet;
+    }
+
+    test.put("hasOptionalWrapper", hasOptionalWrapper);
+    test.put("hasInlineOptional", hasInlineOptional);
+    test.put("hasNilOptional", hasNilOptional);
   }
 }

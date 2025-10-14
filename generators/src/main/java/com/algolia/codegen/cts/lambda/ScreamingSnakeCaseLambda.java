@@ -1,4 +1,4 @@
-package com.algolia.codegen.lambda;
+package com.algolia.codegen.cts.lambda;
 
 import com.algolia.codegen.utils.Helpers;
 import com.samskivert.mustache.Mustache;

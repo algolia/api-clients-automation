@@ -1,10 +1,12 @@
-// {{generationBanner}}
 package e2e
+
+// {{generationBanner}}
 
 import (
   "encoding/json"
   "os"
 	"testing"
+  "context"
 
 	"github.com/stretchr/testify/require"
   "github.com/kinbiko/jsonassert"
@@ -12,7 +14,7 @@ import (
 
   "gotests/tests"
 
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/{{clientImport}}"
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/next/{{clientImport}}"
 )
 
 func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) *{{clientPrefix}}.APIClient {

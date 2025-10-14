@@ -1,8 +1,10 @@
 package com.algolia.codegen;
 
+import com.algolia.codegen.cts.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.exceptions.*;
-import com.algolia.codegen.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.utils.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.samskivert.mustache.Mustache;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.GoClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -18,6 +21,9 @@ import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaGoGenerator extends GoClientCodegen {
+
+  // This is used for the CTS generation
+  private static final AlgoliaGoGenerator INSTANCE = new AlgoliaGoGenerator();
 
   @Override
   public String getName() {
@@ -29,10 +35,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     String client = (String) additionalProperties.get("client");
 
     additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : Helpers.camelize(client));
-    additionalProperties.put("enumClassPrefix", true);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
 
-    String outputFolder = "algolia" + File.separator + client;
+    String outputFolder = "algolia/next/" + client;
     setOutputDir(getOutputDir() + File.separator + outputFolder);
 
     super.processOpts();
@@ -44,6 +49,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     typeMapping.put("AnyType", "any");
 
     modelNameMapping.put("range", "modelRange");
+    typeMapping.put("integer", "int");
 
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
@@ -54,7 +60,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
     supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
 
-    Helpers.addCommonSupportingFiles(supportingFiles, "../../");
+    Helpers.addCommonSupportingFiles(supportingFiles, "../../../");
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("go", "packageVersion"));
@@ -78,6 +84,13 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
     Timeouts.enrichBundle(openAPI, additionalProperties);
+    additionalProperties.put(
+      "appDescription",
+      Arrays.stream(openAPI.getInfo().getDescription().split("\n"))
+        .map(line -> "// " + line)
+        .collect(Collectors.joining("\n"))
+        .trim()
+    );
   }
 
   @Override
@@ -118,7 +131,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       String modelName = entry.getKey();
       CodegenModel model = entry.getValue().getModels().get(0).getModel();
 
-      // for some reason the property additionalPropertiesIsAnyType is not propagated to the
+      // for some reason the property additionalPropertiesIsAnyType is not propagated
+      // to the
       // property
       for (CodegenProperty prop : model.getVars()) {
         ModelsMap propertyModel = models.get(prop.datatypeWithEnum);
@@ -140,9 +154,105 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   @Override
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
+
+    // Flatten body params to remove the wrapping object
+    for (CodegenOperation ope : operations.getOperations().getOperation()) {
+      // clean up the description
+      String[] lines = ope.unescapedNotes.split("\n");
+      ope.notes = (lines[0] +
+        "\n" +
+        Arrays.stream(lines)
+          .skip(1)
+          .map(line -> "// " + line)
+          .collect(Collectors.joining("\n"))).trim();
+
+      // enrich the params
+      for (CodegenParameter param : ope.optionalParams) {
+        param.nameInPascalCase = Helpers.capitalize(param.baseName);
+      }
+
+      CodegenParameter bodyParam = ope.bodyParam;
+      if (bodyParam != null) {
+        flattenBody(ope);
+      }
+
+      // If the optional param struct only has 1 param, we can remove the wrapper
+      if (ope.optionalParams.size() == 1) {
+        CodegenParameter param = ope.optionalParams.get(0);
+
+        // move it to required, it's easier to handle im mustache
+        ope.optionalParams.clear();
+
+        ope.requiredParams.add(param);
+      }
+    }
+
     ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
+  }
+
+  private void flattenBody(CodegenOperation ope) {
+    CodegenParameter bodyParam = ope.bodyParam;
+    bodyParam.nameInPascalCase = Helpers.capitalize(bodyParam.baseName);
+    if (!bodyParam.isModel) {
+      return;
+    }
+
+    if (!canFlattenBody(ope)) {
+      System.out.println(
+        "Operation " + ope.operationId + " has body param " + bodyParam.paramName + " in colision with a parameter, skipping flattening"
+      );
+      return;
+    }
+
+    bodyParam.vendorExtensions.put("x-flat-body", bodyParam.getVars().size() > 0);
+
+    if (bodyParam.getVars().size() > 0) {
+      ope.allParams.removeIf(param -> param.isBodyParam);
+      ope.requiredParams.removeIf(param -> param.isBodyParam);
+      ope.optionalParams.removeIf(param -> param.isBodyParam);
+    }
+
+    for (CodegenProperty prop : bodyParam.getVars()) {
+      prop.nameInLowerCase = toParamName(prop.baseName);
+
+      CodegenParameter param = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .convertValue(prop, CodegenParameter.class);
+      param.nameInPascalCase = Helpers.capitalize(prop.baseName);
+      param.paramName = toParamName(prop.baseName);
+
+      if (prop.required) {
+        ope.requiredParams.add(param);
+      } else {
+        ope.optionalParams.add(param);
+      }
+      ope.allParams.add(param);
+    }
+  }
+
+  public static boolean canFlattenBody(CodegenOperation ope) {
+    if (ope.bodyParam == null || !ope.bodyParam.isModel) {
+      return false;
+    }
+
+    if (ope.allParams.size() == 1) {
+      return true;
+    }
+
+    for (CodegenProperty prop : ope.bodyParam.getVars()) {
+      for (CodegenParameter param : ope.allParams) {
+        if (param.paramName.equals(prop.baseName)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public static String toEnum(String value) {
+    return INSTANCE.toEnumVarName(value, "String");
   }
 }
