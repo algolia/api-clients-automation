@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
@@ -17,6 +15,8 @@ import (
 )
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := search.SearchConfiguration{
 		Configuration: transport.Configuration{
@@ -31,14 +31,21 @@ func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) 
 	return client, echo
 }
 
-// calls api with correct read host
+// calls api with correct read host.
 func TestSearchapi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -56,14 +63,21 @@ func TestSearchapi0(t *testing.T) {
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
-// read transporter with POST method
+// read transporter with POST method.
 func TestSearchapi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -81,14 +95,21 @@ func TestSearchapi1(t *testing.T) {
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
-// calls api with correct write host
+// calls api with correct write host.
 func TestSearchapi2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -106,21 +127,32 @@ func TestSearchapi2(t *testing.T) {
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
 
-// tests the retry strategy
+// tests the retry strategy.
 func TestSearchapi3(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6677", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6678", call.IsReadWrite)},
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6677", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6678", call.IsReadWrite),
+			},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -133,14 +165,21 @@ func TestSearchapi3(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok test server response"}`, string(rawBody))
 }
 
-// tests the retry strategy on timeout
+// tests the retry strategy on timeout.
 func TestSearchapi4(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -154,24 +193,39 @@ func TestSearchapi4(t *testing.T) {
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/hang/go"))
-	require.EqualError(t, err, "failed to do request: all hosts have been contacted unsuccessfully, it can either be a server or a network error or wrong appID/key credentials were used. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support You can use 'ExposeIntermediateNetworkErrors: true' in the config to investigate.")
+	require.EqualError(
+		t,
+		err,
+		"failed to do request: all hosts have been contacted unsuccessfully, it can either be a server or a network error or wrong appID/key credentials were used. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support You can use 'ExposeIntermediateNetworkErrors: true' in the config to investigate.",
+	)
 }
 
-// tests the retry strategy on 5xx
+// tests the retry strategy on 5xx.
 func TestSearchapi5(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6671", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6672", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6673", call.IsReadWrite)},
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6671", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6672", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6673", call.IsReadWrite),
+			},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
@@ -184,14 +238,21 @@ func TestSearchapi5(t *testing.T) {
 	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
 }
 
-// test the compression strategy
+// test the compression strategy.
 func TestSearchapi6(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -212,10 +273,13 @@ func TestSearchapi6(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
 }
 
-// calls api with default read timeouts
+// calls api with default read timeouts.
 func TestSearchapi7(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -226,10 +290,13 @@ func TestSearchapi7(t *testing.T) {
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
 }
 
-// calls api with default write timeouts
+// calls api with default write timeouts.
 func TestSearchapi8(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -240,14 +307,21 @@ func TestSearchapi8(t *testing.T) {
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
 }
 
-// can handle unknown response fields
+// can handle unknown response fields.
 func TestSearchapi9(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -267,14 +341,21 @@ func TestSearchapi9(t *testing.T) {
 	require.JSONEq(t, `{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}`, string(rawBody))
 }
 
-// can handle unknown response fields inside a nested oneOf
+// can handle unknown response fields inside a nested oneOf.
 func TestSearchapi10(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -294,40 +375,57 @@ func TestSearchapi10(t *testing.T) {
 	require.JSONEq(t, `{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}`, string(rawBody))
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestSearchcommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestSearchcommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// call deleteObjects without error
+// call deleteObjects without error.
 func TestSearchdeleteObjects0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -350,10 +448,13 @@ func TestSearchdeleteObjects0(t *testing.T) {
 	}
 }
 
-// api key basic
+// api key basic.
 func TestSearchgenerateSecuredApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -363,14 +464,21 @@ func TestSearchgenerateSecuredApiKey0(t *testing.T) {
 			search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
 				[]string{"Movies"}))
 		require.NoError(t, err)
-		require.Equal(t, "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", res)
+		require.Equal(
+			t,
+			"NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+			res,
+		)
 	}
 }
 
-// with searchParams
+// with searchParams.
 func TestSearchgenerateSecuredApiKey1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -378,18 +486,38 @@ func TestSearchgenerateSecuredApiKey1(t *testing.T) {
 		res, err = client.GenerateSecuredApiKey(
 			"2640659426d5107b6e47d75db9cbaef8",
 			search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
-				[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
-				search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-					[]string{"one", "two"}))))
+				[]string{
+					"Movies",
+					"cts_e2e_settings",
+				}).
+				SetRestrictSources("192.168.1.0/24").
+				SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
+				search.NewEmptySearchParamsObject().
+					SetQuery("batman").
+					SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).
+					SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).
+					SetMode(search.Mode("neuralSearch")).
+					SetHitsPerPage(10).
+					SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+						[]string{"one", "two"})),
+			),
+		)
 		require.NoError(t, err)
-		require.Equal(t, "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw", res)
+		require.Equal(
+			t,
+			"MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+			res,
+		)
 	}
 }
 
-// with filters
+// with filters.
 func TestSearchgenerateSecuredApiKey2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -401,10 +529,13 @@ func TestSearchgenerateSecuredApiKey2(t *testing.T) {
 	}
 }
 
-// with visible_by filter
+// with visible_by filter.
 func TestSearchgenerateSecuredApiKey3(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -416,10 +547,13 @@ func TestSearchgenerateSecuredApiKey3(t *testing.T) {
 	}
 }
 
-// with userID
+// with userID.
 func TestSearchgenerateSecuredApiKey4(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -431,10 +565,13 @@ func TestSearchgenerateSecuredApiKey4(t *testing.T) {
 	}
 }
 
-// mcm with filters
+// mcm with filters.
 func TestSearchgenerateSecuredApiKey5(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -446,10 +583,13 @@ func TestSearchgenerateSecuredApiKey5(t *testing.T) {
 	}
 }
 
-// mcm with user token
+// mcm with user token.
 func TestSearchgenerateSecuredApiKey6(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -461,14 +601,21 @@ func TestSearchgenerateSecuredApiKey6(t *testing.T) {
 	}
 }
 
-// indexExists
+// indexExists.
 func TestSearchindexExists0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -488,14 +635,21 @@ func TestSearchindexExists0(t *testing.T) {
 	}
 }
 
-// indexNotExists
+// indexNotExists.
 func TestSearchindexExists1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -515,14 +669,21 @@ func TestSearchindexExists1(t *testing.T) {
 	}
 }
 
-// indexExistsWithError
+// indexExistsWithError.
 func TestSearchindexExists2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -539,14 +700,21 @@ func TestSearchindexExists2(t *testing.T) {
 	require.EqualError(t, err, "API error [403] Invalid API key")
 }
 
-// client throws with invalid parameters
+// client throws with invalid parameters.
 func TestSearchparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -558,6 +726,7 @@ func TestSearchparameters0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
+
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "",
@@ -567,6 +736,7 @@ func TestSearchparameters0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
+
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
@@ -578,10 +748,13 @@ func TestSearchparameters0(t *testing.T) {
 	require.EqualError(t, err, "`apiKey` is missing.")
 }
 
-// `addApiKey` throws with invalid parameters
+// `addApiKey` throws with invalid parameters.
 func TestSearchparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -590,10 +763,13 @@ func TestSearchparameters1(t *testing.T) {
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
 }
 
-// `addOrUpdateObject` throws with invalid parameters
+// `addOrUpdateObject` throws with invalid parameters.
 func TestSearchparameters2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSearchClient(t)
 	_ = echo
@@ -608,14 +784,21 @@ func TestSearchparameters2(t *testing.T) {
 	require.EqualError(t, err, "Parameter `body` is required when calling `AddOrUpdateObject`.")
 }
 
-// call partialUpdateObjects with createIfNotExists=true
+// call partialUpdateObjects with createIfNotExists=true.
 func TestSearchpartialUpdateObjects0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -630,7 +813,7 @@ func TestSearchpartialUpdateObjects0(t *testing.T) {
 	{
 		res, err = client.PartialUpdateObjects(
 			"cts_e2e_partialUpdateObjects_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+			[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -638,14 +821,21 @@ func TestSearchpartialUpdateObjects0(t *testing.T) {
 	}
 }
 
-// call partialUpdateObjects with createIfNotExists=false
+// call partialUpdateObjects with createIfNotExists=false.
 func TestSearchpartialUpdateObjects1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -660,7 +850,7 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 	{
 		res, err = client.PartialUpdateObjects(
 			"cts_e2e_partialUpdateObjects_go",
-			[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}}, search.WithCreateIfNotExists(false))
+			[]map[string]any{{"objectID": "3", "name": "Cyril"}, {"objectID": "4", "name": "David"}}, search.WithCreateIfNotExists(false))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -668,21 +858,31 @@ func TestSearchpartialUpdateObjects1(t *testing.T) {
 	}
 }
 
-// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+// call partialUpdateObjectsWithTransformation with createIfNotExists=true.
 func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+			},
 		},
 		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
@@ -691,22 +891,39 @@ func TestSearchpartialUpdateObjectsWithTransformation0(t *testing.T) {
 	{
 		res, err = client.PartialUpdateObjectsWithTransformation(
 			"cts_e2e_partialUpdateObjectsWithTransformation_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true), search.WithWaitForTasks(true))
+			[]map[string]any{
+				{"objectID": "1", "name": "Adam"},
+				{"objectID": "2", "name": "Benoit"},
+			},
+			search.WithCreateIfNotExists(true),
+			search.WithWaitForTasks(true),
+		)
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
+		require.JSONEq(
+			t,
+			`[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`,
+			string(rawBody),
+		)
 	}
 }
 
-// call replaceAllObjects without error
+// call replaceAllObjects without error.
 func TestSearchreplaceAllObjects0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -721,22 +938,46 @@ func TestSearchreplaceAllObjects0(t *testing.T) {
 	{
 		res, err = client.ReplaceAllObjects(
 			"cts_e2e_replace_all_objects_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+			[]map[string]any{
+				{"objectID": "1", "name": "Adam"},
+				{"objectID": "2", "name": "Benoit"},
+				{"objectID": "3", "name": "Cyril"},
+				{"objectID": "4", "name": "David"},
+				{"objectID": "5", "name": "Eva"},
+				{"objectID": "6", "name": "Fiona"},
+				{"objectID": "7", "name": "Gael"},
+				{"objectID": "8", "name": "Hugo"},
+				{"objectID": "9", "name": "Igor"},
+				{"objectID": "10", "name": "Julia"},
+			},
+			search.WithBatchSize(3),
+		)
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
+		require.JSONEq(
+			t,
+			`{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`,
+			string(rawBody),
+		)
 	}
 }
 
-// call replaceAllObjects with partial scopes
+// call replaceAllObjects with partial scopes.
 func TestSearchreplaceAllObjects1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -751,23 +992,34 @@ func TestSearchreplaceAllObjects1(t *testing.T) {
 	{
 		res, err = client.ReplaceAllObjects(
 			"cts_e2e_replace_all_objects_scopes_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(77), search.WithScopes(
+			[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(77), search.WithScopes(
 				[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
+		require.JSONEq(
+			t,
+			`{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`,
+			string(rawBody),
+		)
 	}
 }
 
-// replaceAllObjects should cleanup on failure
+// replaceAllObjects should cleanup on failure.
 func TestSearchreplaceAllObjects2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -781,18 +1033,25 @@ func TestSearchreplaceAllObjects2(t *testing.T) {
 	require.NoError(t, err)
 	res, err = client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_too_big_go",
-		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}})
+		[]map[string]any{{"objectID": "fine", "body": "small obj"}, {"objectID": "toolarge", "body": "something bigger than 10KB"}})
 	require.EqualError(t, err, "API error [400] Record is too big")
 }
 
-// call replaceAllObjectsWithTransformation without error
+// call replaceAllObjectsWithTransformation without error.
 func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -808,22 +1067,46 @@ func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
 	{
 		res, err = client.ReplaceAllObjectsWithTransformation(
 			"cts_e2e_replace_all_objects_with_transformation_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+			[]map[string]any{
+				{"objectID": "1", "name": "Adam"},
+				{"objectID": "2", "name": "Benoit"},
+				{"objectID": "3", "name": "Cyril"},
+				{"objectID": "4", "name": "David"},
+				{"objectID": "5", "name": "Eva"},
+				{"objectID": "6", "name": "Fiona"},
+				{"objectID": "7", "name": "Gael"},
+				{"objectID": "8", "name": "Hugo"},
+				{"objectID": "9", "name": "Igor"},
+				{"objectID": "10", "name": "Julia"},
+			},
+			search.WithBatchSize(3),
+		)
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
+		require.JSONEq(
+			t,
+			`{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`,
+			string(rawBody),
+		)
 	}
 }
 
-// call saveObjects without error
+// call saveObjects without error.
 func TestSearchsaveObjects0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -838,7 +1121,7 @@ func TestSearchsaveObjects0(t *testing.T) {
 	{
 		res, err = client.SaveObjects(
 			"cts_e2e_saveObjects_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+			[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}})
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
@@ -846,14 +1129,21 @@ func TestSearchsaveObjects0(t *testing.T) {
 	}
 }
 
-// saveObjects should report errors
+// saveObjects should report errors.
 func TestSearchsaveObjects1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -867,18 +1157,25 @@ func TestSearchsaveObjects1(t *testing.T) {
 	require.NoError(t, err)
 	res, err = client.SaveObjects(
 		"cts_e2e_saveObjects_go",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}})
 	require.EqualError(t, err, "API error [403] Invalid Application-ID or API key")
 }
 
-// saveObjectsPlaylist
+// saveObjectsPlaylist.
 func TestSearchsaveObjects2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -893,19 +1190,35 @@ func TestSearchsaveObjects2(t *testing.T) {
 	{
 		res, err = client.SaveObjects(
 			"playlists",
-			[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}})
+			[]map[string]any{
+				{
+					"objectID":   "1",
+					"visibility": "public",
+					"name":       "Hot 100 Billboard Charts",
+					"playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+					"createdAt":  "1500240452",
+				},
+			},
+		)
 		require.NoError(t, err)
 	}
 }
 
-// saveObjectsPublicUser
+// saveObjectsPublicUser.
 func TestSearchsaveObjects3(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -920,26 +1233,48 @@ func TestSearchsaveObjects3(t *testing.T) {
 	{
 		res, err = client.SaveObjects(
 			"playlists",
-			[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
+			[]map[string]any{
+				{
+					"objectID":   "1",
+					"visibility": "public",
+					"name":       "Hot 100 Billboard Charts",
+					"playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+					"createdAt":  "1500240452",
+				},
+			},
+			search.WithWaitForTasks(false),
+			search.WithBatchSize(1000),
+			search.WithHeaderParam("X-Algolia-User-ID", "*"),
+		)
 		require.NoError(t, err)
 	}
 }
 
-// call saveObjectsWithTransformation without error
+// call saveObjectsWithTransformation without error.
 func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite), transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite)},
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6688", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6689", call.IsReadWrite),
+			},
 		},
 		Transformation: &search.TransformationConfiguration{Region: "us"},
 	}
@@ -948,22 +1283,33 @@ func TestSearchsaveObjectsWithTransformation0(t *testing.T) {
 	{
 		res, err = client.SaveObjectsWithTransformation(
 			"cts_e2e_saveObjectsWithTransformation_go",
-			[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
+			[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`, string(rawBody))
+		require.JSONEq(
+			t,
+			`[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_go","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]`,
+			string(rawBody),
+		)
 	}
 }
 
-// with algolia user id
+// with algolia user id.
 func TestSearchsearchSingleIndex0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -981,14 +1327,21 @@ func TestSearchsearchSingleIndex0(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// switch API key
+// switch API key.
 func TestSearchsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -1023,14 +1376,21 @@ func TestSearchsetClientApiKey0(t *testing.T) {
 	}
 }
 
-// wait for api key helper - add
+// wait for api key helper - add.
 func TestSearchwaitForApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -1048,18 +1408,29 @@ func TestSearchwaitForApiKey0(t *testing.T) {
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `{"value":"api-key-add-operation-test-go","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+		require.JSONEq(
+			t,
+			`{"value":"api-key-add-operation-test-go","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}`,
+			string(rawBody),
+		)
 	}
 }
 
-// wait for api key - update
+// wait for api key - update.
 func TestSearchwaitForApiKey1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -1081,18 +1452,29 @@ func TestSearchwaitForApiKey1(t *testing.T) {
 		require.NoError(t, err)
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
-		require.JSONEq(t, `{"value":"api-key-update-operation-test-go","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}`, string(rawBody))
+		require.JSONEq(
+			t,
+			`{"value":"api-key-update-operation-test-go","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}`,
+			string(rawBody),
+		)
 	}
 }
 
-// wait for api key - delete
+// wait for api key - delete.
 func TestSearchwaitForApiKey2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -1112,14 +1494,21 @@ func TestSearchwaitForApiKey2(t *testing.T) {
 	}
 }
 
-// wait for an application-level task
+// wait for an application-level task.
 func TestSearchwaitForAppTask0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{
@@ -1141,14 +1530,21 @@ func TestSearchwaitForAppTask0(t *testing.T) {
 	}
 }
 
-// wait for task
+// wait for task.
 func TestSearchwaitForTask0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *search.APIClient
-	var cfg search.SearchConfiguration
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = search.SearchConfiguration{

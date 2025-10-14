@@ -618,7 +618,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(
             path: "test/all",
-            parameters: ["query": AnyCodable("to be overriden")],
+            parameters: ["query": AnyCodable("to be overridden")],
             requestOptions: RequestOptions(
                 headers: ["x-header-1": "spaces are left alone"],
                 queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]

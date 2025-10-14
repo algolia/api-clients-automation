@@ -26,11 +26,11 @@ func saveObjectsModified() {
 		panic(err)
 	}
 
-	records := make([]map[string]any, len(products))
+	records := make([]map[string]any, 0, len(products))
 
 	for _, product := range products {
 		reference := product["product_reference"].(string)
-		suffixes := make([]string, len(reference)-1)
+		suffixes := make([]string, 0, len(reference)-1)
 
 		for i := len(reference); i > 1; i-- {
 			suffixes = append(suffixes, reference[i:])

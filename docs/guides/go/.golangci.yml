@@ -1,12 +1,54 @@
-linters:
-  disable:
-    - ineffassign
-    - staticcheck
-    - unused
-
-issues:
-  exclude-generated: disable
-
+version: "2"
 run:
   concurrency: 2
-  timeout: 10m
+linters:
+  default: all
+  disable:
+    - cyclop
+    - depguard
+    - dupl
+    - dupword
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - goconst
+    - godoclint
+    - godot
+    - gomoddirectives
+    - ireturn
+    - lll
+    - maintidx
+    - mnd
+    - noctx
+    - paralleltest
+    - tagliatelle
+    - testpackage
+    - tparallel
+    - unparam
+    - unused
+    - varnamelen
+    - wastedassign
+    - wsl
+  settings:
+    staticcheck:
+      checks: ["all", "-SA1019", "-SA4006"]
+  exclusions:
+    generated: disable
+    presets:
+      - comments
+      - std-error-handling
+    rules:
+      - linters:
+          - revive
+        text: "unused-parameter:"
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - golines
+  settings:
+    golines:
+      max-len: 150
+  exclusions:
+    generated: disable

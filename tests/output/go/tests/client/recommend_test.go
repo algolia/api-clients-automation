@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
@@ -16,6 +14,8 @@ import (
 )
 
 func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
@@ -30,14 +30,21 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// calls api with correct read host
+// calls api with correct read host.
 func TestRecommendapi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *recommend.APIClient
-	var cfg recommend.RecommendConfiguration
+
+	var (
+		client *recommend.APIClient
+		cfg    recommend.RecommendConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = recommend.RecommendConfiguration{
@@ -55,14 +62,21 @@ func TestRecommendapi0(t *testing.T) {
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
-// calls api with correct write host
+// calls api with correct write host.
 func TestRecommendapi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *recommend.APIClient
-	var cfg recommend.RecommendConfiguration
+
+	var (
+		client *recommend.APIClient
+		cfg    recommend.RecommendConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = recommend.RecommendConfiguration{
@@ -80,40 +94,57 @@ func TestRecommendapi1(t *testing.T) {
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestRecommendcommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createRecommendClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Recommend (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Recommend (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestRecommendcommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createRecommendClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// switch API key
+// switch API key.
 func TestRecommendsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *recommend.APIClient
-	var cfg recommend.RecommendConfiguration
+
+	var (
+		client *recommend.APIClient
+		cfg    recommend.RecommendConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = recommend.RecommendConfiguration{

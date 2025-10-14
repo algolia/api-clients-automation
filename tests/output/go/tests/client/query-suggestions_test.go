@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
@@ -16,6 +14,8 @@ import (
 )
 
 func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
@@ -31,40 +31,57 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestSuggestionscommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; QuerySuggestions (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; QuerySuggestions (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestSuggestionscommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// throws when region is not given
+// throws when region is not given.
 func TestSuggestionsparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *suggestions.APIClient
-	var cfg suggestions.QuerySuggestionsConfiguration
+
+	var (
+		client *suggestions.APIClient
+		cfg    suggestions.QuerySuggestionsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = suggestions.QuerySuggestionsConfiguration{
@@ -79,14 +96,21 @@ func TestSuggestionsparameters0(t *testing.T) {
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestSuggestionsparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *suggestions.APIClient
-	var cfg suggestions.QuerySuggestionsConfiguration
+
+	var (
+		client *suggestions.APIClient
+		cfg    suggestions.QuerySuggestionsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = suggestions.QuerySuggestionsConfiguration{
@@ -101,14 +125,21 @@ func TestSuggestionsparameters1(t *testing.T) {
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
 }
 
-// does not throw when region is given
+// does not throw when region is given.
 func TestSuggestionsparameters2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *suggestions.APIClient
-	var cfg suggestions.QuerySuggestionsConfiguration
+
+	var (
+		client *suggestions.APIClient
+		cfg    suggestions.QuerySuggestionsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = suggestions.QuerySuggestionsConfiguration{
@@ -123,14 +154,21 @@ func TestSuggestionsparameters2(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// switch API key
+// switch API key.
 func TestSuggestionssetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *suggestions.APIClient
-	var cfg suggestions.QuerySuggestionsConfiguration
+
+	var (
+		client *suggestions.APIClient
+		cfg    suggestions.QuerySuggestionsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = suggestions.QuerySuggestionsConfiguration{

@@ -18,6 +18,7 @@ func saveObjectsMCM() {
 	configurations, err := getAllAppIDConfigurations()
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 
@@ -26,6 +27,7 @@ func saveObjectsMCM() {
 		client, err := search.NewClient(configuration.appID, configuration.apiKey)
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 

@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
+) // IMPORT<
 
 func SnippetForCustomDeleteOfPersonalization() {
 	/*
@@ -34,6 +34,7 @@ func SnippetForCustomDeleteOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfPersonalization1() {
 	/*
 	   Snippet for the customDelete method.
@@ -62,6 +63,7 @@ func SnippetForCustomDeleteOfPersonalization1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfPersonalization() {
 	/*
 	   Snippet for the customGet method.
@@ -90,6 +92,7 @@ func SnippetForCustomGetOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfPersonalization1() {
 	/*
 	   Snippet for the customGet method.
@@ -118,6 +121,7 @@ func SnippetForCustomGetOfPersonalization1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfPersonalization2() {
 	/*
 	   Snippet for the customGet method.
@@ -135,7 +139,8 @@ func SnippetForCustomGetOfPersonalization2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), personalization.WithQueryParam("query", "parameters with space"), personalization.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), personalization.WithQueryParam("query", "parameters with space"), personalization.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), personalization.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -147,6 +152,7 @@ func SnippetForCustomGetOfPersonalization2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization() {
 	/*
 	   Snippet for the customPost method.
@@ -175,6 +181,7 @@ func SnippetForCustomPostOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization1() {
 	/*
 	   Snippet for the customPost method.
@@ -203,6 +210,7 @@ func SnippetForCustomPostOfPersonalization1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization2() {
 	/*
 	   Snippet for the customPost method.
@@ -220,7 +228,8 @@ func SnippetForCustomPostOfPersonalization2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -231,6 +240,7 @@ func SnippetForCustomPostOfPersonalization2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization3() {
 	/*
 	   Snippet for the customPost method.
@@ -248,7 +258,8 @@ func SnippetForCustomPostOfPersonalization3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -259,6 +270,7 @@ func SnippetForCustomPostOfPersonalization3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization4() {
 	/*
 	   Snippet for the customPost method.
@@ -276,7 +288,8 @@ func SnippetForCustomPostOfPersonalization4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,6 +300,7 @@ func SnippetForCustomPostOfPersonalization4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization5() {
 	/*
 	   Snippet for the customPost method.
@@ -304,7 +318,8 @@ func SnippetForCustomPostOfPersonalization5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -315,6 +330,7 @@ func SnippetForCustomPostOfPersonalization5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization6() {
 	/*
 	   Snippet for the customPost method.
@@ -332,7 +348,8 @@ func SnippetForCustomPostOfPersonalization6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -343,6 +360,7 @@ func SnippetForCustomPostOfPersonalization6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization7() {
 	/*
 	   Snippet for the customPost method.
@@ -360,7 +378,8 @@ func SnippetForCustomPostOfPersonalization7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,6 +390,7 @@ func SnippetForCustomPostOfPersonalization7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization8() {
 	/*
 	   Snippet for the customPost method.
@@ -388,7 +408,8 @@ func SnippetForCustomPostOfPersonalization8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -400,6 +421,7 @@ func SnippetForCustomPostOfPersonalization8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization9() {
 	/*
 	   Snippet for the customPost method.
@@ -417,7 +439,8 @@ func SnippetForCustomPostOfPersonalization9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -429,6 +452,7 @@ func SnippetForCustomPostOfPersonalization9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfPersonalization10() {
 	/*
 	   Snippet for the customPost method.
@@ -446,7 +470,8 @@ func SnippetForCustomPostOfPersonalization10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), personalization.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -458,6 +483,7 @@ func SnippetForCustomPostOfPersonalization10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfPersonalization() {
 	/*
 	   Snippet for the customPut method.
@@ -486,6 +512,7 @@ func SnippetForCustomPutOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfPersonalization1() {
 	/*
 	   Snippet for the customPut method.
@@ -514,6 +541,7 @@ func SnippetForCustomPutOfPersonalization1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteUserProfileOfPersonalization() {
 	/*
 	   Snippet for the deleteUserProfile method.
@@ -542,6 +570,7 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	/*
 	   Snippet for the getPersonalizationStrategy method.
@@ -569,6 +598,7 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetUserTokenProfileOfPersonalization() {
 	/*
 	   Snippet for the getUserTokenProfile method.
@@ -597,6 +627,7 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfPersonalization() {
 	/*
 	   Snippet for the setClientApiKey method.
@@ -623,6 +654,7 @@ func SnippetForSetClientApiKeyOfPersonalization() {
 	// >LOG
 	// SEPARATOR<
 }
+
 func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	/*
 	   Snippet for the setPersonalizationStrategy method.
@@ -642,8 +674,14 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	response, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
 		personalization.NewEmptyPersonalizationStrategyParams().SetEventsScoring(
-			[]personalization.EventsScoring{*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetsScoring(
-			[]personalization.FacetsScoring{*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42)))
+			[]personalization.EventsScoring{
+				*personalization.NewEmptyEventsScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click")),
+			}).
+			SetFacetsScoring(
+				[]personalization.FacetsScoring{
+					*personalization.NewEmptyFacetsScoring().SetScore(42).SetFacetName("Event"),
+				}).
+			SetPersonalizationImpact(42)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

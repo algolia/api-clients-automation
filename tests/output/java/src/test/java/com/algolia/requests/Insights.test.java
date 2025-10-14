@@ -139,7 +139,7 @@ class InsightsClientRequestsTests {
         "test/all",
         new HashMap() {
           {
-            put("query", "to be overriden");
+            put("query", "to be overridden");
           }
         },
         new RequestOptions()

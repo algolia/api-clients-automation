@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/composition"
@@ -17,6 +15,8 @@ import (
 )
 
 func createCompositionClient(t *testing.T) (*composition.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := composition.CompositionConfiguration{
 		Configuration: transport.Configuration{
@@ -31,14 +31,21 @@ func createCompositionClient(t *testing.T) (*composition.APIClient, *tests.EchoR
 	return client, echo
 }
 
-// calls api with correct read host
+// calls api with correct read host.
 func TestCompositionapi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *composition.APIClient
-	var cfg composition.CompositionConfiguration
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = composition.CompositionConfiguration{
@@ -56,14 +63,21 @@ func TestCompositionapi0(t *testing.T) {
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
 
-// calls api with correct write host
+// calls api with correct write host.
 func TestCompositionapi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *composition.APIClient
-	var cfg composition.CompositionConfiguration
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = composition.CompositionConfiguration{
@@ -81,14 +95,21 @@ func TestCompositionapi1(t *testing.T) {
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
 
-// test the compression strategy
+// test the compression strategy.
 func TestCompositionapi2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *composition.APIClient
-	var cfg composition.CompositionConfiguration
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = composition.CompositionConfiguration{
@@ -109,40 +130,57 @@ func TestCompositionapi2(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}`, string(rawBody))
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestCompositioncommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createCompositionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Composition (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestCompositioncommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createCompositionClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// switch API key
+// switch API key.
 func TestCompositionsetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *composition.APIClient
-	var cfg composition.CompositionConfiguration
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = composition.CompositionConfiguration{

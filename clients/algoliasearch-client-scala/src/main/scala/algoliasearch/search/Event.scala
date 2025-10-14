@@ -36,7 +36,7 @@ package algoliasearch.search
 import algoliasearch.search.EventStatus._
 import algoliasearch.search.EventType._
 
-/** An event describe a step of the task execution flow..
+/** An event describe a step of the task execution flow.
   *
   * @param eventID
   *   Universally unique identifier (UUID) of an event.

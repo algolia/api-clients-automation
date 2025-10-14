@@ -51,8 +51,8 @@ public class AutomaticFacetFilter {
 
   /**
    * Whether the filter is disjunctive or conjunctive. If true the filter has multiple matches,
-   * multiple occurences are combined with the logical `OR` operation. If false, multiple occurences
-   * are combined with the logical `AND` operation.
+   * multiple occurrences are combined with the logical `OR` operation. If false, multiple
+   * occurrences are combined with the logical `AND` operation.
    */
   @javax.annotation.Nullable
   public Boolean getDisjunctive() {

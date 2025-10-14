@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+) // IMPORT<
 
 func SnippetForAddApiKeyOfSearch() {
 	/*
@@ -36,6 +36,7 @@ func SnippetForAddApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForAddApiKeyOfSearch1() {
 	/*
 	   Snippet for the addApiKey method.
@@ -55,7 +56,11 @@ func SnippetForAddApiKeyOfSearch1() {
 	response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
 		search.NewEmptyApiKey().SetAcl(
-			[]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
+			[]search.Acl{
+				search.Acl("search"),
+				search.Acl("addObject"),
+			}).
+			SetDescription("my new api key").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -66,6 +71,7 @@ func SnippetForAddApiKeyOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForAddOrUpdateObjectOfSearch() {
 	/*
 	   Snippet for the addOrUpdateObject method.
@@ -94,6 +100,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForAppendSourceOfSearch() {
 	/*
 	   Snippet for the appendSource method.
@@ -123,6 +130,7 @@ func SnippetForAppendSourceOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForAssignUserIdOfSearch() {
 	/*
 	   Snippet for the assignUserId method.
@@ -152,6 +160,7 @@ func SnippetForAssignUserIdOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForAssignUserIdOfSearch1() {
 	/*
 	   Snippet for the assignUserId method.
@@ -181,6 +190,7 @@ func SnippetForAssignUserIdOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch() {
 	/*
 	   Snippet for the batch method.
@@ -200,7 +210,11 @@ func SnippetForBatchOfSearch() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})})))
+			[]search.BatchRequest{
+				*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}),
+				*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"}),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -211,6 +225,7 @@ func SnippetForBatchOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch1() {
 	/*
 	   Snippet for the batch method.
@@ -241,6 +256,7 @@ func SnippetForBatchOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch2() {
 	/*
 	   Snippet for the batch method.
@@ -271,6 +287,7 @@ func SnippetForBatchOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch3() {
 	/*
 	   Snippet for the batch method.
@@ -301,6 +318,7 @@ func SnippetForBatchOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch4() {
 	/*
 	   Snippet for the batch method.
@@ -320,7 +338,10 @@ func SnippetForBatchOfSearch4() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})})))
+			[]search.BatchRequest{
+				*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"}),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -331,6 +352,7 @@ func SnippetForBatchOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch5() {
 	/*
 	   Snippet for the batch method.
@@ -350,7 +372,10 @@ func SnippetForBatchOfSearch5() {
 	response, err := client.Batch(client.NewApiBatchRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyBatchWriteParams().SetRequests(
-			[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})})))
+			[]search.BatchRequest{
+				*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"}),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -361,6 +386,7 @@ func SnippetForBatchOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchOfSearch6() {
 	/*
 	   Snippet for the batch method.
@@ -391,6 +417,7 @@ func SnippetForBatchOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchAssignUserIdsOfSearch() {
 	/*
 	   Snippet for the batchAssignUserIds method.
@@ -421,6 +448,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchDictionaryEntriesOfSearch() {
 	/*
 	   Snippet for the batchDictionaryEntries method.
@@ -440,10 +468,13 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 	response, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
 		search.DictionaryType("plurals"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
-					[]string{"believe", "algolia"}).SetDecomposition(
-					[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))})))
+			[]search.BatchDictionaryEntriesRequest{
+				*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
+						[]string{"believe", "algolia"}).SetDecomposition(
+						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled"))),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -454,6 +485,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchDictionaryEntriesOfSearch1() {
 	/*
 	   Snippet for the batchDictionaryEntries method.
@@ -473,8 +505,11 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 	response, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
 		search.DictionaryType("plurals"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
-			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1"))})))
+			[]search.BatchDictionaryEntriesRequest{
+				*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1")),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -485,6 +520,7 @@ func SnippetForBatchDictionaryEntriesOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBatchDictionaryEntriesOfSearch2() {
 	/*
 	   Snippet for the batchDictionaryEntries method.
@@ -504,8 +540,11 @@ func SnippetForBatchDictionaryEntriesOfSearch2() {
 	response, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
 		search.DictionaryType("stopwords"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
-			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))})))
+			[]search.BatchDictionaryEntriesRequest{
+				*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me")),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -516,6 +555,7 @@ func SnippetForBatchDictionaryEntriesOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBrowseOfSearch() {
 	/*
 	   Snippet for the browse method.
@@ -544,6 +584,7 @@ func SnippetForBrowseOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBrowseOfSearch1() {
 	/*
 	   Snippet for the browse method.
@@ -574,6 +615,7 @@ func SnippetForBrowseOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForBrowseOfSearch2() {
 	/*
 	   Snippet for the browse method.
@@ -603,6 +645,7 @@ func SnippetForBrowseOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForClearObjectsOfSearch() {
 	/*
 	   Snippet for the clearObjects method.
@@ -631,6 +674,7 @@ func SnippetForClearObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForClearRulesOfSearch() {
 	/*
 	   Snippet for the clearRules method.
@@ -659,6 +703,7 @@ func SnippetForClearRulesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForClearSynonymsOfSearch() {
 	/*
 	   Snippet for the clearSynonyms method.
@@ -687,6 +732,7 @@ func SnippetForClearSynonymsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfSearch() {
 	/*
 	   Snippet for the customDelete method.
@@ -715,6 +761,7 @@ func SnippetForCustomDeleteOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfSearch1() {
 	/*
 	   Snippet for the customDelete method.
@@ -743,6 +790,7 @@ func SnippetForCustomDeleteOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfSearch() {
 	/*
 	   Snippet for the customGet method.
@@ -771,6 +819,7 @@ func SnippetForCustomGetOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfSearch1() {
 	/*
 	   Snippet for the customGet method.
@@ -799,6 +848,7 @@ func SnippetForCustomGetOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfSearch2() {
 	/*
 	   Snippet for the customGet method.
@@ -816,7 +866,8 @@ func SnippetForCustomGetOfSearch2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), search.WithQueryParam("query", "parameters with space"), search.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), search.WithQueryParam("query", "parameters with space"), search.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), search.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -828,6 +879,7 @@ func SnippetForCustomGetOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch() {
 	/*
 	   Snippet for the customPost method.
@@ -856,6 +908,7 @@ func SnippetForCustomPostOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch1() {
 	/*
 	   Snippet for the customPost method.
@@ -884,6 +937,7 @@ func SnippetForCustomPostOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch2() {
 	/*
 	   Snippet for the customPost method.
@@ -901,7 +955,8 @@ func SnippetForCustomPostOfSearch2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -912,6 +967,7 @@ func SnippetForCustomPostOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch3() {
 	/*
 	   Snippet for the customPost method.
@@ -929,7 +985,8 @@ func SnippetForCustomPostOfSearch3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -940,6 +997,7 @@ func SnippetForCustomPostOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch4() {
 	/*
 	   Snippet for the customPost method.
@@ -957,7 +1015,8 @@ func SnippetForCustomPostOfSearch4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -968,6 +1027,7 @@ func SnippetForCustomPostOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch5() {
 	/*
 	   Snippet for the customPost method.
@@ -985,7 +1045,8 @@ func SnippetForCustomPostOfSearch5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -996,6 +1057,7 @@ func SnippetForCustomPostOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch6() {
 	/*
 	   Snippet for the customPost method.
@@ -1013,7 +1075,8 @@ func SnippetForCustomPostOfSearch6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1024,6 +1087,7 @@ func SnippetForCustomPostOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch7() {
 	/*
 	   Snippet for the customPost method.
@@ -1041,7 +1105,8 @@ func SnippetForCustomPostOfSearch7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1052,6 +1117,7 @@ func SnippetForCustomPostOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch8() {
 	/*
 	   Snippet for the customPost method.
@@ -1069,7 +1135,8 @@ func SnippetForCustomPostOfSearch8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -1081,6 +1148,7 @@ func SnippetForCustomPostOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch9() {
 	/*
 	   Snippet for the customPost method.
@@ -1098,7 +1166,8 @@ func SnippetForCustomPostOfSearch9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -1110,6 +1179,7 @@ func SnippetForCustomPostOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfSearch10() {
 	/*
 	   Snippet for the customPost method.
@@ -1127,7 +1197,8 @@ func SnippetForCustomPostOfSearch10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), search.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -1139,6 +1210,7 @@ func SnippetForCustomPostOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfSearch() {
 	/*
 	   Snippet for the customPut method.
@@ -1167,6 +1239,7 @@ func SnippetForCustomPutOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfSearch1() {
 	/*
 	   Snippet for the customPut method.
@@ -1195,6 +1268,7 @@ func SnippetForCustomPutOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteApiKeyOfSearch() {
 	/*
 	   Snippet for the deleteApiKey method.
@@ -1223,6 +1297,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteByOfSearch() {
 	/*
 	   Snippet for the deleteBy method.
@@ -1252,6 +1327,7 @@ func SnippetForDeleteByOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteIndexOfSearch() {
 	/*
 	   Snippet for the deleteIndex method.
@@ -1280,6 +1356,7 @@ func SnippetForDeleteIndexOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteObjectOfSearch() {
 	/*
 	   Snippet for the deleteObject method.
@@ -1308,6 +1385,7 @@ func SnippetForDeleteObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteObjectsOfSearch() {
 	/*
 	   Snippet for the deleteObjects method.
@@ -1337,6 +1415,7 @@ func SnippetForDeleteObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteRuleOfSearch() {
 	/*
 	   Snippet for the deleteRule method.
@@ -1365,6 +1444,7 @@ func SnippetForDeleteRuleOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteRuleOfSearch1() {
 	/*
 	   Snippet for the deleteRule method.
@@ -1393,6 +1473,7 @@ func SnippetForDeleteRuleOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteSourceOfSearch() {
 	/*
 	   Snippet for the deleteSource method.
@@ -1421,6 +1502,7 @@ func SnippetForDeleteSourceOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteSynonymOfSearch() {
 	/*
 	   Snippet for the deleteSynonym method.
@@ -1449,6 +1531,7 @@ func SnippetForDeleteSynonymOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1479,6 +1562,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch1() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1498,9 +1582,22 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 	response, err := client.GenerateSecuredApiKey(
 		"2640659426d5107b6e47d75db9cbaef8",
 		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
-			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
-				[]string{"one", "two"}))))
+			[]string{
+				"Movies",
+				"cts_e2e_settings",
+			}).
+			SetRestrictSources("192.168.1.0/24").
+			SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
+			search.NewEmptySearchParamsObject().
+				SetQuery("batman").
+				SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).
+				SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).
+				SetMode(search.Mode("neuralSearch")).
+				SetHitsPerPage(10).
+				SetOptionalWords(search.ArrayOfStringAsOptionalWords(
+					[]string{"one", "two"})),
+		),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1511,6 +1608,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch2() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1540,6 +1638,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch3() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1569,6 +1668,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch4() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1598,6 +1698,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch5() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1627,6 +1728,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGenerateSecuredApiKeyOfSearch6() {
 	/*
 	   Snippet for the generateSecuredApiKey method.
@@ -1656,6 +1758,7 @@ func SnippetForGenerateSecuredApiKeyOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetApiKeyOfSearch() {
 	/*
 	   Snippet for the getApiKey method.
@@ -1684,6 +1787,7 @@ func SnippetForGetApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAppTaskOfSearch() {
 	/*
 	   Snippet for the getAppTask method.
@@ -1712,6 +1816,7 @@ func SnippetForGetAppTaskOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetDictionaryLanguagesOfSearch() {
 	/*
 	   Snippet for the getDictionaryLanguages method.
@@ -1739,6 +1844,7 @@ func SnippetForGetDictionaryLanguagesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetDictionarySettingsOfSearch() {
 	/*
 	   Snippet for the getDictionarySettings method.
@@ -1766,6 +1872,7 @@ func SnippetForGetDictionarySettingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetLogsOfSearch() {
 	/*
 	   Snippet for the getLogs method.
@@ -1793,6 +1900,7 @@ func SnippetForGetLogsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetLogsOfSearch1() {
 	/*
 	   Snippet for the getLogs method.
@@ -1809,7 +1917,9 @@ func SnippetForGetLogsOfSearch1() {
 	}
 
 	// Call the API
-	response, err := client.GetLogs(client.NewApiGetLogsRequest().WithOffset(5).WithLength(10).WithIndexName("<YOUR_INDEX_NAME>").WithType(search.LogType("all")))
+	response, err := client.GetLogs(
+		client.NewApiGetLogsRequest().WithOffset(5).WithLength(10).WithIndexName("<YOUR_INDEX_NAME>").WithType(search.LogType("all")),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1820,6 +1930,7 @@ func SnippetForGetLogsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetObjectOfSearch() {
 	/*
 	   Snippet for the getObject method.
@@ -1849,6 +1960,7 @@ func SnippetForGetObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetObjectOfSearch1() {
 	/*
 	   Snippet for the getObject method.
@@ -1877,6 +1989,7 @@ func SnippetForGetObjectOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetObjectsOfSearch() {
 	/*
 	   Snippet for the getObjects method.
@@ -1907,6 +2020,7 @@ func SnippetForGetObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetObjectsOfSearch1() {
 	/*
 	   Snippet for the getObjects method.
@@ -1926,7 +2040,11 @@ func SnippetForGetObjectsOfSearch1() {
 	response, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
 		search.NewEmptyGetObjectsParams().SetRequests(
-			[]search.GetObjectsRequest{*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("<YOUR_INDEX_NAME>"), *search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("<YOUR_INDEX_NAME>")})))
+			[]search.GetObjectsRequest{
+				*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID1").SetIndexName("<YOUR_INDEX_NAME>"),
+				*search.NewEmptyGetObjectsRequest().SetObjectID("uniqueID2").SetIndexName("<YOUR_INDEX_NAME>"),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1937,6 +2055,7 @@ func SnippetForGetObjectsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetObjectsOfSearch2() {
 	/*
 	   Snippet for the getObjects method.
@@ -1968,6 +2087,7 @@ func SnippetForGetObjectsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRuleOfSearch() {
 	/*
 	   Snippet for the getRule method.
@@ -1996,6 +2116,7 @@ func SnippetForGetRuleOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSettingsOfSearch() {
 	/*
 	   Snippet for the getSettings method.
@@ -2024,6 +2145,7 @@ func SnippetForGetSettingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSourcesOfSearch() {
 	/*
 	   Snippet for the getSources method.
@@ -2051,6 +2173,7 @@ func SnippetForGetSourcesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSynonymOfSearch() {
 	/*
 	   Snippet for the getSynonym method.
@@ -2079,6 +2202,7 @@ func SnippetForGetSynonymOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTaskOfSearch() {
 	/*
 	   Snippet for the getTask method.
@@ -2107,6 +2231,7 @@ func SnippetForGetTaskOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopUserIdsOfSearch() {
 	/*
 	   Snippet for the getTopUserIds method.
@@ -2134,6 +2259,7 @@ func SnippetForGetTopUserIdsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetUserIdOfSearch() {
 	/*
 	   Snippet for the getUserId method.
@@ -2162,6 +2288,7 @@ func SnippetForGetUserIdOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForHasPendingMappingsOfSearch() {
 	/*
 	   Snippet for the hasPendingMappings method.
@@ -2189,6 +2316,7 @@ func SnippetForHasPendingMappingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForHasPendingMappingsOfSearch1() {
 	/*
 	   Snippet for the hasPendingMappings method.
@@ -2216,6 +2344,7 @@ func SnippetForHasPendingMappingsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForIndexExistsOfSearch() {
 	/*
 	   Snippet for the indexExists method.
@@ -2244,6 +2373,7 @@ func SnippetForIndexExistsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForIndexExistsOfSearch1() {
 	/*
 	   Snippet for the indexExists method.
@@ -2272,6 +2402,7 @@ func SnippetForIndexExistsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForIndexExistsOfSearch2() {
 	/*
 	   Snippet for the indexExists method.
@@ -2300,6 +2431,7 @@ func SnippetForIndexExistsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListApiKeysOfSearch() {
 	/*
 	   Snippet for the listApiKeys method.
@@ -2327,6 +2459,7 @@ func SnippetForListApiKeysOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListClustersOfSearch() {
 	/*
 	   Snippet for the listClusters method.
@@ -2354,6 +2487,7 @@ func SnippetForListClustersOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListIndicesOfSearch() {
 	/*
 	   Snippet for the listIndices method.
@@ -2381,6 +2515,7 @@ func SnippetForListIndicesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListIndicesOfSearch1() {
 	/*
 	   Snippet for the listIndices method.
@@ -2408,6 +2543,7 @@ func SnippetForListIndicesOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListUserIdsOfSearch() {
 	/*
 	   Snippet for the listUserIds method.
@@ -2435,6 +2571,7 @@ func SnippetForListUserIdsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListUserIdsOfSearch1() {
 	/*
 	   Snippet for the listUserIds method.
@@ -2462,6 +2599,7 @@ func SnippetForListUserIdsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForMultipleBatchOfSearch() {
 	/*
 	   Snippet for the multipleBatch method.
@@ -2481,7 +2619,10 @@ func SnippetForMultipleBatchOfSearch() {
 	response, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
 		search.NewEmptyBatchParams().SetRequests(
-			[]search.MultipleBatchRequest{*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>")})))
+			[]search.MultipleBatchRequest{
+				*search.NewEmptyMultipleBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"}).SetIndexName("<YOUR_INDEX_NAME>"),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2492,6 +2633,7 @@ func SnippetForMultipleBatchOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForOperationIndexOfSearch() {
 	/*
 	   Snippet for the operationIndex method.
@@ -2522,6 +2664,7 @@ func SnippetForOperationIndexOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForOperationIndexOfSearch1() {
 	/*
 	   Snippet for the operationIndex method.
@@ -2551,6 +2694,7 @@ func SnippetForOperationIndexOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForOperationIndexOfSearch2() {
 	/*
 	   Snippet for the operationIndex method.
@@ -2580,6 +2724,7 @@ func SnippetForOperationIndexOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2608,6 +2753,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch1() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2636,6 +2782,7 @@ func SnippetForPartialUpdateObjectOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch2() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2664,6 +2811,7 @@ func SnippetForPartialUpdateObjectOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch3() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2692,6 +2840,7 @@ func SnippetForPartialUpdateObjectOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch4() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2720,6 +2869,7 @@ func SnippetForPartialUpdateObjectOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch5() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2748,6 +2898,7 @@ func SnippetForPartialUpdateObjectOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch6() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2776,6 +2927,7 @@ func SnippetForPartialUpdateObjectOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectOfSearch7() {
 	/*
 	   Snippet for the partialUpdateObject method.
@@ -2804,6 +2956,7 @@ func SnippetForPartialUpdateObjectOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectsOfSearch() {
 	/*
 	   Snippet for the partialUpdateObjects method.
@@ -2822,7 +2975,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 	// Call the API
 	response, err := client.PartialUpdateObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2833,6 +2986,7 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectsOfSearch1() {
 	/*
 	   Snippet for the partialUpdateObjects method.
@@ -2851,7 +3005,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	// Call the API
 	response, err := client.PartialUpdateObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}}, search.WithCreateIfNotExists(false))
+		[]map[string]any{{"objectID": "3", "name": "Cyril"}, {"objectID": "4", "name": "David"}}, search.WithCreateIfNotExists(false))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2862,6 +3016,7 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPartialUpdateObjectsWithTransformationOfSearch() {
 	/*
 	   Snippet for the partialUpdateObjectsWithTransformation method.
@@ -2880,7 +3035,13 @@ func SnippetForPartialUpdateObjectsWithTransformationOfSearch() {
 	// Call the API
 	response, err := client.PartialUpdateObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithCreateIfNotExists(true), search.WithWaitForTasks(true))
+		[]map[string]any{
+			{"objectID": "1", "name": "Adam"},
+			{"objectID": "2", "name": "Benoit"},
+		},
+		search.WithCreateIfNotExists(true),
+		search.WithWaitForTasks(true),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2891,6 +3052,7 @@ func SnippetForPartialUpdateObjectsWithTransformationOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForRemoveUserIdOfSearch() {
 	/*
 	   Snippet for the removeUserId method.
@@ -2919,6 +3081,7 @@ func SnippetForRemoveUserIdOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceAllObjectsOfSearch() {
 	/*
 	   Snippet for the replaceAllObjects method.
@@ -2937,7 +3100,20 @@ func SnippetForReplaceAllObjectsOfSearch() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+		[]map[string]any{
+			{"objectID": "1", "name": "Adam"},
+			{"objectID": "2", "name": "Benoit"},
+			{"objectID": "3", "name": "Cyril"},
+			{"objectID": "4", "name": "David"},
+			{"objectID": "5", "name": "Eva"},
+			{"objectID": "6", "name": "Fiona"},
+			{"objectID": "7", "name": "Gael"},
+			{"objectID": "8", "name": "Hugo"},
+			{"objectID": "9", "name": "Igor"},
+			{"objectID": "10", "name": "Julia"},
+		},
+		search.WithBatchSize(3),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2948,6 +3124,7 @@ func SnippetForReplaceAllObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceAllObjectsOfSearch1() {
 	/*
 	   Snippet for the replaceAllObjects method.
@@ -2966,7 +3143,7 @@ func SnippetForReplaceAllObjectsOfSearch1() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(77), search.WithScopes(
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(77), search.WithScopes(
 			[]search.ScopeType{search.ScopeType("settings"), search.ScopeType("synonyms")}))
 	if err != nil {
 		// handle the eventual error
@@ -2978,6 +3155,7 @@ func SnippetForReplaceAllObjectsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceAllObjectsOfSearch2() {
 	/*
 	   Snippet for the replaceAllObjects method.
@@ -2996,7 +3174,7 @@ func SnippetForReplaceAllObjectsOfSearch2() {
 	// Call the API
 	response, err := client.ReplaceAllObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "fine", "body": "small obj"}, map[string]any{"objectID": "toolarge", "body": "something bigger than 10KB"}})
+		[]map[string]any{{"objectID": "fine", "body": "small obj"}, {"objectID": "toolarge", "body": "something bigger than 10KB"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3007,6 +3185,7 @@ func SnippetForReplaceAllObjectsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
 	/*
 	   Snippet for the replaceAllObjectsWithTransformation method.
@@ -3025,7 +3204,20 @@ func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
 	// Call the API
 	response, err := client.ReplaceAllObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}}, search.WithBatchSize(3))
+		[]map[string]any{
+			{"objectID": "1", "name": "Adam"},
+			{"objectID": "2", "name": "Benoit"},
+			{"objectID": "3", "name": "Cyril"},
+			{"objectID": "4", "name": "David"},
+			{"objectID": "5", "name": "Eva"},
+			{"objectID": "6", "name": "Fiona"},
+			{"objectID": "7", "name": "Gael"},
+			{"objectID": "8", "name": "Hugo"},
+			{"objectID": "9", "name": "Igor"},
+			{"objectID": "10", "name": "Julia"},
+		},
+		search.WithBatchSize(3),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3036,6 +3228,7 @@ func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceSourcesOfSearch() {
 	/*
 	   Snippet for the replaceSources method.
@@ -3065,6 +3258,7 @@ func SnippetForReplaceSourcesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForRestoreApiKeyOfSearch() {
 	/*
 	   Snippet for the restoreApiKey method.
@@ -3093,6 +3287,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectOfSearch() {
 	/*
 	   Snippet for the saveObject method.
@@ -3110,7 +3305,14 @@ func SnippetForSaveObjectOfSearch() {
 
 	// Call the API
 	response, err := client.SaveObject(client.NewApiSaveObjectRequest(
-		"<YOUR_INDEX_NAME>", map[string]any{"name": "Black T-shirt", "color": "#000000||black", "availableIn": "https://source.unsplash.com/100x100/?paris||Paris", "objectID": "myID"}))
+		"<YOUR_INDEX_NAME>",
+		map[string]any{
+			"name":        "Black T-shirt",
+			"color":       "#000000||black",
+			"availableIn": "https://source.unsplash.com/100x100/?paris||Paris",
+			"objectID":    "myID",
+		},
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3121,6 +3323,7 @@ func SnippetForSaveObjectOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectsOfSearch() {
 	/*
 	   Snippet for the saveObjects method.
@@ -3139,7 +3342,7 @@ func SnippetForSaveObjectsOfSearch() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3150,6 +3353,7 @@ func SnippetForSaveObjectsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectsOfSearch1() {
 	/*
 	   Snippet for the saveObjects method.
@@ -3168,7 +3372,7 @@ func SnippetForSaveObjectsOfSearch1() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}})
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}})
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3179,6 +3383,7 @@ func SnippetForSaveObjectsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectsOfSearch2() {
 	/*
 	   Snippet for the saveObjects method.
@@ -3197,7 +3402,16 @@ func SnippetForSaveObjectsOfSearch2() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}})
+		[]map[string]any{
+			{
+				"objectID":   "1",
+				"visibility": "public",
+				"name":       "Hot 100 Billboard Charts",
+				"playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+				"createdAt":  "1500240452",
+			},
+		},
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3208,6 +3422,7 @@ func SnippetForSaveObjectsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectsOfSearch3() {
 	/*
 	   Snippet for the saveObjects method.
@@ -3226,7 +3441,19 @@ func SnippetForSaveObjectsOfSearch3() {
 	// Call the API
 	response, err := client.SaveObjects(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "visibility": "public", "name": "Hot 100 Billboard Charts", "playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f", "createdAt": "1500240452"}}, search.WithWaitForTasks(false), search.WithBatchSize(1000), search.WithHeaderParam("X-Algolia-User-ID", "*"))
+		[]map[string]any{
+			{
+				"objectID":   "1",
+				"visibility": "public",
+				"name":       "Hot 100 Billboard Charts",
+				"playlistId": "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+				"createdAt":  "1500240452",
+			},
+		},
+		search.WithWaitForTasks(false),
+		search.WithBatchSize(1000),
+		search.WithHeaderParam("X-Algolia-User-ID", "*"),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3237,6 +3464,7 @@ func SnippetForSaveObjectsOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveObjectsWithTransformationOfSearch() {
 	/*
 	   Snippet for the saveObjectsWithTransformation method.
@@ -3255,7 +3483,7 @@ func SnippetForSaveObjectsWithTransformationOfSearch() {
 	// Call the API
 	response, err := client.SaveObjectsWithTransformation(
 		"<YOUR_INDEX_NAME>",
-		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithWaitForTasks(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3266,6 +3494,7 @@ func SnippetForSaveObjectsWithTransformationOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch() {
 	/*
 	   Snippet for the saveRule method.
@@ -3298,6 +3527,7 @@ func SnippetForSaveRuleOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch1() {
 	/*
 	   Snippet for the saveRule method.
@@ -3317,17 +3547,27 @@ func SnippetForSaveRuleOfSearch1() {
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
 		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptyRule().SetObjectID("id1").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
-			search.NewEmptyConsequence().SetParams(
-				search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
-					search.NewEmptyConsequenceQueryObject().SetRemove(
-						[]string{"algolia"}).SetEdits(
-						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"), *search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde")})))).SetHide(
-				[]search.ConsequenceHide{*search.NewEmptyConsequenceHide().SetObjectID("321")}).SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
-				[]search.Promote{*search.PromoteObjectIDAsPromote(
-					search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
-					search.NewEmptyPromoteObjectIDs().SetObjectIDs(
-						[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
+			[]search.Condition{
+				*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search"),
+			}).
+			SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetFilters("brand:apple").SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+						search.NewEmptyConsequenceQueryObject().SetRemove(
+							[]string{"algolia"}).SetEdits(
+							[]search.Edit{
+								*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("abc").SetInsert("cde"),
+								*search.NewEmptyEdit().SetType(search.EditType("replace")).SetDelete("abc").SetInsert("cde"),
+							}),
+					))).SetHide(
+					[]search.ConsequenceHide{
+						*search.NewEmptyConsequenceHide().SetObjectID("321"),
+					}).
+					SetFilterPromotes(false).SetUserData(map[string]any{"algolia": "aloglia"}).SetPromote(
+					[]search.Promote{*search.PromoteObjectIDAsPromote(
+						search.NewEmptyPromoteObjectID().SetObjectID("abc").SetPosition(3)), *search.PromoteObjectIDsAsPromote(
+						search.NewEmptyPromoteObjectIDs().SetObjectIDs(
+							[]string{"abc", "def"}).SetPosition(1))})).SetDescription("test").SetEnabled(true).SetValidity(
 			[]search.TimeRange{*search.NewEmptyTimeRange().SetFrom(1656670273).SetUntil(1656670277)})).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
@@ -3339,6 +3579,7 @@ func SnippetForSaveRuleOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch2() {
 	/*
 	   Snippet for the saveRule method.
@@ -3362,7 +3603,10 @@ func SnippetForSaveRuleOfSearch2() {
 			search.NewEmptyConsequence().SetParams(
 				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 					search.NewEmptyConsequenceQueryObject().SetEdits(
-						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
+						[]search.Edit{
+							*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article"),
+						}),
+				)).SetRestrictSearchableAttributes(
 					[]string{"title", "book_id"})))))
 	if err != nil {
 		// handle the eventual error
@@ -3374,6 +3618,7 @@ func SnippetForSaveRuleOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch3() {
 	/*
 	   Snippet for the saveRule method.
@@ -3393,13 +3638,19 @@ func SnippetForSaveRuleOfSearch3() {
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
 		"<YOUR_INDEX_NAME>", "director-rule",
 		search.NewEmptyRule().SetObjectID("director-rule").SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("{facet:director} director").SetAnchoring(search.Anchoring("contains"))}).SetConsequence(
-			search.NewEmptyConsequence().SetParams(
-				search.NewEmptyConsequenceParams().SetRestrictSearchableAttributes(
-					[]string{"title", "book_id"}).SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
-					[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("director")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
-					search.NewEmptyConsequenceQueryObject().SetEdits(
-						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("director")})))))))
+			[]search.Condition{
+				*search.NewEmptyCondition().SetPattern("{facet:director} director").SetAnchoring(search.Anchoring("contains")),
+			}).
+			SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetRestrictSearchableAttributes(
+						[]string{"title", "book_id"}).SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
+						[]search.AutomaticFacetFilter{
+							*search.NewEmptyAutomaticFacetFilter().SetFacet("director"),
+						},
+					)).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+						search.NewEmptyConsequenceQueryObject().SetEdits(
+							[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("director")})))))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3410,6 +3661,7 @@ func SnippetForSaveRuleOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch4() {
 	/*
 	   Snippet for the saveRule method.
@@ -3441,6 +3693,7 @@ func SnippetForSaveRuleOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch5() {
 	/*
 	   Snippet for the saveRule method.
@@ -3473,6 +3726,7 @@ func SnippetForSaveRuleOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch6() {
 	/*
 	   Snippet for the saveRule method.
@@ -3504,6 +3758,7 @@ func SnippetForSaveRuleOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch7() {
 	/*
 	   Snippet for the saveRule method.
@@ -3536,6 +3791,7 @@ func SnippetForSaveRuleOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch8() {
 	/*
 	   Snippet for the saveRule method.
@@ -3570,6 +3826,7 @@ func SnippetForSaveRuleOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch9() {
 	/*
 	   Snippet for the saveRule method.
@@ -3603,6 +3860,7 @@ func SnippetForSaveRuleOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch10() {
 	/*
 	   Snippet for the saveRule method.
@@ -3636,6 +3894,7 @@ func SnippetForSaveRuleOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch11() {
 	/*
 	   Snippet for the saveRule method.
@@ -3659,7 +3918,10 @@ func SnippetForSaveRuleOfSearch11() {
 			search.NewEmptyConsequence().SetParams(
 				search.NewEmptyConsequenceParams().SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
 					search.NewEmptyConsequenceQueryObject().SetEdits(
-						[]search.Edit{*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article")}))).SetRestrictSearchableAttributes(
+						[]search.Edit{
+							*search.NewEmptyEdit().SetType(search.EditType("remove")).SetDelete("article"),
+						}),
+				)).SetRestrictSearchableAttributes(
 					[]string{"title", "book_id"})))))
 	if err != nil {
 		// handle the eventual error
@@ -3671,6 +3933,7 @@ func SnippetForSaveRuleOfSearch11() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch12() {
 	/*
 	   Snippet for the saveRule method.
@@ -3690,12 +3953,18 @@ func SnippetForSaveRuleOfSearch12() {
 	response, err := client.SaveRule(client.NewApiSaveRuleRequest(
 		"<YOUR_INDEX_NAME>", "tagged-brand-rule",
 		search.NewEmptyRule().SetConditions(
-			[]search.Condition{*search.NewEmptyCondition().SetPattern("brand: {facet:brand}").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false)}).SetConsequence(
-			search.NewEmptyConsequence().SetParams(
-				search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
-					[]search.AutomaticFacetFilter{*search.NewEmptyAutomaticFacetFilter().SetFacet("brand")})).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
-					search.NewEmptyConsequenceQueryObject().SetRemove(
-						[]string{"brand:", "{facet:brand}"}))))).SetDescription("filter on brand: {brand}").SetObjectID("tagged-brand-rule")))
+			[]search.Condition{
+				*search.NewEmptyCondition().SetPattern("brand: {facet:brand}").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false),
+			}).
+			SetConsequence(
+				search.NewEmptyConsequence().SetParams(
+					search.NewEmptyConsequenceParams().SetAutomaticFacetFilters(search.ArrayOfAutomaticFacetFilterAsAutomaticFacetFilters(
+						[]search.AutomaticFacetFilter{
+							*search.NewEmptyAutomaticFacetFilter().SetFacet("brand"),
+						},
+					)).SetQuery(search.ConsequenceQueryObjectAsConsequenceQuery(
+						search.NewEmptyConsequenceQueryObject().SetRemove(
+							[]string{"brand:", "{facet:brand}"}))))).SetDescription("filter on brand: {brand}").SetObjectID("tagged-brand-rule")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -3706,6 +3975,7 @@ func SnippetForSaveRuleOfSearch12() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch13() {
 	/*
 	   Snippet for the saveRule method.
@@ -3739,6 +4009,7 @@ func SnippetForSaveRuleOfSearch13() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch14() {
 	/*
 	   Snippet for the saveRule method.
@@ -3771,6 +4042,7 @@ func SnippetForSaveRuleOfSearch14() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch15() {
 	/*
 	   Snippet for the saveRule method.
@@ -3805,6 +4077,7 @@ func SnippetForSaveRuleOfSearch15() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch16() {
 	/*
 	   Snippet for the saveRule method.
@@ -3839,6 +4112,7 @@ func SnippetForSaveRuleOfSearch16() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch17() {
 	/*
 	   Snippet for the saveRule method.
@@ -3873,6 +4147,7 @@ func SnippetForSaveRuleOfSearch17() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch18() {
 	/*
 	   Snippet for the saveRule method.
@@ -3907,6 +4182,7 @@ func SnippetForSaveRuleOfSearch18() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch19() {
 	/*
 	   Snippet for the saveRule method.
@@ -3940,6 +4216,7 @@ func SnippetForSaveRuleOfSearch19() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch20() {
 	/*
 	   Snippet for the saveRule method.
@@ -3972,6 +4249,7 @@ func SnippetForSaveRuleOfSearch20() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch21() {
 	/*
 	   Snippet for the saveRule method.
@@ -4004,6 +4282,7 @@ func SnippetForSaveRuleOfSearch21() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRuleOfSearch22() {
 	/*
 	   Snippet for the saveRule method.
@@ -4036,6 +4315,7 @@ func SnippetForSaveRuleOfSearch22() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRulesOfSearch() {
 	/*
 	   Snippet for the saveRules method.
@@ -4071,6 +4351,7 @@ func SnippetForSaveRulesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRulesOfSearch1() {
 	/*
 	   Snippet for the saveRules method.
@@ -4112,6 +4393,7 @@ func SnippetForSaveRulesOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRulesOfSearch2() {
 	/*
 	   Snippet for the saveRules method.
@@ -4151,6 +4433,7 @@ func SnippetForSaveRulesOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveRulesOfSearch3() {
 	/*
 	   Snippet for the saveRules method.
@@ -4186,6 +4469,7 @@ func SnippetForSaveRulesOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveSynonymOfSearch() {
 	/*
 	   Snippet for the saveSynonym method.
@@ -4205,7 +4489,7 @@ func SnippetForSaveSynonymOfSearch() {
 	response, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
 		"<YOUR_INDEX_NAME>", "id1",
 		search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-			[]string{"car", "vehicule", "auto"})).WithForwardToReplicas(true))
+			[]string{"car", "vehicle", "auto"})).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -4216,6 +4500,7 @@ func SnippetForSaveSynonymOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSaveSynonymsOfSearch() {
 	/*
 	   Snippet for the saveSynonyms method.
@@ -4235,7 +4520,7 @@ func SnippetForSaveSynonymsOfSearch() {
 	response, err := client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
 		"<YOUR_INDEX_NAME>",
 		[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
-			[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
+			[]string{"car", "vehicle", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
 			[]string{"ephone", "aphone", "yphone"})}).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
 	if err != nil {
 		// handle the eventual error
@@ -4247,6 +4532,7 @@ func SnippetForSaveSynonymsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch() {
 	/*
 	   Snippet for the search method.
@@ -4278,6 +4564,7 @@ func SnippetForSearchOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch1() {
 	/*
 	   Snippet for the search method.
@@ -4309,6 +4596,7 @@ func SnippetForSearchOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch2() {
 	/*
 	   Snippet for the search method.
@@ -4340,6 +4628,7 @@ func SnippetForSearchOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch3() {
 	/*
 	   Snippet for the search method.
@@ -4371,6 +4660,7 @@ func SnippetForSearchOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch4() {
 	/*
 	   Snippet for the search method.
@@ -4402,6 +4692,7 @@ func SnippetForSearchOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch5() {
 	/*
 	   Snippet for the search method.
@@ -4436,6 +4727,7 @@ func SnippetForSearchOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch6() {
 	/*
 	   Snippet for the search method.
@@ -4468,6 +4760,7 @@ func SnippetForSearchOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch7() {
 	/*
 	   Snippet for the search method.
@@ -4500,6 +4793,7 @@ func SnippetForSearchOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch8() {
 	/*
 	   Snippet for the search method.
@@ -4531,6 +4825,7 @@ func SnippetForSearchOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch9() {
 	/*
 	   Snippet for the search method.
@@ -4562,6 +4857,7 @@ func SnippetForSearchOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch10() {
 	/*
 	   Snippet for the search method.
@@ -4593,6 +4889,7 @@ func SnippetForSearchOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch11() {
 	/*
 	   Snippet for the search method.
@@ -4626,6 +4923,7 @@ func SnippetForSearchOfSearch11() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch12() {
 	/*
 	   Snippet for the search method.
@@ -4658,6 +4956,7 @@ func SnippetForSearchOfSearch12() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch13() {
 	/*
 	   Snippet for the search method.
@@ -4701,6 +5000,7 @@ func SnippetForSearchOfSearch13() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch14() {
 	/*
 	   Snippet for the search method.
@@ -4741,6 +5041,7 @@ func SnippetForSearchOfSearch14() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchOfSearch15() {
 	/*
 	   Snippet for the search method.
@@ -4773,11 +5074,13 @@ func SnippetForSearchOfSearch15() {
 					[]search.FacetFilters{*search.StringAsFacetFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
 					[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("<YOUR_INDEX_NAME>").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 					[][]float64{
-						[]float64{47.3165, 4.9665, 47.3424, 5.0201},
-						[]float64{40.9234, 2.1185, 38.643, 1.9916}})).SetInsidePolygon(
+						{47.3165, 4.9665, 47.3424, 5.0201},
+						{40.9234, 2.1185, 38.643, 1.9916},
+					})).SetInsidePolygon(
 					[][]float64{
-						[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
-						[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
+						{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
+						{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104},
+					}).SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
 					[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
 					[]search.NumericFilters{*search.StringAsNumericFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
 					[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
@@ -4804,6 +5107,7 @@ func SnippetForSearchOfSearch15() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchDictionaryEntriesOfSearch() {
 	/*
 	   Snippet for the searchDictionaryEntries method.
@@ -4833,6 +5137,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchDictionaryEntriesOfSearch1() {
 	/*
 	   Snippet for the searchDictionaryEntries method.
@@ -4862,6 +5167,7 @@ func SnippetForSearchDictionaryEntriesOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchForFacetValuesOfSearch() {
 	/*
 	   Snippet for the searchForFacetValues method.
@@ -4890,6 +5196,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchForFacetValuesOfSearch1() {
 	/*
 	   Snippet for the searchForFacetValues method.
@@ -4919,6 +5226,7 @@ func SnippetForSearchForFacetValuesOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchForFacetValuesOfSearch2() {
 	/*
 	   Snippet for the searchForFacetValues method.
@@ -4948,6 +5256,7 @@ func SnippetForSearchForFacetValuesOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchRulesOfSearch() {
 	/*
 	   Snippet for the searchRules method.
@@ -4977,6 +5286,7 @@ func SnippetForSearchRulesOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5005,6 +5315,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch1() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5033,6 +5344,7 @@ func SnippetForSearchSingleIndexOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch2() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5063,6 +5375,7 @@ func SnippetForSearchSingleIndexOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch3() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5094,6 +5407,7 @@ func SnippetForSearchSingleIndexOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch4() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5123,6 +5437,7 @@ func SnippetForSearchSingleIndexOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch5() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5152,6 +5467,7 @@ func SnippetForSearchSingleIndexOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch6() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5181,6 +5497,7 @@ func SnippetForSearchSingleIndexOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch7() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5210,6 +5527,7 @@ func SnippetForSearchSingleIndexOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch8() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5239,6 +5557,7 @@ func SnippetForSearchSingleIndexOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch9() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5268,6 +5587,7 @@ func SnippetForSearchSingleIndexOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch10() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5297,6 +5617,7 @@ func SnippetForSearchSingleIndexOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch11() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5315,7 +5636,10 @@ func SnippetForSearchSingleIndexOfSearch11() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(false))))
+		search.NewEmptySearchParamsObject().
+			SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").
+			SetSumOrFiltersScores(false),
+	)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5326,6 +5650,7 @@ func SnippetForSearchSingleIndexOfSearch11() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch12() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5344,7 +5669,10 @@ func SnippetForSearchSingleIndexOfSearch12() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").SetSumOrFiltersScores(true))))
+		search.NewEmptySearchParamsObject().
+			SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)").
+			SetSumOrFiltersScores(true),
+	)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5355,6 +5683,7 @@ func SnippetForSearchSingleIndexOfSearch12() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch13() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5384,6 +5713,7 @@ func SnippetForSearchSingleIndexOfSearch13() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch14() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5413,6 +5743,7 @@ func SnippetForSearchSingleIndexOfSearch14() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch15() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5444,6 +5775,7 @@ func SnippetForSearchSingleIndexOfSearch15() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch16() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5474,6 +5806,7 @@ func SnippetForSearchSingleIndexOfSearch16() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch17() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5504,6 +5837,7 @@ func SnippetForSearchSingleIndexOfSearch17() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch18() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5535,6 +5869,7 @@ func SnippetForSearchSingleIndexOfSearch18() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch19() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5566,6 +5901,7 @@ func SnippetForSearchSingleIndexOfSearch19() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch20() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5595,6 +5931,7 @@ func SnippetForSearchSingleIndexOfSearch20() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch21() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5613,8 +5950,11 @@ func SnippetForSearchSingleIndexOfSearch21() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetFilters("(author:\"Stephen King\" OR genre:\"Horror\")").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
-			[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin")})))))
+		search.NewEmptySearchParamsObject().
+			SetFilters("(author:\"Stephen King\" OR genre:\"Horror\")").
+			SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+				[]search.FacetFilters{*search.StringAsFacetFilters("publisher:Penguin")})),
+	)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5625,6 +5965,7 @@ func SnippetForSearchSingleIndexOfSearch21() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch22() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5655,6 +5996,7 @@ func SnippetForSearchSingleIndexOfSearch22() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch23() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5685,6 +6027,7 @@ func SnippetForSearchSingleIndexOfSearch23() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch24() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5714,6 +6057,7 @@ func SnippetForSearchSingleIndexOfSearch24() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch25() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5743,6 +6087,7 @@ func SnippetForSearchSingleIndexOfSearch25() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch26() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5772,6 +6117,7 @@ func SnippetForSearchSingleIndexOfSearch26() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch27() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5801,6 +6147,7 @@ func SnippetForSearchSingleIndexOfSearch27() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch28() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5821,7 +6168,8 @@ func SnippetForSearchSingleIndexOfSearch28() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 			[][]float64{
-				[]float64{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875}})))))
+				{49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875},
+			})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5832,6 +6180,7 @@ func SnippetForSearchSingleIndexOfSearch28() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch29() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5852,7 +6201,21 @@ func SnippetForSearchSingleIndexOfSearch29() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetInsidePolygon(
 			[][]float64{
-				[]float64{42.01, -124.31, 48.835509470063045, -124.40453125000005, 45.01082951668149, -65.95726562500005, 31.247243545293433, -81.06578125000004, 25.924152577235226, -97.68234374999997, 32.300311895879545, -117.54828125}}))))
+				{
+					42.01,
+					-124.31,
+					48.835509470063045,
+					-124.40453125000005,
+					45.01082951668149,
+					-65.95726562500005,
+					31.247243545293433,
+					-81.06578125000004,
+					25.924152577235226,
+					-97.68234374999997,
+					32.300311895879545,
+					-117.54828125,
+				},
+			}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5863,6 +6226,7 @@ func SnippetForSearchSingleIndexOfSearch29() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch30() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5893,6 +6257,7 @@ func SnippetForSearchSingleIndexOfSearch30() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch31() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5912,7 +6277,12 @@ func SnippetForSearchSingleIndexOfSearch31() {
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
-			[]search.OptionalFilters{*search.StringAsOptionalFilters("brand:Apple<score=3>"), *search.StringAsOptionalFilters("brand:Samsung<score=2>"), *search.StringAsOptionalFilters("brand:-Huawei")})))))
+			[]search.OptionalFilters{
+				*search.StringAsOptionalFilters("brand:Apple<score=3>"),
+				*search.StringAsOptionalFilters("brand:Samsung<score=2>"),
+				*search.StringAsOptionalFilters("brand:-Huawei"),
+			},
+		)))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -5923,6 +6293,7 @@ func SnippetForSearchSingleIndexOfSearch31() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch32() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5953,6 +6324,7 @@ func SnippetForSearchSingleIndexOfSearch32() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch33() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -5983,6 +6355,7 @@ func SnippetForSearchSingleIndexOfSearch33() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch34() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6012,6 +6385,7 @@ func SnippetForSearchSingleIndexOfSearch34() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch35() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6041,6 +6415,7 @@ func SnippetForSearchSingleIndexOfSearch35() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch36() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6070,6 +6445,7 @@ func SnippetForSearchSingleIndexOfSearch36() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch37() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6099,6 +6475,7 @@ func SnippetForSearchSingleIndexOfSearch37() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch38() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6128,6 +6505,7 @@ func SnippetForSearchSingleIndexOfSearch38() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch39() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6157,6 +6535,7 @@ func SnippetForSearchSingleIndexOfSearch39() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch40() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6187,6 +6566,7 @@ func SnippetForSearchSingleIndexOfSearch40() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch41() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6217,6 +6597,7 @@ func SnippetForSearchSingleIndexOfSearch41() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch42() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6247,6 +6628,7 @@ func SnippetForSearchSingleIndexOfSearch42() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch43() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6277,6 +6659,7 @@ func SnippetForSearchSingleIndexOfSearch43() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch44() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6307,6 +6690,7 @@ func SnippetForSearchSingleIndexOfSearch44() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch45() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6336,6 +6720,7 @@ func SnippetForSearchSingleIndexOfSearch45() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch46() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6365,6 +6750,7 @@ func SnippetForSearchSingleIndexOfSearch46() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch47() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6394,6 +6780,7 @@ func SnippetForSearchSingleIndexOfSearch47() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch48() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6412,7 +6799,11 @@ func SnippetForSearchSingleIndexOfSearch48() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("").SetSimilarQuery("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen").SetFilters("year:1991 TO 2001"))))
+		search.NewEmptySearchParamsObject().
+			SetQuery("").
+			SetSimilarQuery("Comedy Drama Crime McDormand Macy Buscemi Stormare Presnell Coen").
+			SetFilters("year:1991 TO 2001"),
+	)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -6423,6 +6814,7 @@ func SnippetForSearchSingleIndexOfSearch48() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch49() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6453,6 +6845,7 @@ func SnippetForSearchSingleIndexOfSearch49() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch50() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6483,6 +6876,7 @@ func SnippetForSearchSingleIndexOfSearch50() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch51() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6512,6 +6906,7 @@ func SnippetForSearchSingleIndexOfSearch51() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch52() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6541,6 +6936,7 @@ func SnippetForSearchSingleIndexOfSearch52() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch53() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6559,7 +6955,10 @@ func SnippetForSearchSingleIndexOfSearch53() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query").SetFilters("available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""))))
+		search.NewEmptySearchParamsObject().
+			SetQuery("query").
+			SetFilters("available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John Doe\""),
+	)))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -6570,6 +6969,7 @@ func SnippetForSearchSingleIndexOfSearch53() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch54() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6599,6 +6999,7 @@ func SnippetForSearchSingleIndexOfSearch54() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch55() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6628,6 +7029,7 @@ func SnippetForSearchSingleIndexOfSearch55() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch56() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6657,6 +7059,7 @@ func SnippetForSearchSingleIndexOfSearch56() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch57() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6686,6 +7089,7 @@ func SnippetForSearchSingleIndexOfSearch57() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch58() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6716,6 +7120,7 @@ func SnippetForSearchSingleIndexOfSearch58() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch59() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6746,6 +7151,7 @@ func SnippetForSearchSingleIndexOfSearch59() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch60() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6776,6 +7182,7 @@ func SnippetForSearchSingleIndexOfSearch60() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch61() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6807,6 +7214,7 @@ func SnippetForSearchSingleIndexOfSearch61() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch62() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6838,6 +7246,7 @@ func SnippetForSearchSingleIndexOfSearch62() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch63() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6867,6 +7276,7 @@ func SnippetForSearchSingleIndexOfSearch63() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch64() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6897,6 +7307,7 @@ func SnippetForSearchSingleIndexOfSearch64() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch65() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6927,6 +7338,7 @@ func SnippetForSearchSingleIndexOfSearch65() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch66() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6956,6 +7368,7 @@ func SnippetForSearchSingleIndexOfSearch66() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch67() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -6985,6 +7398,7 @@ func SnippetForSearchSingleIndexOfSearch67() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch68() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7014,6 +7428,7 @@ func SnippetForSearchSingleIndexOfSearch68() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch69() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7044,6 +7459,7 @@ func SnippetForSearchSingleIndexOfSearch69() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch70() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7073,6 +7489,7 @@ func SnippetForSearchSingleIndexOfSearch70() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch71() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7102,6 +7519,7 @@ func SnippetForSearchSingleIndexOfSearch71() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch72() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7131,6 +7549,7 @@ func SnippetForSearchSingleIndexOfSearch72() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch73() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7160,6 +7579,7 @@ func SnippetForSearchSingleIndexOfSearch73() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch74() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7189,6 +7609,7 @@ func SnippetForSearchSingleIndexOfSearch74() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch75() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7218,6 +7639,7 @@ func SnippetForSearchSingleIndexOfSearch75() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch76() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7247,6 +7669,7 @@ func SnippetForSearchSingleIndexOfSearch76() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch77() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7276,6 +7699,7 @@ func SnippetForSearchSingleIndexOfSearch77() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch78() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7305,6 +7729,7 @@ func SnippetForSearchSingleIndexOfSearch78() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch79() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7334,6 +7759,7 @@ func SnippetForSearchSingleIndexOfSearch79() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch80() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7363,6 +7789,7 @@ func SnippetForSearchSingleIndexOfSearch80() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch81() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7392,6 +7819,7 @@ func SnippetForSearchSingleIndexOfSearch81() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch82() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7421,6 +7849,7 @@ func SnippetForSearchSingleIndexOfSearch82() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch83() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7439,7 +7868,10 @@ func SnippetForSearchSingleIndexOfSearch83() {
 	// Call the API
 	response, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
-		search.NewEmptySearchParamsObject().SetQuery("query").SetAroundLatLngViaIP(true))), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
+		search.NewEmptySearchParamsObject().
+			SetQuery("query").
+			SetAroundLatLngViaIP(true),
+	)), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -7450,6 +7882,7 @@ func SnippetForSearchSingleIndexOfSearch83() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch84() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7479,6 +7912,7 @@ func SnippetForSearchSingleIndexOfSearch84() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch85() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7508,6 +7942,7 @@ func SnippetForSearchSingleIndexOfSearch85() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch86() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7537,6 +7972,7 @@ func SnippetForSearchSingleIndexOfSearch86() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch87() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7567,6 +8003,7 @@ func SnippetForSearchSingleIndexOfSearch87() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch88() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7596,6 +8033,7 @@ func SnippetForSearchSingleIndexOfSearch88() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch89() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7616,7 +8054,8 @@ func SnippetForSearchSingleIndexOfSearch89() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("query").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 			[][]float64{
-				[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625}})))))
+				{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625},
+			})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -7627,6 +8066,7 @@ func SnippetForSearchSingleIndexOfSearch89() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch90() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7647,8 +8087,9 @@ func SnippetForSearchSingleIndexOfSearch90() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("query").SetInsideBoundingBox(search.ArrayOfArrayOfFloat64AsInsideBoundingBox(
 			[][]float64{
-				[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625},
-				[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875}})))))
+				{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625},
+				{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875},
+			})))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -7659,6 +8100,7 @@ func SnippetForSearchSingleIndexOfSearch90() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch91() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7679,7 +8121,8 @@ func SnippetForSearchSingleIndexOfSearch91() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("query").SetInsidePolygon(
 			[][]float64{
-				[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625}}))))
+				{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625},
+			}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -7690,6 +8133,7 @@ func SnippetForSearchSingleIndexOfSearch91() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch92() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7710,8 +8154,9 @@ func SnippetForSearchSingleIndexOfSearch92() {
 		"<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 		search.NewEmptySearchParamsObject().SetQuery("query").SetInsidePolygon(
 			[][]float64{
-				[]float64{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625},
-				[]float64{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625, 50.62626704081, 4.6181640625}}))))
+				{46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625, 49.62625916704081, 4.6181640625},
+				{49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875, 45.17210966999772, 1.009765625, 50.62626704081, 4.6181640625},
+			}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -7722,6 +8167,7 @@ func SnippetForSearchSingleIndexOfSearch92() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch93() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7752,6 +8198,7 @@ func SnippetForSearchSingleIndexOfSearch93() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch94() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7782,6 +8229,7 @@ func SnippetForSearchSingleIndexOfSearch94() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch95() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7812,6 +8260,7 @@ func SnippetForSearchSingleIndexOfSearch95() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch96() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7842,6 +8291,7 @@ func SnippetForSearchSingleIndexOfSearch96() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch97() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7871,6 +8321,7 @@ func SnippetForSearchSingleIndexOfSearch97() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch98() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7900,6 +8351,7 @@ func SnippetForSearchSingleIndexOfSearch98() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch99() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7930,6 +8382,7 @@ func SnippetForSearchSingleIndexOfSearch99() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch100() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7959,6 +8412,7 @@ func SnippetForSearchSingleIndexOfSearch100() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch101() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -7988,6 +8442,7 @@ func SnippetForSearchSingleIndexOfSearch101() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch102() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8017,6 +8472,7 @@ func SnippetForSearchSingleIndexOfSearch102() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch103() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8046,6 +8502,7 @@ func SnippetForSearchSingleIndexOfSearch103() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch104() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8075,6 +8532,7 @@ func SnippetForSearchSingleIndexOfSearch104() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch105() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8104,6 +8562,7 @@ func SnippetForSearchSingleIndexOfSearch105() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch106() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8133,6 +8592,7 @@ func SnippetForSearchSingleIndexOfSearch106() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch107() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8162,6 +8622,7 @@ func SnippetForSearchSingleIndexOfSearch107() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch108() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8192,6 +8653,7 @@ func SnippetForSearchSingleIndexOfSearch108() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch109() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8222,6 +8684,7 @@ func SnippetForSearchSingleIndexOfSearch109() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch110() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8251,6 +8714,7 @@ func SnippetForSearchSingleIndexOfSearch110() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch111() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8281,6 +8745,7 @@ func SnippetForSearchSingleIndexOfSearch111() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch112() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8311,6 +8776,7 @@ func SnippetForSearchSingleIndexOfSearch112() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch113() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8341,6 +8807,7 @@ func SnippetForSearchSingleIndexOfSearch113() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch114() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8370,6 +8837,7 @@ func SnippetForSearchSingleIndexOfSearch114() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch115() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8399,6 +8867,7 @@ func SnippetForSearchSingleIndexOfSearch115() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch116() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8428,6 +8897,7 @@ func SnippetForSearchSingleIndexOfSearch116() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch117() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8457,6 +8927,7 @@ func SnippetForSearchSingleIndexOfSearch117() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch118() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8486,6 +8957,7 @@ func SnippetForSearchSingleIndexOfSearch118() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch119() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8516,6 +8988,7 @@ func SnippetForSearchSingleIndexOfSearch119() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch120() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8545,6 +9018,7 @@ func SnippetForSearchSingleIndexOfSearch120() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch121() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8574,6 +9048,7 @@ func SnippetForSearchSingleIndexOfSearch121() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch122() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8603,6 +9078,7 @@ func SnippetForSearchSingleIndexOfSearch122() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch123() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8633,6 +9109,7 @@ func SnippetForSearchSingleIndexOfSearch123() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch124() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8662,6 +9139,7 @@ func SnippetForSearchSingleIndexOfSearch124() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch125() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8691,6 +9169,7 @@ func SnippetForSearchSingleIndexOfSearch125() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch126() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8720,6 +9199,7 @@ func SnippetForSearchSingleIndexOfSearch126() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch127() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8749,6 +9229,7 @@ func SnippetForSearchSingleIndexOfSearch127() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSingleIndexOfSearch128() {
 	/*
 	   Snippet for the searchSingleIndex method.
@@ -8778,6 +9259,7 @@ func SnippetForSearchSingleIndexOfSearch128() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSynonymsOfSearch() {
 	/*
 	   Snippet for the searchSynonyms method.
@@ -8806,6 +9288,7 @@ func SnippetForSearchSynonymsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSynonymsOfSearch1() {
 	/*
 	   Snippet for the searchSynonyms method.
@@ -8835,6 +9318,7 @@ func SnippetForSearchSynonymsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchUserIdsOfSearch() {
 	/*
 	   Snippet for the searchUserIds method.
@@ -8864,6 +9348,7 @@ func SnippetForSearchUserIdsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfSearch() {
 	/*
 	   Snippet for the setClientApiKey method.
@@ -8890,6 +9375,7 @@ func SnippetForSetClientApiKeyOfSearch() {
 	// >LOG
 	// SEPARATOR<
 }
+
 func SnippetForSetDictionarySettingsOfSearch() {
 	/*
 	   Snippet for the setDictionarySettings method.
@@ -8920,6 +9406,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetDictionarySettingsOfSearch1() {
 	/*
 	   Snippet for the setDictionarySettings method.
@@ -8939,7 +9426,12 @@ func SnippetForSetDictionarySettingsOfSearch1() {
 	response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
 		search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).SetStopwords(map[string]bool{"fr": false}).SetCompounds(map[string]bool{"ru": true}))))
+			search.NewEmptyStandardEntries().
+				SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).
+				SetStopwords(map[string]bool{"fr": false}).
+				SetCompounds(map[string]bool{"ru": true}),
+		),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -8950,6 +9442,7 @@ func SnippetForSetDictionarySettingsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch() {
 	/*
 	   Snippet for the setSettings method.
@@ -8968,7 +9461,10 @@ func SnippetForSetSettingsOfSearch() {
 	// Call the API
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyIndexSettings().SetPaginationLimitedTo(10).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false")))).WithForwardToReplicas(true))
+		search.NewEmptyIndexSettings().
+			SetPaginationLimitedTo(10).
+			SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false"))),
+	).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -8979,6 +9475,7 @@ func SnippetForSetSettingsOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch1() {
 	/*
 	   Snippet for the setSettings method.
@@ -9008,6 +9505,7 @@ func SnippetForSetSettingsOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch2() {
 	/*
 	   Snippet for the setSettings method.
@@ -9026,7 +9524,9 @@ func SnippetForSetSettingsOfSearch2() {
 	// Call the API
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min")))).WithForwardToReplicas(true))
+		search.NewEmptyIndexSettings().
+			SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))),
+	).WithForwardToReplicas(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -9037,6 +9537,7 @@ func SnippetForSetSettingsOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch3() {
 	/*
 	   Snippet for the setSettings method.
@@ -9066,6 +9567,7 @@ func SnippetForSetSettingsOfSearch3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch4() {
 	/*
 	   Snippet for the setSettings method.
@@ -9096,6 +9598,7 @@ func SnippetForSetSettingsOfSearch4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch5() {
 	/*
 	   Snippet for the setSettings method.
@@ -9125,6 +9628,7 @@ func SnippetForSetSettingsOfSearch5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch6() {
 	/*
 	   Snippet for the setSettings method.
@@ -9155,6 +9659,7 @@ func SnippetForSetSettingsOfSearch6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch7() {
 	/*
 	   Snippet for the setSettings method.
@@ -9184,6 +9689,7 @@ func SnippetForSetSettingsOfSearch7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch8() {
 	/*
 	   Snippet for the setSettings method.
@@ -9213,6 +9719,7 @@ func SnippetForSetSettingsOfSearch8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch9() {
 	/*
 	   Snippet for the setSettings method.
@@ -9242,6 +9749,7 @@ func SnippetForSetSettingsOfSearch9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch10() {
 	/*
 	   Snippet for the setSettings method.
@@ -9271,6 +9779,7 @@ func SnippetForSetSettingsOfSearch10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch11() {
 	/*
 	   Snippet for the setSettings method.
@@ -9300,6 +9809,7 @@ func SnippetForSetSettingsOfSearch11() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch12() {
 	/*
 	   Snippet for the setSettings method.
@@ -9329,6 +9839,7 @@ func SnippetForSetSettingsOfSearch12() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch13() {
 	/*
 	   Snippet for the setSettings method.
@@ -9359,6 +9870,7 @@ func SnippetForSetSettingsOfSearch13() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch14() {
 	/*
 	   Snippet for the setSettings method.
@@ -9389,6 +9901,7 @@ func SnippetForSetSettingsOfSearch14() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch15() {
 	/*
 	   Snippet for the setSettings method.
@@ -9419,6 +9932,7 @@ func SnippetForSetSettingsOfSearch15() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch16() {
 	/*
 	   Snippet for the setSettings method.
@@ -9449,6 +9963,7 @@ func SnippetForSetSettingsOfSearch16() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch17() {
 	/*
 	   Snippet for the setSettings method.
@@ -9479,6 +9994,7 @@ func SnippetForSetSettingsOfSearch17() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch18() {
 	/*
 	   Snippet for the setSettings method.
@@ -9509,6 +10025,7 @@ func SnippetForSetSettingsOfSearch18() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch19() {
 	/*
 	   Snippet for the setSettings method.
@@ -9539,6 +10056,7 @@ func SnippetForSetSettingsOfSearch19() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch20() {
 	/*
 	   Snippet for the setSettings method.
@@ -9569,6 +10087,7 @@ func SnippetForSetSettingsOfSearch20() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch21() {
 	/*
 	   Snippet for the setSettings method.
@@ -9599,6 +10118,7 @@ func SnippetForSetSettingsOfSearch21() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch22() {
 	/*
 	   Snippet for the setSettings method.
@@ -9629,6 +10149,7 @@ func SnippetForSetSettingsOfSearch22() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch23() {
 	/*
 	   Snippet for the setSettings method.
@@ -9659,6 +10180,7 @@ func SnippetForSetSettingsOfSearch23() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch24() {
 	/*
 	   Snippet for the setSettings method.
@@ -9689,6 +10211,7 @@ func SnippetForSetSettingsOfSearch24() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch25() {
 	/*
 	   Snippet for the setSettings method.
@@ -9718,6 +10241,7 @@ func SnippetForSetSettingsOfSearch25() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch26() {
 	/*
 	   Snippet for the setSettings method.
@@ -9747,6 +10271,7 @@ func SnippetForSetSettingsOfSearch26() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch27() {
 	/*
 	   Snippet for the setSettings method.
@@ -9777,6 +10302,7 @@ func SnippetForSetSettingsOfSearch27() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch28() {
 	/*
 	   Snippet for the setSettings method.
@@ -9807,6 +10333,7 @@ func SnippetForSetSettingsOfSearch28() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch29() {
 	/*
 	   Snippet for the setSettings method.
@@ -9837,6 +10364,7 @@ func SnippetForSetSettingsOfSearch29() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch30() {
 	/*
 	   Snippet for the setSettings method.
@@ -9867,6 +10395,7 @@ func SnippetForSetSettingsOfSearch30() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch31() {
 	/*
 	   Snippet for the setSettings method.
@@ -9897,6 +10426,7 @@ func SnippetForSetSettingsOfSearch31() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch32() {
 	/*
 	   Snippet for the setSettings method.
@@ -9928,6 +10458,7 @@ func SnippetForSetSettingsOfSearch32() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch33() {
 	/*
 	   Snippet for the setSettings method.
@@ -9958,6 +10489,7 @@ func SnippetForSetSettingsOfSearch33() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch34() {
 	/*
 	   Snippet for the setSettings method.
@@ -9988,6 +10520,7 @@ func SnippetForSetSettingsOfSearch34() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch35() {
 	/*
 	   Snippet for the setSettings method.
@@ -10018,6 +10551,7 @@ func SnippetForSetSettingsOfSearch35() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch36() {
 	/*
 	   Snippet for the setSettings method.
@@ -10048,6 +10582,7 @@ func SnippetForSetSettingsOfSearch36() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch37() {
 	/*
 	   Snippet for the setSettings method.
@@ -10078,6 +10613,7 @@ func SnippetForSetSettingsOfSearch37() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch38() {
 	/*
 	   Snippet for the setSettings method.
@@ -10108,6 +10644,7 @@ func SnippetForSetSettingsOfSearch38() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch39() {
 	/*
 	   Snippet for the setSettings method.
@@ -10139,6 +10676,7 @@ func SnippetForSetSettingsOfSearch39() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch40() {
 	/*
 	   Snippet for the setSettings method.
@@ -10169,6 +10707,7 @@ func SnippetForSetSettingsOfSearch40() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch41() {
 	/*
 	   Snippet for the setSettings method.
@@ -10199,6 +10738,7 @@ func SnippetForSetSettingsOfSearch41() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch42() {
 	/*
 	   Snippet for the setSettings method.
@@ -10229,6 +10769,7 @@ func SnippetForSetSettingsOfSearch42() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch43() {
 	/*
 	   Snippet for the setSettings method.
@@ -10259,6 +10800,7 @@ func SnippetForSetSettingsOfSearch43() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch44() {
 	/*
 	   Snippet for the setSettings method.
@@ -10289,6 +10831,7 @@ func SnippetForSetSettingsOfSearch44() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch45() {
 	/*
 	   Snippet for the setSettings method.
@@ -10319,6 +10862,7 @@ func SnippetForSetSettingsOfSearch45() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch46() {
 	/*
 	   Snippet for the setSettings method.
@@ -10348,6 +10892,7 @@ func SnippetForSetSettingsOfSearch46() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch47() {
 	/*
 	   Snippet for the setSettings method.
@@ -10377,6 +10922,7 @@ func SnippetForSetSettingsOfSearch47() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch48() {
 	/*
 	   Snippet for the setSettings method.
@@ -10407,6 +10953,7 @@ func SnippetForSetSettingsOfSearch48() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch49() {
 	/*
 	   Snippet for the setSettings method.
@@ -10437,6 +10984,7 @@ func SnippetForSetSettingsOfSearch49() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch50() {
 	/*
 	   Snippet for the setSettings method.
@@ -10467,6 +11015,7 @@ func SnippetForSetSettingsOfSearch50() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch51() {
 	/*
 	   Snippet for the setSettings method.
@@ -10498,6 +11047,7 @@ func SnippetForSetSettingsOfSearch51() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch52() {
 	/*
 	   Snippet for the setSettings method.
@@ -10528,6 +11078,7 @@ func SnippetForSetSettingsOfSearch52() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch53() {
 	/*
 	   Snippet for the setSettings method.
@@ -10558,6 +11109,7 @@ func SnippetForSetSettingsOfSearch53() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch54() {
 	/*
 	   Snippet for the setSettings method.
@@ -10577,24 +11129,55 @@ func SnippetForSetSettingsOfSearch54() {
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyIndexSettings().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
-			[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowCompressionOfIntegerArray(true).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
-			[]search.AlternativesAsExact{search.AlternativesAsExact("singleWordSynonym")}).SetAttributeCriteriaComputedByMinProximity(true).SetAttributeForDistinct("test").SetAttributesForFaceting(
+			[]search.AdvancedSyntaxFeatures{
+				search.AdvancedSyntaxFeatures("exactPhrase"),
+			}).
+			SetAllowCompressionOfIntegerArray(true).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
+			[]search.AlternativesAsExact{
+				search.AlternativesAsExact("singleWordSynonym"),
+			}).
+			SetAttributeCriteriaComputedByMinProximity(true).SetAttributeForDistinct("test").SetAttributesForFaceting(
 			[]string{"algolia"}).SetAttributesToHighlight(
 			[]string{"algolia"}).SetAttributesToRetrieve(
 			[]string{"algolia"}).SetAttributesToSnippet(
 			[]string{"algolia"}).SetAttributesToTransliterate(
 			[]string{"algolia"}).SetCamelCaseAttributes(
-			[]string{"algolia"}).SetCustomNormalization(map[string]map[string]string{"algolia": map[string]string{"aloglia": "aglolia"}}).SetCustomRanking(
-			[]string{"algolia"}).SetDecompoundQuery(false).SetDecompoundedAttributes(map[string]any{"algolia": "aloglia"}).SetDisableExactOnAttributes(
+			[]string{"algolia"}).SetCustomNormalization(map[string]map[string]string{"algolia": {"aloglia": "aglolia"}}).SetCustomRanking(
+			[]string{
+				"algolia",
+			}).
+			SetDecompoundQuery(false).SetDecompoundedAttributes(map[string]any{"algolia": "aloglia"}).SetDisableExactOnAttributes(
 			[]string{"algolia"}).SetDisablePrefixOnAttributes(
 			[]string{"algolia"}).SetDisableTypoToleranceOnAttributes(
 			[]string{"algolia"}).SetDisableTypoToleranceOnWords(
-			[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
-			[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
+			[]string{
+				"algolia",
+			}).
+			SetDistinct(search.Int32AsDistinct(3)).
+			SetEnablePersonalization(true).
+			SetEnableReRanking(false).
+			SetEnableRules(true).
+			SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).
+			SetHighlightPreTag("<span>").
+			SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
+			[]search.SupportedLanguage{
+				search.SupportedLanguage("fr"),
+			}).
+			SetKeepDiacriticsOnCharacters("abc").
+			SetMaxFacetHits(20).
+			SetMaxValuesPerFacet(30).
+			SetMinProximity(6).
+			SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
 			[]string{"algolia"}).SetOptionalWords(search.ArrayOfStringAsOptionalWords(
 			[]string{"myspace"})).SetPaginationLimitedTo(0).SetQueryLanguages(
 			[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
-			[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
+			[]string{
+				"geo",
+			}).
+			SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).
+			SetRelevancyStrictness(10).
+			SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).
+			SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
 			search.NewEmptyRenderingContent().SetFacetOrdering(
 				search.NewEmptyFacetOrdering().SetFacets(
 					search.NewEmptyFacets().SetOrder(
@@ -10604,7 +11187,10 @@ func SnippetForSetSettingsOfSearch54() {
 			[]string{"algolia"}).SetRestrictHighlightAndSnippetArrays(true).SetSearchableAttributes(
 			[]string{"foo"}).SetSemanticSearch(
 			search.NewEmptySemanticSearch().SetEventSources(
-				[]string{"foo"})).SetSeparatorsToIndex("bar").SetSnippetEllipsisText("---").SetSortFacetValuesBy("date").SetTypoTolerance(search.BoolAsTypoTolerance(false)).SetUnretrievableAttributes(
+				[]string{
+					"foo",
+				}),
+		).SetSeparatorsToIndex("bar").SetSnippetEllipsisText("---").SetSortFacetValuesBy("date").SetTypoTolerance(search.BoolAsTypoTolerance(false)).SetUnretrievableAttributes(
 			[]string{"foo"}).SetUserData(map[string]any{"user": "data"})))
 	if err != nil {
 		// handle the eventual error
@@ -10616,6 +11202,7 @@ func SnippetForSetSettingsOfSearch54() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch55() {
 	/*
 	   Snippet for the setSettings method.
@@ -10648,6 +11235,7 @@ func SnippetForSetSettingsOfSearch55() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch56() {
 	/*
 	   Snippet for the setSettings method.
@@ -10678,6 +11266,7 @@ func SnippetForSetSettingsOfSearch56() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch57() {
 	/*
 	   Snippet for the setSettings method.
@@ -10708,6 +11297,7 @@ func SnippetForSetSettingsOfSearch57() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch58() {
 	/*
 	   Snippet for the setSettings method.
@@ -10738,6 +11328,7 @@ func SnippetForSetSettingsOfSearch58() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch59() {
 	/*
 	   Snippet for the setSettings method.
@@ -10768,6 +11359,7 @@ func SnippetForSetSettingsOfSearch59() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch60() {
 	/*
 	   Snippet for the setSettings method.
@@ -10798,6 +11390,7 @@ func SnippetForSetSettingsOfSearch60() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch61() {
 	/*
 	   Snippet for the setSettings method.
@@ -10828,6 +11421,7 @@ func SnippetForSetSettingsOfSearch61() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch62() {
 	/*
 	   Snippet for the setSettings method.
@@ -10858,6 +11452,7 @@ func SnippetForSetSettingsOfSearch62() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch63() {
 	/*
 	   Snippet for the setSettings method.
@@ -10888,6 +11483,7 @@ func SnippetForSetSettingsOfSearch63() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch64() {
 	/*
 	   Snippet for the setSettings method.
@@ -10918,6 +11514,7 @@ func SnippetForSetSettingsOfSearch64() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch65() {
 	/*
 	   Snippet for the setSettings method.
@@ -10948,6 +11545,7 @@ func SnippetForSetSettingsOfSearch65() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch66() {
 	/*
 	   Snippet for the setSettings method.
@@ -10978,6 +11576,7 @@ func SnippetForSetSettingsOfSearch66() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch67() {
 	/*
 	   Snippet for the setSettings method.
@@ -11008,6 +11607,7 @@ func SnippetForSetSettingsOfSearch67() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch68() {
 	/*
 	   Snippet for the setSettings method.
@@ -11038,6 +11638,7 @@ func SnippetForSetSettingsOfSearch68() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch69() {
 	/*
 	   Snippet for the setSettings method.
@@ -11068,6 +11669,7 @@ func SnippetForSetSettingsOfSearch69() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch70() {
 	/*
 	   Snippet for the setSettings method.
@@ -11097,6 +11699,7 @@ func SnippetForSetSettingsOfSearch70() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch71() {
 	/*
 	   Snippet for the setSettings method.
@@ -11126,6 +11729,7 @@ func SnippetForSetSettingsOfSearch71() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch72() {
 	/*
 	   Snippet for the setSettings method.
@@ -11156,6 +11760,7 @@ func SnippetForSetSettingsOfSearch72() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch73() {
 	/*
 	   Snippet for the setSettings method.
@@ -11186,6 +11791,7 @@ func SnippetForSetSettingsOfSearch73() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch74() {
 	/*
 	   Snippet for the setSettings method.
@@ -11216,6 +11822,7 @@ func SnippetForSetSettingsOfSearch74() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch75() {
 	/*
 	   Snippet for the setSettings method.
@@ -11246,6 +11853,7 @@ func SnippetForSetSettingsOfSearch75() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch76() {
 	/*
 	   Snippet for the setSettings method.
@@ -11275,6 +11883,7 @@ func SnippetForSetSettingsOfSearch76() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch77() {
 	/*
 	   Snippet for the setSettings method.
@@ -11305,6 +11914,7 @@ func SnippetForSetSettingsOfSearch77() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch78() {
 	/*
 	   Snippet for the setSettings method.
@@ -11334,6 +11944,7 @@ func SnippetForSetSettingsOfSearch78() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch79() {
 	/*
 	   Snippet for the setSettings method.
@@ -11363,6 +11974,7 @@ func SnippetForSetSettingsOfSearch79() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch80() {
 	/*
 	   Snippet for the setSettings method.
@@ -11393,6 +12005,7 @@ func SnippetForSetSettingsOfSearch80() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch81() {
 	/*
 	   Snippet for the setSettings method.
@@ -11423,6 +12036,7 @@ func SnippetForSetSettingsOfSearch81() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch82() {
 	/*
 	   Snippet for the setSettings method.
@@ -11452,6 +12066,7 @@ func SnippetForSetSettingsOfSearch82() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch83() {
 	/*
 	   Snippet for the setSettings method.
@@ -11481,6 +12096,7 @@ func SnippetForSetSettingsOfSearch83() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch84() {
 	/*
 	   Snippet for the setSettings method.
@@ -11510,6 +12126,7 @@ func SnippetForSetSettingsOfSearch84() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch85() {
 	/*
 	   Snippet for the setSettings method.
@@ -11539,6 +12156,7 @@ func SnippetForSetSettingsOfSearch85() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch86() {
 	/*
 	   Snippet for the setSettings method.
@@ -11568,6 +12186,7 @@ func SnippetForSetSettingsOfSearch86() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch87() {
 	/*
 	   Snippet for the setSettings method.
@@ -11597,6 +12216,7 @@ func SnippetForSetSettingsOfSearch87() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch88() {
 	/*
 	   Snippet for the setSettings method.
@@ -11626,6 +12246,7 @@ func SnippetForSetSettingsOfSearch88() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch89() {
 	/*
 	   Snippet for the setSettings method.
@@ -11655,6 +12276,7 @@ func SnippetForSetSettingsOfSearch89() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch90() {
 	/*
 	   Snippet for the setSettings method.
@@ -11684,6 +12306,7 @@ func SnippetForSetSettingsOfSearch90() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch91() {
 	/*
 	   Snippet for the setSettings method.
@@ -11713,6 +12336,7 @@ func SnippetForSetSettingsOfSearch91() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch92() {
 	/*
 	   Snippet for the setSettings method.
@@ -11743,6 +12367,7 @@ func SnippetForSetSettingsOfSearch92() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch93() {
 	/*
 	   Snippet for the setSettings method.
@@ -11772,6 +12397,7 @@ func SnippetForSetSettingsOfSearch93() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch94() {
 	/*
 	   Snippet for the setSettings method.
@@ -11802,6 +12428,7 @@ func SnippetForSetSettingsOfSearch94() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch95() {
 	/*
 	   Snippet for the setSettings method.
@@ -11833,6 +12460,7 @@ func SnippetForSetSettingsOfSearch95() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch96() {
 	/*
 	   Snippet for the setSettings method.
@@ -11863,6 +12491,7 @@ func SnippetForSetSettingsOfSearch96() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch97() {
 	/*
 	   Snippet for the setSettings method.
@@ -11893,6 +12522,7 @@ func SnippetForSetSettingsOfSearch97() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch98() {
 	/*
 	   Snippet for the setSettings method.
@@ -11922,6 +12552,7 @@ func SnippetForSetSettingsOfSearch98() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch99() {
 	/*
 	   Snippet for the setSettings method.
@@ -11940,7 +12571,9 @@ func SnippetForSetSettingsOfSearch99() {
 	// Call the API
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyIndexSettings().SetDecompoundedAttributes(map[string]any{"de": []string{"name_de", "description_de"}, "fi": []string{"name_fi", "description_fi"}})))
+		search.NewEmptyIndexSettings().
+			SetDecompoundedAttributes(map[string]any{"de": []string{"name_de", "description_de"}, "fi": []string{"name_fi", "description_fi"}}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -11951,6 +12584,7 @@ func SnippetForSetSettingsOfSearch99() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch100() {
 	/*
 	   Snippet for the setSettings method.
@@ -11980,6 +12614,7 @@ func SnippetForSetSettingsOfSearch100() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch101() {
 	/*
 	   Snippet for the setSettings method.
@@ -11998,7 +12633,7 @@ func SnippetForSetSettingsOfSearch101() {
 	// Call the API
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
-		search.NewEmptyIndexSettings().SetCustomNormalization(map[string]map[string]string{"default": map[string]string{"ä": "ae"}})))
+		search.NewEmptyIndexSettings().SetCustomNormalization(map[string]map[string]string{"default": {"ä": "ae"}})))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -12009,6 +12644,7 @@ func SnippetForSetSettingsOfSearch101() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch102() {
 	/*
 	   Snippet for the setSettings method.
@@ -12028,7 +12664,10 @@ func SnippetForSetSettingsOfSearch102() {
 	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
 		"<YOUR_INDEX_NAME>",
 		search.NewEmptyIndexSettings().SetQueryLanguages(
-			[]search.SupportedLanguage{search.SupportedLanguage("es")}).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
+			[]search.SupportedLanguage{
+				search.SupportedLanguage("es"),
+			}).
+			SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetIgnorePlurals(search.BoolAsIgnorePlurals(true))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -12039,6 +12678,7 @@ func SnippetForSetSettingsOfSearch102() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch103() {
 	/*
 	   Snippet for the setSettings method.
@@ -12069,6 +12709,7 @@ func SnippetForSetSettingsOfSearch103() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch104() {
 	/*
 	   Snippet for the setSettings method.
@@ -12098,6 +12739,7 @@ func SnippetForSetSettingsOfSearch104() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch105() {
 	/*
 	   Snippet for the setSettings method.
@@ -12127,6 +12769,7 @@ func SnippetForSetSettingsOfSearch105() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch106() {
 	/*
 	   Snippet for the setSettings method.
@@ -12156,6 +12799,7 @@ func SnippetForSetSettingsOfSearch106() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch107() {
 	/*
 	   Snippet for the setSettings method.
@@ -12185,6 +12829,7 @@ func SnippetForSetSettingsOfSearch107() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch108() {
 	/*
 	   Snippet for the setSettings method.
@@ -12214,6 +12859,7 @@ func SnippetForSetSettingsOfSearch108() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch109() {
 	/*
 	   Snippet for the setSettings method.
@@ -12243,6 +12889,7 @@ func SnippetForSetSettingsOfSearch109() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch110() {
 	/*
 	   Snippet for the setSettings method.
@@ -12273,6 +12920,7 @@ func SnippetForSetSettingsOfSearch110() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch111() {
 	/*
 	   Snippet for the setSettings method.
@@ -12303,6 +12951,7 @@ func SnippetForSetSettingsOfSearch111() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch112() {
 	/*
 	   Snippet for the setSettings method.
@@ -12333,6 +12982,7 @@ func SnippetForSetSettingsOfSearch112() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch113() {
 	/*
 	   Snippet for the setSettings method.
@@ -12362,6 +13012,7 @@ func SnippetForSetSettingsOfSearch113() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch114() {
 	/*
 	   Snippet for the setSettings method.
@@ -12392,6 +13043,7 @@ func SnippetForSetSettingsOfSearch114() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch115() {
 	/*
 	   Snippet for the setSettings method.
@@ -12422,6 +13074,7 @@ func SnippetForSetSettingsOfSearch115() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch116() {
 	/*
 	   Snippet for the setSettings method.
@@ -12451,6 +13104,7 @@ func SnippetForSetSettingsOfSearch116() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch117() {
 	/*
 	   Snippet for the setSettings method.
@@ -12480,6 +13134,7 @@ func SnippetForSetSettingsOfSearch117() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch118() {
 	/*
 	   Snippet for the setSettings method.
@@ -12509,6 +13164,7 @@ func SnippetForSetSettingsOfSearch118() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch119() {
 	/*
 	   Snippet for the setSettings method.
@@ -12538,6 +13194,7 @@ func SnippetForSetSettingsOfSearch119() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch120() {
 	/*
 	   Snippet for the setSettings method.
@@ -12567,6 +13224,7 @@ func SnippetForSetSettingsOfSearch120() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch121() {
 	/*
 	   Snippet for the setSettings method.
@@ -12597,6 +13255,7 @@ func SnippetForSetSettingsOfSearch121() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch122() {
 	/*
 	   Snippet for the setSettings method.
@@ -12626,6 +13285,7 @@ func SnippetForSetSettingsOfSearch122() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch123() {
 	/*
 	   Snippet for the setSettings method.
@@ -12655,6 +13315,7 @@ func SnippetForSetSettingsOfSearch123() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch124() {
 	/*
 	   Snippet for the setSettings method.
@@ -12684,6 +13345,7 @@ func SnippetForSetSettingsOfSearch124() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetSettingsOfSearch125() {
 	/*
 	   Snippet for the setSettings method.
@@ -12720,6 +13382,7 @@ func SnippetForSetSettingsOfSearch125() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateApiKeyOfSearch() {
 	/*
 	   Snippet for the updateApiKey method.
@@ -12750,6 +13413,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForWaitForApiKeyOfSearch() {
 	/*
 	   Snippet for the waitForApiKey method.
@@ -12778,6 +13442,7 @@ func SnippetForWaitForApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForWaitForApiKeyOfSearch1() {
 	/*
 	   Snippet for the waitForApiKey method.
@@ -12810,6 +13475,7 @@ func SnippetForWaitForApiKeyOfSearch1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForWaitForApiKeyOfSearch2() {
 	/*
 	   Snippet for the waitForApiKey method.
@@ -12838,6 +13504,7 @@ func SnippetForWaitForApiKeyOfSearch2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForWaitForAppTaskOfSearch() {
 	/*
 	   Snippet for the waitForAppTask method.
@@ -12866,6 +13533,7 @@ func SnippetForWaitForAppTaskOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForWaitForTaskOfSearch() {
 	/*
 	   Snippet for the waitForTask method.

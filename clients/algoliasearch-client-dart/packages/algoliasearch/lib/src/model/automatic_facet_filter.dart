@@ -22,7 +22,7 @@ final class AutomaticFacetFilter {
   @JsonKey(name: r'score')
   final int? score;
 
-  /// Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
+  /// Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurrences are combined with the logical `OR` operation. If false, multiple occurrences are combined with the logical `AND` operation.
   @JsonKey(name: r'disjunctive')
   final bool? disjunctive;
 

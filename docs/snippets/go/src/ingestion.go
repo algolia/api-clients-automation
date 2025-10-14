@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
+) // IMPORT<
 
 func SnippetForCreateAuthenticationOfIngestion() {
 	/*
@@ -23,9 +23,12 @@ func SnippetForCreateAuthenticationOfIngestion() {
 
 	// Call the API
 	response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
-
-		ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-			ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))))
+		ingestion.NewEmptyAuthenticationCreate().
+			SetType(ingestion.AuthenticationType("oauth")).
+			SetName("authName").
+			SetInput(ingestion.AuthOAuthAsAuthInput(
+				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -36,6 +39,7 @@ func SnippetForCreateAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateAuthenticationOfIngestion1() {
 	/*
 	   Snippet for the createAuthentication method.
@@ -53,9 +57,12 @@ func SnippetForCreateAuthenticationOfIngestion1() {
 
 	// Call the API
 	response, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
-
-		ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("algolia")).SetName("authName").SetInput(ingestion.AuthAlgoliaAsAuthInput(
-			ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY")))))
+		ingestion.NewEmptyAuthenticationCreate().
+			SetType(ingestion.AuthenticationType("algolia")).
+			SetName("authName").
+			SetInput(ingestion.AuthAlgoliaAsAuthInput(
+				ingestion.NewEmptyAuthAlgolia().SetAppID("ALGOLIA_APPLICATION_ID").SetApiKey("ALGOLIA_API_KEY"))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -66,6 +73,7 @@ func SnippetForCreateAuthenticationOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateDestinationOfIngestion() {
 	/*
 	   Snippet for the createDestination method.
@@ -96,6 +104,7 @@ func SnippetForCreateDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateDestinationOfIngestion1() {
 	/*
 	   Snippet for the createDestination method.
@@ -127,6 +136,7 @@ func SnippetForCreateDestinationOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateSourceOfIngestion() {
 	/*
 	   Snippet for the createSource method.
@@ -144,11 +154,19 @@ func SnippetForCreateSourceOfIngestion() {
 
 	// Call the API
 	response, err := client.CreateSource(client.NewApiCreateSourceRequest(
-
-		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-				[]string{"myStore"}).SetLocales(
-				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		ingestion.NewEmptySourceCreate().
+			SetType(ingestion.SourceType("commercetools")).
+			SetName("sourceName").
+			SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+					[]string{"myStore"}).SetLocales(
+					[]string{
+						"de",
+					}).
+					SetUrl("http://commercetools.com").
+					SetProjectKey("keyID").SetProductQueryPredicate("masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"))).
+			SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -159,6 +177,7 @@ func SnippetForCreateSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateSourceOfIngestion1() {
 	/*
 	   Snippet for the createSource method.
@@ -188,6 +207,7 @@ func SnippetForCreateSourceOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskOfIngestion() {
 	/*
 	   Snippet for the createTask method.
@@ -217,6 +237,7 @@ func SnippetForCreateTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskOfIngestion1() {
 	/*
 	   Snippet for the createTask method.
@@ -234,11 +255,17 @@ func SnippetForCreateTaskOfIngestion1() {
 
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
-
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
-			ingestion.NewEmptyNotifications().SetEmail(
-				ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
-			ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+		ingestion.NewEmptyTaskCreate().
+			SetSourceID("search").
+			SetDestinationID("destinationID").
+			SetCron("* * * * *").
+			SetAction(ingestion.ActionType("replace")).
+			SetNotifications(
+				ingestion.NewEmptyNotifications().SetEmail(
+					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).
+			SetPolicies(
+				ingestion.NewEmptyPolicies().SetCriticalThreshold(8)),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -249,6 +276,7 @@ func SnippetForCreateTaskOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskOfIngestion2() {
 	/*
 	   Snippet for the createTask method.
@@ -266,10 +294,18 @@ func SnippetForCreateTaskOfIngestion2() {
 
 	// Call the API
 	response, err := client.CreateTask(client.NewApiCreateTaskRequest(
-
-		ingestion.NewEmptyTaskCreate().SetSourceID("search").SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
-			ingestion.NewEmptyDockerStreamsInput().SetStreams(
-				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+		ingestion.NewEmptyTaskCreate().
+			SetSourceID("search").
+			SetDestinationID("destinationID").
+			SetCron("* * * * *").
+			SetAction(ingestion.ActionType("replace")).
+			SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{
+						*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental")),
+					}),
+			)),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -280,6 +316,7 @@ func SnippetForCreateTaskOfIngestion2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskV1OfIngestion() {
 	/*
 	   Snippet for the createTaskV1 method.
@@ -297,9 +334,13 @@ func SnippetForCreateTaskV1OfIngestion() {
 
 	// Call the API
 	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+		ingestion.NewEmptyTaskCreateV1().
+			SetSourceID("search").
+			SetDestinationID("destinationName").
+			SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).
+			SetAction(ingestion.ActionType("replace")),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -310,6 +351,7 @@ func SnippetForCreateTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskV1OfIngestion1() {
 	/*
 	   Snippet for the createTaskV1 method.
@@ -327,9 +369,17 @@ func SnippetForCreateTaskV1OfIngestion1() {
 
 	// Call the API
 	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.ScheduleTriggerInputAsTaskCreateTrigger(
-			ingestion.NewEmptyScheduleTriggerInput().SetType(ingestion.ScheduleTriggerType("schedule")).SetCron("* * * * *"))).SetAction(ingestion.ActionType("replace"))))
+		ingestion.NewEmptyTaskCreateV1().
+			SetSourceID("search").
+			SetDestinationID("destinationName").
+			SetTrigger(ingestion.ScheduleTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyScheduleTriggerInput().
+					SetType(ingestion.ScheduleTriggerType("schedule")).
+					SetCron("* * * * *"),
+			),
+			).
+			SetAction(ingestion.ActionType("replace")),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -340,6 +390,7 @@ func SnippetForCreateTaskV1OfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskV1OfIngestion2() {
 	/*
 	   Snippet for the createTaskV1 method.
@@ -357,9 +408,13 @@ func SnippetForCreateTaskV1OfIngestion2() {
 
 	// Call the API
 	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace"))))
+		ingestion.NewEmptyTaskCreateV1().
+			SetSourceID("search").
+			SetDestinationID("destinationName").
+			SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).
+			SetAction(ingestion.ActionType("replace")),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -370,6 +425,7 @@ func SnippetForCreateTaskV1OfIngestion2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTaskV1OfIngestion3() {
 	/*
 	   Snippet for the createTaskV1 method.
@@ -387,11 +443,22 @@ func SnippetForCreateTaskV1OfIngestion3() {
 
 	// Call the API
 	response, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
-
-		ingestion.NewEmptyTaskCreateV1().SetSourceID("search").SetDestinationID("destinationName").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
-			ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType("onDemand")))).SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
-			ingestion.NewEmptyDockerStreamsInput().SetStreams(
-				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+		ingestion.NewEmptyTaskCreateV1().
+			SetSourceID("search").
+			SetDestinationID("destinationName").
+			SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(
+				ingestion.NewEmptyOnDemandTriggerInput().
+					SetType(ingestion.OnDemandTriggerType("onDemand")),
+			),
+			).
+			SetAction(ingestion.ActionType("replace")).
+			SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{
+						*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental")),
+					}),
+			)),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -402,6 +469,7 @@ func SnippetForCreateTaskV1OfIngestion3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCreateTransformationOfIngestion() {
 	/*
 	   Snippet for the createTransformation method.
@@ -421,7 +489,9 @@ func SnippetForCreateTransformationOfIngestion() {
 	response, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(
 
 		ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
+			ingestion.NewEmptyTransformationCode().
+				SetCode("foo"),
+		)).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -432,6 +502,7 @@ func SnippetForCreateTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfIngestion() {
 	/*
 	   Snippet for the customDelete method.
@@ -460,6 +531,7 @@ func SnippetForCustomDeleteOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfIngestion1() {
 	/*
 	   Snippet for the customDelete method.
@@ -488,6 +560,7 @@ func SnippetForCustomDeleteOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfIngestion() {
 	/*
 	   Snippet for the customGet method.
@@ -516,6 +589,7 @@ func SnippetForCustomGetOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfIngestion1() {
 	/*
 	   Snippet for the customGet method.
@@ -544,6 +618,7 @@ func SnippetForCustomGetOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfIngestion2() {
 	/*
 	   Snippet for the customGet method.
@@ -561,7 +636,8 @@ func SnippetForCustomGetOfIngestion2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), ingestion.WithQueryParam("query", "parameters with space"), ingestion.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), ingestion.WithQueryParam("query", "parameters with space"), ingestion.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), ingestion.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -573,6 +649,7 @@ func SnippetForCustomGetOfIngestion2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion() {
 	/*
 	   Snippet for the customPost method.
@@ -601,6 +678,7 @@ func SnippetForCustomPostOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion1() {
 	/*
 	   Snippet for the customPost method.
@@ -629,6 +707,7 @@ func SnippetForCustomPostOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion2() {
 	/*
 	   Snippet for the customPost method.
@@ -646,7 +725,8 @@ func SnippetForCustomPostOfIngestion2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -657,6 +737,7 @@ func SnippetForCustomPostOfIngestion2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion3() {
 	/*
 	   Snippet for the customPost method.
@@ -674,7 +755,8 @@ func SnippetForCustomPostOfIngestion3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -685,6 +767,7 @@ func SnippetForCustomPostOfIngestion3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion4() {
 	/*
 	   Snippet for the customPost method.
@@ -702,7 +785,8 @@ func SnippetForCustomPostOfIngestion4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -713,6 +797,7 @@ func SnippetForCustomPostOfIngestion4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion5() {
 	/*
 	   Snippet for the customPost method.
@@ -730,7 +815,8 @@ func SnippetForCustomPostOfIngestion5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -741,6 +827,7 @@ func SnippetForCustomPostOfIngestion5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion6() {
 	/*
 	   Snippet for the customPost method.
@@ -758,7 +845,8 @@ func SnippetForCustomPostOfIngestion6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -769,6 +857,7 @@ func SnippetForCustomPostOfIngestion6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion7() {
 	/*
 	   Snippet for the customPost method.
@@ -786,7 +875,8 @@ func SnippetForCustomPostOfIngestion7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -797,6 +887,7 @@ func SnippetForCustomPostOfIngestion7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion8() {
 	/*
 	   Snippet for the customPost method.
@@ -814,7 +905,8 @@ func SnippetForCustomPostOfIngestion8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -826,6 +918,7 @@ func SnippetForCustomPostOfIngestion8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion9() {
 	/*
 	   Snippet for the customPost method.
@@ -843,7 +936,8 @@ func SnippetForCustomPostOfIngestion9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -855,6 +949,7 @@ func SnippetForCustomPostOfIngestion9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfIngestion10() {
 	/*
 	   Snippet for the customPost method.
@@ -872,7 +967,8 @@ func SnippetForCustomPostOfIngestion10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), ingestion.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -884,6 +980,7 @@ func SnippetForCustomPostOfIngestion10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfIngestion() {
 	/*
 	   Snippet for the customPut method.
@@ -912,6 +1009,7 @@ func SnippetForCustomPutOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfIngestion1() {
 	/*
 	   Snippet for the customPut method.
@@ -940,6 +1038,7 @@ func SnippetForCustomPutOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteAuthenticationOfIngestion() {
 	/*
 	   Snippet for the deleteAuthentication method.
@@ -968,6 +1067,7 @@ func SnippetForDeleteAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteDestinationOfIngestion() {
 	/*
 	   Snippet for the deleteDestination method.
@@ -996,6 +1096,7 @@ func SnippetForDeleteDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteSourceOfIngestion() {
 	/*
 	   Snippet for the deleteSource method.
@@ -1024,6 +1125,7 @@ func SnippetForDeleteSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteTaskOfIngestion() {
 	/*
 	   Snippet for the deleteTask method.
@@ -1052,6 +1154,7 @@ func SnippetForDeleteTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteTaskV1OfIngestion() {
 	/*
 	   Snippet for the deleteTaskV1 method.
@@ -1080,6 +1183,7 @@ func SnippetForDeleteTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteTransformationOfIngestion() {
 	/*
 	   Snippet for the deleteTransformation method.
@@ -1108,6 +1212,7 @@ func SnippetForDeleteTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDisableTaskOfIngestion() {
 	/*
 	   Snippet for the disableTask method.
@@ -1136,6 +1241,7 @@ func SnippetForDisableTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDisableTaskV1OfIngestion() {
 	/*
 	   Snippet for the disableTaskV1 method.
@@ -1164,6 +1270,7 @@ func SnippetForDisableTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForEnableTaskOfIngestion() {
 	/*
 	   Snippet for the enableTask method.
@@ -1192,6 +1299,7 @@ func SnippetForEnableTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForEnableTaskV1OfIngestion() {
 	/*
 	   Snippet for the enableTaskV1 method.
@@ -1220,6 +1328,7 @@ func SnippetForEnableTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAuthenticationOfIngestion() {
 	/*
 	   Snippet for the getAuthentication method.
@@ -1248,6 +1357,7 @@ func SnippetForGetAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetDestinationOfIngestion() {
 	/*
 	   Snippet for the getDestination method.
@@ -1276,6 +1386,7 @@ func SnippetForGetDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetEventOfIngestion() {
 	/*
 	   Snippet for the getEvent method.
@@ -1304,6 +1415,7 @@ func SnippetForGetEventOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRunOfIngestion() {
 	/*
 	   Snippet for the getRun method.
@@ -1332,6 +1444,7 @@ func SnippetForGetRunOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSourceOfIngestion() {
 	/*
 	   Snippet for the getSource method.
@@ -1360,6 +1473,7 @@ func SnippetForGetSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTaskOfIngestion() {
 	/*
 	   Snippet for the getTask method.
@@ -1388,6 +1502,7 @@ func SnippetForGetTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTaskV1OfIngestion() {
 	/*
 	   Snippet for the getTaskV1 method.
@@ -1416,6 +1531,7 @@ func SnippetForGetTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTransformationOfIngestion() {
 	/*
 	   Snippet for the getTransformation method.
@@ -1444,6 +1560,7 @@ func SnippetForGetTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListAuthenticationsOfIngestion() {
 	/*
 	   Snippet for the listAuthentications method.
@@ -1471,6 +1588,7 @@ func SnippetForListAuthenticationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListAuthenticationsOfIngestion1() {
 	/*
 	   Snippet for the listAuthentications method.
@@ -1489,7 +1607,10 @@ func SnippetForListAuthenticationsOfIngestion1() {
 	// Call the API
 	response, err := client.ListAuthentications(client.NewApiListAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(
 		[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
-		[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
+		[]ingestion.PlatformWithNone{
+			*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none")),
+		}).
+		WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1500,6 +1621,7 @@ func SnippetForListAuthenticationsOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListDestinationsOfIngestion() {
 	/*
 	   Snippet for the listDestinations method.
@@ -1527,6 +1649,7 @@ func SnippetForListDestinationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListEventsOfIngestion() {
 	/*
 	   Snippet for the listEvents method.
@@ -1555,6 +1678,7 @@ func SnippetForListEventsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListRunsOfIngestion() {
 	/*
 	   Snippet for the listRuns method.
@@ -1582,6 +1706,7 @@ func SnippetForListRunsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListSourcesOfIngestion() {
 	/*
 	   Snippet for the listSources method.
@@ -1609,6 +1734,7 @@ func SnippetForListSourcesOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListTasksOfIngestion() {
 	/*
 	   Snippet for the listTasks method.
@@ -1636,6 +1762,7 @@ func SnippetForListTasksOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListTasksV1OfIngestion() {
 	/*
 	   Snippet for the listTasksV1 method.
@@ -1663,6 +1790,7 @@ func SnippetForListTasksV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListTransformationsOfIngestion() {
 	/*
 	   Snippet for the listTransformations method.
@@ -1690,6 +1818,7 @@ func SnippetForListTransformationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListTransformationsOfIngestion1() {
 	/*
 	   Snippet for the listTransformations method.
@@ -1706,7 +1835,14 @@ func SnippetForListTransformationsOfIngestion1() {
 	}
 
 	// Call the API
-	response, err := client.ListTransformations(client.NewApiListTransformationsRequest().WithItemsPerPage(2).WithPage(1).WithSort(ingestion.TransformationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")).WithType(ingestion.TransformationType("noCode")))
+	response, err := client.ListTransformations(
+		client.NewApiListTransformationsRequest().
+			WithItemsPerPage(2).
+			WithPage(1).
+			WithSort(ingestion.TransformationSortKeys("createdAt")).
+			WithOrder(ingestion.OrderKeys("asc")).
+			WithType(ingestion.TransformationType("noCode")),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1717,6 +1853,7 @@ func SnippetForListTransformationsOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushOfIngestion() {
 	/*
 	   Snippet for the push method.
@@ -1736,7 +1873,11 @@ func SnippetForPushOfIngestion() {
 	response, err := client.Push(client.NewApiPushRequest(
 		"<YOUR_INDEX_NAME>",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1747,6 +1888,7 @@ func SnippetForPushOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushOfIngestion1() {
 	/*
 	   Snippet for the push method.
@@ -1766,7 +1908,11 @@ func SnippetForPushOfIngestion1() {
 	response, err := client.Push(client.NewApiPushRequest(
 		"<YOUR_INDEX_NAME>",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true).WithReferenceIndexName("foo"))
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			}),
+	).WithWatch(true).WithReferenceIndexName("foo"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1777,6 +1923,7 @@ func SnippetForPushOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushTaskOfIngestion() {
 	/*
 	   Snippet for the pushTask method.
@@ -1796,7 +1943,11 @@ func SnippetForPushTaskOfIngestion() {
 	response, err := client.PushTask(client.NewApiPushTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})))
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1807,6 +1958,7 @@ func SnippetForPushTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushTaskOfIngestion1() {
 	/*
 	   Snippet for the pushTask method.
@@ -1826,7 +1978,11 @@ func SnippetForPushTaskOfIngestion1() {
 	response, err := client.PushTask(client.NewApiPushTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyPushTaskPayload().SetAction(ingestion.Action("addObject")).SetRecords(
-			[]ingestion.PushTaskRecords{*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"), *ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k")})).WithWatch(true))
+			[]ingestion.PushTaskRecords{
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "bar").SetAdditionalProperty("foo", "1").SetObjectID("o"),
+				*ingestion.NewEmptyPushTaskRecords().SetAdditionalProperty("key", "baz").SetAdditionalProperty("foo", "2").SetObjectID("k"),
+			}),
+	).WithWatch(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1837,6 +1993,7 @@ func SnippetForPushTaskOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceTaskOfIngestion() {
 	/*
 	   Snippet for the replaceTask method.
@@ -1866,6 +2023,7 @@ func SnippetForReplaceTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceTaskOfIngestion1() {
 	/*
 	   Snippet for the replaceTask method.
@@ -1884,10 +2042,16 @@ func SnippetForReplaceTaskOfIngestion1() {
 	// Call the API
 	response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetNotifications(
-			ingestion.NewEmptyNotifications().SetEmail(
-				ingestion.NewEmptyEmailNotifications().SetEnabled(true))).SetPolicies(
-			ingestion.NewEmptyPolicies().SetCriticalThreshold(8))))
+		ingestion.NewEmptyTaskReplace().
+			SetDestinationID("destinationID").
+			SetCron("* * * * *").
+			SetAction(ingestion.ActionType("replace")).
+			SetNotifications(
+				ingestion.NewEmptyNotifications().SetEmail(
+					ingestion.NewEmptyEmailNotifications().SetEnabled(true))).
+			SetPolicies(
+				ingestion.NewEmptyPolicies().SetCriticalThreshold(8)),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1898,6 +2062,7 @@ func SnippetForReplaceTaskOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForReplaceTaskOfIngestion2() {
 	/*
 	   Snippet for the replaceTask method.
@@ -1916,9 +2081,17 @@ func SnippetForReplaceTaskOfIngestion2() {
 	// Call the API
 	response, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTaskReplace().SetDestinationID("destinationID").SetCron("* * * * *").SetAction(ingestion.ActionType("replace")).SetInput(ingestion.DockerStreamsInputAsTaskInput(
-			ingestion.NewEmptyDockerStreamsInput().SetStreams(
-				[]ingestion.DockerStreams{*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental"))})))))
+		ingestion.NewEmptyTaskReplace().
+			SetDestinationID("destinationID").
+			SetCron("* * * * *").
+			SetAction(ingestion.ActionType("replace")).
+			SetInput(ingestion.DockerStreamsInputAsTaskInput(
+				ingestion.NewEmptyDockerStreamsInput().SetStreams(
+					[]ingestion.DockerStreams{
+						*ingestion.NewEmptyDockerStreams().SetName("foo").SetSyncMode(ingestion.DockerStreamsSyncMode("incremental")),
+					}),
+			)),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1929,6 +2102,7 @@ func SnippetForReplaceTaskOfIngestion2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForRunSourceOfIngestion() {
 	/*
 	   Snippet for the runSource method.
@@ -1960,6 +2134,7 @@ func SnippetForRunSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForRunTaskOfIngestion() {
 	/*
 	   Snippet for the runTask method.
@@ -1988,6 +2163,7 @@ func SnippetForRunTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForRunTaskV1OfIngestion() {
 	/*
 	   Snippet for the runTaskV1 method.
@@ -2016,6 +2192,7 @@ func SnippetForRunTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchAuthenticationsOfIngestion() {
 	/*
 	   Snippet for the searchAuthentications method.
@@ -2046,6 +2223,7 @@ func SnippetForSearchAuthenticationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchDestinationsOfIngestion() {
 	/*
 	   Snippet for the searchDestinations method.
@@ -2076,6 +2254,7 @@ func SnippetForSearchDestinationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchSourcesOfIngestion() {
 	/*
 	   Snippet for the searchSources method.
@@ -2106,6 +2285,7 @@ func SnippetForSearchSourcesOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchTasksOfIngestion() {
 	/*
 	   Snippet for the searchTasks method.
@@ -2136,6 +2316,7 @@ func SnippetForSearchTasksOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchTasksV1OfIngestion() {
 	/*
 	   Snippet for the searchTasksV1 method.
@@ -2166,6 +2347,7 @@ func SnippetForSearchTasksV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSearchTransformationsOfIngestion() {
 	/*
 	   Snippet for the searchTransformations method.
@@ -2196,6 +2378,7 @@ func SnippetForSearchTransformationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfIngestion() {
 	/*
 	   Snippet for the setClientApiKey method.
@@ -2222,6 +2405,7 @@ func SnippetForSetClientApiKeyOfIngestion() {
 	// >LOG
 	// SEPARATOR<
 }
+
 func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	/*
 	   Snippet for the triggerDockerSourceDiscover method.
@@ -2250,6 +2434,7 @@ func SnippetForTriggerDockerSourceDiscoverOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForTryTransformationOfIngestion() {
 	/*
 	   Snippet for the tryTransformation method.
@@ -2267,9 +2452,12 @@ func SnippetForTryTransformationOfIngestion() {
 
 	// Call the API
 	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
-
-		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
+		ingestion.NewEmptyTransformationTry().
+			SetType(ingestion.TransformationType("code")).
+			SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+			SetSampleRecord(map[string]any{"bar": "baz"}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2280,6 +2468,7 @@ func SnippetForTryTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForTryTransformationOfIngestion1() {
 	/*
 	   Snippet for the tryTransformation method.
@@ -2297,11 +2486,17 @@ func SnippetForTryTransformationOfIngestion1() {
 
 	// Call the API
 	response, err := client.TryTransformation(client.NewApiTryTransformationRequest(
-
-		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
-			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
+		ingestion.NewEmptyTransformationTry().
+			SetType(ingestion.TransformationType("code")).
+			SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+			SetSampleRecord(map[string]any{"bar": "baz"}).
+			SetAuthentications(
+				[]ingestion.AuthenticationCreate{
+					*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+						ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+				}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2312,6 +2507,7 @@ func SnippetForTryTransformationOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	/*
 	   Snippet for the tryTransformationBeforeUpdate method.
@@ -2330,8 +2526,12 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	// Call the API
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"})))
+		ingestion.NewEmptyTransformationTry().
+			SetType(ingestion.TransformationType("code")).
+			SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+			SetSampleRecord(map[string]any{"bar": "baz"}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2342,6 +2542,7 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForTryTransformationBeforeUpdateOfIngestion1() {
 	/*
 	   Snippet for the tryTransformationBeforeUpdate method.
@@ -2360,10 +2561,17 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion1() {
 	// Call the API
 	response, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		ingestion.NewEmptyTransformationTry().SetType(ingestion.TransformationType("code")).SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetSampleRecord(map[string]any{"bar": "baz"}).SetAuthentications(
-			[]ingestion.AuthenticationCreate{*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
-				ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret")))})))
+		ingestion.NewEmptyTransformationTry().
+			SetType(ingestion.TransformationType("code")).
+			SetInput(ingestion.TransformationCodeAsTransformationInput(
+				ingestion.NewEmptyTransformationCode().SetCode("foo"))).
+			SetSampleRecord(map[string]any{"bar": "baz"}).
+			SetAuthentications(
+				[]ingestion.AuthenticationCreate{
+					*ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType("oauth")).SetName("authName").SetInput(ingestion.AuthOAuthAsAuthInput(
+						ingestion.NewEmptyAuthOAuth().SetUrl("http://test.oauth").SetClientId("myID").SetClientSecret("mySecret"))),
+				}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2374,6 +2582,7 @@ func SnippetForTryTransformationBeforeUpdateOfIngestion1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateAuthenticationOfIngestion() {
 	/*
 	   Snippet for the updateAuthentication method.
@@ -2403,6 +2612,7 @@ func SnippetForUpdateAuthenticationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateDestinationOfIngestion() {
 	/*
 	   Snippet for the updateDestination method.
@@ -2432,6 +2642,7 @@ func SnippetForUpdateDestinationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateSourceOfIngestion() {
 	/*
 	   Snippet for the updateSource method.
@@ -2461,6 +2672,7 @@ func SnippetForUpdateSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateTaskOfIngestion() {
 	/*
 	   Snippet for the updateTask method.
@@ -2490,6 +2702,7 @@ func SnippetForUpdateTaskOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateTaskV1OfIngestion() {
 	/*
 	   Snippet for the updateTaskV1 method.
@@ -2519,6 +2732,7 @@ func SnippetForUpdateTaskV1OfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForUpdateTransformationOfIngestion() {
 	/*
 	   Snippet for the updateTransformation method.
@@ -2538,7 +2752,9 @@ func SnippetForUpdateTransformationOfIngestion() {
 	response, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyTransformationCreate().SetInput(ingestion.TransformationCodeAsTransformationInput(
-			ingestion.NewEmptyTransformationCode().SetCode("foo"))).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
+			ingestion.NewEmptyTransformationCode().
+				SetCode("foo"),
+		)).SetType(ingestion.TransformationType("code")).SetName("bar").SetDescription("baz")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2549,6 +2765,7 @@ func SnippetForUpdateTransformationOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForValidateSourceOfIngestion() {
 	/*
 	   Snippet for the validateSource method.
@@ -2566,10 +2783,19 @@ func SnippetForValidateSourceOfIngestion() {
 
 	// Call the API
 	response, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
-		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
-			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
-				[]string{"myStore"}).SetLocales(
-				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		ingestion.NewEmptySourceCreate().
+			SetType(ingestion.SourceType("commercetools")).
+			SetName("sourceName").
+			SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+					[]string{"myStore"}).SetLocales(
+					[]string{
+						"de",
+					}).
+					SetUrl("http://commercetools.com").SetProjectKey("keyID"))).
+			SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
+	),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2580,6 +2806,7 @@ func SnippetForValidateSourceOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForValidateSourceBeforeUpdateOfIngestion() {
 	/*
 	   Snippet for the validateSourceBeforeUpdate method.

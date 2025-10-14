@@ -8191,7 +8191,7 @@
           "disjunctive": {
             "type": "boolean",
             "default": false,
-            "description": "Whether the filter is disjunctive or conjunctive.\n\nIf true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation.\nIf false, multiple occurences are combined with the logical `AND` operation.\n"
+            "description": "Whether the filter is disjunctive or conjunctive.\n\nIf true the filter has multiple matches, multiple occurrences are combined with the logical `OR` operation.\nIf false, multiple occurrences are combined with the logical `AND` operation.\n"
           }
         },
         "required": [
@@ -8964,7 +8964,7 @@
       },
       "Event": {
         "type": "object",
-        "description": "An event describe a step of the task execution flow..",
+        "description": "An event describe a step of the task execution flow.",
         "additionalProperties": false,
         "properties": {
           "eventID": {

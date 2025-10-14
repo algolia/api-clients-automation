@@ -11,10 +11,11 @@ import (
 func saveObjectsMovies() {
 	// read json file
 	url := "https://dashboard.algolia.com/api/1/sample_datasets?type=movie"
-	response, err := http.Get(url)
 
+	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Could not open url")
+
 		return
 	}
 
@@ -22,10 +23,11 @@ func saveObjectsMovies() {
 
 	// parse json file to Movie struct
 	var movies []map[string]interface{}
-	err = json.NewDecoder(response.Body).Decode(&movies)
 
+	err = json.NewDecoder(response.Body).Decode(&movies)
 	if err != nil {
 		fmt.Println("Could not decode body")
+
 		return
 	}
 

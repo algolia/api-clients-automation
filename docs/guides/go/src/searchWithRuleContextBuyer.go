@@ -1,8 +1,10 @@
 package main
 
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
 
-func getBuyerAccountId() (string, error) {
+func getBuyerAccountID() (string, error) {
 	return "", nil // Implement your logic here
 }
 
@@ -14,7 +16,7 @@ func searchWithRuleContextBuyer() {
 	}
 
 	// get the buyer account information
-	buyer, err := getBuyerAccountId()
+	buyer, err := getBuyerAccountID()
 	if err != nil {
 		panic(err)
 	}

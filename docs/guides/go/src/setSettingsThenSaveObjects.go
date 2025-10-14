@@ -10,7 +10,7 @@ func getAppIDFor(_ string) (string, error) {
 	return "", nil // Implement your logic here
 }
 
-func getIndexingApiKeyFor(_ string) (string, error) {
+func getIndexingAPIKeyFor(_ string) (string, error) {
 	return "", nil // Implement your logic here
 }
 
@@ -23,18 +23,21 @@ func setSettingsThenSaveObjects() {
 		appID, err := getAppIDFor(playlist["user"].(string))
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 
-		apiKey, err := getIndexingApiKeyFor(playlist["user"].(string))
+		apiKey, err := getIndexingAPIKeyFor(playlist["user"].(string))
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 
 		client, err := search.NewClient(appID, apiKey)
 		if err != nil {
 			fmt.Println(err)
+
 			return
 		}
 

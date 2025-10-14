@@ -534,7 +534,7 @@ public class SnippetIngestionClient
     // Call the API
     var response = await client.CustomGetAsync(
       "test/all",
-      new Dictionary<string, object> { { "query", "to be overriden" } },
+      new Dictionary<string, object> { { "query", "to be overridden" } },
       new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })

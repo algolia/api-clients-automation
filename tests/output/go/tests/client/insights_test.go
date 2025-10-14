@@ -3,12 +3,10 @@ package client
 
 import (
 	"encoding/json"
-	"regexp"
+	"gotests/tests"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-
-	"gotests/tests"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
@@ -16,6 +14,8 @@ import (
 )
 
 func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequester) {
+	t.Helper()
+
 	echo := &tests.EchoRequester{}
 	cfg := insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
@@ -31,40 +31,57 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 	return client, echo
 }
 
-// calls api with correct user agent
+// calls api with correct user agent.
 func TestInsightscommonApi0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createInsightsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
+	require.Regexp(
+		t,
+		`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Insights (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`,
+		echo.Header.Get("User-Agent"),
+	)
 }
 
-// the user agent contains the latest version
+// the user agent contains the latest version.
 func TestInsightscommonApi1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	client, echo := createInsightsClient(t)
 	_ = echo
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(4.28.1\).*`), echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.28.1\).*`, echo.Header.Get("User-Agent"))
 }
 
-// fallbacks to the alias when region is not given
+// fallbacks to the alias when region is not given.
 func TestInsightsparameters0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *insights.APIClient
-	var cfg insights.InsightsConfiguration
+
+	var (
+		client *insights.APIClient
+		cfg    insights.InsightsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = insights.InsightsConfiguration{
@@ -87,14 +104,21 @@ func TestInsightsparameters0(t *testing.T) {
 	require.Equal(t, "insights.algolia.io", echo.Host)
 }
 
-// uses the correct region
+// uses the correct region.
 func TestInsightsparameters1(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *insights.APIClient
-	var cfg insights.InsightsConfiguration
+
+	var (
+		client *insights.APIClient
+		cfg    insights.InsightsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = insights.InsightsConfiguration{
@@ -113,14 +137,21 @@ func TestInsightsparameters1(t *testing.T) {
 	require.Equal(t, "insights.us.algolia.io", echo.Host)
 }
 
-// throws when incorrect region is given
+// throws when incorrect region is given.
 func TestInsightsparameters2(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *insights.APIClient
-	var cfg insights.InsightsConfiguration
+
+	var (
+		client *insights.APIClient
+		cfg    insights.InsightsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = insights.InsightsConfiguration{
@@ -135,14 +166,21 @@ func TestInsightsparameters2(t *testing.T) {
 	require.EqualError(t, err, "`region` must be one of the following: de, us")
 }
 
-// switch API key
+// switch API key.
 func TestInsightssetClientApiKey0(t *testing.T) {
-	var err error
-	var res any
+	var (
+		err error
+		res any
+	)
+
 	_ = res
 	echo := &tests.EchoRequester{}
-	var client *insights.APIClient
-	var cfg insights.InsightsConfiguration
+
+	var (
+		client *insights.APIClient
+		cfg    insights.InsightsConfiguration
+	)
+
 	_ = client
 	_ = echo
 	cfg = insights.InsightsConfiguration{

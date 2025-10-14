@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/analytics"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics"
+) // IMPORT<
 
 func SnippetForCustomDeleteOfAnalytics() {
 	/*
@@ -34,6 +34,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfAnalytics1() {
 	/*
 	   Snippet for the customDelete method.
@@ -62,6 +63,7 @@ func SnippetForCustomDeleteOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAnalytics() {
 	/*
 	   Snippet for the customGet method.
@@ -90,6 +92,7 @@ func SnippetForCustomGetOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAnalytics1() {
 	/*
 	   Snippet for the customGet method.
@@ -118,6 +121,7 @@ func SnippetForCustomGetOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAnalytics2() {
 	/*
 	   Snippet for the customGet method.
@@ -135,7 +139,8 @@ func SnippetForCustomGetOfAnalytics2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), analytics.WithQueryParam("query", "parameters with space"), analytics.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), analytics.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -147,6 +152,7 @@ func SnippetForCustomGetOfAnalytics2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics() {
 	/*
 	   Snippet for the customPost method.
@@ -175,6 +181,7 @@ func SnippetForCustomPostOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics1() {
 	/*
 	   Snippet for the customPost method.
@@ -203,6 +210,7 @@ func SnippetForCustomPostOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics2() {
 	/*
 	   Snippet for the customPost method.
@@ -220,7 +228,8 @@ func SnippetForCustomPostOfAnalytics2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -231,6 +240,7 @@ func SnippetForCustomPostOfAnalytics2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics3() {
 	/*
 	   Snippet for the customPost method.
@@ -248,7 +258,8 @@ func SnippetForCustomPostOfAnalytics3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -259,6 +270,7 @@ func SnippetForCustomPostOfAnalytics3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics4() {
 	/*
 	   Snippet for the customPost method.
@@ -276,7 +288,8 @@ func SnippetForCustomPostOfAnalytics4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,6 +300,7 @@ func SnippetForCustomPostOfAnalytics4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics5() {
 	/*
 	   Snippet for the customPost method.
@@ -304,7 +318,8 @@ func SnippetForCustomPostOfAnalytics5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -315,6 +330,7 @@ func SnippetForCustomPostOfAnalytics5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics6() {
 	/*
 	   Snippet for the customPost method.
@@ -332,7 +348,8 @@ func SnippetForCustomPostOfAnalytics6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -343,6 +360,7 @@ func SnippetForCustomPostOfAnalytics6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics7() {
 	/*
 	   Snippet for the customPost method.
@@ -360,7 +378,8 @@ func SnippetForCustomPostOfAnalytics7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,6 +390,7 @@ func SnippetForCustomPostOfAnalytics7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics8() {
 	/*
 	   Snippet for the customPost method.
@@ -388,7 +408,8 @@ func SnippetForCustomPostOfAnalytics8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -400,6 +421,7 @@ func SnippetForCustomPostOfAnalytics8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics9() {
 	/*
 	   Snippet for the customPost method.
@@ -417,7 +439,8 @@ func SnippetForCustomPostOfAnalytics9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -429,6 +452,7 @@ func SnippetForCustomPostOfAnalytics9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAnalytics10() {
 	/*
 	   Snippet for the customPost method.
@@ -446,7 +470,8 @@ func SnippetForCustomPostOfAnalytics10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), analytics.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -458,6 +483,7 @@ func SnippetForCustomPostOfAnalytics10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfAnalytics() {
 	/*
 	   Snippet for the customPut method.
@@ -486,6 +512,7 @@ func SnippetForCustomPutOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfAnalytics1() {
 	/*
 	   Snippet for the customPut method.
@@ -514,6 +541,7 @@ func SnippetForCustomPutOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAddToCartRateOfAnalytics() {
 	/*
 	   Snippet for the getAddToCartRate method.
@@ -542,6 +570,7 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAddToCartRateOfAnalytics1() {
 	/*
 	   Snippet for the getAddToCartRate method.
@@ -570,6 +599,7 @@ func SnippetForGetAddToCartRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAverageClickPositionOfAnalytics() {
 	/*
 	   Snippet for the getAverageClickPosition method.
@@ -598,6 +628,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetAverageClickPositionOfAnalytics1() {
 	/*
 	   Snippet for the getAverageClickPosition method.
@@ -626,6 +657,7 @@ func SnippetForGetAverageClickPositionOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClickPositionsOfAnalytics() {
 	/*
 	   Snippet for the getClickPositions method.
@@ -654,6 +686,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClickPositionsOfAnalytics1() {
 	/*
 	   Snippet for the getClickPositions method.
@@ -682,6 +715,7 @@ func SnippetForGetClickPositionsOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClickThroughRateOfAnalytics() {
 	/*
 	   Snippet for the getClickThroughRate method.
@@ -710,6 +744,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetClickThroughRateOfAnalytics1() {
 	/*
 	   Snippet for the getClickThroughRate method.
@@ -738,6 +773,7 @@ func SnippetForGetClickThroughRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetConversionRateOfAnalytics() {
 	/*
 	   Snippet for the getConversionRate method.
@@ -766,6 +802,7 @@ func SnippetForGetConversionRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetConversionRateOfAnalytics1() {
 	/*
 	   Snippet for the getConversionRate method.
@@ -794,6 +831,7 @@ func SnippetForGetConversionRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetNoClickRateOfAnalytics() {
 	/*
 	   Snippet for the getNoClickRate method.
@@ -822,6 +860,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetNoClickRateOfAnalytics1() {
 	/*
 	   Snippet for the getNoClickRate method.
@@ -850,6 +889,7 @@ func SnippetForGetNoClickRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetNoResultsRateOfAnalytics() {
 	/*
 	   Snippet for the getNoResultsRate method.
@@ -878,6 +918,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetNoResultsRateOfAnalytics1() {
 	/*
 	   Snippet for the getNoResultsRate method.
@@ -906,6 +947,7 @@ func SnippetForGetNoResultsRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetPurchaseRateOfAnalytics() {
 	/*
 	   Snippet for the getPurchaseRate method.
@@ -934,6 +976,7 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetPurchaseRateOfAnalytics1() {
 	/*
 	   Snippet for the getPurchaseRate method.
@@ -962,6 +1005,7 @@ func SnippetForGetPurchaseRateOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRevenueOfAnalytics() {
 	/*
 	   Snippet for the getRevenue method.
@@ -990,6 +1034,7 @@ func SnippetForGetRevenueOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetRevenueOfAnalytics1() {
 	/*
 	   Snippet for the getRevenue method.
@@ -1018,6 +1063,7 @@ func SnippetForGetRevenueOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesCountOfAnalytics() {
 	/*
 	   Snippet for the getSearchesCount method.
@@ -1046,6 +1092,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesCountOfAnalytics1() {
 	/*
 	   Snippet for the getSearchesCount method.
@@ -1074,6 +1121,7 @@ func SnippetForGetSearchesCountOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesNoClicksOfAnalytics() {
 	/*
 	   Snippet for the getSearchesNoClicks method.
@@ -1102,6 +1150,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesNoClicksOfAnalytics1() {
 	/*
 	   Snippet for the getSearchesNoClicks method.
@@ -1130,6 +1179,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesNoResultsOfAnalytics() {
 	/*
 	   Snippet for the getSearchesNoResults method.
@@ -1158,6 +1208,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetSearchesNoResultsOfAnalytics1() {
 	/*
 	   Snippet for the getSearchesNoResults method.
@@ -1186,6 +1237,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetStatusOfAnalytics() {
 	/*
 	   Snippet for the getStatus method.
@@ -1214,6 +1266,7 @@ func SnippetForGetStatusOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopCountriesOfAnalytics() {
 	/*
 	   Snippet for the getTopCountries method.
@@ -1242,6 +1295,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopCountriesOfAnalytics1() {
 	/*
 	   Snippet for the getTopCountries method.
@@ -1270,6 +1324,7 @@ func SnippetForGetTopCountriesOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterAttributesOfAnalytics() {
 	/*
 	   Snippet for the getTopFilterAttributes method.
@@ -1298,6 +1353,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterAttributesOfAnalytics1() {
 	/*
 	   Snippet for the getTopFilterAttributes method.
@@ -1326,6 +1382,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	/*
 	   Snippet for the getTopFilterForAttribute method.
@@ -1354,6 +1411,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterForAttributeOfAnalytics1() {
 	/*
 	   Snippet for the getTopFilterForAttribute method.
@@ -1382,6 +1440,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterForAttributeOfAnalytics2() {
 	/*
 	   Snippet for the getTopFilterForAttribute method.
@@ -1399,7 +1458,9 @@ func SnippetForGetTopFilterForAttributeOfAnalytics2() {
 
 	// Call the API
 	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-		"myAttribute", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		"myAttribute",
+		"index",
+	).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1410,6 +1471,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFilterForAttributeOfAnalytics3() {
 	/*
 	   Snippet for the getTopFilterForAttribute method.
@@ -1427,7 +1489,9 @@ func SnippetForGetTopFilterForAttributeOfAnalytics3() {
 
 	// Call the API
 	response, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
-		"myAttribute1,myAttribute2", "index").WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		"myAttribute1,myAttribute2",
+		"index",
+	).WithSearch("mySearch").WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1438,6 +1502,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	/*
 	   Snippet for the getTopFiltersNoResults method.
@@ -1466,6 +1531,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopFiltersNoResultsOfAnalytics1() {
 	/*
 	   Snippet for the getTopFiltersNoResults method.
@@ -1494,6 +1560,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopHitsOfAnalytics() {
 	/*
 	   Snippet for the getTopHits method.
@@ -1522,6 +1589,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopHitsOfAnalytics1() {
 	/*
 	   Snippet for the getTopHits method.
@@ -1539,7 +1607,8 @@ func SnippetForGetTopHitsOfAnalytics1() {
 
 	// Call the API
 	response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
-		"index").WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		"index",
+	).WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1550,6 +1619,7 @@ func SnippetForGetTopHitsOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopSearchesOfAnalytics() {
 	/*
 	   Snippet for the getTopSearches method.
@@ -1578,6 +1648,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetTopSearchesOfAnalytics1() {
 	/*
 	   Snippet for the getTopSearches method.
@@ -1595,7 +1666,8 @@ func SnippetForGetTopSearchesOfAnalytics1() {
 
 	// Call the API
 	response, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
-		"index").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
+		"index",
+	).WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1606,6 +1678,7 @@ func SnippetForGetTopSearchesOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetUsersCountOfAnalytics() {
 	/*
 	   Snippet for the getUsersCount method.
@@ -1634,6 +1707,7 @@ func SnippetForGetUsersCountOfAnalytics() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetUsersCountOfAnalytics1() {
 	/*
 	   Snippet for the getUsersCount method.
@@ -1662,6 +1736,7 @@ func SnippetForGetUsersCountOfAnalytics1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfAnalytics() {
 	/*
 	   Snippet for the setClientApiKey method.

@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
+) // IMPORT<
 
 func SnippetForCustomDeleteOfInsights() {
 	/*
@@ -34,6 +34,7 @@ func SnippetForCustomDeleteOfInsights() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfInsights1() {
 	/*
 	   Snippet for the customDelete method.
@@ -62,6 +63,7 @@ func SnippetForCustomDeleteOfInsights1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfInsights() {
 	/*
 	   Snippet for the customGet method.
@@ -90,6 +92,7 @@ func SnippetForCustomGetOfInsights() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfInsights1() {
 	/*
 	   Snippet for the customGet method.
@@ -118,6 +121,7 @@ func SnippetForCustomGetOfInsights1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfInsights2() {
 	/*
 	   Snippet for the customGet method.
@@ -135,7 +139,8 @@ func SnippetForCustomGetOfInsights2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), insights.WithQueryParam("query", "parameters with space"), insights.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), insights.WithQueryParam("query", "parameters with space"), insights.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), insights.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -147,6 +152,7 @@ func SnippetForCustomGetOfInsights2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights() {
 	/*
 	   Snippet for the customPost method.
@@ -175,6 +181,7 @@ func SnippetForCustomPostOfInsights() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights1() {
 	/*
 	   Snippet for the customPost method.
@@ -203,6 +210,7 @@ func SnippetForCustomPostOfInsights1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights2() {
 	/*
 	   Snippet for the customPost method.
@@ -220,7 +228,8 @@ func SnippetForCustomPostOfInsights2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -231,6 +240,7 @@ func SnippetForCustomPostOfInsights2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights3() {
 	/*
 	   Snippet for the customPost method.
@@ -248,7 +258,8 @@ func SnippetForCustomPostOfInsights3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -259,6 +270,7 @@ func SnippetForCustomPostOfInsights3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights4() {
 	/*
 	   Snippet for the customPost method.
@@ -276,7 +288,8 @@ func SnippetForCustomPostOfInsights4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -287,6 +300,7 @@ func SnippetForCustomPostOfInsights4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights5() {
 	/*
 	   Snippet for the customPost method.
@@ -304,7 +318,8 @@ func SnippetForCustomPostOfInsights5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -315,6 +330,7 @@ func SnippetForCustomPostOfInsights5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights6() {
 	/*
 	   Snippet for the customPost method.
@@ -332,7 +348,8 @@ func SnippetForCustomPostOfInsights6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -343,6 +360,7 @@ func SnippetForCustomPostOfInsights6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights7() {
 	/*
 	   Snippet for the customPost method.
@@ -360,7 +378,8 @@ func SnippetForCustomPostOfInsights7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -371,6 +390,7 @@ func SnippetForCustomPostOfInsights7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights8() {
 	/*
 	   Snippet for the customPost method.
@@ -388,7 +408,8 @@ func SnippetForCustomPostOfInsights8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -400,6 +421,7 @@ func SnippetForCustomPostOfInsights8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights9() {
 	/*
 	   Snippet for the customPost method.
@@ -417,7 +439,8 @@ func SnippetForCustomPostOfInsights9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -429,6 +452,7 @@ func SnippetForCustomPostOfInsights9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfInsights10() {
 	/*
 	   Snippet for the customPost method.
@@ -446,7 +470,8 @@ func SnippetForCustomPostOfInsights10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), insights.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -458,6 +483,7 @@ func SnippetForCustomPostOfInsights10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfInsights() {
 	/*
 	   Snippet for the customPut method.
@@ -486,6 +512,7 @@ func SnippetForCustomPutOfInsights() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfInsights1() {
 	/*
 	   Snippet for the customPut method.
@@ -514,6 +541,7 @@ func SnippetForCustomPutOfInsights1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteUserTokenOfInsights() {
 	/*
 	   Snippet for the deleteUserToken method.
@@ -540,6 +568,7 @@ func SnippetForDeleteUserTokenOfInsights() {
 	// >LOG
 	// SEPARATOR<
 }
+
 func SnippetForPushEventsOfInsights() {
 	/*
 	   Snippet for the pushEvents method.
@@ -573,6 +602,7 @@ func SnippetForPushEventsOfInsights() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushEventsOfInsights1() {
 	/*
 	   Snippet for the pushEvents method.
@@ -607,6 +637,7 @@ func SnippetForPushEventsOfInsights1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushEventsOfInsights2() {
 	/*
 	   Snippet for the pushEvents method.
@@ -639,6 +670,7 @@ func SnippetForPushEventsOfInsights2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushEventsOfInsights3() {
 	/*
 	   Snippet for the pushEvents method.
@@ -671,6 +703,7 @@ func SnippetForPushEventsOfInsights3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForPushEventsOfInsights4() {
 	/*
 	   Snippet for the pushEvents method.
@@ -704,6 +737,7 @@ func SnippetForPushEventsOfInsights4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfInsights() {
 	/*
 	   Snippet for the setClientApiKey method.

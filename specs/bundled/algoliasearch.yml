@@ -3685,10 +3685,10 @@ components:
             Whether the filter is disjunctive or conjunctive.
 
 
-            If true the filter has multiple matches, multiple occurences are
+            If true the filter has multiple matches, multiple occurrences are
             combined with the logical `OR` operation.
 
-            If false, multiple occurences are combined with the logical `AND`
+            If false, multiple occurrences are combined with the logical `AND`
             operation.
       required:
         - facet

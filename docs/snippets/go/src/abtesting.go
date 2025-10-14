@@ -2,9 +2,9 @@
 package snippets
 
 // >IMPORT
-import "github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
-
-// IMPORT<
+import (
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/abtesting"
+) // IMPORT<
 
 func SnippetForAddABTestsOfAbtesting() {
 	/*
@@ -38,6 +38,7 @@ func SnippetForAddABTestsOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfAbtesting() {
 	/*
 	   Snippet for the customDelete method.
@@ -66,6 +67,7 @@ func SnippetForCustomDeleteOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomDeleteOfAbtesting1() {
 	/*
 	   Snippet for the customDelete method.
@@ -94,6 +96,7 @@ func SnippetForCustomDeleteOfAbtesting1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAbtesting() {
 	/*
 	   Snippet for the customGet method.
@@ -122,6 +125,7 @@ func SnippetForCustomGetOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAbtesting1() {
 	/*
 	   Snippet for the customGet method.
@@ -150,6 +154,7 @@ func SnippetForCustomGetOfAbtesting1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomGetOfAbtesting2() {
 	/*
 	   Snippet for the customGet method.
@@ -167,7 +172,8 @@ func SnippetForCustomGetOfAbtesting2() {
 
 	// Call the API
 	response, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"test/all").WithParameters(map[string]any{"query": "to be overriden"}), abtesting.WithQueryParam("query", "parameters with space"), abtesting.WithQueryParam("and an array",
+		"test/all",
+	).WithParameters(map[string]any{"query": "to be overridden"}), abtesting.WithQueryParam("query", "parameters with space"), abtesting.WithQueryParam("and an array",
 		[]string{"array", "with spaces"}), abtesting.WithHeaderParam("x-header-1", "spaces are left alone"))
 	if err != nil {
 		// handle the eventual error
@@ -179,6 +185,7 @@ func SnippetForCustomGetOfAbtesting2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting() {
 	/*
 	   Snippet for the customPost method.
@@ -207,6 +214,7 @@ func SnippetForCustomPostOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting1() {
 	/*
 	   Snippet for the customPost method.
@@ -235,6 +243,7 @@ func SnippetForCustomPostOfAbtesting1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting2() {
 	/*
 	   Snippet for the customPost method.
@@ -252,7 +261,8 @@ func SnippetForCustomPostOfAbtesting2() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -263,6 +273,7 @@ func SnippetForCustomPostOfAbtesting2() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting3() {
 	/*
 	   Snippet for the customPost method.
@@ -280,7 +291,8 @@ func SnippetForCustomPostOfAbtesting3() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query2", "myQueryParameter"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("query2", "myQueryParameter"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -291,6 +303,7 @@ func SnippetForCustomPostOfAbtesting3() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting4() {
 	/*
 	   Snippet for the customPost method.
@@ -308,7 +321,8 @@ func SnippetForCustomPostOfAbtesting4() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -319,6 +333,7 @@ func SnippetForCustomPostOfAbtesting4() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting5() {
 	/*
 	   Snippet for the customPost method.
@@ -336,7 +351,8 @@ func SnippetForCustomPostOfAbtesting5() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithHeaderParam("x-algolia-api-key", "ALGOLIA_API_KEY"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -347,6 +363,7 @@ func SnippetForCustomPostOfAbtesting5() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting6() {
 	/*
 	   Snippet for the customPost method.
@@ -364,7 +381,8 @@ func SnippetForCustomPostOfAbtesting6() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("isItWorking", true))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("isItWorking", true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -375,6 +393,7 @@ func SnippetForCustomPostOfAbtesting6() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting7() {
 	/*
 	   Snippet for the customPost method.
@@ -392,7 +411,8 @@ func SnippetForCustomPostOfAbtesting7() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam", 2))
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam", 2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -403,6 +423,7 @@ func SnippetForCustomPostOfAbtesting7() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting8() {
 	/*
 	   Snippet for the customPost method.
@@ -420,7 +441,8 @@ func SnippetForCustomPostOfAbtesting8() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
 		[]string{"b and c", "d"}))
 	if err != nil {
 		// handle the eventual error
@@ -432,6 +454,7 @@ func SnippetForCustomPostOfAbtesting8() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting9() {
 	/*
 	   Snippet for the customPost method.
@@ -449,7 +472,8 @@ func SnippetForCustomPostOfAbtesting9() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
 		[]bool{true, true, false}))
 	if err != nil {
 		// handle the eventual error
@@ -461,6 +485,7 @@ func SnippetForCustomPostOfAbtesting9() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPostOfAbtesting10() {
 	/*
 	   Snippet for the customPost method.
@@ -478,7 +503,8 @@ func SnippetForCustomPostOfAbtesting10() {
 
 	// Call the API
 	response, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"test/requestOptions").WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
+		"test/requestOptions",
+	).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}), abtesting.WithQueryParam("myParam",
 		[]int32{1, 2}))
 	if err != nil {
 		// handle the eventual error
@@ -490,6 +516,7 @@ func SnippetForCustomPostOfAbtesting10() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfAbtesting() {
 	/*
 	   Snippet for the customPut method.
@@ -518,6 +545,7 @@ func SnippetForCustomPutOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForCustomPutOfAbtesting1() {
 	/*
 	   Snippet for the customPut method.
@@ -546,6 +574,7 @@ func SnippetForCustomPutOfAbtesting1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForDeleteABTestOfAbtesting() {
 	/*
 	   Snippet for the deleteABTest method.
@@ -574,6 +603,7 @@ func SnippetForDeleteABTestOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForEstimateABTestOfAbtesting() {
 	/*
 	   Snippet for the estimateABTest method.
@@ -609,6 +639,7 @@ func SnippetForEstimateABTestOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForGetABTestOfAbtesting() {
 	/*
 	   Snippet for the getABTest method.
@@ -637,6 +668,7 @@ func SnippetForGetABTestOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListABTestsOfAbtesting() {
 	/*
 	   Snippet for the listABTests method.
@@ -664,6 +696,7 @@ func SnippetForListABTestsOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForListABTestsOfAbtesting1() {
 	/*
 	   Snippet for the listABTests method.
@@ -680,7 +713,9 @@ func SnippetForListABTestsOfAbtesting1() {
 	}
 
 	// Call the API
-	response, err := client.ListABTests(client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix("cts_e2e ab").WithIndexSuffix("t"))
+	response, err := client.ListABTests(
+		client.NewApiListABTestsRequest().WithOffset(0).WithLimit(21).WithIndexPrefix("cts_e2e ab").WithIndexSuffix("t"),
+	)
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -691,6 +726,7 @@ func SnippetForListABTestsOfAbtesting1() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForScheduleABTestOfAbtesting() {
 	/*
 	   Snippet for the scheduleABTest method.
@@ -708,11 +744,15 @@ func SnippetForScheduleABTestOfAbtesting() {
 
 	// Call the API
 	response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-
-		abtesting.NewEmptyScheduleABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetScheduledAt("2022-11-31T00:00:00.000Z").SetName("myABTest").SetVariants(
-			[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-				abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+		abtesting.NewEmptyScheduleABTestsRequest().
+			SetEndAt("2022-12-31T00:00:00.000Z").
+			SetScheduledAt("2022-11-31T00:00:00.000Z").
+			SetName("myABTest").
+			SetVariants(
+				[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
+					abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
+					abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -723,6 +763,7 @@ func SnippetForScheduleABTestOfAbtesting() {
 	print(response)
 	// SEPARATOR<
 }
+
 func SnippetForSetClientApiKeyOfAbtesting() {
 	/*
 	   Snippet for the setClientApiKey method.
@@ -749,6 +790,7 @@ func SnippetForSetClientApiKeyOfAbtesting() {
 	// >LOG
 	// SEPARATOR<
 }
+
 func SnippetForStopABTestOfAbtesting() {
 	/*
 	   Snippet for the stopABTest method.

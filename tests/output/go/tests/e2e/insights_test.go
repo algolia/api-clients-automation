@@ -7,10 +7,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
 )
@@ -22,8 +21,10 @@ func createE2EInsightsClient(t *testing.T) *insights.APIClient {
 	if appID == "" && os.Getenv("CI") != "true" {
 		err := godotenv.Load("../../../../.env")
 		require.NoError(t, err)
+
 		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
 	}
+
 	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
 	client, err := insights.NewClient(appID, apiKey, insights.US)
 	require.NoError(t, err)
@@ -32,7 +33,10 @@ func createE2EInsightsClient(t *testing.T) *insights.APIClient {
 }
 
 func TestInsightsE2E_PushEvents(t *testing.T) {
+	t.Parallel()
 	t.Run("Many events type", func(t *testing.T) {
+		t.Parallel()
+
 		client := createE2EInsightsClient(t)
 		res, err := client.PushEvents(client.NewApiPushEventsRequest(
 
@@ -43,17 +47,21 @@ func TestInsightsE2E_PushEvents(t *testing.T) {
 					insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1760227200000).SetObjectIDs(
 						[]string{"9780545139700", "9780439784542"}))})))
 		require.NoError(t, err)
+
 		_ = res
 
 		rawBody, err := json.Marshal(res)
 		require.NoError(t, err)
 
 		var rawBodyMap any
+
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
 		expectedBodyRaw := `{"message":"OK","status":200}`
+
 		var expectedBody any
+
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
 

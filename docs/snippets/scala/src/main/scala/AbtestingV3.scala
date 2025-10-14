@@ -174,7 +174,7 @@ class SnippetAbtestingV3Client {
     val response = Await.result(
       client.customGet[JObject](
         path = "test/all",
-        parameters = Some(Map("query" -> "to be overriden")),
+        parameters = Some(Map("query" -> "to be overridden")),
         requestOptions = Some(
           RequestOptions
             .builder()

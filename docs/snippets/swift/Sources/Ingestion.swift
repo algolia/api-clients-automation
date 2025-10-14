@@ -357,7 +357,7 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customGet(
             path: "test/all",
-            parameters: ["query": AnyCodable("to be overriden")],
+            parameters: ["query": AnyCodable("to be overridden")],
             requestOptions: RequestOptions(
                 headers: ["x-header-1": "spaces are left alone"],
 

@@ -64,7 +64,7 @@ class TestCompositionClient < Test::Unit::TestCase
   def test_custom_get2
     req = @client.custom_get_with_http_info(
       "test/all",
-      {query: "to be overriden"},
+      {query: "to be overridden"},
       {
         :header_params => {"x-header-1" => "spaces are left alone"},
         :query_params => JSON.parse(
