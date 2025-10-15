@@ -49,11 +49,6 @@ public partial interface IIngestionClient
 public partial class IngestionClient : IIngestionClient
 {
   /// <summary>
-  /// The default maximum number of retries for search operations.
-  /// </summary>
-  public const int DefaultMaxRetries = 50;
-
-  /// <summary>
   /// Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
   /// in `push` requests by leveraging the Transformation pipeline setup in the Push connector
   /// (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
@@ -126,7 +121,7 @@ public partial class IngestionClient : IIngestionClient
             );
           }
 
-          await RetryUntil(
+          await RetryHelper.RetryUntil(
               async () =>
               {
                 try
@@ -182,37 +177,4 @@ public partial class IngestionClient : IIngestionClient
         cancellationToken
       )
     );
-
-  private static async Task<T> RetryUntil<T>(
-    Func<Task<T>> func,
-    Func<T, bool> validate,
-    int maxRetries = DefaultMaxRetries,
-    Func<int, int> timeout = null,
-    CancellationToken ct = default
-  )
-  {
-    timeout ??= NextDelay;
-
-    var retryCount = 0;
-    while (retryCount < maxRetries)
-    {
-      var resp = await func().ConfigureAwait(false);
-      if (validate(resp))
-      {
-        return resp;
-      }
-
-      await Task.Delay(timeout(retryCount), ct).ConfigureAwait(false);
-      retryCount++;
-    }
-
-    throw new AlgoliaException(
-      "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")"
-    );
-  }
-
-  private static int NextDelay(int retryCount)
-  {
-    return Math.Min(retryCount * 200, 5000);
-  }
 }

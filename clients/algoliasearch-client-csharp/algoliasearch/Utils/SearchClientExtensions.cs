@@ -531,7 +531,7 @@ public partial class SearchClient : ISearchClient
   /// <summary>
   /// The default maximum number of retries for search operations.
   /// </summary>
-  public const int DefaultMaxRetries = 50;
+  public const int DefaultMaxRetries = RetryHelper.DefaultMaxRetries;
 
   /// <inheritdoc/>
   public async Task<GetTaskResponse> WaitForTaskAsync(
@@ -541,9 +541,8 @@ public partial class SearchClient : ISearchClient
     Func<int, int> timeout = null,
     RequestOptions requestOptions = null,
     CancellationToken ct = default
-  )
-  {
-    return await RetryUntil(
+  ) =>
+    await RetryHelper.RetryUntil(
         async () => await GetTaskAsync(indexName, taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
         maxRetries,
@@ -551,7 +550,6 @@ public partial class SearchClient : ISearchClient
         ct
       )
       .ConfigureAwait(false);
-  }
 
   /// <inheritdoc/>
   public GetTaskResponse WaitForTask(
@@ -573,9 +571,8 @@ public partial class SearchClient : ISearchClient
     Func<int, int> timeout = null,
     RequestOptions requestOptions = null,
     CancellationToken ct = default
-  )
-  {
-    return await RetryUntil(
+  ) =>
+    await RetryHelper.RetryUntil(
         async () => await GetAppTaskAsync(taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
         maxRetries,
@@ -583,7 +580,6 @@ public partial class SearchClient : ISearchClient
         ct
       )
       .ConfigureAwait(false);
-  }
 
   /// <inheritdoc/>
   public GetTaskResponse WaitForAppTask(
@@ -613,7 +609,7 @@ public partial class SearchClient : ISearchClient
         throw new AlgoliaException("`ApiKey` is required when waiting for an `update` operation.");
       }
 
-      return await RetryUntil(
+      return await RetryHelper.RetryUntil(
           () => GetApiKeyAsync(key, requestOptions, ct),
           resp =>
           {
@@ -637,7 +633,7 @@ public partial class SearchClient : ISearchClient
         .ConfigureAwait(false);
     }
 
-    return await RetryUntil(
+    return await RetryHelper.RetryUntil(
       async () =>
       {
         try
@@ -878,39 +874,6 @@ public partial class SearchClient : ISearchClient
     AsyncHelper.RunSync(() =>
       SearchForFacetsAsync(requests, searchStrategy, options, cancellationToken)
     );
-
-  private static async Task<T> RetryUntil<T>(
-    Func<Task<T>> func,
-    Func<T, bool> validate,
-    int maxRetries = DefaultMaxRetries,
-    Func<int, int> timeout = null,
-    CancellationToken ct = default
-  )
-  {
-    timeout ??= NextDelay;
-
-    var retryCount = 0;
-    while (retryCount < maxRetries)
-    {
-      var resp = await func().ConfigureAwait(false);
-      if (validate(resp))
-      {
-        return resp;
-      }
-
-      await Task.Delay(timeout(retryCount), ct).ConfigureAwait(false);
-      retryCount++;
-    }
-
-    throw new AlgoliaException(
-      "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")"
-    );
-  }
-
-  private static int NextDelay(int retryCount)
-  {
-    return Math.Min(retryCount * 200, 5000);
-  }
 
   /// <inheritdoc/>
   public async Task<ReplaceAllObjectsResponse> ReplaceAllObjectsAsync<T>(
