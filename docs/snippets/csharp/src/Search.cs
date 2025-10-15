@@ -2395,6 +2395,34 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the PartialUpdateObjectsWithTransformation method.
+  ///
+  /// call partialUpdateObjectsWithTransformation with createIfNotExists=true
+  /// </summary>
+  public async Task SnippetForSearchClientPartialUpdateObjectsWithTransformation()
+  {
+    // >SEPARATOR partialUpdateObjectsWithTransformation default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.PartialUpdateObjectsWithTransformationAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+      },
+      true,
+      true
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the RemoveUserId method.
   ///
   /// removeUserId
@@ -2499,6 +2527,41 @@ public class SnippetSearchClient
           { "body", "something bigger than 10KB" },
         },
       }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceAllObjectsWithTransformation method.
+  ///
+  /// call replaceAllObjectsWithTransformation without error
+  /// </summary>
+  public async Task SnippetForSearchClientReplaceAllObjectsWithTransformation()
+  {
+    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.ReplaceAllObjectsWithTransformationAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+        new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+        new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
+        new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
+        new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+        new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
+        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
+      },
+      3
     );
     // >LOG
     // print the response
@@ -2689,6 +2752,33 @@ public class SnippetSearchClient
       false,
       1000,
       new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveObjectsWithTransformation method.
+  ///
+  /// call saveObjectsWithTransformation without error
+  /// </summary>
+  public async Task SnippetForSearchClientSaveObjectsWithTransformation()
+  {
+    // >SEPARATOR saveObjectsWithTransformation default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.SaveObjectsWithTransformationAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+      },
+      true
     );
     // >LOG
     // print the response

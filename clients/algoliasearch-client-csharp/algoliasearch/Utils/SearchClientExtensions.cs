@@ -536,7 +536,8 @@ public partial class SearchClient : ISearchClient
     RequestOptions requestOptions = null,
     CancellationToken ct = default
   ) =>
-    await RetryHelper.RetryUntil(
+    await RetryHelper
+      .RetryUntil(
         async () => await GetTaskAsync(indexName, taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
         maxRetries,
@@ -566,7 +567,8 @@ public partial class SearchClient : ISearchClient
     RequestOptions requestOptions = null,
     CancellationToken ct = default
   ) =>
-    await RetryHelper.RetryUntil(
+    await RetryHelper
+      .RetryUntil(
         async () => await GetAppTaskAsync(taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
         maxRetries,
@@ -603,7 +605,8 @@ public partial class SearchClient : ISearchClient
         throw new AlgoliaException("`ApiKey` is required when waiting for an `update` operation.");
       }
 
-      return await RetryHelper.RetryUntil(
+      return await RetryHelper
+        .RetryUntil(
           () => GetApiKeyAsync(key, requestOptions, ct),
           resp =>
           {

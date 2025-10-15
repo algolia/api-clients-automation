@@ -27,35 +27,35 @@ public static class RetryHelper
   /// <returns>The result of the function if the validation function returns true</returns>
   /// <exception cref="AlgoliaException">Thrown if the maximum number of retries is reached</exception>
   public static async Task<T> RetryUntil<T>(
-      Func<Task<T>> func,
-      Func<T, bool> validate,
-      int maxRetries = DefaultMaxRetries,
-      Func<int, int> timeout = null,
-      CancellationToken ct = default
-    )
+    Func<Task<T>> func,
+    Func<T, bool> validate,
+    int maxRetries = DefaultMaxRetries,
+    Func<int, int> timeout = null,
+    CancellationToken ct = default
+  )
+  {
+    timeout ??= NextDelay;
+
+    var retryCount = 0;
+    while (retryCount < maxRetries)
     {
-      timeout ??= NextDelay;
-
-      var retryCount = 0;
-      while (retryCount < maxRetries)
+      var resp = await func().ConfigureAwait(false);
+      if (validate(resp))
       {
-        var resp = await func().ConfigureAwait(false);
-        if (validate(resp))
-        {
-          return resp;
-        }
-
-        await Task.Delay(timeout(retryCount), ct).ConfigureAwait(false);
-        retryCount++;
+        return resp;
       }
 
-      throw new AlgoliaException(
-        "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")"
-      );
+      await Task.Delay(timeout(retryCount), ct).ConfigureAwait(false);
+      retryCount++;
     }
 
-    private static int NextDelay(int retryCount)
-    {
-      return Math.Min(retryCount * 200, 5000);
-    }
+    throw new AlgoliaException(
+      "The maximum number of retries exceeded. (" + (retryCount + 1) + "/" + maxRetries + ")"
+    );
+  }
+
+  private static int NextDelay(int retryCount)
+  {
+    return Math.Min(retryCount * 200, 5000);
+  }
 }

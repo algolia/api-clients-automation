@@ -118,7 +118,8 @@ public partial class IngestionClient : IIngestionClient
             );
           }
 
-          await RetryHelper.RetryUntil(
+          await RetryHelper
+            .RetryUntil(
               async () =>
               {
                 try
