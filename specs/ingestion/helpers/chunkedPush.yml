@@ -4,9 +4,10 @@ method:
     tags:
       - Records
     x-available-languages:
-      - javascript
+      - csharp
       - go
       - java
+      - javascript
       - php
       - python
     operationId: chunkedPush
