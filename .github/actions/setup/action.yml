@@ -115,14 +115,6 @@ runs:
       shell: bash
       run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
-    # Kotlin
-    - name: Cache spotless
-      if: ${{ inputs.language == 'kotlin' }}
-      uses: actions/cache@v4
-      with:
-        path: clients/algoliasearch-client-kotlin/client/build/spotless
-        key: spotless-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
-
     # PHP
     - name: Install PHP
       if: ${{ inputs.language == 'php' }}
