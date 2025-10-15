@@ -34,6 +34,10 @@ class Snippet{{client}} {
     )
     {{/isAsyncMethod}}
     // >LOG
+    {{#hasResponse}}
+    // print the response
+    println(response)
+    {{/hasResponse}}
     // SEPARATOR<
   }
 

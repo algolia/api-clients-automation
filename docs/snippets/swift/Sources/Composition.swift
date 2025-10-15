@@ -18,6 +18,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -32,6 +34,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -46,6 +50,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -63,6 +69,8 @@ final class CompositionClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -85,6 +93,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -99,6 +109,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -117,6 +129,8 @@ final class CompositionClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -138,6 +152,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -159,6 +175,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -180,6 +198,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -201,6 +221,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -222,6 +244,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -243,6 +267,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -264,6 +290,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -285,6 +313,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -306,6 +336,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -320,6 +352,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -338,6 +372,8 @@ final class CompositionClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -352,6 +388,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.deleteComposition(compositionID: "1234")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -366,6 +404,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.deleteCompositionRule(compositionID: "1234", objectID: "5678")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -380,6 +420,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.getComposition(compositionID: "foo")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -394,6 +436,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.getRule(compositionID: "foo", objectID: "123")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -408,6 +452,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.getTask(compositionID: "foo", taskID: Int64(42))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -422,6 +468,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.listCompositions()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -436,6 +484,8 @@ final class CompositionClientSnippet {
         // Call the API
         let response = try await client.listCompositions()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -469,6 +519,8 @@ final class CompositionClientSnippet {
             ),
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -503,6 +555,8 @@ final class CompositionClientSnippet {
                 ))
             )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -572,6 +626,8 @@ final class CompositionClientSnippet {
                 ))
             )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -604,6 +660,8 @@ final class CompositionClientSnippet {
                 ))
             )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -634,6 +692,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -667,6 +727,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -731,6 +793,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -765,6 +829,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -796,6 +862,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -838,6 +906,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -882,6 +952,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -918,6 +990,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -952,6 +1026,8 @@ final class CompositionClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -996,6 +1072,8 @@ final class CompositionClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1042,6 +1120,8 @@ final class CompositionClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1080,6 +1160,8 @@ final class CompositionClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1097,6 +1179,8 @@ final class CompositionClientSnippet {
             requestBody: RequestBody(params: CompositionParams(query: "batman"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1128,6 +1212,8 @@ final class CompositionClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1145,6 +1231,8 @@ final class CompositionClientSnippet {
             searchCompositionRulesParams: SearchCompositionRulesParams(query: "batman")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1165,6 +1253,8 @@ final class CompositionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 

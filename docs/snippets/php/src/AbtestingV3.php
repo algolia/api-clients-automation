@@ -43,7 +43,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -65,7 +65,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -89,7 +89,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -111,7 +111,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -135,7 +135,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -169,7 +169,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -191,7 +191,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -217,7 +217,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -247,7 +247,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -277,7 +277,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -308,7 +308,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -339,7 +339,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -369,7 +369,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -399,7 +399,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -430,7 +430,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -461,7 +461,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -492,7 +492,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -514,7 +514,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -540,7 +540,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -562,7 +562,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -597,7 +597,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -619,7 +619,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -641,7 +641,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -661,7 +661,7 @@ class SnippetAbtestingV3Client
         $response = $client->listABTests();
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -687,7 +687,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -725,7 +725,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -767,7 +767,7 @@ class SnippetAbtestingV3Client
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

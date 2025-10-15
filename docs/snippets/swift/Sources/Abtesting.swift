@@ -31,6 +31,8 @@ final class AbtestingClientSnippet {
             endAt: "2022-12-31T00:00:00.000Z"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -45,6 +47,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -59,6 +63,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -73,6 +79,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -90,6 +98,8 @@ final class AbtestingClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -112,6 +122,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -126,6 +138,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -144,6 +158,8 @@ final class AbtestingClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -165,6 +181,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -186,6 +204,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -207,6 +227,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -228,6 +250,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -249,6 +273,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -270,6 +296,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -291,6 +319,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -312,6 +342,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -333,6 +365,8 @@ final class AbtestingClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -347,6 +381,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -365,6 +401,8 @@ final class AbtestingClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -379,6 +417,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.deleteABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -411,6 +451,8 @@ final class AbtestingClientSnippet {
             ]
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -425,6 +467,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.getABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -439,6 +483,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.listABTests()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -453,6 +499,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.listABTests(offset: 0, limit: 21, indexPrefix: "cts_e2e ab", indexSuffix: "t")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -481,6 +529,8 @@ final class AbtestingClientSnippet {
             endAt: "2022-12-31T00:00:00.000Z"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -509,6 +559,8 @@ final class AbtestingClientSnippet {
         // Call the API
         let response = try await client.stopABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }

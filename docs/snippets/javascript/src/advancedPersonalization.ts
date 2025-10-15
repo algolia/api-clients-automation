@@ -17,7 +17,7 @@ export async function snippetForComputeRealtimeUser(): Promise<void> {
   const response = await client.computeRealtimeUser({ userToken: 'foo' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -35,7 +35,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -53,7 +53,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -71,7 +71,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -89,7 +89,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -113,7 +113,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -131,7 +131,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -153,7 +153,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -176,7 +176,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -199,7 +199,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -222,7 +222,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -245,7 +245,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -268,7 +268,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -291,7 +291,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -314,7 +314,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -337,7 +337,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -360,7 +360,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -378,7 +378,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -400,7 +400,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -418,7 +418,7 @@ export async function snippetForDeleteUser(): Promise<void> {
   const response = await client.deleteUser({ userID: 'user-1' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -436,7 +436,7 @@ export async function snippetForGetConfig(): Promise<void> {
   const response = await client.getConfig();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -454,7 +454,7 @@ export async function snippetForGetRealtimeUser(): Promise<void> {
   const response = await client.getRealtimeUser({ userToken: 'foo' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -472,7 +472,7 @@ export async function snippetForGetUser(): Promise<void> {
   const response = await client.getUser({ userID: 'user-1' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -490,7 +490,7 @@ export async function snippetForGetUsers(): Promise<void> {
   const response = await client.getUsers({ indices: ['indexName'] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -513,7 +513,7 @@ export async function snippetForPutConfig(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

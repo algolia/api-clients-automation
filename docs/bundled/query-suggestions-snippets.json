@@ -121,54 +121,54 @@
       "default": "import com.algolia.api.QuerySuggestionsClient;\nimport com.algolia.config.*;"
     },
     "createConfig": {
-      "default": "client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
+      "default": "BaseResponse response = client.createConfig(\n  new ConfigurationWithIndex()\n    .setIndexName(\"<YOUR_INDEX_NAME>\")\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
-      "allow del method for a custom path with all parameters": "client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
+      "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "Object response = client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
-      "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
-      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+      "allow get method for a custom path with minimal parameters": "Object response = client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
-      "allow post method for a custom path with all parameters": "client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
-      "requestOptions can override default query parameters": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
-      "requestOptions merges query parameters with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
-      "requestOptions can override default headers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions merges headers with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions queryParameters accepts booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
-      "requestOptions queryParameters accepts integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
-      "requestOptions queryParameters accepts list of string": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
-      "requestOptions queryParameters accepts list of booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
-      "requestOptions queryParameters accepts list of integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
+      "allow post method for a custom path with minimal parameters": "Object response = client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "Object response = client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "client.customPut(\"test/minimal\");",
-      "allow put method for a custom path with all parameters": "client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
+      "allow put method for a custom path with minimal parameters": "Object response = client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "Object response = client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
     },
     "deleteConfig": {
-      "default": "client.deleteConfig(\"<YOUR_INDEX_NAME>\");"
+      "default": "BaseResponse response = client.deleteConfig(\"<YOUR_INDEX_NAME>\");"
     },
     "getAllConfigs": {
-      "default": "client.getAllConfigs();"
+      "default": "List response = client.getAllConfigs();"
     },
     "getConfig": {
-      "default": "client.getConfig(\"<YOUR_INDEX_NAME>\");"
+      "default": "ConfigurationResponse response = client.getConfig(\"<YOUR_INDEX_NAME>\");"
     },
     "getConfigStatus": {
-      "default": "client.getConfigStatus(\"<YOUR_INDEX_NAME>\");"
+      "default": "ConfigStatus response = client.getConfigStatus(\"<YOUR_INDEX_NAME>\");"
     },
     "getLogFile": {
-      "default": "client.getLogFile(\"<YOUR_INDEX_NAME>\");"
+      "default": "LogFile response = client.getLogFile(\"<YOUR_INDEX_NAME>\");"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
     },
     "updateConfig": {
-      "default": "client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
+      "default": "BaseResponse response = client.updateConfig(\n  \"<YOUR_INDEX_NAME>\",\n  new Configuration()\n    .setSourceIndices(\n      Arrays.asList(\n        new SourceIndex()\n          .setIndexName(\"<YOUR_INDEX_NAME>\")\n          .setFacets(Arrays.asList(new Facet().setAttribute(\"test\")))\n          .setGenerate(Arrays.asList(Arrays.asList(\"facetA\", \"facetB\"), Arrays.asList(\"facetC\")))\n      )\n    )\n    .setLanguages(Languages.of(Arrays.asList(\"french\")))\n    .setExclude(Arrays.asList(\"test\"))\n);"
     },
     "init": {
       "default": "QuerySuggestionsClient client = new QuerySuggestionsClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"

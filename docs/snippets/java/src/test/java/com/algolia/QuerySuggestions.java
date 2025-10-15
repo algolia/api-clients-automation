@@ -18,7 +18,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createConfig(
+    BaseResponse response = client.createConfig(
       new ConfigurationWithIndex()
         .setIndexName("<YOUR_INDEX_NAME>")
         .setSourceIndices(
@@ -33,6 +33,8 @@ class SnippetQuerySuggestionsClient {
         .setExclude(Arrays.asList("test"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -45,8 +47,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -59,7 +63,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -68,6 +72,8 @@ class SnippetQuerySuggestionsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -80,8 +86,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -94,7 +102,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -103,6 +111,8 @@ class SnippetQuerySuggestionsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -115,7 +125,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -128,6 +138,8 @@ class SnippetQuerySuggestionsClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -140,8 +152,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -154,7 +168,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -168,6 +182,8 @@ class SnippetQuerySuggestionsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -180,7 +196,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -195,6 +211,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -207,7 +225,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -222,6 +240,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -234,7 +254,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -249,6 +269,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -261,7 +283,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -276,6 +298,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -288,7 +312,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -303,6 +327,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -315,7 +341,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -330,6 +356,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -342,7 +370,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -357,6 +385,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -369,7 +399,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -384,6 +414,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -396,7 +428,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -411,6 +443,8 @@ class SnippetQuerySuggestionsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -423,8 +457,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -437,7 +473,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -451,6 +487,8 @@ class SnippetQuerySuggestionsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -463,8 +501,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteConfig("<YOUR_INDEX_NAME>");
+    BaseResponse response = client.deleteConfig("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -477,8 +517,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAllConfigs();
+    List response = client.getAllConfigs();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -491,8 +533,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getConfig("<YOUR_INDEX_NAME>");
+    ConfigurationResponse response = client.getConfig("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -505,8 +549,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getConfigStatus("<YOUR_INDEX_NAME>");
+    ConfigStatus response = client.getConfigStatus("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -519,8 +565,10 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getLogFile("<YOUR_INDEX_NAME>");
+    LogFile response = client.getLogFile("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -547,7 +595,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateConfig(
+    BaseResponse response = client.updateConfig(
       "<YOUR_INDEX_NAME>",
       new Configuration()
         .setSourceIndices(
@@ -562,6 +610,8 @@ class SnippetQuerySuggestionsClient {
         .setExclude(Arrays.asList("test"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 }

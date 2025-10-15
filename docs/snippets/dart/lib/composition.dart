@@ -18,6 +18,8 @@ void snippetForcustomDelete() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -38,6 +40,8 @@ void snippetForcustomDelete1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -55,6 +59,8 @@ void snippetForcustomGet() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -75,6 +81,8 @@ void snippetForcustomGet1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -107,6 +115,8 @@ void snippetForcustomGet2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -124,6 +134,8 @@ void snippetForcustomPost() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -147,6 +159,8 @@ void snippetForcustomPost1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -175,6 +189,8 @@ void snippetForcustomPost2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -203,6 +219,8 @@ void snippetForcustomPost3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -231,6 +249,8 @@ void snippetForcustomPost4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -259,6 +279,8 @@ void snippetForcustomPost5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -287,6 +309,8 @@ void snippetForcustomPost6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -315,6 +339,8 @@ void snippetForcustomPost7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -346,6 +372,8 @@ void snippetForcustomPost8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -378,6 +406,8 @@ void snippetForcustomPost9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -409,6 +439,8 @@ void snippetForcustomPost10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -426,6 +458,8 @@ void snippetForcustomPut() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -449,6 +483,8 @@ void snippetForcustomPut1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -466,6 +502,8 @@ void snippetFordeleteComposition() async {
     compositionID: "1234",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -484,6 +522,8 @@ void snippetFordeleteCompositionRule() async {
     objectID: "5678",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -501,6 +541,8 @@ void snippetForgetComposition() async {
     compositionID: "foo",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -519,6 +561,8 @@ void snippetForgetRule() async {
     objectID: "123",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -537,6 +581,8 @@ void snippetForgetTask() async {
     taskID: 42,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -552,6 +598,8 @@ void snippetForlistCompositions() async {
   // Call the API
   final response = await client.listCompositions();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -567,6 +615,8 @@ void snippetForlistCompositions1() async {
   // Call the API
   final response = await client.listCompositions();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -611,6 +661,8 @@ void snippetFormultipleBatch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -665,6 +717,8 @@ void snippetFormultipleBatch1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -760,6 +814,8 @@ void snippetFormultipleBatch2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -813,6 +869,8 @@ void snippetFormultipleBatch3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -857,6 +915,8 @@ void snippetForputComposition() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -905,6 +965,8 @@ void snippetForputComposition1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -994,6 +1056,8 @@ void snippetForputComposition2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1044,6 +1108,8 @@ void snippetForputComposition3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1096,6 +1162,8 @@ void snippetForputCompositionRule() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1164,6 +1232,8 @@ void snippetForputCompositionRule1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1239,6 +1309,8 @@ void snippetForputCompositionRule2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1296,6 +1368,8 @@ void snippetForputCompositionRule3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1341,6 +1415,8 @@ void snippetForsaveRules() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1415,6 +1491,8 @@ void snippetForsaveRules1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1496,6 +1574,8 @@ void snippetForsaveRules2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1559,6 +1639,8 @@ void snippetForsaveRules3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1581,6 +1663,8 @@ void snippetForsearch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1623,6 +1707,8 @@ void snippetForsearch1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1643,6 +1729,8 @@ void snippetForsearchCompositionRules() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1666,6 +1754,8 @@ void snippetForsearchForFacetValues() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 

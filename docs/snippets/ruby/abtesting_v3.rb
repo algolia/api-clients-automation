@@ -26,11 +26,8 @@ def snippet_for_add_ab_tests
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -46,11 +43,8 @@ def snippet_for_custom_delete
   response = client.custom_delete("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -66,11 +60,8 @@ def snippet_for_custom_delete1
   response = client.custom_delete("test/all", {query: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -86,11 +77,8 @@ def snippet_for_custom_get
   response = client.custom_get("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -106,11 +94,8 @@ def snippet_for_custom_get1
   response = client.custom_get("test/all", {query: "parameters with space"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -136,11 +121,8 @@ def snippet_for_custom_get2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -156,11 +138,8 @@ def snippet_for_custom_post
   response = client.custom_post("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -176,11 +155,8 @@ def snippet_for_custom_post1
   response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -201,11 +177,8 @@ def snippet_for_custom_post2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -226,11 +199,8 @@ def snippet_for_custom_post3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -251,11 +221,8 @@ def snippet_for_custom_post4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -276,11 +243,8 @@ def snippet_for_custom_post5
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -301,11 +265,8 @@ def snippet_for_custom_post6
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -326,11 +287,8 @@ def snippet_for_custom_post7
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -351,11 +309,8 @@ def snippet_for_custom_post8
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -376,11 +331,8 @@ def snippet_for_custom_post9
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -401,11 +353,8 @@ def snippet_for_custom_post10
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -421,11 +370,8 @@ def snippet_for_custom_put
   response = client.custom_put("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -441,11 +387,8 @@ def snippet_for_custom_put1
   response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -461,11 +404,8 @@ def snippet_for_delete_ab_test
   response = client.delete_ab_test(42)
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -494,11 +434,8 @@ def snippet_for_estimate_ab_test
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -514,11 +451,8 @@ def snippet_for_get_ab_test
   response = client.get_ab_test(42)
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -534,11 +468,8 @@ def snippet_for_get_timeseries
   response = client.get_timeseries(42)
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -554,11 +485,8 @@ def snippet_for_list_ab_tests
   response = client.list_ab_tests
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -574,11 +502,8 @@ def snippet_for_list_ab_tests1
   response = client.list_ab_tests(0, 21, "cts_e2e ab", "t", "asc")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -605,11 +530,8 @@ def snippet_for_schedule_ab_test
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -639,10 +561,7 @@ def snippet_for_stop_ab_test
   response = client.stop_ab_test(42)
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end

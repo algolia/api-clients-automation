@@ -30,7 +30,7 @@ func SnippetForCustomDeleteOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -59,7 +59,7 @@ func SnippetForCustomDeleteOfPersonalization1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -88,7 +88,7 @@ func SnippetForCustomGetOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -117,7 +117,7 @@ func SnippetForCustomGetOfPersonalization1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -148,7 +148,7 @@ func SnippetForCustomGetOfPersonalization2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -177,7 +177,7 @@ func SnippetForCustomPostOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -206,7 +206,7 @@ func SnippetForCustomPostOfPersonalization1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -236,7 +236,7 @@ func SnippetForCustomPostOfPersonalization2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -266,7 +266,7 @@ func SnippetForCustomPostOfPersonalization3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -296,7 +296,7 @@ func SnippetForCustomPostOfPersonalization4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -326,7 +326,7 @@ func SnippetForCustomPostOfPersonalization5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -356,7 +356,7 @@ func SnippetForCustomPostOfPersonalization6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -386,7 +386,7 @@ func SnippetForCustomPostOfPersonalization7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -417,7 +417,7 @@ func SnippetForCustomPostOfPersonalization8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -448,7 +448,7 @@ func SnippetForCustomPostOfPersonalization9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -479,7 +479,7 @@ func SnippetForCustomPostOfPersonalization10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -508,7 +508,7 @@ func SnippetForCustomPutOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -537,7 +537,7 @@ func SnippetForCustomPutOfPersonalization1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -566,7 +566,7 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -594,7 +594,7 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -623,7 +623,7 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -688,7 +688,7 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

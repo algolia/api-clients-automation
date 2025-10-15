@@ -51,6 +51,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -75,6 +77,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -100,6 +104,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -124,6 +130,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -149,6 +157,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -182,6 +192,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -206,6 +218,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -232,6 +246,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -264,6 +280,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -296,6 +314,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -328,6 +348,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -360,6 +382,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -392,6 +416,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -424,6 +450,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -456,6 +484,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -488,6 +518,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -520,6 +552,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -544,6 +578,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -570,6 +606,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -594,6 +632,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -640,6 +680,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -664,6 +706,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -687,6 +731,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -714,6 +760,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -752,6 +800,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -796,6 +846,8 @@ class SnippetAbtestingClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 

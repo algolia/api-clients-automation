@@ -24,6 +24,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -46,6 +48,8 @@ public class SnippetCompositionClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -65,6 +69,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -87,6 +93,8 @@ public class SnippetCompositionClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -114,6 +122,8 @@ public class SnippetCompositionClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -133,6 +143,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -156,6 +168,8 @@ public class SnippetCompositionClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -180,6 +194,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -204,6 +220,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -228,6 +246,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -252,6 +272,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -276,6 +298,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -300,6 +324,8 @@ public class SnippetCompositionClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -326,6 +352,8 @@ public class SnippetCompositionClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -352,6 +380,8 @@ public class SnippetCompositionClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -378,6 +408,8 @@ public class SnippetCompositionClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -397,6 +429,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -420,6 +454,8 @@ public class SnippetCompositionClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -439,6 +475,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.DeleteCompositionAsync("1234");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -458,6 +496,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.DeleteCompositionRuleAsync("1234", "5678");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -477,6 +517,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.GetCompositionAsync("foo");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -496,6 +538,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.GetRuleAsync("foo", "123");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -515,6 +559,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.GetTaskAsync("foo", 42L);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -534,6 +580,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.ListCompositionsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -553,6 +601,8 @@ public class SnippetCompositionClient
     // Call the API
     var response = await client.ListCompositionsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -608,6 +658,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -681,6 +733,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -807,6 +861,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -876,6 +932,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -930,6 +988,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -989,6 +1049,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1101,6 +1163,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1163,6 +1227,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1224,6 +1290,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1306,6 +1374,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1384,6 +1454,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1451,6 +1523,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1505,6 +1579,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1601,6 +1677,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1701,6 +1779,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1786,6 +1866,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1808,6 +1890,8 @@ public class SnippetCompositionClient
       new RequestBody { Params = new Params { Query = "batman" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1863,6 +1947,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1885,6 +1971,8 @@ public class SnippetCompositionClient
       new SearchCompositionRulesParams { Query = "batman" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1911,6 +1999,8 @@ public class SnippetCompositionClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 

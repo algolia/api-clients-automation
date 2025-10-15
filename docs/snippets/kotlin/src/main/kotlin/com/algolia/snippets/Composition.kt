@@ -21,7 +21,7 @@ class SnippetCompositionClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -37,7 +37,7 @@ class SnippetCompositionClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -53,7 +53,7 @@ class SnippetCompositionClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -69,7 +69,7 @@ class SnippetCompositionClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -97,7 +97,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -113,7 +113,7 @@ class SnippetCompositionClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -135,7 +135,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -162,7 +162,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -189,7 +189,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -216,7 +216,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -243,7 +243,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -270,7 +270,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -297,7 +297,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -324,7 +324,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -351,7 +351,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -378,7 +378,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -394,7 +394,7 @@ class SnippetCompositionClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -416,7 +416,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -432,7 +432,7 @@ class SnippetCompositionClient {
     var response = client.deleteComposition(compositionID = "1234")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -448,7 +448,7 @@ class SnippetCompositionClient {
     var response = client.deleteCompositionRule(compositionID = "1234", objectID = "5678")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -464,7 +464,7 @@ class SnippetCompositionClient {
     var response = client.getComposition(compositionID = "foo")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -480,7 +480,7 @@ class SnippetCompositionClient {
     var response = client.getRule(compositionID = "foo", objectID = "123")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -496,7 +496,7 @@ class SnippetCompositionClient {
     var response = client.getTask(compositionID = "foo", taskID = 42L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -512,7 +512,7 @@ class SnippetCompositionClient {
     var response = client.listCompositions()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -528,7 +528,7 @@ class SnippetCompositionClient {
     var response = client.listCompositions()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -573,7 +573,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -618,7 +618,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -667,7 +667,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -718,7 +718,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -771,7 +771,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -844,7 +844,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -902,7 +902,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -948,7 +948,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1027,7 +1027,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1091,7 +1091,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1114,7 +1114,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1135,7 +1135,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1159,7 +1159,7 @@ class SnippetCompositionClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

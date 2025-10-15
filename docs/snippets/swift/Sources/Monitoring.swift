@@ -18,6 +18,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -32,6 +34,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -46,6 +50,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -63,6 +69,8 @@ final class MonitoringClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -85,6 +93,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -99,6 +109,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -117,6 +129,8 @@ final class MonitoringClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -138,6 +152,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -159,6 +175,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -180,6 +198,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -201,6 +221,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -222,6 +244,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -243,6 +267,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -264,6 +290,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -285,6 +313,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -306,6 +336,8 @@ final class MonitoringClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -320,6 +352,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -338,6 +372,8 @@ final class MonitoringClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -352,6 +388,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getClusterIncidents(clusters: "c1-de")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -366,6 +404,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getClusterStatus(clusters: "c1-de")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -380,6 +420,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getIncidents()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -394,6 +436,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getIndexingTime(clusters: "c1-de")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -408,6 +452,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getLatency(clusters: "c1-de")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -422,6 +468,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -436,6 +484,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getReachability(clusters: "c1-de")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -450,6 +500,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getServers()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -464,6 +516,8 @@ final class MonitoringClientSnippet {
         // Call the API
         let response = try await client.getStatus()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 

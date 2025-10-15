@@ -28,7 +28,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -52,7 +52,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -74,7 +74,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -98,7 +98,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -132,7 +132,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -154,7 +154,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -180,7 +180,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -210,7 +210,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -240,7 +240,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -271,7 +271,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -302,7 +302,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -332,7 +332,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -362,7 +362,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -393,7 +393,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -424,7 +424,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -455,7 +455,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -477,7 +477,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -503,7 +503,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -525,7 +525,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -547,7 +547,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -567,7 +567,7 @@ class SnippetMonitoringClient
         $response = $client->getIncidents();
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -589,7 +589,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -611,7 +611,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -634,7 +634,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -656,7 +656,7 @@ class SnippetMonitoringClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -676,7 +676,7 @@ class SnippetMonitoringClient
         $response = $client->getServers();
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -696,7 +696,7 @@ class SnippetMonitoringClient
         $response = $client->getStatus();
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

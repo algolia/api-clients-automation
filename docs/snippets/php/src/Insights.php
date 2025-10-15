@@ -28,7 +28,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -52,7 +52,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -74,7 +74,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -98,7 +98,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -132,7 +132,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -154,7 +154,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -180,7 +180,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -210,7 +210,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -240,7 +240,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -271,7 +271,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -302,7 +302,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -332,7 +332,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -362,7 +362,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -393,7 +393,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -424,7 +424,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -455,7 +455,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -477,7 +477,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -503,7 +503,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -565,7 +565,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -589,7 +589,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1760227200000,
+                    'timestamp' => 1760486400000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -603,7 +603,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1760227200000,
+                    'timestamp' => 1760486400000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -615,7 +615,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -652,7 +652,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -688,7 +688,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -738,7 +738,7 @@ class SnippetInsightsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

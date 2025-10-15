@@ -177,7 +177,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -185,10 +185,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -211,14 +213,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -228,12 +229,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -247,14 +251,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -266,14 +269,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -287,14 +289,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -312,14 +313,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -331,19 +331,13 @@ paths:
             response = client.custom_get("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -358,10 +352,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -372,7 +368,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -404,7 +403,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -412,10 +411,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -438,14 +439,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -455,12 +455,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -474,14 +477,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -493,14 +495,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -514,14 +515,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -539,14 +539,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -558,19 +557,13 @@ paths:
             response = client.custom_post("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -585,10 +578,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -599,7 +594,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -631,7 +629,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -639,10 +637,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -665,14 +665,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -682,12 +681,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -701,14 +703,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -720,14 +721,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -741,14 +741,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -766,14 +765,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -785,19 +783,13 @@ paths:
             response = client.custom_put("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -812,10 +804,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -826,7 +820,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -852,7 +849,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -860,10 +857,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -887,14 +886,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -904,12 +902,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -924,14 +925,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -943,14 +943,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -964,14 +963,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -989,14 +987,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -1008,19 +1005,13 @@ paths:
             response = client.custom_delete("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1035,10 +1026,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1049,7 +1042,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /2/searches:
     get:
       tags:
@@ -1144,7 +1140,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1152,10 +1148,12 @@ paths:
 
             // Call the API
             var response = await client.GetTopSearchesAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -1179,14 +1177,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -1196,12 +1193,15 @@ paths:
 
             // Call the API
 
-            client.getTopSearches("index");
+            GetTopSearchesResponse response = client.getTopSearches("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1215,14 +1215,13 @@ paths:
             const response = await client.getTopSearches({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1234,14 +1233,13 @@ paths:
             var response = client.getTopSearches(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1255,14 +1253,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -1280,14 +1277,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -1299,19 +1295,13 @@ paths:
             response = client.get_top_searches("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1326,10 +1316,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1340,7 +1332,10 @@ paths:
 
             let response = try await client.getTopSearches(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1417,7 +1412,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1425,10 +1420,12 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesCountAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -1452,14 +1449,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -1469,12 +1465,16 @@ paths:
 
             // Call the API
 
+            GetSearchesCountResponse response =
             client.getSearchesCount("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1488,14 +1488,13 @@ paths:
             const response = await client.getSearchesCount({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1507,14 +1506,13 @@ paths:
             var response = client.getSearchesCount(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1528,14 +1526,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -1553,14 +1550,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -1572,19 +1568,13 @@ paths:
             response = client.get_searches_count("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1599,10 +1589,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1613,7 +1605,10 @@ paths:
 
             let response = try await client.getSearchesCount(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1686,7 +1681,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1694,10 +1689,12 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesNoResultsAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -1721,14 +1718,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -1738,12 +1734,16 @@ paths:
 
             // Call the API
 
+            GetSearchesNoResultsResponse response =
             client.getSearchesNoResults("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1758,14 +1758,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1777,14 +1776,13 @@ paths:
             var response = client.getSearchesNoResults(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1798,14 +1796,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -1823,14 +1820,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -1842,19 +1838,13 @@ paths:
             response = client.get_searches_no_results("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1869,10 +1859,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1883,7 +1875,10 @@ paths:
 
             let response = try await client.getSearchesNoResults(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1965,7 +1960,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1973,10 +1968,12 @@ paths:
 
             // Call the API
             var response = await client.GetSearchesNoClicksAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -2000,14 +1997,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -2017,12 +2013,16 @@ paths:
 
             // Call the API
 
+            GetSearchesNoClicksResponse response =
             client.getSearchesNoClicks("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2037,14 +2037,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2056,14 +2055,13 @@ paths:
             var response = client.getSearchesNoClicks(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2077,14 +2075,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -2102,14 +2099,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -2121,19 +2117,13 @@ paths:
             response = client.get_searches_no_clicks("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2148,10 +2138,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2162,7 +2154,10 @@ paths:
 
             let response = try await client.getSearchesNoClicks(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2255,7 +2250,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2263,10 +2258,12 @@ paths:
 
             // Call the API
             var response = await client.GetNoResultsRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -2290,14 +2287,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -2307,12 +2303,16 @@ paths:
 
             // Call the API
 
+            GetNoResultsRateResponse response =
             client.getNoResultsRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2326,14 +2326,13 @@ paths:
             const response = await client.getNoResultsRate({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2345,14 +2344,13 @@ paths:
             var response = client.getNoResultsRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2366,14 +2364,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -2391,14 +2388,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -2410,19 +2406,13 @@ paths:
             response = client.get_no_results_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2437,10 +2427,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2451,7 +2443,10 @@ paths:
 
             let response = try await client.getNoResultsRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2543,7 +2538,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2551,10 +2546,12 @@ paths:
 
             // Call the API
             var response = await client.GetNoClickRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -2578,14 +2575,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -2595,12 +2591,15 @@ paths:
 
             // Call the API
 
-            client.getNoClickRate("index");
+            GetNoClickRateResponse response = client.getNoClickRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2614,14 +2613,13 @@ paths:
             const response = await client.getNoClickRate({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2633,14 +2631,13 @@ paths:
             var response = client.getNoClickRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2654,14 +2651,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -2679,14 +2675,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -2698,19 +2693,13 @@ paths:
             response = client.get_no_click_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2725,10 +2714,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2739,7 +2730,10 @@ paths:
 
             let response = try await client.getNoClickRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2840,7 +2834,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2848,10 +2842,12 @@ paths:
 
             // Call the API
             var response = await client.GetTopHitsAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -2874,14 +2870,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -2891,12 +2886,15 @@ paths:
 
             // Call the API
 
-            client.getTopHits("index");
+            GetTopHitsResponse response = client.getTopHits("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2910,14 +2908,13 @@ paths:
             const response = await client.getTopHits({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2929,14 +2926,13 @@ paths:
             var response = client.getTopHits(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2950,14 +2946,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -2975,14 +2970,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -2994,19 +2988,13 @@ paths:
             response = client.get_top_hits("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3021,10 +3009,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3035,7 +3025,10 @@ paths:
 
             let response = try await client.getTopHits(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3128,7 +3121,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -3136,10 +3129,12 @@ paths:
 
             // Call the API
             var response = await client.GetUsersCountAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -3163,14 +3158,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -3180,12 +3174,15 @@ paths:
 
             // Call the API
 
-            client.getUsersCount("index");
+            GetUsersCountResponse response = client.getUsersCount("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -3199,14 +3196,13 @@ paths:
             const response = await client.getUsersCount({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3218,14 +3214,13 @@ paths:
             var response = client.getUsersCount(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -3239,14 +3234,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -3264,14 +3258,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -3283,19 +3276,13 @@ paths:
             response = client.get_users_count("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3310,10 +3297,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3324,7 +3313,10 @@ paths:
 
             let response = try await client.getUsersCount(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3380,7 +3372,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -3388,10 +3380,12 @@ paths:
 
             // Call the API
             var response = await client.GetTopFilterAttributesAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -3415,14 +3409,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -3432,12 +3425,16 @@ paths:
 
             // Call the API
 
+            GetTopFilterAttributesResponse response =
             client.getTopFilterAttributes("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -3452,14 +3449,13 @@ paths:
             'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3471,14 +3467,13 @@ paths:
             var response = client.getTopFilterAttributes(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -3492,14 +3487,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -3517,14 +3511,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -3536,19 +3529,13 @@ paths:
             response = client.get_top_filter_attributes("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3563,10 +3550,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3578,7 +3567,10 @@ paths:
             let response = try await client.getTopFilterAttributes(index:
             "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3636,7 +3628,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: >-
             // Initialize the client
 
             var client = new AnalyticsClient(
@@ -3649,10 +3641,13 @@ paths:
             var response = await
             client.GetTopFilterForAttributeAsync("myAttribute", "index");
 
-            // >LOG
+
+            // print the response
+
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -3676,14 +3671,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -3693,12 +3687,16 @@ paths:
 
             // Call the API
 
+            GetTopFilterForAttributeResponse response =
             client.getTopFilterForAttribute("myAttribute", "index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -3713,14 +3711,13 @@ paths:
             'myAttribute', index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3733,14 +3730,13 @@ paths:
             "myAttribute", index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -3755,14 +3751,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -3781,14 +3776,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -3801,19 +3795,13 @@ paths:
             "index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3829,10 +3817,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3844,7 +3834,10 @@ paths:
             let response = try await client.getTopFilterForAttribute(attribute:
             "myAttribute", index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3903,7 +3896,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -3911,10 +3904,12 @@ paths:
 
             // Call the API
             var response = await client.GetTopFiltersNoResultsAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -3938,14 +3933,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -3955,12 +3949,16 @@ paths:
 
             // Call the API
 
+            GetTopFiltersNoResultsResponse response =
             client.getTopFiltersNoResults("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -3975,14 +3973,13 @@ paths:
             'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3994,14 +3991,13 @@ paths:
             var response = client.getTopFiltersNoResults(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -4015,14 +4011,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -4040,14 +4035,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -4059,19 +4053,13 @@ paths:
             response = client.get_top_filters_no_results("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -4086,10 +4074,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4101,7 +4091,10 @@ paths:
             let response = try await client.getTopFiltersNoResults(index:
             "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -4173,7 +4166,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -4181,10 +4174,12 @@ paths:
 
             // Call the API
             var response = await client.GetTopCountriesAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -4208,14 +4203,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -4225,12 +4219,15 @@ paths:
 
             // Call the API
 
-            client.getTopCountries("index");
+            GetTopCountriesResponse response = client.getTopCountries("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -4244,14 +4241,13 @@ paths:
             const response = await client.getTopCountries({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4263,14 +4259,13 @@ paths:
             var response = client.getTopCountries(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -4284,14 +4279,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -4309,14 +4303,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -4328,19 +4321,13 @@ paths:
             response = client.get_top_countries("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -4355,10 +4342,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4369,7 +4358,10 @@ paths:
 
             let response = try await client.getTopCountries(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -4466,7 +4458,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -4474,10 +4466,12 @@ paths:
 
             // Call the API
             var response = await client.GetAverageClickPositionAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -4501,14 +4495,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -4518,12 +4511,16 @@ paths:
 
             // Call the API
 
+            GetAverageClickPositionResponse response =
             client.getAverageClickPosition("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -4538,14 +4535,13 @@ paths:
             'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4557,14 +4553,13 @@ paths:
             var response = client.getAverageClickPosition(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -4578,14 +4573,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -4603,14 +4597,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -4622,19 +4615,13 @@ paths:
             response = client.get_average_click_position("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -4649,10 +4636,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4664,7 +4653,10 @@ paths:
             let response = try await client.getAverageClickPosition(index:
             "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -4731,7 +4723,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -4739,10 +4731,12 @@ paths:
 
             // Call the API
             var response = await client.GetClickPositionsAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -4766,14 +4760,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -4783,12 +4776,16 @@ paths:
 
             // Call the API
 
+            GetClickPositionsResponse response =
             client.getClickPositions("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -4802,14 +4799,13 @@ paths:
             const response = await client.getClickPositions({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4821,14 +4817,13 @@ paths:
             var response = client.getClickPositions(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -4842,14 +4837,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -4867,14 +4861,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -4886,19 +4879,13 @@ paths:
             response = client.get_click_positions("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -4913,10 +4900,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4927,7 +4916,10 @@ paths:
 
             let response = try await client.getClickPositions(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5028,7 +5020,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -5036,10 +5028,12 @@ paths:
 
             // Call the API
             var response = await client.GetClickThroughRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -5063,14 +5057,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -5080,12 +5073,16 @@ paths:
 
             // Call the API
 
+            GetClickThroughRateResponse response =
             client.getClickThroughRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -5100,14 +5097,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5119,14 +5115,13 @@ paths:
             var response = client.getClickThroughRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -5140,14 +5135,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -5165,14 +5159,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -5184,19 +5177,13 @@ paths:
             response = client.get_click_through_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -5211,10 +5198,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -5225,7 +5214,10 @@ paths:
 
             let response = try await client.getClickThroughRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5326,7 +5318,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -5334,10 +5326,12 @@ paths:
 
             // Call the API
             var response = await client.GetConversionRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -5361,14 +5355,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -5378,12 +5371,16 @@ paths:
 
             // Call the API
 
+            GetConversionRateResponse response =
             client.getConversionRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -5397,14 +5394,13 @@ paths:
             const response = await client.getConversionRate({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5416,14 +5412,13 @@ paths:
             var response = client.getConversionRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -5437,14 +5432,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -5462,14 +5456,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -5481,19 +5474,13 @@ paths:
             response = client.get_conversion_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -5508,10 +5495,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -5522,7 +5511,10 @@ paths:
 
             let response = try await client.getConversionRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5633,7 +5625,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -5641,10 +5633,12 @@ paths:
 
             // Call the API
             var response = await client.GetAddToCartRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -5668,14 +5662,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -5685,12 +5678,16 @@ paths:
 
             // Call the API
 
+            GetAddToCartRateResponse response =
             client.getAddToCartRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -5704,14 +5701,13 @@ paths:
             const response = await client.getAddToCartRate({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5723,14 +5719,13 @@ paths:
             var response = client.getAddToCartRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -5744,14 +5739,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -5769,14 +5763,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -5788,19 +5781,13 @@ paths:
             response = client.get_add_to_cart_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -5815,10 +5802,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -5829,7 +5818,10 @@ paths:
 
             let response = try await client.getAddToCartRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5940,7 +5932,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -5948,10 +5940,12 @@ paths:
 
             // Call the API
             var response = await client.GetPurchaseRateAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -5975,14 +5969,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -5992,12 +5985,15 @@ paths:
 
             // Call the API
 
-            client.getPurchaseRate("index");
+            GetPurchaseRateResponse response = client.getPurchaseRate("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -6011,14 +6007,13 @@ paths:
             const response = await client.getPurchaseRate({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -6030,14 +6025,13 @@ paths:
             var response = client.getPurchaseRate(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -6051,14 +6045,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -6076,14 +6069,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -6095,19 +6087,13 @@ paths:
             response = client.get_purchase_rate("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -6122,10 +6108,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -6136,7 +6124,10 @@ paths:
 
             let response = try await client.getPurchaseRate(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -6215,7 +6206,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -6223,10 +6214,12 @@ paths:
 
             // Call the API
             var response = await client.GetRevenueAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -6249,14 +6242,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -6266,12 +6258,15 @@ paths:
 
             // Call the API
 
-            client.getRevenue("index");
+            GetRevenue response = client.getRevenue("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -6285,14 +6280,13 @@ paths:
             const response = await client.getRevenue({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -6304,14 +6298,13 @@ paths:
             var response = client.getRevenue(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -6325,14 +6318,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -6350,14 +6342,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -6369,19 +6360,13 @@ paths:
             response = client.get_revenue("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -6396,10 +6381,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -6410,7 +6397,10 @@ paths:
 
             let response = try await client.getRevenue(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -6464,7 +6454,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AnalyticsClient(
               new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -6472,10 +6462,12 @@ paths:
 
             // Call the API
             var response = await client.GetStatusAsync("index");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             analytics.ALGOLIA_APPLICATION_REGION
 
@@ -6498,14 +6490,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AnalyticsClient client = new
@@ -6515,12 +6506,15 @@ paths:
 
             // Call the API
 
-            client.getStatus("index");
+            GetStatusResponse response = client.getStatus("index");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -6534,14 +6528,13 @@ paths:
             const response = await client.getStatus({ index: 'index' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -6553,14 +6546,13 @@ paths:
             var response = client.getStatus(index = "index")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AnalyticsClient::create('ALGOLIA_APPLICATION_ID',
@@ -6574,14 +6566,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AnalyticsClient instead,
@@ -6599,14 +6590,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID",
@@ -6618,19 +6608,13 @@ paths:
             response = client.get_status("index")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AnalyticsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -6645,10 +6629,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -6659,7 +6645,10 @@ paths:
 
             let response = try await client.getStatus(index: "index")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

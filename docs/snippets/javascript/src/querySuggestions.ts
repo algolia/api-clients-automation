@@ -24,7 +24,7 @@ export async function snippetForCreateConfig(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -42,7 +42,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -60,7 +60,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -78,7 +78,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -96,7 +96,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -120,7 +120,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -138,7 +138,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -160,7 +160,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -183,7 +183,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -206,7 +206,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -229,7 +229,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -252,7 +252,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -275,7 +275,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -298,7 +298,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -321,7 +321,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -344,7 +344,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -367,7 +367,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -385,7 +385,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -407,7 +407,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -425,7 +425,7 @@ export async function snippetForDeleteConfig(): Promise<void> {
   const response = await client.deleteConfig({ indexName: 'theIndexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -443,7 +443,7 @@ export async function snippetForGetAllConfigs(): Promise<void> {
   const response = await client.getAllConfigs();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -461,7 +461,7 @@ export async function snippetForGetConfig(): Promise<void> {
   const response = await client.getConfig({ indexName: 'cts_e2e_browse_query_suggestions' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -479,7 +479,7 @@ export async function snippetForGetConfigStatus(): Promise<void> {
   const response = await client.getConfigStatus({ indexName: 'theIndexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -497,7 +497,7 @@ export async function snippetForGetLogFile(): Promise<void> {
   const response = await client.getLogFile({ indexName: 'theIndexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -540,7 +540,7 @@ export async function snippetForUpdateConfig(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

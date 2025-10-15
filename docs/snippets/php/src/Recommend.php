@@ -29,7 +29,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -51,7 +51,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -75,7 +75,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -97,7 +97,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -121,7 +121,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -155,7 +155,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -177,7 +177,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -203,7 +203,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -233,7 +233,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -263,7 +263,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -294,7 +294,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -325,7 +325,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -355,7 +355,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -385,7 +385,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -416,7 +416,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -447,7 +447,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -478,7 +478,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -500,7 +500,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -526,7 +526,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -550,7 +550,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -574,7 +574,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -598,7 +598,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -627,7 +627,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -657,7 +657,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -697,7 +697,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -727,7 +727,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -768,7 +768,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -803,7 +803,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -860,7 +860,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -889,7 +889,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -912,7 +912,7 @@ class SnippetRecommendClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

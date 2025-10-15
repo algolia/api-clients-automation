@@ -28,7 +28,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -52,7 +52,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -74,7 +74,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -98,7 +98,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -132,7 +132,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -154,7 +154,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -180,7 +180,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -210,7 +210,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -240,7 +240,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -271,7 +271,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -302,7 +302,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -332,7 +332,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -362,7 +362,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -393,7 +393,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -424,7 +424,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -455,7 +455,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -477,7 +477,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -503,7 +503,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -525,7 +525,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -550,7 +550,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -572,7 +572,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -597,7 +597,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -619,7 +619,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -644,7 +644,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -666,7 +666,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -691,7 +691,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -713,7 +713,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -738,7 +738,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -760,7 +760,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -785,7 +785,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -807,7 +807,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -832,7 +832,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -854,7 +854,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -879,7 +879,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -901,7 +901,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -926,7 +926,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -948,7 +948,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -973,7 +973,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -995,7 +995,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1022,7 +1022,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1044,7 +1044,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1071,7 +1071,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1093,7 +1093,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1115,7 +1115,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1142,7 +1142,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1164,7 +1164,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1192,7 +1192,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1215,7 +1215,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1238,7 +1238,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1267,7 +1267,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1296,7 +1296,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1318,7 +1318,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1346,7 +1346,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1368,7 +1368,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1398,7 +1398,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1420,7 +1420,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1451,7 +1451,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1473,7 +1473,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -1498,7 +1498,7 @@ class SnippetAnalyticsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

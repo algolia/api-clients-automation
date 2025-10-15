@@ -20,7 +20,7 @@ class SnippetAnalyticsClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -36,7 +36,7 @@ class SnippetAnalyticsClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -52,7 +52,7 @@ class SnippetAnalyticsClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -68,7 +68,7 @@ class SnippetAnalyticsClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -96,7 +96,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -112,7 +112,7 @@ class SnippetAnalyticsClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -134,7 +134,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -161,7 +161,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -188,7 +188,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -215,7 +215,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -242,7 +242,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -269,7 +269,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -296,7 +296,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -323,7 +323,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -350,7 +350,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -377,7 +377,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -393,7 +393,7 @@ class SnippetAnalyticsClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -415,7 +415,7 @@ class SnippetAnalyticsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -431,7 +431,7 @@ class SnippetAnalyticsClient {
     var response = client.getAddToCartRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -447,7 +447,7 @@ class SnippetAnalyticsClient {
     var response = client.getAddToCartRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -463,7 +463,7 @@ class SnippetAnalyticsClient {
     var response = client.getAverageClickPosition(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -479,7 +479,7 @@ class SnippetAnalyticsClient {
     var response = client.getAverageClickPosition(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -495,7 +495,7 @@ class SnippetAnalyticsClient {
     var response = client.getClickPositions(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -511,7 +511,7 @@ class SnippetAnalyticsClient {
     var response = client.getClickPositions(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -527,7 +527,7 @@ class SnippetAnalyticsClient {
     var response = client.getClickThroughRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -543,7 +543,7 @@ class SnippetAnalyticsClient {
     var response = client.getClickThroughRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -559,7 +559,7 @@ class SnippetAnalyticsClient {
     var response = client.getConversionRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -575,7 +575,7 @@ class SnippetAnalyticsClient {
     var response = client.getConversionRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -591,7 +591,7 @@ class SnippetAnalyticsClient {
     var response = client.getNoClickRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -607,7 +607,7 @@ class SnippetAnalyticsClient {
     var response = client.getNoClickRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -623,7 +623,7 @@ class SnippetAnalyticsClient {
     var response = client.getNoResultsRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -639,7 +639,7 @@ class SnippetAnalyticsClient {
     var response = client.getNoResultsRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -655,7 +655,7 @@ class SnippetAnalyticsClient {
     var response = client.getPurchaseRate(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -671,7 +671,7 @@ class SnippetAnalyticsClient {
     var response = client.getPurchaseRate(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -687,7 +687,7 @@ class SnippetAnalyticsClient {
     var response = client.getRevenue(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -703,7 +703,7 @@ class SnippetAnalyticsClient {
     var response = client.getRevenue(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -719,7 +719,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesCount(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -735,7 +735,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesCount(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -751,7 +751,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesNoClicks(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -767,7 +767,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesNoClicks(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -783,7 +783,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesNoResults(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -799,7 +799,7 @@ class SnippetAnalyticsClient {
     var response = client.getSearchesNoResults(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -815,7 +815,7 @@ class SnippetAnalyticsClient {
     var response = client.getStatus(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -831,7 +831,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopCountries(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -847,7 +847,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopCountries(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -863,7 +863,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterAttributes(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -879,7 +879,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterAttributes(index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -895,7 +895,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterForAttribute(attribute = "myAttribute", index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -911,7 +911,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterForAttribute(attribute = "myAttribute1,myAttribute2", index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -927,7 +927,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterForAttribute(attribute = "myAttribute", index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -943,7 +943,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFilterForAttribute(attribute = "myAttribute1,myAttribute2", index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -959,7 +959,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFiltersNoResults(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -975,7 +975,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopFiltersNoResults(index = "index", search = "mySearch", startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -991,7 +991,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopHits(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1007,7 +1007,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopHits(index = "index", search = "mySearch", clickAnalytics = true, revenueAnalytics = true, startDate = "1999-09-19", endDate = "2001-01-01", limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1023,7 +1023,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopSearches(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1039,7 +1039,7 @@ class SnippetAnalyticsClient {
     var response = client.getTopSearches(index = "index", clickAnalytics = true, revenueAnalytics = true, startDate = "1999-09-19", endDate = "2001-01-01", orderBy = OrderBy.entries.first { it.value == "searchCount" }, direction = Direction.entries.first { it.value == "asc" }, limit = 21, offset = 42, tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1055,7 +1055,7 @@ class SnippetAnalyticsClient {
     var response = client.getUsersCount(index = "index")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1071,7 +1071,7 @@ class SnippetAnalyticsClient {
     var response = client.getUsersCount(index = "index", startDate = "1999-09-19", endDate = "2001-01-01", tags = "tag")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

@@ -16,11 +16,8 @@ def snippet_for_custom_delete
   response = client.custom_delete("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -36,11 +33,8 @@ def snippet_for_custom_delete1
   response = client.custom_delete("test/all", {query: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -56,11 +50,8 @@ def snippet_for_custom_get
   response = client.custom_get("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -76,11 +67,8 @@ def snippet_for_custom_get1
   response = client.custom_get("test/all", {query: "parameters with space"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -106,11 +94,8 @@ def snippet_for_custom_get2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -126,11 +111,8 @@ def snippet_for_custom_post
   response = client.custom_post("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -146,11 +128,8 @@ def snippet_for_custom_post1
   response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -171,11 +150,8 @@ def snippet_for_custom_post2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -196,11 +172,8 @@ def snippet_for_custom_post3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -221,11 +194,8 @@ def snippet_for_custom_post4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -246,11 +216,8 @@ def snippet_for_custom_post5
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -271,11 +238,8 @@ def snippet_for_custom_post6
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -296,11 +260,8 @@ def snippet_for_custom_post7
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -321,11 +282,8 @@ def snippet_for_custom_post8
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -346,11 +304,8 @@ def snippet_for_custom_post9
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -371,11 +326,8 @@ def snippet_for_custom_post10
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -391,11 +343,8 @@ def snippet_for_custom_put
   response = client.custom_put("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -411,11 +360,8 @@ def snippet_for_custom_put1
   response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -431,11 +377,8 @@ def snippet_for_get_add_to_cart_rate
   response = client.get_add_to_cart_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -451,11 +394,8 @@ def snippet_for_get_add_to_cart_rate1
   response = client.get_add_to_cart_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -471,11 +411,8 @@ def snippet_for_get_average_click_position
   response = client.get_average_click_position("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -491,11 +428,8 @@ def snippet_for_get_average_click_position1
   response = client.get_average_click_position("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -511,11 +445,8 @@ def snippet_for_get_click_positions
   response = client.get_click_positions("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -531,11 +462,8 @@ def snippet_for_get_click_positions1
   response = client.get_click_positions("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -551,11 +479,8 @@ def snippet_for_get_click_through_rate
   response = client.get_click_through_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -571,11 +496,8 @@ def snippet_for_get_click_through_rate1
   response = client.get_click_through_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -591,11 +513,8 @@ def snippet_for_get_conversion_rate
   response = client.get_conversion_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -611,11 +530,8 @@ def snippet_for_get_conversion_rate1
   response = client.get_conversion_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -631,11 +547,8 @@ def snippet_for_get_no_click_rate
   response = client.get_no_click_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -651,11 +564,8 @@ def snippet_for_get_no_click_rate1
   response = client.get_no_click_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -671,11 +581,8 @@ def snippet_for_get_no_results_rate
   response = client.get_no_results_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -691,11 +598,8 @@ def snippet_for_get_no_results_rate1
   response = client.get_no_results_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -711,11 +615,8 @@ def snippet_for_get_purchase_rate
   response = client.get_purchase_rate("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -731,11 +632,8 @@ def snippet_for_get_purchase_rate1
   response = client.get_purchase_rate("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -751,11 +649,8 @@ def snippet_for_get_revenue
   response = client.get_revenue("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -771,11 +666,8 @@ def snippet_for_get_revenue1
   response = client.get_revenue("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -791,11 +683,8 @@ def snippet_for_get_searches_count
   response = client.get_searches_count("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -811,11 +700,8 @@ def snippet_for_get_searches_count1
   response = client.get_searches_count("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -831,11 +717,8 @@ def snippet_for_get_searches_no_clicks
   response = client.get_searches_no_clicks("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -851,11 +734,8 @@ def snippet_for_get_searches_no_clicks1
   response = client.get_searches_no_clicks("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -871,11 +751,8 @@ def snippet_for_get_searches_no_results
   response = client.get_searches_no_results("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -891,11 +768,8 @@ def snippet_for_get_searches_no_results1
   response = client.get_searches_no_results("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -911,11 +785,8 @@ def snippet_for_get_status
   response = client.get_status("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -931,11 +802,8 @@ def snippet_for_get_top_countries
   response = client.get_top_countries("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -951,11 +819,8 @@ def snippet_for_get_top_countries1
   response = client.get_top_countries("index", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -971,11 +836,8 @@ def snippet_for_get_top_filter_attributes
   response = client.get_top_filter_attributes("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -991,11 +853,8 @@ def snippet_for_get_top_filter_attributes1
   response = client.get_top_filter_attributes("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1011,11 +870,8 @@ def snippet_for_get_top_filter_for_attribute
   response = client.get_top_filter_for_attribute("myAttribute", "index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1031,11 +887,8 @@ def snippet_for_get_top_filter_for_attribute1
   response = client.get_top_filter_for_attribute("myAttribute1,myAttribute2", "index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1060,11 +913,8 @@ def snippet_for_get_top_filter_for_attribute2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1089,11 +939,8 @@ def snippet_for_get_top_filter_for_attribute3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1109,11 +956,8 @@ def snippet_for_get_top_filters_no_results
   response = client.get_top_filters_no_results("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1129,11 +973,8 @@ def snippet_for_get_top_filters_no_results1
   response = client.get_top_filters_no_results("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1149,11 +990,8 @@ def snippet_for_get_top_hits
   response = client.get_top_hits("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1169,11 +1007,8 @@ def snippet_for_get_top_hits1
   response = client.get_top_hits("index", "mySearch", true, true, "1999-09-19", "2001-01-01", 21, 42, "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1189,11 +1024,8 @@ def snippet_for_get_top_searches
   response = client.get_top_searches("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1220,11 +1052,8 @@ def snippet_for_get_top_searches1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1240,11 +1069,8 @@ def snippet_for_get_users_count
   response = client.get_users_count("index")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1260,11 +1086,8 @@ def snippet_for_get_users_count1
   response = client.get_users_count("index", "1999-09-19", "2001-01-01", "tag")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 

@@ -30,7 +30,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -59,7 +59,7 @@ func SnippetForCustomDeleteOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -88,7 +88,7 @@ func SnippetForCustomGetOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -117,7 +117,7 @@ func SnippetForCustomGetOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -148,7 +148,7 @@ func SnippetForCustomGetOfAnalytics2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -177,7 +177,7 @@ func SnippetForCustomPostOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -206,7 +206,7 @@ func SnippetForCustomPostOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -236,7 +236,7 @@ func SnippetForCustomPostOfAnalytics2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -266,7 +266,7 @@ func SnippetForCustomPostOfAnalytics3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -296,7 +296,7 @@ func SnippetForCustomPostOfAnalytics4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -326,7 +326,7 @@ func SnippetForCustomPostOfAnalytics5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -356,7 +356,7 @@ func SnippetForCustomPostOfAnalytics6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -386,7 +386,7 @@ func SnippetForCustomPostOfAnalytics7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -417,7 +417,7 @@ func SnippetForCustomPostOfAnalytics8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -448,7 +448,7 @@ func SnippetForCustomPostOfAnalytics9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -479,7 +479,7 @@ func SnippetForCustomPostOfAnalytics10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -508,7 +508,7 @@ func SnippetForCustomPutOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -537,7 +537,7 @@ func SnippetForCustomPutOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -566,7 +566,7 @@ func SnippetForGetAddToCartRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -595,7 +595,7 @@ func SnippetForGetAddToCartRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -624,7 +624,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -653,7 +653,7 @@ func SnippetForGetAverageClickPositionOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -682,7 +682,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -711,7 +711,7 @@ func SnippetForGetClickPositionsOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -740,7 +740,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -769,7 +769,7 @@ func SnippetForGetClickThroughRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -798,7 +798,7 @@ func SnippetForGetConversionRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -827,7 +827,7 @@ func SnippetForGetConversionRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -856,7 +856,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -885,7 +885,7 @@ func SnippetForGetNoClickRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -914,7 +914,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -943,7 +943,7 @@ func SnippetForGetNoResultsRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -972,7 +972,7 @@ func SnippetForGetPurchaseRateOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1001,7 +1001,7 @@ func SnippetForGetPurchaseRateOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1030,7 +1030,7 @@ func SnippetForGetRevenueOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1059,7 +1059,7 @@ func SnippetForGetRevenueOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1088,7 +1088,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1117,7 +1117,7 @@ func SnippetForGetSearchesCountOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1146,7 +1146,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1175,7 +1175,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1204,7 +1204,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1233,7 +1233,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1262,7 +1262,7 @@ func SnippetForGetStatusOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1291,7 +1291,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1320,7 +1320,7 @@ func SnippetForGetTopCountriesOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1349,7 +1349,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1378,7 +1378,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1407,7 +1407,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1436,7 +1436,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1467,7 +1467,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1498,7 +1498,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1527,7 +1527,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1556,7 +1556,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1585,7 +1585,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1615,7 +1615,7 @@ func SnippetForGetTopHitsOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1644,7 +1644,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1674,7 +1674,7 @@ func SnippetForGetTopSearchesOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1703,7 +1703,7 @@ func SnippetForGetUsersCountOfAnalytics() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1732,7 +1732,7 @@ func SnippetForGetUsersCountOfAnalytics1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

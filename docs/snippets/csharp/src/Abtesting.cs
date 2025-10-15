@@ -35,6 +35,8 @@ public class SnippetAbtestingClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -54,6 +56,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -76,6 +80,8 @@ public class SnippetAbtestingClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -95,6 +101,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -117,6 +125,8 @@ public class SnippetAbtestingClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -144,6 +154,8 @@ public class SnippetAbtestingClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -163,6 +175,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -186,6 +200,8 @@ public class SnippetAbtestingClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -210,6 +226,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -234,6 +252,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -258,6 +278,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -282,6 +304,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -306,6 +330,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -330,6 +356,8 @@ public class SnippetAbtestingClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -356,6 +384,8 @@ public class SnippetAbtestingClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -382,6 +412,8 @@ public class SnippetAbtestingClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -408,6 +440,8 @@ public class SnippetAbtestingClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -427,6 +461,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -450,6 +486,8 @@ public class SnippetAbtestingClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -469,6 +507,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.DeleteABTestAsync(42);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -506,6 +546,8 @@ public class SnippetAbtestingClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -525,6 +567,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.GetABTestAsync(42);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -544,6 +588,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.ListABTestsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -563,6 +609,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.ListABTestsAsync(0, 21, "cts_e2e ab", "t");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -594,6 +642,8 @@ public class SnippetAbtestingClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -632,6 +682,8 @@ public class SnippetAbtestingClient
     // Call the API
     var response = await client.StopABTestAsync(42);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 }

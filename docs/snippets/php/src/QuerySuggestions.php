@@ -54,7 +54,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -76,7 +76,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -100,7 +100,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -122,7 +122,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -146,7 +146,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -180,7 +180,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -202,7 +202,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -228,7 +228,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -258,7 +258,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -288,7 +288,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -319,7 +319,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -350,7 +350,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -380,7 +380,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -410,7 +410,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -441,7 +441,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -472,7 +472,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -503,7 +503,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -525,7 +525,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -551,7 +551,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -573,7 +573,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -593,7 +593,7 @@ class SnippetQuerySuggestionsClient
         $response = $client->getAllConfigs();
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -615,7 +615,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -637,7 +637,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -659,7 +659,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }
@@ -727,7 +727,7 @@ class SnippetQuerySuggestionsClient
         );
 
         // >LOG
-        // play with the response
+        // print the response
         var_dump($response);
         // SEPARATOR<
     }

@@ -28,6 +28,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -54,6 +56,8 @@ public class SnippetPersonalizationClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -77,6 +81,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -103,6 +109,8 @@ public class SnippetPersonalizationClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -134,6 +142,8 @@ public class SnippetPersonalizationClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -157,6 +167,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -184,6 +196,8 @@ public class SnippetPersonalizationClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -212,6 +226,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -240,6 +256,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -268,6 +286,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -296,6 +316,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -324,6 +346,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -352,6 +376,8 @@ public class SnippetPersonalizationClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -382,6 +408,8 @@ public class SnippetPersonalizationClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -412,6 +440,8 @@ public class SnippetPersonalizationClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -442,6 +472,8 @@ public class SnippetPersonalizationClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -465,6 +497,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -492,6 +526,8 @@ public class SnippetPersonalizationClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -515,6 +551,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.DeleteUserProfileAsync("UserToken");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -538,6 +576,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.GetPersonalizationStrategyAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -561,6 +601,8 @@ public class SnippetPersonalizationClient
     // Call the API
     var response = await client.GetUserTokenProfileAsync("UserToken");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -625,6 +667,8 @@ public class SnippetPersonalizationClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 }

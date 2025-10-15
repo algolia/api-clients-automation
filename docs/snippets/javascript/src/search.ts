@@ -22,7 +22,7 @@ export async function snippetForAccountCopyIndex(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -39,7 +39,7 @@ export async function snippetForAddApiKey(): Promise<void> {
   const response = await client.addApiKey({ acl: ['search', 'addObject'], description: 'my new api key' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -62,7 +62,7 @@ export async function snippetForAddApiKey1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -83,7 +83,7 @@ export async function snippetForAddOrUpdateObject(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -100,7 +100,7 @@ export async function snippetForAppendSource(): Promise<void> {
   const response = await client.appendSource({ source: 'theSource', description: 'theDescription' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -117,7 +117,7 @@ export async function snippetForAssignUserId(): Promise<void> {
   const response = await client.assignUserId({ xAlgoliaUserID: 'user42', assignUserIdParams: { cluster: 'd4242-eu' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -137,7 +137,7 @@ export async function snippetForAssignUserId1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -162,7 +162,7 @@ export async function snippetForBatch(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -182,7 +182,7 @@ export async function snippetForBatch1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -202,7 +202,7 @@ export async function snippetForBatch2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -222,7 +222,7 @@ export async function snippetForBatch3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -242,7 +242,7 @@ export async function snippetForBatch4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -262,7 +262,7 @@ export async function snippetForBatch5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -282,7 +282,7 @@ export async function snippetForBatch6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -302,7 +302,7 @@ export async function snippetForBatchAssignUserIds(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -337,7 +337,7 @@ export async function snippetForBatchDictionaryEntries(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -360,7 +360,7 @@ export async function snippetForBatchDictionaryEntries1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -382,7 +382,7 @@ export async function snippetForBatchDictionaryEntries2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -399,7 +399,7 @@ export async function snippetForBrowse(): Promise<void> {
   const response = await client.browse({ indexName: 'cts_e2e_browse' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -419,7 +419,7 @@ export async function snippetForBrowse1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -436,7 +436,7 @@ export async function snippetForBrowse2(): Promise<void> {
   const response = await client.browse({ indexName: 'indexName', browseParams: { cursor: 'test' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -453,7 +453,7 @@ export async function snippetForClearObjects(): Promise<void> {
   const response = await client.clearObjects({ indexName: 'theIndexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -470,7 +470,7 @@ export async function snippetForClearRules(): Promise<void> {
   const response = await client.clearRules({ indexName: 'indexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -487,7 +487,7 @@ export async function snippetForClearSynonyms(): Promise<void> {
   const response = await client.clearSynonyms({ indexName: 'indexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -504,7 +504,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -521,7 +521,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -538,7 +538,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -555,7 +555,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -578,7 +578,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -595,7 +595,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -616,7 +616,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -638,7 +638,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -660,7 +660,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -682,7 +682,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -704,7 +704,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -726,7 +726,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -748,7 +748,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -770,7 +770,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -792,7 +792,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -814,7 +814,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -831,7 +831,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -852,7 +852,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -869,7 +869,7 @@ export async function snippetForDeleteApiKey(): Promise<void> {
   const response = await client.deleteApiKey({ key: 'myTestApiKey' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -886,7 +886,7 @@ export async function snippetForDeleteBy(): Promise<void> {
   const response = await client.deleteBy({ indexName: 'theIndexName', deleteByParams: { filters: 'brand:brandName' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -903,7 +903,7 @@ export async function snippetForDeleteIndex(): Promise<void> {
   const response = await client.deleteIndex({ indexName: 'theIndexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -920,7 +920,7 @@ export async function snippetForDeleteObject(): Promise<void> {
   const response = await client.deleteObject({ indexName: '<YOUR_INDEX_NAME>', objectID: 'uniqueID' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -937,7 +937,7 @@ export async function snippetForDeleteObjects(): Promise<void> {
   const response = await client.deleteObjects({ indexName: 'cts_e2e_deleteObjects_javascript', objectIDs: ['1', '2'] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -954,7 +954,7 @@ export async function snippetForDeleteRule(): Promise<void> {
   const response = await client.deleteRule({ indexName: 'indexName', objectID: 'id1' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -971,7 +971,7 @@ export async function snippetForDeleteRule1(): Promise<void> {
   const response = await client.deleteRule({ indexName: 'indexName', objectID: 'test/with/slash' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -988,7 +988,7 @@ export async function snippetForDeleteSource(): Promise<void> {
   const response = await client.deleteSource({ source: 'theSource' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1005,7 +1005,7 @@ export async function snippetForDeleteSynonym(): Promise<void> {
   const response = await client.deleteSynonym({ indexName: 'indexName', objectID: 'id1' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1025,7 +1025,7 @@ export function snippetForGenerateSecuredApiKey(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1059,7 +1059,7 @@ export function snippetForGenerateSecuredApiKey1(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1079,7 +1079,7 @@ export function snippetForGenerateSecuredApiKey2(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1099,7 +1099,7 @@ export function snippetForGenerateSecuredApiKey3(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1119,7 +1119,7 @@ export function snippetForGenerateSecuredApiKey4(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1139,7 +1139,7 @@ export function snippetForGenerateSecuredApiKey5(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1159,7 +1159,7 @@ export function snippetForGenerateSecuredApiKey6(): void {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1176,7 +1176,7 @@ export async function snippetForGetApiKey(): Promise<void> {
   const response = await client.getApiKey({ key: 'myTestApiKey' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1193,7 +1193,7 @@ export async function snippetForGetAppTask(): Promise<void> {
   const response = await client.getAppTask({ taskID: 123 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1210,7 +1210,7 @@ export async function snippetForGetDictionaryLanguages(): Promise<void> {
   const response = await client.getDictionaryLanguages();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1227,7 +1227,7 @@ export async function snippetForGetDictionarySettings(): Promise<void> {
   const response = await client.getDictionarySettings();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1244,7 +1244,7 @@ export async function snippetForGetLogs(): Promise<void> {
   const response = await client.getLogs();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1261,7 +1261,7 @@ export async function snippetForGetLogs1(): Promise<void> {
   const response = await client.getLogs({ offset: 5, length: 10, indexName: 'theIndexName', type: 'all' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1282,7 +1282,7 @@ export async function snippetForGetObject(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1299,7 +1299,7 @@ export async function snippetForGetObject1(): Promise<void> {
   const response = await client.getObject({ indexName: 'cts_e2e_browse', objectID: 'Batman and Robin' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1316,7 +1316,7 @@ export async function snippetForGetObjects(): Promise<void> {
   const response = await client.getObjects({ requests: [{ objectID: 'uniqueID', indexName: 'theIndexName' }] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1338,7 +1338,7 @@ export async function snippetForGetObjects1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1357,7 +1357,7 @@ export async function snippetForGetObjects2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1374,7 +1374,7 @@ export async function snippetForGetRule(): Promise<void> {
   const response = await client.getRule({ indexName: 'cts_e2e_browse', objectID: 'qr-1725004648916' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1391,7 +1391,7 @@ export async function snippetForGetSettings(): Promise<void> {
   const response = await client.getSettings({ indexName: 'cts_e2e_settings', getVersion: 2 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1408,7 +1408,7 @@ export async function snippetForGetSources(): Promise<void> {
   const response = await client.getSources();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1425,7 +1425,7 @@ export async function snippetForGetSynonym(): Promise<void> {
   const response = await client.getSynonym({ indexName: 'indexName', objectID: 'id1' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1442,7 +1442,7 @@ export async function snippetForGetTask(): Promise<void> {
   const response = await client.getTask({ indexName: 'theIndexName', taskID: 123 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1459,7 +1459,7 @@ export async function snippetForGetTopUserIds(): Promise<void> {
   const response = await client.getTopUserIds();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1476,7 +1476,7 @@ export async function snippetForGetUserId(): Promise<void> {
   const response = await client.getUserId({ userID: 'uniqueID' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1493,7 +1493,7 @@ export async function snippetForHasPendingMappings(): Promise<void> {
   const response = await client.hasPendingMappings();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1510,7 +1510,7 @@ export async function snippetForHasPendingMappings1(): Promise<void> {
   const response = await client.hasPendingMappings({ getClusters: true });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1527,7 +1527,7 @@ export async function snippetForIndexExists(): Promise<void> {
   const response = await client.indexExists({ indexName: 'indexExistsYES' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1544,7 +1544,7 @@ export async function snippetForIndexExists1(): Promise<void> {
   const response = await client.indexExists({ indexName: 'indexExistsNO' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1561,7 +1561,7 @@ export async function snippetForIndexExists2(): Promise<void> {
   const response = await client.indexExists({ indexName: 'indexExistsERROR' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1578,7 +1578,7 @@ export async function snippetForListApiKeys(): Promise<void> {
   const response = await client.listApiKeys();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1595,7 +1595,7 @@ export async function snippetForListClusters(): Promise<void> {
   const response = await client.listClusters();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1612,7 +1612,7 @@ export async function snippetForListIndices(): Promise<void> {
   const response = await client.listIndices();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1629,7 +1629,7 @@ export async function snippetForListIndices1(): Promise<void> {
   const response = await client.listIndices({ page: 8, hitsPerPage: 3 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1646,7 +1646,7 @@ export async function snippetForListUserIds(): Promise<void> {
   const response = await client.listUserIds();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1663,7 +1663,7 @@ export async function snippetForListUserIds1(): Promise<void> {
   const response = await client.listUserIds({ page: 8, hitsPerPage: 100 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1682,7 +1682,7 @@ export async function snippetForMultipleBatch(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1702,7 +1702,7 @@ export async function snippetForOperationIndex(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1722,7 +1722,7 @@ export async function snippetForOperationIndex1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1742,7 +1742,7 @@ export async function snippetForOperationIndex2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1763,7 +1763,7 @@ export async function snippetForPartialUpdateObject(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1784,7 +1784,7 @@ export async function snippetForPartialUpdateObject1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1805,7 +1805,7 @@ export async function snippetForPartialUpdateObject2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1826,7 +1826,7 @@ export async function snippetForPartialUpdateObject3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1847,7 +1847,7 @@ export async function snippetForPartialUpdateObject4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1868,7 +1868,7 @@ export async function snippetForPartialUpdateObject5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1889,7 +1889,7 @@ export async function snippetForPartialUpdateObject6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1910,7 +1910,7 @@ export async function snippetForPartialUpdateObject7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1934,7 +1934,7 @@ export async function snippetForPartialUpdateObjects(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1958,7 +1958,7 @@ export async function snippetForPartialUpdateObjects1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1983,7 +1983,7 @@ export async function snippetForPartialUpdateObjectsWithTransformation(): Promis
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2000,7 +2000,7 @@ export async function snippetForRemoveUserId(): Promise<void> {
   const response = await client.removeUserId({ userID: 'uniqueID' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2032,7 +2032,7 @@ export async function snippetForReplaceAllObjects(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2057,7 +2057,7 @@ export async function snippetForReplaceAllObjects1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2080,7 +2080,7 @@ export async function snippetForReplaceAllObjects2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2112,7 +2112,7 @@ export async function snippetForReplaceAllObjectsWithTransformation(): Promise<v
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2129,7 +2129,7 @@ export async function snippetForReplaceSources(): Promise<void> {
   const response = await client.replaceSources({ source: [{ source: 'theSource', description: 'theDescription' }] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2146,7 +2146,7 @@ export async function snippetForRestoreApiKey(): Promise<void> {
   const response = await client.restoreApiKey({ key: 'ALGOLIA_API_KEY' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2171,7 +2171,7 @@ export async function snippetForSaveObject(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2194,7 +2194,7 @@ export async function snippetForSaveObjects(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2217,7 +2217,7 @@ export async function snippetForSaveObjects1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2245,7 +2245,7 @@ export async function snippetForSaveObjects2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2280,7 +2280,7 @@ export async function snippetForSaveObjects3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2304,7 +2304,7 @@ export async function snippetForSaveObjectsWithTransformation(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2329,7 +2329,7 @@ export async function snippetForSaveRule(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2376,7 +2376,7 @@ export async function snippetForSaveRule1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2406,7 +2406,7 @@ export async function snippetForSaveRule2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2437,7 +2437,7 @@ export async function snippetForSaveRule3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2462,7 +2462,7 @@ export async function snippetForSaveRule4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2487,7 +2487,7 @@ export async function snippetForSaveRule5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2512,7 +2512,7 @@ export async function snippetForSaveRule6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2537,7 +2537,7 @@ export async function snippetForSaveRule7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2562,7 +2562,7 @@ export async function snippetForSaveRule8(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2587,7 +2587,7 @@ export async function snippetForSaveRule9(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2612,7 +2612,7 @@ export async function snippetForSaveRule10(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2642,7 +2642,7 @@ export async function snippetForSaveRule11(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2670,7 +2670,7 @@ export async function snippetForSaveRule12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2695,7 +2695,7 @@ export async function snippetForSaveRule13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2720,7 +2720,7 @@ export async function snippetForSaveRule14(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2745,7 +2745,7 @@ export async function snippetForSaveRule15(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2770,7 +2770,7 @@ export async function snippetForSaveRule16(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2797,7 +2797,7 @@ export async function snippetForSaveRule17(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2824,7 +2824,7 @@ export async function snippetForSaveRule18(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2850,7 +2850,7 @@ export async function snippetForSaveRule19(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2875,7 +2875,7 @@ export async function snippetForSaveRule20(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2900,7 +2900,7 @@ export async function snippetForSaveRule21(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2921,7 +2921,7 @@ export async function snippetForSaveRule22(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -2954,7 +2954,7 @@ export async function snippetForSaveRules(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3003,7 +3003,7 @@ export async function snippetForSaveRules1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3034,7 +3034,7 @@ export async function snippetForSaveRules2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3065,7 +3065,7 @@ export async function snippetForSaveRules3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3087,7 +3087,7 @@ export async function snippetForSaveSynonym(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3112,7 +3112,7 @@ export async function snippetForSaveSynonyms(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3131,7 +3131,7 @@ export async function snippetForSearch(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3150,7 +3150,7 @@ export async function snippetForSearch1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3175,7 +3175,7 @@ export async function snippetForSearch2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3194,7 +3194,7 @@ export async function snippetForSearch3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3211,7 +3211,7 @@ export async function snippetForSearch4(): Promise<void> {
   const response = await client.search({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3238,7 +3238,7 @@ export async function snippetForSearch5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3257,7 +3257,7 @@ export async function snippetForSearch6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3276,7 +3276,7 @@ export async function snippetForSearch7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3296,7 +3296,7 @@ export async function snippetForSearch8(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3315,7 +3315,7 @@ export async function snippetForSearch9(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3344,7 +3344,7 @@ export async function snippetForSearch10(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3368,7 +3368,7 @@ export async function snippetForSearch11(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3398,7 +3398,7 @@ export async function snippetForSearch12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3434,7 +3434,7 @@ export async function snippetForSearch13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3461,7 +3461,7 @@ export async function snippetForSearch14(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3564,7 +3564,7 @@ export async function snippetForSearch15(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3584,7 +3584,7 @@ export async function snippetForSearchDictionaryEntries(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3604,7 +3604,7 @@ export async function snippetForSearchDictionaryEntries1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3621,7 +3621,7 @@ export async function snippetForSearchForFacetValues(): Promise<void> {
   const response = await client.searchForFacetValues({ indexName: 'indexName', facetName: 'facetName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3642,7 +3642,7 @@ export async function snippetForSearchForFacetValues1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3663,7 +3663,7 @@ export async function snippetForSearchForFacetValues2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3680,7 +3680,7 @@ export async function snippetForSearchRules(): Promise<void> {
   const response = await client.searchRules({ indexName: 'cts_e2e_browse', searchRulesParams: { query: 'zorro' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3697,7 +3697,7 @@ export async function snippetForSearchSingleIndex(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3714,7 +3714,7 @@ export async function snippetForSearchSingleIndex1(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'cts_e2e_space in index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3734,7 +3734,7 @@ export async function snippetForSearchSingleIndex2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3754,7 +3754,7 @@ export async function snippetForSearchSingleIndex3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3771,7 +3771,7 @@ export async function snippetForSearchSingleIndex4(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { query: 'phone' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3791,7 +3791,7 @@ export async function snippetForSearchSingleIndex5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3811,7 +3811,7 @@ export async function snippetForSearchSingleIndex6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3831,7 +3831,7 @@ export async function snippetForSearchSingleIndex7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3848,7 +3848,7 @@ export async function snippetForSearchSingleIndex8(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { distinct: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3865,7 +3865,7 @@ export async function snippetForSearchSingleIndex9(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { filters: 'price < 10' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3885,7 +3885,7 @@ export async function snippetForSearchSingleIndex10(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3908,7 +3908,7 @@ export async function snippetForSearchSingleIndex11(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3931,7 +3931,7 @@ export async function snippetForSearchSingleIndex12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3951,7 +3951,7 @@ export async function snippetForSearchSingleIndex13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3971,7 +3971,7 @@ export async function snippetForSearchSingleIndex14(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -3991,7 +3991,7 @@ export async function snippetForSearchSingleIndex15(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4011,7 +4011,7 @@ export async function snippetForSearchSingleIndex16(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4031,7 +4031,7 @@ export async function snippetForSearchSingleIndex17(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4051,7 +4051,7 @@ export async function snippetForSearchSingleIndex18(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4071,7 +4071,7 @@ export async function snippetForSearchSingleIndex19(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4091,7 +4091,7 @@ export async function snippetForSearchSingleIndex20(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4111,7 +4111,7 @@ export async function snippetForSearchSingleIndex21(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4131,7 +4131,7 @@ export async function snippetForSearchSingleIndex22(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4148,7 +4148,7 @@ export async function snippetForSearchSingleIndex23(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { facets: ['*'] } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4168,7 +4168,7 @@ export async function snippetForSearchSingleIndex24(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4188,7 +4188,7 @@ export async function snippetForSearchSingleIndex25(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4208,7 +4208,7 @@ export async function snippetForSearchSingleIndex26(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4228,7 +4228,7 @@ export async function snippetForSearchSingleIndex27(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4248,7 +4248,7 @@ export async function snippetForSearchSingleIndex28(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4276,7 +4276,7 @@ export async function snippetForSearchSingleIndex29(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4296,7 +4296,7 @@ export async function snippetForSearchSingleIndex30(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4316,7 +4316,7 @@ export async function snippetForSearchSingleIndex31(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4336,7 +4336,7 @@ export async function snippetForSearchSingleIndex32(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4356,7 +4356,7 @@ export async function snippetForSearchSingleIndex33(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4373,7 +4373,7 @@ export async function snippetForSearchSingleIndex34(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { getRankingInfo: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4390,7 +4390,7 @@ export async function snippetForSearchSingleIndex35(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { clickAnalytics: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4410,7 +4410,7 @@ export async function snippetForSearchSingleIndex36(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4430,7 +4430,7 @@ export async function snippetForSearchSingleIndex37(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4447,7 +4447,7 @@ export async function snippetForSearchSingleIndex38(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { userToken: 'user-1' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4467,7 +4467,7 @@ export async function snippetForSearchSingleIndex39(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4487,7 +4487,7 @@ export async function snippetForSearchSingleIndex40(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4507,7 +4507,7 @@ export async function snippetForSearchSingleIndex41(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4527,7 +4527,7 @@ export async function snippetForSearchSingleIndex42(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4547,7 +4547,7 @@ export async function snippetForSearchSingleIndex43(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4567,7 +4567,7 @@ export async function snippetForSearchSingleIndex44(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4584,7 +4584,7 @@ export async function snippetForSearchSingleIndex45(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { query: 'shirt' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4601,7 +4601,7 @@ export async function snippetForSearchSingleIndex46(): Promise<void> {
   const response = await client.searchSingleIndex({ indexName: 'indexName', searchParams: { query: '' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4621,7 +4621,7 @@ export async function snippetForSearchSingleIndex47(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4645,7 +4645,7 @@ export async function snippetForSearchSingleIndex48(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4665,7 +4665,7 @@ export async function snippetForSearchSingleIndex49(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4685,7 +4685,7 @@ export async function snippetForSearchSingleIndex50(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4705,7 +4705,7 @@ export async function snippetForSearchSingleIndex51(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4725,7 +4725,7 @@ export async function snippetForSearchSingleIndex52(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4749,7 +4749,7 @@ export async function snippetForSearchSingleIndex53(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4769,7 +4769,7 @@ export async function snippetForSearchSingleIndex54(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4789,7 +4789,7 @@ export async function snippetForSearchSingleIndex55(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4809,7 +4809,7 @@ export async function snippetForSearchSingleIndex56(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4829,7 +4829,7 @@ export async function snippetForSearchSingleIndex57(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4849,7 +4849,7 @@ export async function snippetForSearchSingleIndex58(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4869,7 +4869,7 @@ export async function snippetForSearchSingleIndex59(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4889,7 +4889,7 @@ export async function snippetForSearchSingleIndex60(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4909,7 +4909,7 @@ export async function snippetForSearchSingleIndex61(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4929,7 +4929,7 @@ export async function snippetForSearchSingleIndex62(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4949,7 +4949,7 @@ export async function snippetForSearchSingleIndex63(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4969,7 +4969,7 @@ export async function snippetForSearchSingleIndex64(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -4989,7 +4989,7 @@ export async function snippetForSearchSingleIndex65(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5009,7 +5009,7 @@ export async function snippetForSearchSingleIndex66(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5029,7 +5029,7 @@ export async function snippetForSearchSingleIndex67(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5049,7 +5049,7 @@ export async function snippetForSearchSingleIndex68(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5069,7 +5069,7 @@ export async function snippetForSearchSingleIndex69(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5089,7 +5089,7 @@ export async function snippetForSearchSingleIndex70(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5109,7 +5109,7 @@ export async function snippetForSearchSingleIndex71(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5129,7 +5129,7 @@ export async function snippetForSearchSingleIndex72(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5149,7 +5149,7 @@ export async function snippetForSearchSingleIndex73(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5169,7 +5169,7 @@ export async function snippetForSearchSingleIndex74(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5189,7 +5189,7 @@ export async function snippetForSearchSingleIndex75(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5209,7 +5209,7 @@ export async function snippetForSearchSingleIndex76(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5229,7 +5229,7 @@ export async function snippetForSearchSingleIndex77(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5249,7 +5249,7 @@ export async function snippetForSearchSingleIndex78(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5269,7 +5269,7 @@ export async function snippetForSearchSingleIndex79(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5289,7 +5289,7 @@ export async function snippetForSearchSingleIndex80(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5309,7 +5309,7 @@ export async function snippetForSearchSingleIndex81(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5329,7 +5329,7 @@ export async function snippetForSearchSingleIndex82(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5353,7 +5353,7 @@ export async function snippetForSearchSingleIndex83(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5373,7 +5373,7 @@ export async function snippetForSearchSingleIndex84(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5393,7 +5393,7 @@ export async function snippetForSearchSingleIndex85(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5413,7 +5413,7 @@ export async function snippetForSearchSingleIndex86(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5439,7 +5439,7 @@ export async function snippetForSearchSingleIndex87(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5459,7 +5459,7 @@ export async function snippetForSearchSingleIndex88(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5482,7 +5482,7 @@ export async function snippetForSearchSingleIndex89(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5508,7 +5508,7 @@ export async function snippetForSearchSingleIndex90(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5533,7 +5533,7 @@ export async function snippetForSearchSingleIndex91(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5562,7 +5562,7 @@ export async function snippetForSearchSingleIndex92(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5582,7 +5582,7 @@ export async function snippetForSearchSingleIndex93(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5602,7 +5602,7 @@ export async function snippetForSearchSingleIndex94(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5622,7 +5622,7 @@ export async function snippetForSearchSingleIndex95(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5642,7 +5642,7 @@ export async function snippetForSearchSingleIndex96(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5662,7 +5662,7 @@ export async function snippetForSearchSingleIndex97(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5682,7 +5682,7 @@ export async function snippetForSearchSingleIndex98(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5702,7 +5702,7 @@ export async function snippetForSearchSingleIndex99(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5722,7 +5722,7 @@ export async function snippetForSearchSingleIndex100(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5742,7 +5742,7 @@ export async function snippetForSearchSingleIndex101(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5762,7 +5762,7 @@ export async function snippetForSearchSingleIndex102(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5782,7 +5782,7 @@ export async function snippetForSearchSingleIndex103(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5802,7 +5802,7 @@ export async function snippetForSearchSingleIndex104(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5822,7 +5822,7 @@ export async function snippetForSearchSingleIndex105(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5842,7 +5842,7 @@ export async function snippetForSearchSingleIndex106(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5862,7 +5862,7 @@ export async function snippetForSearchSingleIndex107(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5882,7 +5882,7 @@ export async function snippetForSearchSingleIndex108(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5902,7 +5902,7 @@ export async function snippetForSearchSingleIndex109(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5922,7 +5922,7 @@ export async function snippetForSearchSingleIndex110(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5942,7 +5942,7 @@ export async function snippetForSearchSingleIndex111(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5962,7 +5962,7 @@ export async function snippetForSearchSingleIndex112(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -5982,7 +5982,7 @@ export async function snippetForSearchSingleIndex113(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6002,7 +6002,7 @@ export async function snippetForSearchSingleIndex114(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6022,7 +6022,7 @@ export async function snippetForSearchSingleIndex115(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6042,7 +6042,7 @@ export async function snippetForSearchSingleIndex116(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6062,7 +6062,7 @@ export async function snippetForSearchSingleIndex117(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6082,7 +6082,7 @@ export async function snippetForSearchSingleIndex118(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6102,7 +6102,7 @@ export async function snippetForSearchSingleIndex119(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6122,7 +6122,7 @@ export async function snippetForSearchSingleIndex120(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6142,7 +6142,7 @@ export async function snippetForSearchSingleIndex121(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6162,7 +6162,7 @@ export async function snippetForSearchSingleIndex122(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6182,7 +6182,7 @@ export async function snippetForSearchSingleIndex123(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6202,7 +6202,7 @@ export async function snippetForSearchSingleIndex124(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6222,7 +6222,7 @@ export async function snippetForSearchSingleIndex125(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6242,7 +6242,7 @@ export async function snippetForSearchSingleIndex126(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6264,7 +6264,7 @@ export async function snippetForSearchSingleIndex127(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6286,7 +6286,7 @@ export async function snippetForSearchSingleIndex128(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6303,7 +6303,7 @@ export async function snippetForSearchSynonyms(): Promise<void> {
   const response = await client.searchSynonyms({ indexName: 'indexName' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6323,7 +6323,7 @@ export async function snippetForSearchSynonyms1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6345,7 +6345,7 @@ export async function snippetForSearchUserIds(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6379,7 +6379,7 @@ export async function snippetForSetDictionarySettings(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6402,7 +6402,7 @@ export async function snippetForSetDictionarySettings1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6423,7 +6423,7 @@ export async function snippetForSetSettings(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6444,7 +6444,7 @@ export async function snippetForSetSettings1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6465,7 +6465,7 @@ export async function snippetForSetSettings2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6486,7 +6486,7 @@ export async function snippetForSetSettings3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6507,7 +6507,7 @@ export async function snippetForSetSettings4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6528,7 +6528,7 @@ export async function snippetForSetSettings5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6549,7 +6549,7 @@ export async function snippetForSetSettings6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6570,7 +6570,7 @@ export async function snippetForSetSettings7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6591,7 +6591,7 @@ export async function snippetForSetSettings8(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6611,7 +6611,7 @@ export async function snippetForSetSettings9(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6631,7 +6631,7 @@ export async function snippetForSetSettings10(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6648,7 +6648,7 @@ export async function snippetForSetSettings11(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { distinct: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6668,7 +6668,7 @@ export async function snippetForSetSettings12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6688,7 +6688,7 @@ export async function snippetForSetSettings13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6708,7 +6708,7 @@ export async function snippetForSetSettings14(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6728,7 +6728,7 @@ export async function snippetForSetSettings15(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6748,7 +6748,7 @@ export async function snippetForSetSettings16(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6768,7 +6768,7 @@ export async function snippetForSetSettings17(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6788,7 +6788,7 @@ export async function snippetForSetSettings18(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6808,7 +6808,7 @@ export async function snippetForSetSettings19(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6828,7 +6828,7 @@ export async function snippetForSetSettings20(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6848,7 +6848,7 @@ export async function snippetForSetSettings21(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6868,7 +6868,7 @@ export async function snippetForSetSettings22(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6888,7 +6888,7 @@ export async function snippetForSetSettings23(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6908,7 +6908,7 @@ export async function snippetForSetSettings24(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6925,7 +6925,7 @@ export async function snippetForSetSettings25(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'neuralSearch' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6942,7 +6942,7 @@ export async function snippetForSetSettings26(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'keywordSearch' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6962,7 +6962,7 @@ export async function snippetForSetSettings27(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -6982,7 +6982,7 @@ export async function snippetForSetSettings28(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7002,7 +7002,7 @@ export async function snippetForSetSettings29(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7022,7 +7022,7 @@ export async function snippetForSetSettings30(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7042,7 +7042,7 @@ export async function snippetForSetSettings31(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7062,7 +7062,7 @@ export async function snippetForSetSettings32(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7082,7 +7082,7 @@ export async function snippetForSetSettings33(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7102,7 +7102,7 @@ export async function snippetForSetSettings34(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7124,7 +7124,7 @@ export async function snippetForSetSettings35(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7146,7 +7146,7 @@ export async function snippetForSetSettings36(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7166,7 +7166,7 @@ export async function snippetForSetSettings37(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7186,7 +7186,7 @@ export async function snippetForSetSettings38(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7209,7 +7209,7 @@ export async function snippetForSetSettings39(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7229,7 +7229,7 @@ export async function snippetForSetSettings40(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7249,7 +7249,7 @@ export async function snippetForSetSettings41(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7269,7 +7269,7 @@ export async function snippetForSetSettings42(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7289,7 +7289,7 @@ export async function snippetForSetSettings43(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7306,7 +7306,7 @@ export async function snippetForSetSettings44(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { replicas: [''] } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7327,7 +7327,7 @@ export async function snippetForSetSettings45(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7344,7 +7344,7 @@ export async function snippetForSetSettings46(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxValuesPerFacet: 1000 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7361,7 +7361,7 @@ export async function snippetForSetSettings47(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxFacetHits: 100 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7381,7 +7381,7 @@ export async function snippetForSetSettings48(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7403,7 +7403,7 @@ export async function snippetForSetSettings49(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7423,7 +7423,7 @@ export async function snippetForSetSettings50(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7446,7 +7446,7 @@ export async function snippetForSetSettings51(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7466,7 +7466,7 @@ export async function snippetForSetSettings52(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7486,7 +7486,7 @@ export async function snippetForSetSettings53(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7570,7 +7570,7 @@ export async function snippetForSetSettings54(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7594,7 +7594,7 @@ export async function snippetForSetSettings55(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7614,7 +7614,7 @@ export async function snippetForSetSettings56(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7634,7 +7634,7 @@ export async function snippetForSetSettings57(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7654,7 +7654,7 @@ export async function snippetForSetSettings58(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7674,7 +7674,7 @@ export async function snippetForSetSettings59(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7694,7 +7694,7 @@ export async function snippetForSetSettings60(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7714,7 +7714,7 @@ export async function snippetForSetSettings61(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7734,7 +7734,7 @@ export async function snippetForSetSettings62(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7754,7 +7754,7 @@ export async function snippetForSetSettings63(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7776,7 +7776,7 @@ export async function snippetForSetSettings64(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7804,7 +7804,7 @@ export async function snippetForSetSettings65(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7824,7 +7824,7 @@ export async function snippetForSetSettings66(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7844,7 +7844,7 @@ export async function snippetForSetSettings67(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7864,7 +7864,7 @@ export async function snippetForSetSettings68(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7884,7 +7884,7 @@ export async function snippetForSetSettings69(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7901,7 +7901,7 @@ export async function snippetForSetSettings70(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'neuralSearch' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7918,7 +7918,7 @@ export async function snippetForSetSettings71(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { mode: 'keywordSearch' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7938,7 +7938,7 @@ export async function snippetForSetSettings72(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7960,7 +7960,7 @@ export async function snippetForSetSettings73(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -7982,7 +7982,7 @@ export async function snippetForSetSettings74(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8002,7 +8002,7 @@ export async function snippetForSetSettings75(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8019,7 +8019,7 @@ export async function snippetForSetSettings76(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { relevancyStrictness: 90 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8039,7 +8039,7 @@ export async function snippetForSetSettings77(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8056,7 +8056,7 @@ export async function snippetForSetSettings78(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxValuesPerFacet: 100 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8076,7 +8076,7 @@ export async function snippetForSetSettings79(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8096,7 +8096,7 @@ export async function snippetForSetSettings80(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8116,7 +8116,7 @@ export async function snippetForSetSettings81(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8133,7 +8133,7 @@ export async function snippetForSetSettings82(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { highlightPreTag: '<em>' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8153,7 +8153,7 @@ export async function snippetForSetSettings83(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8170,7 +8170,7 @@ export async function snippetForSetSettings84(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { snippetEllipsisText: '…' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8190,7 +8190,7 @@ export async function snippetForSetSettings85(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8207,7 +8207,7 @@ export async function snippetForSetSettings86(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { hitsPerPage: 20 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8227,7 +8227,7 @@ export async function snippetForSetSettings87(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8244,7 +8244,7 @@ export async function snippetForSetSettings88(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { minWordSizefor1Typo: 4 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8261,7 +8261,7 @@ export async function snippetForSetSettings89(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { minWordSizefor2Typos: 4 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8278,7 +8278,7 @@ export async function snippetForSetSettings90(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { typoTolerance: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8298,7 +8298,7 @@ export async function snippetForSetSettings91(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8318,7 +8318,7 @@ export async function snippetForSetSettings92(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8335,7 +8335,7 @@ export async function snippetForSetSettings93(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { separatorsToIndex: '+#' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8355,7 +8355,7 @@ export async function snippetForSetSettings94(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8375,7 +8375,7 @@ export async function snippetForSetSettings95(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8395,7 +8395,7 @@ export async function snippetForSetSettings96(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8415,7 +8415,7 @@ export async function snippetForSetSettings97(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8435,7 +8435,7 @@ export async function snippetForSetSettings98(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8455,7 +8455,7 @@ export async function snippetForSetSettings99(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8475,7 +8475,7 @@ export async function snippetForSetSettings100(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8495,7 +8495,7 @@ export async function snippetForSetSettings101(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8515,7 +8515,7 @@ export async function snippetForSetSettings102(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8532,7 +8532,7 @@ export async function snippetForSetSettings103(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { indexLanguages: ['ja'] } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8549,7 +8549,7 @@ export async function snippetForSetSettings104(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { decompoundQuery: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8566,7 +8566,7 @@ export async function snippetForSetSettings105(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { enableRules: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8586,7 +8586,7 @@ export async function snippetForSetSettings106(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8603,7 +8603,7 @@ export async function snippetForSetSettings107(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { queryType: 'prefixLast' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8623,7 +8623,7 @@ export async function snippetForSetSettings108(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8640,7 +8640,7 @@ export async function snippetForSetSettings109(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { advancedSyntax: true } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8660,7 +8660,7 @@ export async function snippetForSetSettings110(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8680,7 +8680,7 @@ export async function snippetForSetSettings111(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8700,7 +8700,7 @@ export async function snippetForSetSettings112(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8720,7 +8720,7 @@ export async function snippetForSetSettings113(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8740,7 +8740,7 @@ export async function snippetForSetSettings114(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8760,7 +8760,7 @@ export async function snippetForSetSettings115(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8780,7 +8780,7 @@ export async function snippetForSetSettings116(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8800,7 +8800,7 @@ export async function snippetForSetSettings117(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8820,7 +8820,7 @@ export async function snippetForSetSettings118(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8840,7 +8840,7 @@ export async function snippetForSetSettings119(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8857,7 +8857,7 @@ export async function snippetForSetSettings120(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { minProximity: 1 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8877,7 +8877,7 @@ export async function snippetForSetSettings121(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8894,7 +8894,7 @@ export async function snippetForSetSettings122(): Promise<void> {
   const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { maxFacetHits: 10 } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8914,7 +8914,7 @@ export async function snippetForSetSettings123(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8934,7 +8934,7 @@ export async function snippetForSetSettings124(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8964,7 +8964,7 @@ export async function snippetForSetSettings125(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -8984,7 +8984,7 @@ export async function snippetForUpdateApiKey(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -9001,7 +9001,7 @@ export async function snippetForWaitForApiKey(): Promise<void> {
   const response = await client.waitForApiKey({ key: 'api-key-add-operation-test-javascript', operation: 'add' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -9030,7 +9030,7 @@ export async function snippetForWaitForApiKey1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -9047,7 +9047,7 @@ export async function snippetForWaitForApiKey2(): Promise<void> {
   const response = await client.waitForApiKey({ key: 'api-key-delete-operation-test-javascript', operation: 'delete' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -9064,7 +9064,7 @@ export async function snippetForWaitForAppTask(): Promise<void> {
   const response = await client.waitForAppTask({ taskID: 123 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -9081,7 +9081,7 @@ export async function snippetForWaitForTask(): Promise<void> {
   const response = await client.waitForTask({ indexName: 'wait-task-javascript', taskID: 123 });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

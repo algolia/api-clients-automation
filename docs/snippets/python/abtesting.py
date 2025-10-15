@@ -37,7 +37,7 @@ def snippet_for_add_ab_tests():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -61,7 +61,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -88,7 +88,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -112,7 +112,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -139,7 +139,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -172,7 +172,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -196,7 +196,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -226,7 +226,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -259,7 +259,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -292,7 +292,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -325,7 +325,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -358,7 +358,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -391,7 +391,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -424,7 +424,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -457,7 +457,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -490,7 +490,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -523,7 +523,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -547,7 +547,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -577,7 +577,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -601,7 +601,7 @@ def snippet_for_delete_ab_test():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -645,7 +645,7 @@ def snippet_for_estimate_ab_test():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -669,7 +669,7 @@ def snippet_for_get_ab_test():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -691,7 +691,7 @@ def snippet_for_list_ab_tests():
     response = client.list_ab_tests()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -718,7 +718,7 @@ def snippet_for_list_ab_tests1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -756,7 +756,7 @@ def snippet_for_schedule_ab_test():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -802,6 +802,6 @@ def snippet_for_stop_ab_test():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<

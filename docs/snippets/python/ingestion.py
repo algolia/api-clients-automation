@@ -32,7 +32,7 @@ def snippet_for_create_authentication():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -63,7 +63,7 @@ def snippet_for_create_authentication1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -94,7 +94,7 @@ def snippet_for_create_destination():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -127,7 +127,7 @@ def snippet_for_create_destination1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -166,7 +166,7 @@ def snippet_for_create_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -193,7 +193,7 @@ def snippet_for_create_source1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -221,7 +221,7 @@ def snippet_for_create_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -258,7 +258,7 @@ def snippet_for_create_task1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -295,7 +295,7 @@ def snippet_for_create_task2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -326,7 +326,7 @@ def snippet_for_create_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -358,7 +358,7 @@ def snippet_for_create_task_v11():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -389,7 +389,7 @@ def snippet_for_create_task_v12():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -428,7 +428,7 @@ def snippet_for_create_task_v13():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -459,7 +459,7 @@ def snippet_for_create_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -483,7 +483,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -510,7 +510,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -534,7 +534,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -561,7 +561,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -594,7 +594,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -618,7 +618,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -648,7 +648,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -681,7 +681,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -714,7 +714,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -747,7 +747,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -780,7 +780,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -813,7 +813,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -846,7 +846,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -879,7 +879,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -912,7 +912,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -945,7 +945,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -969,7 +969,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -999,7 +999,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1023,7 +1023,7 @@ def snippet_for_delete_authentication():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1047,7 +1047,7 @@ def snippet_for_delete_destination():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1071,7 +1071,7 @@ def snippet_for_delete_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1095,7 +1095,7 @@ def snippet_for_delete_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1119,7 +1119,7 @@ def snippet_for_delete_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1143,7 +1143,7 @@ def snippet_for_delete_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1167,7 +1167,7 @@ def snippet_for_disable_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1191,7 +1191,7 @@ def snippet_for_disable_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1215,7 +1215,7 @@ def snippet_for_enable_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1239,7 +1239,7 @@ def snippet_for_enable_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1263,7 +1263,7 @@ def snippet_for_get_authentication():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1287,7 +1287,7 @@ def snippet_for_get_destination():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1312,7 +1312,7 @@ def snippet_for_get_event():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1336,7 +1336,7 @@ def snippet_for_get_run():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1360,7 +1360,7 @@ def snippet_for_get_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1384,7 +1384,7 @@ def snippet_for_get_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1408,7 +1408,7 @@ def snippet_for_get_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1432,7 +1432,7 @@ def snippet_for_get_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1454,7 +1454,7 @@ def snippet_for_list_authentications():
     response = client.list_authentications()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1488,7 +1488,7 @@ def snippet_for_list_authentications1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1510,7 +1510,7 @@ def snippet_for_list_destinations():
     response = client.list_destinations()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1534,7 +1534,7 @@ def snippet_for_list_events():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1556,7 +1556,7 @@ def snippet_for_list_runs():
     response = client.list_runs()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1578,7 +1578,7 @@ def snippet_for_list_sources():
     response = client.list_sources()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1600,7 +1600,7 @@ def snippet_for_list_tasks():
     response = client.list_tasks()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1622,7 +1622,7 @@ def snippet_for_list_tasks_v1():
     response = client.list_tasks_v1()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1644,7 +1644,7 @@ def snippet_for_list_transformations():
     response = client.list_transformations()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1672,7 +1672,7 @@ def snippet_for_list_transformations1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1711,7 +1711,7 @@ def snippet_for_push():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1752,7 +1752,7 @@ def snippet_for_push1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1791,7 +1791,7 @@ def snippet_for_push_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1831,7 +1831,7 @@ def snippet_for_push_task1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1859,7 +1859,7 @@ def snippet_for_replace_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1896,7 +1896,7 @@ def snippet_for_replace_task1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1933,7 +1933,7 @@ def snippet_for_replace_task2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1968,7 +1968,7 @@ def snippet_for_run_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1992,7 +1992,7 @@ def snippet_for_run_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2016,7 +2016,7 @@ def snippet_for_run_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2045,7 +2045,7 @@ def snippet_for_search_authentications():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2074,7 +2074,7 @@ def snippet_for_search_destinations():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2103,7 +2103,7 @@ def snippet_for_search_sources():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2133,7 +2133,7 @@ def snippet_for_search_tasks():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2163,7 +2163,7 @@ def snippet_for_search_tasks_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2193,7 +2193,7 @@ def snippet_for_search_transformations():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2239,7 +2239,7 @@ def snippet_for_trigger_docker_source_discover():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2271,7 +2271,7 @@ def snippet_for_try_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2314,7 +2314,7 @@ def snippet_for_try_transformation1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2347,7 +2347,7 @@ def snippet_for_try_transformation_before_update():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2391,7 +2391,7 @@ def snippet_for_try_transformation_before_update1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2418,7 +2418,7 @@ def snippet_for_update_authentication():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2445,7 +2445,7 @@ def snippet_for_update_destination():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2472,7 +2472,7 @@ def snippet_for_update_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2500,7 +2500,7 @@ def snippet_for_update_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2527,7 +2527,7 @@ def snippet_for_update_task_v1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2559,7 +2559,7 @@ def snippet_for_update_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2597,7 +2597,7 @@ def snippet_for_validate_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2624,6 +2624,6 @@ def snippet_for_validate_source_before_update():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<

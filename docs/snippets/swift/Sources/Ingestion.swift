@@ -22,6 +22,8 @@ final class IngestionClientSnippet {
             input: AuthInput.authOAuth(AuthOAuth(url: "http://test.oauth", clientId: "myID", clientSecret: "mySecret"))
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -40,6 +42,8 @@ final class IngestionClientSnippet {
             input: AuthInput.authAlgolia(AuthAlgolia(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY"))
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -59,6 +63,8 @@ final class IngestionClientSnippet {
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -78,6 +84,8 @@ final class IngestionClientSnippet {
             transformationIDs: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -103,6 +111,8 @@ final class IngestionClientSnippet {
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -120,6 +130,8 @@ final class IngestionClientSnippet {
             name: "pushezpourentrer"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -138,6 +150,8 @@ final class IngestionClientSnippet {
             action: ActionType.replace
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -159,6 +173,8 @@ final class IngestionClientSnippet {
             policies: Policies(criticalThreshold: 8)
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -182,6 +198,8 @@ final class IngestionClientSnippet {
             )]))
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -201,6 +219,8 @@ final class IngestionClientSnippet {
             action: ActionType.replace
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -223,6 +243,8 @@ final class IngestionClientSnippet {
             action: ActionType.replace
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -242,6 +264,8 @@ final class IngestionClientSnippet {
             action: ActionType.replace
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -265,6 +289,8 @@ final class IngestionClientSnippet {
             )]))
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -284,6 +310,8 @@ final class IngestionClientSnippet {
             description: "baz"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -298,6 +326,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -312,6 +342,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -326,6 +358,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -343,6 +377,8 @@ final class IngestionClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -365,6 +401,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -379,6 +417,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -397,6 +437,8 @@ final class IngestionClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -418,6 +460,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -439,6 +483,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -460,6 +506,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -481,6 +529,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -502,6 +552,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -523,6 +575,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -544,6 +598,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -565,6 +621,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -586,6 +644,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -600,6 +660,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -618,6 +680,8 @@ final class IngestionClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -632,6 +696,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -646,6 +712,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -660,6 +728,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteSource(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -674,6 +744,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -688,6 +760,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -702,6 +776,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.deleteTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -716,6 +792,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.disableTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -730,6 +808,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.disableTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -744,6 +824,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.enableTask(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -758,6 +840,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.enableTaskV1(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -772,6 +856,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -786,6 +872,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -803,6 +891,8 @@ final class IngestionClientSnippet {
             eventID: "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -817,6 +907,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getRun(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -831,6 +923,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getSource(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -845,6 +939,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -859,6 +955,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -873,6 +971,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.getTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -887,6 +987,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listAuthentications()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -908,6 +1010,8 @@ final class IngestionClientSnippet {
             order: OrderKeys.asc
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -922,6 +1026,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listDestinations()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -936,6 +1042,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listEvents(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -950,6 +1058,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listRuns()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -964,6 +1074,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listSources()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -978,6 +1090,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listTasks()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -992,6 +1106,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listTasksV1()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1006,6 +1122,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.listTransformations()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1026,6 +1144,8 @@ final class IngestionClientSnippet {
             type: TransformationType.noCode
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1057,6 +1177,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1090,6 +1212,8 @@ final class IngestionClientSnippet {
             referenceIndexName: "foo"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1121,6 +1245,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1153,6 +1279,8 @@ final class IngestionClientSnippet {
             watch: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1170,6 +1298,8 @@ final class IngestionClientSnippet {
             taskReplace: TaskReplace(destinationID: "destinationID", action: ActionType.replace)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1193,6 +1323,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1218,6 +1350,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1239,6 +1373,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1253,6 +1389,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.runTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1267,6 +1405,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.runTaskV1(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1285,6 +1425,8 @@ final class IngestionClientSnippet {
                 "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
             ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1302,6 +1444,8 @@ final class IngestionClientSnippet {
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1319,6 +1463,8 @@ final class IngestionClientSnippet {
             "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1337,6 +1483,8 @@ final class IngestionClientSnippet {
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1355,6 +1503,8 @@ final class IngestionClientSnippet {
             "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1374,6 +1524,8 @@ final class IngestionClientSnippet {
                 "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
             ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1402,6 +1554,8 @@ final class IngestionClientSnippet {
         // Call the API
         let response = try await client.triggerDockerSourceDiscover(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1420,6 +1574,8 @@ final class IngestionClientSnippet {
             sampleRecord: ["bar": "baz"]
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1447,6 +1603,8 @@ final class IngestionClientSnippet {
             )]
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1468,6 +1626,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1498,6 +1658,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1515,6 +1677,8 @@ final class IngestionClientSnippet {
             authenticationUpdate: AuthenticationUpdate(name: "newName")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1532,6 +1696,8 @@ final class IngestionClientSnippet {
             destinationUpdate: DestinationUpdate(name: "newName")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1549,6 +1715,8 @@ final class IngestionClientSnippet {
             sourceUpdate: SourceUpdate(name: "newName")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1566,6 +1734,8 @@ final class IngestionClientSnippet {
             taskUpdate: TaskUpdate(cron: "* * * * *", enabled: false)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1583,6 +1753,8 @@ final class IngestionClientSnippet {
             taskUpdate: TaskUpdateV1(enabled: false)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1605,6 +1777,8 @@ final class IngestionClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1629,6 +1803,8 @@ final class IngestionClientSnippet {
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1646,6 +1822,8 @@ final class IngestionClientSnippet {
             sourceUpdate: SourceUpdate(name: "newName")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }

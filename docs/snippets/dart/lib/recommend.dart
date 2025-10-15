@@ -19,6 +19,8 @@ void snippetForbatchRecommendRules() async {
     model: RecommendModels.fromJson("related-products"),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -36,6 +38,8 @@ void snippetForcustomDelete() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -56,6 +60,8 @@ void snippetForcustomDelete1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -73,6 +79,8 @@ void snippetForcustomGet() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -93,6 +101,8 @@ void snippetForcustomGet1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -125,6 +135,8 @@ void snippetForcustomGet2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -142,6 +154,8 @@ void snippetForcustomPost() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -165,6 +179,8 @@ void snippetForcustomPost1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -193,6 +209,8 @@ void snippetForcustomPost2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -221,6 +239,8 @@ void snippetForcustomPost3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -249,6 +269,8 @@ void snippetForcustomPost4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -277,6 +299,8 @@ void snippetForcustomPost5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -305,6 +329,8 @@ void snippetForcustomPost6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -333,6 +359,8 @@ void snippetForcustomPost7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -364,6 +392,8 @@ void snippetForcustomPost8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -396,6 +426,8 @@ void snippetForcustomPost9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -427,6 +459,8 @@ void snippetForcustomPost10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -444,6 +478,8 @@ void snippetForcustomPut() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -467,6 +503,8 @@ void snippetForcustomPut1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -486,6 +524,8 @@ void snippetFordeleteRecommendRule() async {
     objectID: "objectID",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -505,6 +545,8 @@ void snippetForgetRecommendRule() async {
     objectID: "objectID",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -524,6 +566,8 @@ void snippetForgetRecommendStatus() async {
     taskID: 12345,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -550,6 +594,8 @@ void snippetForgetRecommendations() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -577,6 +623,8 @@ void snippetForgetRecommendations1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -616,6 +664,8 @@ void snippetForgetRecommendations2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -643,6 +693,8 @@ void snippetForgetRecommendations3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -683,6 +735,8 @@ void snippetForgetRecommendations4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -715,6 +769,8 @@ void snippetForgetRecommendations5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -773,6 +829,8 @@ void snippetForgetRecommendations6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -799,6 +857,8 @@ void snippetForgetRecommendations7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -817,6 +877,8 @@ void snippetForsearchRecommendRules() async {
     model: RecommendModels.fromJson("related-products"),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
