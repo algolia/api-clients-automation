@@ -65,7 +65,7 @@ ${stripCommitMessage(changelog)}
 
 **Full Changelog**: ${repositoryLink}/compare/${previousVersion}...${newVersion}
 
-→ [Browse the Algolia documentation](https://www.algolia.com/doc/libraries/sdk/install#${lang})
+→ [Browse the Algolia documentation](https://www.algolia.com/doc/libraries/sdk/install#${lang === 'csharp' ? 'c%23' : lang})
 `;
 
   try {
