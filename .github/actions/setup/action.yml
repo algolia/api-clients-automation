@@ -195,7 +195,6 @@ runs:
       with:
         path: |
           clients/algoliasearch-client-swift/.build
-          tests/output/swift/.build
         key: swift-build-${{ inputs.version }}-${{ runner.os }}
 
     - name: Set swiftformat version

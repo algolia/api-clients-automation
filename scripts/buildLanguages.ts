@@ -91,9 +91,11 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });
       break;
     case 'swift':
+      const buildFolder = toAbsolutePath(getLanguageFolder(language) + '/.build');
+      console.log(buildFolder);
       // make this work in the playground
       if (buildType !== 'playground') {
-        await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
+        await run(`swift build -Xswiftc -suppress-warnings --build-path ${buildFolder}`, { cwd, language });
       }
       break;
     default:
