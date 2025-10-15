@@ -226,21 +226,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -452,21 +451,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -678,21 +676,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -900,21 +897,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1205,42 +1201,40 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.push(
-              indexName = "<YOUR_INDEX_NAME>",
-              pushTaskPayload = PushTaskPayload(
-                action = Action.entries.first { it.value == "addObject" },
-                records = listOf(
-                  PushTaskRecords(
-                    objectID = "o",
-                    additionalProperties = mapOf(
-                      "key" to JsonPrimitive("bar"),
-                      "foo" to JsonPrimitive("1"),
-                    ),
+            var response =
+              client.push(
+                indexName = "<YOUR_INDEX_NAME>",
+                pushTaskPayload =
+                  PushTaskPayload(
+                    action = Action.entries.first { it.value == "addObject" },
+                    records =
+                      listOf(
+                        PushTaskRecords(
+                          objectID = "o",
+                          additionalProperties =
+                            mapOf("key" to JsonPrimitive("bar"), "foo" to JsonPrimitive("1")),
+                        ),
+                        PushTaskRecords(
+                          objectID = "k",
+                          additionalProperties =
+                            mapOf("key" to JsonPrimitive("baz"), "foo" to JsonPrimitive("2")),
+                        ),
+                      ),
                   ),
-                  PushTaskRecords(
-                    objectID = "k",
-                    additionalProperties = mapOf(
-                      "key" to JsonPrimitive("baz"),
-                      "foo" to JsonPrimitive("2"),
-                    ),
-                  ),
-                ),
-              ),
-            )
-
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1541,21 +1535,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listAuthentications()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1798,31 +1791,29 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createAuthentication(
-              authenticationCreate = AuthenticationCreate(
-                type = AuthenticationType.entries.first { it.value == "oauth" },
-                name = "authName",
-                input = AuthOAuth(
-                  url = "http://test.oauth",
-                  clientId = "myID",
-                  clientSecret = "mySecret",
-                ),
-              ),
-            )
-
+            var response =
+              client.createAuthentication(
+                authenticationCreate =
+                  AuthenticationCreate(
+                    type = AuthenticationType.entries.first { it.value == "oauth" },
+                    name = "authName",
+                    input =
+                      AuthOAuth(url = "http://test.oauth", clientId = "myID", clientSecret = "mySecret"),
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2097,25 +2088,27 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchAuthentications(
-              authenticationSearch = AuthenticationSearch(
-                authenticationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"),
-              ),
-            )
-
+            var response =
+              client.searchAuthentications(
+                authenticationSearch =
+                  AuthenticationSearch(
+                    authenticationIDs =
+                      listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2359,22 +2352,21 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.getAuthentication(authenticationID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
+            var response =
+              client.getAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2606,26 +2598,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateAuthentication(
-              authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              authenticationUpdate = AuthenticationUpdate(
-                name = "newName",
-              ),
-            )
-
+            var response =
+              client.updateAuthentication(
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                authenticationUpdate = AuthenticationUpdate(name = "newName"),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2865,22 +2855,21 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.deleteAuthentication(authenticationID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
+            var response =
+              client.deleteAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3117,21 +3106,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listDestinations()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3366,30 +3354,29 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createDestination(
-              destinationCreate = DestinationCreate(
-                type = DestinationType.entries.first { it.value == "search" },
-                name = "destinationName",
-                input = DestinationInput(
-                  indexName = "<YOUR_INDEX_NAME>",
-                ),
-                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ),
-            )
-
+            var response =
+              client.createDestination(
+                destinationCreate =
+                  DestinationCreate(
+                    type = DestinationType.entries.first { it.value == "search" },
+                    name = "destinationName",
+                    input = DestinationInput(indexName = "<YOUR_INDEX_NAME>"),
+                    authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3662,25 +3649,27 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchDestinations(
-              destinationSearch = DestinationSearch(
-                destinationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"),
-              ),
-            )
-
+            var response =
+              client.searchDestinations(
+                destinationSearch =
+                  DestinationSearch(
+                    destinationIDs =
+                      listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3929,9 +3918,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -4173,26 +4165,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateDestination(
-              destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              destinationUpdate = DestinationUpdate(
-                name = "newName",
-              ),
-            )
-
+            var response =
+              client.updateDestination(
+                destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                destinationUpdate = DestinationUpdate(name = "newName"),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -4435,9 +4425,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -4682,21 +4675,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listSources()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -4965,34 +4957,37 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createSource(
-              sourceCreate = SourceCreate(
-                type = SourceType.entries.first { it.value == "commercetools" },
-                name = "sourceName",
-                input = SourceCommercetools(
-                  storeKeys = listOf("myStore"),
-                  locales = listOf("de"),
-                  url = "http://commercetools.com",
-                  projectKey = "keyID",
-                  productQueryPredicate = "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
-                ),
-                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ),
-            )
-
+            var response =
+              client.createSource(
+                sourceCreate =
+                  SourceCreate(
+                    type = SourceType.entries.first { it.value == "commercetools" },
+                    name = "sourceName",
+                    input =
+                      SourceCommercetools(
+                        storeKeys = listOf("myStore"),
+                        locales = listOf("de"),
+                        url = "http://commercetools.com",
+                        projectKey = "keyID",
+                        productQueryPredicate =
+                          "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
+                      ),
+                    authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5332,33 +5327,35 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.validateSource(
-              sourceCreate = SourceCreate(
-                type = SourceType.entries.first { it.value == "commercetools" },
-                name = "sourceName",
-                input = SourceCommercetools(
-                  storeKeys = listOf("myStore"),
-                  locales = listOf("de"),
-                  url = "http://commercetools.com",
-                  projectKey = "keyID",
-                ),
-                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              ),
-            )
-
+            var response =
+              client.validateSource(
+                sourceCreate =
+                  SourceCreate(
+                    type = SourceType.entries.first { it.value == "commercetools" },
+                    name = "sourceName",
+                    input =
+                      SourceCommercetools(
+                        storeKeys = listOf("myStore"),
+                        locales = listOf("de"),
+                        url = "http://commercetools.com",
+                        projectKey = "keyID",
+                      ),
+                    authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5660,25 +5657,27 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchSources(
-              sourceSearch = SourceSearch(
-                sourceIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"),
-              ),
-            )
-
+            var response =
+              client.searchSources(
+                sourceSearch =
+                  SourceSearch(
+                    sourceIDs =
+                      listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5925,9 +5924,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -6167,26 +6169,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateSource(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              sourceUpdate = SourceUpdate(
-                name = "newName",
-              ),
-            )
-
+            var response =
+              client.updateSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(name = "newName"),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -6429,9 +6429,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -6680,26 +6683,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.validateSourceBeforeUpdate(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              sourceUpdate = SourceUpdate(
-                name = "newName",
-              ),
-            )
-
+            var response =
+              client.validateSourceBeforeUpdate(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate = SourceUpdate(name = "newName"),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -6942,22 +6943,21 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.triggerDockerSourceDiscover(sourceID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
+            var response =
+              client.triggerDockerSourceDiscover(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -7220,28 +7220,29 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.runSource(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              runSourcePayload = RunSourcePayload(
-                indexToInclude = listOf("products_us", "products eu"),
-                entityIDs = listOf("1234", "5678"),
-                entityType = EntityType.entries.first { it.value == "product" },
-              ),
-            )
-
+            var response =
+              client.runSource(
+                sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                runSourcePayload =
+                  RunSourcePayload(
+                    indexToInclude = listOf("products_us", "products eu"),
+                    entityIDs = listOf("1234", "5678"),
+                    entityType = EntityType.entries.first { it.value == "product" },
+                  ),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -7525,21 +7526,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listTasks()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -7759,27 +7759,28 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createTask(
-              taskCreate = TaskCreate(
-                sourceID = "search",
-                destinationID = "destinationID",
-                action = ActionType.entries.first { it.value == "replace" },
-              ),
-            )
-
+            var response =
+              client.createTask(
+                taskCreate =
+                  TaskCreate(
+                    sourceID = "search",
+                    destinationID = "destinationID",
+                    action = ActionType.entries.first { it.value == "replace" },
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -8045,25 +8046,31 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchTasks(
-              taskSearch = TaskSearch(
-                taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
-              ),
-            )
-
+            var response =
+              client.searchTasks(
+                taskSearch =
+                  TaskSearch(
+                    taskIDs =
+                      listOf(
+                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                      )
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -8322,9 +8329,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -8566,27 +8576,28 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.replaceTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              taskReplace = TaskReplace(
-                destinationID = "destinationID",
-                action = ActionType.entries.first { it.value == "replace" },
-              ),
-            )
-
+            var response =
+              client.replaceTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskReplace =
+                  TaskReplace(
+                    destinationID = "destinationID",
+                    action = ActionType.entries.first { it.value == "replace" },
+                  ),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -8830,27 +8841,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              taskUpdate = TaskUpdate(
-                enabled = false,
-                cron = "* * * * *",
-              ),
-            )
-
+            var response =
+              client.updateTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdate(enabled = false, cron = "* * * * *"),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -9089,9 +9097,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -9336,9 +9347,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -9644,42 +9658,40 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.pushTask(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              pushTaskPayload = PushTaskPayload(
-                action = Action.entries.first { it.value == "addObject" },
-                records = listOf(
-                  PushTaskRecords(
-                    objectID = "o",
-                    additionalProperties = mapOf(
-                      "key" to JsonPrimitive("bar"),
-                      "foo" to JsonPrimitive("1"),
-                    ),
+            var response =
+              client.pushTask(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                pushTaskPayload =
+                  PushTaskPayload(
+                    action = Action.entries.first { it.value == "addObject" },
+                    records =
+                      listOf(
+                        PushTaskRecords(
+                          objectID = "o",
+                          additionalProperties =
+                            mapOf("key" to JsonPrimitive("bar"), "foo" to JsonPrimitive("1")),
+                        ),
+                        PushTaskRecords(
+                          objectID = "k",
+                          additionalProperties =
+                            mapOf("key" to JsonPrimitive("baz"), "foo" to JsonPrimitive("2")),
+                        ),
+                      ),
                   ),
-                  PushTaskRecords(
-                    objectID = "k",
-                    additionalProperties = mapOf(
-                      "key" to JsonPrimitive("baz"),
-                      "foo" to JsonPrimitive("2"),
-                    ),
-                  ),
-                ),
-              ),
-            )
-
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -9973,9 +9985,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -10212,9 +10227,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -10465,21 +10483,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listTasksV1()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -10721,30 +10738,32 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createTaskV1(
-              taskCreate = TaskCreateV1(
-                sourceID = "search",
-                destinationID = "destinationName",
-                trigger = OnDemandTriggerInput(
-                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
-                ),
-                action = ActionType.entries.first { it.value == "replace" },
-              ),
-            )
-
+            var response =
+              client.createTaskV1(
+                taskCreate =
+                  TaskCreateV1(
+                    sourceID = "search",
+                    destinationID = "destinationName",
+                    trigger =
+                      OnDemandTriggerInput(
+                        type = OnDemandTriggerType.entries.first { it.value == "onDemand" }
+                      ),
+                    action = ActionType.entries.first { it.value == "replace" },
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -11029,25 +11048,31 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchTasksV1(
-              taskSearch = TaskSearch(
-                taskIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
-              ),
-            )
-
+            var response =
+              client.searchTasksV1(
+                taskSearch =
+                  TaskSearch(
+                    taskIDs =
+                      listOf(
+                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                      )
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -11309,9 +11334,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -11552,26 +11580,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateTaskV1(
-              taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              taskUpdate = TaskUpdateV1(
-                enabled = false,
-              ),
-            )
-
+            var response =
+              client.updateTaskV1(
+                taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                taskUpdate = TaskUpdateV1(enabled = false),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -11811,9 +11837,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -12059,9 +12088,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -12302,9 +12334,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -12543,9 +12578,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -12790,21 +12828,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listTransformations()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -13037,30 +13074,29 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createTransformation(
-              transformationCreate = TransformationCreate(
-                input = TransformationCode(
-                  code = "foo",
-                ),
-                type = TransformationType.entries.first { it.value == "code" },
-                name = "bar",
-                description = "baz",
-              ),
-            )
-
+            var response =
+              client.createTransformation(
+                transformationCreate =
+                  TransformationCreate(
+                    input = TransformationCode(code = "foo"),
+                    type = TransformationType.entries.first { it.value == "code" },
+                    name = "bar",
+                    description = "baz",
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -13344,31 +13380,28 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.tryTransformation(
-              transformationTry = TransformationTry(
-                type = TransformationType.entries.first { it.value == "code" },
-                input = TransformationCode(
-                  code = "foo",
-                ),
-                sampleRecord = buildJsonObject {
-                  put("bar", JsonPrimitive("baz"))
-                },
-              ),
-            )
-
+            var response =
+              client.tryTransformation(
+                transformationTry =
+                  TransformationTry(
+                    type = TransformationType.entries.first { it.value == "code" },
+                    input = TransformationCode(code = "foo"),
+                    sampleRecord = buildJsonObject { put("bar", JsonPrimitive("baz")) },
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -13650,25 +13683,31 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.searchTransformations(
-              transformationSearch = TransformationSearch(
-                transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
-              ),
-            )
-
+            var response =
+              client.searchTransformations(
+                transformationSearch =
+                  TransformationSearch(
+                    transformationIDs =
+                      listOf(
+                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                        "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                      )
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -13924,22 +13963,21 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.getTransformation(transformationID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
+            var response =
+              client.getTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -14180,31 +14218,30 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateTransformation(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              transformationCreate = TransformationCreate(
-                input = TransformationCode(
-                  code = "foo",
-                ),
-                type = TransformationType.entries.first { it.value == "code" },
-                name = "bar",
-                description = "baz",
-              ),
-            )
-
+            var response =
+              client.updateTransformation(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationCreate =
+                  TransformationCreate(
+                    input = TransformationCode(code = "foo"),
+                    type = TransformationType.entries.first { it.value == "code" },
+                    name = "bar",
+                    description = "baz",
+                  ),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -14464,22 +14501,21 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.deleteTransformation(transformationID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
+            var response =
+              client.deleteTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -14734,32 +14770,29 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.tryTransformationBeforeUpdate(
-              transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              transformationTry = TransformationTry(
-                type = TransformationType.entries.first { it.value == "code" },
-                input = TransformationCode(
-                  code = "foo",
-                ),
-                sampleRecord = buildJsonObject {
-                  put("bar", JsonPrimitive("baz"))
-                },
-              ),
-            )
-
+            var response =
+              client.tryTransformationBeforeUpdate(
+                transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                transformationTry =
+                  TransformationTry(
+                    type = TransformationType.entries.first { it.value == "code" },
+                    input = TransformationCode(code = "foo"),
+                    sampleRecord = buildJsonObject { put("bar", JsonPrimitive("baz")) },
+                  ),
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -15033,21 +15066,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listRuns()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -15267,9 +15299,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -15540,9 +15575,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -15777,23 +15815,24 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = IngestionClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              IngestionClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.getEvent(runID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f", eventID =
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
-
+            var response =
+              client.getEvent(
+                runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                eventID = "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP

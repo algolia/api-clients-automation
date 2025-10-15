@@ -1,19 +1,14 @@
+import com.algolia.client.api.SearchClient
+import com.algolia.client.configuration.*
+import com.algolia.client.extensions.*
+import com.algolia.client.model.search.BrowseParamsObject
+import com.algolia.client.transport.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonObject
 
-import com.algolia.client.api.SearchClient
-import com.algolia.client.configuration.*
-import com.algolia.client.transport.*
-import com.algolia.client.extensions.*
-import com.algolia.client.model.search.BrowseParamsObject
-
 suspend fun saveImageClassifications() {
-  data class Image(
-    val imageURL: String,
-    val objectID: String,
-    val objects: List<Map<String, Any>>
-  )
+  data class Image(val imageURL: String, val objectID: String, val objects: List<Map<String, Any>>)
 
   // Retrieve labels
   fun getImageLabels(imageURL: String, objectID: String, scoreLimit: Float): Image {
@@ -34,8 +29,12 @@ suspend fun saveImageClassifications() {
         images.addAll(
           browseResponse.hits.map {
             val props = it.additionalProperties ?: emptyMap()
-            return@map getImageLabels(props.getOrElse("imageURL") { "" }.toString(), it.objectID, 0.5f)
-          },
+            return@map getImageLabels(
+              props.getOrElse("imageURL") { "" }.toString(),
+              it.objectID,
+              0.5f,
+            )
+          }
         )
       },
     )
@@ -43,7 +42,11 @@ suspend fun saveImageClassifications() {
     val records = images.map { Json.encodeToJsonElement(it).jsonObject }
 
     // Update records with image classifications
-    client.partialUpdateObjects(indexName = "<YOUR_INDEX_NAME>", objects = records, createIfNotExists = true)
+    client.partialUpdateObjects(
+      indexName = "<YOUR_INDEX_NAME>",
+      objects = records,
+      createIfNotExists = true,
+    )
   } catch (e: Exception) {
     println(e.message)
   }

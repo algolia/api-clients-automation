@@ -1,10 +1,9 @@
-import kotlinx.serialization.json.JsonObject
-
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
-import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
 import com.algolia.client.model.search.*
+import com.algolia.client.transport.*
+import kotlinx.serialization.json.JsonObject
 
 val getAllAppIDConfigurations: () -> Map<String, String> = {
   mapOf() // A map of your MCM AppID/ApiKey pairs

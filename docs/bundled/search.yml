@@ -1698,18 +1698,20 @@ paths:
 
             // Call the API
 
-            var response = client.search(
-              searchMethodParams = SearchMethodParams(
-                requests = listOf(
-                  SearchForHits(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    query = "<YOUR_QUERY>",
-                    hitsPerPage = 50,
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.search(
+                searchMethodParams =
+                  SearchMethodParams(
+                    requests =
+                      listOf(
+                        SearchForHits(
+                          indexName = "<YOUR_INDEX_NAME>",
+                          query = "<YOUR_QUERY>",
+                          hitsPerPage = 50,
+                        )
+                      )
+                  )
+              )
 
 
             // print the response
@@ -2028,9 +2030,8 @@ paths:
 
             // Call the API
 
-            var response = client.searchForFacetValues(indexName =
-            "<YOUR_INDEX_NAME>", facetName = "facetName")
-
+            var response =
+              client.searchForFacetValues(indexName = "<YOUR_INDEX_NAME>", facetName = "facetName")
 
 
             // print the response
@@ -2682,16 +2683,17 @@ paths:
 
             // Call the API
 
-            var response = client.saveObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              body = buildJsonObject {
-                put("name", JsonPrimitive("Black T-shirt"))
-                put("color", JsonPrimitive("#000000||black"))
-                put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
-                put("objectID", JsonPrimitive("myID"))
-              },
-            )
-
+            var response =
+              client.saveObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                body =
+                  buildJsonObject {
+                    put("name", JsonPrimitive("Black T-shirt"))
+                    put("color", JsonPrimitive("#000000||black"))
+                    put("availableIn", JsonPrimitive("https://source.unsplash.com/100x100/?paris||Paris"))
+                    put("objectID", JsonPrimitive("myID"))
+                  },
+              )
 
 
             // print the response
@@ -3280,10 +3282,12 @@ paths:
 
             // Call the API
 
-            var response = client.getObject(indexName = "<YOUR_INDEX_NAME>",
-            objectID = "uniqueID", attributesToRetrieve = listOf("attr1",
-            "attr2"))
-
+            var response =
+              client.getObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToRetrieve = listOf("attr1", "attr2"),
+              )
 
 
             // print the response
@@ -3593,14 +3597,12 @@ paths:
 
             // Call the API
 
-            var response = client.addOrUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              body = buildJsonObject {
-                put("key", JsonPrimitive("value"))
-              },
-            )
-
+            var response =
+              client.addOrUpdateObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                body = buildJsonObject { put("key", JsonPrimitive("value")) },
+              )
 
 
             // print the response
@@ -4156,13 +4158,11 @@ paths:
 
             // Call the API
 
-            var response = client.deleteBy(
-              indexName = "<YOUR_INDEX_NAME>",
-              deleteByParams = DeleteByParams(
-                filters = "brand:brandName",
-              ),
-            )
-
+            var response =
+              client.deleteBy(
+                indexName = "<YOUR_INDEX_NAME>",
+                deleteByParams = DeleteByParams(filters = "brand:brandName"),
+              )
 
 
             // print the response
@@ -4771,14 +4771,12 @@ paths:
 
             // Call the API
 
-            var response = client.partialUpdateObject(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "uniqueID",
-              attributesToUpdate = buildJsonObject {
-                put("attributeId", JsonPrimitive("new value"))
-              },
-            )
-
+            var response =
+              client.partialUpdateObject(
+                indexName = "<YOUR_INDEX_NAME>",
+                objectID = "uniqueID",
+                attributesToUpdate = buildJsonObject { put("attributeId", JsonPrimitive("new value")) },
+              )
 
 
             // print the response
@@ -5138,28 +5136,32 @@ paths:
 
             // Call the API
 
-            var response = client.batch(
-              indexName = "<YOUR_INDEX_NAME>",
-              batchWriteParams = BatchWriteParams(
-                requests = listOf(
-                  BatchRequest(
-                    action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject {
-                      put("key", JsonPrimitive("bar"))
-                      put("foo", JsonPrimitive("1"))
-                    },
+            var response =
+              client.batch(
+                indexName = "<YOUR_INDEX_NAME>",
+                batchWriteParams =
+                  BatchWriteParams(
+                    requests =
+                      listOf(
+                        BatchRequest(
+                          action = Action.entries.first { it.value == "addObject" },
+                          body =
+                            buildJsonObject {
+                              put("key", JsonPrimitive("bar"))
+                              put("foo", JsonPrimitive("1"))
+                            },
+                        ),
+                        BatchRequest(
+                          action = Action.entries.first { it.value == "addObject" },
+                          body =
+                            buildJsonObject {
+                              put("key", JsonPrimitive("baz"))
+                              put("foo", JsonPrimitive("2"))
+                            },
+                        ),
+                      )
                   ),
-                  BatchRequest(
-                    action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject {
-                      put("key", JsonPrimitive("baz"))
-                      put("foo", JsonPrimitive("2"))
-                    },
-                  ),
-                ),
-              ),
-            )
-
+              )
 
 
             // print the response
@@ -5580,20 +5582,20 @@ paths:
 
             // Call the API
 
-            var response = client.multipleBatch(
-              batchParams = BatchParams(
-                requests = listOf(
-                  MultipleBatchRequest(
-                    action = Action.entries.first { it.value == "addObject" },
-                    body = buildJsonObject {
-                      put("key", JsonPrimitive("value"))
-                    },
-                    indexName = "<YOUR_INDEX_NAME>",
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.multipleBatch(
+                batchParams =
+                  BatchParams(
+                    requests =
+                      listOf(
+                        MultipleBatchRequest(
+                          action = Action.entries.first { it.value == "addObject" },
+                          body = buildJsonObject { put("key", JsonPrimitive("value")) },
+                          indexName = "<YOUR_INDEX_NAME>",
+                        )
+                      )
+                  )
+              )
 
 
             // print the response
@@ -5966,17 +5968,14 @@ paths:
 
             // Call the API
 
-            var response = client.getObjects(
-              getObjectsParams = GetObjectsParams(
-                requests = listOf(
-                  GetObjectsRequest(
-                    objectID = "uniqueID",
-                    indexName = "<YOUR_INDEX_NAME>",
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.getObjects(
+                getObjectsParams =
+                  GetObjectsParams(
+                    requests =
+                      listOf(GetObjectsRequest(objectID = "uniqueID", indexName = "<YOUR_INDEX_NAME>"))
+                  )
+              )
 
 
             // print the response
@@ -6546,15 +6545,16 @@ paths:
 
             // Call the API
 
-            var response = client.setSettings(
-              indexName = "<YOUR_INDEX_NAME>",
-              indexSettings = IndexSettings(
-                paginationLimitedTo = 10,
-                typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
-              ),
-              forwardToReplicas = true,
-            )
-
+            var response =
+              client.setSettings(
+                indexName = "<YOUR_INDEX_NAME>",
+                indexSettings =
+                  IndexSettings(
+                    paginationLimitedTo = 10,
+                    typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
+                  ),
+                forwardToReplicas = true,
+              )
 
 
             // print the response
@@ -7149,17 +7149,18 @@ paths:
 
             // Call the API
 
-            var response = client.saveSynonym(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              synonymHit = SynonymHit(
+            var response =
+              client.saveSynonym(
+                indexName = "<YOUR_INDEX_NAME>",
                 objectID = "id1",
-                type = SynonymType.entries.first { it.value == "synonym" },
-                synonyms = listOf("car", "vehicule", "auto"),
-              ),
-              forwardToReplicas = true,
-            )
-
+                synonymHit =
+                  SynonymHit(
+                    objectID = "id1",
+                    type = SynonymType.entries.first { it.value == "synonym" },
+                    synonyms = listOf("car", "vehicule", "auto"),
+                  ),
+                forwardToReplicas = true,
+              )
 
 
             // print the response
@@ -7783,25 +7784,26 @@ paths:
 
             // Call the API
 
-            var response = client.saveSynonyms(
-              indexName = "<YOUR_INDEX_NAME>",
-              synonymHit = listOf(
-                SynonymHit(
-                  objectID = "id1",
-                  type = SynonymType.entries.first { it.value == "synonym" },
-                  synonyms = listOf("car", "vehicule", "auto"),
-                ),
-                SynonymHit(
-                  objectID = "id2",
-                  type = SynonymType.entries.first { it.value == "onewaysynonym" },
-                  input = "iphone",
-                  synonyms = listOf("ephone", "aphone", "yphone"),
-                ),
-              ),
-              forwardToReplicas = true,
-              replaceExistingSynonyms = true,
-            )
-
+            var response =
+              client.saveSynonyms(
+                indexName = "<YOUR_INDEX_NAME>",
+                synonymHit =
+                  listOf(
+                    SynonymHit(
+                      objectID = "id1",
+                      type = SynonymType.entries.first { it.value == "synonym" },
+                      synonyms = listOf("car", "vehicule", "auto"),
+                    ),
+                    SynonymHit(
+                      objectID = "id2",
+                      type = SynonymType.entries.first { it.value == "onewaysynonym" },
+                      input = "iphone",
+                      synonyms = listOf("ephone", "aphone", "yphone"),
+                    ),
+                  ),
+                forwardToReplicas = true,
+                replaceExistingSynonyms = true,
+              )
 
 
             // print the response
@@ -8932,13 +8934,18 @@ paths:
 
             // Call the API
 
-            var response = client.addApiKey(
-              apiKey = ApiKey(
-                acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
-                description = "my new api key",
-              ),
-            )
-
+            var response =
+              client.addApiKey(
+                apiKey =
+                  ApiKey(
+                    acl =
+                      listOf(
+                        Acl.entries.first { it.value == "search" },
+                        Acl.entries.first { it.value == "addObject" },
+                      ),
+                    description = "my new api key",
+                  )
+              )
 
 
             // print the response
@@ -9506,16 +9513,21 @@ paths:
 
             // Call the API
 
-            var response = client.updateApiKey(
-              key = "ALGOLIA_API_KEY",
-              apiKey = ApiKey(
-                acl = listOf(Acl.entries.first { it.value == "search" }, Acl.entries.first { it.value == "addObject" }),
-                validity = 300,
-                maxQueriesPerIPPerHour = 100,
-                maxHitsPerQuery = 20,
-              ),
-            )
-
+            var response =
+              client.updateApiKey(
+                key = "ALGOLIA_API_KEY",
+                apiKey =
+                  ApiKey(
+                    acl =
+                      listOf(
+                        Acl.entries.first { it.value == "search" },
+                        Acl.entries.first { it.value == "addObject" },
+                      ),
+                    validity = 300,
+                    maxQueriesPerIPPerHour = 100,
+                    maxHitsPerQuery = 20,
+                  ),
+              )
 
 
             // print the response
@@ -10638,25 +10650,23 @@ paths:
 
             // Call the API
 
-            var response = client.saveRule(
-              indexName = "<YOUR_INDEX_NAME>",
-              objectID = "id1",
-              rule = Rule(
+            var response =
+              client.saveRule(
+                indexName = "<YOUR_INDEX_NAME>",
                 objectID = "id1",
-                conditions = listOf(
-                  Condition(
-                    pattern = "apple",
-                    anchoring = Anchoring.entries.first { it.value == "contains" },
+                rule =
+                  Rule(
+                    objectID = "id1",
+                    conditions =
+                      listOf(
+                        Condition(
+                          pattern = "apple",
+                          anchoring = Anchoring.entries.first { it.value == "contains" },
+                        )
+                      ),
+                    consequence = Consequence(params = ConsequenceParams(filters = "brand:xiaomi")),
                   ),
-                ),
-                consequence = Consequence(
-                  params = ConsequenceParams(
-                    filters = "brand:xiaomi",
-                  ),
-                ),
-              ),
-            )
-
+              )
 
 
             // print the response
@@ -11345,42 +11355,37 @@ paths:
 
             // Call the API
 
-            var response = client.saveRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              rules = listOf(
-                Rule(
-                  objectID = "a-rule-id",
-                  conditions = listOf(
-                    Condition(
-                      pattern = "smartphone",
-                      anchoring = Anchoring.entries.first { it.value == "contains" },
+            var response =
+              client.saveRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                rules =
+                  listOf(
+                    Rule(
+                      objectID = "a-rule-id",
+                      conditions =
+                        listOf(
+                          Condition(
+                            pattern = "smartphone",
+                            anchoring = Anchoring.entries.first { it.value == "contains" },
+                          )
+                        ),
+                      consequence = Consequence(params = ConsequenceParams(filters = "brand:apple")),
+                    ),
+                    Rule(
+                      objectID = "a-second-rule-id",
+                      conditions =
+                        listOf(
+                          Condition(
+                            pattern = "apple",
+                            anchoring = Anchoring.entries.first { it.value == "contains" },
+                          )
+                        ),
+                      consequence = Consequence(params = ConsequenceParams(filters = "brand:samsung")),
                     ),
                   ),
-                  consequence = Consequence(
-                    params = ConsequenceParams(
-                      filters = "brand:apple",
-                    ),
-                  ),
-                ),
-                Rule(
-                  objectID = "a-second-rule-id",
-                  conditions = listOf(
-                    Condition(
-                      pattern = "apple",
-                      anchoring = Anchoring.entries.first { it.value == "contains" },
-                    ),
-                  ),
-                  consequence = Consequence(
-                    params = ConsequenceParams(
-                      filters = "brand:samsung",
-                    ),
-                  ),
-                ),
-              ),
-              forwardToReplicas = false,
-              clearExistingRules = true,
-            )
-
+                forwardToReplicas = false,
+                clearExistingRules = true,
+              )
 
 
             // print the response
@@ -12071,13 +12076,11 @@ paths:
 
             // Call the API
 
-            var response = client.searchRules(
-              indexName = "<YOUR_INDEX_NAME>",
-              searchRulesParams = SearchRulesParams(
-                query = "zorro",
-              ),
-            )
-
+            var response =
+              client.searchRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                searchRulesParams = SearchRulesParams(query = "zorro"),
+              )
 
 
             // print the response
@@ -12461,26 +12464,29 @@ paths:
 
             // Call the API
 
-            var response = client.batchDictionaryEntries(
-              dictionaryName = DictionaryType.entries.first { it.value == "plurals" },
-              batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-                clearExistingDictionaryEntries = true,
-                requests = listOf(
-                  BatchDictionaryEntriesRequest(
-                    action = DictionaryAction.entries.first { it.value == "addEntry" },
-                    body = DictionaryEntry(
-                      objectID = "1",
-                      language = SupportedLanguage.entries.first { it.value == "en" },
-                      word = "fancy",
-                      words = listOf("believe", "algolia"),
-                      decomposition = listOf("trust", "algolia"),
-                      state = DictionaryEntryState.entries.first { it.value == "enabled" },
-                    ),
+            var response =
+              client.batchDictionaryEntries(
+                dictionaryName = DictionaryType.entries.first { it.value == "plurals" },
+                batchDictionaryEntriesParams =
+                  BatchDictionaryEntriesParams(
+                    clearExistingDictionaryEntries = true,
+                    requests =
+                      listOf(
+                        BatchDictionaryEntriesRequest(
+                          action = DictionaryAction.entries.first { it.value == "addEntry" },
+                          body =
+                            DictionaryEntry(
+                              objectID = "1",
+                              language = SupportedLanguage.entries.first { it.value == "en" },
+                              word = "fancy",
+                              words = listOf("believe", "algolia"),
+                              decomposition = listOf("trust", "algolia"),
+                              state = DictionaryEntryState.entries.first { it.value == "enabled" },
+                            ),
+                        )
+                      ),
                   ),
-                ),
-              ),
-            )
-
+              )
 
 
             // print the response
@@ -12852,6 +12858,8 @@ paths:
         - lang: kotlin
           label: Kotlin
           source: >-
+            // parameters
+
             // Initialize the client
 
             val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey =
@@ -12860,13 +12868,11 @@ paths:
 
             // Call the API
 
-            var response = client.searchDictionaryEntries(
-              dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
-              searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-                query = "about",
-              ),
-            )
-
+            var response =
+              client.searchDictionaryEntries(
+                dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
+                searchDictionaryEntriesParams = SearchDictionaryEntriesParams(query = "about"),
+              )
 
 
             // print the response
@@ -13425,14 +13431,14 @@ paths:
 
             // Call the API
 
-            var response = client.setDictionarySettings(
-              dictionarySettingsParams = DictionarySettingsParams(
-                disableStandardEntries = StandardEntries(
-                  plurals = mapOf("fr" to false, "en" to false, "ru" to true),
-                ),
-              ),
-            )
-
+            var response =
+              client.setDictionarySettings(
+                dictionarySettingsParams =
+                  DictionarySettingsParams(
+                    disableStandardEntries =
+                      StandardEntries(plurals = mapOf("fr" to false, "en" to false, "ru" to true))
+                  )
+              )
 
 
             // print the response
@@ -13981,13 +13987,11 @@ paths:
 
             // Call the API
 
-            var response = client.assignUserId(
-              xAlgoliaUserID = "user42",
-              assignUserIdParams = AssignUserIdParams(
-                cluster = "d4242-eu",
-              ),
-            )
-
+            var response =
+              client.assignUserId(
+                xAlgoliaUserID = "user42",
+                assignUserIdParams = AssignUserIdParams(cluster = "d4242-eu"),
+              )
 
 
             // print the response
@@ -14554,14 +14558,12 @@ paths:
 
             // Call the API
 
-            var response = client.batchAssignUserIds(
-              xAlgoliaUserID = "userID",
-              batchAssignUserIdsParams = BatchAssignUserIdsParams(
-                cluster = "theCluster",
-                users = listOf("user1", "user2"),
-              ),
-            )
-
+            var response =
+              client.batchAssignUserIds(
+                xAlgoliaUserID = "userID",
+                batchAssignUserIdsParams =
+                  BatchAssignUserIdsParams(cluster = "theCluster", users = listOf("user1", "user2")),
+              )
 
 
             // print the response
@@ -15968,15 +15970,16 @@ paths:
 
             // Call the API
 
-            var response = client.searchUserIds(
-              searchUserIdsParams = SearchUserIdsParams(
-                query = "test",
-                clusterName = "theClusterName",
-                page = 5,
-                hitsPerPage = 10,
-              ),
-            )
-
+            var response =
+              client.searchUserIds(
+                searchUserIdsParams =
+                  SearchUserIdsParams(
+                    query = "test",
+                    clusterName = "theClusterName",
+                    page = 5,
+                    hitsPerPage = 10,
+                  )
+              )
 
 
             // print the response
@@ -16780,15 +16783,10 @@ paths:
 
             // Call the API
 
-            var response = client.replaceSources(
-              source = listOf(
-                Source(
-                  source = "theSource",
-                  description = "theDescription",
-                ),
-              ),
-            )
-
+            var response =
+              client.replaceSources(
+                source = listOf(Source(source = "theSource", description = "theDescription"))
+              )
 
 
             // print the response
@@ -17066,13 +17064,8 @@ paths:
 
             // Call the API
 
-            var response = client.appendSource(
-              source = Source(
-                source = "theSource",
-                description = "theDescription",
-              ),
-            )
-
+            var response =
+              client.appendSource(source = Source(source = "theSource", description = "theDescription"))
 
 
             // print the response
@@ -18640,15 +18633,20 @@ paths:
 
             // Call the API
 
-            var response = client.operationIndex(
-              indexName = "<SOURCE_INDEX_NAME>",
-              operationIndexParams = OperationIndexParams(
-                operation = OperationType.entries.first { it.value == "move" },
-                destination = "<DESTINATION_INDEX_NAME>",
-                scope = listOf(ScopeType.entries.first { it.value == "rules" }, ScopeType.entries.first { it.value == "settings" }),
-              ),
-            )
-
+            var response =
+              client.operationIndex(
+                indexName = "<SOURCE_INDEX_NAME>",
+                operationIndexParams =
+                  OperationIndexParams(
+                    operation = OperationType.entries.first { it.value == "move" },
+                    destination = "<DESTINATION_INDEX_NAME>",
+                    scope =
+                      listOf(
+                        ScopeType.entries.first { it.value == "rules" },
+                        ScopeType.entries.first { it.value == "settings" },
+                      ),
+                  ),
+              )
 
 
             // print the response
