@@ -32,6 +32,10 @@ public class Snippet{{client}}
     // Call the API
      {{#hasResponse}}var response =  {{/hasResponse}}{{> tests/method}};
     // >LOG
+    {{#hasResponse}}
+    // print the response
+    Console.WriteLine(response);
+    {{/hasResponse}}
     // SEPARATOR<
   }
 

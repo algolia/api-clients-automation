@@ -23,6 +23,10 @@ final class {{client}}Snippet {
       queryParameters: [{{#parametersWithDataType}}"{{key}}": {{> tests/paramValue }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}]{{/requestOptions.queryParameters}}
     ){{/hasRequestOptions}})
     // >LOG
+    {{#hasResponse}}
+    // print the response
+    print(response)
+    {{/hasResponse}}
     // SEPARATOR<
   }
   {{/snippets}}
