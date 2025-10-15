@@ -108,7 +108,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -116,10 +116,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -141,14 +143,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -157,12 +158,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -174,14 +178,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -193,14 +196,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -214,14 +216,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -238,14 +239,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -257,19 +257,13 @@ paths:
             response = client.custom_get("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -285,10 +279,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -299,7 +296,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -331,7 +331,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -339,10 +339,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -364,14 +366,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -380,12 +381,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -397,14 +401,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -416,14 +419,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -437,14 +439,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -461,14 +462,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -480,19 +480,13 @@ paths:
             response = client.custom_post("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -508,10 +502,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -522,7 +519,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -554,7 +554,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -562,10 +562,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -587,14 +589,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -603,12 +604,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -620,14 +624,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -639,14 +642,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -660,14 +662,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -684,14 +685,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -703,19 +703,13 @@ paths:
             response = client.custom_put("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -731,10 +725,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -745,7 +742,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -771,7 +771,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -779,10 +779,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -805,14 +807,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -821,12 +822,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -839,14 +843,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -858,14 +861,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -879,14 +881,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -903,14 +904,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -922,19 +922,13 @@ paths:
             response = client.custom_delete("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -950,10 +944,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -964,7 +961,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /1/status:
     get:
       operationId: getStatus
@@ -981,7 +981,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -989,10 +989,12 @@ paths:
 
             // Call the API
             var response = await client.GetStatusAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1014,14 +1016,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -1030,12 +1031,15 @@ paths:
 
             // Call the API
 
-            client.getStatus();
+            StatusResponse response = client.getStatus();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1047,14 +1051,13 @@ paths:
             const response = await client.getStatus();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1066,14 +1069,13 @@ paths:
             var response = client.getStatus()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -1085,14 +1087,13 @@ paths:
             $response = $client->getStatus();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -1107,14 +1108,13 @@ paths:
             response = client.get_status()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -1126,19 +1126,13 @@ paths:
             response = client.get_status
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1153,10 +1147,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1167,7 +1164,10 @@ paths:
 
             let response = try await client.getStatus()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1195,7 +1195,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1203,10 +1203,12 @@ paths:
 
             // Call the API
             var response = await client.GetClusterStatusAsync("c1-de");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1229,14 +1231,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -1245,12 +1246,15 @@ paths:
 
             // Call the API
 
-            client.getClusterStatus("c1-de");
+            StatusResponse response = client.getClusterStatus("c1-de");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1263,14 +1267,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1282,14 +1285,13 @@ paths:
             var response = client.getClusterStatus(clusters = "c1-de")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -1303,14 +1305,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -1327,14 +1328,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -1346,19 +1346,13 @@ paths:
             response = client.get_cluster_status("c1-de")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1374,10 +1368,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1388,7 +1385,10 @@ paths:
 
             let response = try await client.getClusterStatus(clusters: "c1-de")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1412,7 +1412,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1420,10 +1420,12 @@ paths:
 
             // Call the API
             var response = await client.GetIncidentsAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1445,14 +1447,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -1461,12 +1462,15 @@ paths:
 
             // Call the API
 
-            client.getIncidents();
+            IncidentsResponse response = client.getIncidents();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1478,14 +1482,13 @@ paths:
             const response = await client.getIncidents();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1497,14 +1500,13 @@ paths:
             var response = client.getIncidents()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -1516,14 +1518,13 @@ paths:
             $response = $client->getIncidents();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -1538,14 +1539,13 @@ paths:
             response = client.get_incidents()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -1557,19 +1557,13 @@ paths:
             response = client.get_incidents
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1584,10 +1578,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1598,7 +1595,10 @@ paths:
 
             let response = try await client.getIncidents()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1625,7 +1625,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1633,10 +1633,12 @@ paths:
 
             // Call the API
             var response = await client.GetClusterIncidentsAsync("c1-de");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1659,14 +1661,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -1675,12 +1676,15 @@ paths:
 
             // Call the API
 
-            client.getClusterIncidents("c1-de");
+            IncidentsResponse response = client.getClusterIncidents("c1-de");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1693,14 +1697,13 @@ paths:
             'c1-de' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1712,14 +1715,13 @@ paths:
             var response = client.getClusterIncidents(clusters = "c1-de")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -1733,14 +1735,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -1757,14 +1758,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -1776,19 +1776,13 @@ paths:
             response = client.get_cluster_incidents("c1-de")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1804,10 +1798,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1819,7 +1816,10 @@ paths:
             let response = try await client.getClusterIncidents(clusters:
             "c1-de")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1853,7 +1853,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1861,10 +1861,12 @@ paths:
 
             // Call the API
             var response = await client.GetServersAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1886,14 +1888,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -1902,12 +1903,15 @@ paths:
 
             // Call the API
 
-            client.getServers();
+            InventoryResponse response = client.getServers();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1919,14 +1923,13 @@ paths:
             const response = await client.getServers();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1938,14 +1941,13 @@ paths:
             var response = client.getServers()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -1957,14 +1959,13 @@ paths:
             $response = $client->getServers();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -1979,14 +1980,13 @@ paths:
             response = client.get_servers()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -1998,19 +1998,13 @@ paths:
             response = client.get_servers
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2025,10 +2019,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2039,7 +2036,10 @@ paths:
 
             let response = try await client.getServers()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2065,7 +2065,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2073,10 +2073,12 @@ paths:
 
             // Call the API
             var response = await client.GetLatencyAsync("c1-de");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2098,14 +2100,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -2114,12 +2115,15 @@ paths:
 
             // Call the API
 
-            client.getLatency("c1-de");
+            LatencyResponse response = client.getLatency("c1-de");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2131,14 +2135,13 @@ paths:
             const response = await client.getLatency({ clusters: 'c1-de' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2150,14 +2153,13 @@ paths:
             var response = client.getLatency(clusters = "c1-de")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -2171,14 +2173,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -2195,14 +2196,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -2214,19 +2214,13 @@ paths:
             response = client.get_latency("c1-de")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2242,10 +2236,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2256,7 +2253,10 @@ paths:
 
             let response = try await client.getLatency(clusters: "c1-de")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2281,7 +2281,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2289,10 +2289,12 @@ paths:
 
             // Call the API
             var response = await client.GetIndexingTimeAsync("c1-de");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2315,14 +2317,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -2331,12 +2332,15 @@ paths:
 
             // Call the API
 
-            client.getIndexingTime("c1-de");
+            IndexingTimeResponse response = client.getIndexingTime("c1-de");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2349,14 +2353,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2368,14 +2371,13 @@ paths:
             var response = client.getIndexingTime(clusters = "c1-de")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -2389,14 +2391,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -2413,14 +2414,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -2432,19 +2432,13 @@ paths:
             response = client.get_indexing_time("c1-de")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2460,10 +2454,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2474,7 +2471,10 @@ paths:
 
             let response = try await client.getIndexingTime(clusters: "c1-de")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2499,7 +2499,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2507,10 +2507,12 @@ paths:
 
             // Call the API
             var response = await client.GetReachabilityAsync("c1-de");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2533,14 +2535,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -2549,12 +2550,15 @@ paths:
 
             // Call the API
 
-            client.getReachability("c1-de");
+            Map response = client.getReachability("c1-de");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2567,14 +2571,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2586,14 +2589,13 @@ paths:
             var response = client.getReachability(clusters = "c1-de")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -2607,14 +2609,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -2631,14 +2632,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -2650,19 +2650,13 @@ paths:
             response = client.get_reachability("c1-de")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2678,10 +2672,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2692,7 +2689,10 @@ paths:
 
             let response = try await client.getReachability(clusters: "c1-de")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2726,7 +2726,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new MonitoringClient(
               new MonitoringConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2737,10 +2737,12 @@ paths:
               Enum.Parse<Metric>("AvgBuildTime"),
               Enum.Parse<Period>("Minute")
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := monitoring.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2762,14 +2764,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             MonitoringClient client = new
@@ -2778,12 +2779,16 @@ paths:
 
             // Call the API
 
+            InfrastructureResponse response =
             client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2796,14 +2801,13 @@ paths:
             period: 'minute' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2817,14 +2821,13 @@ paths:
             it.value == "minute" })
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = MonitoringClient::create('ALGOLIA_APPLICATION_ID',
@@ -2839,14 +2842,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use MonitoringClient instead,
@@ -2864,14 +2866,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::MonitoringClient.create("ALGOLIA_APPLICATION_ID",
@@ -2883,19 +2884,13 @@ paths:
             response = client.get_metrics("avg_build_time", "minute")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = MonitoringClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2912,10 +2907,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try MonitoringClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2927,7 +2925,10 @@ paths:
             let response = try await client.getMetrics(metric:
             Metric.avgBuildTime, period: Period.minute)
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

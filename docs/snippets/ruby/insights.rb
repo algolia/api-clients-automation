@@ -16,11 +16,8 @@ def snippet_for_custom_delete
   response = client.custom_delete("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -36,11 +33,8 @@ def snippet_for_custom_delete1
   response = client.custom_delete("test/all", {query: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -56,11 +50,8 @@ def snippet_for_custom_get
   response = client.custom_get("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -76,11 +67,8 @@ def snippet_for_custom_get1
   response = client.custom_get("test/all", {query: "parameters with space"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -106,11 +94,8 @@ def snippet_for_custom_get2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -126,11 +111,8 @@ def snippet_for_custom_post
   response = client.custom_post("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -146,11 +128,8 @@ def snippet_for_custom_post1
   response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -171,11 +150,8 @@ def snippet_for_custom_post2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -196,11 +172,8 @@ def snippet_for_custom_post3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -221,11 +194,8 @@ def snippet_for_custom_post4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -246,11 +216,8 @@ def snippet_for_custom_post5
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -271,11 +238,8 @@ def snippet_for_custom_post6
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -296,11 +260,8 @@ def snippet_for_custom_post7
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -321,11 +282,8 @@ def snippet_for_custom_post8
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -346,11 +304,8 @@ def snippet_for_custom_post9
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -371,11 +326,8 @@ def snippet_for_custom_post10
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -391,11 +343,8 @@ def snippet_for_custom_put
   response = client.custom_put("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -411,11 +360,8 @@ def snippet_for_custom_put1
   response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -461,11 +407,8 @@ def snippet_for_push_events
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -487,7 +430,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1760227200000,
+          timestamp: 1760486400000,
           object_ids: ["9780545139700", "9780439784542"],
           query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
         ),
@@ -497,7 +440,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1760227200000,
+          timestamp: 1760486400000,
           object_ids: ["9780545139700", "9780439784542"]
         )
       ]
@@ -505,11 +448,8 @@ def snippet_for_push_events1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -540,11 +480,8 @@ def snippet_for_push_events2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -574,11 +511,8 @@ def snippet_for_push_events3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -615,11 +549,8 @@ def snippet_for_push_events4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 

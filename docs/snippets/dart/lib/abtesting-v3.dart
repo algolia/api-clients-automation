@@ -38,6 +38,8 @@ void snippetForaddABTests() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -57,6 +59,8 @@ void snippetForcustomDelete() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -79,6 +83,8 @@ void snippetForcustomDelete1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -98,6 +104,8 @@ void snippetForcustomGet() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -120,6 +128,8 @@ void snippetForcustomGet1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -154,6 +164,8 @@ void snippetForcustomGet2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -173,6 +185,8 @@ void snippetForcustomPost() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -198,6 +212,8 @@ void snippetForcustomPost1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -228,6 +244,8 @@ void snippetForcustomPost2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -258,6 +276,8 @@ void snippetForcustomPost3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -288,6 +308,8 @@ void snippetForcustomPost4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -318,6 +340,8 @@ void snippetForcustomPost5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -348,6 +372,8 @@ void snippetForcustomPost6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -378,6 +404,8 @@ void snippetForcustomPost7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -411,6 +439,8 @@ void snippetForcustomPost8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -445,6 +475,8 @@ void snippetForcustomPost9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -478,6 +510,8 @@ void snippetForcustomPost10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -497,6 +531,8 @@ void snippetForcustomPut() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -522,6 +558,8 @@ void snippetForcustomPut1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -541,6 +579,8 @@ void snippetFordeleteABTest() async {
     id: 42,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -577,6 +617,8 @@ void snippetForestimateABTest() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -596,6 +638,8 @@ void snippetForgetABTest() async {
     id: 42,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -615,6 +659,8 @@ void snippetForgetTimeseries() async {
     id: 42,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -632,6 +678,8 @@ void snippetForlistABTests() async {
   // Call the API
   final response = await client.listABTests();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -655,6 +703,8 @@ void snippetForlistABTests1() async {
     direction: Direction.fromJson("asc"),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -693,6 +743,8 @@ void snippetForscheduleABTest() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -731,5 +783,7 @@ void snippetForstopABTest() async {
     id: 42,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }

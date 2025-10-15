@@ -24,6 +24,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -46,6 +48,8 @@ public class SnippetAnalyticsClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -65,6 +69,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -87,6 +93,8 @@ public class SnippetAnalyticsClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -114,6 +122,8 @@ public class SnippetAnalyticsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -133,6 +143,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -156,6 +168,8 @@ public class SnippetAnalyticsClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -180,6 +194,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -204,6 +220,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -228,6 +246,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -252,6 +272,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -276,6 +298,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -300,6 +324,8 @@ public class SnippetAnalyticsClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -326,6 +352,8 @@ public class SnippetAnalyticsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -352,6 +380,8 @@ public class SnippetAnalyticsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -378,6 +408,8 @@ public class SnippetAnalyticsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -397,6 +429,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -420,6 +454,8 @@ public class SnippetAnalyticsClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -439,6 +475,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetAddToCartRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -458,6 +496,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetAddToCartRateAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -477,6 +517,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetAverageClickPositionAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -501,6 +543,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -520,6 +564,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetClickPositionsAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -539,6 +585,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetClickPositionsAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -558,6 +606,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetClickThroughRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -582,6 +632,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -601,6 +653,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetConversionRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -620,6 +674,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetConversionRateAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -639,6 +695,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetNoClickRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -658,6 +716,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetNoClickRateAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -677,6 +737,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetNoResultsRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -696,6 +758,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetNoResultsRateAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -715,6 +779,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetPurchaseRateAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -734,6 +800,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetPurchaseRateAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -753,6 +821,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetRevenueAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -772,6 +842,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetRevenueAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -791,6 +863,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetSearchesCountAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -810,6 +884,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetSearchesCountAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -829,6 +905,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetSearchesNoClicksAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -855,6 +933,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -874,6 +954,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetSearchesNoResultsAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -900,6 +982,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -919,6 +1003,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetStatusAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -938,6 +1024,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopCountriesAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -964,6 +1052,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -983,6 +1073,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopFilterAttributesAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1010,6 +1102,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1029,6 +1123,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopFilterForAttributeAsync("myAttribute", "index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1048,6 +1144,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopFilterForAttributeAsync("myAttribute1,myAttribute2", "index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1076,6 +1174,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1104,6 +1204,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1123,6 +1225,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopFiltersNoResultsAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1150,6 +1254,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1169,6 +1275,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopHitsAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1198,6 +1306,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1217,6 +1327,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetTopSearchesAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1247,6 +1359,8 @@ public class SnippetAnalyticsClient
       "tag"
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1266,6 +1380,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetUsersCountAsync("index");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1285,6 +1401,8 @@ public class SnippetAnalyticsClient
     // Call the API
     var response = await client.GetUsersCountAsync("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 

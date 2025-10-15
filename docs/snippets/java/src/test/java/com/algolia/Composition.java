@@ -18,8 +18,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -32,7 +34,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -41,6 +43,8 @@ class SnippetCompositionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -53,8 +57,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -67,7 +73,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -76,6 +82,8 @@ class SnippetCompositionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -88,7 +96,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -101,6 +109,8 @@ class SnippetCompositionClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -113,8 +123,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -127,7 +139,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -141,6 +153,8 @@ class SnippetCompositionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -153,7 +167,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -168,6 +182,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -180,7 +196,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -195,6 +211,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -207,7 +225,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -222,6 +240,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -234,7 +254,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -249,6 +269,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -261,7 +283,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -276,6 +298,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -288,7 +312,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -303,6 +327,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -315,7 +341,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -330,6 +356,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -342,7 +370,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -357,6 +385,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -369,7 +399,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -384,6 +414,8 @@ class SnippetCompositionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -396,8 +428,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -410,7 +444,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -424,6 +458,8 @@ class SnippetCompositionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -436,8 +472,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteComposition("1234");
+    TaskIDResponse response = client.deleteComposition("1234");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -450,8 +488,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteCompositionRule("1234", "5678");
+    TaskIDResponse response = client.deleteCompositionRule("1234", "5678");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -464,8 +504,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getComposition("foo");
+    Composition response = client.getComposition("foo");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -478,8 +520,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getRule("foo", "123");
+    CompositionRule response = client.getRule("foo", "123");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -492,8 +536,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getTask("foo", 42L);
+    GetTaskResponse response = client.getTask("foo", 42L);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -506,8 +552,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listCompositions();
+    ListCompositionsResponse response = client.listCompositions();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -520,8 +568,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listCompositions();
+    ListCompositionsResponse response = client.listCompositions();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -534,7 +584,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.multipleBatch(
+    MultipleBatchResponse response = client.multipleBatch(
       new BatchParams().setRequests(
         Arrays.asList(
           new MultipleBatchRequest()
@@ -556,6 +606,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -568,7 +620,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.multipleBatch(
+    MultipleBatchResponse response = client.multipleBatch(
       new BatchParams().setRequests(
         Arrays.asList(
           new MultipleBatchRequest()
@@ -604,6 +656,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -616,7 +670,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.multipleBatch(
+    MultipleBatchResponse response = client.multipleBatch(
       new BatchParams().setRequests(
         Arrays.asList(
           new MultipleBatchRequest()
@@ -712,6 +766,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -724,7 +780,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.multipleBatch(
+    MultipleBatchResponse response = client.multipleBatch(
       new BatchParams().setRequests(
         Arrays.asList(
           new MultipleBatchRequest()
@@ -754,6 +810,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -766,7 +824,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putComposition(
+    TaskIDResponse response = client.putComposition(
       "1234",
       new Composition()
         .setObjectID("1234")
@@ -788,6 +846,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -800,7 +860,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putComposition(
+    TaskIDResponse response = client.putComposition(
       "my-external-injection-compo",
       new Composition()
         .setObjectID("my-external-injection-compo")
@@ -829,6 +889,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -841,7 +903,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putComposition(
+    TaskIDResponse response = client.putComposition(
       "my-metadata-compo",
       new Composition()
         .setObjectID("my-metadata-compo")
@@ -928,6 +990,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -940,7 +1004,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putComposition(
+    TaskIDResponse response = client.putComposition(
       "my-compo",
       new Composition()
         .setObjectID("my-compo")
@@ -969,6 +1033,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -981,7 +1047,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putCompositionRule(
+    TaskIDResponse response = client.putCompositionRule(
       "compositionID",
       "ruleID",
       new CompositionRule()
@@ -1006,6 +1072,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1018,7 +1086,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putCompositionRule(
+    TaskIDResponse response = client.putCompositionRule(
       "compositionID",
       "rule-with-metadata",
       new CompositionRule()
@@ -1070,6 +1138,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1082,7 +1152,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putCompositionRule(
+    TaskIDResponse response = client.putCompositionRule(
       "compositionID",
       "rule-with-exernal-source",
       new CompositionRule()
@@ -1131,6 +1201,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1143,7 +1215,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.putCompositionRule(
+    TaskIDResponse response = client.putCompositionRule(
       "compositionID",
       "rule-with-deduplication",
       new CompositionRule()
@@ -1171,6 +1243,8 @@ class SnippetCompositionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1183,7 +1257,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    RulesMultipleBatchResponse response = client.saveRules(
       "foo",
       new CompositionRulesBatchParams().setRequests(
         Arrays.asList(
@@ -1207,6 +1281,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1219,7 +1295,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    RulesMultipleBatchResponse response = client.saveRules(
       "rule-with-metadata",
       new CompositionRulesBatchParams().setRequests(
         Arrays.asList(
@@ -1278,6 +1354,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1290,7 +1368,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    RulesMultipleBatchResponse response = client.saveRules(
       "rule-with-exernal-source",
       new CompositionRulesBatchParams().setRequests(
         Arrays.asList(
@@ -1346,6 +1424,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1358,7 +1438,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    RulesMultipleBatchResponse response = client.saveRules(
       "my-compo",
       new CompositionRulesBatchParams().setRequests(
         Arrays.asList(
@@ -1395,6 +1475,8 @@ class SnippetCompositionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1407,8 +1489,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search("foo", new RequestBody().setParams(new Params().setQuery("batman")), Hit.class);
+    SearchResponse response = client.search("foo", new RequestBody().setParams(new Params().setQuery("batman")), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1421,7 +1505,7 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponse response = client.search(
       "foo",
       new RequestBody().setParams(
         new Params()
@@ -1463,6 +1547,8 @@ class SnippetCompositionClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1475,8 +1561,10 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchCompositionRules("foo", new SearchCompositionRulesParams().setQuery("batman"));
+    SearchCompositionRulesResponse response = client.searchCompositionRules("foo", new SearchCompositionRulesParams().setQuery("batman"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1489,12 +1577,14 @@ class SnippetCompositionClient {
     CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchForFacetValues(
+    SearchForFacetValuesResponse response = client.searchForFacetValues(
       "foo",
       "brand",
       new SearchForFacetValuesRequest().setParams(new SearchForFacetValuesParams().setMaxFacetHits(10))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 

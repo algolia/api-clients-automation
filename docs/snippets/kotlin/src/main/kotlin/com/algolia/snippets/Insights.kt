@@ -20,7 +20,7 @@ class SnippetInsightsClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -36,7 +36,7 @@ class SnippetInsightsClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -52,7 +52,7 @@ class SnippetInsightsClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -68,7 +68,7 @@ class SnippetInsightsClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -96,7 +96,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -112,7 +112,7 @@ class SnippetInsightsClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -134,7 +134,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -161,7 +161,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -188,7 +188,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -215,7 +215,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -242,7 +242,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -269,7 +269,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -296,7 +296,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -323,7 +323,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -350,7 +350,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -377,7 +377,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -393,7 +393,7 @@ class SnippetInsightsClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -415,7 +415,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -461,7 +461,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -483,7 +483,7 @@ class SnippetInsightsClient {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = "user-123456",
-            timestamp = 1760227200000L,
+            timestamp = 1760486400000L,
             objectIDs = listOf("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
           ),
@@ -493,7 +493,7 @@ class SnippetInsightsClient {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = "user-123456",
-            timestamp = 1760227200000L,
+            timestamp = 1760486400000L,
             objectIDs = listOf("9780545139700", "9780439784542"),
           ),
         ),
@@ -501,7 +501,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -532,7 +532,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -562,7 +562,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -607,7 +607,7 @@ class SnippetInsightsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

@@ -33,11 +33,8 @@ def snippet_for_create_config
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -57,11 +54,8 @@ def snippet_for_custom_delete
   response = client.custom_delete("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -81,11 +75,8 @@ def snippet_for_custom_delete1
   response = client.custom_delete("test/all", {query: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -105,11 +96,8 @@ def snippet_for_custom_get
   response = client.custom_get("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -129,11 +117,8 @@ def snippet_for_custom_get1
   response = client.custom_get("test/all", {query: "parameters with space"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -163,11 +148,8 @@ def snippet_for_custom_get2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -187,11 +169,8 @@ def snippet_for_custom_post
   response = client.custom_post("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -211,11 +190,8 @@ def snippet_for_custom_post1
   response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -240,11 +216,8 @@ def snippet_for_custom_post2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -269,11 +242,8 @@ def snippet_for_custom_post3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -298,11 +268,8 @@ def snippet_for_custom_post4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -327,11 +294,8 @@ def snippet_for_custom_post5
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -356,11 +320,8 @@ def snippet_for_custom_post6
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -385,11 +346,8 @@ def snippet_for_custom_post7
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -414,11 +372,8 @@ def snippet_for_custom_post8
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -443,11 +398,8 @@ def snippet_for_custom_post9
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -472,11 +424,8 @@ def snippet_for_custom_post10
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -496,11 +445,8 @@ def snippet_for_custom_put
   response = client.custom_put("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -520,11 +466,8 @@ def snippet_for_custom_put1
   response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -544,11 +487,8 @@ def snippet_for_delete_config
   response = client.delete_config("<YOUR_INDEX_NAME>")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -568,11 +508,8 @@ def snippet_for_get_all_configs
   response = client.get_all_configs
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -592,11 +529,8 @@ def snippet_for_get_config
   response = client.get_config("<YOUR_INDEX_NAME>")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -616,11 +550,8 @@ def snippet_for_get_config_status
   response = client.get_config_status("<YOUR_INDEX_NAME>")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -640,11 +571,8 @@ def snippet_for_get_log_file
   response = client.get_log_file("<YOUR_INDEX_NAME>")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -695,10 +623,7 @@ def snippet_for_update_config
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end

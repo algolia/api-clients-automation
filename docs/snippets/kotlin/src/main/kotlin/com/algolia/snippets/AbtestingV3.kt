@@ -40,7 +40,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -56,7 +56,7 @@ class SnippetAbtestingV3Client {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -72,7 +72,7 @@ class SnippetAbtestingV3Client {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -88,7 +88,7 @@ class SnippetAbtestingV3Client {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -104,7 +104,7 @@ class SnippetAbtestingV3Client {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -132,7 +132,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -148,7 +148,7 @@ class SnippetAbtestingV3Client {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -170,7 +170,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -197,7 +197,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -224,7 +224,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -251,7 +251,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -278,7 +278,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -305,7 +305,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -332,7 +332,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -359,7 +359,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -386,7 +386,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -413,7 +413,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -429,7 +429,7 @@ class SnippetAbtestingV3Client {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -451,7 +451,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -467,7 +467,7 @@ class SnippetAbtestingV3Client {
     var response = client.deleteABTest(id = 42)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -502,7 +502,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -518,7 +518,7 @@ class SnippetAbtestingV3Client {
     var response = client.getABTest(id = 42)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -534,7 +534,7 @@ class SnippetAbtestingV3Client {
     var response = client.getTimeseries(id = 42)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -550,7 +550,7 @@ class SnippetAbtestingV3Client {
     var response = client.listABTests()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -566,7 +566,7 @@ class SnippetAbtestingV3Client {
     var response = client.listABTests(offset = 0, limit = 21, indexPrefix = "cts_e2e ab", indexSuffix = "t", direction = Direction.entries.first { it.value == "asc" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -603,7 +603,7 @@ class SnippetAbtestingV3Client {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -633,7 +633,7 @@ class SnippetAbtestingV3Client {
     var response = client.stopABTest(id = 42)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

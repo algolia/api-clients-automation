@@ -29,6 +29,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -55,6 +57,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -76,6 +80,8 @@ public class SnippetSearchClient
       new Dictionary<string, string> { { "key", "value" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -95,6 +101,8 @@ public class SnippetSearchClient
       new Source { VarSource = "theSource", Description = "theDescription" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -115,6 +123,8 @@ public class SnippetSearchClient
       new AssignUserIdParams { Cluster = "d4242-eu" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -135,6 +145,8 @@ public class SnippetSearchClient
       new AssignUserIdParams { Cluster = "cluster with spaces" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -170,6 +182,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -200,6 +214,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -230,6 +246,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -260,6 +278,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -290,6 +310,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -320,6 +342,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -350,6 +374,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -374,6 +400,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -413,6 +441,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -444,6 +474,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -479,6 +511,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -496,6 +530,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -524,6 +560,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -544,6 +582,8 @@ public class SnippetSearchClient
       new BrowseParams(new BrowseParamsObject { Cursor = "test" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -561,6 +601,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ClearObjectsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -578,6 +620,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ClearRulesAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -595,6 +639,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ClearSynonymsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -612,6 +658,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -632,6 +680,8 @@ public class SnippetSearchClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -649,6 +699,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -669,6 +721,8 @@ public class SnippetSearchClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -694,6 +748,8 @@ public class SnippetSearchClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -711,6 +767,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -732,6 +790,8 @@ public class SnippetSearchClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -754,6 +814,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -776,6 +838,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -798,6 +862,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -820,6 +886,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -842,6 +910,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -864,6 +934,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -888,6 +960,8 @@ public class SnippetSearchClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -912,6 +986,8 @@ public class SnippetSearchClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -936,6 +1012,8 @@ public class SnippetSearchClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -953,6 +1031,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -974,6 +1054,8 @@ public class SnippetSearchClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -991,6 +1073,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteApiKeyAsync("myTestApiKey");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1011,6 +1095,8 @@ public class SnippetSearchClient
       new DeleteByParams { Filters = "brand:brandName" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1028,6 +1114,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteIndexAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1045,6 +1133,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteObjectAsync("<YOUR_INDEX_NAME>", "uniqueID");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1065,6 +1155,8 @@ public class SnippetSearchClient
       new List<string> { "1", "2" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1082,6 +1174,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1099,6 +1193,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteRuleAsync("<YOUR_INDEX_NAME>", "test/with/slash");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1116,6 +1212,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteSourceAsync("theSource");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1133,6 +1231,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.DeleteSynonymAsync("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1157,6 +1257,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1193,6 +1295,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1216,6 +1320,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1236,6 +1342,8 @@ public class SnippetSearchClient
       new SecuredApiKeyRestrictions { Filters = "visible_by:group/Finance" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1256,6 +1364,8 @@ public class SnippetSearchClient
       new SecuredApiKeyRestrictions { UserToken = "user42" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1276,6 +1386,8 @@ public class SnippetSearchClient
       new SecuredApiKeyRestrictions { Filters = "user:user42 AND user:public" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1296,6 +1408,8 @@ public class SnippetSearchClient
       new SecuredApiKeyRestrictions { UserToken = "user42" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1313,6 +1427,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetApiKeyAsync("myTestApiKey");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1330,6 +1446,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetAppTaskAsync(123L);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1347,6 +1465,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetDictionaryLanguagesAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1364,6 +1484,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetDictionarySettingsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1381,6 +1503,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetLogsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1403,6 +1527,8 @@ public class SnippetSearchClient
       Enum.Parse<LogType>("All")
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1424,6 +1550,8 @@ public class SnippetSearchClient
       new List<string> { "attr1", "attr2" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1441,6 +1569,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetObjectAsync("<YOUR_INDEX_NAME>", "Batman and Robin");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1466,6 +1596,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1492,6 +1624,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1522,6 +1656,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1539,6 +1675,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetRuleAsync("<YOUR_INDEX_NAME>", "qr-1725004648916");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1556,6 +1694,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetSettingsAsync("<YOUR_INDEX_NAME>", 2);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1573,6 +1713,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetSourcesAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1590,6 +1732,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetSynonymAsync("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1607,6 +1751,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetTaskAsync("<YOUR_INDEX_NAME>", 123L);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1624,6 +1770,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetTopUserIdsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1641,6 +1789,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.GetUserIdAsync("uniqueID");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1658,6 +1808,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.HasPendingMappingsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1675,6 +1827,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.HasPendingMappingsAsync(true);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1692,6 +1846,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1709,6 +1865,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1726,6 +1884,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.IndexExistsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1743,6 +1903,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListApiKeysAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1760,6 +1922,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListClustersAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1777,6 +1941,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListIndicesAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1794,6 +1960,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListIndicesAsync(8, 3);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1811,6 +1979,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListUserIdsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1828,6 +1998,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.ListUserIdsAsync(8, 100);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1858,6 +2030,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1887,6 +2061,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1911,6 +2087,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1935,6 +2113,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1956,6 +2136,8 @@ public class SnippetSearchClient
       new Dictionary<string, string> { { "attributeId", "new value" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1977,6 +2159,8 @@ public class SnippetSearchClient
       new Dictionary<string, int> { { "attributeId", 1 } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -1998,6 +2182,8 @@ public class SnippetSearchClient
       new Dictionary<string, Boolean> { { "attributeId", true } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2025,6 +2211,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2052,6 +2240,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2079,6 +2269,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2110,6 +2302,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2141,6 +2335,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2166,6 +2362,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2191,6 +2389,8 @@ public class SnippetSearchClient
       false
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2208,6 +2408,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.RemoveUserIdAsync("uniqueID");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2241,6 +2443,8 @@ public class SnippetSearchClient
       3
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2267,6 +2471,8 @@ public class SnippetSearchClient
       new List<ScopeType> { Enum.Parse<ScopeType>("Settings"), Enum.Parse<ScopeType>("Synonyms") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2295,6 +2501,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2317,6 +2525,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2334,6 +2544,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.RestoreApiKeyAsync("ALGOLIA_API_KEY");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2360,6 +2572,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2384,6 +2598,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2408,6 +2624,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2438,6 +2656,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2471,6 +2691,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2503,6 +2725,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2586,6 +2810,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2630,6 +2856,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2681,6 +2909,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2716,6 +2946,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2756,6 +2988,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2791,6 +3025,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2826,6 +3062,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2867,6 +3105,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2902,6 +3142,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2937,6 +3179,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -2981,6 +3225,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3030,6 +3276,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3064,6 +3312,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3096,6 +3346,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3134,6 +3386,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3172,6 +3426,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3216,6 +3472,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3260,6 +3518,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3300,6 +3560,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3329,6 +3591,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3361,6 +3625,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3390,6 +3656,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3438,6 +3706,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3524,6 +3794,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3582,6 +3854,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3636,6 +3910,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3663,6 +3939,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3700,6 +3978,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3732,6 +4012,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3764,6 +4046,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3796,6 +4080,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3828,6 +4114,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3853,6 +4141,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3887,6 +4177,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3919,6 +4211,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3951,6 +4245,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -3984,6 +4280,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4017,6 +4315,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4053,6 +4353,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4094,6 +4396,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4139,6 +4443,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4229,6 +4535,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4307,6 +4615,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4454,6 +4764,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4474,6 +4786,8 @@ public class SnippetSearchClient
       new SearchDictionaryEntriesParams { Query = "about" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4500,6 +4814,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4517,6 +4833,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4543,6 +4861,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4564,6 +4884,8 @@ public class SnippetSearchClient
       new SearchForFacetValuesRequest { FacetQuery = "stephen" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4584,6 +4906,8 @@ public class SnippetSearchClient
       new SearchRulesParams { Query = "zorro" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4601,6 +4925,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4618,6 +4944,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4646,6 +4974,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4673,6 +5003,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4693,6 +5025,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "phone" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4713,6 +5047,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Filters = "country:US AND price.gross < 2.0" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4739,6 +5075,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4759,6 +5097,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Filters = "is_available:true" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4779,6 +5119,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Distinct = new Distinct(true) })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4799,6 +5141,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Filters = "price < 10" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4821,6 +5165,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4848,6 +5194,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4875,6 +5223,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4895,6 +5245,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Filters = "author:\"Stephen King\"" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4915,6 +5267,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "harry", Filters = "_tags:non-fiction" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4952,6 +5306,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -4980,6 +5336,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5012,6 +5370,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5049,6 +5409,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5087,6 +5449,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5109,6 +5473,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5137,6 +5503,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5162,6 +5530,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5182,6 +5552,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Facets = new List<string> { "*" } })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5202,6 +5574,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { MaxValuesPerFacet = 1000 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5222,6 +5596,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { AroundLatLng = "40.71, -74.01" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5242,6 +5618,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { AroundLatLngViaIP = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5268,6 +5646,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5298,6 +5678,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5340,6 +5722,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5367,6 +5751,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5399,6 +5785,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5430,6 +5818,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5452,6 +5842,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5472,6 +5864,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { GetRankingInfo = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5492,6 +5886,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { ClickAnalytics = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5512,6 +5908,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { ClickAnalytics = true, UserToken = "user-1" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5534,6 +5932,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5554,6 +5954,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { UserToken = "user-1" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5574,6 +5976,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", UserToken = "user-1234" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5596,6 +6000,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5627,6 +6033,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5654,6 +6062,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5680,6 +6090,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5706,6 +6118,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5726,6 +6140,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "shirt" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5746,6 +6162,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5766,6 +6184,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "books", Filters = "price:10 TO 20" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5793,6 +6213,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5819,6 +6241,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5845,6 +6269,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5865,6 +6291,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", RelevancyStrictness = 70 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5891,6 +6319,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5918,6 +6348,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5940,6 +6372,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5960,6 +6394,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Filters = "keyword:\"OR\"" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -5982,6 +6418,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6004,6 +6442,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6036,6 +6476,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6068,6 +6510,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6096,6 +6540,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6134,6 +6580,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6168,6 +6616,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6188,6 +6638,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", SumOrFiltersScores = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6214,6 +6666,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6240,6 +6694,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6260,6 +6716,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", MaxValuesPerFacet = 20 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6280,6 +6738,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", FacetingAfterDistinct = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6300,6 +6760,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", SortFacetValuesBy = "count" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6326,6 +6788,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6346,6 +6810,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", HighlightPreTag = "<strong>" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6366,6 +6832,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", HighlightPostTag = "</strong>" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6386,6 +6854,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", SnippetEllipsisText = "" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6408,6 +6878,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6428,6 +6900,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Page = 0 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6448,6 +6922,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", HitsPerPage = 10 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6468,6 +6944,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Offset = 4 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6488,6 +6966,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Length = 4 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6508,6 +6988,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor1Typo = 2 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6528,6 +7010,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", MinWordSizefor2Typos = 2 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6550,6 +7034,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6572,6 +7058,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6592,6 +7080,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", AroundLatLng = "40.71, -74.01" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6618,6 +7108,8 @@ public class SnippetSearchClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6640,6 +7132,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6666,6 +7160,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6688,6 +7184,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6720,6 +7218,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6740,6 +7240,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", MinimumAroundRadius = 1000 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6771,6 +7273,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6803,6 +7307,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6840,6 +7346,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6888,6 +7396,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6920,6 +7430,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6950,6 +7462,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -6976,6 +7490,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7003,6 +7519,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7023,6 +7541,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", DecompoundQuery = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7043,6 +7563,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", EnableRules = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7069,6 +7591,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7089,6 +7613,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", EnablePersonalization = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7116,6 +7642,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7136,6 +7664,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", PersonalizationImpact = 20 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7156,6 +7686,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", UserToken = "123456" })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7183,6 +7715,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7205,6 +7739,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7231,6 +7767,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7251,6 +7789,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", AdvancedSyntax = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7277,6 +7817,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7303,6 +7845,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7329,6 +7873,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7358,6 +7904,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7388,6 +7936,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7418,6 +7968,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7438,6 +7990,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Distinct = new Distinct(0) })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7458,6 +8012,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", GetRankingInfo = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7478,6 +8034,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7498,6 +8056,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", ClickAnalytics = true })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7518,6 +8078,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Analytics = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7544,6 +8106,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7564,6 +8128,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", Synonyms = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7586,6 +8152,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7606,6 +8174,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", MinProximity = 2 })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7632,6 +8202,8 @@ public class SnippetSearchClient
       )
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7652,6 +8224,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", PercentileComputation = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7672,6 +8246,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", EnableABTest = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7692,6 +8268,8 @@ public class SnippetSearchClient
       new SearchParams(new SearchParamsObject { Query = "query", EnableReRanking = false })
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7713,6 +8291,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7734,6 +8314,8 @@ public class SnippetSearchClient
       new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user42").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7751,6 +8333,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SearchSynonymsAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7777,6 +8361,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7802,6 +8388,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7849,6 +8437,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7881,6 +8471,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7906,6 +8498,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7927,6 +8521,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7948,6 +8544,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7969,6 +8567,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -7995,6 +8595,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8016,6 +8618,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8042,6 +8646,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8063,6 +8669,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8084,6 +8692,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8104,6 +8714,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributeForDistinct = "company", Distinct = new Distinct(true) }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8124,6 +8736,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributeForDistinct = "design", Distinct = new Distinct(true) }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8144,6 +8758,8 @@ public class SnippetSearchClient
       new IndexSettings { Distinct = new Distinct(true) }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8164,6 +8780,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributeForDistinct = "section", Distinct = new Distinct(true) }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8184,6 +8802,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesForFaceting = new List<string> { "allergens" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8207,6 +8827,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8230,6 +8852,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8253,6 +8877,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8276,6 +8902,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8299,6 +8927,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8319,6 +8949,8 @@ public class SnippetSearchClient
       new IndexSettings { UnretrievableAttributes = new List<string> { "visible_by" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8339,6 +8971,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesForFaceting = new List<string> { "filterOnly(visible_by)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8362,6 +8996,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8382,6 +9018,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesForFaceting = new List<string> { "query_terms" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8402,6 +9040,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesForFaceting = new List<string> { "director" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8422,6 +9062,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesForFaceting = new List<string> { "filterOnly(brand)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8442,6 +9084,8 @@ public class SnippetSearchClient
       new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8462,6 +9106,8 @@ public class SnippetSearchClient
       new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8485,6 +9131,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8508,6 +9156,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8531,6 +9181,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8551,6 +9203,8 @@ public class SnippetSearchClient
       new IndexSettings { CustomRanking = new List<string> { "desc(boosted)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8574,6 +9228,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8598,6 +9254,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8621,6 +9279,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8641,6 +9301,8 @@ public class SnippetSearchClient
       new IndexSettings { CustomRanking = new List<string> { "desc(price)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8675,6 +9337,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8709,6 +9373,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8729,6 +9395,8 @@ public class SnippetSearchClient
       new IndexSettings { Ranking = new List<string> { "desc(post_date_timestamp)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8749,6 +9417,8 @@ public class SnippetSearchClient
       new IndexSettings { CustomRanking = new List<string> { "desc(post_date_timestamp)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8783,6 +9453,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8807,6 +9479,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8827,6 +9501,8 @@ public class SnippetSearchClient
       new IndexSettings { Replicas = new List<string> { "products_price_desc" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8847,6 +9523,8 @@ public class SnippetSearchClient
       new IndexSettings { Replicas = new List<string> { "articles_date_desc" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8867,6 +9545,8 @@ public class SnippetSearchClient
       new IndexSettings { Replicas = new List<string> { "virtual(products_price_desc)" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8887,6 +9567,8 @@ public class SnippetSearchClient
       new IndexSettings { Replicas = new List<string> { "" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8911,6 +9593,8 @@ public class SnippetSearchClient
       true
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8931,6 +9615,8 @@ public class SnippetSearchClient
       new IndexSettings { MaxValuesPerFacet = 1000 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8951,6 +9637,8 @@ public class SnippetSearchClient
       new IndexSettings { MaxFacetHits = 100 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -8979,6 +9667,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9013,6 +9703,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9036,6 +9728,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9060,6 +9754,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9083,6 +9779,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9103,6 +9801,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesToHighlight = new List<string> { "*" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9218,6 +9918,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9255,6 +9957,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9278,6 +9982,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9306,6 +10012,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9330,6 +10038,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9353,6 +10063,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9373,6 +10085,8 @@ public class SnippetSearchClient
       new IndexSettings { DisablePrefixOnAttributes = new List<string> { "serial_number" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9393,6 +10107,8 @@ public class SnippetSearchClient
       new IndexSettings { DisableTypoToleranceOnAttributes = new List<string> { "serial_number" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9413,6 +10129,8 @@ public class SnippetSearchClient
       new IndexSettings { SearchableAttributes = new List<string> { "serial_number" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9436,6 +10154,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9465,6 +10185,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9495,6 +10217,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9515,6 +10239,8 @@ public class SnippetSearchClient
       new IndexSettings { UnretrievableAttributes = new List<string> { "total_number_of_sales" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9538,6 +10264,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9558,6 +10286,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesToRetrieve = new List<string> { "*" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9581,6 +10311,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9601,6 +10333,8 @@ public class SnippetSearchClient
       new IndexSettings { Mode = Enum.Parse<Mode>("NeuralSearch") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9621,6 +10355,8 @@ public class SnippetSearchClient
       new IndexSettings { Mode = Enum.Parse<Mode>("KeywordSearch") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9654,6 +10390,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9688,6 +10426,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9722,6 +10462,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9745,6 +10487,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9765,6 +10509,8 @@ public class SnippetSearchClient
       new IndexSettings { RelevancyStrictness = 90 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9788,6 +10534,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9808,6 +10556,8 @@ public class SnippetSearchClient
       new IndexSettings { MaxValuesPerFacet = 100 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9828,6 +10578,8 @@ public class SnippetSearchClient
       new IndexSettings { SortFacetValuesBy = "alpha" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9851,6 +10603,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9871,6 +10625,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributesToSnippet = new List<string> { "*:80" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9891,6 +10647,8 @@ public class SnippetSearchClient
       new IndexSettings { HighlightPreTag = "<em>" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9911,6 +10669,8 @@ public class SnippetSearchClient
       new IndexSettings { HighlightPostTag = "</em>" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9931,6 +10691,8 @@ public class SnippetSearchClient
       new IndexSettings { SnippetEllipsisText = "…" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9951,6 +10713,8 @@ public class SnippetSearchClient
       new IndexSettings { RestrictHighlightAndSnippetArrays = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9971,6 +10735,8 @@ public class SnippetSearchClient
       new IndexSettings { HitsPerPage = 20 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -9991,6 +10757,8 @@ public class SnippetSearchClient
       new IndexSettings { PaginationLimitedTo = 1000 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10011,6 +10779,8 @@ public class SnippetSearchClient
       new IndexSettings { MinWordSizefor1Typo = 4 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10031,6 +10801,8 @@ public class SnippetSearchClient
       new IndexSettings { MinWordSizefor2Typos = 4 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10051,6 +10823,8 @@ public class SnippetSearchClient
       new IndexSettings { TypoTolerance = new TypoTolerance(true) }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10071,6 +10845,8 @@ public class SnippetSearchClient
       new IndexSettings { AllowTyposOnNumericTokens = false }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10094,6 +10870,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10114,6 +10892,8 @@ public class SnippetSearchClient
       new IndexSettings { SeparatorsToIndex = "+#" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10138,6 +10918,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10162,6 +10944,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10186,6 +10970,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10206,6 +10992,8 @@ public class SnippetSearchClient
       new IndexSettings { CamelCaseAttributes = new List<string> { "description" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10235,6 +11023,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10268,6 +11058,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10288,6 +11080,8 @@ public class SnippetSearchClient
       new IndexSettings { KeepDiacriticsOnCharacters = "øé" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10317,6 +11111,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10342,6 +11138,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10365,6 +11163,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10385,6 +11185,8 @@ public class SnippetSearchClient
       new IndexSettings { DecompoundQuery = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10405,6 +11207,8 @@ public class SnippetSearchClient
       new IndexSettings { EnableRules = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10425,6 +11229,8 @@ public class SnippetSearchClient
       new IndexSettings { EnablePersonalization = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10445,6 +11251,8 @@ public class SnippetSearchClient
       new IndexSettings { QueryType = Enum.Parse<QueryType>("PrefixLast") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10465,6 +11273,8 @@ public class SnippetSearchClient
       new IndexSettings { RemoveWordsIfNoResults = Enum.Parse<RemoveWordsIfNoResults>("None") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10485,6 +11295,8 @@ public class SnippetSearchClient
       new IndexSettings { AdvancedSyntax = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10508,6 +11320,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10528,6 +11342,8 @@ public class SnippetSearchClient
       new IndexSettings { DisablePrefixOnAttributes = new List<string> { "sku" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10548,6 +11364,8 @@ public class SnippetSearchClient
       new IndexSettings { DisableExactOnAttributes = new List<string> { "description" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10568,6 +11386,8 @@ public class SnippetSearchClient
       new IndexSettings { ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("Attribute") }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10595,6 +11415,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10618,6 +11440,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10638,6 +11462,8 @@ public class SnippetSearchClient
       new IndexSettings { AllowCompressionOfIntegerArray = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10658,6 +11484,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributeForDistinct = "url" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10678,6 +11506,8 @@ public class SnippetSearchClient
       new IndexSettings { Distinct = new Distinct(1), AttributeForDistinct = "url" }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10698,6 +11528,8 @@ public class SnippetSearchClient
       new IndexSettings { ReplaceSynonymsInHighlight = false }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10718,6 +11550,8 @@ public class SnippetSearchClient
       new IndexSettings { MinProximity = 1 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10741,6 +11575,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10761,6 +11597,8 @@ public class SnippetSearchClient
       new IndexSettings { MaxFacetHits = 10 }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10781,6 +11619,8 @@ public class SnippetSearchClient
       new IndexSettings { AttributeCriteriaComputedByMinProximity = true }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10807,6 +11647,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10859,6 +11701,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10885,6 +11729,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10905,6 +11751,8 @@ public class SnippetSearchClient
       Enum.Parse<ApiKeyOperation>("Add")
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10940,6 +11788,8 @@ public class SnippetSearchClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10960,6 +11810,8 @@ public class SnippetSearchClient
       Enum.Parse<ApiKeyOperation>("Delete")
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10977,6 +11829,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.WaitForAppTaskAsync(123L);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -10994,6 +11848,8 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", 123L);
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 }

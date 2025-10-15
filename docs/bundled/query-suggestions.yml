@@ -127,7 +127,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -139,10 +139,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -165,14 +167,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -182,12 +183,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -201,14 +205,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -221,14 +224,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -242,14 +244,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -267,14 +268,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -285,15 +285,12 @@ paths:
             # Call the API
             response = client.custom_get("test/minimal")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -308,10 +305,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -322,7 +321,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -354,7 +356,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -366,10 +368,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -392,14 +396,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -409,12 +412,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -428,14 +434,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -448,14 +453,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -469,14 +473,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -494,14 +497,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -512,15 +514,12 @@ paths:
             # Call the API
             response = client.custom_post("test/minimal")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -535,10 +534,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -549,7 +550,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -581,7 +585,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -593,10 +597,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -619,14 +625,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -636,12 +641,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -655,14 +663,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -675,14 +682,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -696,14 +702,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -721,14 +726,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -739,15 +743,12 @@ paths:
             # Call the API
             response = client.custom_put("test/minimal")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -762,10 +763,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -776,7 +779,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -802,7 +808,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -814,10 +820,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -841,14 +849,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -858,12 +865,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -878,14 +888,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -898,14 +907,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -919,14 +927,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -944,14 +951,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -962,15 +968,12 @@ paths:
             # Call the API
             response = client.custom_delete("test/minimal")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -985,10 +988,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -999,7 +1004,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /1/configs:
     get:
       tags:
@@ -1026,7 +1034,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -1038,10 +1046,12 @@ paths:
 
             // Call the API
             var response = await client.GetAllConfigsAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -1064,14 +1074,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -1081,12 +1090,15 @@ paths:
 
             // Call the API
 
-            client.getAllConfigs();
+            List response = client.getAllConfigs();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1100,14 +1112,13 @@ paths:
             const response = await client.getAllConfigs();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -1120,14 +1131,13 @@ paths:
             var response = client.getAllConfigs()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1139,14 +1149,13 @@ paths:
             $response = $client->getAllConfigs();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -1162,14 +1171,13 @@ paths:
             response = client.get_all_configs()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -1180,15 +1188,12 @@ paths:
             # Call the API
             response = client.get_all_configs
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1202,10 +1207,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -1216,7 +1223,10 @@ paths:
 
             let response = try await client.getAllConfigs()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1269,7 +1279,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -1301,10 +1311,12 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -1337,14 +1349,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -1354,7 +1365,7 @@ paths:
 
             // Call the API
 
-            client.createConfig(
+            BaseResponse response = client.createConfig(
               new ConfigurationWithIndex()
                 .setIndexName("<YOUR_INDEX_NAME>")
                 .setSourceIndices(
@@ -1369,10 +1380,13 @@ paths:
                 .setExclude(Arrays.asList("test"))
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1393,14 +1407,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -1430,14 +1443,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1477,14 +1489,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -1529,14 +1540,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -1560,15 +1570,12 @@ paths:
               )
             )
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1600,10 +1607,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -1624,7 +1633,10 @@ paths:
                 indexName: "<YOUR_INDEX_NAME>"
             ))
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1663,7 +1675,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -1675,10 +1687,12 @@ paths:
 
             // Call the API
             var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -1701,14 +1715,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -1718,12 +1731,16 @@ paths:
 
             // Call the API
 
+            ConfigurationResponse response =
             client.getConfig("<YOUR_INDEX_NAME>");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1738,14 +1755,13 @@ paths:
             'cts_e2e_browse_query_suggestions' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -1758,14 +1774,13 @@ paths:
             var response = client.getConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -1779,14 +1794,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -1804,14 +1818,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -1822,15 +1835,12 @@ paths:
             # Call the API
             response = client.get_config("<YOUR_INDEX_NAME>")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1845,10 +1855,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -1860,7 +1872,10 @@ paths:
             let response = try await client.getConfig(indexName:
             "<YOUR_INDEX_NAME>")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1908,7 +1923,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -1940,10 +1955,12 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -1976,14 +1993,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -1993,7 +2009,7 @@ paths:
 
             // Call the API
 
-            client.updateConfig(
+            BaseResponse response = client.updateConfig(
               "<YOUR_INDEX_NAME>",
               new Configuration()
                 .setSourceIndices(
@@ -2008,10 +2024,13 @@ paths:
                 .setExclude(Arrays.asList("test"))
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2034,14 +2053,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -2071,14 +2089,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2118,14 +2135,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -2170,14 +2186,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -2201,15 +2216,12 @@ paths:
               )
             )
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2241,10 +2253,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -2266,7 +2280,10 @@ paths:
                 )
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2315,7 +2332,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -2327,10 +2344,12 @@ paths:
 
             // Call the API
             var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -2354,14 +2373,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -2371,12 +2389,15 @@ paths:
 
             // Call the API
 
-            client.deleteConfig("<YOUR_INDEX_NAME>");
+            BaseResponse response = client.deleteConfig("<YOUR_INDEX_NAME>");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2391,14 +2412,13 @@ paths:
             'theIndexName' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -2411,14 +2431,13 @@ paths:
             var response = client.deleteConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2432,14 +2451,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -2457,14 +2475,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -2475,15 +2492,12 @@ paths:
             # Call the API
             response = client.delete_config("<YOUR_INDEX_NAME>")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2498,10 +2512,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -2513,7 +2529,10 @@ paths:
             let response = try await client.deleteConfig(indexName:
             "<YOUR_INDEX_NAME>")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2575,7 +2594,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: >-
             // Initialize the client
 
             var client = new QuerySuggestionsClient(
@@ -2592,10 +2611,13 @@ paths:
             var response = await
             client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
 
-            // >LOG
+
+            // print the response
+
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -2619,14 +2641,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -2636,12 +2657,15 @@ paths:
 
             // Call the API
 
-            client.getConfigStatus("<YOUR_INDEX_NAME>");
+            ConfigStatus response = client.getConfigStatus("<YOUR_INDEX_NAME>");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2656,14 +2680,13 @@ paths:
             'theIndexName' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -2677,14 +2700,13 @@ paths:
             "<YOUR_INDEX_NAME>")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2698,14 +2720,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -2723,14 +2744,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -2741,15 +2761,12 @@ paths:
             # Call the API
             response = client.get_config_status("<YOUR_INDEX_NAME>")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2764,10 +2781,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -2779,7 +2798,10 @@ paths:
             let response = try await client.getConfigStatus(indexName:
             "<YOUR_INDEX_NAME>")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2840,7 +2862,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new QuerySuggestionsClient(
               new QuerySuggestionsConfig(
@@ -2852,10 +2874,12 @@ paths:
 
             // Call the API
             var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             suggestions.ALGOLIA_APPLICATION_REGION
 
@@ -2878,14 +2902,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             QuerySuggestionsClient client = new
@@ -2895,12 +2918,15 @@ paths:
 
             // Call the API
 
-            client.getLogFile("<YOUR_INDEX_NAME>");
+            LogFile response = client.getLogFile("<YOUR_INDEX_NAME>");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2915,14 +2941,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = QuerySuggestionsClient(appId =
@@ -2935,14 +2960,13 @@ paths:
             var response = client.getLogFile(indexName = "<YOUR_INDEX_NAME>")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = QuerySuggestionsClient::create('ALGOLIA_APPLICATION_ID',
@@ -2956,14 +2980,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use QuerySuggestionsClient
@@ -2981,14 +3004,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: |
+          source: |-
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
               "ALGOLIA_APPLICATION_ID",
@@ -2999,15 +3021,12 @@ paths:
             # Call the API
             response = client.get_log_file("<YOUR_INDEX_NAME>")
 
-            # >LOG
-            # use the class directly
-            puts(response)
 
-            # print the JSON response
-            puts(response.to_json)
+            # print the response
+            puts(response)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = QuerySuggestionsClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3022,10 +3041,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try QuerySuggestionsClient(appID:
@@ -3037,7 +3058,10 @@ paths:
             let response = try await client.getLogFile(indexName:
             "<YOUR_INDEX_NAME>")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

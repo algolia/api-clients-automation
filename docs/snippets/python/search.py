@@ -28,7 +28,7 @@ def snippet_for_add_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -59,7 +59,7 @@ def snippet_for_add_api_key1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -85,7 +85,7 @@ def snippet_for_add_or_update_object():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -110,7 +110,7 @@ def snippet_for_append_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -135,7 +135,7 @@ def snippet_for_assign_user_id():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -160,7 +160,7 @@ def snippet_for_assign_user_id1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -200,7 +200,7 @@ def snippet_for_batch():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -232,7 +232,7 @@ def snippet_for_batch1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -264,7 +264,7 @@ def snippet_for_batch2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -296,7 +296,7 @@ def snippet_for_batch3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -328,7 +328,7 @@ def snippet_for_batch4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -360,7 +360,7 @@ def snippet_for_batch5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -392,7 +392,7 @@ def snippet_for_batch6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -421,7 +421,7 @@ def snippet_for_batch_assign_user_ids():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -465,7 +465,7 @@ def snippet_for_batch_dictionary_entries():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -498,7 +498,7 @@ def snippet_for_batch_dictionary_entries1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -532,7 +532,7 @@ def snippet_for_batch_dictionary_entries2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -554,7 +554,7 @@ def snippet_for_browse():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -582,7 +582,7 @@ def snippet_for_browse1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -607,7 +607,7 @@ def snippet_for_browse2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -629,7 +629,7 @@ def snippet_for_clear_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -651,7 +651,7 @@ def snippet_for_clear_rules():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -673,7 +673,7 @@ def snippet_for_clear_synonyms():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -695,7 +695,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -720,7 +720,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -742,7 +742,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -767,7 +767,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -798,7 +798,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -820,7 +820,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -848,7 +848,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -879,7 +879,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -910,7 +910,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -941,7 +941,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -972,7 +972,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1003,7 +1003,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1034,7 +1034,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1065,7 +1065,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1096,7 +1096,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1127,7 +1127,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1149,7 +1149,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1177,7 +1177,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1199,7 +1199,7 @@ def snippet_for_delete_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1224,7 +1224,7 @@ def snippet_for_delete_by():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1246,7 +1246,7 @@ def snippet_for_delete_index():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1269,7 +1269,7 @@ def snippet_for_delete_object():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1295,7 +1295,7 @@ def snippet_for_delete_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1318,7 +1318,7 @@ def snippet_for_delete_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1341,7 +1341,7 @@ def snippet_for_delete_rule1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1363,7 +1363,7 @@ def snippet_for_delete_source():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1386,7 +1386,7 @@ def snippet_for_delete_synonym():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1414,7 +1414,7 @@ def snippet_for_generate_secured_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1457,7 +1457,7 @@ def snippet_for_generate_secured_api_key1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1482,7 +1482,7 @@ def snippet_for_generate_secured_api_key2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1507,7 +1507,7 @@ def snippet_for_generate_secured_api_key3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1532,7 +1532,7 @@ def snippet_for_generate_secured_api_key4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1557,7 +1557,7 @@ def snippet_for_generate_secured_api_key5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1582,7 +1582,7 @@ def snippet_for_generate_secured_api_key6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1604,7 +1604,7 @@ def snippet_for_get_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1626,7 +1626,7 @@ def snippet_for_get_app_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1646,7 +1646,7 @@ def snippet_for_get_dictionary_languages():
     response = client.get_dictionary_languages()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1666,7 +1666,7 @@ def snippet_for_get_dictionary_settings():
     response = client.get_dictionary_settings()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1686,7 +1686,7 @@ def snippet_for_get_logs():
     response = client.get_logs()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1711,7 +1711,7 @@ def snippet_for_get_logs1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1738,7 +1738,7 @@ def snippet_for_get_object():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1761,7 +1761,7 @@ def snippet_for_get_object1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1790,7 +1790,7 @@ def snippet_for_get_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1823,7 +1823,7 @@ def snippet_for_get_objects1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1856,7 +1856,7 @@ def snippet_for_get_objects2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1879,7 +1879,7 @@ def snippet_for_get_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1902,7 +1902,7 @@ def snippet_for_get_settings():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1922,7 +1922,7 @@ def snippet_for_get_sources():
     response = client.get_sources()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1945,7 +1945,7 @@ def snippet_for_get_synonym():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1968,7 +1968,7 @@ def snippet_for_get_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1988,7 +1988,7 @@ def snippet_for_get_top_user_ids():
     response = client.get_top_user_ids()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2010,7 +2010,7 @@ def snippet_for_get_user_id():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2030,7 +2030,7 @@ def snippet_for_has_pending_mappings():
     response = client.has_pending_mappings()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2052,7 +2052,7 @@ def snippet_for_has_pending_mappings1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2074,7 +2074,7 @@ def snippet_for_index_exists():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2096,7 +2096,7 @@ def snippet_for_index_exists1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2118,7 +2118,7 @@ def snippet_for_index_exists2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2138,7 +2138,7 @@ def snippet_for_list_api_keys():
     response = client.list_api_keys()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2158,7 +2158,7 @@ def snippet_for_list_clusters():
     response = client.list_clusters()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2178,7 +2178,7 @@ def snippet_for_list_indices():
     response = client.list_indices()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2201,7 +2201,7 @@ def snippet_for_list_indices1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2221,7 +2221,7 @@ def snippet_for_list_user_ids():
     response = client.list_user_ids()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2244,7 +2244,7 @@ def snippet_for_list_user_ids1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2276,7 +2276,7 @@ def snippet_for_multiple_batch():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2306,7 +2306,7 @@ def snippet_for_operation_index():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2332,7 +2332,7 @@ def snippet_for_operation_index1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2358,7 +2358,7 @@ def snippet_for_operation_index2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2384,7 +2384,7 @@ def snippet_for_partial_update_object():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2410,7 +2410,7 @@ def snippet_for_partial_update_object1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2436,7 +2436,7 @@ def snippet_for_partial_update_object2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2466,7 +2466,7 @@ def snippet_for_partial_update_object3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2494,7 +2494,7 @@ def snippet_for_partial_update_object4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2524,7 +2524,7 @@ def snippet_for_partial_update_object5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2553,7 +2553,7 @@ def snippet_for_partial_update_object6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2582,7 +2582,7 @@ def snippet_for_partial_update_object7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2615,7 +2615,7 @@ def snippet_for_partial_update_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2648,7 +2648,7 @@ def snippet_for_partial_update_objects1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2682,7 +2682,7 @@ def snippet_for_partial_update_objects_with_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2704,7 +2704,7 @@ def snippet_for_remove_user_id():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2769,7 +2769,7 @@ def snippet_for_replace_all_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2806,7 +2806,7 @@ def snippet_for_replace_all_objects1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2838,7 +2838,7 @@ def snippet_for_replace_all_objects2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2903,7 +2903,7 @@ def snippet_for_replace_all_objects_with_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2930,7 +2930,7 @@ def snippet_for_replace_sources():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2952,7 +2952,7 @@ def snippet_for_restore_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -2980,7 +2980,7 @@ def snippet_for_save_object():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3012,7 +3012,7 @@ def snippet_for_save_objects():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3044,7 +3044,7 @@ def snippet_for_save_objects1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3075,7 +3075,7 @@ def snippet_for_save_objects2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3111,7 +3111,7 @@ def snippet_for_save_objects3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3144,7 +3144,7 @@ def snippet_for_save_objects_with_transformation():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3181,7 +3181,7 @@ def snippet_for_save_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3268,7 +3268,7 @@ def snippet_for_save_rule1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3316,7 +3316,7 @@ def snippet_for_save_rule2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3369,7 +3369,7 @@ def snippet_for_save_rule3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3406,7 +3406,7 @@ def snippet_for_save_rule4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3444,7 +3444,7 @@ def snippet_for_save_rule5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3481,7 +3481,7 @@ def snippet_for_save_rule6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3518,7 +3518,7 @@ def snippet_for_save_rule7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3561,7 +3561,7 @@ def snippet_for_save_rule8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3601,7 +3601,7 @@ def snippet_for_save_rule9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3641,7 +3641,7 @@ def snippet_for_save_rule10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3689,7 +3689,7 @@ def snippet_for_save_rule11():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3738,7 +3738,7 @@ def snippet_for_save_rule12():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3778,7 +3778,7 @@ def snippet_for_save_rule13():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3817,7 +3817,7 @@ def snippet_for_save_rule14():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3859,7 +3859,7 @@ def snippet_for_save_rule15():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3901,7 +3901,7 @@ def snippet_for_save_rule16():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3946,7 +3946,7 @@ def snippet_for_save_rule17():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -3991,7 +3991,7 @@ def snippet_for_save_rule18():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4030,7 +4030,7 @@ def snippet_for_save_rule19():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4066,7 +4066,7 @@ def snippet_for_save_rule20():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4103,7 +4103,7 @@ def snippet_for_save_rule21():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4139,7 +4139,7 @@ def snippet_for_save_rule22():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4193,7 +4193,7 @@ def snippet_for_save_rules():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4282,7 +4282,7 @@ def snippet_for_save_rules1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4344,7 +4344,7 @@ def snippet_for_save_rules2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4396,7 +4396,7 @@ def snippet_for_save_rules3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4429,7 +4429,7 @@ def snippet_for_save_synonym():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4474,7 +4474,7 @@ def snippet_for_save_synonyms():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4504,7 +4504,7 @@ def snippet_for_search():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4534,7 +4534,7 @@ def snippet_for_search1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4564,7 +4564,7 @@ def snippet_for_search2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4594,7 +4594,7 @@ def snippet_for_search3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4622,7 +4622,7 @@ def snippet_for_search4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4660,7 +4660,7 @@ def snippet_for_search5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4693,7 +4693,7 @@ def snippet_for_search6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4725,7 +4725,7 @@ def snippet_for_search7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4756,7 +4756,7 @@ def snippet_for_search8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4787,7 +4787,7 @@ def snippet_for_search9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4821,7 +4821,7 @@ def snippet_for_search10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4859,7 +4859,7 @@ def snippet_for_search11():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4899,7 +4899,7 @@ def snippet_for_search12():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -4968,7 +4968,7 @@ def snippet_for_search13():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5025,7 +5025,7 @@ def snippet_for_search14():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5214,7 +5214,7 @@ def snippet_for_search15():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5239,7 +5239,7 @@ def snippet_for_search_dictionary_entries():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5267,7 +5267,7 @@ def snippet_for_search_dictionary_entries1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5290,7 +5290,7 @@ def snippet_for_search_for_facet_values():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5318,7 +5318,7 @@ def snippet_for_search_for_facet_values1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5344,7 +5344,7 @@ def snippet_for_search_for_facet_values2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5369,7 +5369,7 @@ def snippet_for_search_rules():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5391,7 +5391,7 @@ def snippet_for_search_single_index():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5413,7 +5413,7 @@ def snippet_for_search_single_index1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5441,7 +5441,7 @@ def snippet_for_search_single_index2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5472,7 +5472,7 @@ def snippet_for_search_single_index3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5497,7 +5497,7 @@ def snippet_for_search_single_index4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5522,7 +5522,7 @@ def snippet_for_search_single_index5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5548,7 +5548,7 @@ def snippet_for_search_single_index6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5573,7 +5573,7 @@ def snippet_for_search_single_index7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5598,7 +5598,7 @@ def snippet_for_search_single_index8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5623,7 +5623,7 @@ def snippet_for_search_single_index9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5648,7 +5648,7 @@ def snippet_for_search_single_index10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5674,7 +5674,7 @@ def snippet_for_search_single_index11():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5700,7 +5700,7 @@ def snippet_for_search_single_index12():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5725,7 +5725,7 @@ def snippet_for_search_single_index13():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5751,7 +5751,7 @@ def snippet_for_search_single_index14():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5782,7 +5782,7 @@ def snippet_for_search_single_index15():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5810,7 +5810,7 @@ def snippet_for_search_single_index16():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5839,7 +5839,7 @@ def snippet_for_search_single_index17():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5870,7 +5870,7 @@ def snippet_for_search_single_index18():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5902,7 +5902,7 @@ def snippet_for_search_single_index19():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5927,7 +5927,7 @@ def snippet_for_search_single_index20():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5955,7 +5955,7 @@ def snippet_for_search_single_index21():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -5983,7 +5983,7 @@ def snippet_for_search_single_index22():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6010,7 +6010,7 @@ def snippet_for_search_single_index23():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6035,7 +6035,7 @@ def snippet_for_search_single_index24():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6060,7 +6060,7 @@ def snippet_for_search_single_index25():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6085,7 +6085,7 @@ def snippet_for_search_single_index26():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6111,7 +6111,7 @@ def snippet_for_search_single_index27():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6143,7 +6143,7 @@ def snippet_for_search_single_index28():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6183,7 +6183,7 @@ def snippet_for_search_single_index29():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6210,7 +6210,7 @@ def snippet_for_search_single_index30():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6239,7 +6239,7 @@ def snippet_for_search_single_index31():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6267,7 +6267,7 @@ def snippet_for_search_single_index32():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6294,7 +6294,7 @@ def snippet_for_search_single_index33():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6319,7 +6319,7 @@ def snippet_for_search_single_index34():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6344,7 +6344,7 @@ def snippet_for_search_single_index35():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6370,7 +6370,7 @@ def snippet_for_search_single_index36():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6396,7 +6396,7 @@ def snippet_for_search_single_index37():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6421,7 +6421,7 @@ def snippet_for_search_single_index38():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6447,7 +6447,7 @@ def snippet_for_search_single_index39():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6474,7 +6474,7 @@ def snippet_for_search_single_index40():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6502,7 +6502,7 @@ def snippet_for_search_single_index41():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6531,7 +6531,7 @@ def snippet_for_search_single_index42():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6560,7 +6560,7 @@ def snippet_for_search_single_index43():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6588,7 +6588,7 @@ def snippet_for_search_single_index44():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6613,7 +6613,7 @@ def snippet_for_search_single_index45():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6638,7 +6638,7 @@ def snippet_for_search_single_index46():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6664,7 +6664,7 @@ def snippet_for_search_single_index47():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6691,7 +6691,7 @@ def snippet_for_search_single_index48():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6720,7 +6720,7 @@ def snippet_for_search_single_index49():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6749,7 +6749,7 @@ def snippet_for_search_single_index50():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6775,7 +6775,7 @@ def snippet_for_search_single_index51():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6801,7 +6801,7 @@ def snippet_for_search_single_index52():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6827,7 +6827,7 @@ def snippet_for_search_single_index53():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6853,7 +6853,7 @@ def snippet_for_search_single_index54():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6879,7 +6879,7 @@ def snippet_for_search_single_index55():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6905,7 +6905,7 @@ def snippet_for_search_single_index56():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6931,7 +6931,7 @@ def snippet_for_search_single_index57():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6960,7 +6960,7 @@ def snippet_for_search_single_index58():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -6989,7 +6989,7 @@ def snippet_for_search_single_index59():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7017,7 +7017,7 @@ def snippet_for_search_single_index60():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7049,7 +7049,7 @@ def snippet_for_search_single_index61():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7081,7 +7081,7 @@ def snippet_for_search_single_index62():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7107,7 +7107,7 @@ def snippet_for_search_single_index63():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7135,7 +7135,7 @@ def snippet_for_search_single_index64():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7164,7 +7164,7 @@ def snippet_for_search_single_index65():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7190,7 +7190,7 @@ def snippet_for_search_single_index66():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7216,7 +7216,7 @@ def snippet_for_search_single_index67():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7242,7 +7242,7 @@ def snippet_for_search_single_index68():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7271,7 +7271,7 @@ def snippet_for_search_single_index69():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7297,7 +7297,7 @@ def snippet_for_search_single_index70():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7323,7 +7323,7 @@ def snippet_for_search_single_index71():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7349,7 +7349,7 @@ def snippet_for_search_single_index72():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7375,7 +7375,7 @@ def snippet_for_search_single_index73():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7401,7 +7401,7 @@ def snippet_for_search_single_index74():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7427,7 +7427,7 @@ def snippet_for_search_single_index75():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7453,7 +7453,7 @@ def snippet_for_search_single_index76():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7479,7 +7479,7 @@ def snippet_for_search_single_index77():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7505,7 +7505,7 @@ def snippet_for_search_single_index78():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7531,7 +7531,7 @@ def snippet_for_search_single_index79():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7557,7 +7557,7 @@ def snippet_for_search_single_index80():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7583,7 +7583,7 @@ def snippet_for_search_single_index81():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7609,7 +7609,7 @@ def snippet_for_search_single_index82():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7640,7 +7640,7 @@ def snippet_for_search_single_index83():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7666,7 +7666,7 @@ def snippet_for_search_single_index84():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7692,7 +7692,7 @@ def snippet_for_search_single_index85():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7718,7 +7718,7 @@ def snippet_for_search_single_index86():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7753,7 +7753,7 @@ def snippet_for_search_single_index87():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7779,7 +7779,7 @@ def snippet_for_search_single_index88():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7812,7 +7812,7 @@ def snippet_for_search_single_index89():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7851,7 +7851,7 @@ def snippet_for_search_single_index90():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7886,7 +7886,7 @@ def snippet_for_search_single_index91():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7931,7 +7931,7 @@ def snippet_for_search_single_index92():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7960,7 +7960,7 @@ def snippet_for_search_single_index93():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -7989,7 +7989,7 @@ def snippet_for_search_single_index94():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8017,7 +8017,7 @@ def snippet_for_search_single_index95():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8046,7 +8046,7 @@ def snippet_for_search_single_index96():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8072,7 +8072,7 @@ def snippet_for_search_single_index97():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8098,7 +8098,7 @@ def snippet_for_search_single_index98():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8127,7 +8127,7 @@ def snippet_for_search_single_index99():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8153,7 +8153,7 @@ def snippet_for_search_single_index100():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8180,7 +8180,7 @@ def snippet_for_search_single_index101():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8206,7 +8206,7 @@ def snippet_for_search_single_index102():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8232,7 +8232,7 @@ def snippet_for_search_single_index103():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8259,7 +8259,7 @@ def snippet_for_search_single_index104():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8285,7 +8285,7 @@ def snippet_for_search_single_index105():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8311,7 +8311,7 @@ def snippet_for_search_single_index106():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8337,7 +8337,7 @@ def snippet_for_search_single_index107():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8366,7 +8366,7 @@ def snippet_for_search_single_index108():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8394,7 +8394,7 @@ def snippet_for_search_single_index109():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8420,7 +8420,7 @@ def snippet_for_search_single_index110():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8448,7 +8448,7 @@ def snippet_for_search_single_index111():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8477,7 +8477,7 @@ def snippet_for_search_single_index112():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8506,7 +8506,7 @@ def snippet_for_search_single_index113():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8532,7 +8532,7 @@ def snippet_for_search_single_index114():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8558,7 +8558,7 @@ def snippet_for_search_single_index115():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8584,7 +8584,7 @@ def snippet_for_search_single_index116():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8610,7 +8610,7 @@ def snippet_for_search_single_index117():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8636,7 +8636,7 @@ def snippet_for_search_single_index118():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8665,7 +8665,7 @@ def snippet_for_search_single_index119():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8691,7 +8691,7 @@ def snippet_for_search_single_index120():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8717,7 +8717,7 @@ def snippet_for_search_single_index121():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8743,7 +8743,7 @@ def snippet_for_search_single_index122():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8772,7 +8772,7 @@ def snippet_for_search_single_index123():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8798,7 +8798,7 @@ def snippet_for_search_single_index124():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8824,7 +8824,7 @@ def snippet_for_search_single_index125():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8850,7 +8850,7 @@ def snippet_for_search_single_index126():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8878,7 +8878,7 @@ def snippet_for_search_single_index127():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8906,7 +8906,7 @@ def snippet_for_search_single_index128():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8928,7 +8928,7 @@ def snippet_for_search_synonyms():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8956,7 +8956,7 @@ def snippet_for_search_synonyms1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -8983,7 +8983,7 @@ def snippet_for_search_user_ids():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9033,7 +9033,7 @@ def snippet_for_set_dictionary_settings():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9069,7 +9069,7 @@ def snippet_for_set_dictionary_settings1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9096,7 +9096,7 @@ def snippet_for_set_settings():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9122,7 +9122,7 @@ def snippet_for_set_settings1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9148,7 +9148,7 @@ def snippet_for_set_settings2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9174,7 +9174,7 @@ def snippet_for_set_settings3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9202,7 +9202,7 @@ def snippet_for_set_settings4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9228,7 +9228,7 @@ def snippet_for_set_settings5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9256,7 +9256,7 @@ def snippet_for_set_settings6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9282,7 +9282,7 @@ def snippet_for_set_settings7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9308,7 +9308,7 @@ def snippet_for_set_settings8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9334,7 +9334,7 @@ def snippet_for_set_settings9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9360,7 +9360,7 @@ def snippet_for_set_settings10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9385,7 +9385,7 @@ def snippet_for_set_settings11():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9411,7 +9411,7 @@ def snippet_for_set_settings12():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9438,7 +9438,7 @@ def snippet_for_set_settings13():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9466,7 +9466,7 @@ def snippet_for_set_settings14():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9494,7 +9494,7 @@ def snippet_for_set_settings15():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9522,7 +9522,7 @@ def snippet_for_set_settings16():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9550,7 +9550,7 @@ def snippet_for_set_settings17():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9577,7 +9577,7 @@ def snippet_for_set_settings18():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9604,7 +9604,7 @@ def snippet_for_set_settings19():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9631,7 +9631,7 @@ def snippet_for_set_settings20():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9659,7 +9659,7 @@ def snippet_for_set_settings21():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9686,7 +9686,7 @@ def snippet_for_set_settings22():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9713,7 +9713,7 @@ def snippet_for_set_settings23():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9740,7 +9740,7 @@ def snippet_for_set_settings24():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9765,7 +9765,7 @@ def snippet_for_set_settings25():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9790,7 +9790,7 @@ def snippet_for_set_settings26():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9818,7 +9818,7 @@ def snippet_for_set_settings27():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9846,7 +9846,7 @@ def snippet_for_set_settings28():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9874,7 +9874,7 @@ def snippet_for_set_settings29():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9901,7 +9901,7 @@ def snippet_for_set_settings30():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9929,7 +9929,7 @@ def snippet_for_set_settings31():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9959,7 +9959,7 @@ def snippet_for_set_settings32():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -9987,7 +9987,7 @@ def snippet_for_set_settings33():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10014,7 +10014,7 @@ def snippet_for_set_settings34():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10049,7 +10049,7 @@ def snippet_for_set_settings35():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10084,7 +10084,7 @@ def snippet_for_set_settings36():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10111,7 +10111,7 @@ def snippet_for_set_settings37():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10138,7 +10138,7 @@ def snippet_for_set_settings38():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10175,7 +10175,7 @@ def snippet_for_set_settings39():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10203,7 +10203,7 @@ def snippet_for_set_settings40():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10230,7 +10230,7 @@ def snippet_for_set_settings41():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10257,7 +10257,7 @@ def snippet_for_set_settings42():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10284,7 +10284,7 @@ def snippet_for_set_settings43():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10311,7 +10311,7 @@ def snippet_for_set_settings44():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10340,7 +10340,7 @@ def snippet_for_set_settings45():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10365,7 +10365,7 @@ def snippet_for_set_settings46():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10390,7 +10390,7 @@ def snippet_for_set_settings47():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10419,7 +10419,7 @@ def snippet_for_set_settings48():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10454,7 +10454,7 @@ def snippet_for_set_settings49():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10483,7 +10483,7 @@ def snippet_for_set_settings50():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10516,7 +10516,7 @@ def snippet_for_set_settings51():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10545,7 +10545,7 @@ def snippet_for_set_settings52():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10572,7 +10572,7 @@ def snippet_for_set_settings53():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10728,7 +10728,7 @@ def snippet_for_set_settings54():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10767,7 +10767,7 @@ def snippet_for_set_settings55():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10795,7 +10795,7 @@ def snippet_for_set_settings56():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10824,7 +10824,7 @@ def snippet_for_set_settings57():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10852,7 +10852,7 @@ def snippet_for_set_settings58():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10881,7 +10881,7 @@ def snippet_for_set_settings59():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10908,7 +10908,7 @@ def snippet_for_set_settings60():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10935,7 +10935,7 @@ def snippet_for_set_settings61():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10962,7 +10962,7 @@ def snippet_for_set_settings62():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -10990,7 +10990,7 @@ def snippet_for_set_settings63():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11020,7 +11020,7 @@ def snippet_for_set_settings64():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11051,7 +11051,7 @@ def snippet_for_set_settings65():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11078,7 +11078,7 @@ def snippet_for_set_settings66():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11107,7 +11107,7 @@ def snippet_for_set_settings67():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11134,7 +11134,7 @@ def snippet_for_set_settings68():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11163,7 +11163,7 @@ def snippet_for_set_settings69():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11188,7 +11188,7 @@ def snippet_for_set_settings70():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11213,7 +11213,7 @@ def snippet_for_set_settings71():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11247,7 +11247,7 @@ def snippet_for_set_settings72():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11282,7 +11282,7 @@ def snippet_for_set_settings73():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11317,7 +11317,7 @@ def snippet_for_set_settings74():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11345,7 +11345,7 @@ def snippet_for_set_settings75():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11370,7 +11370,7 @@ def snippet_for_set_settings76():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11398,7 +11398,7 @@ def snippet_for_set_settings77():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11423,7 +11423,7 @@ def snippet_for_set_settings78():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11448,7 +11448,7 @@ def snippet_for_set_settings79():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11476,7 +11476,7 @@ def snippet_for_set_settings80():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11503,7 +11503,7 @@ def snippet_for_set_settings81():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11528,7 +11528,7 @@ def snippet_for_set_settings82():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11553,7 +11553,7 @@ def snippet_for_set_settings83():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11578,7 +11578,7 @@ def snippet_for_set_settings84():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11603,7 +11603,7 @@ def snippet_for_set_settings85():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11628,7 +11628,7 @@ def snippet_for_set_settings86():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11653,7 +11653,7 @@ def snippet_for_set_settings87():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11678,7 +11678,7 @@ def snippet_for_set_settings88():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11703,7 +11703,7 @@ def snippet_for_set_settings89():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11728,7 +11728,7 @@ def snippet_for_set_settings90():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11753,7 +11753,7 @@ def snippet_for_set_settings91():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11781,7 +11781,7 @@ def snippet_for_set_settings92():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11806,7 +11806,7 @@ def snippet_for_set_settings93():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11834,7 +11834,7 @@ def snippet_for_set_settings94():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11865,7 +11865,7 @@ def snippet_for_set_settings95():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11893,7 +11893,7 @@ def snippet_for_set_settings96():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11920,7 +11920,7 @@ def snippet_for_set_settings97():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11949,7 +11949,7 @@ def snippet_for_set_settings98():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -11983,7 +11983,7 @@ def snippet_for_set_settings99():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12008,7 +12008,7 @@ def snippet_for_set_settings100():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12037,7 +12037,7 @@ def snippet_for_set_settings101():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12066,7 +12066,7 @@ def snippet_for_set_settings102():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12093,7 +12093,7 @@ def snippet_for_set_settings103():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12118,7 +12118,7 @@ def snippet_for_set_settings104():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12143,7 +12143,7 @@ def snippet_for_set_settings105():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12168,7 +12168,7 @@ def snippet_for_set_settings106():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12193,7 +12193,7 @@ def snippet_for_set_settings107():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12218,7 +12218,7 @@ def snippet_for_set_settings108():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12243,7 +12243,7 @@ def snippet_for_set_settings109():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12271,7 +12271,7 @@ def snippet_for_set_settings110():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12298,7 +12298,7 @@ def snippet_for_set_settings111():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12325,7 +12325,7 @@ def snippet_for_set_settings112():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12350,7 +12350,7 @@ def snippet_for_set_settings113():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12378,7 +12378,7 @@ def snippet_for_set_settings114():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12406,7 +12406,7 @@ def snippet_for_set_settings115():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12431,7 +12431,7 @@ def snippet_for_set_settings116():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12456,7 +12456,7 @@ def snippet_for_set_settings117():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12482,7 +12482,7 @@ def snippet_for_set_settings118():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12507,7 +12507,7 @@ def snippet_for_set_settings119():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12532,7 +12532,7 @@ def snippet_for_set_settings120():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12562,7 +12562,7 @@ def snippet_for_set_settings121():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12587,7 +12587,7 @@ def snippet_for_set_settings122():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12612,7 +12612,7 @@ def snippet_for_set_settings123():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12639,7 +12639,7 @@ def snippet_for_set_settings124():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12692,7 +12692,7 @@ def snippet_for_set_settings125():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12723,7 +12723,7 @@ def snippet_for_update_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12746,7 +12746,7 @@ def snippet_for_wait_for_api_key():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12788,7 +12788,7 @@ def snippet_for_wait_for_api_key1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12811,7 +12811,7 @@ def snippet_for_wait_for_api_key2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12833,7 +12833,7 @@ def snippet_for_wait_for_app_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -12856,6 +12856,6 @@ def snippet_for_wait_for_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<

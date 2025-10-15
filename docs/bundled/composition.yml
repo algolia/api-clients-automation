@@ -176,7 +176,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -184,10 +184,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -196,10 +198,12 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -221,14 +225,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -237,12 +240,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -254,14 +260,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -273,14 +278,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -294,14 +298,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -318,14 +321,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -337,19 +339,13 @@ paths:
             response = client.custom_get("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -365,10 +361,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -379,7 +378,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -411,7 +413,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -419,10 +421,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -431,10 +435,12 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -456,14 +462,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -472,12 +477,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -489,14 +497,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -508,14 +515,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -529,14 +535,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -553,14 +558,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -572,19 +576,13 @@ paths:
             response = client.custom_post("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -600,10 +598,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -614,7 +615,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -646,7 +650,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -654,10 +658,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -666,10 +672,12 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -691,14 +699,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -707,12 +714,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -724,14 +734,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -743,14 +752,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -764,14 +772,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -788,14 +795,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -807,19 +813,13 @@ paths:
             response = client.custom_put("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -835,10 +835,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -849,7 +852,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -875,7 +881,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -883,10 +889,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -895,10 +903,12 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -921,14 +931,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -937,12 +946,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -955,14 +967,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -974,14 +985,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -995,14 +1005,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -1019,14 +1028,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -1038,19 +1046,13 @@ paths:
             response = client.custom_delete("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1066,10 +1068,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1080,7 +1085,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /1/compositions/{compositionID}/run:
     post:
       tags:
@@ -1123,7 +1131,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1167,10 +1175,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1204,10 +1214,12 @@ paths:
                 ),
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1237,14 +1249,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -1253,7 +1264,7 @@ paths:
 
             // Call the API
 
-            client.search(
+            SearchResponse response = client.search(
               "foo",
               new RequestBody().setParams(
                 new Params()
@@ -1295,10 +1306,13 @@ paths:
               Hit.class
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -1333,14 +1347,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1359,14 +1372,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -1397,14 +1409,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -1444,14 +1455,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -1486,19 +1496,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1547,10 +1551,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1579,7 +1586,10 @@ paths:
                 ))
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1658,7 +1668,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1673,10 +1683,12 @@ paths:
                 Params = new SearchForFacetValuesParams { MaxFacetHits = 10 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1691,10 +1703,12 @@ paths:
                 ),
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1719,14 +1733,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -1735,16 +1748,19 @@ paths:
 
             // Call the API
 
-            client.searchForFacetValues(
+            SearchForFacetValuesResponse response = client.searchForFacetValues(
               "foo",
               "brand",
               new SearchForFacetValuesRequest().setParams(new SearchForFacetValuesParams().setMaxFacetHits(10))
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -1760,14 +1776,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1787,14 +1802,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -1812,14 +1826,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -1842,14 +1855,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -1867,19 +1879,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1905,10 +1911,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1925,7 +1934,10 @@ paths:
                 )
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1968,7 +1980,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1976,20 +1988,24 @@ paths:
 
             // Call the API
             var response = await client.ListCompositionsAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
 
             // Call the API
             final response = await client.listCompositions();
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2012,14 +2028,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -2028,12 +2043,15 @@ paths:
 
             // Call the API
 
-            client.listCompositions();
+            ListCompositionsResponse response = client.listCompositions();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -2045,14 +2063,13 @@ paths:
             const response = await client.listCompositions();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2064,14 +2081,13 @@ paths:
             var response = client.listCompositions()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -2083,14 +2099,13 @@ paths:
             $response = $client->listCompositions();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -2105,14 +2120,13 @@ paths:
             response = client.list_compositions()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -2124,19 +2138,13 @@ paths:
             response = client.list_compositions
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2151,10 +2159,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2165,7 +2176,10 @@ paths:
 
             let response = try await client.listCompositions()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2205,7 +2219,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2213,10 +2227,12 @@ paths:
 
             // Call the API
             var response = await client.GetCompositionAsync("foo");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2225,10 +2241,12 @@ paths:
             final response = await client.getComposition(
               compositionID: "foo",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2251,14 +2269,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -2267,12 +2284,15 @@ paths:
 
             // Call the API
 
-            client.getComposition("foo");
+            Composition response = client.getComposition("foo");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -2285,14 +2305,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2304,14 +2323,13 @@ paths:
             var response = client.getComposition(compositionID = "foo")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -2325,14 +2343,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -2349,14 +2366,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -2368,19 +2384,13 @@ paths:
             response = client.get_composition("foo")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2396,10 +2406,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2410,7 +2423,10 @@ paths:
 
             let response = try await client.getComposition(compositionID: "foo")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2461,7 +2477,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2512,10 +2528,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2557,10 +2575,12 @@ paths:
                 ),
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2597,14 +2617,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -2613,7 +2632,7 @@ paths:
 
             // Call the API
 
-            client.putComposition(
+            TaskIDResponse response = client.putComposition(
               "my-compo",
               new Composition()
                 .setObjectID("my-compo")
@@ -2642,10 +2661,13 @@ paths:
                 )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -2672,14 +2694,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2726,14 +2747,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -2769,14 +2789,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -2826,14 +2845,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -2872,19 +2890,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2939,10 +2951,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2973,7 +2988,10 @@ paths:
                 )
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3018,7 +3036,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -3026,10 +3044,12 @@ paths:
 
             // Call the API
             var response = await client.DeleteCompositionAsync("1234");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -3038,10 +3058,12 @@ paths:
             final response = await client.deleteComposition(
               compositionID: "1234",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -3064,14 +3086,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -3080,12 +3101,15 @@ paths:
 
             // Call the API
 
-            client.deleteComposition("1234");
+            TaskIDResponse response = client.deleteComposition("1234");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -3098,14 +3122,13 @@ paths:
             '1234' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3117,14 +3140,13 @@ paths:
             var response = client.deleteComposition(compositionID = "1234")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -3138,14 +3160,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -3162,14 +3183,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -3181,19 +3201,13 @@ paths:
             response = client.delete_composition("1234")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3209,10 +3223,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3224,7 +3241,10 @@ paths:
             let response = try await client.deleteComposition(compositionID:
             "1234")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3297,7 +3317,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -3355,10 +3375,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -3403,10 +3425,12 @@ paths:
                 ],
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -3445,14 +3469,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -3461,7 +3484,7 @@ paths:
 
             // Call the API
 
-            client.multipleBatch(
+            MultipleBatchResponse response = client.multipleBatch(
               new BatchParams().setRequests(
                 Arrays.asList(
                   new MultipleBatchRequest()
@@ -3491,10 +3514,13 @@ paths:
               )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -3525,14 +3551,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3573,14 +3598,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -3618,14 +3642,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -3678,14 +3701,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -3729,19 +3751,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3797,10 +3813,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3828,7 +3847,10 @@ paths:
                         ))
                     ))
                 )]))
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -3875,7 +3897,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -3883,10 +3905,12 @@ paths:
 
             // Call the API
             var response = await client.GetRuleAsync("foo", "123");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -3896,10 +3920,12 @@ paths:
               compositionID: "foo",
               objectID: "123",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -3921,14 +3947,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -3937,12 +3962,15 @@ paths:
 
             // Call the API
 
-            client.getRule("foo", "123");
+            CompositionRule response = client.getRule("foo", "123");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -3955,14 +3983,13 @@ paths:
             objectID: '123' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3975,14 +4002,13 @@ paths:
             "123")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -3997,14 +4023,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -4022,14 +4047,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -4041,19 +4065,13 @@ paths:
             response = client.get_rule("foo", "123")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4070,10 +4088,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4085,7 +4106,10 @@ paths:
             let response = try await client.getRule(compositionID: "foo",
             objectID: "123")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -4140,7 +4164,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -4196,10 +4220,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -4248,10 +4274,12 @@ paths:
                 ),
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -4292,14 +4320,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -4308,7 +4335,7 @@ paths:
 
             // Call the API
 
-            client.putCompositionRule(
+            TaskIDResponse response = client.putCompositionRule(
               "compositionID",
               "rule-with-deduplication",
               new CompositionRule()
@@ -4336,10 +4363,13 @@ paths:
                 )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -4371,14 +4401,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4432,14 +4461,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -4481,14 +4509,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -4545,14 +4572,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -4595,19 +4621,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4667,10 +4687,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4703,7 +4726,10 @@ paths:
                 )
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -4751,7 +4777,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: >-
             // Initialize the client
 
             var client = new CompositionClient(
@@ -4764,10 +4790,13 @@ paths:
             var response = await client.DeleteCompositionRuleAsync("1234",
             "5678");
 
-            // >LOG
+
+            // print the response
+
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -4777,10 +4806,12 @@ paths:
               compositionID: "1234",
               objectID: "5678",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -4803,14 +4834,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -4819,12 +4849,16 @@ paths:
 
             // Call the API
 
-            client.deleteCompositionRule("1234", "5678");
+            TaskIDResponse response = client.deleteCompositionRule("1234",
+            "5678");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -4837,14 +4871,13 @@ paths:
             '1234', objectID: '5678' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4857,14 +4890,13 @@ paths:
             objectID = "5678")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -4879,14 +4911,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -4904,14 +4935,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -4923,19 +4953,13 @@ paths:
             response = client.delete_composition_rule("1234", "5678")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -4952,10 +4976,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -4967,7 +4994,10 @@ paths:
             let response = try await client.deleteCompositionRule(compositionID:
             "1234", objectID: "5678")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5038,7 +5068,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5112,10 +5142,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -5170,10 +5202,12 @@ paths:
                 ],
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -5213,14 +5247,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -5229,7 +5262,7 @@ paths:
 
             // Call the API
 
-            client.saveRules(
+            RulesMultipleBatchResponse response = client.saveRules(
               "my-compo",
               new CompositionRulesBatchParams().setRequests(
                 Arrays.asList(
@@ -5266,10 +5299,13 @@ paths:
               )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -5312,14 +5348,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5379,14 +5414,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -5432,14 +5466,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -5502,14 +5535,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -5558,19 +5590,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5638,10 +5664,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -5676,7 +5705,10 @@ paths:
                 )])
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -5772,7 +5804,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -5783,10 +5815,12 @@ paths:
               "foo",
               new SearchCompositionRulesParams { Query = "batman" }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -5798,10 +5832,12 @@ paths:
                 query: "batman",
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -5825,14 +5861,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -5841,13 +5876,17 @@ paths:
 
             // Call the API
 
+            SearchCompositionRulesResponse response =
             client.searchCompositionRules("foo", new
             SearchCompositionRulesParams().setQuery("batman"));
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -5862,14 +5901,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5886,14 +5924,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -5909,14 +5946,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -5936,14 +5972,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -5958,19 +5993,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -5991,10 +6020,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -6008,7 +6040,10 @@ paths:
                 searchCompositionRulesParams: SearchCompositionRulesParams(query: "batman")
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -6061,7 +6096,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new CompositionClient(
               new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -6069,10 +6104,12 @@ paths:
 
             // Call the API
             var response = await client.GetTaskAsync("foo", 42L);
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = CompositionClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -6082,10 +6119,12 @@ paths:
               compositionID: "foo",
               taskID: 42,
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
@@ -6107,14 +6146,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             CompositionClient client = new
@@ -6123,12 +6161,15 @@ paths:
 
             // Call the API
 
-            client.getTask("foo", 42L);
+            GetTaskResponse response = client.getTask("foo", 42L);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = compositionClient('ALGOLIA_APPLICATION_ID',
@@ -6141,14 +6182,13 @@ paths:
             taskID: 42 });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -6160,14 +6200,13 @@ paths:
             var response = client.getTask(compositionID = "foo", taskID = 42L)
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
@@ -6182,14 +6221,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use CompositionClient instead,
@@ -6207,14 +6245,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
@@ -6226,19 +6263,13 @@ paths:
             response = client.get_task("foo", 42)
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -6255,10 +6286,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -6270,7 +6304,10 @@ paths:
             let response = try await client.getTask(compositionID: "foo",
             taskID: Int64(42))
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

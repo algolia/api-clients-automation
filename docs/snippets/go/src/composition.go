@@ -30,7 +30,7 @@ func SnippetForCustomDeleteOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -59,7 +59,7 @@ func SnippetForCustomDeleteOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -88,7 +88,7 @@ func SnippetForCustomGetOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -117,7 +117,7 @@ func SnippetForCustomGetOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -148,7 +148,7 @@ func SnippetForCustomGetOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -177,7 +177,7 @@ func SnippetForCustomPostOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -206,7 +206,7 @@ func SnippetForCustomPostOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -236,7 +236,7 @@ func SnippetForCustomPostOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -266,7 +266,7 @@ func SnippetForCustomPostOfComposition3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -296,7 +296,7 @@ func SnippetForCustomPostOfComposition4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -326,7 +326,7 @@ func SnippetForCustomPostOfComposition5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -356,7 +356,7 @@ func SnippetForCustomPostOfComposition6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -386,7 +386,7 @@ func SnippetForCustomPostOfComposition7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -417,7 +417,7 @@ func SnippetForCustomPostOfComposition8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -448,7 +448,7 @@ func SnippetForCustomPostOfComposition9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -479,7 +479,7 @@ func SnippetForCustomPostOfComposition10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -508,7 +508,7 @@ func SnippetForCustomPutOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -537,7 +537,7 @@ func SnippetForCustomPutOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -566,7 +566,7 @@ func SnippetForDeleteCompositionOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -595,7 +595,7 @@ func SnippetForDeleteCompositionRuleOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -624,7 +624,7 @@ func SnippetForGetCompositionOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -653,7 +653,7 @@ func SnippetForGetRuleOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -682,7 +682,7 @@ func SnippetForGetTaskOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -710,7 +710,7 @@ func SnippetForListCompositionsOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -738,7 +738,7 @@ func SnippetForListCompositionsOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -780,7 +780,7 @@ func SnippetForMultipleBatchOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -824,7 +824,7 @@ func SnippetForMultipleBatchOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -876,7 +876,7 @@ func SnippetForMultipleBatchOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -920,7 +920,7 @@ func SnippetForMultipleBatchOfComposition3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -961,7 +961,7 @@ func SnippetForPutCompositionOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1003,7 +1003,7 @@ func SnippetForPutCompositionOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1054,7 +1054,7 @@ func SnippetForPutCompositionOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1097,7 +1097,7 @@ func SnippetForPutCompositionOfComposition3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1140,7 +1140,7 @@ func SnippetForPutCompositionRuleOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1186,7 +1186,7 @@ func SnippetForPutCompositionRuleOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1237,7 +1237,7 @@ func SnippetForPutCompositionRuleOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1284,7 +1284,7 @@ func SnippetForPutCompositionRuleOfComposition3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1326,7 +1326,7 @@ func SnippetForSaveRulesOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1374,7 +1374,7 @@ func SnippetForSaveRulesOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1423,7 +1423,7 @@ func SnippetForSaveRulesOfComposition2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1469,7 +1469,7 @@ func SnippetForSaveRulesOfComposition3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1500,7 +1500,7 @@ func SnippetForSearchOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1536,7 +1536,7 @@ func SnippetForSearchOfComposition1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1566,7 +1566,7 @@ func SnippetForSearchCompositionRulesOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -1597,7 +1597,7 @@ func SnippetForSearchForFacetValuesOfComposition() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

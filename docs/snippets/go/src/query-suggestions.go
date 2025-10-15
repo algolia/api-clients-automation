@@ -39,7 +39,7 @@ func SnippetForCreateConfigOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -68,7 +68,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -97,7 +97,7 @@ func SnippetForCustomDeleteOfSuggestions1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -126,7 +126,7 @@ func SnippetForCustomGetOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -155,7 +155,7 @@ func SnippetForCustomGetOfSuggestions1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -186,7 +186,7 @@ func SnippetForCustomGetOfSuggestions2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -215,7 +215,7 @@ func SnippetForCustomPostOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -244,7 +244,7 @@ func SnippetForCustomPostOfSuggestions1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -274,7 +274,7 @@ func SnippetForCustomPostOfSuggestions2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -304,7 +304,7 @@ func SnippetForCustomPostOfSuggestions3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -334,7 +334,7 @@ func SnippetForCustomPostOfSuggestions4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -364,7 +364,7 @@ func SnippetForCustomPostOfSuggestions5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -394,7 +394,7 @@ func SnippetForCustomPostOfSuggestions6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -424,7 +424,7 @@ func SnippetForCustomPostOfSuggestions7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -455,7 +455,7 @@ func SnippetForCustomPostOfSuggestions8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -486,7 +486,7 @@ func SnippetForCustomPostOfSuggestions9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -517,7 +517,7 @@ func SnippetForCustomPostOfSuggestions10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -546,7 +546,7 @@ func SnippetForCustomPutOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -575,7 +575,7 @@ func SnippetForCustomPutOfSuggestions1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -604,7 +604,7 @@ func SnippetForDeleteConfigOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -632,7 +632,7 @@ func SnippetForGetAllConfigsOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -661,7 +661,7 @@ func SnippetForGetConfigOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -690,7 +690,7 @@ func SnippetForGetConfigStatusOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -719,7 +719,7 @@ func SnippetForGetLogFileOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -784,7 +784,7 @@ func SnippetForUpdateConfigOfSuggestions() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

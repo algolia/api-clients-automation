@@ -30,7 +30,7 @@ func SnippetForCustomDeleteOfInsights() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -59,7 +59,7 @@ func SnippetForCustomDeleteOfInsights1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -88,7 +88,7 @@ func SnippetForCustomGetOfInsights() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -117,7 +117,7 @@ func SnippetForCustomGetOfInsights1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -148,7 +148,7 @@ func SnippetForCustomGetOfInsights2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -177,7 +177,7 @@ func SnippetForCustomPostOfInsights() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -206,7 +206,7 @@ func SnippetForCustomPostOfInsights1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -236,7 +236,7 @@ func SnippetForCustomPostOfInsights2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -266,7 +266,7 @@ func SnippetForCustomPostOfInsights3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -296,7 +296,7 @@ func SnippetForCustomPostOfInsights4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -326,7 +326,7 @@ func SnippetForCustomPostOfInsights5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -356,7 +356,7 @@ func SnippetForCustomPostOfInsights6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -386,7 +386,7 @@ func SnippetForCustomPostOfInsights7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -417,7 +417,7 @@ func SnippetForCustomPostOfInsights8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -448,7 +448,7 @@ func SnippetForCustomPostOfInsights9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -479,7 +479,7 @@ func SnippetForCustomPostOfInsights10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -508,7 +508,7 @@ func SnippetForCustomPutOfInsights() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -537,7 +537,7 @@ func SnippetForCustomPutOfInsights1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -598,7 +598,7 @@ func SnippetForPushEventsOfInsights() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -623,9 +623,9 @@ func SnippetForPushEventsOfInsights1() {
 
 		insights.NewEmptyInsightsEvents().SetEvents(
 			[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-				insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1760227200000).SetObjectIDs(
+				insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1760486400000).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-				insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1760227200000).SetObjectIDs(
+				insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1760486400000).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}))})))
 	if err != nil {
 		// handle the eventual error
@@ -633,7 +633,7 @@ func SnippetForPushEventsOfInsights1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -666,7 +666,7 @@ func SnippetForPushEventsOfInsights2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -699,7 +699,7 @@ func SnippetForPushEventsOfInsights3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -733,7 +733,7 @@ func SnippetForPushEventsOfInsights4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

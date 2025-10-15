@@ -20,7 +20,7 @@ class SnippetPersonalizationClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -36,7 +36,7 @@ class SnippetPersonalizationClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -52,7 +52,7 @@ class SnippetPersonalizationClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -68,7 +68,7 @@ class SnippetPersonalizationClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -96,7 +96,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -112,7 +112,7 @@ class SnippetPersonalizationClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -134,7 +134,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -161,7 +161,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -188,7 +188,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -215,7 +215,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -242,7 +242,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -269,7 +269,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -296,7 +296,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -323,7 +323,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -350,7 +350,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -377,7 +377,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -393,7 +393,7 @@ class SnippetPersonalizationClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -415,7 +415,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -431,7 +431,7 @@ class SnippetPersonalizationClient {
     var response = client.deleteUserProfile(userToken = "UserToken")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -447,7 +447,7 @@ class SnippetPersonalizationClient {
     var response = client.getPersonalizationStrategy()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -463,7 +463,7 @@ class SnippetPersonalizationClient {
     var response = client.getUserTokenProfile(userToken = "UserToken")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -510,7 +510,7 @@ class SnippetPersonalizationClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

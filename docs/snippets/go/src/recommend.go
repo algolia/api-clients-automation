@@ -30,7 +30,7 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -59,7 +59,7 @@ func SnippetForCustomDeleteOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -88,7 +88,7 @@ func SnippetForCustomDeleteOfRecommend1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -117,7 +117,7 @@ func SnippetForCustomGetOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -146,7 +146,7 @@ func SnippetForCustomGetOfRecommend1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -177,7 +177,7 @@ func SnippetForCustomGetOfRecommend2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -206,7 +206,7 @@ func SnippetForCustomPostOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -235,7 +235,7 @@ func SnippetForCustomPostOfRecommend1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -265,7 +265,7 @@ func SnippetForCustomPostOfRecommend2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -295,7 +295,7 @@ func SnippetForCustomPostOfRecommend3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -325,7 +325,7 @@ func SnippetForCustomPostOfRecommend4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -355,7 +355,7 @@ func SnippetForCustomPostOfRecommend5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -385,7 +385,7 @@ func SnippetForCustomPostOfRecommend6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -415,7 +415,7 @@ func SnippetForCustomPostOfRecommend7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -446,7 +446,7 @@ func SnippetForCustomPostOfRecommend8() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -477,7 +477,7 @@ func SnippetForCustomPostOfRecommend9() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -508,7 +508,7 @@ func SnippetForCustomPostOfRecommend10() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -537,7 +537,7 @@ func SnippetForCustomPutOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -566,7 +566,7 @@ func SnippetForCustomPutOfRecommend1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -595,7 +595,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -624,7 +624,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -653,7 +653,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -685,7 +685,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -717,7 +717,7 @@ func SnippetForGetRecommendationsOfRecommend1() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -753,7 +753,7 @@ func SnippetForGetRecommendationsOfRecommend2() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -785,7 +785,7 @@ func SnippetForGetRecommendationsOfRecommend3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -821,7 +821,7 @@ func SnippetForGetRecommendationsOfRecommend4() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -854,7 +854,7 @@ func SnippetForGetRecommendationsOfRecommend5() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -895,7 +895,7 @@ func SnippetForGetRecommendationsOfRecommend6() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -927,7 +927,7 @@ func SnippetForGetRecommendationsOfRecommend7() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -956,7 +956,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

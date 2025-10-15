@@ -21,6 +21,8 @@ final class RecommendClientSnippet {
             model: RecommendModels.relatedProducts
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -35,6 +37,8 @@ final class RecommendClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -49,6 +53,8 @@ final class RecommendClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -63,6 +69,8 @@ final class RecommendClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -80,6 +88,8 @@ final class RecommendClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -102,6 +112,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -116,6 +128,8 @@ final class RecommendClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -134,6 +148,8 @@ final class RecommendClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -155,6 +171,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -176,6 +194,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -197,6 +217,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -218,6 +240,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -239,6 +263,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -260,6 +286,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -281,6 +309,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -302,6 +332,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -323,6 +355,8 @@ final class RecommendClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -337,6 +371,8 @@ final class RecommendClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -355,6 +391,8 @@ final class RecommendClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -373,6 +411,8 @@ final class RecommendClientSnippet {
             objectID: "objectID"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -391,6 +431,8 @@ final class RecommendClientSnippet {
             objectID: "objectID"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -409,6 +451,8 @@ final class RecommendClientSnippet {
             taskID: Int64(12345)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -430,6 +474,8 @@ final class RecommendClientSnippet {
                         objectID: "objectID"
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -452,6 +498,8 @@ final class RecommendClientSnippet {
                         objectID: "Æon Flux"
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -484,6 +532,8 @@ final class RecommendClientSnippet {
                         )
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -506,6 +556,8 @@ final class RecommendClientSnippet {
                         model: TrendingItemsModel.trendingItems
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -539,6 +591,8 @@ final class RecommendClientSnippet {
                         )
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -567,6 +621,8 @@ final class RecommendClientSnippet {
                 )),
             ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -617,6 +673,8 @@ final class RecommendClientSnippet {
                 )),
             ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -638,6 +696,8 @@ final class RecommendClientSnippet {
                         objectID: "objectID1"
                     ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -655,6 +715,8 @@ final class RecommendClientSnippet {
             model: RecommendModels.relatedProducts
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 

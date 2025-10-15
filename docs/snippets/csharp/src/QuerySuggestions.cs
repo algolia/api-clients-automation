@@ -48,6 +48,8 @@ public class SnippetQuerySuggestionsClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -71,6 +73,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -97,6 +101,8 @@ public class SnippetQuerySuggestionsClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -120,6 +126,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -146,6 +154,8 @@ public class SnippetQuerySuggestionsClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -177,6 +187,8 @@ public class SnippetQuerySuggestionsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -200,6 +212,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -227,6 +241,8 @@ public class SnippetQuerySuggestionsClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -255,6 +271,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -283,6 +301,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -311,6 +331,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -339,6 +361,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -367,6 +391,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -395,6 +421,8 @@ public class SnippetQuerySuggestionsClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -425,6 +453,8 @@ public class SnippetQuerySuggestionsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -455,6 +485,8 @@ public class SnippetQuerySuggestionsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -485,6 +517,8 @@ public class SnippetQuerySuggestionsClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -508,6 +542,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -535,6 +571,8 @@ public class SnippetQuerySuggestionsClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -558,6 +596,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.DeleteConfigAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -581,6 +621,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.GetAllConfigsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -604,6 +646,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.GetConfigAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -627,6 +671,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.GetConfigStatusAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -650,6 +696,8 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.GetLogFileAsync("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -716,6 +764,8 @@ public class SnippetQuerySuggestionsClient
       }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 }

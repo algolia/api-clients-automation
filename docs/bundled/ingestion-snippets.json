@@ -441,214 +441,214 @@
       "default": "import com.algolia.api.IngestionClient;\nimport com.algolia.config.*;"
     },
     "createAuthentication": {
-      "createAuthenticationOAuth": "client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.OAUTH)\n    .setName(\"authName\")\n    .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n);",
-      "createAuthenticationAlgolia": "client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.ALGOLIA)\n    .setName(\"authName\")\n    .setInput(new AuthAlgolia().setAppID(\"ALGOLIA_APPLICATION_ID\").setApiKey(\"ALGOLIA_API_KEY\"))\n);"
+      "createAuthenticationOAuth": "AuthenticationCreateResponse response = client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.OAUTH)\n    .setName(\"authName\")\n    .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n);",
+      "createAuthenticationAlgolia": "AuthenticationCreateResponse response = client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.ALGOLIA)\n    .setName(\"authName\")\n    .setInput(new AuthAlgolia().setAppID(\"ALGOLIA_APPLICATION_ID\").setApiKey(\"ALGOLIA_API_KEY\"))\n);"
     },
     "createDestination": {
-      "createDestination": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
-      "with transformationIDs": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setTransformationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n);"
+      "createDestination": "DestinationCreateResponse response = client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
+      "with transformationIDs": "DestinationCreateResponse response = client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationInput().setIndexName(\"<YOUR_INDEX_NAME>\"))\n    .setTransformationIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"))\n);"
     },
     "createSource": {
-      "createSource": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n        .setProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
-      "push": "client.createSource(new SourceCreate().setType(SourceType.PUSH).setName(\"pushezpourentrer\"));"
+      "createSource": "SourceCreateResponse response = client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n        .setProductQueryPredicate(\"masterVariant(attributes(name=\\\"Brand\\\" and value=\\\"Algolia\\\"))\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);",
+      "push": "SourceCreateResponse response = client.createSource(new SourceCreate().setType(SourceType.PUSH).setName(\"pushezpourentrer\"));"
     },
     "createTask": {
-      "task without cron": "client.createTask(new TaskCreate().setSourceID(\"search\").setDestinationID(\"destinationID\").setAction(ActionType.REPLACE));",
-      "task with cron": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))\n    .setPolicies(new Policies().setCriticalThreshold(8))\n);",
-      "task shopify": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
+      "task without cron": "TaskCreateResponse response = client.createTask(\n  new TaskCreate().setSourceID(\"search\").setDestinationID(\"destinationID\").setAction(ActionType.REPLACE)\n);",
+      "task with cron": "TaskCreateResponse response = client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))\n    .setPolicies(new Policies().setCriticalThreshold(8))\n);",
+      "task shopify": "TaskCreateResponse response = client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
     },
     "createTaskV1": {
-      "createTaskOnDemand": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
-      "createTaskSchedule": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron(\"* * * * *\"))\n    .setAction(ActionType.REPLACE)\n);",
-      "createTaskSubscription": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
-      "task shopify": "client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
+      "createTaskOnDemand": "TaskCreateResponse response = client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
+      "createTaskSchedule": "TaskCreateResponse response = client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron(\"* * * * *\"))\n    .setAction(ActionType.REPLACE)\n);",
+      "createTaskSubscription": "TaskCreateResponse response = client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);",
+      "task shopify": "TaskCreateResponse response = client.createTaskV1(\n  new TaskCreateV1()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
     },
     "createTransformation": {
-      "default": "client.createTransformation(\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
+      "default": "TransformationCreateResponse response = client.createTransformation(\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
-      "allow del method for a custom path with all parameters": "client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
+      "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "Object response = client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
-      "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
-      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+      "allow get method for a custom path with minimal parameters": "Object response = client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
-      "allow post method for a custom path with all parameters": "client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
-      "requestOptions can override default query parameters": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
-      "requestOptions merges query parameters with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
-      "requestOptions can override default headers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions merges headers with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions queryParameters accepts booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
-      "requestOptions queryParameters accepts integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
-      "requestOptions queryParameters accepts list of string": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
-      "requestOptions queryParameters accepts list of booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
-      "requestOptions queryParameters accepts list of integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
+      "allow post method for a custom path with minimal parameters": "Object response = client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "Object response = client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "client.customPut(\"test/minimal\");",
-      "allow put method for a custom path with all parameters": "client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
+      "allow put method for a custom path with minimal parameters": "Object response = client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "Object response = client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
     },
     "deleteAuthentication": {
-      "default": "client.deleteAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "deleteDestination": {
-      "default": "client.deleteDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "deleteSource": {
-      "default": "client.deleteSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "deleteTask": {
-      "default": "client.deleteTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "deleteTaskV1": {
-      "default": "client.deleteTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "deleteTransformation": {
-      "default": "client.deleteTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "DeleteResponse response = client.deleteTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "disableTask": {
-      "default": "client.disableTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "TaskUpdateResponse response = client.disableTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "disableTaskV1": {
-      "default": "client.disableTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "TaskUpdateResponse response = client.disableTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "enableTask": {
-      "default": "client.enableTask(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
+      "default": "TaskUpdateResponse response = client.enableTask(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
     "enableTaskV1": {
-      "default": "client.enableTaskV1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
+      "default": "TaskUpdateResponse response = client.enableTaskV1(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
     },
     "getAuthentication": {
-      "default": "client.getAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "Authentication response = client.getAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "getDestination": {
-      "default": "client.getDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "Destination response = client.getDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "getEvent": {
-      "default": "client.getEvent(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\");"
+      "default": "Event response = client.getEvent(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\");"
     },
     "getRun": {
-      "default": "client.getRun(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "Run response = client.getRun(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "getSource": {
-      "default": "client.getSource(\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\");"
+      "default": "Source response = client.getSource(\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\");"
     },
     "getTask": {
-      "default": "client.getTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "Task response = client.getTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "getTaskV1": {
-      "default": "client.getTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "TaskV1 response = client.getTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "getTransformation": {
-      "default": "client.getTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "Transformation response = client.getTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "listAuthentications": {
-      "getAuthentications": "client.listAuthentications();",
-      "getAuthentications with query params": "client.listAuthentications(\n  2,\n  1,\n  Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),\n  Arrays.asList(PlatformNone.NONE),\n  AuthenticationSortKeys.CREATED_AT,\n  OrderKeys.ASC\n);"
+      "getAuthentications": "ListAuthenticationsResponse response = client.listAuthentications();",
+      "getAuthentications with query params": "ListAuthenticationsResponse response = client.listAuthentications(\n  2,\n  1,\n  Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),\n  Arrays.asList(PlatformNone.NONE),\n  AuthenticationSortKeys.CREATED_AT,\n  OrderKeys.ASC\n);"
     },
     "listDestinations": {
-      "default": "client.listDestinations();"
+      "default": "ListDestinationsResponse response = client.listDestinations();"
     },
     "listEvents": {
-      "default": "client.listEvents(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "ListEventsResponse response = client.listEvents(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "listRuns": {
-      "default": "client.listRuns();"
+      "default": "RunListResponse response = client.listRuns();"
     },
     "listSources": {
-      "default": "client.listSources();"
+      "default": "ListSourcesResponse response = client.listSources();"
     },
     "listTasks": {
-      "default": "client.listTasks();"
+      "default": "ListTasksResponse response = client.listTasks();"
     },
     "listTasksV1": {
-      "default": "client.listTasksV1();"
+      "default": "ListTasksResponseV1 response = client.listTasksV1();"
     },
     "listTransformations": {
-      "listTransformations": "client.listTransformations();",
-      "list with every parameters": "client.listTransformations(2, 1, TransformationSortKeys.CREATED_AT, OrderKeys.ASC, TransformationType.NO_CODE);"
+      "listTransformations": "ListTransformationsResponse response = client.listTransformations();",
+      "list with every parameters": "ListTransformationsResponse response = client.listTransformations(\n  2,\n  1,\n  TransformationSortKeys.CREATED_AT,\n  OrderKeys.ASC,\n  TransformationType.NO_CODE\n);"
     },
     "push": {
-      "global push": "client.push(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);",
-      "global push with watch mode": "client.push(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    ),\n  true,\n  \"foo\"\n);"
+      "global push": "WatchResponse response = client.push(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);",
+      "global push with watch mode": "WatchResponse response = client.push(\n  \"<YOUR_INDEX_NAME>\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    ),\n  true,\n  \"foo\"\n);"
     },
     "pushTask": {
-      "pushTask": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);",
-      "allows for watch query parameter": "client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    ),\n  true\n);"
+      "pushTask": "WatchResponse response = client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    )\n);",
+      "allows for watch query parameter": "WatchResponse response = client.pushTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new PushTaskPayload()\n    .setAction(Action.ADD_OBJECT)\n    .setRecords(\n      Arrays.asList(\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"bar\").setAdditionalProperty(\"foo\", \"1\").setObjectID(\"o\"),\n        new PushTaskRecords().setAdditionalProperty(\"key\", \"baz\").setAdditionalProperty(\"foo\", \"2\").setObjectID(\"k\")\n      )\n    ),\n  true\n);"
     },
     "replaceTask": {
-      "fully replace task without cron": "client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace().setDestinationID(\"destinationID\").setAction(ActionType.REPLACE)\n);",
-      "fully replace task with cron": "client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace()\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))\n    .setPolicies(new Policies().setCriticalThreshold(8))\n);",
-      "fully replace task shopify": "client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace()\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
+      "fully replace task without cron": "TaskUpdateResponse response = client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace().setDestinationID(\"destinationID\").setAction(ActionType.REPLACE)\n);",
+      "fully replace task with cron": "TaskUpdateResponse response = client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace()\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setNotifications(new Notifications().setEmail(new EmailNotifications().setEnabled(true)))\n    .setPolicies(new Policies().setCriticalThreshold(8))\n);",
+      "fully replace task shopify": "TaskUpdateResponse response = client.replaceTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskReplace()\n    .setDestinationID(\"destinationID\")\n    .setCron(\"* * * * *\")\n    .setAction(ActionType.REPLACE)\n    .setInput(\n      new DockerStreamsInput().setStreams(\n        Arrays.asList(new DockerStreams().setName(\"foo\").setSyncMode(DockerStreamsSyncMode.INCREMENTAL))\n      )\n    )\n);"
     },
     "runSource": {
-      "default": "client.runSource(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload()\n    .setIndexToInclude(Arrays.asList(\"products_us\", \"products eu\"))\n    .setEntityIDs(Arrays.asList(\"1234\", \"5678\"))\n    .setEntityType(EntityType.PRODUCT)\n);"
+      "default": "RunSourceResponse response = client.runSource(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new RunSourcePayload()\n    .setIndexToInclude(Arrays.asList(\"products_us\", \"products eu\"))\n    .setEntityIDs(Arrays.asList(\"1234\", \"5678\"))\n    .setEntityType(EntityType.PRODUCT)\n);"
     },
     "runTask": {
-      "default": "client.runTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "RunResponse response = client.runTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "runTaskV1": {
-      "default": "client.runTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "RunResponse response = client.runTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "searchAuthentications": {
-      "default": "client.searchAuthentications(\n  new AuthenticationSearch().setAuthenticationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
+      "default": "List response = client.searchAuthentications(\n  new AuthenticationSearch().setAuthenticationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
     },
     "searchDestinations": {
-      "default": "client.searchDestinations(\n  new DestinationSearch().setDestinationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
+      "default": "List response = client.searchDestinations(\n  new DestinationSearch().setDestinationIDs(\n    Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n);"
     },
     "searchSources": {
-      "default": "client.searchSources(\n  new SourceSearch().setSourceIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+      "default": "List response = client.searchSources(\n  new SourceSearch().setSourceIDs(Arrays.asList(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
     },
     "searchTasks": {
-      "default": "client.searchTasks(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
+      "default": "List response = client.searchTasks(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "searchTasksV1": {
-      "default": "client.searchTasksV1(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
+      "default": "List response = client.searchTasksV1(\n  new TaskSearch().setTaskIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "searchTransformations": {
-      "default": "client.searchTransformations(\n  new TransformationSearch().setTransformationIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
+      "default": "List response = client.searchTransformations(\n  new TransformationSearch().setTransformationIDs(\n    Arrays.asList(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
     },
     "triggerDockerSourceDiscover": {
-      "default": "client.triggerDockerSourceDiscover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+      "default": "WatchResponse response = client.triggerDockerSourceDiscover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
     },
     "tryTransformation": {
-      "tryTransformation": "client.tryTransformation(\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);",
-      "with authentications": "client.tryTransformation(\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n    .setAuthentications(\n      Arrays.asList(\n        new AuthenticationCreate()\n          .setType(AuthenticationType.OAUTH)\n          .setName(\"authName\")\n          .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n      )\n    )\n);"
+      "tryTransformation": "TransformationTryResponse response = client.tryTransformation(\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);",
+      "with authentications": "TransformationTryResponse response = client.tryTransformation(\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n    .setAuthentications(\n      Arrays.asList(\n        new AuthenticationCreate()\n          .setType(AuthenticationType.OAUTH)\n          .setName(\"authName\")\n          .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n      )\n    )\n);"
     },
     "tryTransformationBeforeUpdate": {
-      "tryTransformationBeforeUpdate": "client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);",
-      "existing with authentications": "client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n    .setAuthentications(\n      Arrays.asList(\n        new AuthenticationCreate()\n          .setType(AuthenticationType.OAUTH)\n          .setName(\"authName\")\n          .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n      )\n    )\n);"
+      "tryTransformationBeforeUpdate": "TransformationTryResponse response = client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n);",
+      "existing with authentications": "TransformationTryResponse response = client.tryTransformationBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationTry()\n    .setType(TransformationType.CODE)\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setSampleRecord(\n      new HashMap() {\n        {\n          put(\"bar\", \"baz\");\n        }\n      }\n    )\n    .setAuthentications(\n      Arrays.asList(\n        new AuthenticationCreate()\n          .setType(AuthenticationType.OAUTH)\n          .setName(\"authName\")\n          .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n      )\n    )\n);"
     },
     "updateAuthentication": {
-      "default": "client.updateAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new AuthenticationUpdate().setName(\"newName\"));"
+      "default": "AuthenticationUpdateResponse response = client.updateAuthentication(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate().setName(\"newName\")\n);"
     },
     "updateDestination": {
-      "default": "client.updateDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new DestinationUpdate().setName(\"newName\"));"
+      "default": "DestinationUpdateResponse response = client.updateDestination(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate().setName(\"newName\")\n);"
     },
     "updateSource": {
-      "default": "client.updateSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
+      "default": "SourceUpdateResponse response = client.updateSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
     },
     "updateTask": {
-      "default": "client.updateTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new TaskUpdate().setEnabled(false).setCron(\"* * * * *\"));"
+      "default": "TaskUpdateResponse response = client.updateTask(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate().setEnabled(false).setCron(\"* * * * *\")\n);"
     },
     "updateTaskV1": {
-      "default": "client.updateTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new TaskUpdateV1().setEnabled(false));"
+      "default": "TaskUpdateResponse response = client.updateTaskV1(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new TaskUpdateV1().setEnabled(false));"
     },
     "updateTransformation": {
-      "default": "client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
+      "default": "TransformationUpdateResponse response = client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate()\n    .setInput(new TransformationCode().setCode(\"foo\"))\n    .setType(TransformationType.CODE)\n    .setName(\"bar\")\n    .setDescription(\"baz\")\n);"
     },
     "validateSource": {
-      "default": "client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+      "default": "WatchResponse response = client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(Arrays.asList(\"myStore\"))\n        .setLocales(Arrays.asList(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
     },
     "validateSourceBeforeUpdate": {
-      "default": "client.validateSourceBeforeUpdate(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
+      "default": "WatchResponse response = client.validateSourceBeforeUpdate(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate().setName(\"newName\")\n);"
     },
     "init": {
       "default": "IngestionClient client = new IngestionClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"

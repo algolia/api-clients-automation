@@ -38,6 +38,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -63,6 +65,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -87,6 +91,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -112,6 +118,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -145,6 +153,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -169,6 +179,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -195,6 +207,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -227,6 +241,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -259,6 +275,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -291,6 +309,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -323,6 +343,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -355,6 +377,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -387,6 +411,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -419,6 +445,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -451,6 +479,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -483,6 +513,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -507,6 +539,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -533,6 +567,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -595,6 +631,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -622,7 +660,7 @@ class SnippetInsightsClient {
               index = "products",
               userToken = "user-123456",
               authenticatedUserToken = Some("user-123456"),
-              timestamp = Some(1760227200000L),
+              timestamp = Some(1760486400000L),
               objectIDs = Seq("9780545139700", "9780439784542"),
               queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
             ),
@@ -632,7 +670,7 @@ class SnippetInsightsClient {
               index = "products",
               userToken = "user-123456",
               authenticatedUserToken = Some("user-123456"),
-              timestamp = Some(1760227200000L),
+              timestamp = Some(1760486400000L),
               objectIDs = Seq("9780545139700", "9780439784542")
             )
           )
@@ -641,6 +679,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -678,6 +718,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -714,6 +756,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -767,6 +811,8 @@ class SnippetInsightsClient {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 

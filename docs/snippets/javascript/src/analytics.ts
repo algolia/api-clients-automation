@@ -17,7 +17,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -35,7 +35,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -53,7 +53,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -71,7 +71,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -95,7 +95,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -113,7 +113,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -135,7 +135,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -158,7 +158,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -181,7 +181,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -204,7 +204,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -227,7 +227,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -250,7 +250,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -273,7 +273,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -296,7 +296,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -319,7 +319,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -342,7 +342,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -360,7 +360,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -382,7 +382,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -400,7 +400,7 @@ export async function snippetForGetAddToCartRate(): Promise<void> {
   const response = await client.getAddToCartRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -423,7 +423,7 @@ export async function snippetForGetAddToCartRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -441,7 +441,7 @@ export async function snippetForGetAverageClickPosition(): Promise<void> {
   const response = await client.getAverageClickPosition({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -464,7 +464,7 @@ export async function snippetForGetAverageClickPosition1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -482,7 +482,7 @@ export async function snippetForGetClickPositions(): Promise<void> {
   const response = await client.getClickPositions({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -505,7 +505,7 @@ export async function snippetForGetClickPositions1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -523,7 +523,7 @@ export async function snippetForGetClickThroughRate(): Promise<void> {
   const response = await client.getClickThroughRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -546,7 +546,7 @@ export async function snippetForGetClickThroughRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -564,7 +564,7 @@ export async function snippetForGetConversionRate(): Promise<void> {
   const response = await client.getConversionRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -587,7 +587,7 @@ export async function snippetForGetConversionRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -605,7 +605,7 @@ export async function snippetForGetNoClickRate(): Promise<void> {
   const response = await client.getNoClickRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -628,7 +628,7 @@ export async function snippetForGetNoClickRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -646,7 +646,7 @@ export async function snippetForGetNoResultsRate(): Promise<void> {
   const response = await client.getNoResultsRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -669,7 +669,7 @@ export async function snippetForGetNoResultsRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -687,7 +687,7 @@ export async function snippetForGetPurchaseRate(): Promise<void> {
   const response = await client.getPurchaseRate({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -710,7 +710,7 @@ export async function snippetForGetPurchaseRate1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -728,7 +728,7 @@ export async function snippetForGetRevenue(): Promise<void> {
   const response = await client.getRevenue({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -751,7 +751,7 @@ export async function snippetForGetRevenue1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -769,7 +769,7 @@ export async function snippetForGetSearchesCount(): Promise<void> {
   const response = await client.getSearchesCount({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -792,7 +792,7 @@ export async function snippetForGetSearchesCount1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -810,7 +810,7 @@ export async function snippetForGetSearchesNoClicks(): Promise<void> {
   const response = await client.getSearchesNoClicks({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -835,7 +835,7 @@ export async function snippetForGetSearchesNoClicks1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -853,7 +853,7 @@ export async function snippetForGetSearchesNoResults(): Promise<void> {
   const response = await client.getSearchesNoResults({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -878,7 +878,7 @@ export async function snippetForGetSearchesNoResults1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -896,7 +896,7 @@ export async function snippetForGetStatus(): Promise<void> {
   const response = await client.getStatus({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -914,7 +914,7 @@ export async function snippetForGetTopCountries(): Promise<void> {
   const response = await client.getTopCountries({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -939,7 +939,7 @@ export async function snippetForGetTopCountries1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -957,7 +957,7 @@ export async function snippetForGetTopFilterAttributes(): Promise<void> {
   const response = await client.getTopFilterAttributes({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -983,7 +983,7 @@ export async function snippetForGetTopFilterAttributes1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1001,7 +1001,7 @@ export async function snippetForGetTopFilterForAttribute(): Promise<void> {
   const response = await client.getTopFilterForAttribute({ attribute: 'myAttribute', index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1019,7 +1019,7 @@ export async function snippetForGetTopFilterForAttribute1(): Promise<void> {
   const response = await client.getTopFilterForAttribute({ attribute: 'myAttribute1,myAttribute2', index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1046,7 +1046,7 @@ export async function snippetForGetTopFilterForAttribute2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1073,7 +1073,7 @@ export async function snippetForGetTopFilterForAttribute3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1091,7 +1091,7 @@ export async function snippetForGetTopFiltersNoResults(): Promise<void> {
   const response = await client.getTopFiltersNoResults({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1117,7 +1117,7 @@ export async function snippetForGetTopFiltersNoResults1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1135,7 +1135,7 @@ export async function snippetForGetTopHits(): Promise<void> {
   const response = await client.getTopHits({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1163,7 +1163,7 @@ export async function snippetForGetTopHits1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1181,7 +1181,7 @@ export async function snippetForGetTopSearches(): Promise<void> {
   const response = await client.getTopSearches({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1210,7 +1210,7 @@ export async function snippetForGetTopSearches1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1228,7 +1228,7 @@ export async function snippetForGetUsersCount(): Promise<void> {
   const response = await client.getUsersCount({ index: 'index' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1251,7 +1251,7 @@ export async function snippetForGetUsersCount1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

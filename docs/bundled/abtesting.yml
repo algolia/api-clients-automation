@@ -139,7 +139,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -147,10 +147,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -173,14 +175,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -190,12 +191,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -209,14 +213,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -228,14 +231,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -249,14 +251,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -274,14 +275,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -293,19 +293,13 @@ paths:
             response = client.custom_get("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -320,10 +314,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -334,7 +330,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -366,7 +365,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -374,10 +373,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -400,14 +401,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -417,12 +417,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -436,14 +439,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -455,14 +457,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -476,14 +477,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -501,14 +501,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -520,19 +519,13 @@ paths:
             response = client.custom_post("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -547,10 +540,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -561,7 +556,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -593,7 +591,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -601,10 +599,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -627,14 +627,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -644,12 +643,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -663,14 +665,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -682,14 +683,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -703,14 +703,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -728,14 +727,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -747,19 +745,13 @@ paths:
             response = client.custom_put("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -774,10 +766,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -788,7 +782,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -814,7 +811,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -822,10 +819,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -849,14 +848,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -866,12 +864,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -886,14 +887,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -905,14 +905,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -926,14 +925,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -951,14 +949,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -970,19 +967,13 @@ paths:
             response = client.custom_delete("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -997,10 +988,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1011,7 +1004,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /2/abtests:
     post:
       tags:
@@ -1070,7 +1066,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1089,10 +1085,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -1119,14 +1117,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -1136,7 +1133,7 @@ paths:
 
             // Call the API
 
-            client.addABTests(
+            ABTestResponse response = client.addABTests(
               new AddABTestsRequest()
                 .setEndAt("2022-12-31T00:00:00.000Z")
                 .setName("myABTest")
@@ -1148,10 +1145,13 @@ paths:
                 )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1172,14 +1172,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1206,14 +1205,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -1238,14 +1236,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -1276,14 +1273,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -1304,19 +1300,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1344,10 +1334,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1372,7 +1364,10 @@ paths:
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1466,7 +1461,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1474,10 +1469,12 @@ paths:
 
             // Call the API
             var response = await client.ListABTestsAsync();
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -1501,14 +1498,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -1518,12 +1514,15 @@ paths:
 
             // Call the API
 
-            client.listABTests();
+            ListABTestsResponse response = client.listABTests();
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1537,14 +1536,13 @@ paths:
             const response = await client.listABTests();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1556,14 +1554,13 @@ paths:
             var response = client.listABTests()
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -1575,14 +1572,13 @@ paths:
             $response = $client->listABTests();
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -1598,14 +1594,13 @@ paths:
             response = client.list_ab_tests()
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -1617,19 +1612,13 @@ paths:
             response = client.list_ab_tests
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1643,10 +1632,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1657,7 +1648,10 @@ paths:
 
             let response = try await client.listABTests()
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1702,7 +1696,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1710,10 +1704,12 @@ paths:
 
             // Call the API
             var response = await client.GetABTestAsync(42);
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -1736,14 +1732,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -1753,12 +1748,15 @@ paths:
 
             // Call the API
 
-            client.getABTest(42);
+            ABTest response = client.getABTest(42);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -1772,14 +1770,13 @@ paths:
             const response = await client.getABTest({ id: 42 });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1791,14 +1788,13 @@ paths:
             var response = client.getABTest(id = 42)
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -1812,14 +1808,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -1837,14 +1832,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -1856,19 +1850,13 @@ paths:
             response = client.get_ab_test(42)
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -1883,10 +1871,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1897,7 +1887,10 @@ paths:
 
             let response = try await client.getABTest(id: 42)
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1941,7 +1934,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -1949,10 +1942,12 @@ paths:
 
             // Call the API
             var response = await client.DeleteABTestAsync(42);
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -1976,14 +1971,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -1993,12 +1987,15 @@ paths:
 
             // Call the API
 
-            client.deleteABTest(42);
+            ABTestResponse response = client.deleteABTest(42);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2012,14 +2009,13 @@ paths:
             const response = await client.deleteABTest({ id: 42 });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2031,14 +2027,13 @@ paths:
             var response = client.deleteABTest(id = 42)
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -2052,14 +2047,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -2077,14 +2071,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -2096,19 +2089,13 @@ paths:
             response = client.delete_ab_test(42)
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2123,10 +2110,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2137,7 +2126,10 @@ paths:
 
             let response = try await client.deleteABTest(id: 42)
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2185,7 +2177,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2193,10 +2185,12 @@ paths:
 
             // Call the API
             var response = await client.StopABTestAsync(42);
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -2219,14 +2213,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -2236,12 +2229,15 @@ paths:
 
             // Call the API
 
-            client.stopABTest(42);
+            ABTestResponse response = client.stopABTest(42);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2255,14 +2251,13 @@ paths:
             const response = await client.stopABTest({ id: 42 });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2274,14 +2269,13 @@ paths:
             var response = client.stopABTest(id = 42)
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -2295,14 +2289,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -2320,14 +2313,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -2339,19 +2331,13 @@ paths:
             response = client.stop_ab_test(42)
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2366,10 +2352,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2380,7 +2368,10 @@ paths:
 
             let response = try await client.stopABTest(id: 42)
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2451,7 +2442,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2471,10 +2462,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -2507,14 +2500,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -2524,7 +2516,7 @@ paths:
 
             // Call the API
 
-            client.scheduleABTest(
+            ScheduleABTestResponse response = client.scheduleABTest(
               new ScheduleABTestsRequest()
                 .setEndAt("2022-12-31T00:00:00.000Z")
                 .setScheduledAt("2022-11-31T00:00:00.000Z")
@@ -2537,10 +2529,13 @@ paths:
                 )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2562,14 +2557,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2597,14 +2591,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -2630,14 +2623,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -2669,14 +2661,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -2698,19 +2689,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -2739,10 +2724,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2769,7 +2756,10 @@ paths:
                 endAt: "2022-12-31T00:00:00.000Z"
             ))
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2851,7 +2841,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new AbtestingClient(
               new AbtestingConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
@@ -2877,10 +2867,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client with your application region, eg.
             abtesting.ALGOLIA_APPLICATION_REGION
 
@@ -2911,14 +2903,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             AbtestingClient client = new
@@ -2928,7 +2919,7 @@ paths:
 
             // Call the API
 
-            client.estimateABTest(
+            EstimateABTestResponse response = client.estimateABTest(
               new EstimateABTestRequest()
                 .setConfiguration(
                   new EstimateConfiguration()
@@ -2943,10 +2934,13 @@ paths:
                 )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'us' with your Algolia Application Region
@@ -2969,14 +2963,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -3010,14 +3003,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = AbtestingClient::create('ALGOLIA_APPLICATION_ID',
@@ -3046,14 +3038,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use AbtestingClient instead,
@@ -3091,14 +3082,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::AbtestingClient.create("ALGOLIA_APPLICATION_ID",
@@ -3121,19 +3111,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: |
+          source: |-
             // Initialize the client
             val client = AbtestingClient(
               appId = "ALGOLIA_APPLICATION_ID",
@@ -3170,10 +3154,12 @@ paths:
               ),
               Duration(100, "sec")
             )
-            // >LOG
+
+            // print the response
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try AbtestingClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -3204,7 +3190,10 @@ paths:
                 ]
             ))
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

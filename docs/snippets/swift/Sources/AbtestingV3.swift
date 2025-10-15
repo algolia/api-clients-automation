@@ -32,6 +32,8 @@ final class AbtestingV3ClientSnippet {
             endAt: "2022-12-31T00:00:00.000Z"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -46,6 +48,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -60,6 +64,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -74,6 +80,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -91,6 +99,8 @@ final class AbtestingV3ClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -113,6 +123,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -127,6 +139,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -145,6 +159,8 @@ final class AbtestingV3ClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -166,6 +182,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -187,6 +205,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -208,6 +228,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -229,6 +251,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -250,6 +274,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -271,6 +297,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -292,6 +320,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -313,6 +343,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -334,6 +366,8 @@ final class AbtestingV3ClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -348,6 +382,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -366,6 +402,8 @@ final class AbtestingV3ClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -380,6 +418,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.deleteABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -409,6 +449,8 @@ final class AbtestingV3ClientSnippet {
             ]
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -423,6 +465,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.getABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -437,6 +481,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.getTimeseries(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -451,6 +497,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.listABTests()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -471,6 +519,8 @@ final class AbtestingV3ClientSnippet {
             direction: AbtestingV3Direction.asc
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -500,6 +550,8 @@ final class AbtestingV3ClientSnippet {
             endAt: "2022-12-31T00:00:00.000Z"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -528,6 +580,8 @@ final class AbtestingV3ClientSnippet {
         // Call the API
         let response = try await client.stopABTest(id: 42)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }
