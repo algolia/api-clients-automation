@@ -434,26 +434,24 @@ public partial interface ISearchClient
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  Task<List<Algolia.Search.Models.Ingestion.WatchResponse>> SaveObjectsWithTransformationAsync<T>(
+  Task<List<Algolia.Search.Models.Ingestion.WatchResponse>> SaveObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
-  /// <inheritdoc cref="SaveObjectsWithTransformationAsync{T}(string, IEnumerable{T}, bool, int, RequestOptions, CancellationToken)"/>
-  List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation<T>(
+  /// <inheritdoc cref="SaveObjectsWithTransformationAsync(string, IEnumerable{object}, bool, int, RequestOptions, CancellationToken)"/>
+  List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
   /// <summary>
   /// Helper: Similar to the `PartialUpdateObjects` method but requires a Push connector to be created first,
@@ -469,28 +467,26 @@ public partial interface ISearchClient
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   Task<
     List<Algolia.Search.Models.Ingestion.WatchResponse>
-  > PartialUpdateObjectsWithTransformationAsync<T>(
+  > PartialUpdateObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
-  /// <inheritdoc cref="PartialUpdateObjectsWithTransformationAsync{T}(string, IEnumerable{T}, bool, bool, int, RequestOptions, CancellationToken)"/>
-  List<Algolia.Search.Models.Ingestion.WatchResponse> PartialUpdateObjectsWithTransformation<T>(
+  /// <inheritdoc cref="PartialUpdateObjectsWithTransformationAsync(string, IEnumerable{object}, bool, bool, int, RequestOptions, CancellationToken)"/>
+  List<Algolia.Search.Models.Ingestion.WatchResponse> PartialUpdateObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
   /// <summary>
   /// Helper: Similar to the `ReplaceAllObjects` method but requires a Push connector to be created first,
@@ -1250,15 +1246,14 @@ public partial class SearchClient : ISearchClient
   /// <inheritdoc/>
   public async Task<
     List<Algolia.Search.Models.Ingestion.WatchResponse>
-  > SaveObjectsWithTransformationAsync<T>(
+  > SaveObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
-    where T : class
   {
     if (_ingestionTransporter == null)
     {
@@ -1282,15 +1277,14 @@ public partial class SearchClient : ISearchClient
   }
 
   /// <inheritdoc/>
-  public List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation<T>(
+  public List<Algolia.Search.Models.Ingestion.WatchResponse> SaveObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class =>
+  ) =>
     AsyncHelper.RunSync(() =>
       SaveObjectsWithTransformationAsync(
         indexName,
@@ -1307,16 +1301,15 @@ public partial class SearchClient : ISearchClient
   /// <inheritdoc/>
   public async Task<
     List<Algolia.Search.Models.Ingestion.WatchResponse>
-  > PartialUpdateObjectsWithTransformationAsync<T>(
+  > PartialUpdateObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
-    where T : class
   {
     if (_ingestionTransporter == null)
     {
@@ -1344,16 +1337,15 @@ public partial class SearchClient : ISearchClient
   }
 
   /// <inheritdoc/>
-  public List<Algolia.Search.Models.Ingestion.WatchResponse> PartialUpdateObjectsWithTransformation<T>(
+  public List<Algolia.Search.Models.Ingestion.WatchResponse> PartialUpdateObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     bool createIfNotExists = true,
     bool waitForTasks = false,
     int batchSize = 1000,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class =>
+  ) =>
     AsyncHelper.RunSync(() =>
       PartialUpdateObjectsWithTransformationAsync(
         indexName,
