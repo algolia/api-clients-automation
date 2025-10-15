@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -932,8 +933,8 @@ public partial class SearchClient : ISearchClient
       scopes = new List<ScopeType> { ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms };
     }
 
-    var rnd = new Random();
-    var tmpIndexName = $"{indexName}_tmp_{rnd.Next(100)}";
+    var randomSuffix = 100_000 + RandomNumberGenerator.GetInt32(900_000);
+    var tmpIndexName = $"{indexName}_tmp_{randomSuffix}";
 
     try
     {
@@ -1425,8 +1426,7 @@ public partial class SearchClient : ISearchClient
       scopes = new List<ScopeType> { ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms };
     }
 
-    var random = new Random();
-    var randomSuffix = random.Next(100000, 1000000);
+    var randomSuffix = 100_000 + RandomNumberGenerator.GetInt32(900_000);
     var tmpIndexName = $"{indexName}_tmp_{randomSuffix}";
 
     try
