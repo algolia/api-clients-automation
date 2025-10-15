@@ -17,11 +17,11 @@ The Algolia API clients are generated from [OpenAPI specs](https://swagger.io/sp
 
 **Migration note from current API clients**
 
-> In July 2022, we released an alpha version generated API clients for the JavaScript, Java and PHP languages. If you are using the latest stable of those clients and looking to upgrade, read the [migration guide](https://www.algolia.com/doc/libraries/). You can still browse the documentation of the stable clients on [the Algolia documentation](https://www.algolia.com/doc/).
+> In July 2022, we released an alpha version generated API clients for the JavaScript, Java and PHP languages. If you are using the latest stable of those clients and looking to upgrade, read the [migration guide](https://www.algolia.com/doc/libraries/sdk/upgrade). You can still browse the documentation of the stable clients on [the Algolia documentation](https://www.algolia.com/doc/).
 
 ## 💡 Getting Started with the clients
 
-You can read `getting started` guides and how to use the API clients on [our documentation](https://www.algolia.com/doc/libraries/).
+You can read `getting started` guides and how to use the API clients on [our documentation](https://www.algolia.com/doc/libraries/sdk/install).
 
 ## ✨ Contributing
 

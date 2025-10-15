@@ -22,7 +22,7 @@ function Hero() {
           width={160}
           height={30}
           title="GitHub Stars"
-        />
+        />,
       ]}
     >
       <Title />

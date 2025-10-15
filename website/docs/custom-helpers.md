@@ -33,7 +33,6 @@ This section explains the decision over the implementation of complicated helper
 
 :::
 
-
 ### `replaceAllObjects`
 
 :::caution
