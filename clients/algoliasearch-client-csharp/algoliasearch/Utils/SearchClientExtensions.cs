@@ -933,7 +933,11 @@ public partial class SearchClient : ISearchClient
       scopes = new List<ScopeType> { ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms };
     }
 
-    var randomSuffix = 100_000 + RandomNumberGenerator.GetInt32(900_000);
+    var rng = RandomNumberGenerator.Create();
+    var bytes = new byte[4];
+    rng.GetBytes(bytes);
+
+    var randomSuffix = (Math.Abs(BitConverter.ToInt32(bytes, 0)) % 900001) + 100000;
     var tmpIndexName = $"{indexName}_tmp_{randomSuffix}";
 
     try
@@ -1426,7 +1430,11 @@ public partial class SearchClient : ISearchClient
       scopes = new List<ScopeType> { ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms };
     }
 
-    var randomSuffix = 100_000 + RandomNumberGenerator.GetInt32(900_000);
+    var rng = RandomNumberGenerator.Create();
+    var bytes = new byte[4];
+    rng.GetBytes(bytes);
+
+    var randomSuffix = (Math.Abs(BitConverter.ToInt32(bytes, 0)) % 900001) + 100000;
     var tmpIndexName = $"{indexName}_tmp_{randomSuffix}";
 
     try
