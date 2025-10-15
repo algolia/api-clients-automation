@@ -219,21 +219,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -445,21 +444,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -671,21 +669,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -893,21 +890,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1178,36 +1174,32 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.addABTests(
-              addABTestsRequest = AddABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                name = "myABTest",
-                variants = listOf(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 30,
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50,
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.addABTests(
+                addABTestsRequest =
+                  AddABTestsRequest(
+                    endAt = "2022-12-31T00:00:00.000Z",
+                    name = "myABTest",
+                    variants =
+                      listOf(
+                        AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
+                        AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+                      ),
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1542,21 +1534,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.listABTests()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1776,21 +1767,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getABTest(id = 42)
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2015,21 +2005,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.deleteABTest(id = 42)
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2257,21 +2246,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.stopABTest(id = 42)
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2563,37 +2551,33 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.scheduleABTest(
-              scheduleABTestsRequest = ScheduleABTestsRequest(
-                endAt = "2022-12-31T00:00:00.000Z",
-                scheduledAt = "2022-11-31T00:00:00.000Z",
-                name = "myABTest",
-                variants = listOf(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 30,
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50,
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.scheduleABTest(
+                scheduleABTestsRequest =
+                  ScheduleABTestsRequest(
+                    endAt = "2022-12-31T00:00:00.000Z",
+                    scheduledAt = "2022-11-31T00:00:00.000Z",
+                    name = "myABTest",
+                    variants =
+                      listOf(
+                        AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
+                        AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+                      ),
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2969,43 +2953,39 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AbtestingClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AbtestingClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.estimateABTest(
-              estimateABTestRequest = EstimateABTestRequest(
-                configuration = EstimateConfiguration(
-                  emptySearch = EmptySearch(
-                    exclude = true,
-                  ),
-                  minimumDetectableEffect = MinimumDetectableEffect(
-                    size = 0.03,
-                    metric = EffectMetric.entries.first { it.value == "conversionRate" },
-                  ),
-                ),
-                variants = listOf(
-                  AbTestsVariant(
-                    index = "AB_TEST_1",
-                    trafficPercentage = 50,
-                  ),
-                  AbTestsVariant(
-                    index = "AB_TEST_2",
-                    trafficPercentage = 50,
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.estimateABTest(
+                estimateABTestRequest =
+                  EstimateABTestRequest(
+                    configuration =
+                      EstimateConfiguration(
+                        emptySearch = EmptySearch(exclude = true),
+                        minimumDetectableEffect =
+                          MinimumDetectableEffect(
+                            size = 0.03,
+                            metric = EffectMetric.entries.first { it.value == "conversionRate" },
+                          ),
+                      ),
+                    variants =
+                      listOf(
+                        AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 50),
+                        AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+                      ),
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP

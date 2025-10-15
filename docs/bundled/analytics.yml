@@ -257,21 +257,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -483,21 +482,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -709,21 +707,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -931,21 +928,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1221,21 +1217,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getTopSearches(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1494,21 +1489,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getSearchesCount(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1764,21 +1758,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getSearchesNoResults(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2043,21 +2036,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getSearchesNoClicks(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2332,21 +2324,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getNoResultsRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2619,21 +2610,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getNoClickRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2914,21 +2904,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getTopHits(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3202,21 +3191,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getUsersCount(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3455,21 +3443,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getTopFilterAttributes(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -3720,9 +3707,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -3979,21 +3969,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getTopFiltersNoResults(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -4247,21 +4236,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getTopCountries(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -4541,21 +4529,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getAverageClickPosition(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -4805,21 +4792,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getClickPositions(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5103,21 +5089,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getClickThroughRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5400,21 +5385,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getConversionRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -5707,21 +5691,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getAddToCartRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -6013,21 +5996,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getPurchaseRate(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -6286,21 +6268,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getRevenue(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -6534,21 +6515,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = AnalyticsClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              AnalyticsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getStatus(index = "index")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP

@@ -2816,10 +2816,11 @@ paths:
 
             // Call the API
 
-            var response = client.getMetrics(metric = Metric.entries.first {
-            it.value == "avg_build_time" }, period = Period.entries.first {
-            it.value == "minute" })
-
+            var response =
+              client.getMetrics(
+                metric = Metric.entries.first { it.value == "avg_build_time" },
+                period = Period.entries.first { it.value == "minute" },
+              )
 
 
             // print the response

@@ -1,10 +1,9 @@
-import kotlinx.serialization.json.JsonObject
-
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
-import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
 import com.algolia.client.model.search.*
+import com.algolia.client.transport.*
+import kotlinx.serialization.json.JsonObject
 
 suspend fun setHeaderUserIDThenSaveObjects() {
   val playlists: List<JsonObject> = listOf() // Your records
@@ -19,11 +18,8 @@ suspend fun setHeaderUserIDThenSaveObjects() {
         objects = playlists,
         waitForTasks = false,
         batchSize = 1000,
-        requestOptions = RequestOptions(
-          headers = buildMap {
-            put("X-Algolia-User-ID", playlistUserID)
-          },
-        ),
+        requestOptions =
+          RequestOptions(headers = buildMap { put("X-Algolia-User-ID", playlistUserID) }),
       )
     } catch (exception: Exception) {
       println(exception.message)

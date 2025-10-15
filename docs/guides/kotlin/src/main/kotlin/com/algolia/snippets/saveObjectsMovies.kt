@@ -1,18 +1,19 @@
 package org.example
+
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
+import com.algolia.client.extensions.*
 import com.algolia.client.transport.*
-import com.algolia.client.extensions.*
-import com.algolia.client.extensions.*
+import java.net.URI
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import java.net.URI
 
 suspend fun main() {
   val url = URI.create("https://dashboard.algolia.com/api/1/sample_datasets?type=movie")
   val json = url.toURL().readText()
-  val movies: List<JsonObject> = Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
+  val movies: List<JsonObject> =
+    Json.decodeFromString(ListSerializer(JsonObject.serializer()), json)
 
   val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

@@ -211,22 +211,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -440,22 +438,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -669,22 +665,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -894,22 +888,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1118,22 +1110,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getAllConfigs()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1413,39 +1403,36 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.createConfig(
-              configurationWithIndex = ConfigurationWithIndex(
-                indexName = "<YOUR_INDEX_NAME>",
-                sourceIndices = listOf(
-                  SourceIndex(
+            var response =
+              client.createConfig(
+                configurationWithIndex =
+                  ConfigurationWithIndex(
                     indexName = "<YOUR_INDEX_NAME>",
-                    facets = listOf(
-                      Facet(
-                        attribute = "test",
+                    sourceIndices =
+                      listOf(
+                        SourceIndex(
+                          indexName = "<YOUR_INDEX_NAME>",
+                          facets = listOf(Facet(attribute = "test")),
+                          generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                        )
                       ),
-                    ),
-                    generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
-                  ),
-                ),
-                languages = Languages.of(listOf("french")),
-                exclude = listOf("test"),
-              ),
-            )
-
+                    languages = Languages.of(listOf("french")),
+                    exclude = listOf("test"),
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1761,22 +1748,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2059,39 +2044,36 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.updateConfig(
-              indexName = "<YOUR_INDEX_NAME>",
-              configuration = Configuration(
-                sourceIndices = listOf(
-                  SourceIndex(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    facets = listOf(
-                      Facet(
-                        attribute = "test",
+            var response =
+              client.updateConfig(
+                indexName = "<YOUR_INDEX_NAME>",
+                configuration =
+                  Configuration(
+                    sourceIndices =
+                      listOf(
+                        SourceIndex(
+                          indexName = "<YOUR_INDEX_NAME>",
+                          facets = listOf(Facet(attribute = "test")),
+                          generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                        )
                       ),
-                    ),
-                    generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                    languages = Languages.of(listOf("french")),
+                    exclude = listOf("test"),
                   ),
-                ),
-                languages = Languages.of(listOf("french")),
-                exclude = listOf("test"),
-              ),
-            )
-
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2418,22 +2400,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.deleteConfig(indexName = "<YOUR_INDEX_NAME>")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2689,10 +2669,12 @@ paths:
           source: >-
             // Initialize the client
 
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
 
@@ -2947,22 +2929,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = QuerySuggestionsClient(appId =
-            "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY", region =
-            "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              QuerySuggestionsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getLogFile(indexName = "<YOUR_INDEX_NAME>")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP

@@ -473,121 +473,118 @@
     }
   },
   "kotlin": {
-    "import": {
-      "default": "import com.algolia.client.api.AnalyticsClient\nimport com.algolia.client.configuration.*\nimport com.algolia.client.transport.*"
-    },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
-      "allow del method for a custom path with all parameters": "var response = client.customDelete(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters\"))"
+      "allow del method for a custom path with all parameters": "var response =\n  client.customDelete(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters\"))"
     },
     "customGet": {
       "allow get method for a custom path with minimal parameters": "var response = client.customGet(path = \"test/minimal\")",
-      "allow get method for a custom path with all parameters": "var response = client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
-      "requestOptions should be escaped too": "var response = client.customGet(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"to be overridden\"),\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"parameters with space\")\n      put(\"and an array\", listOf(\"array\", \"with spaces\"))\n    },\n    headers = buildMap {\n      put(\"x-header-1\", \"spaces are left alone\")\n    },\n  ),\n)"
+      "allow get method for a custom path with all parameters": "var response =\n  client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
+      "requestOptions should be escaped too": "var response =\n  client.customGet(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"to be overridden\"),\n    requestOptions =\n      RequestOptions(\n        urlParameters =\n          buildMap {\n            put(\"query\", \"parameters with space\")\n            put(\"and an array\", listOf(\"array\", \"with spaces\"))\n          },\n        headers = buildMap { put(\"x-header-1\", \"spaces are left alone\") },\n      ),\n  )"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "var response = client.customPost(path = \"test/minimal\")",
-      "allow post method for a custom path with all parameters": "var response = client.customPost(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)",
-      "requestOptions can override default query parameters": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions merges query parameters with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"query2\", \"myQueryParameter\")\n    },\n  ),\n)",
-      "requestOptions can override default headers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions merges headers with default ones": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    headers = buildMap {\n      put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"isItWorking\", true)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", 2)\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of string": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(\"b and c\", \"d\"))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of booleans": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(true, true, false))\n    },\n  ),\n)",
-      "requestOptions queryParameters accepts list of integers": "var response = client.customPost(\n  path = \"test/requestOptions\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"facet\", JsonPrimitive(\"filters\"))\n  },\n  requestOptions = RequestOptions(\n    urlParameters = buildMap {\n      put(\"myParam\", listOf(1, 2))\n    },\n  ),\n)"
+      "allow post method for a custom path with all parameters": "var response =\n  client.customPost(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"body\", JsonPrimitive(\"parameters\")) },\n  )",
+      "requestOptions can override default query parameters": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"query\", \"myQueryParameter\") }),\n  )",
+      "requestOptions merges query parameters with default ones": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"query2\", \"myQueryParameter\") }),\n  )",
+      "requestOptions can override default headers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(headers = buildMap { put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\") }),\n  )",
+      "requestOptions merges headers with default ones": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(headers = buildMap { put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\") }),\n  )",
+      "requestOptions queryParameters accepts booleans": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"isItWorking\", true) }),\n  )",
+      "requestOptions queryParameters accepts integers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"myParam\", 2) }),\n  )",
+      "requestOptions queryParameters accepts list of string": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(\"b and c\", \"d\")) }),\n  )",
+      "requestOptions queryParameters accepts list of booleans": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(true, true, false)) }),\n  )",
+      "requestOptions queryParameters accepts list of integers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(1, 2)) }),\n  )"
     },
     "customPut": {
       "allow put method for a custom path with minimal parameters": "var response = client.customPut(path = \"test/minimal\")",
-      "allow put method for a custom path with all parameters": "var response = client.customPut(\n  path = \"test/all\",\n  parameters = mapOf(\"query\" to \"parameters\"),\n  body = buildJsonObject {\n    put(\"body\", JsonPrimitive(\"parameters\"))\n  },\n)"
+      "allow put method for a custom path with all parameters": "var response =\n  client.customPut(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"body\", JsonPrimitive(\"parameters\")) },\n  )"
     },
     "getAddToCartRate": {
       "get getAddToCartRate with minimal parameters": "var response = client.getAddToCartRate(index = \"index\")",
-      "get getAddToCartRate with all parameters": "var response = client.getAddToCartRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getAddToCartRate with all parameters": "var response =\n  client.getAddToCartRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getAverageClickPosition": {
       "get getAverageClickPosition with minimal parameters": "var response = client.getAverageClickPosition(index = \"index\")",
-      "get getAverageClickPosition with all parameters": "var response = client.getAverageClickPosition(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getAverageClickPosition with all parameters": "var response =\n  client.getAverageClickPosition(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getClickPositions": {
       "get getClickPositions with minimal parameters": "var response = client.getClickPositions(index = \"index\")",
-      "get getClickPositions with all parameters": "var response = client.getClickPositions(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getClickPositions with all parameters": "var response =\n  client.getClickPositions(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getClickThroughRate": {
       "get getClickThroughRate with minimal parameters": "var response = client.getClickThroughRate(index = \"index\")",
-      "get getClickThroughRate with all parameters": "var response = client.getClickThroughRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getClickThroughRate with all parameters": "var response =\n  client.getClickThroughRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getConversionRate": {
       "get getConversationRate with minimal parameters": "var response = client.getConversionRate(index = \"index\")",
-      "get getConversationRate with all parameters": "var response = client.getConversionRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getConversationRate with all parameters": "var response =\n  client.getConversionRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getNoClickRate": {
       "get getNoClickRate with minimal parameters": "var response = client.getNoClickRate(index = \"index\")",
-      "get getNoClickRate with all parameters": "var response = client.getNoClickRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getNoClickRate with all parameters": "var response =\n  client.getNoClickRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getNoResultsRate": {
       "get getNoResultsRate with minimal parameters": "var response = client.getNoResultsRate(index = \"index\")",
-      "get getNoResultsRate with all parameters": "var response = client.getNoResultsRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getNoResultsRate with all parameters": "var response =\n  client.getNoResultsRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "var response = client.getPurchaseRate(index = \"index\")",
-      "get getPurchaseRate with all parameters": "var response = client.getPurchaseRate(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getPurchaseRate with all parameters": "var response =\n  client.getPurchaseRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getRevenue": {
       "get getRevenue with minimal parameters": "var response = client.getRevenue(index = \"index\")",
-      "get getRevenue with all parameters": "var response = client.getRevenue(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getRevenue with all parameters": "var response =\n  client.getRevenue(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getSearchesCount": {
       "get getSearchesCount with minimal parameters": "var response = client.getSearchesCount(index = \"index\")",
-      "get getSearchesCount with all parameters": "var response = client.getSearchesCount(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getSearchesCount with all parameters": "var response =\n  client.getSearchesCount(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "getSearchesNoClicks": {
       "get getSearchesNoClicks with minimal parameters": "var response = client.getSearchesNoClicks(index = \"index\")",
-      "get getSearchesNoClicks with all parameters": "var response = client.getSearchesNoClicks(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getSearchesNoClicks with all parameters": "var response =\n  client.getSearchesNoClicks(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getSearchesNoResults": {
       "get getSearchesNoResults with minimal parameters": "var response = client.getSearchesNoResults(index = \"index\")",
-      "get getSearchesNoResults with all parameters": "var response = client.getSearchesNoResults(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getSearchesNoResults with all parameters": "var response =\n  client.getSearchesNoResults(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getStatus": {
       "default": "var response = client.getStatus(index = \"index\")"
     },
     "getTopCountries": {
       "get getTopCountries with minimal parameters": "var response = client.getTopCountries(index = \"index\")",
-      "get getTopCountries with all parameters": "var response = client.getTopCountries(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopCountries with all parameters": "var response =\n  client.getTopCountries(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getTopFilterAttributes": {
       "get getTopFilterAttributes with minimal parameters": "var response = client.getTopFilterAttributes(index = \"index\")",
-      "get getTopFilterAttributes with all parameters": "var response = client.getTopFilterAttributes(index = \"index\", search = \"mySearch\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopFilterAttributes with all parameters": "var response =\n  client.getTopFilterAttributes(\n    index = \"index\",\n    search = \"mySearch\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getTopFilterForAttribute": {
       "get getTopFilterForAttribute with minimal parameters": "var response = client.getTopFilterForAttribute(attribute = \"myAttribute\", index = \"index\")",
-      "get getTopFilterForAttribute with minimal parameters and multiple attributes": "var response = client.getTopFilterForAttribute(attribute = \"myAttribute1,myAttribute2\", index = \"index\")",
-      "get getTopFilterForAttribute with all parameters": "var response = client.getTopFilterForAttribute(attribute = \"myAttribute\", index = \"index\", search = \"mySearch\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")",
-      "get getTopFilterForAttribute with all parameters and multiple attributes": "var response = client.getTopFilterForAttribute(attribute = \"myAttribute1,myAttribute2\", index = \"index\", search = \"mySearch\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopFilterForAttribute with minimal parameters and": "var response =\n  client.getTopFilterForAttribute(attribute = \"myAttribute1,myAttribute2\", index = \"index\")",
+      "get getTopFilterForAttribute with all parameters": "var response =\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute\",\n    index = \"index\",\n    search = \"mySearch\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )",
+      "get getTopFilterForAttribute with all parameters and": "var response =\n  client.getTopFilterForAttribute(\n    attribute = \"myAttribute1,myAttribute2\",\n    index = \"index\",\n    search = \"mySearch\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getTopFiltersNoResults": {
       "get getTopFiltersNoResults with minimal parameters": "var response = client.getTopFiltersNoResults(index = \"index\")",
-      "get getTopFiltersNoResults with all parameters": "var response = client.getTopFiltersNoResults(index = \"index\", search = \"mySearch\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopFiltersNoResults with all parameters": "var response =\n  client.getTopFiltersNoResults(\n    index = \"index\",\n    search = \"mySearch\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getTopHits": {
       "get getTopHits with minimal parameters": "var response = client.getTopHits(index = \"index\")",
-      "get getTopHits with all parameters": "var response = client.getTopHits(index = \"index\", search = \"mySearch\", clickAnalytics = true, revenueAnalytics = true, startDate = \"1999-09-19\", endDate = \"2001-01-01\", limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopHits with all parameters": "var response =\n  client.getTopHits(\n    index = \"index\",\n    search = \"mySearch\",\n    clickAnalytics = true,\n    revenueAnalytics = true,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getTopSearches": {
       "get getTopSearches with minimal parameters": "var response = client.getTopSearches(index = \"index\")",
-      "get getTopSearches with all parameters": "var response = client.getTopSearches(index = \"index\", clickAnalytics = true, revenueAnalytics = true, startDate = \"1999-09-19\", endDate = \"2001-01-01\", orderBy = OrderBy.entries.first { it.value == \"searchCount\" }, direction = Direction.entries.first { it.value == \"asc\" }, limit = 21, offset = 42, tags = \"tag\")"
+      "get getTopSearches with all parameters": "var response =\n  client.getTopSearches(\n    index = \"index\",\n    clickAnalytics = true,\n    revenueAnalytics = true,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    orderBy = OrderBy.entries.first { it.value == \"searchCount\" },\n    direction = Direction.entries.first { it.value == \"asc\" },\n    limit = 21,\n    offset = 42,\n    tags = \"tag\",\n  )"
     },
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "var response = client.getUsersCount(index = \"index\")",
-      "get getUsersCount with all parameters": "var response = client.getUsersCount(index = \"index\", startDate = \"1999-09-19\", endDate = \"2001-01-01\", tags = \"tag\")"
+      "get getUsersCount with all parameters": "var response =\n  client.getUsersCount(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
     },
     "init": {
-      "default": "val client = AnalyticsClient(appId = \"ALGOLIA_APPLICATION_ID\", apiKey = \"ALGOLIA_API_KEY\", region = \"ALGOLIA_APPLICATION_REGION\")"
+      "default": "val client =\n  AnalyticsClient(\n    appId = \"ALGOLIA_APPLICATION_ID\",\n    apiKey = \"ALGOLIA_API_KEY\",\n    region = \"ALGOLIA_APPLICATION_REGION\",\n  )"
     }
   },
   "php": {
