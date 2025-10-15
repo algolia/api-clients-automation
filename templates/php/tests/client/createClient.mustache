@@ -4,9 +4,9 @@ $client = $this->createClient(
     {{#parametersWithDataTypeMap.apiKey}}"{{parametersWithDataTypeMap.apiKey.value}}"{{/parametersWithDataTypeMap.apiKey}}{{^parametersWithDataTypeMap.apiKey}}null{{/parametersWithDataTypeMap.apiKey}}{{#hasRegionalHost}},
     {{#parametersWithDataTypeMap.region}}"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{^parametersWithDataTypeMap.region}}null{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
 );
-{{^isError}}$this->assertIsObject($client);{{/isError}}{{/useEchoRequester}}{{^hasTransformationRegion}}{{#hasCustomHosts}}
-$client = {{client}}::createWithConfig({{clientPrefix}}Config::create("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}})->setFullHosts([{{#customHosts}}"http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":{{port}}"{{^-last}},{{/-last}}{{/customHosts}}]));
-{{/hasCustomHosts}}{{/hasTransformationRegion}}
+{{^isError}}$this->assertIsObject($client);{{/isError}}{{/useEchoRequester}}{{^hasTransformationRegion}}{{#hasCustomClientCreate}}
+$client = {{client}}::createWithConfig({{clientPrefix}}Config::create("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}"{{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}},"{{parametersWithDataTypeMap.region.value}}"{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}){{#hasCustomHosts}}->setFullHosts([{{#customHosts}}"http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":{{port}}"{{^-last}},{{/-last}}{{/customHosts}}]){{/hasCustomHosts}}{{#hasCustomWriteTimeout}}->setWriteTimeout({{writeTimeout}}){{/hasCustomWriteTimeout}});
+{{/hasCustomClientCreate}}{{/hasTransformationRegion}}
 {{#hasTransformationRegion}}
 $client = {{client}}::createWithConfig({{clientPrefix}}Config::create("{{parametersWithDataTypeMap.appId.value}}","{{parametersWithDataTypeMap.apiKey.value}}")->setFullHosts([{{#customHosts}}"http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":{{port}}"{{^-last}},{{/-last}}{{/customHosts}}])->setTransformationRegion("{{{transformationRegion}}}"));
 {{/hasTransformationRegion}}

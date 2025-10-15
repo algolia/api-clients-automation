@@ -42,11 +42,15 @@ class {{client}}ClientTests {
   }
 
   {{client}} createClient() {
-      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}withEchoRequester());
+      return new {{client}}("appId", "apiKey", {{#hasRegionalHost}}"{{defaultRegion}}", {{/hasRegionalHost}}withEchoRequester(null));
   }
 
-  private ClientOptions withEchoRequester() {
-    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+  private ClientOptions withEchoRequester(Integer writeTimeout) {
+    if (writeTimeout == null) {
+      return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).build();
+    }
+
+    return ClientOptions.builder().setRequesterConfig(requester -> requester.addInterceptor(echo)).setWriteTimeout(Duration.ofMillis(writeTimeout)).build();
   }
 
   private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding) {

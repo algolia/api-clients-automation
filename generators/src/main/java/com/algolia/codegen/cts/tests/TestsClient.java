@@ -89,16 +89,24 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
-              if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
+                testOut.put("useEchoRequester", false);
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
               }
 
+              boolean hasCustomWriteTimeout = step.parameters != null && step.parameters.containsKey("writeTimeout");
+              stepOut.put("hasCustomWriteTimeout", hasCustomWriteTimeout);
+              if (hasCustomWriteTimeout) {
+                stepOut.put("writeTimeout", step.parameters.get("writeTimeout"));
+              }
+
+              stepOut.put("hasCustomClientCreate", hasCustomWriteTimeout || hasCustomHosts);
+
               boolean hasTransformationRegion = step.parameters != null && step.parameters.containsKey("transformationRegion");
-              if (hasTransformationRegion) testOut.put("useEchoRequester", false);
               stepOut.put("hasTransformationRegion", hasTransformationRegion);
               if (hasTransformationRegion) {
+                testOut.put("useEchoRequester", false);
                 stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
               }
 

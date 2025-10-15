@@ -1,14 +1,17 @@
-{{#hasCustomHosts}}
+{{#hasCustomClientCreate}}
 client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create_with_config(Algolia::Configuration.new(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
+  {{#hasCustomHosts}}
   [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE),{{/customHosts}}],
+  {{/hasCustomHosts}}
   '{{client}}'{{#gzipEncoding}},
   compression_type: 'gzip'{{/gzipEncoding}}
-)){{/hasCustomHosts}}{{^hasCustomHosts}}
+  {{#hasCustomWriteTimeout}},write_timeout: {{writeTimeout}}{{/hasCustomWriteTimeout}}
+)){{/hasCustomClientCreate}}{{^hasCustomClientCreate}}
 {{^isError}}client = {{/isError}}Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
   {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}'{{parametersWithDataTypeMap.region.value}}',{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
   { requester: Algolia::Transport::EchoRequester.new }
-){{/hasCustomHosts}}
+){{/hasCustomClientCreate}}

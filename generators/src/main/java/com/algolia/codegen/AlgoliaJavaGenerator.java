@@ -95,6 +95,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
     ModelPruner.removeOrphanModelFiles(this, operations, models);
     Helpers.removeHelpers(operations);
+    Timeouts.propagate(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
   }

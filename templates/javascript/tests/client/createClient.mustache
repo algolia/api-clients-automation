@@ -19,6 +19,9 @@
     {{/customHosts}}
     ],
     {{/hasCustomHosts}} 
+    {{#hasCustomWriteTimeout}}
+    writeTimeout: {{writeTimeout}},
+    {{/hasCustomWriteTimeout}}
     {{#hasTransformationRegion}}
     transformation: { region : "{{{transformationRegion}}}" },
     {{/hasTransformationRegion}} 
@@ -41,7 +44,10 @@
       },
       {{/customHosts}}
       ]
-      {{/hasCustomHosts}}
+    {{/hasCustomHosts}}
+    {{#hasCustomWriteTimeout}}
+      writeTimeout: {{writeTimeout}},
+    {{/hasCustomWriteTimeout}}
   },
  {{#hasRegionalHost}}
  // @ts-ignore
