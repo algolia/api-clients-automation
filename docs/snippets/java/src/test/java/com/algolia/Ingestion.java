@@ -18,13 +18,15 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createAuthentication(
+    AuthenticationCreateResponse response = client.createAuthentication(
       new AuthenticationCreate()
         .setType(AuthenticationType.OAUTH)
         .setName("authName")
         .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -37,13 +39,15 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createAuthentication(
+    AuthenticationCreateResponse response = client.createAuthentication(
       new AuthenticationCreate()
         .setType(AuthenticationType.ALGOLIA)
         .setName("authName")
         .setInput(new AuthAlgolia().setAppID("ALGOLIA_APPLICATION_ID").setApiKey("ALGOLIA_API_KEY"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -56,7 +60,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createDestination(
+    DestinationCreateResponse response = client.createDestination(
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
@@ -64,6 +68,8 @@ class SnippetIngestionClient {
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -76,7 +82,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createDestination(
+    DestinationCreateResponse response = client.createDestination(
       new DestinationCreate()
         .setType(DestinationType.SEARCH)
         .setName("destinationName")
@@ -84,6 +90,8 @@ class SnippetIngestionClient {
         .setTransformationIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -96,7 +104,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createSource(
+    SourceCreateResponse response = client.createSource(
       new SourceCreate()
         .setType(SourceType.COMMERCETOOLS)
         .setName("sourceName")
@@ -111,6 +119,8 @@ class SnippetIngestionClient {
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -123,8 +133,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createSource(new SourceCreate().setType(SourceType.PUSH).setName("pushezpourentrer"));
+    SourceCreateResponse response = client.createSource(new SourceCreate().setType(SourceType.PUSH).setName("pushezpourentrer"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -137,8 +149,12 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTask(new TaskCreate().setSourceID("search").setDestinationID("destinationID").setAction(ActionType.REPLACE));
+    TaskCreateResponse response = client.createTask(
+      new TaskCreate().setSourceID("search").setDestinationID("destinationID").setAction(ActionType.REPLACE)
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -151,7 +167,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTask(
+    TaskCreateResponse response = client.createTask(
       new TaskCreate()
         .setSourceID("search")
         .setDestinationID("destinationID")
@@ -161,6 +177,8 @@ class SnippetIngestionClient {
         .setPolicies(new Policies().setCriticalThreshold(8))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -173,7 +191,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTask(
+    TaskCreateResponse response = client.createTask(
       new TaskCreate()
         .setSourceID("search")
         .setDestinationID("destinationID")
@@ -186,6 +204,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -198,7 +218,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTaskV1(
+    TaskCreateResponse response = client.createTaskV1(
       new TaskCreateV1()
         .setSourceID("search")
         .setDestinationID("destinationName")
@@ -206,6 +226,8 @@ class SnippetIngestionClient {
         .setAction(ActionType.REPLACE)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -218,7 +240,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTaskV1(
+    TaskCreateResponse response = client.createTaskV1(
       new TaskCreateV1()
         .setSourceID("search")
         .setDestinationID("destinationName")
@@ -226,6 +248,8 @@ class SnippetIngestionClient {
         .setAction(ActionType.REPLACE)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -238,7 +262,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTaskV1(
+    TaskCreateResponse response = client.createTaskV1(
       new TaskCreateV1()
         .setSourceID("search")
         .setDestinationID("destinationName")
@@ -246,6 +270,8 @@ class SnippetIngestionClient {
         .setAction(ActionType.REPLACE)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -258,7 +284,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTaskV1(
+    TaskCreateResponse response = client.createTaskV1(
       new TaskCreateV1()
         .setSourceID("search")
         .setDestinationID("destinationName")
@@ -271,6 +297,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -283,7 +311,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.createTransformation(
+    TransformationCreateResponse response = client.createTransformation(
       new TransformationCreate()
         .setInput(new TransformationCode().setCode("foo"))
         .setType(TransformationType.CODE)
@@ -291,6 +319,8 @@ class SnippetIngestionClient {
         .setDescription("baz")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -303,8 +333,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -317,7 +349,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -326,6 +358,8 @@ class SnippetIngestionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -338,8 +372,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -352,7 +388,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -361,6 +397,8 @@ class SnippetIngestionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -373,7 +411,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -386,6 +424,8 @@ class SnippetIngestionClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -398,8 +438,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -412,7 +454,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -426,6 +468,8 @@ class SnippetIngestionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -438,7 +482,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -453,6 +497,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -465,7 +511,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -480,6 +526,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -492,7 +540,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -507,6 +555,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -519,7 +569,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -534,6 +584,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -546,7 +598,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -561,6 +613,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -573,7 +627,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -588,6 +642,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -600,7 +656,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -615,6 +671,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -627,7 +685,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -642,6 +700,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -654,7 +714,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -669,6 +729,8 @@ class SnippetIngestionClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -681,8 +743,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -695,7 +759,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -709,6 +773,8 @@ class SnippetIngestionClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -721,8 +787,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -735,8 +803,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -749,8 +819,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -763,8 +835,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -777,8 +851,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -791,8 +867,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    DeleteResponse response = client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -805,8 +883,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    TaskUpdateResponse response = client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -819,8 +899,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    TaskUpdateResponse response = client.disableTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -833,8 +915,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    TaskUpdateResponse response = client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -847,8 +931,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
+    TaskUpdateResponse response = client.enableTaskV1("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -861,8 +947,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    Authentication response = client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -875,8 +963,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    Destination response = client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -889,8 +979,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
+    Event response = client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -903,8 +995,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    Run response = client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -917,8 +1011,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
+    Source response = client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -931,8 +1027,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    Task response = client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -945,8 +1043,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    TaskV1 response = client.getTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -959,8 +1059,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    Transformation response = client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -973,8 +1075,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listAuthentications();
+    ListAuthenticationsResponse response = client.listAuthentications();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -987,7 +1091,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listAuthentications(
+    ListAuthenticationsResponse response = client.listAuthentications(
       2,
       1,
       Arrays.asList(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
@@ -996,6 +1100,8 @@ class SnippetIngestionClient {
       OrderKeys.ASC
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1008,8 +1114,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listDestinations();
+    ListDestinationsResponse response = client.listDestinations();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1022,8 +1130,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    ListEventsResponse response = client.listEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1036,8 +1146,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listRuns();
+    RunListResponse response = client.listRuns();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1050,8 +1162,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listSources();
+    ListSourcesResponse response = client.listSources();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1064,8 +1178,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listTasks();
+    ListTasksResponse response = client.listTasks();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1078,8 +1194,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listTasksV1();
+    ListTasksResponseV1 response = client.listTasksV1();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1092,8 +1210,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listTransformations();
+    ListTransformationsResponse response = client.listTransformations();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1106,8 +1226,16 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.listTransformations(2, 1, TransformationSortKeys.CREATED_AT, OrderKeys.ASC, TransformationType.NO_CODE);
+    ListTransformationsResponse response = client.listTransformations(
+      2,
+      1,
+      TransformationSortKeys.CREATED_AT,
+      OrderKeys.ASC,
+      TransformationType.NO_CODE
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1120,7 +1248,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.push(
+    WatchResponse response = client.push(
       "<YOUR_INDEX_NAME>",
       new PushTaskPayload()
         .setAction(Action.ADD_OBJECT)
@@ -1132,6 +1260,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1144,7 +1274,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.push(
+    WatchResponse response = client.push(
       "<YOUR_INDEX_NAME>",
       new PushTaskPayload()
         .setAction(Action.ADD_OBJECT)
@@ -1158,6 +1288,8 @@ class SnippetIngestionClient {
       "foo"
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1170,7 +1302,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushTask(
+    WatchResponse response = client.pushTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new PushTaskPayload()
         .setAction(Action.ADD_OBJECT)
@@ -1182,6 +1314,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1194,7 +1328,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushTask(
+    WatchResponse response = client.pushTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new PushTaskPayload()
         .setAction(Action.ADD_OBJECT)
@@ -1207,6 +1341,8 @@ class SnippetIngestionClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1219,11 +1355,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.replaceTask(
+    TaskUpdateResponse response = client.replaceTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskReplace().setDestinationID("destinationID").setAction(ActionType.REPLACE)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1236,7 +1374,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.replaceTask(
+    TaskUpdateResponse response = client.replaceTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskReplace()
         .setDestinationID("destinationID")
@@ -1246,6 +1384,8 @@ class SnippetIngestionClient {
         .setPolicies(new Policies().setCriticalThreshold(8))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1258,7 +1398,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.replaceTask(
+    TaskUpdateResponse response = client.replaceTask(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskReplace()
         .setDestinationID("destinationID")
@@ -1271,6 +1411,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1283,7 +1425,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.runSource(
+    RunSourceResponse response = client.runSource(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new RunSourcePayload()
         .setIndexToInclude(Arrays.asList("products_us", "products eu"))
@@ -1291,6 +1433,8 @@ class SnippetIngestionClient {
         .setEntityType(EntityType.PRODUCT)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1303,8 +1447,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    RunResponse response = client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1317,8 +1463,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    RunResponse response = client.runTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1331,12 +1479,14 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchAuthentications(
+    List response = client.searchAuthentications(
       new AuthenticationSearch().setAuthenticationIDs(
         Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1349,12 +1499,14 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchDestinations(
+    List response = client.searchDestinations(
       new DestinationSearch().setDestinationIDs(
         Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1367,10 +1519,12 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchSources(
+    List response = client.searchSources(
       new SourceSearch().setSourceIDs(Arrays.asList("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1383,7 +1537,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchTasks(
+    List response = client.searchTasks(
       new TaskSearch().setTaskIDs(
         Arrays.asList(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1393,6 +1547,8 @@ class SnippetIngestionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1405,7 +1561,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchTasksV1(
+    List response = client.searchTasksV1(
       new TaskSearch().setTaskIDs(
         Arrays.asList(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1415,6 +1571,8 @@ class SnippetIngestionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1427,7 +1585,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.searchTransformations(
+    List response = client.searchTransformations(
       new TransformationSearch().setTransformationIDs(
         Arrays.asList(
           "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1437,6 +1595,8 @@ class SnippetIngestionClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1463,8 +1623,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    WatchResponse response = client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1477,7 +1639,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.tryTransformation(
+    TransformationTryResponse response = client.tryTransformation(
       new TransformationTry()
         .setType(TransformationType.CODE)
         .setInput(new TransformationCode().setCode("foo"))
@@ -1490,6 +1652,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1502,7 +1666,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.tryTransformation(
+    TransformationTryResponse response = client.tryTransformation(
       new TransformationTry()
         .setType(TransformationType.CODE)
         .setInput(new TransformationCode().setCode("foo"))
@@ -1523,6 +1687,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1535,7 +1701,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.tryTransformationBeforeUpdate(
+    TransformationTryResponse response = client.tryTransformationBeforeUpdate(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry()
         .setType(TransformationType.CODE)
@@ -1549,6 +1715,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1561,7 +1729,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.tryTransformationBeforeUpdate(
+    TransformationTryResponse response = client.tryTransformationBeforeUpdate(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationTry()
         .setType(TransformationType.CODE)
@@ -1583,6 +1751,8 @@ class SnippetIngestionClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1595,8 +1765,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new AuthenticationUpdate().setName("newName"));
+    AuthenticationUpdateResponse response = client.updateAuthentication(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new AuthenticationUpdate().setName("newName")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1609,8 +1784,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new DestinationUpdate().setName("newName"));
+    DestinationUpdateResponse response = client.updateDestination(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new DestinationUpdate().setName("newName")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1623,8 +1803,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    SourceUpdateResponse response = client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1637,8 +1819,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false).setCron("* * * * *"));
+    TaskUpdateResponse response = client.updateTask(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TaskUpdate().setEnabled(false).setCron("* * * * *")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1651,8 +1838,10 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdateV1().setEnabled(false));
+    TaskUpdateResponse response = client.updateTaskV1("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdateV1().setEnabled(false));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1665,7 +1854,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.updateTransformation(
+    TransformationUpdateResponse response = client.updateTransformation(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TransformationCreate()
         .setInput(new TransformationCode().setCode("foo"))
@@ -1674,6 +1863,8 @@ class SnippetIngestionClient {
         .setDescription("baz")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1686,7 +1877,7 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.validateSource(
+    WatchResponse response = client.validateSource(
       new SourceCreate()
         .setType(SourceType.COMMERCETOOLS)
         .setName("sourceName")
@@ -1700,6 +1891,8 @@ class SnippetIngestionClient {
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1712,8 +1905,13 @@ class SnippetIngestionClient {
     IngestionClient client = new IngestionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    WatchResponse response = client.validateSourceBeforeUpdate(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate().setName("newName")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 }

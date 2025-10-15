@@ -18,6 +18,8 @@ void snippetForcustomPost() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -41,6 +43,8 @@ void snippetForcustomPost1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -69,6 +73,8 @@ void snippetForcustomPost2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -97,6 +103,8 @@ void snippetForcustomPost3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -125,6 +133,8 @@ void snippetForcustomPost4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -153,6 +163,8 @@ void snippetForcustomPost5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -181,6 +193,8 @@ void snippetForcustomPost6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -209,6 +223,8 @@ void snippetForcustomPost7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -240,6 +256,8 @@ void snippetForcustomPost8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -272,6 +290,8 @@ void snippetForcustomPost9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -303,6 +323,8 @@ void snippetForcustomPost10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -329,6 +351,8 @@ void snippetForgetRecommendations() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -356,6 +380,8 @@ void snippetForgetRecommendations1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -395,6 +421,8 @@ void snippetForgetRecommendations2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -422,6 +450,8 @@ void snippetForgetRecommendations3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -462,6 +492,8 @@ void snippetForgetRecommendations4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -494,6 +526,8 @@ void snippetForgetRecommendations5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -552,6 +586,8 @@ void snippetForgetRecommendations6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -578,6 +614,8 @@ void snippetForgetRecommendations7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -603,6 +641,8 @@ void snippetForsearch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -628,6 +668,8 @@ void snippetForsearch1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -653,6 +695,8 @@ void snippetForsearch2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -678,6 +722,8 @@ void snippetForsearch3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -701,6 +747,8 @@ void snippetForsearch4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -734,6 +782,8 @@ void snippetForsearch5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -762,6 +812,8 @@ void snippetForsearch6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -789,6 +841,8 @@ void snippetForsearch7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -815,6 +869,8 @@ void snippetForsearch8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -841,6 +897,8 @@ void snippetForsearch9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -870,6 +928,8 @@ void snippetForsearch10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -903,6 +963,8 @@ void snippetForsearch11() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -938,6 +1000,8 @@ void snippetForsearch12() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1002,6 +1066,8 @@ void snippetForsearch13() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1054,6 +1120,8 @@ void snippetForsearch14() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1239,5 +1307,7 @@ void snippetForsearch15() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }

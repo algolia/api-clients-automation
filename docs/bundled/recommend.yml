@@ -171,7 +171,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -179,10 +179,12 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -191,10 +193,12 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -216,14 +220,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -232,12 +235,15 @@ paths:
 
             // Call the API
 
-            client.customGet("test/minimal");
+            Object response = client.customGet("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -249,14 +255,13 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -268,14 +273,13 @@ paths:
             var response = client.customGet(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -289,14 +293,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -313,14 +316,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -332,19 +334,13 @@ paths:
             response = client.custom_get("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -360,10 +356,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -374,7 +373,10 @@ paths:
 
             let response = try await client.customGet(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     post:
       operationId: customPost
       requestBody:
@@ -406,7 +408,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -414,10 +416,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -426,10 +430,12 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -451,14 +457,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -467,12 +472,15 @@ paths:
 
             // Call the API
 
-            client.customPost("test/minimal");
+            Object response = client.customPost("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -484,14 +492,13 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -503,14 +510,13 @@ paths:
             var response = client.customPost(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -524,14 +530,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -548,14 +553,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -567,19 +571,13 @@ paths:
             response = client.custom_post("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -595,10 +593,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -609,7 +610,10 @@ paths:
 
             let response = try await client.customPost(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     put:
       operationId: customPut
       requestBody:
@@ -641,7 +645,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -649,10 +653,12 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -661,10 +667,12 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -686,14 +694,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -702,12 +709,15 @@ paths:
 
             // Call the API
 
-            client.customPut("test/minimal");
+            Object response = client.customPut("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -719,14 +729,13 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -738,14 +747,13 @@ paths:
             var response = client.customPut(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -759,14 +767,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -783,14 +790,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -802,19 +808,13 @@ paths:
             response = client.custom_put("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -830,10 +830,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -844,7 +847,10 @@ paths:
 
             let response = try await client.customPut(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -870,7 +876,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -878,10 +884,12 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -890,10 +898,12 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -916,14 +926,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -932,12 +941,15 @@ paths:
 
             // Call the API
 
-            client.customDelete("test/minimal");
+            Object response = client.customDelete("test/minimal");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -950,14 +962,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -969,14 +980,13 @@ paths:
             var response = client.customDelete(path = "test/minimal")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -990,14 +1000,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -1014,14 +1023,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -1033,19 +1041,13 @@ paths:
             response = client.custom_delete("test/minimal")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1061,10 +1063,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1075,7 +1080,10 @@ paths:
 
             let response = try await client.customDelete(path: "test/minimal")
 
-            // >LOG
+
+            // print the response
+
+            print(response)
   /1/indexes/*/recommendations:
     post:
       tags:
@@ -1135,7 +1143,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1159,10 +1167,12 @@ paths:
                 },
               }
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1180,10 +1190,12 @@ paths:
                 ],
               ),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1209,14 +1221,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -1225,7 +1236,7 @@ paths:
 
             // Call the API
 
-            client.getRecommendations(
+            GetRecommendationsResponse response = client.getRecommendations(
               new GetRecommendationsParams().setRequests(
                 Arrays.asList(
                   new RelatedQuery()
@@ -1237,10 +1248,13 @@ paths:
               )
             );
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1254,14 +1268,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1284,14 +1297,13 @@ paths:
             )
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -1312,14 +1324,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -1345,14 +1356,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -1375,19 +1385,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1412,10 +1416,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1432,7 +1439,10 @@ paths:
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID"
                         ))]))
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1476,7 +1486,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1488,10 +1498,12 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1502,10 +1514,12 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1528,14 +1542,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -1544,13 +1557,17 @@ paths:
 
             // Call the API
 
+            RecommendRule response =
             client.getRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1566,14 +1583,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1587,14 +1603,13 @@ paths:
             it.value == "related-products" }, objectID = "objectID")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -1610,14 +1625,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -1636,14 +1650,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -1656,19 +1669,13 @@ paths:
             "related-products", "objectID")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1686,10 +1693,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1704,7 +1714,10 @@ paths:
                 objectID: "objectID"
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -1739,7 +1752,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1751,10 +1764,12 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1765,10 +1780,12 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -1791,14 +1808,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -1807,13 +1823,17 @@ paths:
 
             // Call the API
 
+            DeletedAtResponse response =
             client.deleteRecommendRule("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, "objectID");
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -1829,14 +1849,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1850,14 +1869,13 @@ paths:
             it.value == "related-products" }, objectID = "objectID")
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -1873,14 +1891,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -1899,14 +1916,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -1919,19 +1935,13 @@ paths:
             "related-products", "objectID")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -1949,10 +1959,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -1967,7 +1980,10 @@ paths:
                 objectID: "objectID"
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2029,7 +2045,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2041,10 +2057,12 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               12345L
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2055,10 +2073,12 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               taskID: 12345,
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2081,14 +2101,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -2097,13 +2116,17 @@ paths:
 
             // Call the API
 
+            GetRecommendTaskResponse response =
             client.getRecommendStatus("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS, 12345L);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2119,14 +2142,13 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2140,14 +2162,13 @@ paths:
             it.value == "related-products" }, taskID = 12345L)
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -2163,14 +2184,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -2189,14 +2209,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -2209,19 +2228,13 @@ paths:
             "related-products", 12345)
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2239,10 +2252,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2257,7 +2273,10 @@ paths:
                 taskID: Int64(12345)
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2369,7 +2388,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2380,10 +2399,12 @@ paths:
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2393,10 +2414,12 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2419,14 +2442,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -2435,13 +2457,17 @@ paths:
 
             // Call the API
 
+            SearchRecommendRulesResponse response =
             client.searchRecommendRules("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2454,14 +2480,13 @@ paths:
             'indexName', model: 'related-products' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2475,14 +2500,13 @@ paths:
             it.value == "related-products" })
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -2497,14 +2521,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -2522,14 +2545,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -2542,19 +2564,13 @@ paths:
             "related-products")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2571,10 +2587,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2588,7 +2607,10 @@ paths:
                 model: RecommendModels.relatedProducts
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-
@@ -2655,7 +2677,7 @@ paths:
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: |
+          source: |-
             // Initialize the client
             var client = new RecommendClient(
               new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2666,10 +2688,12 @@ paths:
               "<YOUR_INDEX_NAME>",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
-            // >LOG
+
+            // print the response
+            Console.WriteLine(response);
         - lang: dart
           label: Dart
-          source: |
+          source: |-
             // Initialize the client
             final client = RecommendClient(
                 appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2679,10 +2703,12 @@ paths:
               indexName: "<YOUR_INDEX_NAME>",
               model: RecommendModels.fromJson("related-products"),
             );
-            // >LOG
+
+            // print the response
+            print(response);
         - lang: go
           label: Go
-          source: >
+          source: >-
             // Initialize the client
 
             client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID",
@@ -2705,14 +2731,13 @@ paths:
             }
 
 
-            // >LOG
 
-            // use the model directly
+            // print the response
 
             print(response)
         - lang: java
           label: Java
-          source: >
+          source: >-
             // Initialize the client
 
             RecommendClient client = new
@@ -2721,13 +2746,17 @@ paths:
 
             // Call the API
 
+            RecommendUpdatedAtResponse response =
             client.batchRecommendRules("<YOUR_INDEX_NAME>",
             RecommendModels.RELATED_PRODUCTS);
 
-            // >LOG
+
+            // print the response
+
+            System.out.println(response);
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             const client = algoliasearch('ALGOLIA_APPLICATION_ID',
@@ -2740,14 +2769,13 @@ paths:
             'indexName', model: 'related-products' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2761,14 +2789,13 @@ paths:
             it.value == "related-products" })
 
 
-            // >LOG
 
-            // Use the response
+            // print the response
 
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: >-
             // Initialize the client
 
             $client = RecommendClient::create('ALGOLIA_APPLICATION_ID',
@@ -2783,14 +2810,13 @@ paths:
             );
 
 
-            // >LOG
 
-            // play with the response
+            // print the response
 
             var_dump($response);
         - lang: python
           label: Python
-          source: >
+          source: >-
             # Initialize the client
 
             # In an asynchronous context, you can use RecommendClient instead,
@@ -2808,14 +2834,13 @@ paths:
             )
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             print(response)
         - lang: ruby
           label: Ruby
-          source: >
+          source: >-
             # Initialize the client
 
             client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID",
@@ -2828,19 +2853,13 @@ paths:
             "related-products")
 
 
-            # >LOG
 
-            # use the class directly
+            # print the response
 
             puts(response)
-
-
-            # print the JSON response
-
-            puts(response.to_json)
         - lang: scala
           label: Scala
-          source: >
+          source: >-
             // Initialize the client
 
             val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID",
@@ -2857,10 +2876,13 @@ paths:
               Duration(100, "sec")
             )
 
-            // >LOG
+
+            // print the response
+
+            println(response)
         - lang: swift
           label: Swift
-          source: >
+          source: >-
             // Initialize the client
 
             let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID",
@@ -2874,7 +2896,10 @@ paths:
                 model: RecommendModels.relatedProducts
             )
 
-            // >LOG
+
+            // print the response
+
+            print(response)
         - lang: cURL
           label: curl
           source: |-

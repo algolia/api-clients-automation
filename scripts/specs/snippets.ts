@@ -115,5 +115,16 @@ export async function transformGeneratedSnippetsToCodeSamples(clientName: string
     JSON.stringify(jsonSnippets, null, 2),
   );
 
+  // remove all the `>LOG` comments from the snippets
+  for (const lang of Object.keys(codeSamples) as Language[]) {
+    for (const operationId of Object.keys(codeSamples[lang])) {
+      for (const sampleName of Object.keys(codeSamples[lang][operationId])) {
+        codeSamples[lang][operationId][sampleName] = codeSamples[lang][operationId][sampleName]
+          .replace(/(#|\/\/) >LOG/g, '')
+          .trim();
+      }
+    }
+  }
+
   return codeSamples;
 }

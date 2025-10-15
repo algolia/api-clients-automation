@@ -27,6 +27,8 @@ final class QuerySuggestionsClientSnippet {
             indexName: "<YOUR_INDEX_NAME>"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -41,6 +43,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -55,6 +59,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -69,6 +75,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -86,6 +94,8 @@ final class QuerySuggestionsClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -108,6 +118,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -122,6 +134,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -140,6 +154,8 @@ final class QuerySuggestionsClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -161,6 +177,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -182,6 +200,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -203,6 +223,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -224,6 +246,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -245,6 +269,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -266,6 +292,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -287,6 +315,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -308,6 +338,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -329,6 +361,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -343,6 +377,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -361,6 +397,8 @@ final class QuerySuggestionsClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -375,6 +413,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.deleteConfig(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -389,6 +429,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.getAllConfigs()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -403,6 +445,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.getConfig(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -417,6 +461,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.getConfigStatus(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -431,6 +477,8 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         let response = try await client.getLogFile(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -470,6 +518,8 @@ final class QuerySuggestionsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }

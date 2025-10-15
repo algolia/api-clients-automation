@@ -22,7 +22,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -47,7 +47,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -69,7 +69,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -94,7 +94,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -125,7 +125,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -147,7 +147,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -175,7 +175,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -206,7 +206,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -237,7 +237,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -268,7 +268,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -299,7 +299,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -330,7 +330,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -361,7 +361,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -392,7 +392,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -423,7 +423,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -454,7 +454,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -476,7 +476,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -504,7 +504,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -526,7 +526,7 @@ def snippet_for_get_cluster_incidents():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -548,7 +548,7 @@ def snippet_for_get_cluster_status():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -568,7 +568,7 @@ def snippet_for_get_incidents():
     response = client.get_incidents()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -590,7 +590,7 @@ def snippet_for_get_indexing_time():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -612,7 +612,7 @@ def snippet_for_get_latency():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -635,7 +635,7 @@ def snippet_for_get_metrics():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -657,7 +657,7 @@ def snippet_for_get_reachability():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -677,7 +677,7 @@ def snippet_for_get_servers():
     response = client.get_servers()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -697,7 +697,7 @@ def snippet_for_get_status():
     response = client.get_status()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 

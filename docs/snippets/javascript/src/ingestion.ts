@@ -21,7 +21,7 @@ export async function snippetForCreateAuthentication(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -43,7 +43,7 @@ export async function snippetForCreateAuthentication1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -66,7 +66,7 @@ export async function snippetForCreateDestination(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -89,7 +89,7 @@ export async function snippetForCreateDestination1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -118,7 +118,7 @@ export async function snippetForCreateSource(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -136,7 +136,7 @@ export async function snippetForCreateSource1(): Promise<void> {
   const response = await client.createSource({ type: 'push', name: 'pushezpourentrer' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -154,7 +154,7 @@ export async function snippetForCreateTask(): Promise<void> {
   const response = await client.createTask({ sourceID: 'search', destinationID: 'destinationID', action: 'replace' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -179,7 +179,7 @@ export async function snippetForCreateTask1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -203,7 +203,7 @@ export async function snippetForCreateTask2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -226,7 +226,7 @@ export async function snippetForCreateTaskV1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -249,7 +249,7 @@ export async function snippetForCreateTaskV11(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -272,7 +272,7 @@ export async function snippetForCreateTaskV12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -296,7 +296,7 @@ export async function snippetForCreateTaskV13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -319,7 +319,7 @@ export async function snippetForCreateTransformation(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -337,7 +337,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -355,7 +355,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -373,7 +373,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -391,7 +391,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -415,7 +415,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -433,7 +433,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -455,7 +455,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -478,7 +478,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -501,7 +501,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -524,7 +524,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -547,7 +547,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -570,7 +570,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -593,7 +593,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -616,7 +616,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -639,7 +639,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -662,7 +662,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -680,7 +680,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -702,7 +702,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -720,7 +720,7 @@ export async function snippetForDeleteAuthentication(): Promise<void> {
   const response = await client.deleteAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -738,7 +738,7 @@ export async function snippetForDeleteDestination(): Promise<void> {
   const response = await client.deleteDestination({ destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -756,7 +756,7 @@ export async function snippetForDeleteSource(): Promise<void> {
   const response = await client.deleteSource({ sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -774,7 +774,7 @@ export async function snippetForDeleteTask(): Promise<void> {
   const response = await client.deleteTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -792,7 +792,7 @@ export async function snippetForDeleteTaskV1(): Promise<void> {
   const response = await client.deleteTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -810,7 +810,7 @@ export async function snippetForDeleteTransformation(): Promise<void> {
   const response = await client.deleteTransformation({ transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -828,7 +828,7 @@ export async function snippetForDisableTask(): Promise<void> {
   const response = await client.disableTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -846,7 +846,7 @@ export async function snippetForDisableTaskV1(): Promise<void> {
   const response = await client.disableTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -864,7 +864,7 @@ export async function snippetForEnableTask(): Promise<void> {
   const response = await client.enableTask({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -882,7 +882,7 @@ export async function snippetForEnableTaskV1(): Promise<void> {
   const response = await client.enableTaskV1({ taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -900,7 +900,7 @@ export async function snippetForGetAuthentication(): Promise<void> {
   const response = await client.getAuthentication({ authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -918,7 +918,7 @@ export async function snippetForGetDestination(): Promise<void> {
   const response = await client.getDestination({ destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -939,7 +939,7 @@ export async function snippetForGetEvent(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -957,7 +957,7 @@ export async function snippetForGetRun(): Promise<void> {
   const response = await client.getRun({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -975,7 +975,7 @@ export async function snippetForGetSource(): Promise<void> {
   const response = await client.getSource({ sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -993,7 +993,7 @@ export async function snippetForGetTask(): Promise<void> {
   const response = await client.getTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1011,7 +1011,7 @@ export async function snippetForGetTaskV1(): Promise<void> {
   const response = await client.getTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1029,7 +1029,7 @@ export async function snippetForGetTransformation(): Promise<void> {
   const response = await client.getTransformation({ transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1047,7 +1047,7 @@ export async function snippetForListAuthentications(): Promise<void> {
   const response = await client.listAuthentications();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1072,7 +1072,7 @@ export async function snippetForListAuthentications1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1090,7 +1090,7 @@ export async function snippetForListDestinations(): Promise<void> {
   const response = await client.listDestinations();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1108,7 +1108,7 @@ export async function snippetForListEvents(): Promise<void> {
   const response = await client.listEvents({ runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1126,7 +1126,7 @@ export async function snippetForListRuns(): Promise<void> {
   const response = await client.listRuns();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1144,7 +1144,7 @@ export async function snippetForListSources(): Promise<void> {
   const response = await client.listSources();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1162,7 +1162,7 @@ export async function snippetForListTasks(): Promise<void> {
   const response = await client.listTasks();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1180,7 +1180,7 @@ export async function snippetForListTasksV1(): Promise<void> {
   const response = await client.listTasksV1();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1198,7 +1198,7 @@ export async function snippetForListTransformations(): Promise<void> {
   const response = await client.listTransformations();
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1222,7 +1222,7 @@ export async function snippetForListTransformations1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1249,7 +1249,7 @@ export async function snippetForPush(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1278,7 +1278,7 @@ export async function snippetForPush1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1305,7 +1305,7 @@ export async function snippetForPushTask(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1333,7 +1333,7 @@ export async function snippetForPushTask1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1354,7 +1354,7 @@ export async function snippetForReplaceTask(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1381,7 +1381,7 @@ export async function snippetForReplaceTask1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1407,7 +1407,7 @@ export async function snippetForReplaceTask2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1432,7 +1432,7 @@ export async function snippetForRunSource(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1450,7 +1450,7 @@ export async function snippetForRunTask(): Promise<void> {
   const response = await client.runTask({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1468,7 +1468,7 @@ export async function snippetForRunTaskV1(): Promise<void> {
   const response = await client.runTaskV1({ taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1488,7 +1488,7 @@ export async function snippetForSearchAuthentications(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1508,7 +1508,7 @@ export async function snippetForSearchDestinations(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1528,7 +1528,7 @@ export async function snippetForSearchSources(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1552,7 +1552,7 @@ export async function snippetForSearchTasks(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1576,7 +1576,7 @@ export async function snippetForSearchTasksV1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1600,7 +1600,7 @@ export async function snippetForSearchTransformations(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1634,7 +1634,7 @@ export async function snippetForTriggerDockerSourceDiscover(): Promise<void> {
   const response = await client.triggerDockerSourceDiscover({ sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1656,7 +1656,7 @@ export async function snippetForTryTransformation(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1685,7 +1685,7 @@ export async function snippetForTryTransformation1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1706,7 +1706,7 @@ export async function snippetForTryTransformationBeforeUpdate(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1738,7 +1738,7 @@ export async function snippetForTryTransformationBeforeUpdate1(): Promise<void> 
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1759,7 +1759,7 @@ export async function snippetForUpdateAuthentication(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1780,7 +1780,7 @@ export async function snippetForUpdateDestination(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1801,7 +1801,7 @@ export async function snippetForUpdateSource(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1822,7 +1822,7 @@ export async function snippetForUpdateTask(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1843,7 +1843,7 @@ export async function snippetForUpdateTaskV1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1864,7 +1864,7 @@ export async function snippetForUpdateTransformation(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1887,7 +1887,7 @@ export async function snippetForValidateSource(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -1908,7 +1908,7 @@ export async function snippetForValidateSourceBeforeUpdate(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

@@ -18,8 +18,10 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -32,7 +34,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -41,6 +43,8 @@ class SnippetInsightsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -53,8 +57,10 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -67,7 +73,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -76,6 +82,8 @@ class SnippetInsightsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -88,7 +96,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -101,6 +109,8 @@ class SnippetInsightsClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -113,8 +123,10 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -127,7 +139,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -141,6 +153,8 @@ class SnippetInsightsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -153,7 +167,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -168,6 +182,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -180,7 +196,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -195,6 +211,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -207,7 +225,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -222,6 +240,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -234,7 +254,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -249,6 +269,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -261,7 +283,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -276,6 +298,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -288,7 +312,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -303,6 +327,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -315,7 +341,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -330,6 +356,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -342,7 +370,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -357,6 +385,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -369,7 +399,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -384,6 +414,8 @@ class SnippetInsightsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -396,8 +428,10 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -410,7 +444,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -424,6 +458,8 @@ class SnippetInsightsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -450,7 +486,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushEvents(
+    EventsResponse response = client.pushEvents(
       new InsightsEvents().setEvents(
         Arrays.asList(
           new ClickedObjectIDsAfterSearch()
@@ -467,6 +503,8 @@ class SnippetInsightsClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -479,7 +517,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushEvents(
+    EventsResponse response = client.pushEvents(
       new InsightsEvents().setEvents(
         Arrays.asList(
           new ConvertedObjectIDsAfterSearch()
@@ -488,7 +526,7 @@ class SnippetInsightsClient {
             .setIndex("products")
             .setUserToken("user-123456")
             .setAuthenticatedUserToken("user-123456")
-            .setTimestamp(1760227200000L)
+            .setTimestamp(1760486400000L)
             .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
             .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
           new ViewedObjectIDs()
@@ -497,12 +535,14 @@ class SnippetInsightsClient {
             .setIndex("products")
             .setUserToken("user-123456")
             .setAuthenticatedUserToken("user-123456")
-            .setTimestamp(1760227200000L)
+            .setTimestamp(1760486400000L)
             .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
         )
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -515,7 +555,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushEvents(
+    EventsResponse response = client.pushEvents(
       new InsightsEvents().setEvents(
         Arrays.asList(
           new ConvertedObjectIDsAfterSearch()
@@ -531,6 +571,8 @@ class SnippetInsightsClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -543,7 +585,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushEvents(
+    EventsResponse response = client.pushEvents(
       new InsightsEvents().setEvents(
         Arrays.asList(
           new ViewedObjectIDs()
@@ -558,6 +600,8 @@ class SnippetInsightsClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -570,7 +614,7 @@ class SnippetInsightsClient {
     InsightsClient client = new InsightsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.pushEvents(
+    EventsResponse response = client.pushEvents(
       new InsightsEvents().setEvents(
         Arrays.asList(
           new AddedToCartObjectIDsAfterSearch()
@@ -594,6 +638,8 @@ class SnippetInsightsClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 

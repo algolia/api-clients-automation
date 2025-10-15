@@ -56,6 +56,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -80,6 +82,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -105,6 +109,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -129,6 +135,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -154,6 +162,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -187,6 +197,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -211,6 +223,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -237,6 +251,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -269,6 +285,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -301,6 +319,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -333,6 +353,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -365,6 +387,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -397,6 +421,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -429,6 +455,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -461,6 +489,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -493,6 +523,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -525,6 +557,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -549,6 +583,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -575,6 +611,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -599,6 +637,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -640,6 +680,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -664,6 +706,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -688,6 +732,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -711,6 +757,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -739,6 +787,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -782,6 +832,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 
@@ -826,6 +878,8 @@ class SnippetAbtestingV3Client {
       Duration(100, "sec")
     )
     // >LOG
+    // print the response
+    println(response)
     // SEPARATOR<
   }
 

@@ -18,8 +18,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -32,7 +34,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -41,6 +43,8 @@ class SnippetMonitoringClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -53,8 +57,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -67,7 +73,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -76,6 +82,8 @@ class SnippetMonitoringClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -88,7 +96,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -101,6 +109,8 @@ class SnippetMonitoringClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -113,8 +123,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -127,7 +139,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -141,6 +153,8 @@ class SnippetMonitoringClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -153,7 +167,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -168,6 +182,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -180,7 +196,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -195,6 +211,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -207,7 +225,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -222,6 +240,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -234,7 +254,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -249,6 +269,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -261,7 +283,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -276,6 +298,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -288,7 +312,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -303,6 +327,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -315,7 +341,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -330,6 +356,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -342,7 +370,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -357,6 +385,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -369,7 +399,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -384,6 +414,8 @@ class SnippetMonitoringClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -396,8 +428,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -410,7 +444,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -424,6 +458,8 @@ class SnippetMonitoringClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -436,8 +472,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getClusterIncidents("c1-de");
+    IncidentsResponse response = client.getClusterIncidents("c1-de");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -450,8 +488,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getClusterStatus("c1-de");
+    StatusResponse response = client.getClusterStatus("c1-de");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -464,8 +504,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getIncidents();
+    IncidentsResponse response = client.getIncidents();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -478,8 +520,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getIndexingTime("c1-de");
+    IndexingTimeResponse response = client.getIndexingTime("c1-de");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -492,8 +536,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getLatency("c1-de");
+    LatencyResponse response = client.getLatency("c1-de");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -506,8 +552,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
+    InfrastructureResponse response = client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -520,8 +568,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getReachability("c1-de");
+    Map response = client.getReachability("c1-de");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -534,8 +584,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getServers();
+    InventoryResponse response = client.getServers();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -548,8 +600,10 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getStatus();
+    StatusResponse response = client.getStatus();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 

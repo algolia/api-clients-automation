@@ -18,6 +18,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -32,6 +34,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -46,6 +50,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -63,6 +69,8 @@ final class AnalyticsClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -85,6 +93,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -99,6 +109,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -117,6 +129,8 @@ final class AnalyticsClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -138,6 +152,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -159,6 +175,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -180,6 +198,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -201,6 +221,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -222,6 +244,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -243,6 +267,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -264,6 +290,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -285,6 +313,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -306,6 +336,8 @@ final class AnalyticsClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -320,6 +352,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -338,6 +372,8 @@ final class AnalyticsClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -352,6 +388,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getAddToCartRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -371,6 +409,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -385,6 +425,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getAverageClickPosition(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -404,6 +446,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -418,6 +462,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getClickPositions(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -437,6 +483,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -451,6 +499,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getClickThroughRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -470,6 +520,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -484,6 +536,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getConversionRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -503,6 +557,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -517,6 +573,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getNoClickRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -536,6 +594,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -550,6 +610,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getNoResultsRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -569,6 +631,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -583,6 +647,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getPurchaseRate(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -602,6 +668,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -616,6 +684,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getRevenue(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -635,6 +705,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -649,6 +721,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getSearchesCount(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -668,6 +742,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -682,6 +758,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getSearchesNoClicks(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -703,6 +781,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -717,6 +797,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getSearchesNoResults(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -738,6 +820,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -752,6 +836,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getStatus(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -766,6 +852,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopCountries(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -787,6 +875,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -801,6 +891,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopFilterAttributes(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -823,6 +915,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -837,6 +931,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -852,6 +948,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopFilterForAttribute(attribute: "myAttribute1,myAttribute2", index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -875,6 +973,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -898,6 +998,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -912,6 +1014,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopFiltersNoResults(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -934,6 +1038,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -948,6 +1054,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopHits(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -972,6 +1080,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -986,6 +1096,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getTopSearches(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1011,6 +1123,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1025,6 +1139,8 @@ final class AnalyticsClientSnippet {
         // Call the API
         let response = try await client.getUsersCount(index: "index")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1044,6 +1160,8 @@ final class AnalyticsClientSnippet {
             tags: "tag"
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 

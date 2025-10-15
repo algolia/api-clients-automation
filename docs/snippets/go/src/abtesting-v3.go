@@ -35,7 +35,7 @@ func SnippetForAddABTestsOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -64,7 +64,7 @@ func SnippetForCustomDeleteOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -93,7 +93,7 @@ func SnippetForCustomDeleteOfAbtestingV31() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -122,7 +122,7 @@ func SnippetForCustomGetOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -151,7 +151,7 @@ func SnippetForCustomGetOfAbtestingV31() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -182,7 +182,7 @@ func SnippetForCustomGetOfAbtestingV32() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -211,7 +211,7 @@ func SnippetForCustomPostOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -240,7 +240,7 @@ func SnippetForCustomPostOfAbtestingV31() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -270,7 +270,7 @@ func SnippetForCustomPostOfAbtestingV32() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -300,7 +300,7 @@ func SnippetForCustomPostOfAbtestingV33() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -330,7 +330,7 @@ func SnippetForCustomPostOfAbtestingV34() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -360,7 +360,7 @@ func SnippetForCustomPostOfAbtestingV35() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -390,7 +390,7 @@ func SnippetForCustomPostOfAbtestingV36() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -420,7 +420,7 @@ func SnippetForCustomPostOfAbtestingV37() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -451,7 +451,7 @@ func SnippetForCustomPostOfAbtestingV38() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -482,7 +482,7 @@ func SnippetForCustomPostOfAbtestingV39() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -513,7 +513,7 @@ func SnippetForCustomPostOfAbtestingV310() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -542,7 +542,7 @@ func SnippetForCustomPutOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -571,7 +571,7 @@ func SnippetForCustomPutOfAbtestingV31() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -600,7 +600,7 @@ func SnippetForDeleteABTestOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -635,7 +635,7 @@ func SnippetForEstimateABTestOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -664,7 +664,7 @@ func SnippetForGetABTestOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -693,7 +693,7 @@ func SnippetForGetTimeseriesOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -721,7 +721,7 @@ func SnippetForListABTestsOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -756,7 +756,7 @@ func SnippetForListABTestsOfAbtestingV31() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -795,7 +795,7 @@ func SnippetForScheduleABTestOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }
@@ -851,7 +851,7 @@ func SnippetForStopABTestOfAbtestingV3() {
 	}
 
 	// >LOG
-	// use the model directly
+	// print the response
 	print(response)
 	// SEPARATOR<
 }

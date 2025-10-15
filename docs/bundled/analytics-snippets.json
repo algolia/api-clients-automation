@@ -241,111 +241,111 @@
       "default": "import com.algolia.api.AnalyticsClient;\nimport com.algolia.config.*;"
     },
     "customDelete": {
-      "allow del method for a custom path with minimal parameters": "client.customDelete(\"test/minimal\");",
-      "allow del method for a custom path with all parameters": "client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
+      "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "Object response = client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
     },
     "customGet": {
-      "allow get method for a custom path with minimal parameters": "client.customGet(\"test/minimal\");",
-      "allow get method for a custom path with all parameters": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
-      "requestOptions should be escaped too": "client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+      "allow get method for a custom path with minimal parameters": "Object response = client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
     },
     "customPost": {
-      "allow post method for a custom path with minimal parameters": "client.customPost(\"test/minimal\");",
-      "allow post method for a custom path with all parameters": "client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
-      "requestOptions can override default query parameters": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
-      "requestOptions merges query parameters with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
-      "requestOptions can override default headers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions merges headers with default ones": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
-      "requestOptions queryParameters accepts booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
-      "requestOptions queryParameters accepts integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
-      "requestOptions queryParameters accepts list of string": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
-      "requestOptions queryParameters accepts list of booleans": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
-      "requestOptions queryParameters accepts list of integers": "client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
+      "allow post method for a custom path with minimal parameters": "Object response = client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "Object response = client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
     },
     "customPut": {
-      "allow put method for a custom path with minimal parameters": "client.customPut(\"test/minimal\");",
-      "allow put method for a custom path with all parameters": "client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
+      "allow put method for a custom path with minimal parameters": "Object response = client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "Object response = client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
     },
     "getAddToCartRate": {
-      "get getAddToCartRate with minimal parameters": "client.getAddToCartRate(\"index\");",
-      "get getAddToCartRate with all parameters": "client.getAddToCartRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getAddToCartRate with minimal parameters": "GetAddToCartRateResponse response = client.getAddToCartRate(\"index\");",
+      "get getAddToCartRate with all parameters": "GetAddToCartRateResponse response = client.getAddToCartRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getAverageClickPosition": {
-      "get getAverageClickPosition with minimal parameters": "client.getAverageClickPosition(\"index\");",
-      "get getAverageClickPosition with all parameters": "client.getAverageClickPosition(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getAverageClickPosition with minimal parameters": "GetAverageClickPositionResponse response = client.getAverageClickPosition(\"index\");",
+      "get getAverageClickPosition with all parameters": "GetAverageClickPositionResponse response = client.getAverageClickPosition(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getClickPositions": {
-      "get getClickPositions with minimal parameters": "client.getClickPositions(\"index\");",
-      "get getClickPositions with all parameters": "client.getClickPositions(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getClickPositions with minimal parameters": "GetClickPositionsResponse response = client.getClickPositions(\"index\");",
+      "get getClickPositions with all parameters": "GetClickPositionsResponse response = client.getClickPositions(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getClickThroughRate": {
-      "get getClickThroughRate with minimal parameters": "client.getClickThroughRate(\"index\");",
-      "get getClickThroughRate with all parameters": "client.getClickThroughRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getClickThroughRate with minimal parameters": "GetClickThroughRateResponse response = client.getClickThroughRate(\"index\");",
+      "get getClickThroughRate with all parameters": "GetClickThroughRateResponse response = client.getClickThroughRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getConversionRate": {
-      "get getConversationRate with minimal parameters": "client.getConversionRate(\"index\");",
-      "get getConversationRate with all parameters": "client.getConversionRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getConversationRate with minimal parameters": "GetConversionRateResponse response = client.getConversionRate(\"index\");",
+      "get getConversationRate with all parameters": "GetConversionRateResponse response = client.getConversionRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getNoClickRate": {
-      "get getNoClickRate with minimal parameters": "client.getNoClickRate(\"index\");",
-      "get getNoClickRate with all parameters": "client.getNoClickRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getNoClickRate with minimal parameters": "GetNoClickRateResponse response = client.getNoClickRate(\"index\");",
+      "get getNoClickRate with all parameters": "GetNoClickRateResponse response = client.getNoClickRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getNoResultsRate": {
-      "get getNoResultsRate with minimal parameters": "client.getNoResultsRate(\"index\");",
-      "get getNoResultsRate with all parameters": "client.getNoResultsRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getNoResultsRate with minimal parameters": "GetNoResultsRateResponse response = client.getNoResultsRate(\"index\");",
+      "get getNoResultsRate with all parameters": "GetNoResultsRateResponse response = client.getNoResultsRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getPurchaseRate": {
-      "get getPurchaseRate with minimal parameters": "client.getPurchaseRate(\"index\");",
-      "get getPurchaseRate with all parameters": "client.getPurchaseRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getPurchaseRate with minimal parameters": "GetPurchaseRateResponse response = client.getPurchaseRate(\"index\");",
+      "get getPurchaseRate with all parameters": "GetPurchaseRateResponse response = client.getPurchaseRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getRevenue": {
-      "get getRevenue with minimal parameters": "client.getRevenue(\"index\");",
-      "get getRevenue with all parameters": "client.getRevenue(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getRevenue with minimal parameters": "GetRevenue response = client.getRevenue(\"index\");",
+      "get getRevenue with all parameters": "GetRevenue response = client.getRevenue(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getSearchesCount": {
-      "get getSearchesCount with minimal parameters": "client.getSearchesCount(\"index\");",
-      "get getSearchesCount with all parameters": "client.getSearchesCount(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getSearchesCount with minimal parameters": "GetSearchesCountResponse response = client.getSearchesCount(\"index\");",
+      "get getSearchesCount with all parameters": "GetSearchesCountResponse response = client.getSearchesCount(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "getSearchesNoClicks": {
-      "get getSearchesNoClicks with minimal parameters": "client.getSearchesNoClicks(\"index\");",
-      "get getSearchesNoClicks with all parameters": "client.getSearchesNoClicks(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getSearchesNoClicks with minimal parameters": "GetSearchesNoClicksResponse response = client.getSearchesNoClicks(\"index\");",
+      "get getSearchesNoClicks with all parameters": "GetSearchesNoClicksResponse response = client.getSearchesNoClicks(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getSearchesNoResults": {
-      "get getSearchesNoResults with minimal parameters": "client.getSearchesNoResults(\"index\");",
-      "get getSearchesNoResults with all parameters": "client.getSearchesNoResults(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getSearchesNoResults with minimal parameters": "GetSearchesNoResultsResponse response = client.getSearchesNoResults(\"index\");",
+      "get getSearchesNoResults with all parameters": "GetSearchesNoResultsResponse response = client.getSearchesNoResults(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getStatus": {
-      "default": "client.getStatus(\"index\");"
+      "default": "GetStatusResponse response = client.getStatus(\"index\");"
     },
     "getTopCountries": {
-      "get getTopCountries with minimal parameters": "client.getTopCountries(\"index\");",
-      "get getTopCountries with all parameters": "client.getTopCountries(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getTopCountries with minimal parameters": "GetTopCountriesResponse response = client.getTopCountries(\"index\");",
+      "get getTopCountries with all parameters": "GetTopCountriesResponse response = client.getTopCountries(\"index\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getTopFilterAttributes": {
-      "get getTopFilterAttributes with minimal parameters": "client.getTopFilterAttributes(\"index\");",
-      "get getTopFilterAttributes with all parameters": "client.getTopFilterAttributes(\"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getTopFilterAttributes with minimal parameters": "GetTopFilterAttributesResponse response = client.getTopFilterAttributes(\"index\");",
+      "get getTopFilterAttributes with all parameters": "GetTopFilterAttributesResponse response = client.getTopFilterAttributes(\"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getTopFilterForAttribute": {
-      "get getTopFilterForAttribute with minimal parameters": "client.getTopFilterForAttribute(\"myAttribute\", \"index\");",
-      "get getTopFilterForAttribute with minimal parameters and": "client.getTopFilterForAttribute(\"myAttribute1,myAttribute2\", \"index\");",
-      "get getTopFilterForAttribute with all parameters": "client.getTopFilterForAttribute(\"myAttribute\", \"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");",
-      "get getTopFilterForAttribute with all parameters and": "client.getTopFilterForAttribute(\"myAttribute1,myAttribute2\", \"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getTopFilterForAttribute with minimal parameters": "GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(\"myAttribute\", \"index\");",
+      "get getTopFilterForAttribute with minimal parameters and": "GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(\"myAttribute1,myAttribute2\", \"index\");",
+      "get getTopFilterForAttribute with all parameters": "GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(\n  \"myAttribute\",\n  \"index\",\n  \"mySearch\",\n  \"1999-09-19\",\n  \"2001-01-01\",\n  21,\n  42,\n  \"tag\"\n);",
+      "get getTopFilterForAttribute with all parameters and": "GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(\n  \"myAttribute1,myAttribute2\",\n  \"index\",\n  \"mySearch\",\n  \"1999-09-19\",\n  \"2001-01-01\",\n  21,\n  42,\n  \"tag\"\n);"
     },
     "getTopFiltersNoResults": {
-      "get getTopFiltersNoResults with minimal parameters": "client.getTopFiltersNoResults(\"index\");",
-      "get getTopFiltersNoResults with all parameters": "client.getTopFiltersNoResults(\"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getTopFiltersNoResults with minimal parameters": "GetTopFiltersNoResultsResponse response = client.getTopFiltersNoResults(\"index\");",
+      "get getTopFiltersNoResults with all parameters": "GetTopFiltersNoResultsResponse response = client.getTopFiltersNoResults(\"index\", \"mySearch\", \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getTopHits": {
-      "get getTopHits with minimal parameters": "client.getTopHits(\"index\");",
-      "get getTopHits with all parameters": "client.getTopHits(\"index\", \"mySearch\", true, true, \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
+      "get getTopHits with minimal parameters": "GetTopHitsResponse response = client.getTopHits(\"index\");",
+      "get getTopHits with all parameters": "GetTopHitsResponse response = client.getTopHits(\"index\", \"mySearch\", true, true, \"1999-09-19\", \"2001-01-01\", 21, 42, \"tag\");"
     },
     "getTopSearches": {
-      "get getTopSearches with minimal parameters": "client.getTopSearches(\"index\");",
-      "get getTopSearches with all parameters": "client.getTopSearches(\"index\", true, true, \"1999-09-19\", \"2001-01-01\", OrderBy.SEARCH_COUNT, Direction.ASC, 21, 42, \"tag\");"
+      "get getTopSearches with minimal parameters": "GetTopSearchesResponse response = client.getTopSearches(\"index\");",
+      "get getTopSearches with all parameters": "GetTopSearchesResponse response = client.getTopSearches(\n  \"index\",\n  true,\n  true,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  OrderBy.SEARCH_COUNT,\n  Direction.ASC,\n  21,\n  42,\n  \"tag\"\n);"
     },
     "getUsersCount": {
-      "get getUsersCount with minimal parameters": "client.getUsersCount(\"index\");",
-      "get getUsersCount with all parameters": "client.getUsersCount(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+      "get getUsersCount with minimal parameters": "GetUsersCountResponse response = client.getUsersCount(\"index\");",
+      "get getUsersCount with all parameters": "GetUsersCountResponse response = client.getUsersCount(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"

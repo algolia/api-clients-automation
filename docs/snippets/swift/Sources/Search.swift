@@ -21,6 +21,8 @@ final class SearchClientSnippet {
             description: "my new api key"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -41,6 +43,8 @@ final class SearchClientSnippet {
             validity: 300
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -59,6 +63,8 @@ final class SearchClientSnippet {
             body: ["key": "value"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -76,6 +82,8 @@ final class SearchClientSnippet {
             description: "theDescription"
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -93,6 +101,8 @@ final class SearchClientSnippet {
             assignUserIdParams: AssignUserIdParams(cluster: "d4242-eu")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -110,6 +120,8 @@ final class SearchClientSnippet {
             assignUserIdParams: AssignUserIdParams(cluster: "cluster with spaces")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -130,6 +142,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -150,6 +164,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -170,6 +186,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -190,6 +208,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -210,6 +230,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -230,6 +252,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -250,6 +274,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -267,6 +293,8 @@ final class SearchClientSnippet {
             batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -297,6 +325,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -320,6 +350,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -344,6 +376,8 @@ final class SearchClientSnippet {
             )])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -358,6 +392,8 @@ final class SearchClientSnippet {
         // Call the API
         let response: BrowseResponse<Hit> = try await client.browse(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -378,6 +414,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -395,6 +433,8 @@ final class SearchClientSnippet {
             browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: "test"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -409,6 +449,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.clearObjects(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -423,6 +465,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.clearRules(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -437,6 +481,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.clearSynonyms(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -451,6 +497,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -465,6 +513,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.customDelete(path: "test/all", parameters: ["query": AnyCodable("parameters")])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -479,6 +529,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.customGet(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -496,6 +548,8 @@ final class SearchClientSnippet {
             parameters: ["query": AnyCodable("parameters with space")]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -518,6 +572,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -532,6 +588,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.customPost(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -550,6 +608,8 @@ final class SearchClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -571,6 +631,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -592,6 +654,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -613,6 +677,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -634,6 +700,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -655,6 +723,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -676,6 +746,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -697,6 +769,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -718,6 +792,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -739,6 +815,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -753,6 +831,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.customPut(path: "test/minimal")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -771,6 +851,8 @@ final class SearchClientSnippet {
             body: ["body": "parameters"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -785,6 +867,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteApiKey(key: "myTestApiKey")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -802,6 +886,8 @@ final class SearchClientSnippet {
             deleteByParams: DeleteByParams(filters: "brand:brandName")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -816,6 +902,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteIndex(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -830,6 +918,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteObject(indexName: "<YOUR_INDEX_NAME>", objectID: "uniqueID")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -844,6 +934,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteObjects(indexName: "<YOUR_INDEX_NAME>", objectIDs: ["1", "2"])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -858,6 +950,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteRule(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -872,6 +966,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteRule(indexName: "<YOUR_INDEX_NAME>", objectID: "test/with/slash")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -886,6 +982,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteSource(source: "theSource")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -900,6 +998,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.deleteSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -917,6 +1017,8 @@ final class SearchClientSnippet {
             restrictions: SecuredApiKeyRestrictions(validUntil: Int64(2_524_604_400), restrictIndices: ["Movies"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -951,6 +1053,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -970,6 +1074,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -987,6 +1093,8 @@ final class SearchClientSnippet {
             restrictions: SecuredApiKeyRestrictions(filters: "visible_by:group/Finance")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1004,6 +1112,8 @@ final class SearchClientSnippet {
             restrictions: SecuredApiKeyRestrictions(userToken: "user42")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1021,6 +1131,8 @@ final class SearchClientSnippet {
             restrictions: SecuredApiKeyRestrictions(filters: "user:user42 AND user:public")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1038,6 +1150,8 @@ final class SearchClientSnippet {
             restrictions: SecuredApiKeyRestrictions(userToken: "user42")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1052,6 +1166,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getApiKey(key: "myTestApiKey")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1066,6 +1182,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getAppTask(taskID: Int64(123))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1080,6 +1198,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getDictionaryLanguages()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1094,6 +1214,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getDictionarySettings()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1108,6 +1230,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getLogs()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1127,6 +1251,8 @@ final class SearchClientSnippet {
             type: LogType.all
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1145,6 +1271,8 @@ final class SearchClientSnippet {
             attributesToRetrieve: ["attr1", "attr2"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1159,6 +1287,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getObject(indexName: "<YOUR_INDEX_NAME>", objectID: "Batman and Robin")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1177,6 +1307,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1195,6 +1327,8 @@ final class SearchClientSnippet {
                 GetObjectsRequest(objectID: "uniqueID2", indexName: "<YOUR_INDEX_NAME>"),
             ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1214,6 +1348,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1228,6 +1364,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getRule(indexName: "<YOUR_INDEX_NAME>", objectID: "qr-1725004648916")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1242,6 +1380,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getSettings(indexName: "<YOUR_INDEX_NAME>", getVersion: 2)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1256,6 +1396,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getSources()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1270,6 +1412,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getSynonym(indexName: "<YOUR_INDEX_NAME>", objectID: "id1")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1284,6 +1428,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1298,6 +1444,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getTopUserIds()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1312,6 +1460,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.getUserId(userID: "uniqueID")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1326,6 +1476,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.hasPendingMappings()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1340,6 +1492,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.hasPendingMappings(getClusters: true)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1354,6 +1508,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1368,6 +1524,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1382,6 +1540,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.indexExists(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1396,6 +1556,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listApiKeys()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1410,6 +1572,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listClusters()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1424,6 +1588,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listIndices()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1438,6 +1604,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listIndices(page: 8, hitsPerPage: 3)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1452,6 +1620,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listUserIds()
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1466,6 +1636,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.listUserIds(page: 8, hitsPerPage: 100)
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1484,6 +1656,8 @@ final class SearchClientSnippet {
             indexName: "<YOUR_INDEX_NAME>"
         )]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1505,6 +1679,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1525,6 +1701,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1545,6 +1723,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1563,6 +1743,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["attributeId": "new value"]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1581,6 +1763,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["attributeId": 1]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1599,6 +1783,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["attributeId": true]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1617,6 +1803,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["attributeId": ["one", "two", "three"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1635,6 +1823,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["attributeId": ["nested": "value"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1653,6 +1843,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["visible_by": ["Angela", "group/Finance", "group/Shareholders"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1671,6 +1863,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["categoryPageId": ["_operation": "Add", "value": "men-clothing-pants"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1689,6 +1883,8 @@ final class SearchClientSnippet {
             attributesToUpdate: ["categoryPageId": ["_operation": "Remove", "value": "men-clothing-pants"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1707,6 +1903,8 @@ final class SearchClientSnippet {
             createIfNotExists: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1725,6 +1923,8 @@ final class SearchClientSnippet {
             createIfNotExists: false
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1739,6 +1939,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.removeUserId(userID: "uniqueID")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1768,6 +1970,8 @@ final class SearchClientSnippet {
             batchSize: 3
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1787,6 +1991,8 @@ final class SearchClientSnippet {
             scopes: [ScopeType.settings, ScopeType.synonyms]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1807,6 +2013,8 @@ final class SearchClientSnippet {
             ]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1824,6 +2032,8 @@ final class SearchClientSnippet {
             description: "theDescription"
         )])
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1838,6 +2048,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.restoreApiKey(key: "ALGOLIA_API_KEY")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1860,6 +2072,8 @@ final class SearchClientSnippet {
             ]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1877,6 +2091,8 @@ final class SearchClientSnippet {
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1894,6 +2110,8 @@ final class SearchClientSnippet {
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1917,6 +2135,8 @@ final class SearchClientSnippet {
             ]]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1945,6 +2165,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -1967,6 +2189,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2019,6 +2243,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2048,6 +2274,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2082,6 +2310,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2104,6 +2334,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2127,6 +2359,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2149,6 +2383,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2172,6 +2408,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2197,6 +2435,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2222,6 +2462,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2247,6 +2489,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2276,6 +2520,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2310,6 +2556,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2335,6 +2583,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2357,6 +2607,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2383,6 +2635,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2409,6 +2663,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2438,6 +2694,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2467,6 +2725,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2495,6 +2755,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2517,6 +2779,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2540,6 +2804,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2563,6 +2829,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2592,6 +2860,8 @@ final class SearchClientSnippet {
             clearExistingRules: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2644,6 +2914,8 @@ final class SearchClientSnippet {
             clearExistingRules: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2679,6 +2951,8 @@ final class SearchClientSnippet {
             ]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2706,6 +2980,8 @@ final class SearchClientSnippet {
             ]
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2725,6 +3001,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2752,6 +3030,8 @@ final class SearchClientSnippet {
             replaceExistingSynonyms: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2771,6 +3051,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2790,6 +3072,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2809,6 +3093,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2828,6 +3114,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2844,6 +3132,8 @@ final class SearchClientSnippet {
             .search(searchMethodParams: SearchMethodParams(requests: [SearchQuery
                     .searchForHits(SearchForHits(indexName: "<YOUR_INDEX_NAME>"))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2865,6 +3155,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2884,6 +3176,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2903,6 +3197,8 @@ final class SearchClientSnippet {
                 indexName: "<YOUR_INDEX_NAME>"
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2924,6 +3220,8 @@ final class SearchClientSnippet {
             strategy: SearchStrategy.stopIfEnoughMatches
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2944,6 +3242,8 @@ final class SearchClientSnippet {
                 type: SearchTypeDefault.`default`
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2968,6 +3268,8 @@ final class SearchClientSnippet {
             strategy: SearchStrategy.stopIfEnoughMatches
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -2996,6 +3298,8 @@ final class SearchClientSnippet {
             strategy: SearchStrategy.stopIfEnoughMatches
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3025,6 +3329,8 @@ final class SearchClientSnippet {
             strategy: SearchStrategy.stopIfEnoughMatches
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3076,6 +3382,8 @@ final class SearchClientSnippet {
             )),
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3119,6 +3427,8 @@ final class SearchClientSnippet {
             )),
         ]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3218,6 +3528,8 @@ final class SearchClientSnippet {
                 type: SearchTypeDefault.`default`
             ))]))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3235,6 +3547,8 @@ final class SearchClientSnippet {
             searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3257,6 +3571,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3271,6 +3587,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.searchForFacetValues(indexName: "<YOUR_INDEX_NAME>", facetName: "facetName")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3293,6 +3611,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3311,6 +3631,8 @@ final class SearchClientSnippet {
             searchForFacetValuesRequest: SearchForFacetValuesRequest(facetQuery: "stephen")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3328,6 +3650,8 @@ final class SearchClientSnippet {
             searchRulesParams: SearchRulesParams(query: "zorro")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3342,6 +3666,8 @@ final class SearchClientSnippet {
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3356,6 +3682,8 @@ final class SearchClientSnippet {
         // Call the API
         let response: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3376,6 +3704,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3397,6 +3727,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3414,6 +3746,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "phone"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3432,6 +3766,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(filters: "country:US AND price.gross < 2.0"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3452,6 +3788,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3470,6 +3808,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(filters: "is_available:true"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3488,6 +3828,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(distinct: SearchDistinct.bool(true)))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3505,6 +3847,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(filters: "price < 10"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3525,6 +3869,8 @@ final class SearchClientSnippet {
                 )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3545,6 +3891,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3565,6 +3913,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3583,6 +3933,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(filters: "author:\"Stephen King\""))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3603,6 +3955,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3628,6 +3982,8 @@ final class SearchClientSnippet {
                         ])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3648,6 +4004,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3671,6 +4029,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3695,6 +4055,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3721,6 +4083,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3740,6 +4104,8 @@ final class SearchClientSnippet {
                         .string("category:-Ebook")))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3761,6 +4127,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3781,6 +4149,8 @@ final class SearchClientSnippet {
             ]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3798,6 +4168,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(facets: ["*"]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3815,6 +4187,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(maxValuesPerFacet: 1000))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3833,6 +4207,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(aroundLatLng: "40.71, -74.01"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3850,6 +4226,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(aroundLatLngViaIP: true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3870,6 +4248,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3894,6 +4274,8 @@ final class SearchClientSnippet {
                         ]])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3924,6 +4306,8 @@ final class SearchClientSnippet {
             ]]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3943,6 +4327,8 @@ final class SearchClientSnippet {
                         .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("can_deliver_quickly:true")])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3966,6 +4352,8 @@ final class SearchClientSnippet {
                         ])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -3988,6 +4376,8 @@ final class SearchClientSnippet {
                         ])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4006,6 +4396,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(restrictSearchableAttributes: ["title_fr"]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4023,6 +4415,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(getRankingInfo: true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4040,6 +4434,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(clickAnalytics: true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4060,6 +4456,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4080,6 +4478,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4097,6 +4497,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(userToken: "user-1"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4117,6 +4519,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4135,6 +4539,8 @@ final class SearchClientSnippet {
                 .searchSearchParamsObject(SearchSearchParamsObject(analyticsTags: ["YOUR_ANALYTICS_TAG"]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4157,6 +4563,8 @@ final class SearchClientSnippet {
                         ])))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4178,6 +4586,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4198,6 +4608,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4218,6 +4630,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4235,6 +4649,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "shirt"))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4252,6 +4668,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: ""))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4272,6 +4690,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4293,6 +4713,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4313,6 +4735,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4333,6 +4757,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4353,6 +4779,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4373,6 +4801,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4393,6 +4823,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4413,6 +4845,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4433,6 +4867,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4453,6 +4889,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4473,6 +4911,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4496,6 +4936,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4519,6 +4961,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4540,6 +4984,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4566,6 +5012,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4592,6 +5040,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4612,6 +5062,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4632,6 +5084,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4652,6 +5106,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4672,6 +5128,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4692,6 +5150,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4712,6 +5172,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4732,6 +5194,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4752,6 +5216,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4772,6 +5238,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4792,6 +5260,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4812,6 +5282,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4829,6 +5301,8 @@ final class SearchClientSnippet {
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(query: "query", page: 0))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4849,6 +5323,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4869,6 +5345,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4889,6 +5367,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4909,6 +5389,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4929,6 +5411,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4949,6 +5433,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4969,6 +5455,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -4989,6 +5477,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5014,6 +5504,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5034,6 +5526,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5054,6 +5548,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5074,6 +5570,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5097,6 +5595,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5117,6 +5617,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5142,6 +5644,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5165,6 +5669,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5192,6 +5698,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5224,6 +5732,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5247,6 +5757,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5267,6 +5779,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5287,6 +5801,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5308,6 +5824,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5328,6 +5846,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5348,6 +5868,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5368,6 +5890,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5388,6 +5912,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5409,6 +5935,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5429,6 +5957,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5449,6 +5979,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5470,6 +6002,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5490,6 +6024,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5510,6 +6046,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5530,6 +6068,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5550,6 +6090,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5570,6 +6112,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5590,6 +6134,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5610,6 +6156,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5631,6 +6179,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5652,6 +6202,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5672,6 +6224,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5692,6 +6246,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5712,6 +6268,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5732,6 +6290,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5752,6 +6312,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5772,6 +6334,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5792,6 +6356,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5812,6 +6378,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5832,6 +6400,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5852,6 +6422,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5872,6 +6444,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5892,6 +6466,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5912,6 +6488,8 @@ final class SearchClientSnippet {
             ))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5932,6 +6510,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5952,6 +6532,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5966,6 +6548,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.searchSynonyms(indexName: "<YOUR_INDEX_NAME>")
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -5988,6 +6572,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6007,6 +6593,8 @@ final class SearchClientSnippet {
             hitsPerPage: 10
         ))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6042,6 +6630,8 @@ final class SearchClientSnippet {
                 ]))
             )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6063,6 +6653,8 @@ final class SearchClientSnippet {
                 ))
             )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6084,6 +6676,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6102,6 +6696,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6121,6 +6717,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6139,6 +6737,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6158,6 +6758,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6176,6 +6778,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6195,6 +6799,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6213,6 +6819,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6231,6 +6839,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6248,6 +6858,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeForDistinct: "company", distinct: SearchDistinct.bool(true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6265,6 +6877,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeForDistinct: "design", distinct: SearchDistinct.bool(true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6282,6 +6896,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(distinct: SearchDistinct.bool(true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6299,6 +6915,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeForDistinct: "section", distinct: SearchDistinct.bool(true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6316,6 +6934,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["allergens"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6333,6 +6953,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["color", "availableIn"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6350,6 +6972,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["genre", "author"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6367,6 +6991,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["genre", "searchable(author)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6384,6 +7010,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(genre)", "author"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6401,6 +7029,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["searchable(categoryPageId)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6418,6 +7048,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(unretrievableAttributes: ["visible_by"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6435,6 +7067,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(visible_by)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6452,6 +7086,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["can_deliver_quickly", "restaurant"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6469,6 +7105,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["query_terms"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6486,6 +7124,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["director"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6503,6 +7143,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesForFaceting: ["filterOnly(brand)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6520,6 +7162,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(mode: SearchMode.neuralSearch)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6537,6 +7181,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(mode: SearchMode.keywordSearch)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6554,6 +7200,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["title,comments", "ingredients"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6571,6 +7219,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["title", "ingredients"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6588,6 +7238,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(retweets)", "desc(likes)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6605,6 +7257,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(boosted)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6622,6 +7276,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(pageviews)", "desc(comments)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6642,6 +7298,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6659,6 +7317,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(rounded_pageviews)", "desc(comments)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6676,6 +7336,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(price)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6703,6 +7365,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6730,6 +7394,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6747,6 +7413,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(ranking: ["desc(post_date_timestamp)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6764,6 +7432,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(post_date_timestamp)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6784,6 +7454,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6801,6 +7473,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["asc(textual_attribute)"], relevancyStrictness: 0)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6818,6 +7492,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replicas: ["products_price_desc"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6835,6 +7511,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replicas: ["articles_date_desc"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6852,6 +7530,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replicas: ["virtual(products_price_desc)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6869,6 +7549,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replicas: [""])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6887,6 +7569,8 @@ final class SearchClientSnippet {
             forwardToReplicas: true
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6904,6 +7588,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(maxValuesPerFacet: 1000)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6921,6 +7607,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(maxFacetHits: 100)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6942,6 +7630,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6969,6 +7659,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -6986,6 +7678,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["design", "type", "color"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7006,6 +7700,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7023,6 +7719,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToHighlight: ["author", "title", "content"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7040,6 +7738,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToHighlight: ["*"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7122,6 +7822,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7143,6 +7845,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7160,6 +7864,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["unordered(title)", "cast"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7181,6 +7887,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7201,6 +7909,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7218,6 +7928,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["title_eng", "title_fr", "title_es"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7235,6 +7947,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(disablePrefixOnAttributes: ["serial_number"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7252,6 +7966,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(disableTypoToleranceOnAttributes: ["serial_number"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7269,6 +7985,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["serial_number"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7286,6 +8004,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(searchableAttributes: ["serial_number", "serial_number_suffixes"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7308,6 +8028,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7331,6 +8053,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7348,6 +8072,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(unretrievableAttributes: ["total_number_of_sales"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7365,6 +8091,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToRetrieve: ["author", "title", "content"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7382,6 +8110,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToRetrieve: ["*"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7399,6 +8129,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToRetrieve: ["*", "-SKU", "-internal_desc"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7416,6 +8148,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(mode: SearchMode.neuralSearch)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7433,6 +8167,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(mode: SearchMode.keywordSearch)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7459,6 +8195,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7486,6 +8224,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7513,6 +8253,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7530,6 +8272,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customRanking: ["desc(popularity)", "asc(price)"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7547,6 +8291,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(relevancyStrictness: 90)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7564,6 +8310,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replicas: ["name_of_replica_index1", "name_of_replica_index2"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7581,6 +8329,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(maxValuesPerFacet: 100)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7598,6 +8348,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(sortFacetValuesBy: "alpha")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7615,6 +8367,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToSnippet: ["content:80", "description"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7632,6 +8386,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributesToSnippet: ["*:80"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7649,6 +8405,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(highlightPreTag: "<em>")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7666,6 +8424,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(highlightPostTag: "</em>")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7683,6 +8443,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(snippetEllipsisText: "…")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7700,6 +8462,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(restrictHighlightAndSnippetArrays: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7717,6 +8481,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(hitsPerPage: 20)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7734,6 +8500,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(paginationLimitedTo: 1000)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7751,6 +8519,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(minWordSizefor1Typo: 4)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7768,6 +8538,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(minWordSizefor2Typos: 4)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7785,6 +8557,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance.bool(true))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7802,6 +8576,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(allowTyposOnNumericTokens: false)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7819,6 +8595,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(disableTypoToleranceOnWords: ["wheel", "1X2BCD"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7836,6 +8614,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(separatorsToIndex: "+#")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7856,6 +8636,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7876,6 +8658,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7896,6 +8680,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7913,6 +8699,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(camelCaseAttributes: ["description"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7930,6 +8718,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(decompoundedAttributes: ["de": ["name"]])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7950,6 +8740,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7967,6 +8759,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(keepDiacriticsOnCharacters: "øé")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -7984,6 +8778,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(customNormalization: ["default": ["ä": "ae"]])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8005,6 +8801,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8022,6 +8820,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(indexLanguages: [SearchSupportedLanguage.ja])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8039,6 +8839,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(decompoundQuery: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8056,6 +8858,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(enableRules: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8073,6 +8877,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(enablePersonalization: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8090,6 +8896,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(queryType: SearchQueryType.prefixLast)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8107,6 +8915,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(removeWordsIfNoResults: SearchRemoveWordsIfNoResults.`none`)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8124,6 +8934,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(advancedSyntax: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8141,6 +8953,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(optionalWords: SearchOptionalWords.arrayOfString(["blue", "iphone case"]))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8158,6 +8972,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(disablePrefixOnAttributes: ["sku"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8175,6 +8991,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(disableExactOnAttributes: ["description"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8192,6 +9010,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(exactOnSingleWordQuery: SearchExactOnSingleWordQuery.attribute)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8212,6 +9032,8 @@ final class SearchClientSnippet {
             ])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8229,6 +9051,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(numericAttributesForFiltering: ["quantity", "popularity"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8246,6 +9070,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(allowCompressionOfIntegerArray: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8263,6 +9089,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeForDistinct: "url")
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8280,6 +9108,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeForDistinct: "url", distinct: SearchDistinct.int(1))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8297,6 +9127,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(replaceSynonymsInHighlight: false)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8314,6 +9146,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(minProximity: 1)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8331,6 +9165,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(responseFields: ["hits", "hitsPerPage", "nbPages", "page"])
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8348,6 +9184,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(maxFacetHits: 10)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8365,6 +9203,8 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(attributeCriteriaComputedByMinProximity: true)
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8384,6 +9224,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8411,6 +9253,8 @@ final class SearchClientSnippet {
             )))
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8433,6 +9277,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8450,6 +9296,8 @@ final class SearchClientSnippet {
             operation: ApiKeyOperation.add
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8476,6 +9324,8 @@ final class SearchClientSnippet {
             )
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8493,6 +9343,8 @@ final class SearchClientSnippet {
             operation: ApiKeyOperation.delete
         )
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8507,6 +9359,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.waitForAppTask(taskID: Int64(123))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 
@@ -8521,6 +9375,8 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.waitForTask(indexName: "<YOUR_INDEX_NAME>", taskID: Int64(123))
         // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }

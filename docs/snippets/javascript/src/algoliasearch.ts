@@ -16,7 +16,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -37,7 +37,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -59,7 +59,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -81,7 +81,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -103,7 +103,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -125,7 +125,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -147,7 +147,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -169,7 +169,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -191,7 +191,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -213,7 +213,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -235,7 +235,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -254,7 +254,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -281,7 +281,7 @@ export async function snippetForGetRecommendations1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -310,7 +310,7 @@ export async function snippetForGetRecommendations2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -331,7 +331,7 @@ export async function snippetForGetRecommendations3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -361,7 +361,7 @@ export async function snippetForGetRecommendations4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -383,7 +383,7 @@ export async function snippetForGetRecommendations5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -421,7 +421,7 @@ export async function snippetForGetRecommendations6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -440,7 +440,7 @@ export async function snippetForGetRecommendations7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -459,7 +459,7 @@ export async function snippetForSearch(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -478,7 +478,7 @@ export async function snippetForSearch1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -503,7 +503,7 @@ export async function snippetForSearch2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -522,7 +522,7 @@ export async function snippetForSearch3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -539,7 +539,7 @@ export async function snippetForSearch4(): Promise<void> {
   const response = await client.search({ requests: [{ indexName: 'cts_e2e_search_empty_index' }] });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -566,7 +566,7 @@ export async function snippetForSearch5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -585,7 +585,7 @@ export async function snippetForSearch6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -604,7 +604,7 @@ export async function snippetForSearch7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -624,7 +624,7 @@ export async function snippetForSearch8(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -643,7 +643,7 @@ export async function snippetForSearch9(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -672,7 +672,7 @@ export async function snippetForSearch10(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -696,7 +696,7 @@ export async function snippetForSearch11(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -726,7 +726,7 @@ export async function snippetForSearch12(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -762,7 +762,7 @@ export async function snippetForSearch13(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -789,7 +789,7 @@ export async function snippetForSearch14(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -892,7 +892,7 @@ export async function snippetForSearch15(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

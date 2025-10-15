@@ -22,7 +22,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -47,7 +47,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -69,7 +69,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -94,7 +94,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -125,7 +125,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -147,7 +147,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -175,7 +175,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -206,7 +206,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -237,7 +237,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -268,7 +268,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -299,7 +299,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -330,7 +330,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -361,7 +361,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -392,7 +392,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -423,7 +423,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -454,7 +454,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -476,7 +476,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -504,7 +504,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -526,7 +526,7 @@ def snippet_for_delete_composition():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -549,7 +549,7 @@ def snippet_for_delete_composition_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -571,7 +571,7 @@ def snippet_for_get_composition():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -594,7 +594,7 @@ def snippet_for_get_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -617,7 +617,7 @@ def snippet_for_get_task():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -637,7 +637,7 @@ def snippet_for_list_compositions():
     response = client.list_compositions()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -657,7 +657,7 @@ def snippet_for_list_compositions1():
     response = client.list_compositions()
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -706,7 +706,7 @@ def snippet_for_multiple_batch():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -765,7 +765,7 @@ def snippet_for_multiple_batch1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -865,7 +865,7 @@ def snippet_for_multiple_batch2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -923,7 +923,7 @@ def snippet_for_multiple_batch3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -972,7 +972,7 @@ def snippet_for_put_composition():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1025,7 +1025,7 @@ def snippet_for_put_composition1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1115,7 +1115,7 @@ def snippet_for_put_composition2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1170,7 +1170,7 @@ def snippet_for_put_composition3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1227,7 +1227,7 @@ def snippet_for_put_composition_rule():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1298,7 +1298,7 @@ def snippet_for_put_composition_rule1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1378,7 +1378,7 @@ def snippet_for_put_composition_rule2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1440,7 +1440,7 @@ def snippet_for_put_composition_rule3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1490,7 +1490,7 @@ def snippet_for_save_rules():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1569,7 +1569,7 @@ def snippet_for_save_rules1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1655,7 +1655,7 @@ def snippet_for_save_rules2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1723,7 +1723,7 @@ def snippet_for_save_rules3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1750,7 +1750,7 @@ def snippet_for_search():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1795,7 +1795,7 @@ def snippet_for_search1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1820,7 +1820,7 @@ def snippet_for_search_composition_rules():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1848,7 +1848,7 @@ def snippet_for_search_for_facet_values():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 

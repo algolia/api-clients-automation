@@ -24,7 +24,7 @@ def snippet_for_custom_delete():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -51,7 +51,7 @@ def snippet_for_custom_delete1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -75,7 +75,7 @@ def snippet_for_custom_get():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -102,7 +102,7 @@ def snippet_for_custom_get1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -135,7 +135,7 @@ def snippet_for_custom_get2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -159,7 +159,7 @@ def snippet_for_custom_post():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -189,7 +189,7 @@ def snippet_for_custom_post1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -222,7 +222,7 @@ def snippet_for_custom_post2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -255,7 +255,7 @@ def snippet_for_custom_post3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -288,7 +288,7 @@ def snippet_for_custom_post4():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -321,7 +321,7 @@ def snippet_for_custom_post5():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -354,7 +354,7 @@ def snippet_for_custom_post6():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -387,7 +387,7 @@ def snippet_for_custom_post7():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -420,7 +420,7 @@ def snippet_for_custom_post8():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -453,7 +453,7 @@ def snippet_for_custom_post9():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -486,7 +486,7 @@ def snippet_for_custom_post10():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -510,7 +510,7 @@ def snippet_for_custom_put():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -540,7 +540,7 @@ def snippet_for_custom_put1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -564,7 +564,7 @@ def snippet_for_get_add_to_cart_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -591,7 +591,7 @@ def snippet_for_get_add_to_cart_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -615,7 +615,7 @@ def snippet_for_get_average_click_position():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -642,7 +642,7 @@ def snippet_for_get_average_click_position1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -666,7 +666,7 @@ def snippet_for_get_click_positions():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -693,7 +693,7 @@ def snippet_for_get_click_positions1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -717,7 +717,7 @@ def snippet_for_get_click_through_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -744,7 +744,7 @@ def snippet_for_get_click_through_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -768,7 +768,7 @@ def snippet_for_get_conversion_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -795,7 +795,7 @@ def snippet_for_get_conversion_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -819,7 +819,7 @@ def snippet_for_get_no_click_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -846,7 +846,7 @@ def snippet_for_get_no_click_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -870,7 +870,7 @@ def snippet_for_get_no_results_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -897,7 +897,7 @@ def snippet_for_get_no_results_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -921,7 +921,7 @@ def snippet_for_get_purchase_rate():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -948,7 +948,7 @@ def snippet_for_get_purchase_rate1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -972,7 +972,7 @@ def snippet_for_get_revenue():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -999,7 +999,7 @@ def snippet_for_get_revenue1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1023,7 +1023,7 @@ def snippet_for_get_searches_count():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1050,7 +1050,7 @@ def snippet_for_get_searches_count1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1074,7 +1074,7 @@ def snippet_for_get_searches_no_clicks():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1103,7 +1103,7 @@ def snippet_for_get_searches_no_clicks1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1127,7 +1127,7 @@ def snippet_for_get_searches_no_results():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1156,7 +1156,7 @@ def snippet_for_get_searches_no_results1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1180,7 +1180,7 @@ def snippet_for_get_status():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1204,7 +1204,7 @@ def snippet_for_get_top_countries():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1233,7 +1233,7 @@ def snippet_for_get_top_countries1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1257,7 +1257,7 @@ def snippet_for_get_top_filter_attributes():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1287,7 +1287,7 @@ def snippet_for_get_top_filter_attributes1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1312,7 +1312,7 @@ def snippet_for_get_top_filter_for_attribute():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1337,7 +1337,7 @@ def snippet_for_get_top_filter_for_attribute1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1368,7 +1368,7 @@ def snippet_for_get_top_filter_for_attribute2():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1399,7 +1399,7 @@ def snippet_for_get_top_filter_for_attribute3():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1423,7 +1423,7 @@ def snippet_for_get_top_filters_no_results():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1453,7 +1453,7 @@ def snippet_for_get_top_filters_no_results1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1477,7 +1477,7 @@ def snippet_for_get_top_hits():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1509,7 +1509,7 @@ def snippet_for_get_top_hits1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1533,7 +1533,7 @@ def snippet_for_get_top_searches():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1566,7 +1566,7 @@ def snippet_for_get_top_searches1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1590,7 +1590,7 @@ def snippet_for_get_users_count():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 
@@ -1617,7 +1617,7 @@ def snippet_for_get_users_count1():
     )
 
     # >LOG
-    # use the class directly
+    # print the response
     print(response)
     # SEPARATOR<
 

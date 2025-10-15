@@ -16,7 +16,7 @@ export async function snippetForBatchRecommendRules(): Promise<void> {
   const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -33,7 +33,7 @@ export async function snippetForCustomDelete(): Promise<void> {
   const response = await client.customDelete({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -50,7 +50,7 @@ export async function snippetForCustomDelete1(): Promise<void> {
   const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -67,7 +67,7 @@ export async function snippetForCustomGet(): Promise<void> {
   const response = await client.customGet({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -84,7 +84,7 @@ export async function snippetForCustomGet1(): Promise<void> {
   const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -107,7 +107,7 @@ export async function snippetForCustomGet2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -124,7 +124,7 @@ export async function snippetForCustomPost(): Promise<void> {
   const response = await client.customPost({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -145,7 +145,7 @@ export async function snippetForCustomPost1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -167,7 +167,7 @@ export async function snippetForCustomPost2(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -189,7 +189,7 @@ export async function snippetForCustomPost3(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -211,7 +211,7 @@ export async function snippetForCustomPost4(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -233,7 +233,7 @@ export async function snippetForCustomPost5(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -255,7 +255,7 @@ export async function snippetForCustomPost6(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -277,7 +277,7 @@ export async function snippetForCustomPost7(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -299,7 +299,7 @@ export async function snippetForCustomPost8(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -321,7 +321,7 @@ export async function snippetForCustomPost9(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -343,7 +343,7 @@ export async function snippetForCustomPost10(): Promise<void> {
   );
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -360,7 +360,7 @@ export async function snippetForCustomPut(): Promise<void> {
   const response = await client.customPut({ path: 'test/minimal' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -381,7 +381,7 @@ export async function snippetForCustomPut1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -402,7 +402,7 @@ export async function snippetForDeleteRecommendRule(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -423,7 +423,7 @@ export async function snippetForGetRecommendRule(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -444,7 +444,7 @@ export async function snippetForGetRecommendStatus(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -463,7 +463,7 @@ export async function snippetForGetRecommendations(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -490,7 +490,7 @@ export async function snippetForGetRecommendations1(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -519,7 +519,7 @@ export async function snippetForGetRecommendations2(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -540,7 +540,7 @@ export async function snippetForGetRecommendations3(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -570,7 +570,7 @@ export async function snippetForGetRecommendations4(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -592,7 +592,7 @@ export async function snippetForGetRecommendations5(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -630,7 +630,7 @@ export async function snippetForGetRecommendations6(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -649,7 +649,7 @@ export async function snippetForGetRecommendations7(): Promise<void> {
   });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }
@@ -666,7 +666,7 @@ export async function snippetForSearchRecommendRules(): Promise<void> {
   const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });
 
   // >LOG
-  // use typed response
+  // print the response
   console.log(response);
   // SEPARATOR<
 }

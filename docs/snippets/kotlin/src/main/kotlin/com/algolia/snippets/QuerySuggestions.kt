@@ -37,7 +37,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -53,7 +53,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -69,7 +69,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -85,7 +85,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -101,7 +101,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -129,7 +129,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -145,7 +145,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -167,7 +167,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -194,7 +194,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -221,7 +221,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -248,7 +248,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -275,7 +275,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -302,7 +302,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -329,7 +329,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -356,7 +356,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -383,7 +383,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -410,7 +410,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -426,7 +426,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -448,7 +448,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -464,7 +464,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.deleteConfig(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -480,7 +480,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.getAllConfigs()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -496,7 +496,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.getConfig(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -512,7 +512,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.getConfigStatus(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -528,7 +528,7 @@ class SnippetQuerySuggestionsClient {
     var response = client.getLogFile(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -575,7 +575,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

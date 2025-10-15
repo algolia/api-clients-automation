@@ -24,6 +24,8 @@ void snippetForaddApiKey() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -50,6 +52,8 @@ void snippetForaddApiKey1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -71,6 +75,8 @@ void snippetForaddOrUpdateObject() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -91,6 +97,8 @@ void snippetForappendSource() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -111,6 +119,8 @@ void snippetForassignUserId() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -131,6 +141,8 @@ void snippetForassignUserId1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -166,6 +178,8 @@ void snippetForbatch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -193,6 +207,8 @@ void snippetForbatch1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -220,6 +236,8 @@ void snippetForbatch2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -247,6 +265,8 @@ void snippetForbatch3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -274,6 +294,8 @@ void snippetForbatch4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -301,6 +323,8 @@ void snippetForbatch5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -328,6 +352,8 @@ void snippetForbatch6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -352,6 +378,8 @@ void snippetForbatchAssignUserIds() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -391,6 +419,8 @@ void snippetForbatchDictionaryEntries() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -419,6 +449,8 @@ void snippetForbatchDictionaryEntries1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -448,6 +480,8 @@ void snippetForbatchDictionaryEntries2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -465,6 +499,8 @@ void snippetForbrowse() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -488,6 +524,8 @@ void snippetForbrowse1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -508,6 +546,8 @@ void snippetForbrowse2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -525,6 +565,8 @@ void snippetForclearObjects() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -542,6 +584,8 @@ void snippetForclearRules() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -559,6 +603,8 @@ void snippetForclearSynonyms() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -576,6 +622,8 @@ void snippetForcustomDelete() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -596,6 +644,8 @@ void snippetForcustomDelete1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -613,6 +663,8 @@ void snippetForcustomGet() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -633,6 +685,8 @@ void snippetForcustomGet1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -665,6 +719,8 @@ void snippetForcustomGet2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -682,6 +738,8 @@ void snippetForcustomPost() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -705,6 +763,8 @@ void snippetForcustomPost1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -733,6 +793,8 @@ void snippetForcustomPost2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -761,6 +823,8 @@ void snippetForcustomPost3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -789,6 +853,8 @@ void snippetForcustomPost4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -817,6 +883,8 @@ void snippetForcustomPost5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -845,6 +913,8 @@ void snippetForcustomPost6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -873,6 +943,8 @@ void snippetForcustomPost7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -904,6 +976,8 @@ void snippetForcustomPost8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -936,6 +1010,8 @@ void snippetForcustomPost9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -967,6 +1043,8 @@ void snippetForcustomPost10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -984,6 +1062,8 @@ void snippetForcustomPut() async {
     path: "test/minimal",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1007,6 +1087,8 @@ void snippetForcustomPut1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1024,6 +1106,8 @@ void snippetFordeleteApiKey() async {
     key: "myTestApiKey",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1044,6 +1128,8 @@ void snippetFordeleteBy() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1061,6 +1147,8 @@ void snippetFordeleteIndex() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1079,6 +1167,8 @@ void snippetFordeleteObject() async {
     objectID: "uniqueID",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1097,6 +1187,8 @@ void snippetFordeleteRule() async {
     objectID: "id1",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1115,6 +1207,8 @@ void snippetFordeleteRule1() async {
     objectID: "test/with/slash",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1132,6 +1226,8 @@ void snippetFordeleteSource() async {
     source: "theSource",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1150,6 +1246,8 @@ void snippetFordeleteSynonym() async {
     objectID: "id1",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1167,6 +1265,8 @@ void snippetForgetApiKey() async {
     key: "myTestApiKey",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1184,6 +1284,8 @@ void snippetForgetAppTask() async {
     taskID: 123,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1199,6 +1301,8 @@ void snippetForgetDictionaryLanguages() async {
   // Call the API
   final response = await client.getDictionaryLanguages();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1214,6 +1318,8 @@ void snippetForgetDictionarySettings() async {
   // Call the API
   final response = await client.getDictionarySettings();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1229,6 +1335,8 @@ void snippetForgetLogs() async {
   // Call the API
   final response = await client.getLogs();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1249,6 +1357,8 @@ void snippetForgetLogs1() async {
     type: LogType.fromJson("all"),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1271,6 +1381,8 @@ void snippetForgetObject() async {
     ],
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1289,6 +1401,8 @@ void snippetForgetObject1() async {
     objectID: "Batman and Robin",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1313,6 +1427,8 @@ void snippetForgetObjects() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1341,6 +1457,8 @@ void snippetForgetObjects1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1369,6 +1487,8 @@ void snippetForgetObjects2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1387,6 +1507,8 @@ void snippetForgetRule() async {
     objectID: "qr-1725004648916",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1405,6 +1527,8 @@ void snippetForgetSettings() async {
     getVersion: 2,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1420,6 +1544,8 @@ void snippetForgetSources() async {
   // Call the API
   final response = await client.getSources();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1438,6 +1564,8 @@ void snippetForgetSynonym() async {
     objectID: "id1",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1456,6 +1584,8 @@ void snippetForgetTask() async {
     taskID: 123,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1471,6 +1601,8 @@ void snippetForgetTopUserIds() async {
   // Call the API
   final response = await client.getTopUserIds();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1488,6 +1620,8 @@ void snippetForgetUserId() async {
     userID: "uniqueID",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1503,6 +1637,8 @@ void snippetForhasPendingMappings() async {
   // Call the API
   final response = await client.hasPendingMappings();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1520,6 +1656,8 @@ void snippetForhasPendingMappings1() async {
     getClusters: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1535,6 +1673,8 @@ void snippetForlistApiKeys() async {
   // Call the API
   final response = await client.listApiKeys();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1550,6 +1690,8 @@ void snippetForlistClusters() async {
   // Call the API
   final response = await client.listClusters();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1565,6 +1707,8 @@ void snippetForlistIndices() async {
   // Call the API
   final response = await client.listIndices();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1583,6 +1727,8 @@ void snippetForlistIndices1() async {
     hitsPerPage: 3,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1598,6 +1744,8 @@ void snippetForlistUserIds() async {
   // Call the API
   final response = await client.listUserIds();
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1616,6 +1764,8 @@ void snippetForlistUserIds1() async {
     hitsPerPage: 100,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1643,6 +1793,8 @@ void snippetFormultipleBatch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1668,6 +1820,8 @@ void snippetForoperationIndex() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1689,6 +1843,8 @@ void snippetForoperationIndex1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1710,6 +1866,8 @@ void snippetForoperationIndex2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1731,6 +1889,8 @@ void snippetForpartialUpdateObject() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1752,6 +1912,8 @@ void snippetForpartialUpdateObject1() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1773,6 +1935,8 @@ void snippetForpartialUpdateObject2() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1798,6 +1962,8 @@ void snippetForpartialUpdateObject3() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1821,6 +1987,8 @@ void snippetForpartialUpdateObject4() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1846,6 +2014,8 @@ void snippetForpartialUpdateObject5() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1870,6 +2040,8 @@ void snippetForpartialUpdateObject6() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1894,6 +2066,8 @@ void snippetForpartialUpdateObject7() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1911,6 +2085,8 @@ void snippetForremoveUserId() async {
     userID: "uniqueID",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1933,6 +2109,8 @@ void snippetForreplaceSources() async {
     ],
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1950,6 +2128,8 @@ void snippetForrestoreApiKey() async {
     key: "ALGOLIA_API_KEY",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -1973,6 +2153,8 @@ void snippetForsaveObject() async {
     },
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2005,6 +2187,8 @@ void snippetForsaveRule() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2087,6 +2271,8 @@ void snippetForsaveRule1() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2130,6 +2316,8 @@ void snippetForsaveRule2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2178,6 +2366,8 @@ void snippetForsaveRule3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2210,6 +2400,8 @@ void snippetForsaveRule4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2243,6 +2435,8 @@ void snippetForsaveRule5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2275,6 +2469,8 @@ void snippetForsaveRule6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2307,6 +2503,8 @@ void snippetForsaveRule7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2345,6 +2543,8 @@ void snippetForsaveRule8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2380,6 +2580,8 @@ void snippetForsaveRule9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2415,6 +2617,8 @@ void snippetForsaveRule10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2458,6 +2662,8 @@ void snippetForsaveRule11() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2502,6 +2708,8 @@ void snippetForsaveRule12() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2537,6 +2745,8 @@ void snippetForsaveRule13() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2571,6 +2781,8 @@ void snippetForsaveRule14() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2608,6 +2820,8 @@ void snippetForsaveRule15() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2645,6 +2859,8 @@ void snippetForsaveRule16() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2685,6 +2901,8 @@ void snippetForsaveRule17() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2725,6 +2943,8 @@ void snippetForsaveRule18() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2759,6 +2979,8 @@ void snippetForsaveRule19() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2790,6 +3012,8 @@ void snippetForsaveRule20() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2822,6 +3046,8 @@ void snippetForsaveRule21() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2853,6 +3079,8 @@ void snippetForsaveRule22() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2902,6 +3130,8 @@ void snippetForsaveRules() async {
     clearExistingRules: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -2986,6 +3216,8 @@ void snippetForsaveRules1() async {
     clearExistingRules: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3043,6 +3275,8 @@ void snippetForsaveRules2() async {
     ],
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3090,6 +3324,8 @@ void snippetForsaveRules3() async {
     ],
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3118,6 +3354,8 @@ void snippetForsaveSynonym() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3158,6 +3396,8 @@ void snippetForsaveSynonyms() async {
     replaceExistingSynonyms: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3183,6 +3423,8 @@ void snippetForsearch() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3208,6 +3450,8 @@ void snippetForsearch1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3233,6 +3477,8 @@ void snippetForsearch2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3258,6 +3504,8 @@ void snippetForsearch3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3281,6 +3529,8 @@ void snippetForsearch4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3314,6 +3564,8 @@ void snippetForsearch5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3342,6 +3594,8 @@ void snippetForsearch6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3369,6 +3623,8 @@ void snippetForsearch7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3395,6 +3651,8 @@ void snippetForsearch8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3421,6 +3679,8 @@ void snippetForsearch9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3450,6 +3710,8 @@ void snippetForsearch10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3483,6 +3745,8 @@ void snippetForsearch11() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3518,6 +3782,8 @@ void snippetForsearch12() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3582,6 +3848,8 @@ void snippetForsearch13() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3634,6 +3902,8 @@ void snippetForsearch14() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3819,6 +4089,8 @@ void snippetForsearch15() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3839,6 +4111,8 @@ void snippetForsearchDictionaryEntries() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3862,6 +4136,8 @@ void snippetForsearchDictionaryEntries1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3880,6 +4156,8 @@ void snippetForsearchForFacetValues() async {
     facetName: "facetName",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3903,6 +4181,8 @@ void snippetForsearchForFacetValues1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3924,6 +4204,8 @@ void snippetForsearchForFacetValues2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3944,6 +4226,8 @@ void snippetForsearchRules() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3961,6 +4245,8 @@ void snippetForsearchSingleIndex() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -3978,6 +4264,8 @@ void snippetForsearchSingleIndex1() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4001,6 +4289,8 @@ void snippetForsearchSingleIndex2() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4027,6 +4317,8 @@ void snippetForsearchSingleIndex3() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4047,6 +4339,8 @@ void snippetForsearchSingleIndex4() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4067,6 +4361,8 @@ void snippetForsearchSingleIndex5() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4088,6 +4384,8 @@ void snippetForsearchSingleIndex6() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4108,6 +4406,8 @@ void snippetForsearchSingleIndex7() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4128,6 +4428,8 @@ void snippetForsearchSingleIndex8() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4148,6 +4450,8 @@ void snippetForsearchSingleIndex9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4168,6 +4472,8 @@ void snippetForsearchSingleIndex10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4190,6 +4496,8 @@ void snippetForsearchSingleIndex11() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4212,6 +4520,8 @@ void snippetForsearchSingleIndex12() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4232,6 +4542,8 @@ void snippetForsearchSingleIndex13() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4253,6 +4565,8 @@ void snippetForsearchSingleIndex14() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4279,6 +4593,8 @@ void snippetForsearchSingleIndex15() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4302,6 +4618,8 @@ void snippetForsearchSingleIndex16() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4326,6 +4644,8 @@ void snippetForsearchSingleIndex17() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4352,6 +4672,8 @@ void snippetForsearchSingleIndex18() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4379,6 +4701,8 @@ void snippetForsearchSingleIndex19() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4399,6 +4723,8 @@ void snippetForsearchSingleIndex20() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4422,6 +4748,8 @@ void snippetForsearchSingleIndex21() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4445,6 +4773,8 @@ void snippetForsearchSingleIndex22() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4467,6 +4797,8 @@ void snippetForsearchSingleIndex23() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4487,6 +4819,8 @@ void snippetForsearchSingleIndex24() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4507,6 +4841,8 @@ void snippetForsearchSingleIndex25() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4527,6 +4863,8 @@ void snippetForsearchSingleIndex26() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4548,6 +4886,8 @@ void snippetForsearchSingleIndex27() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4575,6 +4915,8 @@ void snippetForsearchSingleIndex28() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4610,6 +4952,8 @@ void snippetForsearchSingleIndex29() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4632,6 +4976,8 @@ void snippetForsearchSingleIndex30() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4656,6 +5002,8 @@ void snippetForsearchSingleIndex31() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4679,6 +5027,8 @@ void snippetForsearchSingleIndex32() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4701,6 +5051,8 @@ void snippetForsearchSingleIndex33() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4721,6 +5073,8 @@ void snippetForsearchSingleIndex34() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4741,6 +5095,8 @@ void snippetForsearchSingleIndex35() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4762,6 +5118,8 @@ void snippetForsearchSingleIndex36() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4783,6 +5141,8 @@ void snippetForsearchSingleIndex37() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4803,6 +5163,8 @@ void snippetForsearchSingleIndex38() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4824,6 +5186,8 @@ void snippetForsearchSingleIndex39() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4846,6 +5210,8 @@ void snippetForsearchSingleIndex40() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4869,6 +5235,8 @@ void snippetForsearchSingleIndex41() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4893,6 +5261,8 @@ void snippetForsearchSingleIndex42() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4917,6 +5287,8 @@ void snippetForsearchSingleIndex43() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4940,6 +5312,8 @@ void snippetForsearchSingleIndex44() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4960,6 +5334,8 @@ void snippetForsearchSingleIndex45() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -4980,6 +5356,8 @@ void snippetForsearchSingleIndex46() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5001,6 +5379,8 @@ void snippetForsearchSingleIndex47() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5024,6 +5404,8 @@ void snippetForsearchSingleIndex48() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5048,6 +5430,8 @@ void snippetForsearchSingleIndex49() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5072,6 +5456,8 @@ void snippetForsearchSingleIndex50() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5093,6 +5479,8 @@ void snippetForsearchSingleIndex51() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5114,6 +5502,8 @@ void snippetForsearchSingleIndex52() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5136,6 +5526,8 @@ void snippetForsearchSingleIndex53() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5157,6 +5549,8 @@ void snippetForsearchSingleIndex54() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5178,6 +5572,8 @@ void snippetForsearchSingleIndex55() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5199,6 +5595,8 @@ void snippetForsearchSingleIndex56() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5220,6 +5618,8 @@ void snippetForsearchSingleIndex57() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5244,6 +5644,8 @@ void snippetForsearchSingleIndex58() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5268,6 +5670,8 @@ void snippetForsearchSingleIndex59() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5291,6 +5695,8 @@ void snippetForsearchSingleIndex60() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5318,6 +5724,8 @@ void snippetForsearchSingleIndex61() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5345,6 +5753,8 @@ void snippetForsearchSingleIndex62() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5366,6 +5776,8 @@ void snippetForsearchSingleIndex63() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5389,6 +5801,8 @@ void snippetForsearchSingleIndex64() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5413,6 +5827,8 @@ void snippetForsearchSingleIndex65() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5434,6 +5850,8 @@ void snippetForsearchSingleIndex66() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5455,6 +5873,8 @@ void snippetForsearchSingleIndex67() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5476,6 +5896,8 @@ void snippetForsearchSingleIndex68() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5500,6 +5922,8 @@ void snippetForsearchSingleIndex69() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5521,6 +5945,8 @@ void snippetForsearchSingleIndex70() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5542,6 +5968,8 @@ void snippetForsearchSingleIndex71() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5563,6 +5991,8 @@ void snippetForsearchSingleIndex72() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5584,6 +6014,8 @@ void snippetForsearchSingleIndex73() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5605,6 +6037,8 @@ void snippetForsearchSingleIndex74() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5626,6 +6060,8 @@ void snippetForsearchSingleIndex75() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5647,6 +6083,8 @@ void snippetForsearchSingleIndex76() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5668,6 +6106,8 @@ void snippetForsearchSingleIndex77() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5689,6 +6129,8 @@ void snippetForsearchSingleIndex78() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5710,6 +6152,8 @@ void snippetForsearchSingleIndex79() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5731,6 +6175,8 @@ void snippetForsearchSingleIndex80() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5752,6 +6198,8 @@ void snippetForsearchSingleIndex81() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5773,6 +6221,8 @@ void snippetForsearchSingleIndex82() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5800,6 +6250,8 @@ void snippetForsearchSingleIndex83() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5821,6 +6273,8 @@ void snippetForsearchSingleIndex84() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5842,6 +6296,8 @@ void snippetForsearchSingleIndex85() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5863,6 +6319,8 @@ void snippetForsearchSingleIndex86() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5893,6 +6351,8 @@ void snippetForsearchSingleIndex87() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5914,6 +6374,8 @@ void snippetForsearchSingleIndex88() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5942,6 +6404,8 @@ void snippetForsearchSingleIndex89() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -5976,6 +6440,8 @@ void snippetForsearchSingleIndex90() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6006,6 +6472,8 @@ void snippetForsearchSingleIndex91() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6046,6 +6514,8 @@ void snippetForsearchSingleIndex92() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6070,6 +6540,8 @@ void snippetForsearchSingleIndex93() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6094,6 +6566,8 @@ void snippetForsearchSingleIndex94() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6117,6 +6591,8 @@ void snippetForsearchSingleIndex95() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6141,6 +6617,8 @@ void snippetForsearchSingleIndex96() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6162,6 +6640,8 @@ void snippetForsearchSingleIndex97() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6183,6 +6663,8 @@ void snippetForsearchSingleIndex98() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6207,6 +6689,8 @@ void snippetForsearchSingleIndex99() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6228,6 +6712,8 @@ void snippetForsearchSingleIndex100() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6250,6 +6736,8 @@ void snippetForsearchSingleIndex101() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6271,6 +6759,8 @@ void snippetForsearchSingleIndex102() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6292,6 +6782,8 @@ void snippetForsearchSingleIndex103() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6314,6 +6806,8 @@ void snippetForsearchSingleIndex104() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6335,6 +6829,8 @@ void snippetForsearchSingleIndex105() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6356,6 +6852,8 @@ void snippetForsearchSingleIndex106() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6377,6 +6875,8 @@ void snippetForsearchSingleIndex107() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6401,6 +6901,8 @@ void snippetForsearchSingleIndex108() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6424,6 +6926,8 @@ void snippetForsearchSingleIndex109() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6445,6 +6949,8 @@ void snippetForsearchSingleIndex110() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6468,6 +6974,8 @@ void snippetForsearchSingleIndex111() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6492,6 +7000,8 @@ void snippetForsearchSingleIndex112() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6516,6 +7026,8 @@ void snippetForsearchSingleIndex113() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6537,6 +7049,8 @@ void snippetForsearchSingleIndex114() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6558,6 +7072,8 @@ void snippetForsearchSingleIndex115() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6579,6 +7095,8 @@ void snippetForsearchSingleIndex116() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6600,6 +7118,8 @@ void snippetForsearchSingleIndex117() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6621,6 +7141,8 @@ void snippetForsearchSingleIndex118() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6645,6 +7167,8 @@ void snippetForsearchSingleIndex119() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6666,6 +7190,8 @@ void snippetForsearchSingleIndex120() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6687,6 +7213,8 @@ void snippetForsearchSingleIndex121() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6708,6 +7236,8 @@ void snippetForsearchSingleIndex122() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6732,6 +7262,8 @@ void snippetForsearchSingleIndex123() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6753,6 +7285,8 @@ void snippetForsearchSingleIndex124() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6774,6 +7308,8 @@ void snippetForsearchSingleIndex125() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6795,6 +7331,8 @@ void snippetForsearchSingleIndex126() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6820,6 +7358,8 @@ void snippetForsearchSingleIndex127() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6845,6 +7385,8 @@ void snippetForsearchSingleIndex128() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6862,6 +7404,8 @@ void snippetForsearchSynonyms() async {
     indexName: "<YOUR_INDEX_NAME>",
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6885,6 +7429,8 @@ void snippetForsearchSynonyms1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6907,6 +7453,8 @@ void snippetForsearchUserIds() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6949,6 +7497,8 @@ void snippetForsetDictionarySettings() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -6980,6 +7530,8 @@ void snippetForsetDictionarySettings1() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7002,6 +7554,8 @@ void snippetForsetSettings() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7023,6 +7577,8 @@ void snippetForsetSettings1() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7044,6 +7600,8 @@ void snippetForsetSettings2() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7065,6 +7623,8 @@ void snippetForsetSettings3() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7088,6 +7648,8 @@ void snippetForsetSettings4() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7109,6 +7671,8 @@ void snippetForsetSettings5() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7132,6 +7696,8 @@ void snippetForsetSettings6() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7153,6 +7719,8 @@ void snippetForsetSettings7() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7174,6 +7742,8 @@ void snippetForsetSettings8() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7195,6 +7765,8 @@ void snippetForsetSettings9() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7216,6 +7788,8 @@ void snippetForsetSettings10() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7236,6 +7810,8 @@ void snippetForsetSettings11() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7257,6 +7833,8 @@ void snippetForsetSettings12() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7279,6 +7857,8 @@ void snippetForsetSettings13() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7302,6 +7882,8 @@ void snippetForsetSettings14() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7325,6 +7907,8 @@ void snippetForsetSettings15() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7348,6 +7932,8 @@ void snippetForsetSettings16() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7371,6 +7957,8 @@ void snippetForsetSettings17() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7393,6 +7981,8 @@ void snippetForsetSettings18() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7415,6 +8005,8 @@ void snippetForsetSettings19() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7437,6 +8029,8 @@ void snippetForsetSettings20() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7460,6 +8054,8 @@ void snippetForsetSettings21() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7482,6 +8078,8 @@ void snippetForsetSettings22() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7504,6 +8102,8 @@ void snippetForsetSettings23() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7526,6 +8126,8 @@ void snippetForsetSettings24() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7546,6 +8148,8 @@ void snippetForsetSettings25() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7566,6 +8170,8 @@ void snippetForsetSettings26() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7589,6 +8195,8 @@ void snippetForsetSettings27() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7612,6 +8220,8 @@ void snippetForsetSettings28() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7635,6 +8245,8 @@ void snippetForsetSettings29() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7657,6 +8269,8 @@ void snippetForsetSettings30() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7680,6 +8294,8 @@ void snippetForsetSettings31() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7705,6 +8321,8 @@ void snippetForsetSettings32() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7728,6 +8346,8 @@ void snippetForsetSettings33() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7750,6 +8370,8 @@ void snippetForsetSettings34() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7780,6 +8402,8 @@ void snippetForsetSettings35() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7810,6 +8434,8 @@ void snippetForsetSettings36() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7832,6 +8458,8 @@ void snippetForsetSettings37() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7854,6 +8482,8 @@ void snippetForsetSettings38() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7886,6 +8516,8 @@ void snippetForsetSettings39() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7909,6 +8541,8 @@ void snippetForsetSettings40() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7931,6 +8565,8 @@ void snippetForsetSettings41() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7953,6 +8589,8 @@ void snippetForsetSettings42() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7975,6 +8613,8 @@ void snippetForsetSettings43() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -7997,6 +8637,8 @@ void snippetForsetSettings44() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8021,6 +8663,8 @@ void snippetForsetSettings45() async {
     forwardToReplicas: true,
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8041,6 +8685,8 @@ void snippetForsetSettings46() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8061,6 +8707,8 @@ void snippetForsetSettings47() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8085,6 +8733,8 @@ void snippetForsetSettings48() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8115,6 +8765,8 @@ void snippetForsetSettings49() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8139,6 +8791,8 @@ void snippetForsetSettings50() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8167,6 +8821,8 @@ void snippetForsetSettings51() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8191,6 +8847,8 @@ void snippetForsetSettings52() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8213,6 +8871,8 @@ void snippetForsetSettings53() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8366,6 +9026,8 @@ void snippetForsetSettings54() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8400,6 +9062,8 @@ void snippetForsetSettings55() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8423,6 +9087,8 @@ void snippetForsetSettings56() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8447,6 +9113,8 @@ void snippetForsetSettings57() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8470,6 +9138,8 @@ void snippetForsetSettings58() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8494,6 +9164,8 @@ void snippetForsetSettings59() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8516,6 +9188,8 @@ void snippetForsetSettings60() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8538,6 +9212,8 @@ void snippetForsetSettings61() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8560,6 +9236,8 @@ void snippetForsetSettings62() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8583,6 +9261,8 @@ void snippetForsetSettings63() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8608,6 +9288,8 @@ void snippetForsetSettings64() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8634,6 +9316,8 @@ void snippetForsetSettings65() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8656,6 +9340,8 @@ void snippetForsetSettings66() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8680,6 +9366,8 @@ void snippetForsetSettings67() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8702,6 +9390,8 @@ void snippetForsetSettings68() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8726,6 +9416,8 @@ void snippetForsetSettings69() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8746,6 +9438,8 @@ void snippetForsetSettings70() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8766,6 +9460,8 @@ void snippetForsetSettings71() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8795,6 +9491,8 @@ void snippetForsetSettings72() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8825,6 +9523,8 @@ void snippetForsetSettings73() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8855,6 +9555,8 @@ void snippetForsetSettings74() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8878,6 +9580,8 @@ void snippetForsetSettings75() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8898,6 +9602,8 @@ void snippetForsetSettings76() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8921,6 +9627,8 @@ void snippetForsetSettings77() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8941,6 +9649,8 @@ void snippetForsetSettings78() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8961,6 +9671,8 @@ void snippetForsetSettings79() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -8984,6 +9696,8 @@ void snippetForsetSettings80() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9006,6 +9720,8 @@ void snippetForsetSettings81() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9026,6 +9742,8 @@ void snippetForsetSettings82() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9046,6 +9764,8 @@ void snippetForsetSettings83() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9066,6 +9786,8 @@ void snippetForsetSettings84() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9086,6 +9808,8 @@ void snippetForsetSettings85() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9106,6 +9830,8 @@ void snippetForsetSettings86() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9126,6 +9852,8 @@ void snippetForsetSettings87() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9146,6 +9874,8 @@ void snippetForsetSettings88() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9166,6 +9896,8 @@ void snippetForsetSettings89() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9186,6 +9918,8 @@ void snippetForsetSettings90() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9206,6 +9940,8 @@ void snippetForsetSettings91() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9229,6 +9965,8 @@ void snippetForsetSettings92() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9249,6 +9987,8 @@ void snippetForsetSettings93() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9272,6 +10012,8 @@ void snippetForsetSettings94() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9298,6 +10040,8 @@ void snippetForsetSettings95() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9321,6 +10065,8 @@ void snippetForsetSettings96() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9343,6 +10089,8 @@ void snippetForsetSettings97() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9367,6 +10115,8 @@ void snippetForsetSettings98() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9396,6 +10146,8 @@ void snippetForsetSettings99() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9416,6 +10168,8 @@ void snippetForsetSettings100() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9440,6 +10194,8 @@ void snippetForsetSettings101() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9464,6 +10220,8 @@ void snippetForsetSettings102() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9486,6 +10244,8 @@ void snippetForsetSettings103() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9506,6 +10266,8 @@ void snippetForsetSettings104() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9526,6 +10288,8 @@ void snippetForsetSettings105() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9546,6 +10310,8 @@ void snippetForsetSettings106() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9566,6 +10332,8 @@ void snippetForsetSettings107() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9586,6 +10354,8 @@ void snippetForsetSettings108() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9606,6 +10376,8 @@ void snippetForsetSettings109() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9629,6 +10401,8 @@ void snippetForsetSettings110() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9651,6 +10425,8 @@ void snippetForsetSettings111() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9673,6 +10449,8 @@ void snippetForsetSettings112() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9693,6 +10471,8 @@ void snippetForsetSettings113() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9716,6 +10496,8 @@ void snippetForsetSettings114() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9739,6 +10521,8 @@ void snippetForsetSettings115() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9759,6 +10543,8 @@ void snippetForsetSettings116() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9779,6 +10565,8 @@ void snippetForsetSettings117() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9800,6 +10588,8 @@ void snippetForsetSettings118() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9820,6 +10610,8 @@ void snippetForsetSettings119() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9840,6 +10632,8 @@ void snippetForsetSettings120() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9865,6 +10659,8 @@ void snippetForsetSettings121() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9885,6 +10681,8 @@ void snippetForsetSettings122() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9905,6 +10703,8 @@ void snippetForsetSettings123() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9928,6 +10728,8 @@ void snippetForsetSettings124() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -9976,6 +10778,8 @@ void snippetForsetSettings125() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }
 
@@ -10002,5 +10806,7 @@ void snippetForupdateApiKey() async {
     ),
   );
   // >LOG
+  // print the response
+  print(response);
   // SEPARATOR<
 }

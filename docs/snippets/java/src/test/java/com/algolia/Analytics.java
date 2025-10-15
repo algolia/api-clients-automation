@@ -18,8 +18,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -32,7 +34,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -41,6 +43,8 @@ class SnippetAnalyticsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -53,8 +57,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -67,7 +73,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -76,6 +82,8 @@ class SnippetAnalyticsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -88,7 +96,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -101,6 +109,8 @@ class SnippetAnalyticsClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -113,8 +123,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -127,7 +139,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -141,6 +153,8 @@ class SnippetAnalyticsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -153,7 +167,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -168,6 +182,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -180,7 +196,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -195,6 +211,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -207,7 +225,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -222,6 +240,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -234,7 +254,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -249,6 +269,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -261,7 +283,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -276,6 +298,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -288,7 +312,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -303,6 +327,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -315,7 +341,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -330,6 +356,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -342,7 +370,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -357,6 +385,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -369,7 +399,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -384,6 +414,8 @@ class SnippetAnalyticsClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -396,8 +428,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -410,7 +444,7 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -424,6 +458,8 @@ class SnippetAnalyticsClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -436,8 +472,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAddToCartRate("index");
+    GetAddToCartRateResponse response = client.getAddToCartRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -450,8 +488,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAddToCartRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetAddToCartRateResponse response = client.getAddToCartRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -464,8 +504,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAverageClickPosition("index");
+    GetAverageClickPositionResponse response = client.getAverageClickPosition("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -478,8 +520,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getAverageClickPosition("index", "1999-09-19", "2001-01-01", "tag");
+    GetAverageClickPositionResponse response = client.getAverageClickPosition("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -492,8 +536,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getClickPositions("index");
+    GetClickPositionsResponse response = client.getClickPositions("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -506,8 +552,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getClickPositions("index", "1999-09-19", "2001-01-01", "tag");
+    GetClickPositionsResponse response = client.getClickPositions("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -520,8 +568,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getClickThroughRate("index");
+    GetClickThroughRateResponse response = client.getClickThroughRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -534,8 +584,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getClickThroughRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetClickThroughRateResponse response = client.getClickThroughRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -548,8 +600,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getConversionRate("index");
+    GetConversionRateResponse response = client.getConversionRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -562,8 +616,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getConversionRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetConversionRateResponse response = client.getConversionRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -576,8 +632,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getNoClickRate("index");
+    GetNoClickRateResponse response = client.getNoClickRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -590,8 +648,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getNoClickRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetNoClickRateResponse response = client.getNoClickRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -604,8 +664,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getNoResultsRate("index");
+    GetNoResultsRateResponse response = client.getNoResultsRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -618,8 +680,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getNoResultsRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetNoResultsRateResponse response = client.getNoResultsRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -632,8 +696,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getPurchaseRate("index");
+    GetPurchaseRateResponse response = client.getPurchaseRate("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -646,8 +712,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getPurchaseRate("index", "1999-09-19", "2001-01-01", "tag");
+    GetPurchaseRateResponse response = client.getPurchaseRate("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -660,8 +728,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getRevenue("index");
+    GetRevenue response = client.getRevenue("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -674,8 +744,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getRevenue("index", "1999-09-19", "2001-01-01", "tag");
+    GetRevenue response = client.getRevenue("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -688,8 +760,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesCount("index");
+    GetSearchesCountResponse response = client.getSearchesCount("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -702,8 +776,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesCount("index", "1999-09-19", "2001-01-01", "tag");
+    GetSearchesCountResponse response = client.getSearchesCount("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -716,8 +792,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesNoClicks("index");
+    GetSearchesNoClicksResponse response = client.getSearchesNoClicks("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -730,8 +808,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesNoClicks("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetSearchesNoClicksResponse response = client.getSearchesNoClicks("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -744,8 +824,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesNoResults("index");
+    GetSearchesNoResultsResponse response = client.getSearchesNoResults("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -758,8 +840,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getSearchesNoResults("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetSearchesNoResultsResponse response = client.getSearchesNoResults("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -772,8 +856,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getStatus("index");
+    GetStatusResponse response = client.getStatus("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -786,8 +872,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopCountries("index");
+    GetTopCountriesResponse response = client.getTopCountries("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -800,8 +888,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopCountries("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopCountriesResponse response = client.getTopCountries("index", "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -814,8 +904,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterAttributes("index");
+    GetTopFilterAttributesResponse response = client.getTopFilterAttributes("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -828,8 +920,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterAttributes("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopFilterAttributesResponse response = client.getTopFilterAttributes("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -842,8 +936,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterForAttribute("myAttribute", "index");
+    GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute("myAttribute", "index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -857,8 +953,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterForAttribute("myAttribute1,myAttribute2", "index");
+    GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute("myAttribute1,myAttribute2", "index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -871,8 +969,19 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterForAttribute("myAttribute", "index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(
+      "myAttribute",
+      "index",
+      "mySearch",
+      "1999-09-19",
+      "2001-01-01",
+      21,
+      42,
+      "tag"
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -886,8 +995,19 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFilterForAttribute("myAttribute1,myAttribute2", "index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopFilterForAttributeResponse response = client.getTopFilterForAttribute(
+      "myAttribute1,myAttribute2",
+      "index",
+      "mySearch",
+      "1999-09-19",
+      "2001-01-01",
+      21,
+      42,
+      "tag"
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -900,8 +1020,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFiltersNoResults("index");
+    GetTopFiltersNoResultsResponse response = client.getTopFiltersNoResults("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -914,8 +1036,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopFiltersNoResults("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopFiltersNoResultsResponse response = client.getTopFiltersNoResults("index", "mySearch", "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -928,8 +1052,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopHits("index");
+    GetTopHitsResponse response = client.getTopHits("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -942,8 +1068,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopHits("index", "mySearch", true, true, "1999-09-19", "2001-01-01", 21, 42, "tag");
+    GetTopHitsResponse response = client.getTopHits("index", "mySearch", true, true, "1999-09-19", "2001-01-01", 21, 42, "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -956,8 +1084,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopSearches("index");
+    GetTopSearchesResponse response = client.getTopSearches("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -970,8 +1100,21 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getTopSearches("index", true, true, "1999-09-19", "2001-01-01", OrderBy.SEARCH_COUNT, Direction.ASC, 21, 42, "tag");
+    GetTopSearchesResponse response = client.getTopSearches(
+      "index",
+      true,
+      true,
+      "1999-09-19",
+      "2001-01-01",
+      OrderBy.SEARCH_COUNT,
+      Direction.ASC,
+      21,
+      42,
+      "tag"
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -984,8 +1127,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getUsersCount("index");
+    GetUsersCountResponse response = client.getUsersCount("index");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -998,8 +1143,10 @@ class SnippetAnalyticsClient {
     AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    client.getUsersCount("index", "1999-09-19", "2001-01-01", "tag");
+    GetUsersCountResponse response = client.getUsersCount("index", "1999-09-19", "2001-01-01", "tag");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 

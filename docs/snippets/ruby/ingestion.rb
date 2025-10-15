@@ -22,11 +22,8 @@ def snippet_for_create_authentication
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -48,11 +45,8 @@ def snippet_for_create_authentication1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -75,11 +69,8 @@ def snippet_for_create_destination
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -102,11 +93,8 @@ def snippet_for_create_destination1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -135,11 +123,8 @@ def snippet_for_create_source
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -155,11 +140,8 @@ def snippet_for_create_source1
   response = client.create_source(Algolia::Ingestion::SourceCreate.new(type: "push", name: "pushezpourentrer"))
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -177,11 +159,8 @@ def snippet_for_create_task
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -208,11 +187,8 @@ def snippet_for_create_task1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -238,11 +214,8 @@ def snippet_for_create_task2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -265,11 +238,8 @@ def snippet_for_create_task_v1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -292,11 +262,8 @@ def snippet_for_create_task_v11
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -319,11 +286,8 @@ def snippet_for_create_task_v12
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -349,11 +313,8 @@ def snippet_for_create_task_v13
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -376,11 +337,8 @@ def snippet_for_create_transformation
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -396,11 +354,8 @@ def snippet_for_custom_delete
   response = client.custom_delete("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -416,11 +371,8 @@ def snippet_for_custom_delete1
   response = client.custom_delete("test/all", {query: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -436,11 +388,8 @@ def snippet_for_custom_get
   response = client.custom_get("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -456,11 +405,8 @@ def snippet_for_custom_get1
   response = client.custom_get("test/all", {query: "parameters with space"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -486,11 +432,8 @@ def snippet_for_custom_get2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -506,11 +449,8 @@ def snippet_for_custom_post
   response = client.custom_post("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -526,11 +466,8 @@ def snippet_for_custom_post1
   response = client.custom_post("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -551,11 +488,8 @@ def snippet_for_custom_post2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -576,11 +510,8 @@ def snippet_for_custom_post3
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -601,11 +532,8 @@ def snippet_for_custom_post4
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -626,11 +554,8 @@ def snippet_for_custom_post5
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -651,11 +576,8 @@ def snippet_for_custom_post6
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -676,11 +598,8 @@ def snippet_for_custom_post7
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -701,11 +620,8 @@ def snippet_for_custom_post8
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -726,11 +642,8 @@ def snippet_for_custom_post9
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -751,11 +664,8 @@ def snippet_for_custom_post10
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -771,11 +681,8 @@ def snippet_for_custom_put
   response = client.custom_put("test/minimal")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -791,11 +698,8 @@ def snippet_for_custom_put1
   response = client.custom_put("test/all", {query: "parameters"}, {body: "parameters"})
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -811,11 +715,8 @@ def snippet_for_delete_authentication
   response = client.delete_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -831,11 +732,8 @@ def snippet_for_delete_destination
   response = client.delete_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -851,11 +749,8 @@ def snippet_for_delete_source
   response = client.delete_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -871,11 +766,8 @@ def snippet_for_delete_task
   response = client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -891,11 +783,8 @@ def snippet_for_delete_task_v1
   response = client.delete_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -911,11 +800,8 @@ def snippet_for_delete_transformation
   response = client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -931,11 +817,8 @@ def snippet_for_disable_task
   response = client.disable_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -951,11 +834,8 @@ def snippet_for_disable_task_v1
   response = client.disable_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -971,11 +851,8 @@ def snippet_for_enable_task
   response = client.enable_task("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -991,11 +868,8 @@ def snippet_for_enable_task_v1
   response = client.enable_task_v1("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1011,11 +885,8 @@ def snippet_for_get_authentication
   response = client.get_authentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1031,11 +902,8 @@ def snippet_for_get_destination
   response = client.get_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1051,11 +919,8 @@ def snippet_for_get_event
   response = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1071,11 +936,8 @@ def snippet_for_get_run
   response = client.get_run("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1091,11 +953,8 @@ def snippet_for_get_source
   response = client.get_source("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1111,11 +970,8 @@ def snippet_for_get_task
   response = client.get_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1131,11 +987,8 @@ def snippet_for_get_task_v1
   response = client.get_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1151,11 +1004,8 @@ def snippet_for_get_transformation
   response = client.get_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1171,11 +1021,8 @@ def snippet_for_list_authentications
   response = client.list_authentications
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1191,11 +1038,8 @@ def snippet_for_list_authentications1
   response = client.list_authentications(2, 1, ["basic", "algolia"], ["none"], "createdAt", "asc")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1211,11 +1055,8 @@ def snippet_for_list_destinations
   response = client.list_destinations
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1231,11 +1072,8 @@ def snippet_for_list_events
   response = client.list_events("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1251,11 +1089,8 @@ def snippet_for_list_runs
   response = client.list_runs
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1271,11 +1106,8 @@ def snippet_for_list_sources
   response = client.list_sources
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1291,11 +1123,8 @@ def snippet_for_list_tasks
   response = client.list_tasks
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1311,11 +1140,8 @@ def snippet_for_list_tasks_v1
   response = client.list_tasks_v1
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1331,11 +1157,8 @@ def snippet_for_list_transformations
   response = client.list_transformations
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1351,11 +1174,8 @@ def snippet_for_list_transformations1
   response = client.list_transformations(2, 1, "createdAt", "asc", "noCode")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1380,11 +1200,8 @@ def snippet_for_push
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1411,11 +1228,8 @@ def snippet_for_push1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1440,11 +1254,8 @@ def snippet_for_push_task
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1470,11 +1281,8 @@ def snippet_for_push_task1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1493,11 +1301,8 @@ def snippet_for_replace_task
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1524,11 +1329,8 @@ def snippet_for_replace_task1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1554,11 +1356,8 @@ def snippet_for_replace_task2
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1581,11 +1380,8 @@ def snippet_for_run_source
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1601,11 +1397,8 @@ def snippet_for_run_task
   response = client.run_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1621,11 +1414,8 @@ def snippet_for_run_task_v1
   response = client.run_task_v1("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1645,11 +1435,8 @@ def snippet_for_search_authentications
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1669,11 +1456,8 @@ def snippet_for_search_destinations
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1693,11 +1477,8 @@ def snippet_for_search_sources
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1721,11 +1502,8 @@ def snippet_for_search_tasks
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1749,11 +1527,8 @@ def snippet_for_search_tasks_v1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1777,11 +1552,8 @@ def snippet_for_search_transformations
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1811,11 +1583,8 @@ def snippet_for_trigger_docker_source_discover
   response = client.trigger_docker_source_discover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1837,11 +1606,8 @@ def snippet_for_try_transformation
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1874,11 +1640,8 @@ def snippet_for_try_transformation1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1901,11 +1664,8 @@ def snippet_for_try_transformation_before_update
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1939,11 +1699,8 @@ def snippet_for_try_transformation_before_update1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1962,11 +1719,8 @@ def snippet_for_update_authentication
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -1985,11 +1739,8 @@ def snippet_for_update_destination
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2008,11 +1759,8 @@ def snippet_for_update_source
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2031,11 +1779,8 @@ def snippet_for_update_task
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2054,11 +1799,8 @@ def snippet_for_update_task_v1
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2082,11 +1824,8 @@ def snippet_for_update_transformation
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2114,11 +1853,8 @@ def snippet_for_validate_source
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end
 
@@ -2137,10 +1873,7 @@ def snippet_for_validate_source_before_update
   )
 
   # >LOG
-  # use the class directly
+  # print the response
   puts(response)
-
-  # print the JSON response
-  puts(response.to_json)
   # SEPARATOR<
 end

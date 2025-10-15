@@ -24,6 +24,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.CustomDeleteAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -46,6 +48,8 @@ public class SnippetMonitoringClient
       new Dictionary<string, object> { { "query", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -65,6 +69,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.CustomGetAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -87,6 +93,8 @@ public class SnippetMonitoringClient
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -114,6 +122,8 @@ public class SnippetMonitoringClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -133,6 +143,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.CustomPostAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -156,6 +168,8 @@ public class SnippetMonitoringClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -180,6 +194,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -204,6 +220,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -228,6 +246,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -252,6 +272,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -276,6 +298,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -300,6 +324,8 @@ public class SnippetMonitoringClient
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -326,6 +352,8 @@ public class SnippetMonitoringClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -352,6 +380,8 @@ public class SnippetMonitoringClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -378,6 +408,8 @@ public class SnippetMonitoringClient
         .Build()
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -397,6 +429,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.CustomPutAsync("test/minimal");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -420,6 +454,8 @@ public class SnippetMonitoringClient
       new Dictionary<string, string> { { "body", "parameters" } }
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -439,6 +475,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetClusterIncidentsAsync("c1-de");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -458,6 +496,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetClusterStatusAsync("c1-de");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -477,6 +517,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetIncidentsAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -496,6 +538,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetIndexingTimeAsync("c1-de");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -515,6 +559,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetLatencyAsync("c1-de");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -537,6 +583,8 @@ public class SnippetMonitoringClient
       Enum.Parse<Period>("Minute")
     );
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -556,6 +604,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetReachabilityAsync("c1-de");
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -575,6 +625,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetServersAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 
@@ -594,6 +646,8 @@ public class SnippetMonitoringClient
     // Call the API
     var response = await client.GetStatusAsync();
     // >LOG
+    // print the response
+    Console.WriteLine(response);
     // SEPARATOR<
   }
 

@@ -170,7 +170,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -185,9 +185,8 @@ paths:
             const response = await client.customGet({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
     post:
@@ -221,7 +220,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -236,9 +235,8 @@ paths:
             const response = await client.customPost({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
     put:
@@ -272,7 +270,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -287,9 +285,8 @@ paths:
             const response = await client.customPut({ path: 'test/minimal' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
     delete:
@@ -317,7 +314,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -333,9 +330,8 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
   /2/config:
@@ -363,7 +359,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -378,9 +374,8 @@ paths:
             const response = await client.getConfig();
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -489,7 +484,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -509,9 +504,8 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -573,7 +567,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -588,9 +582,8 @@ paths:
             const response = await client.getUsers({ indices: ['indexName'] });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -634,7 +627,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -649,9 +642,8 @@ paths:
             const response = await client.getUser({ userID: 'user-1' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -704,7 +696,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -719,9 +711,8 @@ paths:
             const response = await client.deleteUser({ userID: 'user-1' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -763,7 +754,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -778,9 +769,8 @@ paths:
             const response = await client.getRealtimeUser({ userToken: 'foo' });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL
@@ -821,7 +811,7 @@ paths:
       x-codeSamples:
         - lang: javascript
           label: JavaScript
-          source: >
+          source: >-
             // Initialize the client
 
             // Replace 'eu' with your Algolia Application Region
@@ -837,9 +827,8 @@ paths:
             });
 
 
-            // >LOG
 
-            // use typed response
+            // print the response
 
             console.log(response);
         - lang: cURL

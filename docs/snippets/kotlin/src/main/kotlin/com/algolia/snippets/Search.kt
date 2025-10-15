@@ -26,7 +26,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -50,7 +50,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -72,7 +72,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -93,7 +93,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -114,7 +114,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -135,7 +135,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -171,7 +171,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -199,7 +199,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -227,7 +227,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -255,7 +255,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -283,7 +283,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -311,7 +311,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -339,7 +339,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -361,7 +361,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -395,7 +395,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -424,7 +424,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -454,7 +454,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -470,7 +470,7 @@ class SnippetSearchClient {
     var response = client.browse(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -492,7 +492,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -513,7 +513,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -529,7 +529,7 @@ class SnippetSearchClient {
     var response = client.clearObjects(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -545,7 +545,7 @@ class SnippetSearchClient {
     var response = client.clearRules(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -561,7 +561,7 @@ class SnippetSearchClient {
     var response = client.clearSynonyms(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -577,7 +577,7 @@ class SnippetSearchClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -593,7 +593,7 @@ class SnippetSearchClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -609,7 +609,7 @@ class SnippetSearchClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -625,7 +625,7 @@ class SnippetSearchClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -653,7 +653,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -669,7 +669,7 @@ class SnippetSearchClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -691,7 +691,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -718,7 +718,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -745,7 +745,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -772,7 +772,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -799,7 +799,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -826,7 +826,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -853,7 +853,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -880,7 +880,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -907,7 +907,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -934,7 +934,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -950,7 +950,7 @@ class SnippetSearchClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -972,7 +972,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -988,7 +988,7 @@ class SnippetSearchClient {
     var response = client.deleteApiKey(key = "myTestApiKey")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1009,7 +1009,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1025,7 +1025,7 @@ class SnippetSearchClient {
     var response = client.deleteIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1041,7 +1041,7 @@ class SnippetSearchClient {
     var response = client.deleteObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1057,7 +1057,7 @@ class SnippetSearchClient {
     var response = client.deleteObjects(indexName = "<YOUR_INDEX_NAME>", objectIDs = listOf("1", "2"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1073,7 +1073,7 @@ class SnippetSearchClient {
     var response = client.deleteRule(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1089,7 +1089,7 @@ class SnippetSearchClient {
     var response = client.deleteRule(indexName = "<YOUR_INDEX_NAME>", objectID = "test/with/slash")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1105,7 +1105,7 @@ class SnippetSearchClient {
     var response = client.deleteSource(source = "theSource")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1121,7 +1121,7 @@ class SnippetSearchClient {
     var response = client.deleteSynonym(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1143,7 +1143,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1176,7 +1176,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1197,7 +1197,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1218,7 +1218,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1239,7 +1239,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1260,7 +1260,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1281,7 +1281,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1297,7 +1297,7 @@ class SnippetSearchClient {
     var response = client.getApiKey(key = "myTestApiKey")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1313,7 +1313,7 @@ class SnippetSearchClient {
     var response = client.getAppTask(taskID = 123L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1329,7 +1329,7 @@ class SnippetSearchClient {
     var response = client.getDictionaryLanguages()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1345,7 +1345,7 @@ class SnippetSearchClient {
     var response = client.getDictionarySettings()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1361,7 +1361,7 @@ class SnippetSearchClient {
     var response = client.getLogs()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1377,7 +1377,7 @@ class SnippetSearchClient {
     var response = client.getLogs(offset = 5, length = 10, indexName = "<YOUR_INDEX_NAME>", type = LogType.entries.first { it.value == "all" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1393,7 +1393,7 @@ class SnippetSearchClient {
     var response = client.getObject(indexName = "<YOUR_INDEX_NAME>", objectID = "uniqueID", attributesToRetrieve = listOf("attr1", "attr2"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1409,7 +1409,7 @@ class SnippetSearchClient {
     var response = client.getObject(indexName = "<YOUR_INDEX_NAME>", objectID = "Batman and Robin")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1434,7 +1434,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1463,7 +1463,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1489,7 +1489,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1505,7 +1505,7 @@ class SnippetSearchClient {
     var response = client.getRule(indexName = "<YOUR_INDEX_NAME>", objectID = "qr-1725004648916")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1521,7 +1521,7 @@ class SnippetSearchClient {
     var response = client.getSettings(indexName = "<YOUR_INDEX_NAME>", getVersion = 2)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1537,7 +1537,7 @@ class SnippetSearchClient {
     var response = client.getSources()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1553,7 +1553,7 @@ class SnippetSearchClient {
     var response = client.getSynonym(indexName = "<YOUR_INDEX_NAME>", objectID = "id1")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1569,7 +1569,7 @@ class SnippetSearchClient {
     var response = client.getTask(indexName = "<YOUR_INDEX_NAME>", taskID = 123L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1585,7 +1585,7 @@ class SnippetSearchClient {
     var response = client.getTopUserIds()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1601,7 +1601,7 @@ class SnippetSearchClient {
     var response = client.getUserId(userID = "uniqueID")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1617,7 +1617,7 @@ class SnippetSearchClient {
     var response = client.hasPendingMappings()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1633,7 +1633,7 @@ class SnippetSearchClient {
     var response = client.hasPendingMappings(getClusters = true)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1649,7 +1649,7 @@ class SnippetSearchClient {
     var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1665,7 +1665,7 @@ class SnippetSearchClient {
     var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1681,7 +1681,7 @@ class SnippetSearchClient {
     var response = client.indexExists(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1697,7 +1697,7 @@ class SnippetSearchClient {
     var response = client.listApiKeys()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1713,7 +1713,7 @@ class SnippetSearchClient {
     var response = client.listClusters()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1729,7 +1729,7 @@ class SnippetSearchClient {
     var response = client.listIndices()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1745,7 +1745,7 @@ class SnippetSearchClient {
     var response = client.listIndices(page = 8, hitsPerPage = 3)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1761,7 +1761,7 @@ class SnippetSearchClient {
     var response = client.listUserIds()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1777,7 +1777,7 @@ class SnippetSearchClient {
     var response = client.listUserIds(page = 8, hitsPerPage = 100)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1805,7 +1805,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1828,7 +1828,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1850,7 +1850,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1872,7 +1872,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1894,7 +1894,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1916,7 +1916,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1938,7 +1938,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1969,7 +1969,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -1996,7 +1996,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2027,7 +2027,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2055,7 +2055,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2083,7 +2083,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2112,7 +2112,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2141,7 +2141,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2157,7 +2157,7 @@ class SnippetSearchClient {
     var response = client.removeUserId(userID = "uniqueID")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2218,7 +2218,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2248,7 +2248,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2276,7 +2276,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2299,7 +2299,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2315,7 +2315,7 @@ class SnippetSearchClient {
     var response = client.restoreApiKey(key = "ALGOLIA_API_KEY")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2339,7 +2339,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2367,7 +2367,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2395,7 +2395,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2422,7 +2422,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2456,7 +2456,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2489,7 +2489,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2567,7 +2567,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2608,7 +2608,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2656,7 +2656,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2689,7 +2689,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2723,7 +2723,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2756,7 +2756,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2789,7 +2789,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2825,7 +2825,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2861,7 +2861,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2897,7 +2897,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2938,7 +2938,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -2982,7 +2982,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3020,7 +3020,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3055,7 +3055,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3091,7 +3091,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3127,7 +3127,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3168,7 +3168,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3209,7 +3209,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3244,7 +3244,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3276,7 +3276,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3309,7 +3309,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3341,7 +3341,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3391,7 +3391,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3471,7 +3471,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3525,7 +3525,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3573,7 +3573,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3598,7 +3598,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3631,7 +3631,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3657,7 +3657,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3683,7 +3683,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3709,7 +3709,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3735,7 +3735,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3759,7 +3759,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3787,7 +3787,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3813,7 +3813,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3839,7 +3839,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3866,7 +3866,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3893,7 +3893,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3923,7 +3923,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3957,7 +3957,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -3993,7 +3993,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4030,7 +4030,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4067,7 +4067,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4175,7 +4175,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4196,7 +4196,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4220,7 +4220,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4236,7 +4236,7 @@ class SnippetSearchClient {
     var response = client.searchForFacetValues(indexName = "<YOUR_INDEX_NAME>", facetName = "facetName")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4260,7 +4260,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4282,7 +4282,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4303,7 +4303,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4319,7 +4319,7 @@ class SnippetSearchClient {
     var response = client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4335,7 +4335,7 @@ class SnippetSearchClient {
     var response = client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4357,7 +4357,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4380,7 +4380,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4401,7 +4401,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4422,7 +4422,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4444,7 +4444,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4465,7 +4465,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4486,7 +4486,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4507,7 +4507,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4528,7 +4528,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4550,7 +4550,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4572,7 +4572,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4593,7 +4593,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4615,7 +4615,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4636,7 +4636,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4658,7 +4658,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4680,7 +4680,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4702,7 +4702,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4724,7 +4724,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4745,7 +4745,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4767,7 +4767,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4788,7 +4788,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4809,7 +4809,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4830,7 +4830,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4851,7 +4851,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4872,7 +4872,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4894,7 +4894,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4915,7 +4915,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4936,7 +4936,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4957,7 +4957,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4978,7 +4978,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -4999,7 +4999,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5020,7 +5020,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5041,7 +5041,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5062,7 +5062,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5084,7 +5084,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5106,7 +5106,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5127,7 +5127,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5149,7 +5149,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5170,7 +5170,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5191,7 +5191,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5214,7 +5214,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5236,7 +5236,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5258,7 +5258,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5279,7 +5279,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5300,7 +5300,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5322,7 +5322,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5345,7 +5345,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5367,7 +5367,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5389,7 +5389,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5411,7 +5411,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5433,7 +5433,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5455,7 +5455,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5477,7 +5477,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5499,7 +5499,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5521,7 +5521,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5543,7 +5543,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5565,7 +5565,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5587,7 +5587,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5609,7 +5609,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5631,7 +5631,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5653,7 +5653,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5675,7 +5675,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5697,7 +5697,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5719,7 +5719,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5741,7 +5741,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5763,7 +5763,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5785,7 +5785,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5807,7 +5807,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5829,7 +5829,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5851,7 +5851,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5873,7 +5873,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5895,7 +5895,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5917,7 +5917,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5939,7 +5939,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5961,7 +5961,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -5983,7 +5983,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6005,7 +6005,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6027,7 +6027,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6049,7 +6049,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6071,7 +6071,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6093,7 +6093,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6120,7 +6120,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6142,7 +6142,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6164,7 +6164,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6186,7 +6186,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6219,7 +6219,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6241,7 +6241,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6263,7 +6263,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6285,7 +6285,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6307,7 +6307,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6329,7 +6329,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6351,7 +6351,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6373,7 +6373,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6395,7 +6395,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6418,7 +6418,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6440,7 +6440,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6462,7 +6462,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6484,7 +6484,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6506,7 +6506,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6529,7 +6529,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6551,7 +6551,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6573,7 +6573,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6596,7 +6596,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6618,7 +6618,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6640,7 +6640,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6662,7 +6662,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6684,7 +6684,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6706,7 +6706,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6728,7 +6728,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6750,7 +6750,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6773,7 +6773,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6796,7 +6796,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6818,7 +6818,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6840,7 +6840,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6862,7 +6862,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6884,7 +6884,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6906,7 +6906,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6928,7 +6928,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6950,7 +6950,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6972,7 +6972,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -6994,7 +6994,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7016,7 +7016,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7038,7 +7038,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7060,7 +7060,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7082,7 +7082,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7108,7 +7108,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7134,7 +7134,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7150,7 +7150,7 @@ class SnippetSearchClient {
     var response = client.searchSynonyms(indexName = "<YOUR_INDEX_NAME>")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7174,7 +7174,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7197,7 +7197,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7233,7 +7233,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7257,7 +7257,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7280,7 +7280,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7302,7 +7302,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7324,7 +7324,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7346,7 +7346,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7368,7 +7368,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7390,7 +7390,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7412,7 +7412,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7434,7 +7434,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7456,7 +7456,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7478,7 +7478,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7500,7 +7500,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7521,7 +7521,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7543,7 +7543,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7564,7 +7564,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7585,7 +7585,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7606,7 +7606,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7627,7 +7627,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7648,7 +7648,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7669,7 +7669,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7690,7 +7690,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7711,7 +7711,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7732,7 +7732,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7753,7 +7753,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7774,7 +7774,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7795,7 +7795,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7816,7 +7816,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7837,7 +7837,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7858,7 +7858,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7879,7 +7879,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7900,7 +7900,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7921,7 +7921,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7942,7 +7942,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7964,7 +7964,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -7985,7 +7985,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8006,7 +8006,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8027,7 +8027,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8048,7 +8048,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8069,7 +8069,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8090,7 +8090,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8112,7 +8112,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8134,7 +8134,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8155,7 +8155,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8176,7 +8176,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8197,7 +8197,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8218,7 +8218,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8240,7 +8240,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8261,7 +8261,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8282,7 +8282,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8303,7 +8303,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8324,7 +8324,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8345,7 +8345,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8367,7 +8367,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8388,7 +8388,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8409,7 +8409,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8508,7 +8508,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8531,7 +8531,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8552,7 +8552,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8573,7 +8573,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8595,7 +8595,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8616,7 +8616,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8637,7 +8637,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8658,7 +8658,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8679,7 +8679,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8700,7 +8700,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8721,7 +8721,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8742,7 +8742,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8763,7 +8763,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8784,7 +8784,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8805,7 +8805,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8826,7 +8826,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8847,7 +8847,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8868,7 +8868,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8889,7 +8889,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8910,7 +8910,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8931,7 +8931,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8952,7 +8952,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8973,7 +8973,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -8994,7 +8994,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9015,7 +9015,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9036,7 +9036,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9057,7 +9057,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9078,7 +9078,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9099,7 +9099,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9120,7 +9120,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9141,7 +9141,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9162,7 +9162,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9183,7 +9183,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9204,7 +9204,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9225,7 +9225,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9246,7 +9246,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9267,7 +9267,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9288,7 +9288,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9309,7 +9309,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9330,7 +9330,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9352,7 +9352,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9374,7 +9374,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9396,7 +9396,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9417,7 +9417,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9440,7 +9440,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9480,7 +9480,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9501,7 +9501,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9522,7 +9522,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9545,7 +9545,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9566,7 +9566,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9587,7 +9587,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9608,7 +9608,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9629,7 +9629,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9650,7 +9650,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9671,7 +9671,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9692,7 +9692,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9713,7 +9713,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9734,7 +9734,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9755,7 +9755,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9776,7 +9776,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9797,7 +9797,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9818,7 +9818,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9839,7 +9839,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9860,7 +9860,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9882,7 +9882,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9903,7 +9903,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9924,7 +9924,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9945,7 +9945,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9966,7 +9966,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -9987,7 +9987,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10010,7 +10010,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10048,7 +10048,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10072,7 +10072,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10088,7 +10088,7 @@ class SnippetSearchClient {
     var response = client.waitForApiKey(key = "api-key-add-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "add" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10116,7 +10116,7 @@ class SnippetSearchClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10132,7 +10132,7 @@ class SnippetSearchClient {
     var response = client.waitForApiKey(key = "api-key-delete-operation-test-kotlin", operation = ApiKeyOperation.entries.first { it.value == "delete" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10148,7 +10148,7 @@ class SnippetSearchClient {
     var response = client.waitForAppTask(taskID = 123L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -10164,7 +10164,7 @@ class SnippetSearchClient {
     var response = client.waitForTask(indexName = "<YOUR_INDEX_NAME>", taskID = 123L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

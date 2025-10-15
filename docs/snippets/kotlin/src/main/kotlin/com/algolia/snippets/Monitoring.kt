@@ -20,7 +20,7 @@ class SnippetMonitoringClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -36,7 +36,7 @@ class SnippetMonitoringClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -52,7 +52,7 @@ class SnippetMonitoringClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -68,7 +68,7 @@ class SnippetMonitoringClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -96,7 +96,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -112,7 +112,7 @@ class SnippetMonitoringClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -134,7 +134,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -161,7 +161,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -188,7 +188,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -215,7 +215,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -242,7 +242,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -269,7 +269,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -296,7 +296,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -323,7 +323,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -350,7 +350,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -377,7 +377,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -393,7 +393,7 @@ class SnippetMonitoringClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -415,7 +415,7 @@ class SnippetMonitoringClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -431,7 +431,7 @@ class SnippetMonitoringClient {
     var response = client.getClusterIncidents(clusters = "c1-de")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -447,7 +447,7 @@ class SnippetMonitoringClient {
     var response = client.getClusterStatus(clusters = "c1-de")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -463,7 +463,7 @@ class SnippetMonitoringClient {
     var response = client.getIncidents()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -479,7 +479,7 @@ class SnippetMonitoringClient {
     var response = client.getIndexingTime(clusters = "c1-de")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -495,7 +495,7 @@ class SnippetMonitoringClient {
     var response = client.getLatency(clusters = "c1-de")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -511,7 +511,7 @@ class SnippetMonitoringClient {
     var response = client.getMetrics(metric = Metric.entries.first { it.value == "avg_build_time" }, period = Period.entries.first { it.value == "minute" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -527,7 +527,7 @@ class SnippetMonitoringClient {
     var response = client.getReachability(clusters = "c1-de")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -543,7 +543,7 @@ class SnippetMonitoringClient {
     var response = client.getServers()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -559,7 +559,7 @@ class SnippetMonitoringClient {
     var response = client.getStatus()
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

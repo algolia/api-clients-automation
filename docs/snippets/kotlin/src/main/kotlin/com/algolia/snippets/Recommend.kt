@@ -20,7 +20,7 @@ class SnippetRecommendClient {
     var response = client.batchRecommendRules(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -36,7 +36,7 @@ class SnippetRecommendClient {
     var response = client.customDelete(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -52,7 +52,7 @@ class SnippetRecommendClient {
     var response = client.customDelete(path = "test/all", parameters = mapOf("query" to "parameters"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -68,7 +68,7 @@ class SnippetRecommendClient {
     var response = client.customGet(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -84,7 +84,7 @@ class SnippetRecommendClient {
     var response = client.customGet(path = "test/all", parameters = mapOf("query" to "parameters with space"))
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -112,7 +112,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -128,7 +128,7 @@ class SnippetRecommendClient {
     var response = client.customPost(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -150,7 +150,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -177,7 +177,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -204,7 +204,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -231,7 +231,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -258,7 +258,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -285,7 +285,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -312,7 +312,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -339,7 +339,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -366,7 +366,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -393,7 +393,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -409,7 +409,7 @@ class SnippetRecommendClient {
     var response = client.customPut(path = "test/minimal")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -431,7 +431,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -447,7 +447,7 @@ class SnippetRecommendClient {
     var response = client.deleteRecommendRule(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -463,7 +463,7 @@ class SnippetRecommendClient {
     var response = client.getRecommendRule(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, objectID = "objectID")
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -479,7 +479,7 @@ class SnippetRecommendClient {
     var response = client.getRecommendStatus(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" }, taskID = 12345L)
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -506,7 +506,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -534,7 +534,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -570,7 +570,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -598,7 +598,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -635,7 +635,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -668,7 +668,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -719,7 +719,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -746,7 +746,7 @@ class SnippetRecommendClient {
     )
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 
@@ -762,7 +762,7 @@ class SnippetRecommendClient {
     var response = client.searchRecommendRules(indexName = "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first { it.value == "related-products" })
 
     // >LOG
-    // Use the response
+    // print the response
     println(response)
     // SEPARATOR<
 

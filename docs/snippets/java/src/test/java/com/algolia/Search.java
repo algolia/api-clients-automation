@@ -18,8 +18,12 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.addApiKey(new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setDescription("my new api key"));
+    AddApiKeyResponse response = client.addApiKey(
+      new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setDescription("my new api key")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -32,7 +36,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.addApiKey(
+    AddApiKeyResponse response = client.addApiKey(
       new ApiKey()
         .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))
         .setDescription("my new api key")
@@ -41,6 +45,8 @@ class SnippetSearchClient {
         .setMaxHitsPerQuery(20)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -53,7 +59,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.addOrUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.addOrUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -63,6 +69,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -75,8 +83,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
+    CreatedAtResponse response = client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -89,8 +99,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.assignUserId("user42", new AssignUserIdParams().setCluster("d4242-eu"));
+    CreatedAtResponse response = client.assignUserId("user42", new AssignUserIdParams().setCluster("d4242-eu"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -103,8 +115,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.assignUserId("user id with spaces", new AssignUserIdParams().setCluster("cluster with spaces"));
+    CreatedAtResponse response = client.assignUserId("user id with spaces", new AssignUserIdParams().setCluster("cluster with spaces"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -117,7 +131,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -145,6 +159,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -157,7 +173,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -174,6 +190,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -186,7 +204,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -203,6 +221,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -215,7 +235,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -232,6 +252,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -244,7 +266,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -261,6 +283,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -273,7 +297,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -290,6 +314,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -302,7 +328,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batch(
+    BatchResponse response = client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams().setRequests(
         Arrays.asList(
@@ -319,6 +345,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -331,8 +359,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2")));
+    CreatedAtResponse response = client.batchAssignUserIds(
+      "userID",
+      new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(Arrays.asList("user1", "user2"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -345,7 +378,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batchDictionaryEntries(
+    UpdatedAtResponse response = client.batchDictionaryEntries(
       DictionaryType.PLURALS,
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
@@ -366,6 +399,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -378,7 +413,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batchDictionaryEntries(
+    UpdatedAtResponse response = client.batchDictionaryEntries(
       DictionaryType.PLURALS,
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
@@ -389,6 +424,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -401,7 +438,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.batchDictionaryEntries(
+    UpdatedAtResponse response = client.batchDictionaryEntries(
       DictionaryType.STOPWORDS,
       new BatchDictionaryEntriesParams().setRequests(
         Arrays.asList(
@@ -412,6 +449,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -424,8 +463,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.browse("<YOUR_INDEX_NAME>", Hit.class);
+    BrowseResponse response = client.browse("<YOUR_INDEX_NAME>", Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -438,12 +479,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.browse(
+    BrowseResponse response = client.browse(
       "<YOUR_INDEX_NAME>",
       new BrowseParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -456,8 +499,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.browse("<YOUR_INDEX_NAME>", new BrowseParamsObject().setCursor("test"), Hit.class);
+    BrowseResponse response = client.browse("<YOUR_INDEX_NAME>", new BrowseParamsObject().setCursor("test"), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -470,8 +515,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.clearObjects("<YOUR_INDEX_NAME>");
+    UpdatedAtResponse response = client.clearObjects("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -484,8 +531,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.clearRules("<YOUR_INDEX_NAME>");
+    UpdatedAtResponse response = client.clearRules("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -498,8 +547,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.clearSynonyms("<YOUR_INDEX_NAME>");
+    UpdatedAtResponse response = client.clearSynonyms("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -512,8 +563,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete("test/minimal");
+    Object response = client.customDelete("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -526,7 +579,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customDelete(
+    Object response = client.customDelete(
       "test/all",
       new HashMap() {
         {
@@ -535,6 +588,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -547,8 +602,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet("test/minimal");
+    Object response = client.customGet("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -561,7 +618,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -570,6 +627,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -582,7 +641,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customGet(
+    Object response = client.customGet(
       "test/all",
       new HashMap() {
         {
@@ -595,6 +654,8 @@ class SnippetSearchClient {
         .addExtraHeader("x-header-1", "spaces are left alone")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -607,8 +668,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost("test/minimal");
+    Object response = client.customPost("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -621,7 +684,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/all",
       new HashMap() {
         {
@@ -635,6 +698,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -647,7 +712,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -662,6 +727,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -674,7 +741,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -689,6 +756,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -701,7 +770,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -716,6 +785,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -728,7 +799,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -743,6 +814,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -755,7 +828,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -770,6 +843,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("isItWorking", true)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -782,7 +857,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -797,6 +872,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("myParam", 2)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -809,7 +886,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -824,6 +901,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList("b and c", "d"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -836,7 +915,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -851,6 +930,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(true, true, false))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -863,7 +944,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPost(
+    Object response = client.customPost(
       "test/requestOptions",
       new HashMap() {
         {
@@ -878,6 +959,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraQueryParameters("myParam", Arrays.asList(1, 2))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -890,8 +973,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut("test/minimal");
+    Object response = client.customPut("test/minimal");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -904,7 +989,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.customPut(
+    Object response = client.customPut(
       "test/all",
       new HashMap() {
         {
@@ -918,6 +1003,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -930,8 +1017,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteApiKey("myTestApiKey");
+    DeleteApiKeyResponse response = client.deleteApiKey("myTestApiKey");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -944,8 +1033,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteBy("<YOUR_INDEX_NAME>", new DeleteByParams().setFilters("brand:brandName"));
+    UpdatedAtResponse response = client.deleteBy("<YOUR_INDEX_NAME>", new DeleteByParams().setFilters("brand:brandName"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -958,8 +1049,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteIndex("<YOUR_INDEX_NAME>");
+    DeletedAtResponse response = client.deleteIndex("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -972,8 +1065,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
+    DeletedAtResponse response = client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -986,8 +1081,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
+    List response = client.deleteObjects("<YOUR_INDEX_NAME>", Arrays.asList("1", "2"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1000,8 +1097,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteRule("<YOUR_INDEX_NAME>", "id1");
+    UpdatedAtResponse response = client.deleteRule("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1014,8 +1113,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteRule("<YOUR_INDEX_NAME>", "test/with/slash");
+    UpdatedAtResponse response = client.deleteRule("<YOUR_INDEX_NAME>", "test/with/slash");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1028,8 +1129,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteSource("theSource");
+    DeleteSourceResponse response = client.deleteSource("theSource");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1042,8 +1145,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
+    DeletedAtResponse response = client.deleteSynonym("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1056,11 +1161,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey(
+    String response = client.generateSecuredApiKey(
       "2640659426d5107b6e47d75db9cbaef8",
       new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(Arrays.asList("Movies"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1073,7 +1180,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey(
+    String response = client.generateSecuredApiKey(
       "2640659426d5107b6e47d75db9cbaef8",
       new SecuredApiKeyRestrictions()
         .setValidUntil(2524604400L)
@@ -1092,6 +1199,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1104,11 +1213,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey(
+    String response = client.generateSecuredApiKey(
       "2640659426d5107b6e47d75db9cbaef8",
-      new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)")
+      new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public AND (visible_by:John OR" + " visible_by:group/Finance)")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1121,11 +1232,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey(
+    String response = client.generateSecuredApiKey(
       "2640659426d5107b6e47d75db9cbaef8",
       new SecuredApiKeyRestrictions().setFilters("visible_by:group/Finance")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1138,8 +1251,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey("2640659426d5107b6e47d75db9cbaef8", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    String response = client.generateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions().setUserToken("user42")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1152,8 +1270,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public"));
+    String response = client.generateSecuredApiKey(
+      "YourSearchOnlyApiKey",
+      new SecuredApiKeyRestrictions().setFilters("user:user42 AND user:public")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1166,8 +1289,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
+    String response = client.generateSecuredApiKey("YourSearchOnlyApiKey", new SecuredApiKeyRestrictions().setUserToken("user42"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1180,8 +1305,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getApiKey("myTestApiKey");
+    GetApiKeyResponse response = client.getApiKey("myTestApiKey");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1194,8 +1321,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getAppTask(123L);
+    GetTaskResponse response = client.getAppTask(123L);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1208,8 +1337,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getDictionaryLanguages();
+    Map response = client.getDictionaryLanguages();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1222,8 +1353,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getDictionarySettings();
+    GetDictionarySettingsResponse response = client.getDictionarySettings();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1236,8 +1369,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getLogs();
+    GetLogsResponse response = client.getLogs();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1250,8 +1385,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getLogs(5, 10, "<YOUR_INDEX_NAME>", LogType.ALL);
+    GetLogsResponse response = client.getLogs(5, 10, "<YOUR_INDEX_NAME>", LogType.ALL);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1264,8 +1401,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getObject("<YOUR_INDEX_NAME>", "uniqueID", Arrays.asList("attr1", "attr2"));
+    Object response = client.getObject("<YOUR_INDEX_NAME>", "uniqueID", Arrays.asList("attr1", "attr2"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1278,8 +1417,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getObject("<YOUR_INDEX_NAME>", "Batman and Robin");
+    Object response = client.getObject("<YOUR_INDEX_NAME>", "Batman and Robin");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1292,11 +1433,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getObjects(
+    GetObjectsResponse response = client.getObjects(
       new GetObjectsParams().setRequests(Arrays.asList(new GetObjectsRequest().setObjectID("uniqueID").setIndexName("<YOUR_INDEX_NAME>"))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1309,7 +1452,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getObjects(
+    GetObjectsResponse response = client.getObjects(
       new GetObjectsParams().setRequests(
         Arrays.asList(
           new GetObjectsRequest().setObjectID("uniqueID1").setIndexName("<YOUR_INDEX_NAME>"),
@@ -1319,6 +1462,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1331,7 +1476,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getObjects(
+    GetObjectsResponse response = client.getObjects(
       new GetObjectsParams().setRequests(
         Arrays.asList(
           new GetObjectsRequest()
@@ -1343,6 +1488,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1355,8 +1502,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
+    Rule response = client.getRule("<YOUR_INDEX_NAME>", "qr-1725004648916");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1369,8 +1518,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getSettings("<YOUR_INDEX_NAME>", 2);
+    SettingsResponse response = client.getSettings("<YOUR_INDEX_NAME>", 2);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1383,8 +1534,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getSources();
+    List response = client.getSources();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1397,8 +1550,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getSynonym("<YOUR_INDEX_NAME>", "id1");
+    SynonymHit response = client.getSynonym("<YOUR_INDEX_NAME>", "id1");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1411,8 +1566,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getTask("<YOUR_INDEX_NAME>", 123L);
+    GetTaskResponse response = client.getTask("<YOUR_INDEX_NAME>", 123L);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1425,8 +1582,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getTopUserIds();
+    GetTopUserIdsResponse response = client.getTopUserIds();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1439,8 +1598,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.getUserId("uniqueID");
+    UserId response = client.getUserId("uniqueID");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1453,8 +1614,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.hasPendingMappings();
+    HasPendingMappingsResponse response = client.hasPendingMappings();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1467,8 +1630,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.hasPendingMappings(true);
+    HasPendingMappingsResponse response = client.hasPendingMappings(true);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1481,8 +1646,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.indexExists("<YOUR_INDEX_NAME>");
+    Boolean response = client.indexExists("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1495,8 +1662,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.indexExists("<YOUR_INDEX_NAME>");
+    Boolean response = client.indexExists("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1509,8 +1678,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.indexExists("<YOUR_INDEX_NAME>");
+    Boolean response = client.indexExists("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1523,8 +1694,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listApiKeys();
+    ListApiKeysResponse response = client.listApiKeys();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1537,8 +1710,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listClusters();
+    ListClustersResponse response = client.listClusters();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1551,8 +1726,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listIndices();
+    ListIndicesResponse response = client.listIndices();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1565,8 +1742,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listIndices(8, 3);
+    ListIndicesResponse response = client.listIndices(8, 3);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1579,8 +1758,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listUserIds();
+    ListUserIdsResponse response = client.listUserIds();
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1593,8 +1774,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.listUserIds(8, 100);
+    ListUserIdsResponse response = client.listUserIds(8, 100);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1607,7 +1790,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.multipleBatch(
+    MultipleBatchResponse response = client.multipleBatch(
       new BatchParams().setRequests(
         Arrays.asList(
           new MultipleBatchRequest()
@@ -1624,6 +1807,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1636,7 +1821,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.operationIndex(
+    UpdatedAtResponse response = client.operationIndex(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams()
         .setOperation(OperationType.MOVE)
@@ -1644,6 +1829,8 @@ class SnippetSearchClient {
         .setScope(Arrays.asList(ScopeType.RULES, ScopeType.SETTINGS))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1656,11 +1843,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.operationIndex(
+    UpdatedAtResponse response = client.operationIndex(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1673,11 +1862,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.operationIndex(
+    UpdatedAtResponse response = client.operationIndex(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1690,7 +1881,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1700,6 +1891,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1712,7 +1905,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1722,6 +1915,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1734,7 +1929,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1744,6 +1939,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1756,7 +1953,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1766,6 +1963,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1778,7 +1977,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1795,6 +1994,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1807,7 +2008,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "uniqueID",
       new HashMap() {
@@ -1817,6 +2018,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1829,7 +2032,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "productId",
       new HashMap() {
@@ -1847,6 +2050,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1859,7 +2064,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObject(
+    UpdatedAtWithObjectIdResponse response = client.partialUpdateObject(
       "<YOUR_INDEX_NAME>",
       "productId",
       new HashMap() {
@@ -1877,6 +2082,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1889,7 +2096,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObjects(
+    List response = client.partialUpdateObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -1908,6 +2115,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1920,7 +2129,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObjects(
+    List response = client.partialUpdateObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -1939,6 +2148,8 @@ class SnippetSearchClient {
       false
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1951,7 +2162,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.partialUpdateObjectsWithTransformation(
+    List response = client.partialUpdateObjectsWithTransformation(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -1971,6 +2182,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1983,8 +2196,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.removeUserId("uniqueID");
+    RemoveUserIdResponse response = client.removeUserId("uniqueID");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -1997,7 +2212,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.replaceAllObjects(
+    ReplaceAllObjectsResponse response = client.replaceAllObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2064,6 +2279,8 @@ class SnippetSearchClient {
       3
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2076,7 +2293,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.replaceAllObjects(
+    ReplaceAllObjectsResponse response = client.replaceAllObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2096,6 +2313,8 @@ class SnippetSearchClient {
       Arrays.asList(ScopeType.SETTINGS, ScopeType.SYNONYMS)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2108,7 +2327,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.replaceAllObjects(
+    ReplaceAllObjectsResponse response = client.replaceAllObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2126,6 +2345,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2138,7 +2359,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.replaceAllObjectsWithTransformation(
+    ReplaceAllObjectsWithTransformationResponse response = client.replaceAllObjectsWithTransformation(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2205,6 +2426,8 @@ class SnippetSearchClient {
       3
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2217,8 +2440,12 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.replaceSources(Arrays.asList(new Source().setSource("theSource").setDescription("theDescription")));
+    ReplaceSourceResponse response = client.replaceSources(
+      Arrays.asList(new Source().setSource("theSource").setDescription("theDescription"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2231,8 +2458,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.restoreApiKey("ALGOLIA_API_KEY");
+    AddApiKeyResponse response = client.restoreApiKey("ALGOLIA_API_KEY");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2245,7 +2474,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObject(
+    SaveObjectResponse response = client.saveObject(
       "<YOUR_INDEX_NAME>",
       new HashMap() {
         {
@@ -2257,6 +2486,8 @@ class SnippetSearchClient {
       }
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2269,7 +2500,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObjects(
+    List response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2287,6 +2518,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2299,7 +2532,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObjects(
+    List response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2317,6 +2550,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2329,7 +2564,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObjects(
+    List response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2344,6 +2579,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2356,7 +2593,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObjects(
+    List response = client.saveObjects(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2374,6 +2611,8 @@ class SnippetSearchClient {
       new RequestOptions().addExtraHeader("X-Algolia-User-ID", "*")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2386,7 +2625,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveObjectsWithTransformation(
+    List response = client.saveObjectsWithTransformation(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new HashMap() {
@@ -2405,6 +2644,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2417,7 +2658,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "id1",
       new Rule()
@@ -2426,6 +2667,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("brand:xiaomi")))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2438,7 +2681,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "id1",
       new Rule()
@@ -2484,6 +2727,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2496,7 +2741,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "article-rule",
       new Rule()
@@ -2511,6 +2756,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2523,7 +2770,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "director-rule",
       new Rule()
@@ -2541,6 +2788,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2553,7 +2802,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "harry-potter-rule",
       new Rule()
@@ -2570,6 +2819,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2582,7 +2833,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "clearance-category-filter",
       new Rule()
@@ -2591,6 +2842,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setParams(new ConsequenceParams().setOptionalFilters(OptionalFilters.of("clearance:true"))))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2603,7 +2856,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "redirect-help-rule",
       new Rule()
@@ -2620,6 +2873,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2632,7 +2887,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "tomato-fruit",
       new Rule()
@@ -2641,6 +2896,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setParams(new ConsequenceParams().setOptionalFilters(OptionalFilters.of("food_group:fruit"))))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2653,7 +2910,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "Promote-Apple-Newest",
       new Rule()
@@ -2666,6 +2923,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2678,7 +2937,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "Promote-iPhone-X",
       new Rule()
@@ -2687,6 +2946,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteObjectID().setObjectID("iPhone-12345").setPosition(0))))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2699,7 +2960,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "promote-harry-potter-box-set",
       new Rule()
@@ -2708,6 +2969,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteObjectID().setObjectID("HP-12345").setPosition(0))))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2720,7 +2983,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "article-rule",
       new Rule()
@@ -2735,6 +2998,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2747,7 +3012,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "tagged-brand-rule",
       new Rule()
@@ -2767,6 +3032,8 @@ class SnippetSearchClient {
         .setObjectID("tagged-brand-rule")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2779,7 +3046,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "color-facets",
       new Rule()
@@ -2794,6 +3061,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2806,7 +3075,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "hide-12345",
       new Rule()
@@ -2815,6 +3084,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setHide(Arrays.asList(new ConsequenceHide().setObjectID("to-hide-12345"))))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2827,7 +3098,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "red-color",
       new Rule()
@@ -2840,6 +3111,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2852,7 +3125,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "cheap",
       new Rule()
@@ -2865,6 +3138,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2877,7 +3152,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "gluten-free-rule",
       new Rule()
@@ -2892,6 +3167,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2904,7 +3181,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "diet-rule",
       new Rule()
@@ -2919,6 +3196,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2931,7 +3210,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "diet-rule",
       new Rule()
@@ -2945,6 +3224,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2957,7 +3238,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "a-rule-id",
       new Rule()
@@ -2966,6 +3247,8 @@ class SnippetSearchClient {
         .setConsequence(new Consequence().setParams(new ConsequenceParams().setFilters("release_date >= 1577836800")))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2978,7 +3261,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "a-rule-id",
       new Rule()
@@ -2987,6 +3270,8 @@ class SnippetSearchClient {
         .setValidity(Arrays.asList(new TimeRange().setFrom(1577836800L).setUntil(1577836800L)))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -2999,7 +3284,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRule(
+    UpdatedAtResponse response = client.saveRule(
       "<YOUR_INDEX_NAME>",
       "a-rule-id",
       new Rule()
@@ -3008,6 +3293,8 @@ class SnippetSearchClient {
         .setValidity(Arrays.asList(new TimeRange().setFrom(1577836800L)))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3020,7 +3307,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    UpdatedAtResponse response = client.saveRules(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new Rule()
@@ -3036,6 +3323,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3048,7 +3337,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    UpdatedAtResponse response = client.saveRules(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new Rule()
@@ -3096,6 +3385,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3108,7 +3399,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    UpdatedAtResponse response = client.saveRules(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new Rule()
@@ -3132,6 +3423,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3144,7 +3437,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveRules(
+    UpdatedAtResponse response = client.saveRules(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new Rule()
@@ -3158,6 +3451,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3170,13 +3465,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveSynonym(
+    SaveSynonymResponse response = client.saveSynonym(
       "<YOUR_INDEX_NAME>",
       "id1",
       new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3189,7 +3486,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.saveSynonyms(
+    UpdatedAtResponse response = client.saveSynonyms(
       "<YOUR_INDEX_NAME>",
       Arrays.asList(
         new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(Arrays.asList("car", "vehicule", "auto")),
@@ -3203,6 +3500,8 @@ class SnippetSearchClient {
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3215,13 +3514,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))
       ),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3234,13 +3535,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
       ),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3253,7 +3556,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits()
@@ -3265,6 +3568,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3277,13 +3582,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
       ),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3296,8 +3603,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(new SearchMethodParams().setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>"))), Hit.class);
+    SearchResponses response = client.search(
+      new SearchMethodParams().setRequests(Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>"))),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3310,7 +3622,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits()
@@ -3324,6 +3636,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3336,7 +3650,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("author", "genre"))
@@ -3345,6 +3659,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3357,13 +3673,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(Arrays.asList("*")))
       ),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3376,7 +3694,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams()
         .setRequests(
           Arrays.asList(new SearchForFacets().setIndexName("<YOUR_INDEX_NAME>").setType(SearchTypeFacet.FACET).setFacet("editor"))
@@ -3385,6 +3703,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3397,7 +3717,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
@@ -3406,6 +3726,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3418,7 +3740,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams()
         .setRequests(
           Arrays.asList(
@@ -3435,6 +3757,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3448,7 +3772,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams()
         .setRequests(
           Arrays.asList(
@@ -3461,6 +3785,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3473,7 +3799,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams()
         .setRequests(
           Arrays.asList(
@@ -3491,6 +3817,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3503,7 +3831,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits()
@@ -3559,6 +3887,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3571,7 +3901,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setFilters("editor:'visual studio' OR editor:neovim"),
@@ -3602,6 +3932,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3614,7 +3946,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.search(
+    SearchResponses response = client.search(
       new SearchMethodParams().setRequests(
         Arrays.asList(
           new SearchForHits()
@@ -3717,6 +4049,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3730,8 +4064,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
+    SearchDictionaryEntriesResponse response = client.searchDictionaryEntries(
+      DictionaryType.STOPWORDS,
+      new SearchDictionaryEntriesParams().setQuery("about")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3744,11 +4083,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchDictionaryEntries(
+    SearchDictionaryEntriesResponse response = client.searchDictionaryEntries(
       DictionaryType.COMPOUNDS,
       new SearchDictionaryEntriesParams().setQuery("foo").setPage(4).setHitsPerPage(2).setLanguage(SupportedLanguage.FR)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3761,8 +4102,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
+    SearchForFacetValuesResponse response = client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3775,12 +4118,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchForFacetValues(
+    SearchForFacetValuesResponse response = client.searchForFacetValues(
       "<YOUR_INDEX_NAME>",
       "facetName",
       new SearchForFacetValuesRequest().setParams("query=foo&facetFilters=['bar']").setFacetQuery("foo").setMaxFacetHits(42)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3793,8 +4138,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchForFacetValues("<YOUR_INDEX_NAME>", "author", new SearchForFacetValuesRequest().setFacetQuery("stephen"));
+    SearchForFacetValuesResponse response = client.searchForFacetValues(
+      "<YOUR_INDEX_NAME>",
+      "author",
+      new SearchForFacetValuesRequest().setFacetQuery("stephen")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3807,8 +4158,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
+    SearchRulesResponse response = client.searchRules("<YOUR_INDEX_NAME>", new SearchRulesParams().setQuery("zorro"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3821,8 +4174,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3835,8 +4190,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3849,12 +4206,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3867,7 +4226,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("batman mask of the phantasm")
@@ -3876,6 +4235,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3888,8 +4249,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("phone"), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("phone"), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3902,8 +4265,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("country:US AND price.gross < 2.0"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFilters("country:US AND price.gross < 2.0"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3916,12 +4285,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("ben").setFilters("categories:politics AND store:Gibert Joseph Saint-Michel"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3934,8 +4305,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("is_available:true"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFilters("is_available:true"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3948,8 +4325,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setDistinct(Distinct.of(true)), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setDistinct(Distinct.of(true)),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3962,8 +4345,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("price < 10"), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("price < 10"), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3976,12 +4361,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setFilters("NOT date_timestamp:1514764800 TO 1546300799"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -3994,14 +4381,16 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
-        .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)")
+        .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR" + " company:Facebook<score=1>)")
         .setSumOrFiltersScores(false),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4014,14 +4403,16 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
-        .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)")
+        .setFilters("(company:Google<score=3> OR company:Amazon<score=2> OR" + " company:Facebook<score=1>)")
         .setSumOrFiltersScores(true),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4034,8 +4425,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFilters("author:\"Stephen King\""), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFilters("author:\"Stephen King\""),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4048,8 +4445,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("harry").setFilters("_tags:non-fiction"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("harry").setFilters("_tags:non-fiction"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4062,7 +4465,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setFacetFilters(
         FacetFilters.of(
@@ -4075,6 +4478,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4087,12 +4492,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("category:Book")))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4105,7 +4512,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4113,6 +4520,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4125,7 +4534,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4137,6 +4546,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4149,7 +4560,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4164,6 +4575,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4176,8 +4589,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFacetFilters(FacetFilters.of("category:-Ebook")), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFacetFilters(FacetFilters.of("category:-Ebook")),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4190,7 +4609,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setFilters("(author:\"Stephen King\" OR genre:\"Horror\")")
@@ -4198,6 +4617,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4210,8 +4631,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFacets(Arrays.asList("author", "genre")), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFacets(Arrays.asList("author", "genre")),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4224,8 +4651,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setFacets(Arrays.asList("*")), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setFacets(Arrays.asList("*")),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4238,8 +4671,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setMaxValuesPerFacet(1000), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setMaxValuesPerFacet(1000), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4252,8 +4687,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setAroundLatLng("40.71, -74.01"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setAroundLatLng("40.71, -74.01"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4266,8 +4707,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setAroundLatLngViaIP(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setAroundLatLngViaIP(true), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4280,12 +4723,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setAroundLatLng("40.71, -74.01").setAroundRadius(AroundRadius.of(1000000)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4298,7 +4743,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setInsideBoundingBox(
         InsideBoundingBox.of(Arrays.asList(Arrays.asList(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)))
@@ -4306,6 +4751,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4318,7 +4765,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setInsidePolygon(
         Arrays.asList(
@@ -4341,6 +4788,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4353,12 +4802,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("can_deliver_quickly:true")))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4371,7 +4822,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setOptionalFilters(
         OptionalFilters.of(
@@ -4385,6 +4836,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4397,7 +4850,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setOptionalFilters(
         OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:Apple<score=2>"), OptionalFilters.of("type:tablet")))
@@ -4405,6 +4858,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4417,12 +4872,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setRestrictSearchableAttributes(Arrays.asList("title_fr")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4435,8 +4892,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setGetRankingInfo(true), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4449,8 +4908,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setClickAnalytics(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setClickAnalytics(true), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4463,8 +4924,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setClickAnalytics(true).setUserToken("user-1"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setClickAnalytics(true).setUserToken("user-1"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4477,12 +4944,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setEnablePersonalization(true).setUserToken("user-1"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4495,8 +4964,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setUserToken("user-1"), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setUserToken("user-1"), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4509,8 +4980,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setUserToken("user-1234"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setUserToken("user-1234"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4523,12 +5000,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setAnalyticsTags(Arrays.asList("YOUR_ANALYTICS_TAG")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4541,7 +5020,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setFacetFilters(
         FacetFilters.of(Arrays.asList(FacetFilters.of("user:user42"), FacetFilters.of("user:public")))
@@ -4549,6 +5028,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4561,7 +5042,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setFilters("categoryPageId: Men's Clothing")
@@ -4570,6 +5051,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4582,12 +5065,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAttributesToHighlight(Arrays.asList("title", "content")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4600,12 +5085,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4618,8 +5105,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("shirt"), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("shirt"), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4632,8 +5121,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery(""), Hit.class);
+    SearchResponse response = client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery(""), Hit.class);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4646,8 +5137,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("books").setFilters("price:10 TO 20"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("books").setFilters("price:10 TO 20"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4660,7 +5157,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("")
@@ -4669,6 +5166,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4681,12 +5180,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAttributesToRetrieve(Arrays.asList("title", "content")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4699,12 +5200,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setRestrictSearchableAttributes(Arrays.asList("title", "author")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4717,8 +5220,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setRelevancyStrictness(70), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setRelevancyStrictness(70),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4731,12 +5240,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFilters("(category:Book OR category:Ebook) AND _tags:published"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4749,18 +5260,20 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
         .setFilters(
-          "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND" +
-            " publication_date:1441745506 TO 1441755506 AND inStock > 0 AND author:\"John" +
-            " Doe\""
+          "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published" +
+            " AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND" +
+            " author:\"John Doe\""
         ),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4773,12 +5286,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFilters("category:\"Books and Comics\""),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4791,8 +5306,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setFilters("keyword:\"OR\""), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setFilters("keyword:\"OR\""),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4805,12 +5326,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFilters("content:\"It's a wonderful day\""),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4823,12 +5346,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFilters("content:\"She said \"Hello World\""),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4841,7 +5366,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4849,6 +5374,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4861,7 +5388,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4869,6 +5396,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4881,7 +5410,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4889,6 +5418,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4901,7 +5432,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4916,6 +5447,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4928,7 +5461,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -4938,6 +5471,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4950,8 +5485,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setSumOrFiltersScores(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setSumOrFiltersScores(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4964,8 +5505,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setFacets(Arrays.asList("*")), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setFacets(Arrays.asList("*")),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4978,12 +5525,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setFacets(Arrays.asList("category", "author")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -4996,8 +5545,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setMaxValuesPerFacet(20), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setMaxValuesPerFacet(20),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5010,8 +5565,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setFacetingAfterDistinct(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setFacetingAfterDistinct(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5024,8 +5585,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setSortFacetValuesBy("count"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setSortFacetValuesBy("count"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5038,12 +5605,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAttributesToSnippet(Arrays.asList("title", "content:80")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5056,8 +5625,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setHighlightPreTag("<strong>"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setHighlightPreTag("<strong>"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5070,8 +5645,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setHighlightPostTag("</strong>"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setHighlightPostTag("</strong>"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5084,8 +5665,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setSnippetEllipsisText(""), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setSnippetEllipsisText(""),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5098,12 +5685,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setRestrictHighlightAndSnippetArrays(false),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5116,8 +5705,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setPage(0), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setPage(0),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5130,8 +5725,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setHitsPerPage(10), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setHitsPerPage(10),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5144,8 +5745,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setOffset(4), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setOffset(4),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5158,8 +5765,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setLength(4), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setLength(4),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5172,8 +5785,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setMinWordSizefor1Typo(2), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setMinWordSizefor1Typo(2),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5186,8 +5805,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setMinWordSizefor2Typos(2), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setMinWordSizefor2Typos(2),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5200,12 +5825,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setTypoTolerance(TypoTolerance.of(false)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5218,12 +5845,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAllowTyposOnNumericTokens(false),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5236,8 +5865,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setAroundLatLng("40.71, -74.01"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setAroundLatLng("40.71, -74.01"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5250,16 +5885,18 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAroundLatLngViaIP(true),
       Hit.class,
       new RequestOptions().addExtraHeader(
         "x-forwarded-for",
-        "94.228.178.246 // should be replaced with the actual IP you would like to search" + " around"
+        "94.228.178.246 // should be replaced with the actual IP you would like to" + " search around"
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5272,12 +5909,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAroundRadius(AroundRadius.of(1000)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5290,12 +5929,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAroundRadius(AroundRadiusAll.ALL),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5308,12 +5949,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAroundPrecision(AroundPrecision.of(100)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5326,7 +5969,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5336,6 +5979,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5348,8 +5993,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setMinimumAroundRadius(1000), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setMinimumAroundRadius(1000),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5362,7 +6013,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5372,6 +6023,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5384,7 +6037,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5399,6 +6052,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5411,7 +6066,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5421,6 +6076,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5433,7 +6090,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5455,6 +6112,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5467,7 +6126,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5475,6 +6134,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5487,12 +6148,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setQueryLanguages(Arrays.asList(SupportedLanguage.JA, SupportedLanguage.EN)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5505,12 +6168,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("").setNaturalLanguages(Arrays.asList(SupportedLanguage.FR)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5523,7 +6188,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("")
@@ -5532,6 +6197,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5544,8 +6211,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setDecompoundQuery(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setDecompoundQuery(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5558,8 +6231,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setEnableRules(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setEnableRules(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5572,12 +6251,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setRuleContexts(Arrays.asList("front_end", "website2")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5590,8 +6271,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setEnablePersonalization(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setEnablePersonalization(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5604,12 +6291,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setEnablePersonalization(true).setUserToken("123456"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5622,8 +6311,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setPersonalizationImpact(20), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setPersonalizationImpact(20),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5636,8 +6331,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setUserToken("123456"), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setUserToken("123456"),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5650,12 +6351,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setEnablePersonalization(true).setUserToken("123456"),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5668,8 +6371,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setQueryType(QueryType.PREFIX_ALL), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setQueryType(QueryType.PREFIX_ALL),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5682,12 +6391,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setRemoveWordsIfNoResults(RemoveWordsIfNoResults.LAST_WORDS),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5700,8 +6411,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setAdvancedSyntax(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setAdvancedSyntax(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5714,12 +6431,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setOptionalWords(OptionalWords.of(Arrays.asList("toyota", "2020 2021"))),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5732,12 +6451,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setDisableExactOnAttributes(Arrays.asList("description")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5750,12 +6471,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setExactOnSingleWordQuery(ExactOnSingleWordQuery.NONE),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5768,12 +6491,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAlternativesAsExact(Arrays.asList(AlternativesAsExact.MULTI_WORDS_SYNONYM)),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5786,7 +6511,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5795,6 +6520,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5807,7 +6534,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject()
         .setQuery("query")
@@ -5816,6 +6543,8 @@ class SnippetSearchClient {
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5828,8 +6557,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setDistinct(Distinct.of(0)), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setDistinct(Distinct.of(0)),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5842,8 +6577,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setGetRankingInfo(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setGetRankingInfo(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5856,8 +6597,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setClickAnalytics(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setClickAnalytics(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5870,8 +6617,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setClickAnalytics(true), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setClickAnalytics(true),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5884,8 +6637,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setAnalytics(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setAnalytics(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5898,12 +6657,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setAnalyticsTags(Arrays.asList("front_end", "website2")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5916,8 +6677,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setSynonyms(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setSynonyms(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5930,12 +6697,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setReplaceSynonymsInHighlight(true),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5948,8 +6717,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setMinProximity(2), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setMinProximity(2),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5962,12 +6737,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query").setResponseFields(Arrays.asList("hits", "facets")),
       Hit.class
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5980,8 +6757,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setPercentileComputation(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setPercentileComputation(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -5994,8 +6777,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setEnableABTest(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setEnableABTest(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6008,8 +6797,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex("<YOUR_INDEX_NAME>", new SearchParamsObject().setQuery("query").setEnableReRanking(false), Hit.class);
+    SearchResponse response = client.searchSingleIndex(
+      "<YOUR_INDEX_NAME>",
+      new SearchParamsObject().setQuery("query").setEnableReRanking(false),
+      Hit.class
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6022,13 +6817,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("query"),
       Hit.class,
       new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user1234")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6041,13 +6838,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSingleIndex(
+    SearchResponse response = client.searchSingleIndex(
       "<YOUR_INDEX_NAME>",
       new SearchParamsObject().setQuery("peace"),
       Hit.class,
       new RequestOptions().addExtraHeader("X-Algolia-User-ID", "user42")
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6060,8 +6859,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSynonyms("<YOUR_INDEX_NAME>");
+    SearchSynonymsResponse response = client.searchSynonyms("<YOUR_INDEX_NAME>");
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6074,11 +6875,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchSynonyms(
+    SearchSynonymsResponse response = client.searchSynonyms(
       "<YOUR_INDEX_NAME>",
       new SearchSynonymsParams().setQuery("myQuery").setType(SynonymType.ALTCORRECTION_1).setPage(10).setHitsPerPage(10)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6091,8 +6894,12 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.searchUserIds(new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
+    SearchUserIdsResponse response = client.searchUserIds(
+      new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10)
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6119,7 +6926,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setDictionarySettings(
+    UpdatedAtResponse response = client.setDictionarySettings(
       new DictionarySettingsParams().setDisableStandardEntries(
         new StandardEntries().setPlurals(
           new HashMap() {
@@ -6133,6 +6940,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6145,7 +6954,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setDictionarySettings(
+    UpdatedAtResponse response = client.setDictionarySettings(
       new DictionarySettingsParams().setDisableStandardEntries(
         new StandardEntries()
           .setPlurals(
@@ -6174,6 +6983,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6186,8 +6997,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE), true);
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+      true
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6200,8 +7017,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)), true);
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setTypoTolerance(TypoTolerance.of(true)),
+      true
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6214,8 +7037,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN), true);
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN), true);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6228,8 +7053,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(true)), true);
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setIgnorePlurals(IgnorePlurals.of(true)),
+      true
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6242,12 +7073,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setIgnorePlurals(IgnorePlurals.of(Arrays.asList(SupportedLanguage.FR))),
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6260,8 +7093,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)), true);
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)),
+      true
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6274,12 +7113,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRemoveStopWords(RemoveStopWords.of(Arrays.asList(SupportedLanguage.FR))),
       true
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6292,8 +7133,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(true)), true);
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(true)), true);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6306,8 +7149,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(1)), true);
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(1)), true);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6320,8 +7165,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("company").setDistinct(Distinct.of(true)));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributeForDistinct("company").setDistinct(Distinct.of(true))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6334,8 +7184,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("design").setDistinct(Distinct.of(true)));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributeForDistinct("design").setDistinct(Distinct.of(true))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6348,8 +7203,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(true)));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(true)));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6362,8 +7219,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("section").setDistinct(Distinct.of(true)));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributeForDistinct("section").setDistinct(Distinct.of(true))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6376,8 +7238,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("allergens")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("allergens"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6390,8 +7257,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("color", "availableIn")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("color", "availableIn"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6404,8 +7276,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("genre", "author")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("genre", "author"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6418,8 +7295,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("genre", "searchable(author)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("genre", "searchable(author)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6432,8 +7314,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(genre)", "author")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(genre)", "author"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6446,8 +7333,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("searchable(categoryPageId)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("searchable(categoryPageId)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6460,8 +7352,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setUnretrievableAttributes(Arrays.asList("visible_by")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setUnretrievableAttributes(Arrays.asList("visible_by"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6474,8 +7371,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(visible_by)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(visible_by)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6488,11 +7390,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAttributesForFaceting(Arrays.asList("can_deliver_quickly", "restaurant"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6505,8 +7409,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("query_terms")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("query_terms"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6519,8 +7428,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("director")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("director"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6533,8 +7447,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(brand)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(Arrays.asList("filterOnly(brand)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6547,8 +7466,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6561,8 +7482,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6575,8 +7498,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("title,comments", "ingredients")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("title,comments", "ingredients"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6589,8 +7517,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("title", "ingredients")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("title", "ingredients"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6603,8 +7536,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(retweets)", "desc(likes)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(retweets)", "desc(likes)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6617,8 +7555,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(boosted)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(boosted)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6631,8 +7574,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(pageviews)", "desc(comments)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(pageviews)", "desc(comments)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6645,13 +7593,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setCustomRanking(Arrays.asList("desc(nb_airline_liaisons)"))
         .setAttributesForFaceting(Arrays.asList("city, country"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6664,11 +7614,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setCustomRanking(Arrays.asList("desc(rounded_pageviews)", "desc(comments)"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6681,8 +7633,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(price)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(price)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6695,13 +7652,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(
         Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6714,13 +7673,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(
         Arrays.asList("desc(is_popular)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6733,8 +7694,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRanking(Arrays.asList("desc(post_date_timestamp)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setRanking(Arrays.asList("desc(post_date_timestamp)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6747,8 +7713,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(post_date_timestamp)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(post_date_timestamp)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6761,13 +7732,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setCustomRanking(Arrays.asList("asc(textual_attribute)"))
         .setRanking(Arrays.asList("custom", "typo", "geo", "words", "filters", "proximity", "attribute", "exact"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6780,11 +7753,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setCustomRanking(Arrays.asList("asc(textual_attribute)")).setRelevancyStrictness(0)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6797,8 +7772,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplicas(Arrays.asList("products_price_desc")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setReplicas(Arrays.asList("products_price_desc"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6811,8 +7791,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplicas(Arrays.asList("articles_date_desc")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setReplicas(Arrays.asList("articles_date_desc"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6825,8 +7810,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplicas(Arrays.asList("virtual(products_price_desc)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setReplicas(Arrays.asList("virtual(products_price_desc)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6839,8 +7829,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplicas(Arrays.asList("")));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplicas(Arrays.asList("")));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6853,8 +7845,14 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("name", "description")), true);
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("name", "description")),
+      true
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6867,8 +7865,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxValuesPerFacet(1000));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxValuesPerFacet(1000));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6881,8 +7881,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxFacetHits(100));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxFacetHits(100));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6895,11 +7897,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAttributesForFaceting(Arrays.asList("actor", "filterOnly(category)", "searchable(publisher)"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6912,13 +7916,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(
         Arrays.asList("asc(date_timestamp)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6931,8 +7937,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("design", "type", "color")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("design", "type", "color"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6945,13 +7956,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setSearchableAttributes(Arrays.asList("name", "country", "city", "iata_code"))
         .setCustomRanking(Arrays.asList("desc(links_count)"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6964,8 +7977,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToHighlight(Arrays.asList("author", "title", "content")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesToHighlight(Arrays.asList("author", "title", "content"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6978,8 +7996,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToHighlight(Arrays.asList("*")));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToHighlight(Arrays.asList("*")));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -6992,7 +8012,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setAdvancedSyntax(true)
@@ -7095,6 +8115,8 @@ class SnippetSearchClient {
         )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7107,7 +8129,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setSearchableAttributes(Arrays.asList("brand", "name", "categories", "unordered(description)"))
@@ -7115,6 +8137,8 @@ class SnippetSearchClient {
         .setAttributesForFaceting(Arrays.asList("searchable(brand)", "type", "categories", "price"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7127,8 +8151,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("unordered(title)", "cast")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("unordered(title)", "cast"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7141,11 +8170,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setSearchableAttributes(Arrays.asList("name", "product_reference", "product_reference_suffixes"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7158,11 +8189,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setQueryLanguages(Arrays.asList(SupportedLanguage.EN)).setIgnorePlurals(IgnorePlurals.of(true))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7175,11 +8208,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setSearchableAttributes(Arrays.asList("title_eng", "title_fr", "title_es"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7192,8 +8227,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("serial_number")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("serial_number"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7206,8 +8246,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7220,8 +8265,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7234,11 +8284,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number", "serial_number_suffixes"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7251,11 +8303,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setSearchableAttributes(Arrays.asList("title,alternative_title", "author", "unordered(text)", "emails.personal"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7268,7 +8322,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAttributesForFaceting(
         Arrays.asList(
@@ -7281,6 +8335,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7293,8 +8349,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setUnretrievableAttributes(Arrays.asList("total_number_of_sales")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setUnretrievableAttributes(Arrays.asList("total_number_of_sales"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7307,8 +8368,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToRetrieve(Arrays.asList("author", "title", "content")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesToRetrieve(Arrays.asList("author", "title", "content"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7321,8 +8387,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToRetrieve(Arrays.asList("*")));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToRetrieve(Arrays.asList("*")));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7335,8 +8403,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToRetrieve(Arrays.asList("*", "-SKU", "-internal_desc")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesToRetrieve(Arrays.asList("*", "-SKU", "-internal_desc"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7349,8 +8422,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7363,8 +8438,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7377,11 +8454,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(Arrays.asList("typo", "geo", "words", "filters", "attribute", "proximity", "exact", "custom"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7394,13 +8473,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(
         Arrays.asList("asc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7413,13 +8494,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRanking(
         Arrays.asList("desc(price)", "typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom")
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7432,8 +8515,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCustomRanking(Arrays.asList("desc(popularity)", "asc(price)")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCustomRanking(Arrays.asList("desc(popularity)", "asc(price)"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7446,8 +8534,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRelevancyStrictness(90));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRelevancyStrictness(90));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7460,11 +8550,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setReplicas(Arrays.asList("name_of_replica_index1", "name_of_replica_index2"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7477,8 +8569,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxValuesPerFacet(100));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxValuesPerFacet(100));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7491,8 +8585,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSortFacetValuesBy("alpha"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSortFacetValuesBy("alpha"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7505,8 +8601,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToSnippet(Arrays.asList("content:80", "description")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesToSnippet(Arrays.asList("content:80", "description"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7519,8 +8620,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToSnippet(Arrays.asList("*:80")));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributesToSnippet(Arrays.asList("*:80")));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7533,8 +8636,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHighlightPreTag("<em>"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHighlightPreTag("<em>"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7547,8 +8652,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHighlightPostTag("</em>"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHighlightPostTag("</em>"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7561,8 +8668,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSnippetEllipsisText("…"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSnippetEllipsisText("…"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7575,8 +8684,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRestrictHighlightAndSnippetArrays(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRestrictHighlightAndSnippetArrays(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7589,8 +8700,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHitsPerPage(20));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setHitsPerPage(20));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7603,8 +8716,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setPaginationLimitedTo(1000));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setPaginationLimitedTo(1000));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7617,8 +8732,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinWordSizefor1Typo(4));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinWordSizefor1Typo(4));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7631,8 +8748,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinWordSizefor2Typos(4));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinWordSizefor2Typos(4));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7645,8 +8764,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7659,8 +8780,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAllowTyposOnNumericTokens(false));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAllowTyposOnNumericTokens(false));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7673,8 +8796,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDisableTypoToleranceOnWords(Arrays.asList("wheel", "1X2BCD")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDisableTypoToleranceOnWords(Arrays.asList("wheel", "1X2BCD"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7687,8 +8815,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSeparatorsToIndex("+#"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSeparatorsToIndex("+#"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7701,11 +8831,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setQueryLanguages(Arrays.asList(SupportedLanguage.ES)).setIgnorePlurals(IgnorePlurals.of(true))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7718,13 +8850,15 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setIndexLanguages(Arrays.asList(SupportedLanguage.JA))
         .setAttributesToTransliterate(Arrays.asList("name", "description"))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7737,11 +8871,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setQueryLanguages(Arrays.asList(SupportedLanguage.ES)).setRemoveStopWords(RemoveStopWords.of(true))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7754,8 +8890,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setCamelCaseAttributes(Arrays.asList("description")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setCamelCaseAttributes(Arrays.asList("description"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7768,7 +8909,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setDecompoundedAttributes(
         new HashMap() {
@@ -7779,6 +8920,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7791,7 +8934,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setDecompoundedAttributes(
         new HashMap() {
@@ -7803,6 +8946,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7815,8 +8960,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setKeepDiacriticsOnCharacters("øé"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setKeepDiacriticsOnCharacters("øé"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7829,7 +8976,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setCustomNormalization(
         new HashMap() {
@@ -7847,6 +8994,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7859,7 +9008,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings()
         .setQueryLanguages(Arrays.asList(SupportedLanguage.ES))
@@ -7867,6 +9016,8 @@ class SnippetSearchClient {
         .setIgnorePlurals(IgnorePlurals.of(true))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7879,8 +9030,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setIndexLanguages(Arrays.asList(SupportedLanguage.JA)));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setIndexLanguages(Arrays.asList(SupportedLanguage.JA))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7893,8 +9049,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDecompoundQuery(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDecompoundQuery(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7907,8 +9065,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setEnableRules(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setEnableRules(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7921,8 +9081,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setEnablePersonalization(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setEnablePersonalization(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7935,8 +9097,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setQueryType(QueryType.PREFIX_LAST));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setQueryType(QueryType.PREFIX_LAST));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7949,8 +9113,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setRemoveWordsIfNoResults(RemoveWordsIfNoResults.NONE));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setRemoveWordsIfNoResults(RemoveWordsIfNoResults.NONE)
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7963,8 +9132,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAdvancedSyntax(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAdvancedSyntax(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7977,8 +9148,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setOptionalWords(OptionalWords.of(Arrays.asList("blue", "iphone case"))));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setOptionalWords(OptionalWords.of(Arrays.asList("blue", "iphone case")))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -7991,8 +9167,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("sku")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("sku"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8005,8 +9186,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDisableExactOnAttributes(Arrays.asList("description")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDisableExactOnAttributes(Arrays.asList("description"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8019,8 +9205,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8033,11 +9224,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setAlternativesAsExact(Arrays.asList(AlternativesAsExact.IGNORE_PLURALS, AlternativesAsExact.SINGLE_WORD_SYNONYM))
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8050,8 +9243,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setNumericAttributesForFiltering(Arrays.asList("quantity", "popularity")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setNumericAttributesForFiltering(Arrays.asList("quantity", "popularity"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8064,8 +9262,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAllowCompressionOfIntegerArray(true));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAllowCompressionOfIntegerArray(true));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8078,8 +9278,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("url"));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeForDistinct("url"));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8092,8 +9294,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setDistinct(Distinct.of(1)).setAttributeForDistinct("url"));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setDistinct(Distinct.of(1)).setAttributeForDistinct("url")
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8106,8 +9313,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplaceSynonymsInHighlight(false));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setReplaceSynonymsInHighlight(false));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8120,8 +9329,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinProximity(1));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinProximity(1));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8134,8 +9345,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setResponseFields(Arrays.asList("hits", "hitsPerPage", "nbPages", "page")));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setResponseFields(Arrays.asList("hits", "hitsPerPage", "nbPages", "page"))
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8148,8 +9364,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxFacetHits(10));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMaxFacetHits(10));
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8162,8 +9380,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setAttributeCriteriaComputedByMinProximity(true));
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributeCriteriaComputedByMinProximity(true)
+    );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8176,7 +9399,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setUserData(
         new HashMap() {
@@ -8187,6 +9410,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8199,7 +9424,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.setSettings(
+    UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
       new IndexSettings().setRenderingContent(
         new RenderingContent().setFacetOrdering(
@@ -8220,6 +9445,8 @@ class SnippetSearchClient {
       )
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8232,11 +9459,13 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.updateApiKey(
+    UpdateApiKeyResponse response = client.updateApiKey(
       "ALGOLIA_API_KEY",
       new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8249,8 +9478,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
+    GetApiKeyResponse response = client.waitForApiKey("api-key-add-operation-test-java", ApiKeyOperation.ADD);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8263,7 +9494,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.waitForApiKey(
+    GetApiKeyResponse response = client.waitForApiKey(
       "api-key-update-operation-test-java",
       ApiKeyOperation.UPDATE,
       new ApiKey()
@@ -8276,6 +9507,8 @@ class SnippetSearchClient {
         .setMaxHitsPerQuery(20)
     );
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8288,8 +9521,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
+    GetApiKeyResponse response = client.waitForApiKey("api-key-delete-operation-test-java", ApiKeyOperation.DELETE);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8302,8 +9537,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.waitForAppTask(123L);
+    GetTaskResponse response = client.waitForAppTask(123L);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 
@@ -8316,8 +9553,10 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.waitForTask("<YOUR_INDEX_NAME>", 123L);
+    GetTaskResponse response = client.waitForTask("<YOUR_INDEX_NAME>", 123L);
     // >LOG
+    // print the response
+    System.out.println(response);
     // SEPARATOR<
   }
 }
