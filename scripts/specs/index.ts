@@ -92,7 +92,7 @@ async function buildSpec({
   const cache = new Cache({
     folder: toAbsolutePath('.'),
     generatedFiles,
-    dependsOn: [...deps, 'specs/common'],
+    dependencies: [...deps, 'specs/common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}-${basePath}-${outputFormat}.cache`),
   });
 

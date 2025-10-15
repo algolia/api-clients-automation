@@ -18,7 +18,7 @@ export async function lintCommon(useCache: boolean): Promise<void> {
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
     generatedFiles: [],
-    dependsOn: ['common'],
+    dependencies: ['common'],
     cacheFile: toAbsolutePath('specs/dist/common.cache'),
   });
 
