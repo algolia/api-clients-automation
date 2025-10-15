@@ -18,7 +18,7 @@ export async function updateDartPackages(changelog: string, nextVersion: string)
     }
 
     if (!nextVersion) {
-      throw new Error(`Failed to bump '${gen.packageName}'.`);
+      throw new Error(`Failed to bump '${gen.client}'.`);
     }
 
     let currentVersion = await getPubspecField(gen.output, 'version');
