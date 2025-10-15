@@ -18,11 +18,11 @@ export async function lintCommon(useCache: boolean): Promise<void> {
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
     generatedFiles: [],
-    filesToCache: ['common'],
+    dependsOn: ['common'],
     cacheFile: toAbsolutePath('specs/dist/common.cache'),
   });
 
-  if (useCache && (await cache.isValid())) {
+  if (useCache && (await cache.hit())) {
     spinner.succeed("job skipped, cache found for 'common' spec");
     return;
   }

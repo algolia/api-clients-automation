@@ -1,7 +1,7 @@
 import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 
-import { CI } from './common.ts';
-import type { Language, LanguageConfig } from './types.ts';
+import { CI, createClientName } from './common.ts';
+import type { Generator, Language, LanguageConfig } from './types.ts';
 
 export function getClientsConfigField(
   language: Language,
@@ -43,6 +43,10 @@ export function getTestExtension(language: Language): string {
 
 export function getTestOutputFolder(language: Language): string {
   return getClientsConfigField(language, ['tests', 'outputFolder']);
+}
+
+export function getSnippetFile(gen: Generator): string {
+  return `docs/snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(gen.client, gen.language)}${gen.snippets.extension}`;
 }
 
 export function getDockerImage(language?: Language): string | undefined {

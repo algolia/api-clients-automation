@@ -3,10 +3,11 @@ import fsp from 'fs/promises';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.ts';
-import { exists, run, toAbsolutePath } from '../common.ts';
+import { exists, GENERATORS, run, toAbsolutePath } from '../common.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Spec } from '../types.ts';
 
+import { getSnippetFile } from '../config.ts';
 import { bundleSpecsForClient, bundleSpecsForDoc, lintCommon } from './format.ts';
 import type { BaseBuildSpecsOptions } from './types.ts';
 
@@ -73,26 +74,39 @@ async function buildSpec({
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isLiteSpec ? 'search' : spec;
   const logSuffix = `${outputFormat} ${docs ? 'doc spec' : 'spec'}`;
-  const basePath = docs ? 'docs/' : 'specs/';
-  const deps = isLiteSpec ? ['search', 'recommend'] : [spec];
+  const basePath = docs ? 'docs' : 'specs';
+  const deps = isLiteSpec ? ['specs/search', 'specs/recommend'] : [`specs/${spec}`];
+  const generatedFile = `${basePath}/bundled/${spec}.${outputFormat}`;
+
+  const generatedFiles = [generatedFile];
+  if (docs && outputFormat === 'yml') {
+    for (const gen of Object.values(GENERATORS)) {
+      if (gen.client === spec) {
+        deps.push(getSnippetFile(gen));
+      }
+    }
+
+    generatedFiles.push(`docs/bundled/${spec}-snippets.json`);
+  }
+
   const cache = new Cache({
-    folder: toAbsolutePath('specs/'),
-    generatedFiles: [`bundled/${spec}.yml`],
-    filesToCache: [...deps, 'common'],
-    cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
+    folder: toAbsolutePath('.'),
+    generatedFiles,
+    dependsOn: [...deps, 'specs/common'],
+    cacheFile: toAbsolutePath(`specs/dist/${spec}-${basePath}-${outputFormat}.cache`),
   });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
 
   if (useCache) {
-    spinner.text = `checking cache for '${specBase}'`;
+    spinner.text = `checking cache for '${specBase}' ${logSuffix}`;
 
-    if (await cache.isValid()) {
-      spinner.succeed(`job skipped, cache found for '${specBase}'`);
+    if (await cache.hit()) {
+      spinner.succeed(`job skipped, cache found for '${specBase}' ${logSuffix}`);
       return;
     }
 
-    spinner.text = `cache not found for '${specBase}'`;
+    spinner.text = `cache not found for '${specBase}' ${logSuffix}`;
   }
 
   // First linting the base
@@ -100,7 +114,7 @@ async function buildSpec({
   await run(`yarn specs:fix specs/${specBase}`);
 
   // Then bundle the file
-  const bundledPath = toAbsolutePath(`${basePath}/bundled/${spec}.${outputFormat}`);
+  const bundledPath = toAbsolutePath(generatedFile);
   await run(`yarn redocly bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat} `);
 
   if (!(await exists(bundledPath))) {
@@ -108,9 +122,7 @@ async function buildSpec({
   }
 
   // Add the correct tags to be able to generate the proper client
-  if (!isLiteSpec) {
-    docs ? await bundleSpecsForDoc(bundledPath, spec) : await bundleSpecsForClient(bundledPath, spec);
-  } else {
+  if (isLiteSpec) {
     await buildLiteSpec({
       spec,
       bundledPath: toAbsolutePath(bundledPath),
@@ -118,6 +130,8 @@ async function buildSpec({
       docs,
       useCache,
     });
+  } else if (outputFormat === 'yml') {
+    docs ? await bundleSpecsForDoc(bundledPath, spec) : await bundleSpecsForClient(bundledPath, spec);
   }
 
   spinner.text = `validating '${spec}' ${logSuffix}`;

@@ -7,23 +7,23 @@ import { exists } from './common.ts';
 export class Cache {
   folder: string;
   generatedFiles: string[];
-  filesToCache: string[];
+  dependsOn: string[];
   cacheFile: string;
 
   constructor({
     folder,
     generatedFiles,
-    filesToCache,
+    dependsOn,
     cacheFile,
   }: {
     folder: string;
     generatedFiles: string[];
-    filesToCache: string[];
+    dependsOn: string[];
     cacheFile: string;
   }) {
     this.folder = folder;
     this.generatedFiles = generatedFiles;
-    this.filesToCache = filesToCache;
+    this.dependsOn = dependsOn;
     this.cacheFile = cacheFile;
   }
 
@@ -34,14 +34,14 @@ export class Cache {
       hash += (await hashElement(`${this.folder}/${generatedFile}`)).hash;
     }
 
-    for (const fileToCache of this.filesToCache) {
-      hash += (await hashElement(`${this.folder}/${fileToCache}`)).hash;
+    for (const file of this.dependsOn) {
+      hash += (await hashElement(`${this.folder}/${file}`)).hash;
     }
 
     return hash;
   }
 
-  async isValid(): Promise<boolean> {
+  async hit(): Promise<boolean> {
     if (!(await exists(this.cacheFile))) {
       return false;
     }
