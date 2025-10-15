@@ -504,26 +504,24 @@ public partial interface ISearchClient
   /// <param name="scopes">The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-  Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync<T>(
+  Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
-  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync{T}(string, IEnumerable{T}, int, List{ScopeType}, RequestOptions, CancellationToken)"/>
-  ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation<T>(
+  /// <inheritdoc cref="ReplaceAllObjectsWithTransformationAsync(string, IEnumerable{object}, int, List{ScopeType}, RequestOptions, CancellationToken)"/>
+  ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 }
 
 public partial class SearchClient : ISearchClient
@@ -1371,15 +1369,14 @@ public partial class SearchClient : ISearchClient
   // ==================== ReplaceAllObjectsWithTransformation ====================
 
   /// <inheritdoc/>
-  public async Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync<T>(
+  public async Task<ReplaceAllObjectsWithTransformationResponse> ReplaceAllObjectsWithTransformationAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
-    where T : class
   {
     if (_ingestionTransporter == null)
     {
@@ -1491,15 +1488,14 @@ public partial class SearchClient : ISearchClient
   }
 
   /// <inheritdoc/>
-  public ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation<T>(
+  public ReplaceAllObjectsWithTransformationResponse ReplaceAllObjectsWithTransformation(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     int batchSize = 1000,
     List<ScopeType> scopes = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class =>
+  ) =>
     AsyncHelper.RunSync(() =>
       ReplaceAllObjectsWithTransformationAsync(
         indexName,

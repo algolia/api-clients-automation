@@ -18,32 +18,30 @@ public partial interface IIngestionClient
   /// Helper method to call ChunkedPushAsync and convert the response types.
   /// This simplifies SearchClient helpers that need to use IngestionClient.
   /// </summary>
-  Task<List<WatchResponse>> ChunkedPushAsync<T>(
+  Task<List<WatchResponse>> ChunkedPushAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     Models.Ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 
   /// <summary>
-  /// Synchronous version of ChunkedPushWithSearchResponseAsync
+  /// Synchronous version of ChunkedPushAsync
   /// </summary>
-  List<WatchResponse> ChunkedPush<T>(
+  List<WatchResponse> ChunkedPush(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     Models.Ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class;
+  );
 }
 
 public partial class IngestionClient : IIngestionClient
@@ -62,9 +60,9 @@ public partial class IngestionClient : IIngestionClient
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation token to cancel the request</param>
   /// <returns>List of WatchResponse objects from the push operations</returns>
-  public async Task<List<WatchResponse>> ChunkedPushAsync<T>(
+  public async Task<List<WatchResponse>> ChunkedPushAsync(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     Algolia.Search.Models.Ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
@@ -72,7 +70,6 @@ public partial class IngestionClient : IIngestionClient
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
-    where T : class
   {
     var objectsList = objects.ToList();
     var responses = new List<WatchResponse>();
@@ -154,17 +151,16 @@ public partial class IngestionClient : IIngestionClient
   /// <summary>
   /// Synchronous version of ChunkedPushAsync
   /// </summary>
-  public List<WatchResponse> ChunkedPush<T>(
+  public List<WatchResponse> ChunkedPush(
     string indexName,
-    IEnumerable<T> objects,
+    IEnumerable<object> objects,
     Algolia.Search.Models.Ingestion.Action action,
     bool waitForTasks = false,
     int batchSize = 1000,
     string referenceIndexName = null,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  )
-    where T : class =>
+  ) =>
     AsyncHelper.RunSync(() =>
       ChunkedPushAsync(
         indexName,
