@@ -33,6 +33,7 @@ export const ROOT_DIR = path.resolve(process.cwd(), '..');
 export const GENERATORS = Object.entries(clientsConfig).reduce(
   (current, [language, opts]) => {
     if (typeof opts === 'string') {
+      // skip $schema
       return current;
     }
 
@@ -51,7 +52,6 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
       }
 
       current[key] = {
-        additionalProperties: {},
         ...opts,
         output,
         client: clientName,
@@ -61,7 +61,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       // guess the package name for js from the output folder variable
       if (language === 'javascript') {
-        current[key].additionalProperties.packageName = output.substring(output.lastIndexOf('/') + 1);
+        current[key].packageName = output.substring(output.lastIndexOf('/') + 1);
       }
     }
 
@@ -153,11 +153,11 @@ async function buildCustomGenerators(): Promise<void> {
   const cache = new Cache({
     folder: toAbsolutePath('generators/'),
     generatedFiles: ['build/classes'],
-    filesToCache: ['src', 'build.gradle', 'settings.gradle', '../config/.java-version'],
+    dependencies: ['src', 'build.gradle', 'settings.gradle', '../config/.java-version'],
     cacheFile: toAbsolutePath('generators/.cache'),
   });
 
-  const cacheExists = await cache.isValid();
+  const cacheExists = await cache.hit();
 
   if (cacheExists) {
     spinner.succeed('job skipped, cache found for custom generators');

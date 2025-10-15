@@ -2,6 +2,11 @@ import config from '../config/clients.config.json' with { type: 'json' };
 
 import type { CodeSamples } from './specs/types.ts';
 
+type GeneratedFile = {
+  extension: string;
+  outputFolder: string;
+};
+
 /**
  * Config.
  */
@@ -11,23 +16,17 @@ export type LanguageConfig = {
   modelFolder: string;
   apiFolder: string;
   packageVersion?: string;
-  tests: {
-    extension: string;
-    outputFolder: string;
-  };
+  tests: GeneratedFile;
+  snippets: GeneratedFile;
 };
 
-type AdditionalProperties = Partial<{
-  packageName: string;
-}> &
-  Record<string, any>;
-
-export type Generator = Record<string, any> & {
+export type Generator = {
   language: Language;
   client: string;
   key: string;
   output: string;
-  additionalProperties: AdditionalProperties;
+  snippets: GeneratedFile;
+  packageName?: string;
 };
 
 export type GeneratorMode = 'client' | 'guides' | 'snippets' | 'tests';

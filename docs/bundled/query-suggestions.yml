@@ -3199,7 +3199,8 @@ components:
               type: string
         - type: 'null'
       example:
-        - - color
+        -
+          - color
           - brand
     External:
       description: >

@@ -1,8 +1,9 @@
 import fsp from 'fs/promises';
 
-import { GENERATORS, capitalize, createClientName, exists, toAbsolutePath } from '../common.ts';
+import { GENERATORS, capitalize, exists, toAbsolutePath } from '../common.ts';
 import type { Language } from '../types.ts';
 
+import { getSnippetFile } from '../config.ts';
 import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.ts';
 
 export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
@@ -63,16 +64,14 @@ export async function transformGeneratedSnippetsToCodeSamples(clientName: string
       continue;
     }
 
-    const ppath = toAbsolutePath(
-      `docs/snippets/${gen.language}/${gen.snippets.outputFolder}/${createClientName(clientName, gen.language)}${gen.snippets.extension}`,
-    );
+    const snippetPath = toAbsolutePath(getSnippetFile(gen));
 
-    if (!(await exists(ppath))) {
+    if (!(await exists(snippetPath))) {
       continue;
     }
 
     // find snippets for each operationId in the current gen.language + clientName combo
-    const snippetFileContent = await fsp.readFile(ppath, 'utf8');
+    const snippetFileContent = await fsp.readFile(snippetPath, 'utf8');
 
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
