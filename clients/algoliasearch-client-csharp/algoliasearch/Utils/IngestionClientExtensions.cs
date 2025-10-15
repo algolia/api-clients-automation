@@ -182,7 +182,7 @@ public partial class IngestionClient : IIngestionClient
         cancellationToken
       )
     );
-  
+
   private static async Task<T> RetryUntil<T>(
     Func<Task<T>> func,
     Func<T, bool> validate,

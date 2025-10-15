@@ -1539,7 +1539,7 @@ public partial class SearchClient : ISearchClient
         cancellationToken
       )
     );
-  
+
   private static List<Models.Search.WatchResponse> ToSearchWatchResponses(
     List<Models.Ingestion.WatchResponse> ingestionResponses
   )

@@ -177,9 +177,19 @@ namespace Algolia.Search.Clients;
         }
 
         _ingestionTransporter = new IngestionClient(
-          _transport._algoliaConfig.AppId,
-          _transport._algoliaConfig.ApiKey,
-          region,
+          new IngestionConfig(
+            _transport._algoliaConfig.AppId,
+            _transport._algoliaConfig.ApiKey,
+            region
+          )
+          {
+            DefaultHeaders = _transport._algoliaConfig.DefaultHeaders,
+            ConnectTimeout = _transport._algoliaConfig.ConnectTimeout,
+            ReadTimeout = _transport._algoliaConfig.ReadTimeout,
+            WriteTimeout = _transport._algoliaConfig.WriteTimeout,
+            Compression = _transport._algoliaConfig.Compression,
+            CustomHosts = _transport._algoliaConfig.CustomHosts
+          },
           factory
         );
       }
