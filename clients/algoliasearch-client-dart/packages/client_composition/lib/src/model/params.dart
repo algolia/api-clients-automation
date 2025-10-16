@@ -16,6 +16,7 @@ final class Params {
     this.page,
     this.getRankingInfo,
     this.relevancyStrictness,
+    this.facets,
     this.facetFilters,
     this.optionalFilters,
     this.numericFilters,
@@ -60,6 +61,10 @@ final class Params {
   /// Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
   @JsonKey(name: r'relevancyStrictness')
   final int? relevancyStrictness;
+
+  /// Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+  @JsonKey(name: r'facets')
+  final List<String>? facets;
 
   /// One of types:
   /// - [List<List<FacetFilters>>]
@@ -176,6 +181,7 @@ final class Params {
           other.page == page &&
           other.getRankingInfo == getRankingInfo &&
           other.relevancyStrictness == relevancyStrictness &&
+          other.facets == facets &&
           other.facetFilters == facetFilters &&
           other.optionalFilters == optionalFilters &&
           other.numericFilters == numericFilters &&
@@ -206,6 +212,7 @@ final class Params {
       page.hashCode +
       getRankingInfo.hashCode +
       relevancyStrictness.hashCode +
+      facets.hashCode +
       facetFilters.hashCode +
       optionalFilters.hashCode +
       numericFilters.hashCode +

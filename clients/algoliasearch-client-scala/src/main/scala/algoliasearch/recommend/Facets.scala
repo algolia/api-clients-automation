@@ -35,6 +35,6 @@ package algoliasearch.recommend
   *   Explicit order of facets or facet values. This setting lets you always show specific facets or facet values at the
   *   top of the list.
   */
-case class IndexSettingsFacets(
+case class Facets(
     order: Option[Seq[String]] = scala.None
 )

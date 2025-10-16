@@ -30,6 +30,7 @@ from .exhaustive import Exhaustive
 from .facet_filters import FacetFilters
 from .facet_ordering import FacetOrdering
 from .facet_stats import FacetStats
+from .facets import Facets
 from .fallback_params import FallbackParams
 from .fbt_model import FbtModel
 from .get_recommend_task_response import GetRecommendTaskResponse
@@ -39,7 +40,6 @@ from .hide_consequence_object import HideConsequenceObject
 from .highlight_result import HighlightResult
 from .highlight_result_option import HighlightResultOption
 from .ignore_plurals import IgnorePlurals
-from .index_settings_facets import IndexSettingsFacets
 from .inside_bounding_box import InsideBoundingBox
 from .looking_similar_model import LookingSimilarModel
 from .looking_similar_query import LookingSimilarQuery
@@ -115,6 +115,7 @@ __all__ = (
     "FacetFilters",
     "FacetOrdering",
     "FacetStats",
+    "Facets",
     "FallbackParams",
     "FbtModel",
     "GetRecommendTaskResponse",
@@ -124,7 +125,6 @@ __all__ = (
     "HighlightResult",
     "HighlightResultOption",
     "IgnorePlurals",
-    "IndexSettingsFacets",
     "InsideBoundingBox",
     "LookingSimilarModel",
     "LookingSimilarQuery",

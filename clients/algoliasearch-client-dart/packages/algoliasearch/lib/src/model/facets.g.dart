@@ -1,17 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'index_settings_facets.dart';
+part of 'facets.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-IndexSettingsFacets _$IndexSettingsFacetsFromJson(Map<String, dynamic> json) =>
-    $checkedCreate(
-      'IndexSettingsFacets',
+Facets _$FacetsFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'Facets',
       json,
       ($checkedConvert) {
-        final val = IndexSettingsFacets(
+        final val = Facets(
           order: $checkedConvert('order',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
@@ -19,7 +18,7 @@ IndexSettingsFacets _$IndexSettingsFacetsFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$IndexSettingsFacetsToJson(IndexSettingsFacets instance) {
+Map<String, dynamic> _$FacetsToJson(Facets instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

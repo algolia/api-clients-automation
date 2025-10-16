@@ -1333,7 +1333,7 @@ void main() {
                   RemoveWordsIfNoResults.fromJson("allOptional"),
               renderingContent: RenderingContent(
                 facetOrdering: FacetOrdering(
-                  facets: IndexSettingsFacets(
+                  facets: Facets(
                     order: [
                       "a",
                       "b",

@@ -3,12 +3,12 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'index_settings_facets.g.dart';
+part 'facets.g.dart';
 
 @JsonSerializable()
-final class IndexSettingsFacets {
-  /// Returns a new [IndexSettingsFacets] instance.
-  const IndexSettingsFacets({
+final class Facets {
+  /// Returns a new [Facets] instance.
+  const Facets({
     this.order,
   });
 
@@ -18,16 +18,14 @@ final class IndexSettingsFacets {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is IndexSettingsFacets && other.order == order;
+      identical(this, other) || other is Facets && other.order == order;
 
   @override
   int get hashCode => order.hashCode;
 
-  factory IndexSettingsFacets.fromJson(Map<String, dynamic> json) =>
-      _$IndexSettingsFacetsFromJson(json);
+  factory Facets.fromJson(Map<String, dynamic> json) => _$FacetsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$IndexSettingsFacetsToJson(this);
+  Map<String, dynamic> toJson() => _$FacetsToJson(this);
 
   @override
   String toString() {

@@ -888,7 +888,7 @@
           "Filtering"
         ]
       },
-      "facets": {
+      "searchParamsFacets": {
         "type": "array",
         "items": {
           "type": "string"
@@ -1274,7 +1274,7 @@
             "$ref": "#/components/schemas/restrictSearchableAttributes"
           },
           "facets": {
-            "$ref": "#/components/schemas/facets"
+            "$ref": "#/components/schemas/searchParamsFacets"
           },
           "facetingAfterDistinct": {
             "$ref": "#/components/schemas/facetingAfterDistinct"
@@ -2115,7 +2115,7 @@
           "type": "string"
         }
       },
-      "IndexSettings_facets": {
+      "facets": {
         "description": "Order of facet names.",
         "type": "object",
         "additionalProperties": false,
@@ -2170,7 +2170,7 @@
         "additionalProperties": false,
         "properties": {
           "facets": {
-            "$ref": "#/components/schemas/IndexSettings_facets"
+            "$ref": "#/components/schemas/facets"
           },
           "values": {
             "$ref": "#/components/schemas/values"

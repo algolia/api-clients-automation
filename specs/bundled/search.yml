@@ -4506,6 +4506,23 @@ components:
       default: []
       x-categories:
         - Filtering
+    searchParamsFacets:
+      type: array
+      items:
+        type: string
+      description: >
+        Facets for which to retrieve facet values that match the search criteria
+        and the number of matching facet values
+
+        To retrieve all facets, use the wildcard character `*`.
+
+        For more information, see
+        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+      default: []
+      example:
+        - '*'
+      x-categories:
+        - Faceting
     facetingAfterDistinct:
       type: boolean
       description: >
@@ -4925,22 +4942,7 @@ components:
         restrictSearchableAttributes:
           $ref: '#/components/schemas/restrictSearchableAttributes'
         facets:
-          type: array
-          items:
-            type: string
-          description: >
-            Facets for which to retrieve facet values that match the search
-            criteria and the number of matching facet values
-
-            To retrieve all facets, use the wildcard character `*`.
-
-            For more information, see
-            [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-          default: []
-          example:
-            - '*'
-          x-categories:
-            - Faceting
+          $ref: '#/components/schemas/searchParamsFacets'
         facetingAfterDistinct:
           $ref: '#/components/schemas/facetingAfterDistinct'
         page:

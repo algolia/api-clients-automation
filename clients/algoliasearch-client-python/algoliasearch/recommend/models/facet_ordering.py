@@ -18,7 +18,7 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.recommend.models.index_settings_facets import IndexSettingsFacets
+from algoliasearch.recommend.models.facets import Facets
 from algoliasearch.recommend.models.value import Value
 
 _ALIASES = {
@@ -36,7 +36,7 @@ class FacetOrdering(BaseModel):
     Order of facet names and facet values in your UI.
     """
 
-    facets: Optional[IndexSettingsFacets] = None
+    facets: Optional[Facets] = None
     values: Optional[Dict[str, Value]] = None
     """ Order of facet values. One object for each facet. """
 
@@ -76,9 +76,7 @@ class FacetOrdering(BaseModel):
             return cls.model_validate(obj)
 
         obj["facets"] = (
-            IndexSettingsFacets.from_dict(obj["facets"])
-            if obj.get("facets") is not None
-            else None
+            Facets.from_dict(obj["facets"]) if obj.get("facets") is not None else None
         )
         obj["values"] = (
             dict((_k, Value.from_dict(_v)) for _k, _v in obj["values"].items())

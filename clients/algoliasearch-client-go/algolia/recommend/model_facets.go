@@ -6,26 +6,26 @@ import (
 	"fmt"
 )
 
-// IndexSettingsFacets Order of facet names.
-type IndexSettingsFacets struct {
+// Facets Order of facet names.
+type Facets struct {
 	// Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
 	Order []string `json:"order,omitempty"`
 }
 
-type IndexSettingsFacetsOption func(f *IndexSettingsFacets)
+type FacetsOption func(f *Facets)
 
-func WithIndexSettingsFacetsOrder(val []string) IndexSettingsFacetsOption {
-	return func(f *IndexSettingsFacets) {
+func WithFacetsOrder(val []string) FacetsOption {
+	return func(f *Facets) {
 		f.Order = val
 	}
 }
 
-// NewIndexSettingsFacets instantiates a new IndexSettingsFacets object
+// NewFacets instantiates a new Facets object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewIndexSettingsFacets(opts ...IndexSettingsFacetsOption) *IndexSettingsFacets {
-	this := &IndexSettingsFacets{}
+func NewFacets(opts ...FacetsOption) *Facets {
+	this := &Facets{}
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -33,13 +33,13 @@ func NewIndexSettingsFacets(opts ...IndexSettingsFacetsOption) *IndexSettingsFac
 	return this
 }
 
-// NewEmptyIndexSettingsFacets return a pointer to an empty IndexSettingsFacets object.
-func NewEmptyIndexSettingsFacets() *IndexSettingsFacets {
-	return &IndexSettingsFacets{}
+// NewEmptyFacets return a pointer to an empty Facets object.
+func NewEmptyFacets() *Facets {
+	return &Facets{}
 }
 
 // GetOrder returns the Order field value if set, zero value otherwise.
-func (o *IndexSettingsFacets) GetOrder() []string {
+func (o *Facets) GetOrder() []string {
 	if o == nil || o.Order == nil {
 		var ret []string
 
@@ -51,7 +51,7 @@ func (o *IndexSettingsFacets) GetOrder() []string {
 
 // GetOrderOk returns a tuple with the Order field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IndexSettingsFacets) GetOrderOk() ([]string, bool) {
+func (o *Facets) GetOrderOk() ([]string, bool) {
 	if o == nil || o.Order == nil {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *IndexSettingsFacets) GetOrderOk() ([]string, bool) {
 }
 
 // HasOrder returns a boolean if a field has been set.
-func (o *IndexSettingsFacets) HasOrder() bool {
+func (o *Facets) HasOrder() bool {
 	if o != nil && o.Order != nil {
 		return true
 	}
@@ -69,13 +69,13 @@ func (o *IndexSettingsFacets) HasOrder() bool {
 }
 
 // SetOrder gets a reference to the given []string and assigns it to the Order field.
-func (o *IndexSettingsFacets) SetOrder(v []string) *IndexSettingsFacets {
+func (o *Facets) SetOrder(v []string) *Facets {
 	o.Order = v
 
 	return o
 }
 
-func (o IndexSettingsFacets) MarshalJSON() ([]byte, error) {
+func (o Facets) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if o.Order != nil {
 		toSerialize["order"] = o.Order
@@ -83,15 +83,15 @@ func (o IndexSettingsFacets) MarshalJSON() ([]byte, error) {
 
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal IndexSettingsFacets: %w", err)
+		return nil, fmt.Errorf("failed to marshal Facets: %w", err)
 	}
 
 	return serialized, nil
 }
 
-func (o IndexSettingsFacets) String() string {
+func (o Facets) String() string {
 	out := ""
 	out += fmt.Sprintf("  order=%v\n", o.Order)
 
-	return fmt.Sprintf("IndexSettingsFacets {\n%s}", out)
+	return fmt.Sprintf("Facets {\n%s}", out)
 }

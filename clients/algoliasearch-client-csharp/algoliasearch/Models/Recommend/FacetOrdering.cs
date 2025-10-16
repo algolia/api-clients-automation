@@ -25,7 +25,7 @@ public partial class FacetOrdering
   /// Gets or Sets Facets
   /// </summary>
   [JsonPropertyName("facets")]
-  public IndexSettingsFacets Facets { get; set; }
+  public Facets Facets { get; set; }
 
   /// <summary>
   /// Order of facet values. One object for each facet.

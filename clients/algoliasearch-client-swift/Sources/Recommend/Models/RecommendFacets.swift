@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Order of facet names.
-public struct IndexSettingsFacets: Codable, JSONEncodable {
+public struct RecommendFacets: Codable, JSONEncodable {
     /// Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at
     /// the top of the list.
     public var order: [String]?
@@ -28,13 +28,13 @@ public struct IndexSettingsFacets: Codable, JSONEncodable {
     }
 }
 
-extension IndexSettingsFacets: Equatable {
-    public static func ==(lhs: IndexSettingsFacets, rhs: IndexSettingsFacets) -> Bool {
+extension RecommendFacets: Equatable {
+    public static func ==(lhs: RecommendFacets, rhs: RecommendFacets) -> Bool {
         lhs.order == rhs.order
     }
 }
 
-extension IndexSettingsFacets: Hashable {
+extension RecommendFacets: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.order?.hashValue)
     }

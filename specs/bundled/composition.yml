@@ -1064,6 +1064,23 @@ components:
       default: 100
       x-categories:
         - Ranking
+    searchParamsFacets:
+      type: array
+      items:
+        type: string
+      description: >
+        Facets for which to retrieve facet values that match the search criteria
+        and the number of matching facet values
+
+        To retrieve all facets, use the wildcard character `*`.
+
+        For more information, see
+        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+      default: []
+      example:
+        - '*'
+      x-categories:
+        - Faceting
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -1617,6 +1634,8 @@ components:
           $ref: '#/components/schemas/getRankingInfo'
         relevancyStrictness:
           $ref: '#/components/schemas/relevancyStrictness'
+        facets:
+          $ref: '#/components/schemas/searchParamsFacets'
         facetFilters:
           $ref: '#/components/schemas/facetFilters'
         optionalFilters:
@@ -3353,23 +3372,6 @@ components:
       default: false
       x-categories:
         - Faceting
-    properties-facets:
-      type: array
-      items:
-        type: string
-      description: >
-        Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
-
-        To retrieve all facets, use the wildcard character `*`.
-
-        For more information, see
-        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      default: []
-      example:
-        - '*'
-      x-categories:
-        - Faceting
     maxValuesPerFacet:
       type: integer
       description: Maximum number of facet values to return for each facet.
@@ -3421,7 +3423,7 @@ components:
             facetingAfterDistinct:
               $ref: '#/components/schemas/facetingAfterDistinct'
             facets:
-              $ref: '#/components/schemas/properties-facets'
+              $ref: '#/components/schemas/searchParamsFacets'
             hitsPerPage:
               $ref: '#/components/schemas/hitsPerPage'
             maxValuesPerFacet:

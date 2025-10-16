@@ -29,6 +29,9 @@ public class Params {
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
 
+  @JsonProperty("facets")
+  private List<String> facets;
+
   @JsonProperty("facetFilters")
   private FacetFilters facetFilters;
 
@@ -169,6 +172,30 @@ public class Params {
   @javax.annotation.Nullable
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;
+  }
+
+  public Params setFacets(List<String> facets) {
+    this.facets = facets;
+    return this;
+  }
+
+  public Params addFacets(String facetsItem) {
+    if (this.facets == null) {
+      this.facets = new ArrayList<>();
+    }
+    this.facets.add(facetsItem);
+    return this;
+  }
+
+  /**
+   * Facets for which to retrieve facet values that match the search criteria and the number of
+   * matching facet values To retrieve all facets, use the wildcard character `*`. For more
+   * information, see
+   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+   */
+  @javax.annotation.Nullable
+  public List<String> getFacets() {
+    return facets;
   }
 
   public Params setFacetFilters(FacetFilters facetFilters) {
@@ -531,6 +558,7 @@ public class Params {
       Objects.equals(this.page, params.page) &&
       Objects.equals(this.getRankingInfo, params.getRankingInfo) &&
       Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
+      Objects.equals(this.facets, params.facets) &&
       Objects.equals(this.facetFilters, params.facetFilters) &&
       Objects.equals(this.optionalFilters, params.optionalFilters) &&
       Objects.equals(this.numericFilters, params.numericFilters) &&
@@ -564,6 +592,7 @@ public class Params {
       page,
       getRankingInfo,
       relevancyStrictness,
+      facets,
       facetFilters,
       optionalFilters,
       numericFilters,
@@ -598,6 +627,7 @@ public class Params {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
+    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
     sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");

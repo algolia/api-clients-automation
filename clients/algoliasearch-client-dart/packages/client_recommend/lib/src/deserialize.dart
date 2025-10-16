@@ -21,6 +21,7 @@ import 'package:algolia_client_recommend/src/model/exact_on_single_word_query.da
 import 'package:algolia_client_recommend/src/model/exhaustive.dart';
 import 'package:algolia_client_recommend/src/model/facet_ordering.dart';
 import 'package:algolia_client_recommend/src/model/facet_stats.dart';
+import 'package:algolia_client_recommend/src/model/facets.dart';
 import 'package:algolia_client_recommend/src/model/fallback_params.dart';
 import 'package:algolia_client_recommend/src/model/fbt_model.dart';
 import 'package:algolia_client_recommend/src/model/frequently_bought_together.dart';
@@ -29,7 +30,6 @@ import 'package:algolia_client_recommend/src/model/get_recommendations_params.da
 import 'package:algolia_client_recommend/src/model/get_recommendations_response.dart';
 import 'package:algolia_client_recommend/src/model/hide_consequence_object.dart';
 import 'package:algolia_client_recommend/src/model/highlight_result_option.dart';
-import 'package:algolia_client_recommend/src/model/index_settings_facets.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar_model.dart';
 import 'package:algolia_client_recommend/src/model/looking_similar_query.dart';
@@ -154,6 +154,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'FacetStats':
       return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'Facets':
+      return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FallbackParams':
       return FallbackParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -176,9 +178,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'HighlightResultOption':
       return HighlightResultOption.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'IndexSettingsFacets':
-      return IndexSettingsFacets.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'LookingSimilar':
       return LookingSimilar.fromJson(value as Map<String, dynamic>)
