@@ -19,9 +19,18 @@ import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
 
+import scala.concurrent._
+import scala.concurrent.duration._
+import ExecutionContext.Implicits.global
+
 class {{clientPrefix}}Test extends AnyFunSuite {
   implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
   implicit val formats: Formats = JsonSupport.format
+
+  val t0 = System.nanoTime()
+  val f = Future { Thread.sleep(0); 1 }
+  Await.result(f, Duration.Inf)
+  println("latency ms = " + (System.nanoTime()-t0)/1e6)
 
   {{#blocksBenchmark}}
   {{> tests/client/tests}}

@@ -394,7 +394,7 @@ jobs:
 
       - name: Run benchmarks
         if: ${{ matrix.client.isMainVersion }}
-        run: yarn cli cts run ${{ matrix.client.language }} --benchmark --no-client --no-requests --no-e2e
+        run: yarn cli cts run ${{ matrix.client.language }} --benchmark --no-client --no-requests --no-e2e -v
 
       - name: Generate code snippets
         run: yarn cli snippets ${{ matrix.client.language }}
