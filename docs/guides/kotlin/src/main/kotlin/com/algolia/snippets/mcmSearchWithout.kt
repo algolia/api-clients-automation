@@ -1,10 +1,8 @@
-import kotlinx.serialization.json.JsonObject
-
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.*
-import com.algolia.client.transport.*
 import com.algolia.client.extensions.*
 import com.algolia.client.model.search.*
+import com.algolia.client.transport.*
 
 suspend fun mcmSearchWithout() {
   val getAppIDFor: (String) -> String = {
@@ -20,15 +18,12 @@ suspend fun mcmSearchWithout() {
   val apiKey = getIndexingApiKeyFor("user42")
 
   val client = SearchClient(appID, apiKey)
-  val searchParams = SearchParamsObject(
-    query = "<YOUR_SEARCH_QUERY>",
-    facetFilters = FacetFilters.of(
-      listOf(
-        FacetFilters.of("user:user42"),
-        FacetFilters.of("user:public"),
-      ),
-    ),
-  )
+  val searchParams =
+    SearchParamsObject(
+      query = "<YOUR_SEARCH_QUERY>",
+      facetFilters =
+        FacetFilters.of(listOf(FacetFilters.of("user:user42"), FacetFilters.of("user:public"))),
+    )
 
   client.searchSingleIndex(indexName = "<YOUR_INDEX_NAME>", searchParams = searchParams)
 }

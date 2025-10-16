@@ -1283,19 +1283,21 @@ paths:
 
             // Call the API
 
-            var response = client.getRecommendations(
-              getRecommendationsParams = GetRecommendationsParams(
-                requests = listOf(
-                  RelatedQuery(
-                    indexName = "<YOUR_INDEX_NAME>",
-                    objectID = "objectID",
-                    model = RelatedModel.entries.first { it.value == "related-products" },
-                    threshold = 42.1,
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.getRecommendations(
+                getRecommendationsParams =
+                  GetRecommendationsParams(
+                    requests =
+                      listOf(
+                        RelatedQuery(
+                          indexName = "<YOUR_INDEX_NAME>",
+                          objectID = "objectID",
+                          model = RelatedModel.entries.first { it.value == "related-products" },
+                          threshold = 42.1,
+                        )
+                      )
+                  )
+              )
 
 
             // print the response
@@ -1598,10 +1600,12 @@ paths:
 
             // Call the API
 
-            var response = client.getRecommendRule(indexName =
-            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
-            it.value == "related-products" }, objectID = "objectID")
-
+            var response =
+              client.getRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.entries.first { it.value == "related-products" },
+                objectID = "objectID",
+              )
 
 
             // print the response
@@ -1864,10 +1868,12 @@ paths:
 
             // Call the API
 
-            var response = client.deleteRecommendRule(indexName =
-            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
-            it.value == "related-products" }, objectID = "objectID")
-
+            var response =
+              client.deleteRecommendRule(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.entries.first { it.value == "related-products" },
+                objectID = "objectID",
+              )
 
 
             // print the response
@@ -2157,10 +2163,12 @@ paths:
 
             // Call the API
 
-            var response = client.getRecommendStatus(indexName =
-            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
-            it.value == "related-products" }, taskID = 12345L)
-
+            var response =
+              client.getRecommendStatus(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.entries.first { it.value == "related-products" },
+                taskID = 12345L,
+              )
 
 
             // print the response
@@ -2495,10 +2503,11 @@ paths:
 
             // Call the API
 
-            var response = client.searchRecommendRules(indexName =
-            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
-            it.value == "related-products" })
-
+            var response =
+              client.searchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.entries.first { it.value == "related-products" },
+              )
 
 
             // print the response
@@ -2784,10 +2793,11 @@ paths:
 
             // Call the API
 
-            var response = client.batchRecommendRules(indexName =
-            "<YOUR_INDEX_NAME>", model = RecommendModels.entries.first {
-            it.value == "related-products" })
-
+            var response =
+              client.batchRecommendRules(
+                indexName = "<YOUR_INDEX_NAME>",
+                model = RecommendModels.entries.first { it.value == "related-products" },
+              )
 
 
             // print the response

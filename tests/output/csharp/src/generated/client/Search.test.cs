@@ -760,6 +760,62 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "call partialUpdateObjectsWithTransformation with createIfNotExists=true")]
+  public async Task PartialUpdateObjectsWithTransformationTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6688,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6689,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+    client.SetTransformationRegion("us");
+
+    {
+      var res = await client.PartialUpdateObjectsWithTransformationAsync(
+        "cts_e2e_partialUpdateObjectsWithTransformation_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        },
+        true,
+        true
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
   [Fact(DisplayName = "call replaceAllObjects without error")]
   public async Task ReplaceAllObjectsTest0()
   {
@@ -895,6 +951,57 @@ public class SearchClientTests
       "{\"message\":\"Record is too big\",\"status\":400}".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
     );
+  }
+
+  [Fact(DisplayName = "call replaceAllObjectsWithTransformation without error")]
+  public async Task ReplaceAllObjectsWithTransformationTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6690,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+    client.SetTransformationRegion("us");
+
+    {
+      var res = await client.ReplaceAllObjectsWithTransformationAsync(
+        "cts_e2e_replace_all_objects_with_transformation_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+          new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+          new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
+          new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
+          new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+          new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
+          new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
+        },
+        3
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"watchResponses\":[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82921\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82922\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82923\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82924\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
   }
 
   [Fact(DisplayName = "call saveObjects without error")]
@@ -1059,6 +1166,61 @@ public class SearchClientTests
         false,
         1000,
         new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+      );
+    }
+  }
+
+  [Fact(DisplayName = "call saveObjectsWithTransformation without error")]
+  public async Task SaveObjectsWithTransformationTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6688,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6689,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+    client.SetTransformationRegion("us");
+
+    {
+      var res = await client.SaveObjectsWithTransformationAsync(
+        "cts_e2e_saveObjectsWithTransformation_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        },
+        true
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_csharp\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82925\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
       );
     }
   }

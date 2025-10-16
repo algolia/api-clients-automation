@@ -244,21 +244,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -485,21 +484,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -726,21 +724,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -963,21 +960,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1695,37 +1691,39 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.pushEvents(
-              insightsEvents = InsightsEvents(
-                events = listOf(
-                  ClickedObjectIDsAfterSearch(
-                    eventType = ClickEvent.entries.first { it.value == "click" },
-                    eventName = "Product Clicked",
-                    index = "products",
-                    userToken = "user-123456",
-                    authenticatedUserToken = "user-123456",
-                    timestamp = 1641290601962L,
-                    objectIDs = listOf("9780545139700", "9780439784542"),
-                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                    positions = listOf(7, 6),
-                  ),
-                ),
-              ),
-            )
-
+            var response =
+              client.pushEvents(
+                insightsEvents =
+                  InsightsEvents(
+                    events =
+                      listOf(
+                        ClickedObjectIDsAfterSearch(
+                          eventType = ClickEvent.entries.first { it.value == "click" },
+                          eventName = "Product Clicked",
+                          index = "products",
+                          userToken = "user-123456",
+                          authenticatedUserToken = "user-123456",
+                          timestamp = 1641290601962L,
+                          objectIDs = listOf("9780545139700", "9780439784542"),
+                          queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                          positions = listOf(7, 6),
+                        )
+                      )
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -2039,15 +2037,16 @@ paths:
             await client.deleteUserToken({ userToken: 'test-user-1' });
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = InsightsClient(appId = "ALGOLIA_APPLICATION_ID", apiKey
-            = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              InsightsClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             client.deleteUserToken(userToken = "test-user-1")
         - lang: php
           label: PHP

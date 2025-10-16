@@ -2,6 +2,7 @@ method:
   post:
     x-helper: true
     x-available-languages:
+      - csharp
       - go
       - java
       - javascript

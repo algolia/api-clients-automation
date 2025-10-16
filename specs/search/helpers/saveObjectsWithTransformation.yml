@@ -1,14 +1,15 @@
 method:
   get:
     x-helper: true
+    tags:
+      - Records
     x-available-languages:
+      - csharp
       - go
       - java
       - javascript
       - php
       - python
-    tags:
-      - Records
     operationId: saveObjectsWithTransformation
     summary: Save objects to an Algolia index by leveraging the Transformation pipeline setup using the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push)
     description: |

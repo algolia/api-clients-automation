@@ -3632,9 +3632,10 @@ paths:
       tags:
         - search
       x-available-languages:
-        - javascript
+        - csharp
         - go
         - java
+        - javascript
         - php
         - python
       operationId: replaceAllObjectsWithTransformation
@@ -3850,14 +3851,15 @@ paths:
   /saveObjectsWithTransformation:
     get:
       x-helper: true
+      tags:
+        - search
       x-available-languages:
+        - csharp
         - go
         - java
         - javascript
         - php
         - python
-      tags:
-        - search
       operationId: saveObjectsWithTransformation
       summary: >-
         Save objects to an Algolia index by leveraging the Transformation
@@ -4081,6 +4083,7 @@ paths:
     post:
       x-helper: true
       x-available-languages:
+        - csharp
         - go
         - java
         - javascript

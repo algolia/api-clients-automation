@@ -231,21 +231,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customGet(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -459,21 +458,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPost(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -687,21 +685,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customPut(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -911,21 +908,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.customDelete(path = "test/minimal")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1171,21 +1167,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getUserTokenProfile(userToken = "UserToken")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1437,21 +1432,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.deleteUserProfile(userToken = "UserToken")
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1678,21 +1672,20 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
             var response = client.getPersonalizationStrategy()
 
 
-
             // print the response
-
             println(response)
         - lang: php
           label: PHP
@@ -1957,38 +1950,35 @@ paths:
             console.log(response);
         - lang: kotlin
           label: Kotlin
-          source: >-
+          source: |-
             // Initialize the client
-
-            val client = PersonalizationClient(appId = "ALGOLIA_APPLICATION_ID",
-            apiKey = "ALGOLIA_API_KEY", region = "ALGOLIA_APPLICATION_REGION")
-
+            val client =
+              PersonalizationClient(
+                appId = "ALGOLIA_APPLICATION_ID",
+                apiKey = "ALGOLIA_API_KEY",
+                region = "ALGOLIA_APPLICATION_REGION",
+              )
 
             // Call the API
-
-            var response = client.setPersonalizationStrategy(
-              personalizationStrategyParams = PersonalizationStrategyParams(
-                eventsScoring = listOf(
-                  EventsScoring(
-                    score = 42,
-                    eventName = "Algolia",
-                    eventType = EventType.entries.first { it.value == "click" },
-                  ),
-                ),
-                facetsScoring = listOf(
-                  FacetsScoring(
-                    score = 42,
-                    facetName = "Event",
-                  ),
-                ),
-                personalizationImpact = 42,
-              ),
-            )
-
+            var response =
+              client.setPersonalizationStrategy(
+                personalizationStrategyParams =
+                  PersonalizationStrategyParams(
+                    eventsScoring =
+                      listOf(
+                        EventsScoring(
+                          score = 42,
+                          eventName = "Algolia",
+                          eventType = EventType.entries.first { it.value == "click" },
+                        )
+                      ),
+                    facetsScoring = listOf(FacetsScoring(score = 42, facetName = "Event")),
+                    personalizationImpact = 42,
+                  )
+              )
 
 
             // print the response
-
             println(response)
         - lang: php
           label: PHP
