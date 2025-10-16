@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 
 import { createClientName, run, toAbsolutePath } from './common.ts';
-import { getLanguageFolder } from './config.ts';
+import { getLanguageFolder, getSwiftBuildFolder } from './config.ts';
 import { formatter } from './formatter.ts';
 import { createSpinner } from './spinners.ts';
 import type { Generator, Language } from './types.ts';
@@ -91,10 +91,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
       await run('sbt --batch -Dsbt.server.forcestart=true +compile', { cwd, language });
       break;
     case 'swift':
-      // make this work in the playground
-      if (buildType !== 'playground') {
-        await run('swift build -Xswiftc -suppress-warnings', { cwd, language });
-      }
+      await run(`swift build -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()}`, { cwd, language });
       break;
     default:
   }

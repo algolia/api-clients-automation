@@ -1,6 +1,6 @@
 import clientsConfig from '../config/clients.config.json' with { type: 'json' };
 
-import { CI, createClientName } from './common.ts';
+import { CI, createClientName, toAbsolutePath } from './common.ts';
 import type { Generator, Language, LanguageConfig } from './types.ts';
 
 export function getClientsConfigField(
@@ -55,6 +55,10 @@ export function getDockerImage(language?: Language): string | undefined {
   }
 
   return getClientsConfigField(language, 'dockerImage', false);
+}
+
+export function getSwiftBuildFolder(): string {
+  return toAbsolutePath(getLanguageFolder('swift') + '/.build');
 }
 
 /**

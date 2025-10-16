@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 
 import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
-import { getTestOutputFolder } from '../config.ts';
+import { getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
 
@@ -115,10 +115,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     case 'swift':
-      await run(`swift test -Xswiftc -suppress-warnings --parallel ${filter((f) => `--filter "${f}.*"`)}`, {
-        cwd,
-        language,
-      });
+      await run(
+        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${filter((f) => `--filter "${f}.*"`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);

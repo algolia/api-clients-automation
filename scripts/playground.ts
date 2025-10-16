@@ -1,5 +1,6 @@
 import type { AllLanguage } from './cli/utils.ts';
 import { createClientName, run, runComposerInstall } from './common.ts';
+import { getSwiftBuildFolder } from './config.ts';
 
 export async function playground({ language, client }: { language: AllLanguage; client: string }): Promise<void> {
   switch (language) {
@@ -56,7 +57,10 @@ export async function playground({ language, client }: { language: AllLanguage; 
       await run(`sbt \\"runMain ${createClientName(client, 'scala')}\\"`, { cwd: 'playground/scala', language });
       break;
     case 'swift':
-      await run(`swift run ${client}-playground`, { cwd: 'playground/swift', language });
+      await run(`swift run --build-path ${getSwiftBuildFolder()} ${client}-playground`, {
+        cwd: 'playground/swift',
+        language,
+      });
       break;
     default:
   }
