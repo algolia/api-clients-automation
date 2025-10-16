@@ -43,17 +43,7 @@ baseSearchParamsWithoutQuery:
     restrictSearchableAttributes:
       $ref: '#/restrictSearchableAttributes'
     facets:
-      type: array
-      items:
-        type: string
-      description: |
-        Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
-        To retrieve all facets, use the wildcard character `*`.
-        For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      default: []
-      example: ['*']
-      x-categories:
-        - Faceting
+      $ref: '#/searchParamsFacets'
     facetingAfterDistinct:
       $ref: '#/facetingAfterDistinct'
     page:
@@ -463,6 +453,19 @@ restrictSearchableAttributes:
   x-categories:
     - Filtering
 
+searchParamsFacets:
+  type: array
+  items:
+    type: string
+  description: |
+    Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+    To retrieve all facets, use the wildcard character `*`.
+    For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+  default: []
+  example: ['*']
+  x-categories:
+    - Faceting
+    
 ruleContexts:
   type: array
   items:
