@@ -300,7 +300,7 @@ jobs:
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
     runs-on: ${{ matrix.client.language == 'swift' && 'macos-14'
-      || (matrix.client.language == 'scala' && format('{0}/runner=2cpu-linux-x64', github.run_id)
+      || (matrix.client.language == 'scala' && format('{0}/runner=2cpu-linux-x64/spot=false', github.run_id)
       || 'ubuntu-24.04') }}
     needs:
       - setup
