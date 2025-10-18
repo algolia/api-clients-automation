@@ -34,7 +34,7 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install sbt
 
 # Java formatter
-ADD https://github.com/google/google-java-format/releases/download/v1.29.0/google-java-format-1.29.0-all-deps.jar /tmp/java-formatter.jar
+ADD https://github.com/google/google-java-format/releases/download/v1.30.0/google-java-format-1.30.0-all-deps.jar /tmp/java-formatter.jar
 
 
 # Python
