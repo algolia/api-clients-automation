@@ -11,7 +11,7 @@
     "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
   },
   "devDependencies": {
-    "@types/node": "22.18.10",
+    "@types/node": "22.18.11",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   }
