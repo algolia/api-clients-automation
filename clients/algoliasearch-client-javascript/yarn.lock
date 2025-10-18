@@ -48,7 +48,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -65,7 +65,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -97,7 +97,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -114,7 +114,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -131,7 +131,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -148,7 +148,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -182,7 +182,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -215,7 +215,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -232,7 +232,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.40.1"
     "@algolia/requester-node-http": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
     tsup: "npm:8.5.0"
@@ -423,22 +423,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.9.12":
-  version: 0.9.12
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.9.12"
+"@cloudflare/vitest-pool-workers@npm:0.9.13":
+  version: 0.9.13
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.9.13"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
     devalue: "npm:^5.3.2"
     miniflare: "npm:4.20251008.0"
     semver: "npm:^7.7.1"
-    wrangler: "npm:4.42.2"
+    wrangler: "npm:4.43.0"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 3.2.x
     "@vitest/snapshot": 2.0.x - 3.2.x
     vitest: 2.0.x - 3.2.x
-  checksum: 10/6891b6f8a9f93b5c439755d58a6917acdb05ca3418c364a1111580c1552481816055570b1075fde279000323d222b1626eaa6e8d1611e43df6ee82b4d77aee84
+  checksum: 10/1fb0f0e708af7623bd170b3339ba6bb282cf4c5cdf2617a21cb45efb2d8d54522153464e2fa724b14ea7ff64a1ffabd9dcd54aa5a67f33972d0d2b875b1d73b2
   languageName: node
   linkType: hard
 
@@ -2548,15 +2548,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.18.10":
-  version: 22.18.10
-  resolution: "@types/node@npm:22.18.10"
-  dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10/07e9ce07767c48fc4860c78d2d9c90a87ef6fa30fa065beb2fd838ae1ba6fe787218f344a01cb14b4bf0a97cdfea5488fcbfbd343ccd07ab97154bceeb394f2f
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:22.18.11":
   version: 22.18.11
   resolution: "@types/node@npm:22.18.11"
@@ -2794,9 +2785,9 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.40.1"
     "@algolia/requester-testing": "npm:5.40.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@cloudflare/vitest-pool-workers": "npm:0.9.12"
+    "@cloudflare/vitest-pool-workers": "npm:0.9.13"
     "@cloudflare/workers-types": "npm:4.20251011.0"
-    "@types/node": "npm:22.18.10"
+    "@types/node": "npm:22.18.11"
     jsdom: "npm:27.0.0"
     publint: "npm:0.3.14"
     rollup: "npm:4.52.4"
@@ -9187,9 +9178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.42.2":
-  version: 4.42.2
-  resolution: "wrangler@npm:4.42.2"
+"wrangler@npm:4.43.0":
+  version: 4.43.0
+  resolution: "wrangler@npm:4.43.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.7.7"
@@ -9211,7 +9202,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10/ab17e1e5e83112716dfc23c3fad55b79f5d53056c707b03b15ce0da7d40dbd38668ba8dba0a8c51ff04354ff2afc69fd163f90d429e6a67b9cf6a30d06a14dcc
+  checksum: 10/9339238ec8e082db0f6d489f1d185df56dc0c2665a658cfb1f38cce89c8ed0dbe2d80dfc4c1e7b648737d5f04feafd777ac34a0c2b3a2ba3e135f22f3ae354d3
   languageName: node
   linkType: hard
 
