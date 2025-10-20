@@ -19,7 +19,7 @@
   */
 package algoliasearch.ingestion
 
-/** SourceGA4BigQueryExport
+/** Specific configuration attributes of a `ga4BigqueryExport` source.
   *
   * @param projectID
   *   GCP project ID that the BigQuery export writes to.

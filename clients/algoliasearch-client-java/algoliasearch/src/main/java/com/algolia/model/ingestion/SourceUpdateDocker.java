@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** SourceUpdateDocker */
+/** Specific configuration attributes of a `docker` source. */
 @JsonDeserialize(as = SourceUpdateDocker.class)
 public class SourceUpdateDocker implements SourceUpdateInput {
 

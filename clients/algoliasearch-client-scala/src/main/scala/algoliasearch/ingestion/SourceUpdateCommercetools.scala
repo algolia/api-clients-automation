@@ -19,7 +19,7 @@
   */
 package algoliasearch.ingestion
 
-/** SourceUpdateCommercetools
+/** Specific configuration attributes of a `commercetools` source.
   *
   * @param locales
   *   Locales for your commercetools stores.
