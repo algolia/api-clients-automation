@@ -19,7 +19,7 @@
   */
 package algoliasearch.ingestion
 
-/** SourceDocker
+/** Specific configuration attributes of a `docker` source.
   *
   * @param image
   *   Name of the connector.
