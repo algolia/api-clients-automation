@@ -121,7 +121,7 @@ function addRoutes(app: Express): void {
     expect(raowtState).to.include.keys(lang);
     expect(req.body.action).to.equals('addObject');
     expect(req.query.referenceIndexName).to.equals(`cts_e2e_replace_all_objects_with_transformation_${lang}`);
-    expect(req.query.watch ?? false).to.equal(false);
+    expect(req.query.watch ?? 'false').to.equal('false');
 
     raowtState[lang].pushCount++;
 
