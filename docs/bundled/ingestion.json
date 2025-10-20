@@ -4020,9 +4020,6 @@
           "name": {
             "$ref": "#/components/schemas/name"
           },
-          "platform": {
-            "$ref": "#/components/schemas/Platform"
-          },
           "input": {
             "$ref": "#/components/schemas/AuthInputPartial"
           }
@@ -4349,6 +4346,7 @@
       },
       "SourceCommercetools": {
         "type": "object",
+        "description": "Specific configuration attributes of a `commercetools` source.",
         "additionalProperties": false,
         "properties": {
           "storeKeys": {
@@ -4364,7 +4362,7 @@
             "items": {
               "type": "string",
               "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
-              "description": "Locale specfied as combination of a two-letter language code and an optional two-letter country code.",
+              "description": "Locale specified as combination of a two-letter language code and an optional two-letter country code.",
               "example": "fr-FR"
             }
           },
@@ -4441,6 +4439,7 @@
       },
       "SourceBigCommerce": {
         "type": "object",
+        "description": "Specific configuration attributes of a `bigcommerce` source.",
         "additionalProperties": false,
         "properties": {
           "storeHash": {
@@ -4490,6 +4489,7 @@
       },
       "SourceJSON": {
         "type": "object",
+        "description": "Specific configuration attributes of a `json` source.",
         "additionalProperties": false,
         "properties": {
           "url": {
@@ -4519,6 +4519,7 @@
       },
       "SourceCSV": {
         "type": "object",
+        "description": "Specific configuration attributes of a `csv` source.",
         "additionalProperties": false,
         "properties": {
           "url": {
@@ -4560,6 +4561,7 @@
       },
       "SourceBigQuery": {
         "type": "object",
+        "description": "Specific configuration attributes of a `bigquery` source.",
         "additionalProperties": false,
         "properties": {
           "projectID": {
@@ -4599,6 +4601,7 @@
       },
       "SourceGA4BigQueryExport": {
         "type": "object",
+        "description": "Specific configuration attributes of a `ga4BigqueryExport` source.",
         "additionalProperties": false,
         "properties": {
           "projectID": {
@@ -4628,6 +4631,7 @@
       },
       "SourceDocker": {
         "type": "object",
+        "description": "Specific configuration attributes of a `docker` source.",
         "additionalProperties": false,
         "properties": {
           "image": {
@@ -4651,6 +4655,7 @@
       },
       "SourceUpdateShopify": {
         "type": "object",
+        "description": "Specific configuration attributes of a `shopify` source.",
         "additionalProperties": false,
         "properties": {
           "featureFlags": {
@@ -4812,6 +4817,7 @@
       },
       "SourceUpdateCommercetools": {
         "type": "object",
+        "description": "Specific configuration attributes of a `commercetools` source.",
         "additionalProperties": false,
         "properties": {
           "storeKeys": {
@@ -4827,7 +4833,7 @@
             "items": {
               "type": "string",
               "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
-              "description": "Locale specfied as combination of a two-letter language code and an optional two-letter country code.",
+              "description": "Locale specified as combination of a two-letter language code and an optional two-letter country code.",
               "example": "fr-FR"
             }
           },
@@ -4849,6 +4855,7 @@
       },
       "SourceUpdateDocker": {
         "type": "object",
+        "description": "Specific configuration attributes of a `docker` source.",
         "additionalProperties": false,
         "properties": {
           "configuration": {

@@ -19,7 +19,7 @@
   */
 package algoliasearch.ingestion
 
-/** SourceBigCommerce
+/** Specific configuration attributes of a `bigcommerce` source.
   *
   * @param storeHash
   *   Store hash identifying your BigCommerce store.

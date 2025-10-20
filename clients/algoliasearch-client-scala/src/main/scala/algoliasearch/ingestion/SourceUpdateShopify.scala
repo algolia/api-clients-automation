@@ -19,7 +19,7 @@
   */
 package algoliasearch.ingestion
 
-/** SourceUpdateShopify
+/** Specific configuration attributes of a `shopify` source.
   *
   * @param featureFlags
   *   Feature flags for the Shopify source.

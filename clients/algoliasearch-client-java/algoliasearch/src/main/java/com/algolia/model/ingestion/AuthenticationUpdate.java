@@ -16,9 +16,6 @@ public class AuthenticationUpdate {
   @JsonProperty("name")
   private String name;
 
-  @JsonProperty("platform")
-  private Platform platform;
-
   @JsonProperty("input")
   private AuthInputPartial input;
 
@@ -44,17 +41,6 @@ public class AuthenticationUpdate {
     return name;
   }
 
-  public AuthenticationUpdate setPlatform(Platform platform) {
-    this.platform = platform;
-    return this;
-  }
-
-  /** Get platform */
-  @javax.annotation.Nullable
-  public Platform getPlatform() {
-    return platform;
-  }
-
   public AuthenticationUpdate setInput(AuthInputPartial input) {
     this.input = input;
     return this;
@@ -78,14 +64,13 @@ public class AuthenticationUpdate {
     return (
       Objects.equals(this.type, authenticationUpdate.type) &&
       Objects.equals(this.name, authenticationUpdate.name) &&
-      Objects.equals(this.platform, authenticationUpdate.platform) &&
       Objects.equals(this.input, authenticationUpdate.input)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, platform, input);
+    return Objects.hash(type, name, input);
   }
 
   @Override
@@ -94,7 +79,6 @@ public class AuthenticationUpdate {
     sb.append("class AuthenticationUpdate {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    platform: ").append(toIndentedString(platform)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("}");
     return sb.toString();

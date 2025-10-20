@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** SourceJSON */
+/** Specific configuration attributes of a `json` source. */
 @JsonDeserialize(as = SourceJSON.class)
 public class SourceJSON implements SourceInput, SourceUpdateInput {
 

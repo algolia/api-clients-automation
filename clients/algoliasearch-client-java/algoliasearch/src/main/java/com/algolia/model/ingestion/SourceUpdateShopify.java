@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** SourceUpdateShopify */
+/** Specific configuration attributes of a `shopify` source. */
 @JsonDeserialize(as = SourceUpdateShopify.class)
 public class SourceUpdateShopify implements SourceUpdateInput {
 
