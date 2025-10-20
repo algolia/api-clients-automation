@@ -71,7 +71,7 @@ exactOnSingleWordQuery:
   $ref: '../../../common/schemas/IndexSettings.yml#/exactOnSingleWordQuery'
 
 facets:
-  $ref: '../../../common/schemas/SearchParams.yml#/searchParamsFacets'
+  $ref: '../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery/properties/facets'
 
 facetFilters:
   $ref: '../../../common/schemas/SearchParams.yml#/facetFilters'
