@@ -70,8 +70,6 @@ AuthenticationUpdate:
       $ref: '#/AuthenticationType'
     name:
       $ref: './common.yml#/name'
-    platform:
-      $ref: '#/Platform'
     input:
       $ref: '#/AuthInputPartial'
 
