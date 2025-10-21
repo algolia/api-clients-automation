@@ -1,3 +1,7 @@
+## [3.28.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.28.1...3.28.2)
+
+- [7f9de7cd9](https://github.com/algolia/api-clients-automation/commit/7f9de7cd9) fix(specs): ingestion small fix + added source input descriptions ([#5515](https://github.com/algolia/api-clients-automation/pull/5515)) by [@sbellone](https://github.com/sbellone/)
+
 ## [3.28.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.28.0...3.28.1)
 
 - [9a92b3269](https://github.com/algolia/api-clients-automation/commit/9a92b3269) chore(deps): dependencies 2025-10-13 ([#5453](https://github.com/algolia/api-clients-automation/pull/5453)) by [@algolia-bot](https://github.com/algolia-bot/)
