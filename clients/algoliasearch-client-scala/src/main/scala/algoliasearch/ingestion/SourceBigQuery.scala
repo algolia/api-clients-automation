@@ -21,7 +21,7 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.BigQueryDataType._
 
-/** SourceBigQuery
+/** Specific configuration attributes of a `bigquery` source.
   *
   * @param projectID
   *   Project ID of the BigQuery source.

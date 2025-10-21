@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** SourceGA4BigQueryExport */
+/** Specific configuration attributes of a `ga4BigqueryExport` source. */
 @JsonDeserialize(as = SourceGA4BigQueryExport.class)
 public class SourceGA4BigQueryExport implements SourceInput, SourceUpdateInput {
 

@@ -5078,7 +5078,7 @@ public class IngestionClient extends ApiClient {
         WatchResponse watch = this.push(
           indexName,
           new PushTaskPayload().setAction(action).setRecords(this.objectsToPushTaskRecords(records)),
-          waitForTasks,
+          false,
           referenceIndexName,
           requestOptions
         );

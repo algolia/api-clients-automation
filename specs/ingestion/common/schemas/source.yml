@@ -112,6 +112,7 @@ SourceType:
 
 SourceCommercetools:
   type: object
+  description: Specific configuration attributes of a `commercetools` source.
   additionalProperties: false
   properties:
     storeKeys:
@@ -125,7 +126,7 @@ SourceCommercetools:
       items:
         type: string
         pattern: '^[a-z]{2}(-[A-Z]{2})?$'
-        description: Locale specfied as combination of a two-letter language code and an optional two-letter country code.
+        description: Locale specified as combination of a two-letter language code and an optional two-letter country code.
         example: 'fr-FR'
     url:
       type: string
@@ -180,6 +181,7 @@ CommercetoolsCustomFields:
 
 SourceBigCommerce:
   type: object
+  description: Specific configuration attributes of a `bigcommerce` source.
   additionalProperties: false
   properties:
     storeHash:
@@ -247,6 +249,7 @@ UniqueIDColumn:
 
 SourceJSON:
   type: object
+  description: Specific configuration attributes of a `json` source.
   additionalProperties: false
   properties:
     url:
@@ -265,6 +268,7 @@ MappingTypeCSV:
 
 SourceCSV:
   type: object
+  description: Specific configuration attributes of a `csv` source.
   additionalProperties: false
   properties:
     url:
@@ -292,6 +296,7 @@ SourceCSV:
 
 SourceGA4BigQueryExport:
   type: object
+  description: Specific configuration attributes of a `ga4BigqueryExport` source.
   additionalProperties: false
   properties:
     projectID:
@@ -315,6 +320,7 @@ SourceGA4BigQueryExport:
 
 SourceBigQuery:
   type: object
+  description: Specific configuration attributes of a `bigquery` source.
   additionalProperties: false
   properties:
     projectID:
@@ -348,6 +354,7 @@ BigQueryDataType:
 
 SourceDocker:
   type: object
+  description: Specific configuration attributes of a `docker` source.
   additionalProperties: false
   properties:
     image:
@@ -366,6 +373,7 @@ SourceDocker:
 
 SourceUpdateDocker:
   type: object
+  description: Specific configuration attributes of a `docker` source.
   additionalProperties: false
   properties:
     configuration:
@@ -389,6 +397,7 @@ SourceInput:
 
 SourceUpdateCommercetools:
   type: object
+  description: Specific configuration attributes of a `commercetools` source.
   additionalProperties: false
   properties:
     storeKeys:
@@ -402,7 +411,7 @@ SourceUpdateCommercetools:
       items:
         type: string
         pattern: '^[a-z]{2}(-[A-Z]{2})?$'
-        description: Locale specfied as combination of a two-letter language code and an optional two-letter country code.
+        description: Locale specified as combination of a two-letter language code and an optional two-letter country code.
         example: 'fr-FR'
     url:
       type: string
@@ -429,6 +438,7 @@ SourceUpdateInput:
 
 SourceUpdateShopify:
   type: object
+  description: Specific configuration attributes of a `shopify` source.
   additionalProperties: false
   properties:
     featureFlags:
