@@ -34,11 +34,11 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.29.0/google-java-format-1.29.0-all-deps.jar" > /tmp/java-formatter.jar
+      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.30.0/google-java-format-1.30.0-all-deps.jar" > /tmp/java-formatter.jar
 
     # JavaScript for monorepo and tooling
     - name: Install Node
-      uses: actions/setup-node@v5
+      uses: actions/setup-node@v6
       with:
         node-version-file: .nvmrc
         cache: yarn
@@ -193,7 +193,7 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.58.3" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.58.5" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}

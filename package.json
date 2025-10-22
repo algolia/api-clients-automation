@@ -30,17 +30,17 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.24.0",
-    "@redocly/cli": "1.29.0",
+    "@openapitools/openapi-generator-cli": "2.25.0",
+    "@redocly/cli": "2.7.0",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-yml": "1.19.0",
     "husky": "9.1.7",
-    "lint-staged": "16.2.4",
-    "oxlint": "1.22.0",
+    "lint-staged": "16.2.5",
+    "oxlint": "1.23.0",
     "prettier": "3.6.2",
-    "prettier-plugin-java": "2.7.5",
+    "prettier-plugin-java": "2.7.7",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
     "typescript": "5.9.3"
