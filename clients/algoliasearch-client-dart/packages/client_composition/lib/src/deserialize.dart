@@ -40,12 +40,12 @@ import 'package:algolia_client_composition/src/model/external_source.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
-import 'package:algolia_client_composition/src/model/facets.dart';
 import 'package:algolia_client_composition/src/model/get_task_response.dart';
 import 'package:algolia_client_composition/src/model/highlight_result_option.dart';
 import 'package:algolia_client_composition/src/model/hit.dart';
 import 'package:algolia_client_composition/src/model/hit_metadata.dart';
 import 'package:algolia_client_composition/src/model/hit_ranking_info.dart';
+import 'package:algolia_client_composition/src/model/index_settings_facets.dart';
 import 'package:algolia_client_composition/src/model/injected_item.dart';
 import 'package:algolia_client_composition/src/model/injected_item_hits_metadata.dart';
 import 'package:algolia_client_composition/src/model/injected_item_metadata.dart';
@@ -223,8 +223,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'FacetStats':
       return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Facets':
-      return Facets.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'GetTaskResponse':
       return GetTaskResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -237,6 +235,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return HitMetadata.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'HitRankingInfo':
       return HitRankingInfo.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'IndexSettingsFacets':
+      return IndexSettingsFacets.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'InjectedItem':
       return InjectedItem.fromJson(value as Map<String, dynamic>) as ReturnType;

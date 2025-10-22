@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SourceUpdateCommercetools */
+/** Specific configuration attributes of a `commercetools` source. */
 @JsonDeserialize(as = SourceUpdateCommercetools.class)
 public class SourceUpdateCommercetools implements SourceUpdateInput {
 

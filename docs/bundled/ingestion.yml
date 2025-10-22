@@ -2739,7 +2739,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
+              --data '{"type":"googleServiceAccount","name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
     delete:
       tags:
         - authentications
@@ -16902,8 +16902,6 @@ components:
           $ref: '#/components/schemas/AuthenticationType'
         name:
           $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
         input:
           $ref: '#/components/schemas/AuthInputPartial'
     AuthenticationUpdateResponse:
@@ -17160,6 +17158,7 @@ components:
             - type: 'null'
     SourceCommercetools:
       type: object
+      description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
       properties:
         storeKeys:
@@ -17174,7 +17173,7 @@ components:
             type: string
             pattern: ^[a-z]{2}(-[A-Z]{2})?$
             description: >-
-              Locale specfied as combination of a two-letter language code and
+              Locale specified as combination of a two-letter language code and
               an optional two-letter country code.
             example: fr-FR
         url:
@@ -17234,6 +17233,7 @@ components:
         - key
     SourceBigCommerce:
       type: object
+      description: Specific configuration attributes of a `bigcommerce` source.
       additionalProperties: false
       properties:
         storeHash:
@@ -17270,6 +17270,7 @@ components:
         - POST
     SourceJSON:
       type: object
+      description: Specific configuration attributes of a `json` source.
       additionalProperties: false
       properties:
         url:
@@ -17291,6 +17292,7 @@ components:
         - json
     SourceCSV:
       type: object
+      description: Specific configuration attributes of a `csv` source.
       additionalProperties: false
       properties:
         url:
@@ -17324,6 +17326,7 @@ components:
         - ga360
     SourceBigQuery:
       type: object
+      description: Specific configuration attributes of a `bigquery` source.
       additionalProperties: false
       properties:
         projectID:
@@ -17352,6 +17355,7 @@ components:
         - projectID
     SourceGA4BigQueryExport:
       type: object
+      description: Specific configuration attributes of a `ga4BigqueryExport` source.
       additionalProperties: false
       properties:
         projectID:
@@ -17374,6 +17378,7 @@ components:
         - tablePrefix
     SourceDocker:
       type: object
+      description: Specific configuration attributes of a `docker` source.
       additionalProperties: false
       properties:
         image:
@@ -17391,6 +17396,7 @@ components:
         - configuration
     SourceUpdateShopify:
       type: object
+      description: Specific configuration attributes of a `shopify` source.
       additionalProperties: false
       properties:
         featureFlags:
@@ -17491,6 +17497,7 @@ components:
         - sourceIDs
     SourceUpdateCommercetools:
       type: object
+      description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
       properties:
         storeKeys:
@@ -17505,7 +17512,7 @@ components:
             type: string
             pattern: ^[a-z]{2}(-[A-Z]{2})?$
             description: >-
-              Locale specfied as combination of a two-letter language code and
+              Locale specified as combination of a two-letter language code and
               an optional two-letter country code.
             example: fr-FR
         url:
@@ -17525,6 +17532,7 @@ components:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
       type: object
+      description: Specific configuration attributes of a `docker` source.
       additionalProperties: false
       properties:
         configuration:

@@ -21,7 +21,7 @@ package algoliasearch.ingestion
 
 import algoliasearch.ingestion.MethodType._
 
-/** SourceJSON
+/** Specific configuration attributes of a `json` source.
   *
   * @param url
   *   URL of the file.

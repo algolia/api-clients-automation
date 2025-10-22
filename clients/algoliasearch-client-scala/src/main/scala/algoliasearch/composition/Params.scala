@@ -59,6 +59,10 @@ import algoliasearch.composition.SupportedLanguage._
   *   `relevancyStrictness` on [virtual replica
   *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
   *   Use this setting to strike a balance between the relevance and number of returned results.
+  * @param facets
+  *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+  *   To retrieve all facets, use the wildcard character `*`. For more information, see
+  *   [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
   * @param hitsPerPage
   *   Number of hits per page.
   * @param aroundLatLng
@@ -125,6 +129,7 @@ case class Params(
     page: Option[Int] = scala.None,
     getRankingInfo: Option[Boolean] = scala.None,
     relevancyStrictness: Option[Int] = scala.None,
+    facets: Option[Seq[String]] = scala.None,
     facetFilters: Option[FacetFilters] = scala.None,
     optionalFilters: Option[OptionalFilters] = scala.None,
     numericFilters: Option[NumericFilters] = scala.None,

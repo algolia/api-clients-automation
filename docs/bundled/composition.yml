@@ -1595,7 +1595,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":false,"relevancyStrictness":90,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true,"injectedItems":{}}}'
+              --data '{"params":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":false,"relevancyStrictness":90,"facets":["*"],"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true,"injectedItems":{}}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -1940,7 +1940,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":false,"relevancyStrictness":90,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true,"injectedItems":{}}}}'
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"query":"","filters":"(category:Book OR category:Ebook) AND _tags:published","page":0,"getRankingInfo":false,"relevancyStrictness":90,"facets":["*"],"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"optionalFilters":["category:Book","author:John Doe"],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"hitsPerPage":20,"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"minimumAroundRadius":1,"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"queryLanguages":["es"],"naturalLanguages":[],"enableRules":true,"ruleContexts":["mobile"],"userToken":"test-user-123","clickAnalytics":false,"analytics":true,"analyticsTags":[],"enableABTest":true,"enableReRanking":true,"injectedItems":{}}}}'
   /1/compositions:
     get:
       tags:
@@ -6489,6 +6489,23 @@ components:
       default: 100
       x-categories:
         - Ranking
+    facets:
+      type: array
+      items:
+        type: string
+      description: >
+        Facets for which to retrieve facet values that match the search criteria
+        and the number of matching facet values
+
+        To retrieve all facets, use the wildcard character `*`.
+
+        For more information, see
+        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+      default: []
+      example:
+        - '*'
+      x-categories:
+        - Faceting
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -7042,6 +7059,8 @@ components:
           $ref: '#/components/schemas/getRankingInfo'
         relevancyStrictness:
           $ref: '#/components/schemas/relevancyStrictness'
+        facets:
+          $ref: '#/components/schemas/facets'
         facetFilters:
           $ref: '#/components/schemas/facetFilters'
         optionalFilters:
@@ -7170,7 +7189,7 @@ components:
       type: array
       items:
         type: string
-    facets:
+    IndexSettings_facets:
       description: Order of facet names.
       type: object
       additionalProperties: false
@@ -7224,7 +7243,7 @@ components:
       additionalProperties: false
       properties:
         facets:
-          $ref: '#/components/schemas/facets'
+          $ref: '#/components/schemas/IndexSettings_facets'
         values:
           $ref: '#/components/schemas/values'
     redirectURL:
@@ -8778,23 +8797,6 @@ components:
       default: false
       x-categories:
         - Faceting
-    properties-facets:
-      type: array
-      items:
-        type: string
-      description: >
-        Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
-
-        To retrieve all facets, use the wildcard character `*`.
-
-        For more information, see
-        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      default: []
-      example:
-        - '*'
-      x-categories:
-        - Faceting
     maxValuesPerFacet:
       type: integer
       description: Maximum number of facet values to return for each facet.
@@ -8846,7 +8848,7 @@ components:
             facetingAfterDistinct:
               $ref: '#/components/schemas/facetingAfterDistinct'
             facets:
-              $ref: '#/components/schemas/properties-facets'
+              $ref: '#/components/schemas/facets'
             hitsPerPage:
               $ref: '#/components/schemas/hitsPerPage'
             maxValuesPerFacet:

@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Objects;
 
 /** Order of facet names. */
-public class Facets {
+public class IndexSettingsFacets {
 
   @JsonProperty("order")
   private List<String> order;
 
-  public Facets setOrder(List<String> order) {
+  public IndexSettingsFacets setOrder(List<String> order) {
     this.order = order;
     return this;
   }
 
-  public Facets addOrder(String orderItem) {
+  public IndexSettingsFacets addOrder(String orderItem) {
     if (this.order == null) {
       this.order = new ArrayList<>();
     }
@@ -45,8 +45,8 @@ public class Facets {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Facets facets = (Facets) o;
-    return Objects.equals(this.order, facets.order);
+    IndexSettingsFacets indexSettingsFacets = (IndexSettingsFacets) o;
+    return Objects.equals(this.order, indexSettingsFacets.order);
   }
 
   @Override
@@ -57,7 +57,7 @@ public class Facets {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Facets {\n");
+    sb.append("class IndexSettingsFacets {\n");
     sb.append("    order: ").append(toIndentedString(order)).append("\n");
     sb.append("}");
     return sb.toString();

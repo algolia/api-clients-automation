@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** SourceBigQuery */
+/** Specific configuration attributes of a `bigquery` source. */
 @JsonDeserialize(as = SourceBigQuery.class)
 public class SourceBigQuery implements SourceInput, SourceUpdateInput {
 

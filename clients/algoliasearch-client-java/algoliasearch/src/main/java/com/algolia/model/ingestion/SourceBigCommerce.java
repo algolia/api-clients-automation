@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SourceBigCommerce */
+/** Specific configuration attributes of a `bigcommerce` source. */
 @JsonDeserialize(as = SourceBigCommerce.class)
 public class SourceBigCommerce implements SourceInput {
 

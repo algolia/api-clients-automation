@@ -33,6 +33,13 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
     {{#isIngestionClient}}
     private $defaultWaitTaskTimeBeforeRetry = 5000; // 5 sec in milliseconds
 
+    public function setWaitTaskTimeBeforeRetry($waitTaskTimeBeforeRetry)
+    {
+        $this->config['waitTaskTimeBeforeRetry'] = $waitTaskTimeBeforeRetry;
+
+        return $this;
+    }
+
     public function getWaitTaskTimeBeforeRetry()
     {
         return $this->config['waitTaskTimeBeforeRetry'];
@@ -51,6 +58,13 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
         ];
 
         return new static($config);
+    }
+
+    public function setWaitTaskTimeBeforeRetry($waitTaskTimeBeforeRetry)
+    {
+        $this->config['waitTaskTimeBeforeRetry'] = $waitTaskTimeBeforeRetry;
+
+        return $this;
     }
 
     public function getWaitTaskTimeBeforeRetry()

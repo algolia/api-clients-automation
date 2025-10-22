@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** SourceCSV */
+/** Specific configuration attributes of a `csv` source. */
 @JsonDeserialize(as = SourceCSV.class)
 public class SourceCSV implements SourceInput, SourceUpdateInput {
 

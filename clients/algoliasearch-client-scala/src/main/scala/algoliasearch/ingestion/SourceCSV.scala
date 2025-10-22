@@ -22,7 +22,7 @@ package algoliasearch.ingestion
 import algoliasearch.ingestion.MappingTypeCSV._
 import algoliasearch.ingestion.MethodType._
 
-/** SourceCSV
+/** Specific configuration attributes of a `csv` source.
   *
   * @param url
   *   URL of the file.
