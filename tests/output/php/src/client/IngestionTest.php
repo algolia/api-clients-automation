@@ -170,7 +170,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.31.1\).*/',
+                '/^Algolia for PHP \(4.32.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
