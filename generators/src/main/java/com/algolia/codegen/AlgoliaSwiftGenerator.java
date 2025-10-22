@@ -152,6 +152,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "facethits",
     "gettaskresponse",
     "hit",
+    "indexsettingsfacets",
     "main",
     "multiplebatchrequest",
     "multiplebatchresponse",
