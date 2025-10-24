@@ -48,6 +48,10 @@ post:
   summary: Create a task V1
   description: Creates a new task using the v1 endpoint, please use `createTask` instead.
   operationId: createTaskV1
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   deprecated: true
   x-codegen-request-body-name: taskCreate
   requestBody:

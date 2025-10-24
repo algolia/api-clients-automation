@@ -14,6 +14,8 @@ method:
       - ruby
       - scala
       - swift
+    x-acl:
+      - settings
     operationId: indexExists
     summary: Check if an index exists or not
     description: |

@@ -4,6 +4,8 @@ get:
   description: Retrieves the status of the specified tasks, whether they're pending or completed.
   tags:
     - tasks
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/TaskIdParameter'

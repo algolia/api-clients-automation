@@ -6,6 +6,8 @@ patch:
     Every time you update the configuration, a new version is created.
   tags:
     - config
+  x-acl:
+    - editSettings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:

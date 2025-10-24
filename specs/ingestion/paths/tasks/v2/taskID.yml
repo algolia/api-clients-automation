@@ -1,13 +1,13 @@
 get:
   tags:
     - tasks
-  summary: Retrieve a task
-  description: Retrieves a task by its ID.
-  operationId: getTask
   x-acl:
     - addObject
     - deleteIndex
     - editSettings
+  summary: Retrieve a task
+  description: Retrieves a task by its ID.
+  operationId: getTask
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
   responses:
@@ -23,6 +23,10 @@ get:
 put:
   tags:
     - tasks
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   summary: Fully update a task
   description: Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
   operationId: replaceTask
@@ -48,6 +52,10 @@ put:
 patch:
   tags:
     - tasks
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   summary: Partially update a task
   description: Partially updates a task by its ID.
   operationId: updateTask
@@ -72,6 +80,10 @@ patch:
 delete:
   tags:
     - tasks
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   summary: Delete a task
   description: Deletes a task by its ID.
   operationId: deleteTask

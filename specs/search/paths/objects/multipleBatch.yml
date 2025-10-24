@@ -1,6 +1,8 @@
 post:
   tags:
     - Records
+  x-acl:
+    - addObject
   operationId: multipleBatch
   x-mcp-tool: true
   description: |

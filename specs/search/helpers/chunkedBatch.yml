@@ -3,6 +3,8 @@ method:
     x-helper: true
     tags:
       - Records
+    x-acl:
+      - addObject
     operationId: chunkedBatch
     summary: Replace all records in an index
     description: |

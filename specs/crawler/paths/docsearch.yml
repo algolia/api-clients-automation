@@ -2,6 +2,7 @@ post:
   operationId: createDocSearchApp
   summary: Create a new Algolia app with the DocSearch plan
   description: Create a new Algolia app with the DocSearch plan.
+  x-acl: []
   requestBody:
     content:
       application/json:

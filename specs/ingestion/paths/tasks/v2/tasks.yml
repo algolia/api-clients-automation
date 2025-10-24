@@ -50,6 +50,10 @@ post:
   summary: Create a task
   description: Creates a new task.
   operationId: createTask
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     description: Request body for creating a task.
     content:

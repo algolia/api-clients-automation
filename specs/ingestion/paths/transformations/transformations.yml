@@ -44,6 +44,10 @@ post:
   summary: Create a transformation
   description: Creates a new transformation.
   operationId: createTransformation
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   requestBody:
     description: Request body for creating a transformation.
     content:

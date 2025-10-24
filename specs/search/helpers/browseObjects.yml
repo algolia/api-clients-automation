@@ -3,6 +3,8 @@ method:
     x-helper: true
     tags:
       - Records
+    x-acl:
+      - browse
     operationId: browseObjects
     summary: Get all records from an index
     description: |

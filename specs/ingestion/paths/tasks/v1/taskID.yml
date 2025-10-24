@@ -27,6 +27,10 @@ patch:
   summary: Update a task V1
   description: Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
   operationId: updateTaskV1
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   deprecated: true
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'
@@ -53,6 +57,10 @@ delete:
   summary: Delete a task
   description: Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
   operationId: deleteTaskV1
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   deprecated: true
   parameters:
     - $ref: '../../../common/parameters.yml#/pathTaskID'

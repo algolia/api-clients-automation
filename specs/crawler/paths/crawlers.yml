@@ -4,6 +4,8 @@ get:
   description: Lists all your crawlers.
   tags:
     - crawlers
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/ItemsPerPage'
     - $ref: '../common/parameters.yml#/Page'
@@ -30,6 +32,8 @@ post:
   description: Creates a new crawler with the provided configuration.
   tags:
     - crawlers
+  x-acl:
+    - editSettings
   requestBody:
     content:
       application/json:

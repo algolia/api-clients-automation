@@ -9,6 +9,7 @@ post:
     This operation is rate-limited to 500 requests every 24 hours.
   tags:
     - actions
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:

@@ -14,6 +14,8 @@ method:
       - ruby
       - scala
       - swift
+    x-acl:
+      - addObject
     operationId: saveObjects
     summary: Saves the given array of objects in the given index
     description: |

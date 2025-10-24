@@ -15,6 +15,7 @@ method:
       - ruby
       - scala
       - swift
+    x-acl: []
     operationId: generateSecuredApiKey
     summary: Create secured API keys
     description: |
