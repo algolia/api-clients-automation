@@ -6,6 +6,8 @@ get:
     Every time you update a crawler's configuration, a new version is added.
   tags:
     - config
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/ItemsPerPage'

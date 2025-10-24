@@ -4,6 +4,12 @@ method:
     tags:
       - Records
     operationId: waitForCompositionTask
+    x-acl:
+      - editSettings
+      - settings
+      - addObject
+      - deleteObject
+      - deleteIndex
     summary: Wait for operation to complete
     description: |
       Wait for a task to complete to ensure synchronized composition updates.

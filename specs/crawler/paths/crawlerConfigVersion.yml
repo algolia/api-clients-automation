@@ -7,6 +7,8 @@ get:
     You can use this to restore a previous version of the configuration.
   tags:
     - config
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/CrawlerVersionParameter'

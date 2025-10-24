@@ -31,6 +31,14 @@ nested:
     invalid: [
       {
         code: `
+post:
+  operationId: test
+  description: Test endpoint without ACL
+`,
+        errors: [{ messageId: 'missingACL' }],
+      },
+      {
+        code: `
 x-acl:
   - notACL
   - search

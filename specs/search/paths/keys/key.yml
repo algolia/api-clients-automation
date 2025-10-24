@@ -1,6 +1,8 @@
 get:
   tags:
     - Api Keys
+  x-acl:
+    - search
   operationId: getApiKey
   summary: Retrieve API key permissions
   description: |

@@ -4,6 +4,7 @@ post:
   description: Pauses the specified crawler.
   tags:
     - actions
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:
