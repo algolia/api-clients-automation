@@ -5,14 +5,7 @@ get:
   tags:
     - crawlers
   x-acl:
-    - search
-    - browse
-    - addObject
-    - deleteObject
-    - deleteIndex
     - settings
-    - editSettings
-    - listIndexes
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:
