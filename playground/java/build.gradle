@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
     implementation 'io.github.cdimascio:dotenv-java:3.0.1'
-    implementation 'com.algolia:algoliasearch:4.28.2'
+    implementation 'com.algolia:algoliasearch:4.29.0'
 }
 
 group = 'com.algolia'
