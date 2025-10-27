@@ -230,6 +230,11 @@ class IngestionClient(
 
   /** Creates a new task.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskCreate
     *   Request body for creating a task.
     */
@@ -248,6 +253,11 @@ class IngestionClient(
   }
 
   /** Creates a new task using the v1 endpoint, please use `createTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @deprecated
     *
@@ -269,6 +279,11 @@ class IngestionClient(
   }
 
   /** Creates a new transformation.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param transformationCreate
     *   Request body for creating a transformation.
@@ -462,6 +477,11 @@ class IngestionClient(
 
   /** Deletes a task by its ID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -479,6 +499,11 @@ class IngestionClient(
   }
 
   /** Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @deprecated
     *
@@ -499,6 +524,11 @@ class IngestionClient(
   }
 
   /** Deletes a transformation by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param transformationID
     *   Unique identifier of a transformation.
@@ -1309,6 +1339,11 @@ class IngestionClient(
 
   /** Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -1717,6 +1752,11 @@ class IngestionClient(
 
   /** Partially updates a task by its ID.
     *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
     * @param taskID
     *   Unique identifier of a task.
     */
@@ -1736,6 +1776,11 @@ class IngestionClient(
   }
 
   /** Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @deprecated
     *
@@ -1758,6 +1803,11 @@ class IngestionClient(
   }
 
   /** Updates a transformation by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
     *
     * @param transformationID
     *   Unique identifier of a transformation.

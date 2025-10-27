@@ -845,6 +845,7 @@ paths:
     get:
       x-helper: true
       x-asynchronous-helper: false
+      x-acl: []
       tags:
         - composition
       operationId: setClientApiKey
@@ -867,6 +868,12 @@ paths:
       tags:
         - composition
       operationId: waitForCompositionTask
+      x-acl:
+        - editSettings
+        - settings
+        - addObject
+        - deleteObject
+        - deleteIndex
       summary: Wait for operation to complete
       description: >
         Wait for a task to complete to ensure synchronized composition updates.

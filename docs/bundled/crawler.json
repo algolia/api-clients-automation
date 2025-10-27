@@ -52,6 +52,9 @@
         "tags": [
           "crawlers"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/ItemsPerPage"
@@ -97,6 +100,9 @@
         "description": "Creates a new crawler with the provided configuration.",
         "tags": [
           "crawlers"
+        ],
+        "x-acl": [
+          "editSettings"
         ],
         "requestBody": {
           "content": {
@@ -160,6 +166,9 @@
         "tags": [
           "crawlers"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -206,6 +215,9 @@
         "tags": [
           "crawlers"
         ],
+        "x-acl": [
+          "editSettings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -251,6 +263,9 @@
         "tags": [
           "crawlers"
         ],
+        "x-acl": [
+          "editSettings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -280,6 +295,7 @@
         "tags": [
           "actions"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -309,6 +325,7 @@
         "tags": [
           "actions"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -338,6 +355,7 @@
         "tags": [
           "actions"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -367,6 +385,7 @@
         "tags": [
           "actions"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -563,6 +582,7 @@
         "tags": [
           "actions"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -621,6 +641,9 @@
         "tags": [
           "crawlers"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -673,6 +696,9 @@
         "tags": [
           "config"
         ],
+        "x-acl": [
+          "editSettings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -711,6 +737,9 @@
         "tags": [
           "config"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -746,6 +775,9 @@
         "description": "Retrieves the specified version of the crawler configuration.\n\nYou can use this to restore a previous version of the configuration.\n",
         "tags": [
           "config"
+        ],
+        "x-acl": [
+          "settings"
         ],
         "parameters": [
           {
@@ -801,6 +833,9 @@
         "tags": [
           "tasks"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -847,6 +882,7 @@
         "tags": [
           "tasks"
         ],
+        "x-acl": [],
         "parameters": [
           {
             "$ref": "#/components/parameters/CrawlerIdParameter"
@@ -878,6 +914,9 @@
         "description": "Lists registered domains.\n\nCrawlers will only run if the URLs match any of the registered domains.\n",
         "tags": [
           "domains"
+        ],
+        "x-acl": [
+          "settings"
         ],
         "parameters": [
           {
