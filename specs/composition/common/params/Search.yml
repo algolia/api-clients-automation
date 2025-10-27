@@ -163,6 +163,9 @@ removeStopWords:
 removeWordsIfNoResults:
   $ref: '../../../common/schemas/IndexSettings.yml#/removeWordsIfNoResults'
 
+renderingContent:
+  $ref: '../../../common/schemas/IndexSettings.yml#/renderingContent'
+
 replaceSynonymsInHighlight:
   $ref: '../../../common/schemas/IndexSettings.yml#/replaceSynonymsInHighlight'
 
