@@ -279,6 +279,7 @@ case class MainInjectionQueryParameters(
     facets: Option[Seq[String]] = scala.None,
     hitsPerPage: Option[Int] = scala.None,
     maxValuesPerFacet: Option[Int] = scala.None,
+    renderingContent: Option[RenderingContent] = scala.None,
     sortFacetValuesBy: Option[String] = scala.None,
     sumOrFiltersScores: Option[Boolean] = scala.None
 )

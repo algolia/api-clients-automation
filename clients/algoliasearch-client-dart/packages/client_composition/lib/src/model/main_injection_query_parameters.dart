@@ -5,6 +5,7 @@ import 'package:algolia_client_composition/src/model/query_type.dart';
 import 'package:algolia_client_composition/src/model/supported_language.dart';
 import 'package:algolia_client_composition/src/model/advanced_syntax_features.dart';
 import 'package:algolia_client_composition/src/model/exact_on_single_word_query.dart';
+import 'package:algolia_client_composition/src/model/rendering_content.dart';
 import 'package:algolia_client_composition/src/model/remove_words_if_no_results.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -66,6 +67,7 @@ final class MainInjectionQueryParameters {
     this.facets,
     this.hitsPerPage,
     this.maxValuesPerFacet,
+    this.renderingContent,
     this.sortFacetValuesBy,
     this.sumOrFiltersScores,
   });
@@ -299,6 +301,9 @@ final class MainInjectionQueryParameters {
   @JsonKey(name: r'maxValuesPerFacet')
   final int? maxValuesPerFacet;
 
+  @JsonKey(name: r'renderingContent')
+  final RenderingContent? renderingContent;
+
   /// Order in which to retrieve facet values - `count`.   Facet values are retrieved by decreasing count.   The count is the number of matching records containing this facet value - `alpha`.   Retrieve facet values alphabetically This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`). For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
   @JsonKey(name: r'sortFacetValuesBy')
   final String? sortFacetValuesBy;
@@ -365,6 +370,7 @@ final class MainInjectionQueryParameters {
           other.facets == facets &&
           other.hitsPerPage == hitsPerPage &&
           other.maxValuesPerFacet == maxValuesPerFacet &&
+          other.renderingContent == renderingContent &&
           other.sortFacetValuesBy == sortFacetValuesBy &&
           other.sumOrFiltersScores == sumOrFiltersScores;
 
@@ -421,6 +427,7 @@ final class MainInjectionQueryParameters {
       facets.hashCode +
       hitsPerPage.hashCode +
       maxValuesPerFacet.hashCode +
+      renderingContent.hashCode +
       sortFacetValuesBy.hashCode +
       sumOrFiltersScores.hashCode;
 

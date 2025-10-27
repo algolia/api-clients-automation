@@ -165,6 +165,9 @@ public class MainInjectionQueryParameters {
   @JsonProperty("maxValuesPerFacet")
   private Integer maxValuesPerFacet;
 
+  @JsonProperty("renderingContent")
+  private RenderingContent renderingContent;
+
   @JsonProperty("sortFacetValuesBy")
   private String sortFacetValuesBy;
 
@@ -1013,6 +1016,17 @@ public class MainInjectionQueryParameters {
     return maxValuesPerFacet;
   }
 
+  public MainInjectionQueryParameters setRenderingContent(RenderingContent renderingContent) {
+    this.renderingContent = renderingContent;
+    return this;
+  }
+
+  /** Get renderingContent */
+  @javax.annotation.Nullable
+  public RenderingContent getRenderingContent() {
+    return renderingContent;
+  }
+
   public MainInjectionQueryParameters setSortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
     return this;
@@ -1106,6 +1120,7 @@ public class MainInjectionQueryParameters {
       Objects.equals(this.facets, mainInjectionQueryParameters.facets) &&
       Objects.equals(this.hitsPerPage, mainInjectionQueryParameters.hitsPerPage) &&
       Objects.equals(this.maxValuesPerFacet, mainInjectionQueryParameters.maxValuesPerFacet) &&
+      Objects.equals(this.renderingContent, mainInjectionQueryParameters.renderingContent) &&
       Objects.equals(this.sortFacetValuesBy, mainInjectionQueryParameters.sortFacetValuesBy) &&
       Objects.equals(this.sumOrFiltersScores, mainInjectionQueryParameters.sumOrFiltersScores)
     );
@@ -1165,6 +1180,7 @@ public class MainInjectionQueryParameters {
       facets,
       hitsPerPage,
       maxValuesPerFacet,
+      renderingContent,
       sortFacetValuesBy,
       sumOrFiltersScores
     );
@@ -1228,6 +1244,7 @@ public class MainInjectionQueryParameters {
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
+    sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    sortFacetValuesBy: ").append(toIndentedString(sortFacetValuesBy)).append("\n");
     sb.append("    sumOrFiltersScores: ").append(toIndentedString(sumOrFiltersScores)).append("\n");
     sb.append("}");
