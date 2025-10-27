@@ -115,6 +115,8 @@ mainInjectionQueryParameters:
           $ref: '../../params/Search.yml#/hitsPerPage'
         maxValuesPerFacet:
           $ref: '../../params/Search.yml#/maxValuesPerFacet'
+        renderingContent:
+          $ref: '../../params/Search.yml#/renderingContent'
         sortFacetValuesBy:
           $ref: '../../params/Search.yml#/sortFacetValuesBy'
         sumOrFiltersScores:
