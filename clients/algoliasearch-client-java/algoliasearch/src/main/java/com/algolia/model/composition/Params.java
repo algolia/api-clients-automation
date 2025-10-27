@@ -29,11 +29,11 @@ public class Params {
   @JsonProperty("relevancyStrictness")
   private Integer relevancyStrictness;
 
-  @JsonProperty("facets")
-  private List<String> facets;
-
   @JsonProperty("facetFilters")
   private FacetFilters facetFilters;
+
+  @JsonProperty("facets")
+  private List<String> facets;
 
   @JsonProperty("optionalFilters")
   private OptionalFilters optionalFilters;
@@ -174,6 +174,17 @@ public class Params {
     return relevancyStrictness;
   }
 
+  public Params setFacetFilters(FacetFilters facetFilters) {
+    this.facetFilters = facetFilters;
+    return this;
+  }
+
+  /** Get facetFilters */
+  @javax.annotation.Nullable
+  public FacetFilters getFacetFilters() {
+    return facetFilters;
+  }
+
   public Params setFacets(List<String> facets) {
     this.facets = facets;
     return this;
@@ -189,24 +200,16 @@ public class Params {
 
   /**
    * Facets for which to retrieve facet values that match the search criteria and the number of
-   * matching facet values To retrieve all facets, use the wildcard character `*`. For more
+   * matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve
+   * disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more
    * information, see
-   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
+   * and [disjunctive faceting for Smart
+   * Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
    */
   @javax.annotation.Nullable
   public List<String> getFacets() {
     return facets;
-  }
-
-  public Params setFacetFilters(FacetFilters facetFilters) {
-    this.facetFilters = facetFilters;
-    return this;
-  }
-
-  /** Get facetFilters */
-  @javax.annotation.Nullable
-  public FacetFilters getFacetFilters() {
-    return facetFilters;
   }
 
   public Params setOptionalFilters(OptionalFilters optionalFilters) {
@@ -558,8 +561,8 @@ public class Params {
       Objects.equals(this.page, params.page) &&
       Objects.equals(this.getRankingInfo, params.getRankingInfo) &&
       Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
-      Objects.equals(this.facets, params.facets) &&
       Objects.equals(this.facetFilters, params.facetFilters) &&
+      Objects.equals(this.facets, params.facets) &&
       Objects.equals(this.optionalFilters, params.optionalFilters) &&
       Objects.equals(this.numericFilters, params.numericFilters) &&
       Objects.equals(this.hitsPerPage, params.hitsPerPage) &&
@@ -592,8 +595,8 @@ public class Params {
       page,
       getRankingInfo,
       relevancyStrictness,
-      facets,
       facetFilters,
+      facets,
       optionalFilters,
       numericFilters,
       hitsPerPage,
@@ -627,8 +630,8 @@ public class Params {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
     sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
-    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
+    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
     sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");
     sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");

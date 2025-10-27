@@ -1071,23 +1071,6 @@ components:
       default: 100
       x-categories:
         - Ranking
-    facets:
-      type: array
-      items:
-        type: string
-      description: >
-        Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
-
-        To retrieve all facets, use the wildcard character `*`.
-
-        For more information, see
-        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      default: []
-      example:
-        - '*'
-      x-categories:
-        - Faceting
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -1122,6 +1105,33 @@ components:
         - type: string
       x-categories:
         - Filtering
+    facets:
+      type: array
+      items:
+        type: string
+      description: >
+        Facets for which to retrieve facet values that match the search criteria
+        and the number of matching facet values
+
+        To retrieve all facets, use the wildcard character `*`.
+
+        To retrieve disjunctive facets lists, annotate any facets with the
+        `disjunctive` modifier.
+
+        For more information, see
+        [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
+        and [disjunctive faceting for Smart
+        Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+      default: []
+      example:
+        -
+          - category
+          - disjunctive(brand)
+          - price
+        -
+          - '*'
+      x-categories:
+        - Faceting
     optionalFilters:
       description: >
         Filters to promote or demote records in the search results.
@@ -1641,10 +1651,10 @@ components:
           $ref: '#/components/schemas/getRankingInfo'
         relevancyStrictness:
           $ref: '#/components/schemas/relevancyStrictness'
-        facets:
-          $ref: '#/components/schemas/facets'
         facetFilters:
           $ref: '#/components/schemas/facetFilters'
+        facets:
+          $ref: '#/components/schemas/facets'
         optionalFilters:
           $ref: '#/components/schemas/optionalFilters'
         numericFilters:

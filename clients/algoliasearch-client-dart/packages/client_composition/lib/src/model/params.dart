@@ -16,8 +16,8 @@ final class Params {
     this.page,
     this.getRankingInfo,
     this.relevancyStrictness,
-    this.facets,
     this.facetFilters,
+    this.facets,
     this.optionalFilters,
     this.numericFilters,
     this.hitsPerPage,
@@ -62,16 +62,16 @@ final class Params {
   @JsonKey(name: r'relevancyStrictness')
   final int? relevancyStrictness;
 
-  /// Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-  @JsonKey(name: r'facets')
-  final List<String>? facets;
-
   /// One of types:
   /// - [List<List<FacetFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'facetFilters')
   final dynamic facetFilters;
+
+  /// Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+  @JsonKey(name: r'facets')
+  final List<String>? facets;
 
   /// One of types:
   /// - [String]
@@ -181,8 +181,8 @@ final class Params {
           other.page == page &&
           other.getRankingInfo == getRankingInfo &&
           other.relevancyStrictness == relevancyStrictness &&
-          other.facets == facets &&
           other.facetFilters == facetFilters &&
+          other.facets == facets &&
           other.optionalFilters == optionalFilters &&
           other.numericFilters == numericFilters &&
           other.hitsPerPage == hitsPerPage &&
@@ -212,8 +212,8 @@ final class Params {
       page.hashCode +
       getRankingInfo.hashCode +
       relevancyStrictness.hashCode +
-      facets.hashCode +
       facetFilters.hashCode +
+      facets.hashCode +
       optionalFilters.hashCode +
       numericFilters.hashCode +
       hitsPerPage.hashCode +

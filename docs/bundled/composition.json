@@ -1319,20 +1319,6 @@
           "Ranking"
         ]
       },
-      "facets": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).\n",
-        "default": [],
-        "example": [
-          "*"
-        ],
-        "x-categories": [
-          "Faceting"
-        ]
-      },
       "facetFilters": {
         "description": "Filter the search by facet values, so that only records with the same facet values are retrieved.\n\n**Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**\n\n- `[filter1, filter2]` is interpreted as `filter1 AND filter2`.\n- `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.\n- `facet:-value` is interpreted as `NOT facet:value`.\n\nWhile it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:\n`facet:\\-value`.\n",
         "example": [
@@ -1355,6 +1341,27 @@
         ],
         "x-categories": [
           "Filtering"
+        ]
+      },
+      "facets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nTo retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).\n",
+        "default": [],
+        "example": [
+          [
+            "category",
+            "disjunctive(brand)",
+            "price"
+          ],
+          [
+            "*"
+          ]
+        ],
+        "x-categories": [
+          "Faceting"
         ]
       },
       "optionalFilters": {
@@ -1813,11 +1820,11 @@
           "relevancyStrictness": {
             "$ref": "#/components/schemas/relevancyStrictness"
           },
-          "facets": {
-            "$ref": "#/components/schemas/facets"
-          },
           "facetFilters": {
             "$ref": "#/components/schemas/facetFilters"
+          },
+          "facets": {
+            "$ref": "#/components/schemas/facets"
           },
           "optionalFilters": {
             "$ref": "#/components/schemas/optionalFilters"

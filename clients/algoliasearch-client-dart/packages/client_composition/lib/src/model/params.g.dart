@@ -17,9 +17,9 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
           relevancyStrictness: $checkedConvert(
               'relevancyStrictness', (v) => (v as num?)?.toInt()),
+          facetFilters: $checkedConvert('facetFilters', (v) => v),
           facets: $checkedConvert('facets',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          facetFilters: $checkedConvert('facetFilters', (v) => v),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           numericFilters: $checkedConvert('numericFilters', (v) => v),
           hitsPerPage:
@@ -87,8 +87,8 @@ Map<String, dynamic> _$ParamsToJson(Params instance) {
   writeNotNull('page', instance.page);
   writeNotNull('getRankingInfo', instance.getRankingInfo);
   writeNotNull('relevancyStrictness', instance.relevancyStrictness);
-  writeNotNull('facets', instance.facets);
   writeNotNull('facetFilters', instance.facetFilters);
+  writeNotNull('facets', instance.facets);
   writeNotNull('optionalFilters', instance.optionalFilters);
   writeNotNull('numericFilters', instance.numericFilters);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
