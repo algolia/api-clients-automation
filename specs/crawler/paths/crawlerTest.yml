@@ -7,6 +7,7 @@ post:
     You can test configuration changes by overriding specific parts before updating the full configuration.
   tags:
     - actions
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:

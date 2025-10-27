@@ -8,6 +8,7 @@ post:
     To unblock the crawler, cancel the blocking task.
   tags:
     - tasks
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/TaskIdParameter'

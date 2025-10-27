@@ -5,6 +5,8 @@ get:
     Retrieves details about the specified crawler, optionally with its configuration.
   tags:
     - crawlers
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - in: query
@@ -42,6 +44,8 @@ patch:
     description: Update configuration.
   tags:
     - crawlers
+  x-acl:
+    - editSettings
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:
@@ -70,6 +74,8 @@ delete:
   description: Delete the specified crawler.
   tags:
     - crawlers
+  x-acl:
+    - editSettings
   parameters:
     - $ref: '#/components/parameters/CrawlerIdParameter'
   responses:

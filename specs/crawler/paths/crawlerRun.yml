@@ -7,6 +7,7 @@ post:
     Otherwise, the crawler waits for its next scheduled run.
   tags:
     - actions
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:

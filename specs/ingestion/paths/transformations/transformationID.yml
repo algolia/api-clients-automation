@@ -26,6 +26,10 @@ put:
   summary: Update a transformation
   description: Updates a transformation by its ID.
   operationId: updateTransformation
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathTransformationID'
   requestBody:
@@ -50,6 +54,10 @@ delete:
   summary: Delete a transformation
   description: Deletes a transformation by its ID.
   operationId: deleteTransformation
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
   parameters:
     - $ref: '../../common/parameters.yml#/pathTransformationID'
   responses:
