@@ -18,7 +18,16 @@ export default defineWorkersConfig({
       {
         resolve: {
           alias: {
+            '@algolia/abtesting': '../../abtesting/builds/browser',
+            '@algolia/client-abtesting': '../../client-abtesting/builds/browser',
+            '@algolia/client-analytics': '../../client-analytics/builds/browser',
+            '@algolia/client-insights': '../../client-insights/builds/browser',
+            '@algolia/client-personalization': '../../client-personalization/builds/browser',
+            '@algolia/client-query-suggestions': '../../client-query-suggestions/builds/browser',
             '@algolia/client-search': '../../client-search/builds/browser',
+            '@algolia/ingestion': '../../ingestion/builds/browser',
+            '@algolia/monitoring': '../../monitoring/builds/browser',
+            '@algolia/recommend': '../../recommend/builds/browser',
           },
         },
         test: {
