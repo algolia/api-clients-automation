@@ -1,3 +1,23 @@
+# #########################
+# ### Category Faceting ###
+# #########################
+
+facets:
+  type: array
+  items:
+    type: string
+  description: |
+    Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+    To retrieve all facets, use the wildcard character `*`.
+    To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.
+    For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+  default: []
+  example:
+    - ['category', 'disjunctive(brand)', 'price']
+    - ['*']
+  x-categories:
+    - Faceting
+
 # ######################
 # ### Category Rules ###
 # ######################
