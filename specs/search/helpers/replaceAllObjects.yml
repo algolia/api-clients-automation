@@ -14,6 +14,8 @@ method:
       - ruby
       - scala
       - swift
+    x-acl:
+      - addObject
     operationId: replaceAllObjects
     summary: Replace all records in an index
     description: |

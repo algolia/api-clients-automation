@@ -1,7 +1,7 @@
 // @ts-ignore
 import { createRule } from 'eslint-plugin-yml/lib/utils';
 
-import { isPairWithKey, isScalar } from '../utils.js';
+import { isPairWithKey, isPairWithValue, isScalar } from '../utils.js';
 
 const ACLs = [
   'search',
@@ -23,12 +23,13 @@ const ACLs = [
 export const validACL = createRule('validACL', {
   meta: {
     docs: {
-      description: 'x-acl enum must contains valid Algolia ACLs',
+      description: 'x-acl enum must be set and contain valid Algolia ACLs',
       categories: null,
       extensionRule: false,
       layout: false,
     },
     messages: {
+      missingACL: 'x-acl is missing',
       validString: 'is not a string',
       validACL: `{{entry}} is not a valid Algolia ACL, must be one of: ${ACLs.join(', ')}.`,
       validArray: 'is not an array of string',
@@ -43,6 +44,41 @@ export const validACL = createRule('validACL', {
 
     return {
       YAMLPair(node): void {
+        const spec = context.getFilename().match(/specs\/([a-z-]+?)\//)?.[1];
+        if (!spec) {
+          return;
+        }
+        if (spec === 'monitoring') {
+          // monitoring uses a special API key and doesn't need ACLs
+          return;
+        }
+
+        if (spec === 'crawler') {
+          // no clients are generated for the crawler API
+          return;
+        }
+
+        // if we find then prop operationId, there must be x-acl on the same level
+        if (isPairWithKey(node, 'operationId')) {
+          const hasACL = node.parent.pairs.some((item: any) => isPairWithKey(item, 'x-acl'));
+
+          // ignore custom helpers
+          if (isPairWithValue(node, 'customGet') || isPairWithValue(node, 'customPost') || isPairWithValue(node, 'customPut') || isPairWithValue(node, 'customDelete')) {
+            return;
+          }
+
+
+          if (!hasACL) {
+            context.report({
+              node: node as any,
+              messageId: 'missingACL',
+            });
+          }
+
+          return;
+        }
+
+        // check the validity of x-acl
         if (!isPairWithKey(node, 'x-acl')) {
           return;
         }

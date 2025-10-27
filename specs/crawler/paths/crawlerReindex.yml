@@ -4,6 +4,7 @@ post:
   description: Starts or resumes a crawl.
   tags:
     - actions
+  x-acl: []
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:

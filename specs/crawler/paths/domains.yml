@@ -7,6 +7,8 @@ get:
     Crawlers will only run if the URLs match any of the registered domains.
   tags:
     - domains
+  x-acl:
+    - settings
   parameters:
     - $ref: '../common/parameters.yml#/ItemsPerPage'
     - $ref: '../common/parameters.yml#/Page'

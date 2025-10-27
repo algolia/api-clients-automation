@@ -30,6 +30,16 @@ nested:
     ],
     invalid: [
       {
+       filename: 'api-client-automation/specs/search/path/test.yml',
+        code: `
+post:
+  operationId: test
+  description: Test endpoint without ACL
+`,
+        errors: [{ messageId: 'missingACL' }],
+      },
+      {
+        filename: 'api-client-automation/specs/search/path/test.yml',
         code: `
 x-acl:
   - notACL
@@ -38,6 +48,7 @@ x-acl:
         errors: [{ messageId: 'validACL' }],
       },
       {
+        filename: 'api-client-automation/specs/search/path/test.yml',
         code: `
 nested:
   inside:
@@ -48,12 +59,14 @@ nested:
         errors: [{ messageId: 'validACL' }],
       },
       {
+        filename: 'api-client-automation/specs/search/path/test.yml',
         code: `
 x-acl: notList
     `,
         errors: [{ messageId: 'validArray' }],
       },
       {
+        filename: 'api-client-automation/specs/search/path/test.yml',
         code: `
 x-acl:
   - ['search']

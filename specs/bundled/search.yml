@@ -787,6 +787,7 @@ paths:
               schema:
                 type: object
                 description: The requested record.
+                x-is-generic: true
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1059,6 +1060,8 @@ paths:
     post:
       tags:
         - search
+      x-acl:
+        - addObject
       operationId: batch
       x-mcp-tool: true
       summary: Batch indexing operations on one index
@@ -1106,6 +1109,8 @@ paths:
     post:
       tags:
         - search
+      x-acl:
+        - addObject
       operationId: multipleBatch
       x-mcp-tool: true
       description: >
@@ -1639,6 +1644,8 @@ paths:
   /1/keys/{key}:
     get:
       tags:
+        - search
+      x-acl:
         - search
       operationId: getApiKey
       summary: Retrieve API key permissions
@@ -3247,6 +3254,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - search
       operationId: waitForApiKey
       summary: Wait for an API key operation
       description: Waits for an API key to be added, updated, or deleted.
@@ -3296,6 +3305,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - addObject
       operationId: waitForTask
       summary: Wait for operation to complete
       description: >
@@ -3343,6 +3354,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - editSettings
       operationId: waitForAppTask
       summary: Wait for application-level operation to complete
       description: Wait for a application-level task to complete.
@@ -3370,6 +3383,8 @@ paths:
       x-helper: true
       tags:
         - search
+      x-acl:
+        - browse
       operationId: browseObjects
       summary: Get all records from an index
       description: >
@@ -3419,6 +3434,7 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl: []
       operationId: generateSecuredApiKey
       summary: Create secured API keys
       description: >
@@ -3553,6 +3569,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - addObject
       operationId: replaceAllObjects
       summary: Replace all records in an index
       description: >
@@ -3638,6 +3656,10 @@ paths:
         - javascript
         - php
         - python
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       operationId: replaceAllObjectsWithTransformation
       summary: Replace all records in an index
       description: >
@@ -3719,6 +3741,8 @@ paths:
       x-helper: true
       tags:
         - search
+      x-acl:
+        - addObject
       operationId: chunkedBatch
       summary: Replace all records in an index
       description: >
@@ -3791,6 +3815,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - addObject
       operationId: saveObjects
       summary: Saves the given array of objects in the given index
       description: >
@@ -3860,6 +3886,10 @@ paths:
         - javascript
         - php
         - python
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       operationId: saveObjectsWithTransformation
       summary: >-
         Save objects to an Algolia index by leveraging the Transformation
@@ -3939,6 +3969,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - addObject
       operationId: deleteObjects
       summary: Deletes every records for the given objectIDs
       description: >
@@ -4010,6 +4042,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - addObject
       operationId: partialUpdateObjects
       summary: >-
         Replaces object content of all the given objects according to their
@@ -4091,6 +4125,10 @@ paths:
         - python
       tags:
         - search
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       operationId: partialUpdateObjectsWithTransformation
       summary: >-
         Save objects to an Algolia index by leveraging the Transformation
@@ -4179,6 +4217,8 @@ paths:
         - ruby
         - scala
         - swift
+      x-acl:
+        - settings
       operationId: indexExists
       summary: Check if an index exists or not
       description: >
@@ -4205,6 +4245,7 @@ paths:
     get:
       x-helper: true
       x-asynchronous-helper: false
+      x-acl: []
       tags:
         - search
       operationId: setClientApiKey

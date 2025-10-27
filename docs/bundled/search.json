@@ -712,7 +712,8 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "description": "The requested record."
+                  "description": "The requested record.",
+                  "x-is-generic": true
                 }
               }
             }
@@ -972,6 +973,9 @@
         "tags": [
           "Records"
         ],
+        "x-acl": [
+          "addObject"
+        ],
         "operationId": "batch",
         "x-mcp-tool": true,
         "summary": "Batch indexing operations on one index",
@@ -1022,6 +1026,9 @@
       "post": {
         "tags": [
           "Records"
+        ],
+        "x-acl": [
+          "addObject"
         ],
         "operationId": "multipleBatch",
         "x-mcp-tool": true,
@@ -1766,6 +1773,9 @@
       "get": {
         "tags": [
           "Api Keys"
+        ],
+        "x-acl": [
+          "search"
         ],
         "operationId": "getApiKey",
         "summary": "Retrieve API key permissions",
@@ -3830,6 +3840,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "search"
+        ],
         "operationId": "waitForApiKey",
         "summary": "Wait for an API key operation",
         "description": "Waits for an API key to be added, updated, or deleted.",
@@ -3897,6 +3910,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "addObject"
+        ],
         "operationId": "waitForTask",
         "summary": "Wait for operation to complete",
         "description": "Wait for a task to complete to ensure synchronized index updates.\n\nAll Algolia write operations are asynchronous. When you make a request for a write operation, for example, to add or update records in your index, Algolia creates a task on a queue and returns a taskID. The task itself runs separately, depending on the server load.\n",
@@ -3953,6 +3969,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "editSettings"
+        ],
         "operationId": "waitForAppTask",
         "summary": "Wait for application-level operation to complete",
         "description": "Wait for a application-level task to complete.",
@@ -3990,6 +4009,9 @@
         "x-helper": true,
         "tags": [
           "Records"
+        ],
+        "x-acl": [
+          "browse"
         ],
         "operationId": "browseObjects",
         "summary": "Get all records from an index",
@@ -4043,6 +4065,7 @@
           "scala",
           "swift"
         ],
+        "x-acl": [],
         "operationId": "generateSecuredApiKey",
         "summary": "Create secured API keys",
         "description": "Generates a secured API key without any requests to Algolia's servers.\n\nSecured API keys are API keys that you generate on your server without any API request to Algolia.\nSecured API keys help in environments where you can't easily update the client-side code, such as mobile apps,\nor when you need to restrict access to a part of your index for every user.\n\nWhen your users start searching, instead of using the Search API key, they request a short-lived secured API key from your server.\nOn your server, you use this method to create a secured API key, with any restrictions you'd like, such as filters, index access restrictions,\nor expiration times. The API key gets longer the more restrictions you add.\nYour users then use the secured API key to search with Algolia.\n\nYou can't create secured API keys from other secured API keys or from your Admin API key.\nThe generated API key can have the same restrictions as the parent API key, or be more restrictive.\n",
@@ -4181,6 +4204,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "addObject"
+        ],
         "operationId": "replaceAllObjects",
         "summary": "Replace all records in an index",
         "description": "Replace all records from your index with a new set of records.\n\nThis method lets you replace all records in your index without downtime. It performs these operations:\n  1. Copy settings, synonyms, and rules from your original index to a temporary index.\n  2. Add your new records to the temporary index.\n  3. Replace your original index with the temporary index.\n\nUse the safe parameter to ensure that these (asynchronous) operations are performed in sequence.\nIf there's an error duing one of these steps, the temporary index won't be deleted.\nThis operation is rate-limited.\nThis method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.\nIf you're on a legacy plan (before July 2020), this method counts two operations towards your usage (in addition to the number of records): copySettings and moveIndex.\nThe API key you use for this operation must have access to the index YourIndex and the temporary index YourIndex_tmp.\n",
@@ -4260,6 +4286,11 @@
           "php",
           "python"
         ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "operationId": "replaceAllObjectsWithTransformation",
         "summary": "Replace all records in an index",
         "description": "Replace all records from your index with a new set of records by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).\n\nThis method lets you replace all records in your index without downtime. It performs these operations:\n  1. Copy settings, synonyms, and rules from your original index to a temporary index.\n  2. Add your new records to the temporary index.\n  3. Replace your original index with the temporary index.\n\nUse the safe parameter to ensure that these (asynchronous) operations are performed in sequence.\nIf there's an error duing one of these steps, the temporary index won't be deleted.\nThis operation is rate-limited.\nThis method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.\nIf you're on a legacy plan (before July 2020), this method counts two operations towards your usage (in addition to the number of records): copySettings and moveIndex.\nThe API key you use for this operation must have access to the index YourIndex and the temporary index YourIndex_tmp.\n",
@@ -4330,6 +4361,9 @@
         "x-helper": true,
         "tags": [
           "Records"
+        ],
+        "x-acl": [
+          "addObject"
         ],
         "operationId": "chunkedBatch",
         "summary": "Replace all records in an index",
@@ -4422,6 +4456,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "addObject"
+        ],
         "operationId": "saveObjects",
         "summary": "Saves the given array of objects in the given index",
         "description": "Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.\n",
@@ -4510,6 +4547,11 @@
           "javascript",
           "php",
           "python"
+        ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
         ],
         "operationId": "saveObjectsWithTransformation",
         "summary": "Save objects to an Algolia index by leveraging the Transformation pipeline setup using the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push)",
@@ -4604,6 +4646,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "addObject"
+        ],
         "operationId": "deleteObjects",
         "summary": "Deletes every records for the given objectIDs",
         "description": "Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.\n",
@@ -4694,6 +4739,9 @@
           "ruby",
           "scala",
           "swift"
+        ],
+        "x-acl": [
+          "addObject"
         ],
         "operationId": "partialUpdateObjects",
         "summary": "Replaces object content of all the given objects according to their respective `objectID` field",
@@ -4793,6 +4841,11 @@
         ],
         "tags": [
           "Records"
+        ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
         ],
         "operationId": "partialUpdateObjectsWithTransformation",
         "summary": "Save objects to an Algolia index by leveraging the Transformation pipeline setup using the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push)",
@@ -4897,6 +4950,9 @@
           "scala",
           "swift"
         ],
+        "x-acl": [
+          "settings"
+        ],
         "operationId": "indexExists",
         "summary": "Check if an index exists or not",
         "description": "You can initialize an index with any name. The index is created on Algolia's servers when you add objects or set settings. To prevent accidentally creating new indices, or changing existing indices, you can use the exists method. The exists method returns a boolean that indicates whether an initialized index has been created.\n",
@@ -4929,6 +4985,7 @@
       "get": {
         "x-helper": true,
         "x-asynchronous-helper": false,
+        "x-acl": [],
         "tags": [
           "Api Key"
         ],

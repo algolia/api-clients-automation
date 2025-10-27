@@ -1097,6 +1097,7 @@
       "get": {
         "x-helper": true,
         "x-asynchronous-helper": false,
+        "x-acl": [],
         "tags": [
           "Api Key"
         ],
@@ -1128,6 +1129,13 @@
           "Records"
         ],
         "operationId": "waitForCompositionTask",
+        "x-acl": [
+          "editSettings",
+          "settings",
+          "addObject",
+          "deleteObject",
+          "deleteIndex"
+        ],
         "summary": "Wait for operation to complete",
         "description": "Wait for a task to complete to ensure synchronized composition updates.\n\nAll Algolia write operations are asynchronous. When you make a request for a write operation, for example, to upsert or delete a composition, Algolia creates a task on a queue and returns a taskID. The task itself runs separately, depending on the server load.\n",
         "parameters": [
@@ -3617,6 +3625,9 @@
               },
               "maxValuesPerFacet": {
                 "$ref": "#/components/schemas/maxValuesPerFacet"
+              },
+              "renderingContent": {
+                "$ref": "#/components/schemas/renderingContent"
               },
               "sortFacetValuesBy": {
                 "$ref": "#/components/schemas/sortFacetValuesBy"

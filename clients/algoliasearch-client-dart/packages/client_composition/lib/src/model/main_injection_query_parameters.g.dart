@@ -113,6 +113,11 @@ MainInjectionQueryParameters _$MainInjectionQueryParametersFromJson(
               $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
               $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
+          renderingContent: $checkedConvert(
+              'renderingContent',
+              (v) => v == null
+                  ? null
+                  : RenderingContent.fromJson(v as Map<String, dynamic>)),
           sortFacetValuesBy:
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           sumOrFiltersScores:
@@ -194,6 +199,7 @@ Map<String, dynamic> _$MainInjectionQueryParametersToJson(
   writeNotNull('facets', instance.facets);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
   writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
+  writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('sumOrFiltersScores', instance.sumOrFiltersScores);
   return val;

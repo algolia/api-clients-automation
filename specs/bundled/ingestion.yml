@@ -976,6 +976,10 @@ paths:
       summary: Create a task
       description: Creates a new task.
       operationId: createTask
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         description: Request body for creating a task.
         content:
@@ -1025,13 +1029,13 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task
-      description: Retrieves a task by its ID.
-      operationId: getTask
       x-acl:
         - addObject
         - deleteIndex
         - editSettings
+      summary: Retrieve a task
+      description: Retrieves a task by its ID.
+      operationId: getTask
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
       responses:
@@ -1046,6 +1050,10 @@ paths:
     put:
       tags:
         - ingestion
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       summary: Fully update a task
       description: >-
         Fully updates a task by its ID, use partialUpdateTask if you only want
@@ -1071,6 +1079,10 @@ paths:
     patch:
       tags:
         - ingestion
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       summary: Partially update a task
       description: Partially updates a task by its ID.
       operationId: updateTask
@@ -1094,6 +1106,10 @@ paths:
     delete:
       tags:
         - ingestion
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       summary: Delete a task
       description: Deletes a task by its ID.
       operationId: deleteTask
@@ -1284,6 +1300,10 @@ paths:
         Creates a new task using the v1 endpoint, please use `createTask`
         instead.
       operationId: createTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       deprecated: true
       x-codegen-request-body-name: taskCreate
       requestBody:
@@ -1367,6 +1387,10 @@ paths:
         Updates a task by its ID using the v1 endpoint, please use `updateTask`
         instead.
       operationId: updateTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       deprecated: true
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
@@ -1394,6 +1418,10 @@ paths:
         Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
         instead.
       operationId: deleteTaskV1
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       deprecated: true
       parameters:
         - $ref: '#/components/parameters/pathTaskID'
@@ -1529,6 +1557,10 @@ paths:
       summary: Create a transformation
       description: Creates a new transformation.
       operationId: createTransformation
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       requestBody:
         description: Request body for creating a transformation.
         content:
@@ -1628,6 +1660,10 @@ paths:
       summary: Update a transformation
       description: Updates a transformation by its ID.
       operationId: updateTransformation
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTransformationID'
       requestBody:
@@ -1651,6 +1687,10 @@ paths:
       summary: Delete a transformation
       description: Deletes a transformation by its ID.
       operationId: deleteTransformation
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/pathTransformationID'
       responses:
@@ -1838,6 +1878,7 @@ paths:
     get:
       x-helper: true
       x-asynchronous-helper: false
+      x-acl: []
       tags:
         - ingestion
       operationId: setClientApiKey
@@ -1866,6 +1907,10 @@ paths:
         - javascript
         - php
         - python
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
       operationId: chunkedPush
       summary: Replace all records in an index
       description: >

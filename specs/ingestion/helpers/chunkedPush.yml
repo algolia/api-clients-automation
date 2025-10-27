@@ -10,6 +10,10 @@ method:
       - javascript
       - php
       - python
+    x-acl:
+      - addObject
+      - deleteIndex
+      - editSettings
     operationId: chunkedPush
     summary: Replace all records in an index
     description: |

@@ -2,6 +2,7 @@ method:
   get:
     x-helper: true
     x-asynchronous-helper: false
+    x-acl: []
     tags:
       - Api Key
     operationId: setClientApiKey

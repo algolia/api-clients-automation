@@ -3153,6 +3153,7 @@ paths:
               schema:
                 type: object
                 description: The requested record.
+                x-is-generic: true
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -4910,6 +4911,8 @@ paths:
     post:
       tags:
         - Records
+      x-acl:
+        - addObject
       operationId: batch
       x-mcp-tool: true
       summary: Batch indexing operations on one index
@@ -5339,6 +5342,8 @@ paths:
     post:
       tags:
         - Records
+      x-acl:
+        - addObject
       operationId: multipleBatch
       x-mcp-tool: true
       description: >
@@ -9085,6 +9090,8 @@ paths:
     get:
       tags:
         - Api Keys
+      x-acl:
+        - search
       operationId: getApiKey
       summary: Retrieve API key permissions
       description: >

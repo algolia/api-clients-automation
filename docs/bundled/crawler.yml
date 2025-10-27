@@ -131,6 +131,8 @@ paths:
       description: Lists all your crawlers.
       tags:
         - crawlers
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/ItemsPerPage'
         - $ref: '#/components/parameters/Page'
@@ -157,6 +159,8 @@ paths:
       description: Creates a new crawler with the provided configuration.
       tags:
         - crawlers
+      x-acl:
+        - editSettings
       requestBody:
         content:
           application/json:
@@ -199,6 +203,8 @@ paths:
         configuration.
       tags:
         - crawlers
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
         - in: query
@@ -244,6 +250,8 @@ paths:
         description: Update configuration.
       tags:
         - crawlers
+      x-acl:
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -272,6 +280,8 @@ paths:
       description: Delete the specified crawler.
       tags:
         - crawlers
+      x-acl:
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
@@ -293,6 +303,7 @@ paths:
         Otherwise, the crawler waits for its next scheduled run.
       tags:
         - actions
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
@@ -311,6 +322,7 @@ paths:
       description: Pauses the specified crawler.
       tags:
         - actions
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
@@ -329,6 +341,7 @@ paths:
       description: Starts or resumes a crawl.
       tags:
         - actions
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
@@ -353,6 +366,7 @@ paths:
         updating the full configuration.
       tags:
         - actions
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -512,6 +526,7 @@ paths:
         This operation is rate-limited to 500 requests every 24 hours.
       tags:
         - actions
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -556,6 +571,8 @@ paths:
         URLs.
       tags:
         - crawlers
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
@@ -592,6 +609,8 @@ paths:
         Every time you update the configuration, a new version is created.
       tags:
         - config
+      x-acl:
+        - editSettings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -619,6 +638,8 @@ paths:
         Every time you update a crawler's configuration, a new version is added.
       tags:
         - config
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
         - $ref: '#/components/parameters/ItemsPerPage'
@@ -642,6 +663,8 @@ paths:
         You can use this to restore a previous version of the configuration.
       tags:
         - config
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
         - $ref: '#/components/parameters/CrawlerVersionParameter'
@@ -678,6 +701,8 @@ paths:
         completed.
       tags:
         - tasks
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
         - $ref: '#/components/parameters/TaskIdParameter'
@@ -710,6 +735,7 @@ paths:
         To unblock the crawler, cancel the blocking task.
       tags:
         - tasks
+      x-acl: []
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
         - $ref: '#/components/parameters/TaskIdParameter'
@@ -732,6 +758,8 @@ paths:
         Crawlers will only run if the URLs match any of the registered domains.
       tags:
         - domains
+      x-acl:
+        - settings
       parameters:
         - $ref: '#/components/parameters/ItemsPerPage'
         - $ref: '#/components/parameters/Page'

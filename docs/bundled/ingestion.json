@@ -1366,6 +1366,11 @@
         "summary": "Create a task",
         "description": "Creates a new task.",
         "operationId": "createTask",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "requestBody": {
           "description": "Request body for creating a task.",
           "content": {
@@ -1443,14 +1448,14 @@
         "tags": [
           "tasks"
         ],
-        "summary": "Retrieve a task",
-        "description": "Retrieves a task by its ID.",
-        "operationId": "getTask",
         "x-acl": [
           "addObject",
           "deleteIndex",
           "editSettings"
         ],
+        "summary": "Retrieve a task",
+        "description": "Retrieves a task by its ID.",
+        "operationId": "getTask",
         "parameters": [
           {
             "$ref": "#/components/parameters/pathTaskID"
@@ -1475,6 +1480,11 @@
       "put": {
         "tags": [
           "tasks"
+        ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
         ],
         "summary": "Fully update a task",
         "description": "Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.",
@@ -1514,6 +1524,11 @@
         "tags": [
           "tasks"
         ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "summary": "Partially update a task",
         "description": "Partially updates a task by its ID.",
         "operationId": "updateTask",
@@ -1551,6 +1566,11 @@
       "delete": {
         "tags": [
           "tasks"
+        ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
         ],
         "summary": "Delete a task",
         "description": "Deletes a task by its ID.",
@@ -1833,6 +1853,11 @@
         "summary": "Create a task V1",
         "description": "Creates a new task using the v1 endpoint, please use `createTask` instead.",
         "operationId": "createTaskV1",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "deprecated": true,
         "x-codegen-request-body-name": "taskCreate",
         "requestBody": {
@@ -1950,6 +1975,11 @@
         "summary": "Update a task V1",
         "description": "Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.",
         "operationId": "updateTaskV1",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "deprecated": true,
         "parameters": [
           {
@@ -1990,6 +2020,11 @@
         "summary": "Delete a task",
         "description": "Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.",
         "operationId": "deleteTaskV1",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "deprecated": true,
         "parameters": [
           {
@@ -2203,6 +2238,11 @@
         "summary": "Create a transformation",
         "description": "Creates a new transformation.",
         "operationId": "createTransformation",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "requestBody": {
           "description": "Request body for creating a transformation.",
           "content": {
@@ -2356,6 +2396,11 @@
         "summary": "Update a transformation",
         "description": "Updates a transformation by its ID.",
         "operationId": "updateTransformation",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/pathTransformationID"
@@ -2394,6 +2439,11 @@
         "summary": "Delete a transformation",
         "description": "Deletes a transformation by its ID.",
         "operationId": "deleteTransformation",
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/pathTransformationID"
@@ -2697,6 +2747,7 @@
       "get": {
         "x-helper": true,
         "x-asynchronous-helper": false,
+        "x-acl": [],
         "tags": [
           "Api Key"
         ],
@@ -2734,6 +2785,11 @@
           "javascript",
           "php",
           "python"
+        ],
+        "x-acl": [
+          "addObject",
+          "deleteIndex",
+          "editSettings"
         ],
         "operationId": "chunkedPush",
         "summary": "Replace all records in an index",
