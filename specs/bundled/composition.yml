@@ -3428,6 +3428,8 @@ components:
               $ref: '#/components/schemas/hitsPerPage'
             maxValuesPerFacet:
               $ref: '#/components/schemas/maxValuesPerFacet'
+            renderingContent:
+              $ref: '#/components/schemas/renderingContent'
             sortFacetValuesBy:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
