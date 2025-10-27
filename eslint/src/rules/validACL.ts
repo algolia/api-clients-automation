@@ -53,6 +53,11 @@ export const validACL = createRule('validACL', {
           return;
         }
 
+        if (spec === 'crawler') {
+          // no clients are generated for the crawler API
+          return;
+        }
+
         // if we find then prop operationId, there must be x-acl on the same level
         if (isPairWithKey(node, 'operationId')) {
           const hasACL = node.parent.pairs.some((item: any) => isPairWithKey(item, 'x-acl'));
