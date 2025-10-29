@@ -965,7 +965,7 @@
     }
   },
   {
-    "testName": "similarQuery",
+    "testName": "search query",
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
@@ -1015,7 +1015,7 @@
     }
   },
   {
-    "testName": "search_a_query",
+    "testName": "similarQuery",
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
