@@ -516,38 +516,6 @@ class AbtestingV3Test {
     )
   }
 
-  // scheduleABTest
-
-  @Test
-  fun `scheduleABTest with minimal parameters`() = runTest {
-    client.runTest(
-      call = {
-        scheduleABTest(
-          scheduleABTestsRequest =
-            ScheduleABTestsRequest(
-              endAt = "2022-12-31T00:00:00.000Z",
-              scheduledAt = "2022-11-31T00:00:00.000Z",
-              name = "myABTest",
-              metrics = listOf(CreateMetric(name = "myMetric")),
-              variants =
-                listOf(
-                  AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
-                  AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
-                ),
-            )
-        )
-      },
-      intercept = {
-        assertEquals("/3/abtests/schedule".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody(
-          """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}""",
-          it.body,
-        )
-      },
-    )
-  }
-
   // stopABTest
 
   @Test

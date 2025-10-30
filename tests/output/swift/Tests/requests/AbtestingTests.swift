@@ -877,50 +877,6 @@ final class AbtestingClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// scheduleABTest with minimal parameters
-    func testScheduleABTestTest() async throws {
-        let configuration = try AbtestingClientConfiguration(
-            appID: AbtestingClientRequestsTests.APPLICATION_ID,
-            apiKey: AbtestingClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = AbtestingClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client
-            .scheduleABTestWithHTTPInfo(scheduleABTestsRequest: AbtestingScheduleABTestsRequest(
-                name: "myABTest",
-                variants: [
-                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
-                        index: "AB_TEST_1",
-                        trafficPercentage: 30
-                    )),
-                    AbtestingAddABTestsVariant.abtestingAbTestsVariant(AbtestingAbTestsVariant(
-                        index: "AB_TEST_2",
-                        trafficPercentage: 50
-                    )),
-                ],
-                scheduledAt: "2022-11-31T00:00:00.000Z",
-                endAt: "2022-12-31T00:00:00.000Z"
-            ))
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
-            .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/2/abtests/schedule")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// stopABTest
     func testStopABTestTest() async throws {
         let configuration = try AbtestingClientConfiguration(

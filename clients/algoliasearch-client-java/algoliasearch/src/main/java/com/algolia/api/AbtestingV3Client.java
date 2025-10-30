@@ -975,60 +975,6 @@ public class AbtestingV3Client extends ApiClient {
   }
 
   /**
-   * Schedule an A/B test to be started at a later time.
-   *
-   * @param scheduleABTestsRequest (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ScheduleABTestResponse scheduleABTest(
-    @Nonnull ScheduleABTestsRequest scheduleABTestsRequest,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(scheduleABTestAsync(scheduleABTestsRequest, requestOptions));
-  }
-
-  /**
-   * Schedule an A/B test to be started at a later time.
-   *
-   * @param scheduleABTestsRequest (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public ScheduleABTestResponse scheduleABTest(@Nonnull ScheduleABTestsRequest scheduleABTestsRequest) throws AlgoliaRuntimeException {
-    return this.scheduleABTest(scheduleABTestsRequest, null);
-  }
-
-  /**
-   * (asynchronously) Schedule an A/B test to be started at a later time.
-   *
-   * @param scheduleABTestsRequest (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ScheduleABTestResponse> scheduleABTestAsync(
-    @Nonnull ScheduleABTestsRequest scheduleABTestsRequest,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(scheduleABTestsRequest, "Parameter `scheduleABTestsRequest` is required when calling `scheduleABTest`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/schedule").setMethod("POST").setBody(scheduleABTestsRequest).build();
-    return executeAsync(request, requestOptions, new TypeReference<ScheduleABTestResponse>() {});
-  }
-
-  /**
-   * (asynchronously) Schedule an A/B test to be started at a later time.
-   *
-   * @param scheduleABTestsRequest (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<ScheduleABTestResponse> scheduleABTestAsync(@Nonnull ScheduleABTestsRequest scheduleABTestsRequest)
-    throws AlgoliaRuntimeException {
-    return this.scheduleABTestAsync(scheduleABTestsRequest, null);
-  }
-
-  /**
    * Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)

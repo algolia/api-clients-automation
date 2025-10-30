@@ -12,8 +12,6 @@ import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_request.d
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/list_ab_tests_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_name.dart';
-import 'package:algolia_client_abtesting_v3/src/model/schedule_ab_test_response.dart';
-import 'package:algolia_client_abtesting_v3/src/model/schedule_ab_tests_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries.dart';
 
 final class AbtestingV3Client implements ApiClient {
@@ -384,34 +382,6 @@ final class AbtestingV3Client implements ApiClient {
     return deserialize<ListABTestsResponse, ListABTestsResponse>(
       response,
       'ListABTestsResponse',
-      growable: true,
-    );
-  }
-
-  /// Schedule an A/B test to be started at a later time.
-  ///
-  /// Required API Key ACLs:
-  ///   - editSettings
-  ///
-  /// Parameters:
-  /// * [scheduleABTestsRequest]
-  /// * [requestOptions] additional request configuration.
-  Future<ScheduleABTestResponse> scheduleABTest({
-    required ScheduleABTestsRequest scheduleABTestsRequest,
-    RequestOptions? requestOptions,
-  }) async {
-    final request = ApiRequest(
-      method: RequestMethod.post,
-      path: r'/3/abtests/schedule',
-      body: scheduleABTestsRequest.toJson(),
-    );
-    final response = await _retryStrategy.execute(
-      request: request,
-      options: requestOptions,
-    );
-    return deserialize<ScheduleABTestResponse, ScheduleABTestResponse>(
-      response,
-      'ScheduleABTestResponse',
       growable: true,
     );
   }

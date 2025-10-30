@@ -48,9 +48,6 @@
       "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
       "listABTests with parameters": "var response = await client.ListABTestsAsync(\n  0,\n  21,\n  \"cts_e2e ab\",\n  \"t\",\n  Enum.Parse<Direction>(\"Asc\")\n);"
     },
-    "scheduleABTest": {
-      "default": "var response = await client.ScheduleABTestAsync(\n  new ScheduleABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    ScheduledAt = \"2022-11-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"myMetric\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
-    },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
     },
@@ -109,9 +106,6 @@
     "listABTests": {
       "listABTests with minimal parameters": "final response = await client.listABTests();",
       "listABTests with parameters": "final response = await client.listABTests(\n  offset: 0,\n  limit: 21,\n  indexPrefix: \"cts_e2e ab\",\n  indexSuffix: \"t\",\n  direction: Direction.fromJson(\"asc\"),\n);"
-    },
-    "scheduleABTest": {
-      "default": "final response = await client.scheduleABTest(\n  scheduleABTestsRequest: ScheduleABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"myMetric\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
@@ -172,9 +166,6 @@
       "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "listABTests with parameters": "response, err := client.ListABTests(\n  client.NewApiListABTestsRequest().\n    WithOffset(0).\n    WithLimit(21).\n    WithIndexPrefix(\"cts_e2e ab\").\n    WithIndexSuffix(\"t\").\n    WithDirection(abtestingV3.Direction(\"asc\")),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
-    "scheduleABTest": {
-      "default": "response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(\n  abtestingV3.NewEmptyScheduleABTestsRequest().\n    SetEndAt(\"2022-12-31T00:00:00.000Z\").\n    SetScheduledAt(\"2022-11-31T00:00:00.000Z\").\n    SetName(\"myABTest\").\n    SetMetrics(\n      []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"myMetric\")}).\n    SetVariants(\n      []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n        abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n        abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
-    },
     "setClientApiKey": {
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
@@ -233,9 +224,6 @@
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
       "listABTests with parameters": "ListABTestsResponse response = client.listABTests(0, 21, \"cts_e2e ab\", \"t\", Direction.ASC);"
-    },
-    "scheduleABTest": {
-      "default": "ScheduleABTestResponse response = client.scheduleABTest(\n  new ScheduleABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setScheduledAt(\"2022-11-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
@@ -296,9 +284,6 @@
       "listABTests with minimal parameters": "const response = await client.listABTests();",
       "listABTests with parameters": "const response = await client.listABTests({\n  offset: 0,\n  limit: 21,\n  indexPrefix: 'cts_e2e ab',\n  indexSuffix: 't',\n  direction: 'asc',\n});"
     },
-    "scheduleABTest": {
-      "default": "const response = await client.scheduleABTest({\n  endAt: '2022-12-31T00:00:00.000Z',\n  scheduledAt: '2022-11-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
-    },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
@@ -354,9 +339,6 @@
     "listABTests": {
       "listABTests with minimal parameters": "var response = client.listABTests()",
       "listABTests with parameters": "var response =\n  client.listABTests(\n    offset = 0,\n    limit = 21,\n    indexPrefix = \"cts_e2e ab\",\n    indexSuffix = \"t\",\n    direction = Direction.entries.first { it.value == \"asc\" },\n  )"
-    },
-    "scheduleABTest": {
-      "default": "var response =\n  client.scheduleABTest(\n    scheduleABTestsRequest =\n      ScheduleABTestsRequest(\n        endAt = \"2022-12-31T00:00:00.000Z\",\n        scheduledAt = \"2022-11-31T00:00:00.000Z\",\n        name = \"myABTest\",\n        metrics = listOf(CreateMetric(name = \"myMetric\")),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 30),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
@@ -417,9 +399,6 @@
       "listABTests with minimal parameters": "$response = $client->listABTests();",
       "listABTests with parameters": "$response = $client->listABTests(\n    0,\n    21,\n    'cts_e2e ab',\n    't',\n    'asc',\n);"
     },
-    "scheduleABTest": {
-      "default": "$response = $client->scheduleABTest(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'scheduledAt' => '2022-11-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'myMetric',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
-    },
     "setClientApiKey": {
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
     },
@@ -478,9 +457,6 @@
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests()",
       "listABTests with parameters": "response = client.list_ab_tests(\n    offset=0,\n    limit=21,\n    index_prefix=\"cts_e2e ab\",\n    index_suffix=\"t\",\n    direction=\"asc\",\n)"
-    },
-    "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n    schedule_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"scheduledAt\": \"2022-11-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"myMetric\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
@@ -541,9 +517,6 @@
       "listABTests with minimal parameters": "response = client.list_ab_tests",
       "listABTests with parameters": "response = client.list_ab_tests(0, 21, \"cts_e2e ab\", \"t\", \"asc\")"
     },
-    "scheduleABTest": {
-      "default": "response = client.schedule_ab_test(\n  Algolia::AbtestingV3::ScheduleABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    scheduled_at: \"2022-11-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"myMetric\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
-    },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
@@ -603,9 +576,6 @@
       "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
       "listABTests with parameters": "val response = Await.result(\n  client.listABTests(\n    offset = Some(0),\n    limit = Some(21),\n    indexPrefix = Some(\"cts_e2e ab\"),\n    indexSuffix = Some(\"t\"),\n    direction = Some(Direction.withName(\"asc\"))\n  ),\n  Duration(100, \"sec\")\n)"
     },
-    "scheduleABTest": {
-      "default": "val response = Await.result(\n  client.scheduleABTest(\n    scheduleABTestsRequest = ScheduleABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      scheduledAt = \"2022-11-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"myMetric\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
-    },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
     },
@@ -664,9 +634,6 @@
     "listABTests": {
       "listABTests with minimal parameters": "let response = try await client.listABTests()",
       "listABTests with parameters": "let response = try await client.listABTests(\n    offset: 0,\n    limit: 21,\n    indexPrefix: \"cts_e2e ab\",\n    indexSuffix: \"t\",\n    direction: AbtestingV3Direction.asc\n)"
-    },
-    "scheduleABTest": {
-      "default": "let response = try await client.scheduleABTest(scheduleABTestsRequest: AbtestingV3ScheduleABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    scheduledAt: \"2022-11-31T00:00:00.000Z\",\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
     },
     "setClientApiKey": {
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"

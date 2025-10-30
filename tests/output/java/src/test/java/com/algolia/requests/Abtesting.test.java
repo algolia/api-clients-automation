@@ -784,35 +784,6 @@ class AbtestingClientRequestsTests {
   }
 
   @Test
-  @DisplayName("scheduleABTest with minimal parameters")
-  void scheduleABTestTest() {
-    assertDoesNotThrow(() -> {
-      client.scheduleABTest(
-        new ScheduleABTestsRequest()
-          .setEndAt("2022-12-31T00:00:00.000Z")
-          .setScheduledAt("2022-11-31T00:00:00.000Z")
-          .setName("myABTest")
-          .setVariants(
-            Arrays.asList(
-              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
-              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
-            )
-          )
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/2/abtests/schedule", req.path);
-    assertEquals("POST", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-  }
-
-  @Test
   @DisplayName("stopABTest")
   void stopABTestTest() {
     assertDoesNotThrow(() -> {

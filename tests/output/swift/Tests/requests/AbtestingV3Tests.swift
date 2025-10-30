@@ -900,51 +900,6 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// scheduleABTest with minimal parameters
-    func testScheduleABTestTest() async throws {
-        let configuration = try AbtestingV3ClientConfiguration(
-            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
-            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
-            region: Region.us
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
-
-        let response = try await client
-            .scheduleABTestWithHTTPInfo(scheduleABTestsRequest: AbtestingV3ScheduleABTestsRequest(
-                name: "myABTest",
-                variants: [
-                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
-                        index: "AB_TEST_1",
-                        trafficPercentage: 30
-                    )),
-                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
-                        index: "AB_TEST_2",
-                        trafficPercentage: 50
-                    )),
-                ],
-                metrics: [CreateMetric(name: "myMetric")],
-                scheduledAt: "2022-11-31T00:00:00.000Z",
-                endAt: "2022-12-31T00:00:00.000Z"
-            ))
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"myMetric\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
-            .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/3/abtests/schedule")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// stopABTest
     func testStopABTestTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(

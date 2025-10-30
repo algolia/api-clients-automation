@@ -23,8 +23,6 @@ import 'package:algolia_client_abtesting_v3/src/model/metric_result.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metrics_filter.dart';
 import 'package:algolia_client_abtesting_v3/src/model/minimum_detectable_effect.dart';
 import 'package:algolia_client_abtesting_v3/src/model/outliers_filter.dart';
-import 'package:algolia_client_abtesting_v3/src/model/schedule_ab_test_response.dart';
-import 'package:algolia_client_abtesting_v3/src/model/schedule_ab_tests_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/status.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries_variant.dart';
@@ -115,12 +113,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'OutliersFilter':
       return OutliersFilter.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ScheduleABTestResponse':
-      return ScheduleABTestResponse.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ScheduleABTestsRequest':
-      return ScheduleABTestsRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Status':
       return Status.fromJson(value) as ReturnType;

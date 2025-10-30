@@ -530,36 +530,6 @@ class TestAbtestingClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_schedule_ab_test_(self):
-        """
-        scheduleABTest with minimal parameters
-        """
-        _req = await self._client.schedule_ab_test_with_http_info(
-            schedule_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
-                "scheduledAt": "2022-11-31T00:00:00.000Z",
-                "name": "myABTest",
-                "variants": [
-                    {
-                        "index": "AB_TEST_1",
-                        "trafficPercentage": 30,
-                    },
-                    {
-                        "index": "AB_TEST_2",
-                        "trafficPercentage": 50,
-                    },
-                ],
-            },
-        )
-
-        assert _req.path == "/2/abtests/schedule"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
-        )
-
     async def test_stop_ab_test_(self):
         """
         stopABTest
@@ -1096,36 +1066,6 @@ class TestAbtestingClientSync:
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
-
-    def test_schedule_ab_test_(self):
-        """
-        scheduleABTest with minimal parameters
-        """
-        _req = self._client.schedule_ab_test_with_http_info(
-            schedule_ab_tests_request={
-                "endAt": "2022-12-31T00:00:00.000Z",
-                "scheduledAt": "2022-11-31T00:00:00.000Z",
-                "name": "myABTest",
-                "variants": [
-                    {
-                        "index": "AB_TEST_1",
-                        "trafficPercentage": 30,
-                    },
-                    {
-                        "index": "AB_TEST_2",
-                        "trafficPercentage": 50,
-                    },
-                ],
-            },
-        )
-
-        assert _req.path == "/2/abtests/schedule"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
-        )
 
     def test_stop_ab_test_(self):
         """

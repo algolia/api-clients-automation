@@ -792,51 +792,6 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
-  /** Snippet for the scheduleABTest method.
-    *
-    * scheduleABTest with minimal parameters
-    */
-  def snippetForAbtestingV3ClientScheduleABTest(): Unit = {
-    // >SEPARATOR scheduleABTest default
-    // Initialize the client
-    val client = AbtestingV3Client(
-      appId = "ALGOLIA_APPLICATION_ID",
-      apiKey = "ALGOLIA_API_KEY",
-      region = Option("ALGOLIA_APPLICATION_REGION")
-    )
-
-    // Call the API
-    val response = Await.result(
-      client.scheduleABTest(
-        scheduleABTestsRequest = ScheduleABTestsRequest(
-          endAt = "2022-12-31T00:00:00.000Z",
-          scheduledAt = "2022-11-31T00:00:00.000Z",
-          name = "myABTest",
-          metrics = Seq(
-            CreateMetric(
-              name = "myMetric"
-            )
-          ),
-          variants = Seq(
-            AbTestsVariant(
-              index = "AB_TEST_1",
-              trafficPercentage = 30
-            ),
-            AbTestsVariant(
-              index = "AB_TEST_2",
-              trafficPercentage = 50
-            )
-          )
-        )
-      ),
-      Duration(100, "sec")
-    )
-    // >LOG
-    // print the response
-    println(response)
-    // SEPARATOR<
-  }
-
   /** Snippet for the setClientApiKey method.
     *
     * switch API key
