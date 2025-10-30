@@ -1,3 +1,9 @@
+## [1.40.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.39.0...1.40.0)
+
+- [d9b21b4b1](https://github.com/algolia/api-clients-automation/commit/d9b21b4b1) feat(specs): add `renderingContent` query parameter in Composition API main injection ([#5549](https://github.com/algolia/api-clients-automation/pull/5549)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [1eee2a5f7](https://github.com/algolia/api-clients-automation/commit/1eee2a5f7) fix(specs): add ACL to missing endpoints ([#5529](https://github.com/algolia/api-clients-automation/pull/5529)) by [@millotp](https://github.com/millotp/)
+- [38ae444d7](https://github.com/algolia/api-clients-automation/commit/38ae444d7) feat(specs): add specific documentation for `facets` query parameter in Composition API ([#5477](https://github.com/algolia/api-clients-automation/pull/5477)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [1.39.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.38.1...1.39.0)
 
 - [7287faaa7](https://github.com/algolia/api-clients-automation/commit/7287faaa7) feat(specs): add `facets` query parameter available at run time ([#5486](https://github.com/algolia/api-clients-automation/pull/5486)) by [@ClaraMuller](https://github.com/ClaraMuller/)
