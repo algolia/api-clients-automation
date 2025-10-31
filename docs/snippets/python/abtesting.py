@@ -723,44 +723,6 @@ def snippet_for_list_ab_tests1():
     # SEPARATOR<
 
 
-def snippet_for_schedule_ab_test():
-    """
-    Snippet for the scheduleABTest method.
-
-    scheduleABTest with minimal parameters
-    """
-    # >SEPARATOR scheduleABTest default
-    # Initialize the client
-    # In an asynchronous context, you can use AbtestingClient instead, which exposes the exact same methods.
-    client = AbtestingClientSync(
-        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
-    )
-
-    # Call the API
-    response = client.schedule_ab_test(
-        schedule_ab_tests_request={
-            "endAt": "2022-12-31T00:00:00.000Z",
-            "scheduledAt": "2022-11-31T00:00:00.000Z",
-            "name": "myABTest",
-            "variants": [
-                {
-                    "index": "AB_TEST_1",
-                    "trafficPercentage": 30,
-                },
-                {
-                    "index": "AB_TEST_2",
-                    "trafficPercentage": 50,
-                },
-            ],
-        },
-    )
-
-    # >LOG
-    # print the response
-    print(response)
-    # SEPARATOR<
-
-
 def snippet_for_set_client_api_key():
     """
     Snippet for the setClientApiKey method.

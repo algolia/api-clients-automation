@@ -708,46 +708,6 @@ void snippetForlistABTests1() async {
   // SEPARATOR<
 }
 
-// Snippet for the scheduleABTest method.
-//
-// scheduleABTest with minimal parameters
-void snippetForscheduleABTest() async {
-  // >SEPARATOR scheduleABTest default
-  // Initialize the client
-  final client = AbtestingV3Client(
-      appId: 'ALGOLIA_APPLICATION_ID',
-      apiKey: 'ALGOLIA_API_KEY',
-      region: 'ALGOLIA_APPLICATION_REGION');
-
-  // Call the API
-  final response = await client.scheduleABTest(
-    scheduleABTestsRequest: ScheduleABTestsRequest(
-      endAt: "2022-12-31T00:00:00.000Z",
-      scheduledAt: "2022-11-31T00:00:00.000Z",
-      name: "myABTest",
-      metrics: [
-        CreateMetric(
-          name: "myMetric",
-        ),
-      ],
-      variants: [
-        AbTestsVariant(
-          index: "AB_TEST_1",
-          trafficPercentage: 30,
-        ),
-        AbTestsVariant(
-          index: "AB_TEST_2",
-          trafficPercentage: 50,
-        ),
-      ],
-    ),
-  );
-  // >LOG
-  // print the response
-  print(response);
-  // SEPARATOR<
-}
-
 // Snippet for the setClientApiKey method.
 //
 // switch API key

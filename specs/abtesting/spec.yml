@@ -97,8 +97,6 @@ paths:
     $ref: 'paths/abtest.yml'
   /2/abtests/{id}/stop:
     $ref: 'paths/stopABTest.yml'
-  /2/abtests/schedule:
-    $ref: 'paths/scheduleABTest.yml'
   /2/abtests/estimate:
     $ref: 'paths/estimate.yml'
 

@@ -528,36 +528,6 @@ func TestAbtesting_ListABTests(t *testing.T) {
 	})
 }
 
-func TestAbtesting_ScheduleABTest(t *testing.T) {
-	t.Parallel()
-
-	client, echo := createAbtestingClient(t)
-	_ = echo
-
-	t.Run("scheduleABTest with minimal parameters", func(t *testing.T) {
-		_, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-			abtesting.NewEmptyScheduleABTestsRequest().
-				SetEndAt("2022-12-31T00:00:00.000Z").
-				SetScheduledAt("2022-11-31T00:00:00.000Z").
-				SetName("myABTest").
-				SetVariants(
-					[]abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
-						abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtesting.AbTestsVariantAsAddABTestsVariant(
-						abtesting.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/2/abtests/schedule", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
-		)
-	})
-}
-
 func TestAbtesting_StopABTest(t *testing.T) {
 	t.Parallel()
 

@@ -582,33 +582,6 @@ class SnippetAbtestingClient {
     // SEPARATOR<
   }
 
-  // Snippet for the scheduleABTest method.
-  //
-  // scheduleABTest with minimal parameters
-  void snippetForScheduleABTest() throws Exception {
-    // >SEPARATOR scheduleABTest default
-    // Initialize the client
-    AbtestingClient client = new AbtestingClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
-
-    // Call the API
-    ScheduleABTestResponse response = client.scheduleABTest(
-      new ScheduleABTestsRequest()
-        .setEndAt("2022-12-31T00:00:00.000Z")
-        .setScheduledAt("2022-11-31T00:00:00.000Z")
-        .setName("myABTest")
-        .setVariants(
-          Arrays.asList(
-            new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
-            new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
-          )
-        )
-    );
-    // >LOG
-    // print the response
-    System.out.println(response);
-    // SEPARATOR<
-  }
-
   // Snippet for the setClientApiKey method.
   //
   // switch API key

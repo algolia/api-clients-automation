@@ -476,74 +476,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-  /3/abtests/schedule:
-    post:
-      tags:
-        - abtesting-v3
-      operationId: scheduleABTest
-      x-acl:
-        - editSettings
-      summary: Schedule an A/B test
-      description: |
-        Schedule an A/B test to be started at a later time.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: scheduleABTestsRequest
-              type: object
-              additionalProperties: false
-              properties:
-                name:
-                  $ref: '#/components/schemas/name'
-                variants:
-                  type: array
-                  description: A/B test variants.
-                  minItems: 2
-                  items:
-                    $ref: '#/components/schemas/AddABTestsVariant'
-                metrics:
-                  type: array
-                  description: >-
-                    A/B test metrics involved in the test. Only these metrics
-                    will be considered when calculating results.
-                  items:
-                    $ref: '#/components/schemas/createMetric'
-                configuration:
-                  $ref: '#/components/schemas/ABTestConfiguration'
-                scheduledAt:
-                  $ref: '#/components/schemas/scheduledAt'
-                endAt:
-                  $ref: '#/components/schemas/endAt'
-              required:
-                - name
-                - variants
-                - metrics
-                - scheduledAt
-                - endAt
-      responses:
-        '200':
-          description: OK
-          headers:
-            x-ratelimit-limit:
-              $ref: '#/components/headers/x-ratelimit-limit'
-            x-ratelimit-remaining:
-              $ref: '#/components/headers/x-ratelimit-remaining'
-            x-ratelimit-reset:
-              $ref: '#/components/headers/x-ratelimit-reset'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ScheduleABTestResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
   /3/abtests/estimate:
     post:
       tags:
@@ -1249,24 +1181,6 @@ components:
         - abTestID
         - index
         - taskID
-    scheduledAt:
-      type: string
-      description: >-
-        Date and time when the A/B test is scheduled to start, in RFC 3339
-        format.
-      example: '2023-06-15T15:06:44.400601Z'
-    abTestScheduleID:
-      type: integer
-      description: Unique scheduled A/B test identifier.
-      example: 224
-    ScheduleABTestResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        abTestScheduleID:
-          $ref: '#/components/schemas/abTestScheduleID'
-      required:
-        - abTestScheduleID
     EstimateABTestResponse:
       type: object
       properties:

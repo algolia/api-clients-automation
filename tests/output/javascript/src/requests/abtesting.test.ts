@@ -354,33 +354,6 @@ describe('listABTests', () => {
   });
 });
 
-describe('scheduleABTest', () => {
-  test('scheduleABTest with minimal parameters', async () => {
-    const req = (await client.scheduleABTest({
-      endAt: '2022-12-31T00:00:00.000Z',
-      scheduledAt: '2022-11-31T00:00:00.000Z',
-      name: 'myABTest',
-      variants: [
-        { index: 'AB_TEST_1', trafficPercentage: 30 },
-        { index: 'AB_TEST_2', trafficPercentage: 50 },
-      ],
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/2/abtests/schedule');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      endAt: '2022-12-31T00:00:00.000Z',
-      scheduledAt: '2022-11-31T00:00:00.000Z',
-      name: 'myABTest',
-      variants: [
-        { index: 'AB_TEST_1', trafficPercentage: 30 },
-        { index: 'AB_TEST_2', trafficPercentage: 50 },
-      ],
-    });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('stopABTest', () => {
   test('stopABTest', async () => {
     const req = (await client.stopABTest({ id: 42 })) as unknown as EchoResponse;

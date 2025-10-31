@@ -585,35 +585,6 @@ class AbtestingTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('scheduleABTest with minimal parameters')]
-    public function testScheduleABTest(): void
-    {
-        $client = $this->getClient();
-        $client->scheduleABTest(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                'name' => 'myABTest',
-                'variants' => [
-                    ['index' => 'AB_TEST_1',
-                        'trafficPercentage' => 30,
-                    ],
-
-                    ['index' => 'AB_TEST_2',
-                        'trafficPercentage' => 50,
-                    ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/abtests/schedule',
-                'method' => 'POST',
-                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}'),
-            ],
-        ]);
-    }
-
     #[TestDox('stopABTest')]
     public function testStopABTest(): void
     {

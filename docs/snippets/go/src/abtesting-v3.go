@@ -761,45 +761,6 @@ func SnippetForListABTestsOfAbtestingV31() {
 	// SEPARATOR<
 }
 
-func SnippetForScheduleABTestOfAbtestingV3() {
-	/*
-	   Snippet for the scheduleABTest method.
-
-	   scheduleABTest with minimal parameters
-	*/
-
-	// >SEPARATOR scheduleABTest default
-	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
-	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-		abtestingV3.NewEmptyScheduleABTestsRequest().
-			SetEndAt("2022-12-31T00:00:00.000Z").
-			SetScheduledAt("2022-11-31T00:00:00.000Z").
-			SetName("myABTest").
-			SetMetrics(
-				[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).
-			SetVariants(
-				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-	))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// >LOG
-	// print the response
-	print(response)
-	// SEPARATOR<
-}
-
 func SnippetForSetClientApiKeyOfAbtestingV3() {
 	/*
 	   Snippet for the setClientApiKey method.

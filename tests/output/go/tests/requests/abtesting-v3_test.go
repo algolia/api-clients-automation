@@ -556,38 +556,6 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 	})
 }
 
-func TestAbtestingV3_ScheduleABTest(t *testing.T) {
-	t.Parallel()
-
-	client, echo := createAbtestingV3Client(t)
-	_ = echo
-
-	t.Run("scheduleABTest with minimal parameters", func(t *testing.T) {
-		_, err := client.ScheduleABTest(client.NewApiScheduleABTestRequest(
-			abtestingV3.NewEmptyScheduleABTestsRequest().
-				SetEndAt("2022-12-31T00:00:00.000Z").
-				SetScheduledAt("2022-11-31T00:00:00.000Z").
-				SetName("myABTest").
-				SetMetrics(
-					[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("myMetric")}).
-				SetVariants(
-					[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
-						abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
-						abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}),
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/3/abtests/schedule", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"endAt":"2022-12-31T00:00:00.000Z","scheduledAt":"2022-11-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
-		)
-	})
-}
-
 func TestAbtestingV3_StopABTest(t *testing.T) {
 	t.Parallel()
 

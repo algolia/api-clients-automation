@@ -693,44 +693,6 @@ class SnippetAbtestingV3Client
     }
 
     /**
-     * Snippet for the ScheduleABTest method.
-     *
-     * scheduleABTest with minimal parameters
-     */
-    public function snippetForScheduleABTest(): void
-    {
-        // >SEPARATOR scheduleABTest default
-        // Initialize the client
-        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
-
-        // Call the API
-        $response = $client->scheduleABTest(
-            ['endAt' => '2022-12-31T00:00:00.000Z',
-                'scheduledAt' => '2022-11-31T00:00:00.000Z',
-                'name' => 'myABTest',
-                'metrics' => [
-                    ['name' => 'myMetric',
-                    ],
-                ],
-                'variants' => [
-                    ['index' => 'AB_TEST_1',
-                        'trafficPercentage' => 30,
-                    ],
-
-                    ['index' => 'AB_TEST_2',
-                        'trafficPercentage' => 50,
-                    ],
-                ],
-            ],
-        );
-
-        // >LOG
-        // print the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the SetClientApiKey method.
      *
      * switch API key

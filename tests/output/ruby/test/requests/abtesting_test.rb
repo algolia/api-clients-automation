@@ -388,32 +388,6 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # scheduleABTest with minimal parameters
-  def test_schedule_ab_test
-    req = @client.schedule_ab_test_with_http_info(
-      Algolia::Abtesting::ScheduleABTestsRequest.new(
-        end_at: "2022-12-31T00:00:00.000Z",
-        scheduled_at: "2022-11-31T00:00:00.000Z",
-        name: "myABTest",
-        variants: [
-          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
-          Algolia::Abtesting::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
-        ]
-      )
-    )
-
-    assert_equal(:post, req.method)
-    assert_equal("/2/abtests/schedule", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(
-      JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"scheduledAt\":\"2022-11-31T00:00:00.000Z\",\"name\":\"myABTest\",\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
-      ),
-      JSON.parse(req.body)
-    )
-  end
-
   # stopABTest
   def test_stop_ab_test
     req = @client.stop_ab_test_with_http_info(42)

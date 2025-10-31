@@ -511,32 +511,6 @@ export async function snippetForListABTests1(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the scheduleABTest method.
-//
-// scheduleABTest with minimal parameters
-export async function snippetForScheduleABTest(): Promise<void> {
-  // >SEPARATOR scheduleABTest default
-  // Initialize the client
-  // Replace 'us' with your Algolia Application Region
-  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtesting({ region: 'us' });
-
-  // Call the API
-  const response = await client.scheduleABTest({
-    endAt: '2022-12-31T00:00:00.000Z',
-    scheduledAt: '2022-11-31T00:00:00.000Z',
-    name: 'myABTest',
-    variants: [
-      { index: 'AB_TEST_1', trafficPercentage: 30 },
-      { index: 'AB_TEST_2', trafficPercentage: 50 },
-    ],
-  });
-
-  // >LOG
-  // print the response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the setClientApiKey method.
 //
 // switch API key

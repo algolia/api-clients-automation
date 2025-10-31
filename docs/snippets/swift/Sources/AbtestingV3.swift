@@ -524,37 +524,6 @@ final class AbtestingV3ClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the scheduleABTest method.
-    ///
-    /// scheduleABTest with minimal parameters
-    func snippetForScheduleABTest() async throws {
-        // >SEPARATOR scheduleABTest default
-        // Initialize the client
-        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client.scheduleABTest(scheduleABTestsRequest: AbtestingV3ScheduleABTestsRequest(
-            name: "myABTest",
-            variants: [
-                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
-                    index: "AB_TEST_1",
-                    trafficPercentage: 30
-                )),
-                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
-                    index: "AB_TEST_2",
-                    trafficPercentage: 50
-                )),
-            ],
-            metrics: [CreateMetric(name: "myMetric")],
-            scheduledAt: "2022-11-31T00:00:00.000Z",
-            endAt: "2022-12-31T00:00:00.000Z"
-        ))
-        // >LOG
-        // print the response
-        print(response)
-        // SEPARATOR<
-    }
-
     /// Snippet for the setClientApiKey method.
     ///
     /// switch API key

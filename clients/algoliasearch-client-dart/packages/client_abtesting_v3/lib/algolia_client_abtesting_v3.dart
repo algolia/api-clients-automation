@@ -30,8 +30,6 @@ export 'src/model/metric_result.dart';
 export 'src/model/metrics_filter.dart';
 export 'src/model/minimum_detectable_effect.dart';
 export 'src/model/outliers_filter.dart';
-export 'src/model/schedule_ab_test_response.dart';
-export 'src/model/schedule_ab_tests_request.dart';
 export 'src/model/status.dart';
 export 'src/model/timeseries.dart';
 export 'src/model/timeseries_variant.dart';
