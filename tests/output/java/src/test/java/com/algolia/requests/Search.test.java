@@ -4594,7 +4594,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("similarQuery")
+  @DisplayName("search query")
   void searchSingleIndexTest45() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", new SearchParamsObject().setQuery("shirt"), Hit.class);
@@ -4632,7 +4632,7 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("search_a_query")
+  @DisplayName("similarQuery")
   void searchSingleIndexTest48() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex(

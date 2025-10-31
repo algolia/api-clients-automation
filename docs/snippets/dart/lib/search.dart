@@ -5319,9 +5319,9 @@ void snippetForsearchSingleIndex44() async {
 
 // Snippet for the searchSingleIndex method.
 //
-// similarQuery
+// search query
 void snippetForsearchSingleIndex45() async {
-  // >SEPARATOR searchSingleIndex similarQuery
+  // >SEPARATOR searchSingleIndex search query
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -5386,9 +5386,9 @@ void snippetForsearchSingleIndex47() async {
 
 // Snippet for the searchSingleIndex method.
 //
-// search_a_query
+// similarQuery
 void snippetForsearchSingleIndex48() async {
-  // >SEPARATOR searchSingleIndex search_a_query
+  // >SEPARATOR searchSingleIndex similarQuery
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');

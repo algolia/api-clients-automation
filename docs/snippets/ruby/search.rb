@@ -4687,9 +4687,9 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# similarQuery
+# search query
 def snippet_for_search_single_index45
-  # >SEPARATOR searchSingleIndex similarQuery
+  # >SEPARATOR searchSingleIndex search query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -4741,9 +4741,9 @@ end
 
 # Snippet for the searchSingleIndex method.
 #
-# search_a_query
+# similarQuery
 def snippet_for_search_single_index48
-  # >SEPARATOR searchSingleIndex search_a_query
+  # >SEPARATOR searchSingleIndex similarQuery
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 

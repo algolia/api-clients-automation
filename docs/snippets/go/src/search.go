@@ -6695,10 +6695,10 @@ func SnippetForSearchSingleIndexOfSearch45() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
-	   similarQuery
+	   search query
 	*/
 
-	// >SEPARATOR searchSingleIndex similarQuery
+	// >SEPARATOR searchSingleIndex search query
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -6785,10 +6785,10 @@ func SnippetForSearchSingleIndexOfSearch48() {
 	/*
 	   Snippet for the searchSingleIndex method.
 
-	   search_a_query
+	   similarQuery
 	*/
 
-	// >SEPARATOR searchSingleIndex search_a_query
+	// >SEPARATOR searchSingleIndex similarQuery
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {

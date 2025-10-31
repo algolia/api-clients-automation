@@ -6404,10 +6404,10 @@ class SnippetSearchClient {
 
   /** Snippet for the searchSingleIndex method.
     *
-    * similarQuery
+    * search query
     */
   def snippetForSearchClientSearchSingleIndex45(): Unit = {
-    // >SEPARATOR searchSingleIndex similarQuery
+    // >SEPARATOR searchSingleIndex search query
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -6486,10 +6486,10 @@ class SnippetSearchClient {
 
   /** Snippet for the searchSingleIndex method.
     *
-    * search_a_query
+    * similarQuery
     */
   def snippetForSearchClientSearchSingleIndex48(): Unit = {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 

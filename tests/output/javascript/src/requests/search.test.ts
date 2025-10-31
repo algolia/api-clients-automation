@@ -3182,7 +3182,7 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('similarQuery', async () => {
+  test('search query', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
       searchParams: { query: 'shirt' },
@@ -3218,7 +3218,7 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('search_a_query', async () => {
+  test('similarQuery', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
       searchParams: {

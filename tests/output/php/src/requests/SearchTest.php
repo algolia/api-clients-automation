@@ -4737,7 +4737,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('similarQuery')]
+    #[TestDox('search query')]
     public function testSearchSingleIndex45(): void
     {
         $client = $this->getClient();
@@ -4795,7 +4795,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('search_a_query')]
+    #[TestDox('similarQuery')]
     public function testSearchSingleIndex48(): void
     {
         $client = $this->getClient();

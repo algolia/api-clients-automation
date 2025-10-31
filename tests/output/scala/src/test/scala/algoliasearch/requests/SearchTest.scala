@@ -5019,7 +5019,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("similarQuery45") {
+  test("search query45") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -5083,7 +5083,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search_a_query48") {
+  test("similarQuery48") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",

@@ -4574,9 +4574,9 @@ export async function snippetForSearchSingleIndex44(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
-// similarQuery
+// search query
 export async function snippetForSearchSingleIndex45(): Promise<void> {
-  // >SEPARATOR searchSingleIndex similarQuery
+  // >SEPARATOR searchSingleIndex search query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -4628,9 +4628,9 @@ export async function snippetForSearchSingleIndex47(): Promise<void> {
 
 // Snippet for the searchSingleIndex method.
 //
-// search_a_query
+// similarQuery
 export async function snippetForSearchSingleIndex48(): Promise<void> {
-  // >SEPARATOR searchSingleIndex search_a_query
+  // >SEPARATOR searchSingleIndex similarQuery
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

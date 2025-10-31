@@ -6216,11 +6216,11 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
-  /// similarQuery
+  /// search query
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex45()
   {
-    // >SEPARATOR searchSingleIndex similarQuery
+    // >SEPARATOR searchSingleIndex search query
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -6282,11 +6282,11 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the SearchSingleIndex method.
   ///
-  /// search_a_query
+  /// similarQuery
   /// </summary>
   public async Task SnippetForSearchClientSearchSingleIndex48()
   {
-    // >SEPARATOR searchSingleIndex search_a_query
+    // >SEPARATOR searchSingleIndex similarQuery
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 

@@ -6361,11 +6361,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * similarQuery
+     * search query
      */
     public function snippetForSearchSingleIndex45(): void
     {
-        // >SEPARATOR searchSingleIndex similarQuery
+        // >SEPARATOR searchSingleIndex search query
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -6434,11 +6434,11 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * search_a_query
+     * similarQuery
      */
     public function snippetForSearchSingleIndex48(): void
     {
-        // >SEPARATOR searchSingleIndex search_a_query
+        // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 

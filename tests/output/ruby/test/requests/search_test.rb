@@ -3589,7 +3589,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # similarQuery
+  # search query
   def test_search_single_index45
     req = @client.search_single_index_with_http_info(
       "indexName",
@@ -3628,7 +3628,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"query\":\"books\",\"filters\":\"price:10 TO 20\"}"), JSON.parse(req.body))
   end
 
-  # search_a_query
+  # similarQuery
   def test_search_single_index48
     req = @client.search_single_index_with_http_info(
       "indexName",

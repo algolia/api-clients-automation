@@ -3386,7 +3386,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"query","disableTypoToleranceOnAttributes":["serial_number"]}`)
 	})
-	t.Run("similarQuery", func(t *testing.T) {
+	t.Run("search query", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().SetQuery("shirt"))))
@@ -3422,7 +3422,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"query":"books","filters":"price:10 TO 20"}`)
 	})
-	t.Run("search_a_query", func(t *testing.T) {
+	t.Run("similarQuery", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
 			search.NewEmptySearchParamsObject().

@@ -4609,7 +4609,7 @@ class TestSearchClient:
 
     async def test_search_single_index_45(self):
         """
-        similarQuery
+        search query
         """
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -4663,7 +4663,7 @@ class TestSearchClient:
 
     async def test_search_single_index_48(self):
         """
-        search_a_query
+        similarQuery
         """
         _req = await self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -13868,7 +13868,7 @@ class TestSearchClientSync:
 
     def test_search_single_index_45(self):
         """
-        similarQuery
+        search query
         """
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",
@@ -13922,7 +13922,7 @@ class TestSearchClientSync:
 
     def test_search_single_index_48(self):
         """
-        search_a_query
+        similarQuery
         """
         _req = self._client.search_single_index_with_http_info(
             index_name="indexName",

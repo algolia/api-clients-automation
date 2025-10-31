@@ -4637,9 +4637,9 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
-    /// similarQuery
+    /// search query
     func snippetForSearchSingleIndex45() async throws {
-        // >SEPARATOR searchSingleIndex similarQuery
+        // >SEPARATOR searchSingleIndex search query
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -4697,9 +4697,9 @@ final class SearchClientSnippet {
 
     /// Snippet for the searchSingleIndex method.
     ///
-    /// search_a_query
+    /// similarQuery
     func snippetForSearchSingleIndex48() async throws {
-        // >SEPARATOR searchSingleIndex search_a_query
+        // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 

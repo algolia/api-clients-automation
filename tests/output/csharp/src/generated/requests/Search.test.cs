@@ -4984,7 +4984,7 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "similarQuery")]
+  [Fact(DisplayName = "search query")]
   public async Task SearchSingleIndexTest45()
   {
     await client.SearchSingleIndexAsync<Hit>(
@@ -5030,7 +5030,7 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "search_a_query")]
+  [Fact(DisplayName = "similarQuery")]
   public async Task SearchSingleIndexTest48()
   {
     await client.SearchSingleIndexAsync<Hit>(

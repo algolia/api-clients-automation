@@ -4881,7 +4881,7 @@ class SearchTest {
   }
 
   @Test
-  fun `similarQuery45`() = runTest {
+  fun `search query45`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -4929,7 +4929,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search_a_query48`() = runTest {
+  fun `similarQuery48`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
