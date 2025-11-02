@@ -363,19 +363,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asamuzakjp/dom-selector@npm:^6.7.2":
-  version: 6.7.2
-  resolution: "@asamuzakjp/dom-selector@npm:6.7.2"
-  dependencies:
-    "@asamuzakjp/nwsapi": "npm:^2.3.9"
-    bidi-js: "npm:^1.0.3"
-    css-tree: "npm:^3.1.0"
-    is-potential-custom-element-name: "npm:^1.0.1"
-    lru-cache: "npm:^11.2.2"
-  checksum: 10/a78422cbb124f87addaafb4e8991fac89cb21a99e16033da69def3b14174bb35893254c9ad6218c1f499d07dfb33b0dedfc4129335de572e87db63d9d07aa2de
-  languageName: node
-  linkType: hard
-
 "@asamuzakjp/dom-selector@npm:^6.7.3":
   version: 6.7.4
   resolution: "@asamuzakjp/dom-selector@npm:6.7.4"
@@ -443,22 +430,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.10.0"
+"@cloudflare/vitest-pool-workers@npm:0.10.3":
+  version: 0.10.3
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.10.3"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
     devalue: "npm:^5.3.2"
     miniflare: "npm:4.20251011.1"
     semver: "npm:^7.7.1"
-    wrangler: "npm:4.45.0"
+    wrangler: "npm:4.45.3"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 3.2.x
     "@vitest/snapshot": 2.0.x - 3.2.x
     vitest: 2.0.x - 3.2.x
-  checksum: 10/8ef4fe9b4b167b85da61ed5841344fa9ce2dfad5c148fe0e9eca4c4932c86b2fcd57185510f16228c8775f66f048b83506ed9adf9232ff5c6a645a8da41ad229
+  checksum: 10/e151334a1cd423e79c191cce7b1521c6ecffb91ed27903b51befd178d8f15819461f0295d638ac4a1af107dfd9174bd2bd3b9d36225a48022344e3105b7ec513
   languageName: node
   linkType: hard
 
@@ -2810,10 +2797,10 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.42.0"
     "@algolia/requester-testing": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@cloudflare/vitest-pool-workers": "npm:0.10.0"
+    "@cloudflare/vitest-pool-workers": "npm:0.10.3"
     "@cloudflare/workers-types": "npm:4.20251014.0"
     "@types/node": "npm:22.18.12"
-    jsdom: "npm:27.0.1"
+    jsdom: "npm:27.1.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -3761,17 +3748,6 @@ __metadata:
   bin:
     cssesc: bin/cssesc
   checksum: 10/0e161912c1306861d8f46e1883be1cbc8b1b2879f0f509287c0db71796e4ddfb97ac96bdfca38f77f452e2c10554e1bb5678c99b07a5cf947a12778f73e47e12
-  languageName: node
-  linkType: hard
-
-"cssstyle@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "cssstyle@npm:5.3.1"
-  dependencies:
-    "@asamuzakjp/css-color": "npm:^4.0.3"
-    "@csstools/css-syntax-patches-for-csstree": "npm:^1.0.14"
-    css-tree: "npm:^3.1.0"
-  checksum: 10/090f3a82b1731d346af369fd8e4b85a954ce738071caab6bfd20cc669f26952a60ef517acb17b18c95b90a17e3a0659a7a293c03bab1e77c68bb7301e906fd2d
   languageName: node
   linkType: hard
 
@@ -5454,39 +5430,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10/9e22d80b4d0105b9899135365f746d47466ed53ef4223c529b3c0f7a39907743fdbd3c4379f94f1106f02755b5e90b2faaf84801a891135544e1ea475d1a1379
-  languageName: node
-  linkType: hard
-
-"jsdom@npm:27.0.1":
-  version: 27.0.1
-  resolution: "jsdom@npm:27.0.1"
-  dependencies:
-    "@asamuzakjp/dom-selector": "npm:^6.7.2"
-    cssstyle: "npm:^5.3.1"
-    data-urls: "npm:^6.0.0"
-    decimal.js: "npm:^10.6.0"
-    html-encoding-sniffer: "npm:^4.0.0"
-    http-proxy-agent: "npm:^7.0.2"
-    https-proxy-agent: "npm:^7.0.6"
-    is-potential-custom-element-name: "npm:^1.0.1"
-    parse5: "npm:^8.0.0"
-    rrweb-cssom: "npm:^0.8.0"
-    saxes: "npm:^6.0.0"
-    symbol-tree: "npm:^3.2.4"
-    tough-cookie: "npm:^6.0.0"
-    w3c-xmlserializer: "npm:^5.0.0"
-    webidl-conversions: "npm:^8.0.0"
-    whatwg-encoding: "npm:^3.1.1"
-    whatwg-mimetype: "npm:^4.0.0"
-    whatwg-url: "npm:^15.1.0"
-    ws: "npm:^8.18.3"
-    xml-name-validator: "npm:^5.0.0"
-  peerDependencies:
-    canvas: ^3.0.0
-  peerDependenciesMeta:
-    canvas:
-      optional: true
-  checksum: 10/94ad4c909cf977fc6c9a649e59c8118502de24ed4998272d9b3e14a4b8dbd63ae93625253cb3bcef3c64120f61b7b000ba508b60fa1c40559ee714007e3b2c25
   languageName: node
   linkType: hard
 
@@ -7727,13 +7670,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rrweb-cssom@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "rrweb-cssom@npm:0.8.0"
-  checksum: 10/07521ee36fb6569c17906afad1ac7ff8f099d49ade9249e190693ac36cdf27f88d9acf0cc66978935d5d0a23fca105643d7e9125b9a9d91ed9db9e02d31d7d80
-  languageName: node
-  linkType: hard
-
 "run-async@npm:^4.0.5":
   version: 4.0.6
   resolution: "run-async@npm:4.0.6"
@@ -9189,9 +9125,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.45.0":
-  version: 4.45.0
-  resolution: "wrangler@npm:4.45.0"
+"wrangler@npm:4.45.3":
+  version: 4.45.3
+  resolution: "wrangler@npm:4.45.3"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.7.8"
@@ -9213,7 +9149,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10/fc03974abd958632fe90460a191982c2492c3dfb70f98f59ac38b2696c2c05fdef900dc27f5a42a044265fd0e9ed362aaa6c81281b6321b5214b38e1f7c7a026
+  checksum: 10/cb0774dbe42c3fd96a58cee41a84ef7e8d620f557b4fc3fc148bbf1d6937d4da21ff227b184fbd63effa68ca90044f3cad83e9848322e4c0f403096306a32f61
   languageName: node
   linkType: hard
 
