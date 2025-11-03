@@ -13,7 +13,7 @@ algoliasearch = { path = "../../../clients/algoliasearch-client-python", develop
 ruff = "== 0.14.1"
 pyright = "== 1.1.406"
 pytest = "=8.3.5"
-python-dotenv = "=1.0.1"
+python-dotenv = "=1.2.1"
 pytest-aiohttp = "=1.0.5"
 
 [tool.pytest.ini_options]
