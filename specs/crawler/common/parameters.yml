@@ -6,6 +6,14 @@ CrawlerIdParameter:
   schema:
     $ref: '#/CrawlerID'
 
+CrawlerLogIdParameter:
+  name: logId
+  in: path
+  description: Crawler log ID.
+  required: true
+  schema:
+    $ref: '#/CrawlerLogID'
+
 TaskIdParameter:
   name: taskID
   in: path
@@ -36,6 +44,48 @@ Page:
   schema:
     $ref: '#/page'
 
+From:
+  name: from
+  in: query
+  description: Date 'from' filter.
+  schema:
+    $ref: '#/from'
+
+Until:
+  name: until
+  in: query
+  description: Date 'until' filter.
+  schema:
+    $ref: '#/until'
+
+Status:
+  name: status
+  in: query
+  description: Status to filter 'DONE', 'SKIPPED' or 'FAILED'.
+  schema:
+    $ref: '#/urlsCrawledGroupStatus'
+
+Limit:
+  name: limit
+  in: query
+  description: Limit of the query results.
+  schema:
+    $ref: '#/limit'
+
+Offset:
+  name: offset
+  in: query
+  description: Offset of the query results.
+  schema:
+    $ref: '#/offset'
+
+Order:
+  name: order
+  in: query
+  description: Order of the query 'ASC' or 'DESC'.
+  schema:
+    $ref: '#/order'
+
 Name:
   name: name
   in: query
@@ -59,6 +109,11 @@ CrawlerID:
   type: string
   description: Universally unique identifier (UUID) of the crawler.
   example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+
+CrawlerLogID:
+  type: string
+  description: Universally unique identifier (UUID) of the crawler log.
+  example: a2ebb507-ef64-4b6b-9d84-ef66baaa7a80
 
 TaskID:
   type: string
@@ -136,6 +191,37 @@ total:
   type: integer
   description: Total number of retrievable items.
   example: 100
+
+from:
+  type: string
+  description: Unix string 'from' date.
+  example: 1762264044
+
+until:
+  type: string
+  description: Unix string 'until' date.
+  example: 1762264044
+
+limit:
+  type: integer
+  description: Limit of the query results.
+  minimum: 1
+  default: 10
+  maximum: 1000
+  example: 10
+
+offset:
+  type: integer
+  description: Offset of the query results.
+  example: 11
+
+order:
+  type: string
+  description: |
+    Order of the query.
+  enum:
+    - ASC
+    - DESC
 
 Pagination:
   type: object

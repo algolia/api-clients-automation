@@ -1,0 +1,23 @@
+get:
+  operationId: getCrawlRunFile
+  summary: Crawler run file
+  description: |
+    The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording
+    detailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,
+    verifying site coverage, and monitoring crawler performance over time.
+  tags:
+    - crawlers
+  x-acl:
+    - settings
+  parameters:
+    - $ref: '../common/parameters.yml#/CrawlerIdParameter'
+    - $ref: '../common/parameters.yml#/CrawlerLogIdParameter'
+  responses:
+    '200':
+      $ref: '../common/schemas/crawlerLogsResponse.yml'
+    '400':
+      $ref: '../../common/responses/InvalidRequest.yml'
+    '401':
+      $ref: '../common/schemas/responses.yml#/MissingAuthorization'
+    '403':
+      $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'

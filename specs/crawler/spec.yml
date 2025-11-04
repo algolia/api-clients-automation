@@ -103,6 +103,10 @@ paths:
     $ref: 'paths/crawlerCrawl.yml'
   /1/crawlers/{id}/stats/urls:
     $ref: 'paths/crawlerStats.yml'
+  /1/crawlers/{id}/crawl_runs:
+    $ref: 'paths/crawlerLogs.yml'
+  /1/crawlers/{id}/{logId}/download:
+    $ref: 'paths/crawlerLogsFile.yml'
   /1/crawlers/{id}/config:
     $ref: 'paths/crawlerConfig.yml'
   /1/crawlers/{id}/config/versions:
