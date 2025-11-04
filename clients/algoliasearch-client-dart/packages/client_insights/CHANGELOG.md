@@ -1,3 +1,7 @@
+## [1.41.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.40.0...1.41.0)
+
+- [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [1.40.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.39.0...1.40.0)
 
 - [d9b21b4b1](https://github.com/algolia/api-clients-automation/commit/d9b21b4b1) feat(specs): add `renderingContent` query parameter in Composition API main injection ([#5549](https://github.com/algolia/api-clients-automation/pull/5549)) by [@ClaraMuller](https://github.com/ClaraMuller/)

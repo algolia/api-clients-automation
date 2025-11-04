@@ -1,3 +1,7 @@
+## [5.43.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.42.0...5.43.0)
+
+- [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [5.42.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.41.0...5.42.0)
 
 - [1eee2a5f7](https://github.com/algolia/api-clients-automation/commit/1eee2a5f7) fix(specs): add ACL to missing endpoints ([#5529](https://github.com/algolia/api-clients-automation/pull/5529)) by [@millotp](https://github.com/millotp/)
