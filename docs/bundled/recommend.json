@@ -2496,6 +2496,18 @@
         "description": "Unique record identifier.",
         "example": "test-record-123"
       },
+      "fallbackParams": {
+        "title": "fallbackParameters",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/recommendSearchParams"
+          },
+          {
+            "type": "object",
+            "description": "Search parameters to use for a fallback request if there aren't enough recommendations."
+          }
+        ]
+      },
       "frequentlyBoughtTogether": {
         "type": "object",
         "properties": {
@@ -2504,6 +2516,9 @@
           },
           "objectID": {
             "$ref": "#/components/schemas/objectID"
+          },
+          "fallbackParameters": {
+            "$ref": "#/components/schemas/fallbackParams"
           }
         },
         "required": [
@@ -2527,18 +2542,6 @@
         "description": "Related products or similar content model.\n\nThis model recommends items that are similar to the item with the ID `objectID`.\nSimilarity is determined from the user interactions and attributes.\n",
         "enum": [
           "related-products"
-        ]
-      },
-      "fallbackParams": {
-        "title": "fallbackParameters",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/recommendSearchParams"
-          },
-          {
-            "type": "object",
-            "description": "Search parameters to use for a fallback request if there aren't enough recommendations."
-          }
         ]
       },
       "relatedProducts": {

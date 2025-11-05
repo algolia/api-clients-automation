@@ -29,6 +29,9 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
   @JsonProperty("objectID")
   private String objectID;
 
+  @JsonProperty("fallbackParameters")
+  private FallbackParams fallbackParameters;
+
   public BoughtTogetherQuery setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
@@ -103,6 +106,17 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
     return objectID;
   }
 
+  public BoughtTogetherQuery setFallbackParameters(FallbackParams fallbackParameters) {
+    this.fallbackParameters = fallbackParameters;
+    return this;
+  }
+
+  /** Get fallbackParameters */
+  @javax.annotation.Nullable
+  public FallbackParams getFallbackParameters() {
+    return fallbackParameters;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -118,13 +132,14 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
       Objects.equals(this.maxRecommendations, boughtTogetherQuery.maxRecommendations) &&
       Objects.equals(this.queryParameters, boughtTogetherQuery.queryParameters) &&
       Objects.equals(this.model, boughtTogetherQuery.model) &&
-      Objects.equals(this.objectID, boughtTogetherQuery.objectID)
+      Objects.equals(this.objectID, boughtTogetherQuery.objectID) &&
+      Objects.equals(this.fallbackParameters, boughtTogetherQuery.fallbackParameters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters, model, objectID);
+    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters, model, objectID, fallbackParameters);
   }
 
   @Override
@@ -137,6 +152,7 @@ public class BoughtTogetherQuery implements RecommendationsRequest {
     sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
     sb.append("    model: ").append(toIndentedString(model)).append("\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
+    sb.append("    fallbackParameters: ").append(toIndentedString(fallbackParameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

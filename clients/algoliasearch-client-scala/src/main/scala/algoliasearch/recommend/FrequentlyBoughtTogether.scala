@@ -38,5 +38,6 @@ import algoliasearch.recommend.FbtModel._
   */
 case class FrequentlyBoughtTogether(
     model: FbtModel,
-    objectID: String
+    objectID: String,
+    fallbackParameters: Option[FallbackParams] = scala.None
 )

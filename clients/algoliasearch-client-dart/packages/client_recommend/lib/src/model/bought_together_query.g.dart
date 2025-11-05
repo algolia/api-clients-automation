@@ -24,6 +24,11 @@ BoughtTogetherQuery _$BoughtTogetherQueryFromJson(Map<String, dynamic> json) =>
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$FbtModelEnumMap, v)),
           objectID: $checkedConvert('objectID', (v) => v as String),
+          fallbackParameters: $checkedConvert(
+              'fallbackParameters',
+              (v) => v == null
+                  ? null
+                  : FallbackParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -45,6 +50,7 @@ Map<String, dynamic> _$BoughtTogetherQueryToJson(BoughtTogetherQuery instance) {
   writeNotNull('queryParameters', instance.queryParameters?.toJson());
   val['model'] = instance.model.toJson();
   val['objectID'] = instance.objectID;
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
   return val;
 }
 
