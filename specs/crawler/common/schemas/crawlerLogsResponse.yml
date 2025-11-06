@@ -1,0 +1,69 @@
+description: List Response of Crawler Logs.
+content:
+  application/json:
+    schema:
+      title: listCrawlerLogsResponse
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            title: crawlerLogItem
+            type: object
+            properties:
+              id:
+                type: string
+                description: ID of the crawler log.
+              configId:
+                type: string
+                description: Crawler Config identifier.
+              reindexId:
+                type: string
+                description: Identifier of Reindex.
+              fileSizeBytes:
+                type: integer
+                description: Size of the compressed crawler log.
+              uncompressedSizeBytes:
+                type: integer
+                description: Size of the uncompressed crawler log.
+              crawlStartedAt:
+                type: string
+                description: Crawl started at date.
+              crawlCompletedAt:
+                type: string
+                description: Crawl started at date.
+              fileCreatedAt:
+                type: string
+                description: File created date.
+              expiresAt:
+                type: string
+                description: File expiration date.
+              status:
+                type: string
+                description: File status.
+              accessCount:
+                type: integer
+                description: File access count.
+              lastAccessedAt:
+                type: string
+                description: File last accessed date.
+                nullable: true
+              urlsDone:
+                type: integer
+                description: Crawler urls done.
+              urlsSkipped:
+                type: integer
+                description: Crawler urls skipped.
+              urlsFailed:
+                type: integer
+                description: Crawler urls failed.
+        meta:
+          title: crawlerLogsMeta
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total of records found.
+      required:
+        - logs
+        - meta

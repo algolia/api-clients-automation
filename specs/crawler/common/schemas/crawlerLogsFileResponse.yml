@@ -1,0 +1,12 @@
+description: Get Crawler File Response.
+content:
+  application/json:
+    schema:
+      title: getCrawlerFileResponse
+      type: object
+      properties:
+        file:
+          title: crawlerLogFile
+          type: string
+      required:
+        - file
