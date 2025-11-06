@@ -11,6 +11,8 @@ frequentlyBoughtTogether:
       $ref: '#/fbtModel'
     objectID:
       $ref: '../../../common/parameters.yml#/objectID'
+    fallbackParameters:
+      $ref: './QueryParameters.yml#/fallbackParams'
   required:
     - model
     - objectID

@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_recommend/src/model/fbt_model.dart';
 import 'package:algolia_client_recommend/src/model/recommend_search_params.dart';
+import 'package:algolia_client_recommend/src/model/fallback_params.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -17,6 +18,7 @@ final class BoughtTogetherQuery {
     this.queryParameters,
     required this.model,
     required this.objectID,
+    this.fallbackParameters,
   });
 
   /// Index name (case-sensitive).
@@ -45,6 +47,9 @@ final class BoughtTogetherQuery {
   @JsonKey(name: r'objectID')
   final String objectID;
 
+  @JsonKey(name: r'fallbackParameters')
+  final FallbackParams? fallbackParameters;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -54,7 +59,8 @@ final class BoughtTogetherQuery {
           other.maxRecommendations == maxRecommendations &&
           other.queryParameters == queryParameters &&
           other.model == model &&
-          other.objectID == objectID;
+          other.objectID == objectID &&
+          other.fallbackParameters == fallbackParameters;
 
   @override
   int get hashCode =>
@@ -63,7 +69,8 @@ final class BoughtTogetherQuery {
       maxRecommendations.hashCode +
       queryParameters.hashCode +
       model.hashCode +
-      objectID.hashCode;
+      objectID.hashCode +
+      fallbackParameters.hashCode;
 
   factory BoughtTogetherQuery.fromJson(Map<String, dynamic> json) =>
       _$BoughtTogetherQueryFromJson(json);

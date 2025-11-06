@@ -50,5 +50,6 @@ case class BoughtTogetherQuery(
     maxRecommendations: Option[Int] = scala.None,
     queryParameters: Option[RecommendSearchParams] = scala.None,
     model: FbtModel,
-    objectID: String
+    objectID: String,
+    fallbackParameters: Option[FallbackParams] = scala.None
 ) extends RecommendationsRequestTrait

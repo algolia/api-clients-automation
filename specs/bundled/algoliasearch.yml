@@ -3985,6 +3985,14 @@ components:
         the item with the ID `objectID`.
       enum:
         - bought-together
+    fallbackParams:
+      title: fallbackParameters
+      allOf:
+        - $ref: '#/components/schemas/recommendSearchParams'
+        - type: object
+          description: >-
+            Search parameters to use for a fallback request if there aren't
+            enough recommendations.
     frequentlyBoughtTogether:
       type: object
       properties:
@@ -3992,6 +4000,8 @@ components:
           $ref: '#/components/schemas/fbtModel'
         objectID:
           $ref: '#/components/schemas/objectID'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
       required:
         - model
         - objectID
@@ -4012,14 +4022,6 @@ components:
         Similarity is determined from the user interactions and attributes.
       enum:
         - related-products
-    fallbackParams:
-      title: fallbackParameters
-      allOf:
-        - $ref: '#/components/schemas/recommendSearchParams'
-        - type: object
-          description: >-
-            Search parameters to use for a fallback request if there aren't
-            enough recommendations.
     relatedProducts:
       type: object
       properties:
