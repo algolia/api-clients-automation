@@ -43,6 +43,7 @@ TransformationInput:
     - $ref: '#/TransformationNoCode'
 
 TransformationCode:
+  title: Code
   type: object
   additionalProperties: false
   description: Input for a transformation that contains the source code of the transformation.
@@ -54,6 +55,7 @@ TransformationCode:
     - code
 
 TransformationNoCode:
+  title: No-code
   type: object
   additionalProperties: false
   description: Input for a no-code transformation that contains a series of steps.
