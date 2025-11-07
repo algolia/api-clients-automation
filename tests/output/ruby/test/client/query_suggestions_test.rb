@@ -28,7 +28,7 @@ class TestClientQuerySuggestionsClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.30.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.31.0\).*/))
   end
 
   # throws when region is not given
