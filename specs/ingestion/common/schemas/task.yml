@@ -509,6 +509,7 @@ MappingInput:
     - actions
 
 StreamingInput:
+  title: Streaming input
   type: object
   additionalProperties: false
   description: Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
@@ -521,6 +522,7 @@ StreamingInput:
     - mapping
 
 DockerStreamsInput:
+  title: Docker streams
   description: The selected streams of an airbyte connector.
   type: object
   properties:
@@ -562,6 +564,7 @@ failureThreshold:
   description: Maximum accepted percentage of failures for a task run to finish successfully.
 
 ShopifyInput:
+  title: Shopify input
   type: object
   additionalProperties: false
   description: Represents the required elements of the task input when using a `shopify` source.

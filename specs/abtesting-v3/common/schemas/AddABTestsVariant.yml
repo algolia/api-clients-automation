@@ -1,8 +1,9 @@
 AddABTestsVariant:
   oneOf:
-    - $ref: '#/abTestsVariant'
-    - $ref: '#/abTestsVariantSearchParams'
-
+    - title: Variant
+      $ref: '#/abTestsVariant'
+    - title: Variant with search parameters
+      $ref: '#/abTestsVariantSearchParams'
 abTestsVariantSearchParams:
   allOf:
     - $ref: '#/abTestsVariant'

@@ -10,5 +10,7 @@ deleteCompositionAction:
 
 batchCompositionAction:
   oneOf:
-    - $ref: '../components/Composition.yml#/composition'
-    - $ref: '#/deleteCompositionAction'
+    - title: Upsert (update and insert)
+      $ref: '../components/Composition.yml#/composition'
+    - title: Delete
+      $ref: '#/deleteCompositionAction'
