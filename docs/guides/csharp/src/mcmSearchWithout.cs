@@ -32,9 +32,10 @@ class McmSearchWithout
       new SearchParamsObject
       {
         Query = "<YOUR_SEARCH_QUERY>",
-        FacetFilters = new FacetFilters(
-          [new FacetFilters("user:user42"), new FacetFilters("user:public")]
-        ),
+        FacetFilters = new FacetFilters([
+          new FacetFilters("user:user42"),
+          new FacetFilters("user:public"),
+        ]),
       }
     );
 
