@@ -26,6 +26,7 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
   'tests/output/csharp/global.json',
+  'tests/output/csharp/src/Algolia.Search.Tests.csproj',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',

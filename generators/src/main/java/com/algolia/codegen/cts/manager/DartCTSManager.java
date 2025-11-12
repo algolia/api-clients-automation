@@ -27,7 +27,6 @@ public class DartCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", getVersion());
     if (client.equals("algoliasearch")) {
       bundle.put("import", "package:algoliasearch/algoliasearch_lite.dart");
       bundle.put("client", "SearchClient");

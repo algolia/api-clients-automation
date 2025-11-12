@@ -27,7 +27,7 @@ public class JavascriptCTSManager implements CTSManager {
     return client;
   }
 
-  public String getVersion() {
+  public String getPackageVersion() {
     return Helpers.getPackageJsonVersion(AlgoliaJavascriptGenerator.getPackageName(client));
   }
 

@@ -16,7 +16,7 @@ public interface CTSManager {
     return Helpers.capitalize(getLanguage());
   }
 
-  public default String getVersion() {
+  public default String getPackageVersion() {
     return Helpers.getClientConfigField(getLanguage(), "packageVersion");
   }
 

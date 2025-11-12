@@ -27,7 +27,12 @@
     "snippets": {
       "extension": ".cs",
       "outputFolder": "src"
-    }
+    },
+    "supportedVersions": [
+      "8.0.416",
+      "9.0.307",
+      "10.0.100"
+    ]
   },
   "dart": {
     "clients": [
