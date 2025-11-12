@@ -93,6 +93,9 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
     // language specific options
     switch (language) {
+      case 'csharp':
+        languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/src/Algolia.Search.Tests.csproj`;
+        break;
       case 'go':
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsOutputBase}/echo.go ${testsRootFolder}/go.sum ${testsRootFolder}/go.mod`;
         break;

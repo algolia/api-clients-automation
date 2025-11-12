@@ -13,7 +13,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
   # this is the same as `yarn start` but without the overhead of yarn
-  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node --experimental-strip-types cli/index.ts $*)
+  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node cli/index.ts $*)
 }
 
 export apic

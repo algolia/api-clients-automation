@@ -1,6 +1,7 @@
 import type { AllLanguage } from './cli/utils.ts';
 import { createClientName, run, runComposerInstall } from './common.ts';
 import { getSwiftBuildFolder } from './config.ts';
+import type { Language } from './types.ts';
 
 export async function playground({ language, client }: { language: AllLanguage; client: string }): Promise<void> {
   switch (language) {
@@ -61,6 +62,17 @@ export async function playground({ language, client }: { language: AllLanguage; 
         cwd: 'playground/swift',
         language,
       });
+      break;
+    default:
+  }
+}
+
+export async function updatePlaygroundLanguageVersion(language: Language, languageVersion: string): Promise<void> {
+  switch (language) {
+    case 'csharp':
+      await run(
+        `sed -i '' 's|<TargetFramework>net.*</TargetFramework>|<TargetFramework>net${languageVersion}</TargetFramework>|g' playground/csharp/Playground/Playground.csproj`,
+      );
       break;
     default:
   }
