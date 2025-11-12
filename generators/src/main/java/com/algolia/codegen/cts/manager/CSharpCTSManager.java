@@ -28,7 +28,6 @@ public class CSharpCTSManager implements CTSManager {
 
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("globaljson.mustache", "tests/output/csharp", "global.json"));
     supportingFiles.add(
       new SupportingFile("tests/Algolia.Search.Tests.csproj.mustache", "tests/output/csharp/src", "Algolia.Search.Tests.csproj")
     );
