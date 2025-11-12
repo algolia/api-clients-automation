@@ -61,7 +61,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
       unionBodyRaw, err := json.Marshal(unionBody)
       require.NoError(t, err)
 
-      jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+      jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
       {{/body}}
       {{/response}}
     })
