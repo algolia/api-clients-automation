@@ -31,7 +31,7 @@
     "@types/node": "24.10.0",
     "@types/semver": "7.7.1",
     "@types/spinnies": "0.5.3",
-    "chai": "6.2.0",
+    "chai": "6.2.1",
     "chalk": "5.6.2",
     "commander": "14.0.2",
     "crc": "4.3.2",
