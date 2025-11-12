@@ -654,7 +654,7 @@ paths:
         - $ref: '#/components/parameters/CrawlerLogIdParameter'
       responses:
         '200':
-          $ref: '#/components/responses/crawlerLogsResponse'
+          $ref: '#/components/responses/crawlerLogsFileResponse'
         '400':
           $ref: '#/components/responses/InvalidRequest'
         '401':
@@ -3973,6 +3973,19 @@ components:
             required:
               - logs
               - meta
+    crawlerLogsFileResponse:
+      description: Get Crawler File Response.
+      content:
+        application/json:
+          schema:
+            title: getCrawlerFileResponse
+            type: object
+            properties:
+              file:
+                title: crawlerLogFile
+                type: string
+            required:
+              - file
     Forbidden:
       description: Invalid credentials.
       content:
