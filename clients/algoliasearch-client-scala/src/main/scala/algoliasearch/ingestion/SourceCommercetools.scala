@@ -28,6 +28,8 @@ package algoliasearch.ingestion
   * @param productQueryPredicate
   *   Predicate to filter out specific products when indexing. For more information, see [Query
   *   Predicate](https://docs.commercetools.com/api/predicates/query).
+  * @param useImagesObjects
+  *   When set to true, the connector indexes objects with all images attributes instead of only the URLs.
   */
 case class SourceCommercetools(
     storeKeys: Option[Seq[String]] = scala.None,
@@ -36,5 +38,6 @@ case class SourceCommercetools(
     projectKey: String,
     fallbackIsInStockValue: Option[Boolean] = scala.None,
     productQueryPredicate: Option[String] = scala.None,
+    useImagesObjects: Option[Boolean] = scala.None,
     customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceInputTrait
