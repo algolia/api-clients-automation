@@ -688,6 +688,91 @@
         }
       }
     },
+    "/1/crawlers/{id}/crawl_runs": {
+      "get": {
+        "operationId": "listCrawlRuns",
+        "summary": "List crawler runs",
+        "description": "The Crawler Logs feature allows you to monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
+        "tags": [
+          "crawlers"
+        ],
+        "x-acl": [
+          "settings"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CrawlerIdParameter"
+          },
+          {
+            "$ref": "#/components/parameters/From"
+          },
+          {
+            "$ref": "#/components/parameters/Until"
+          },
+          {
+            "$ref": "#/components/parameters/Status"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Offset"
+          },
+          {
+            "$ref": "#/components/parameters/Order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/crawlerLogsResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/MissingAuthorization"
+          },
+          "403": {
+            "$ref": "#/components/responses/NoRightsOnCrawler"
+          }
+        }
+      }
+    },
+    "/1/crawlers/{id}/{logId}/download": {
+      "get": {
+        "operationId": "getCrawlRunFile",
+        "summary": "Crawler run file",
+        "description": "The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording\ndetailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,\nverifying site coverage, and monitoring crawler performance over time.\n",
+        "tags": [
+          "crawlers"
+        ],
+        "x-acl": [
+          "settings"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CrawlerIdParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CrawlerLogIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/crawlerLogsFileResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/MissingAuthorization"
+          },
+          "403": {
+            "$ref": "#/components/responses/NoRightsOnCrawler"
+          }
+        }
+      }
+    },
     "/1/crawlers/{id}/config": {
       "patch": {
         "operationId": "patchConfig",
@@ -3107,6 +3192,42 @@
           "readable": "Forbidden by robots.txt"
         }
       },
+      "from": {
+        "type": "string",
+        "description": "Unix string 'from' date.",
+        "example": 1762264044
+      },
+      "until": {
+        "type": "string",
+        "description": "Unix string 'until' date.",
+        "example": 1762264044
+      },
+      "limit": {
+        "type": "integer",
+        "description": "Limit of the query results.",
+        "minimum": 1,
+        "default": 10,
+        "maximum": 1000,
+        "example": 10
+      },
+      "offset": {
+        "type": "integer",
+        "description": "Offset of the query results.",
+        "example": 11
+      },
+      "parameters_order": {
+        "type": "string",
+        "description": "Order of the query.\n",
+        "enum": [
+          "ASC",
+          "DESC"
+        ]
+      },
+      "CrawlerLogID": {
+        "type": "string",
+        "description": "Universally unique identifier (UUID) of the crawler log.",
+        "example": "a2ebb507-ef64-4b6b-9d84-ef66baaa7a80"
+      },
       "version": {
         "type": "integer",
         "description": "Version of the configuration. Version 1 is the initial configuration you used when creating the crawler.",
@@ -3229,6 +3350,63 @@
           "$ref": "#/components/schemas/CrawlerID"
         }
       },
+      "From": {
+        "name": "from",
+        "in": "query",
+        "description": "Date 'from' filter.",
+        "schema": {
+          "$ref": "#/components/schemas/from"
+        }
+      },
+      "Until": {
+        "name": "until",
+        "in": "query",
+        "description": "Date 'until' filter.",
+        "schema": {
+          "$ref": "#/components/schemas/until"
+        }
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "description": "Status to filter 'DONE', 'SKIPPED' or 'FAILED'.",
+        "schema": {
+          "$ref": "#/components/schemas/urlsCrawledGroupStatus"
+        }
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Limit of the query results.",
+        "schema": {
+          "$ref": "#/components/schemas/limit"
+        }
+      },
+      "Offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "Offset of the query results.",
+        "schema": {
+          "$ref": "#/components/schemas/offset"
+        }
+      },
+      "Order": {
+        "name": "order",
+        "in": "query",
+        "description": "Order of the query 'ASC' or 'DESC'.",
+        "schema": {
+          "$ref": "#/components/schemas/parameters_order"
+        }
+      },
+      "CrawlerLogIdParameter": {
+        "name": "logId",
+        "in": "path",
+        "description": "Crawler log ID.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/CrawlerLogID"
+        }
+      },
       "CrawlerVersionParameter": {
         "name": "version",
         "in": "path",
@@ -3328,6 +3506,123 @@
               },
               "required": [
                 "taskId"
+              ]
+            }
+          }
+        }
+      },
+      "crawlerLogsResponse": {
+        "description": "List Response of Crawler Logs.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "listCrawlerLogsResponse",
+              "type": "object",
+              "properties": {
+                "logs": {
+                  "type": "array",
+                  "items": {
+                    "title": "crawlerLogItem",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID of the crawler log."
+                      },
+                      "configId": {
+                        "type": "string",
+                        "description": "Crawler Config identifier."
+                      },
+                      "reindexId": {
+                        "type": "string",
+                        "description": "Identifier of Reindex."
+                      },
+                      "fileSizeBytes": {
+                        "type": "integer",
+                        "description": "Size of the compressed crawler log."
+                      },
+                      "uncompressedSizeBytes": {
+                        "type": "integer",
+                        "description": "Size of the uncompressed crawler log."
+                      },
+                      "crawlStartedAt": {
+                        "type": "string",
+                        "description": "Crawl started at date."
+                      },
+                      "crawlCompletedAt": {
+                        "type": "string",
+                        "description": "Crawl started at date."
+                      },
+                      "fileCreatedAt": {
+                        "type": "string",
+                        "description": "File created date."
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "description": "File expiration date."
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "File status."
+                      },
+                      "accessCount": {
+                        "type": "integer",
+                        "description": "File access count."
+                      },
+                      "lastAccessedAt": {
+                        "type": "string",
+                        "description": "File last accessed date.",
+                        "nullable": true
+                      },
+                      "urlsDone": {
+                        "type": "integer",
+                        "description": "Crawler urls done."
+                      },
+                      "urlsSkipped": {
+                        "type": "integer",
+                        "description": "Crawler urls skipped."
+                      },
+                      "urlsFailed": {
+                        "type": "integer",
+                        "description": "Crawler urls failed."
+                      }
+                    }
+                  }
+                },
+                "meta": {
+                  "title": "crawlerLogsMeta",
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "Total of records found."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "logs",
+                "meta"
+              ]
+            }
+          }
+        }
+      },
+      "crawlerLogsFileResponse": {
+        "description": "Get Crawler File Response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "getCrawlerFileResponse",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "crawlerLogFile",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "file"
               ]
             }
           }

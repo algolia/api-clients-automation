@@ -141,6 +141,10 @@ SourceCommercetools:
       type: string
       description: |
         Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+    useImagesObjects:
+      type: boolean
+      description: >
+        When set to true, the connector indexes objects with all images attributes instead of only the URLs.
     customFields:
       $ref: '#/CommercetoolsCustomFields'
   required:
@@ -423,6 +427,10 @@ SourceUpdateCommercetools:
       type: string
       description: |
         Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+    useImagesObjects:
+      type: boolean
+      description: >
+        When set to true, the connector indexes objects with all images attributes instead of only the URLs.
     customFields:
       $ref: '#/CommercetoolsCustomFields'
 

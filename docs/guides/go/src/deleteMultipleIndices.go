@@ -55,7 +55,7 @@ func deleteMultipleIndices() {
 
 	// Now, delete replica indices
 	if len(replicaIndices) > 0 {
-		requests := make([]search.MultipleBatchRequest, 0, len(primaryIndices))
+		requests := make([]search.MultipleBatchRequest, 0, len(replicaIndices))
 
 		for _, index := range primaryIndices {
 			requests = append(requests, search.MultipleBatchRequest{
