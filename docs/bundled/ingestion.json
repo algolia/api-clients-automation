@@ -4437,6 +4437,10 @@
             "type": "string",
             "description": "Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).\n"
           },
+          "useImagesObjects": {
+            "type": "boolean",
+            "description": "When set to true, the connector indexes objects with all images attributes instead of only the URLs.\n"
+          },
           "customFields": {
             "$ref": "#/components/schemas/CommercetoolsCustomFields"
           }
@@ -4904,6 +4908,10 @@
             "type": "string",
             "description": "Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).\n"
           },
+          "useImagesObjects": {
+            "type": "boolean",
+            "description": "When set to true, the connector indexes objects with all images attributes instead of only the URLs.\n"
+          },
           "customFields": {
             "$ref": "#/components/schemas/CommercetoolsCustomFields"
           }
@@ -5164,6 +5172,7 @@
         ]
       },
       "StreamingInput": {
+        "title": "Streaming input",
         "type": "object",
         "additionalProperties": false,
         "description": "Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.",
@@ -5211,6 +5220,7 @@
         ]
       },
       "DockerStreamsInput": {
+        "title": "Docker streams",
         "description": "The selected streams of an airbyte connector.",
         "type": "object",
         "properties": {
@@ -5280,6 +5290,7 @@
         ]
       },
       "ShopifyInput": {
+        "title": "Shopify input",
         "type": "object",
         "additionalProperties": false,
         "description": "Represents the required elements of the task input when using a `shopify` source.",
@@ -5949,6 +5960,7 @@
         "description": "It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code."
       },
       "TransformationCode": {
+        "title": "Code",
         "type": "object",
         "additionalProperties": false,
         "description": "Input for a transformation that contains the source code of the transformation.",
@@ -5967,6 +5979,7 @@
         "description": "A step in a no-code transformation."
       },
       "TransformationNoCode": {
+        "title": "No-code",
         "type": "object",
         "additionalProperties": false,
         "description": "Input for a no-code transformation that contains a series of steps.",

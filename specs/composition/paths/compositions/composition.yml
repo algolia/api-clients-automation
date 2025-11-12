@@ -32,9 +32,9 @@ put:
   operationId: putComposition
   x-acl:
     - editSettings
-  summary: Upsert a composition
+  summary: Update and insert (upsert) a composition
   description: |
-    Upsert a composition in the current Algolia application.
+    Update and insert a composition in the current Algolia application.
   parameters:
     - $ref: '../urlParams.yml#/compositionID'
   requestBody:

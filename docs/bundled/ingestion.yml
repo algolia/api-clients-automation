@@ -5163,7 +5163,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/validate:
     post:
       tags:
@@ -5528,7 +5528,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/search:
     post:
       tags:
@@ -6310,7 +6310,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
     delete:
       tags:
         - sources
@@ -6824,7 +6824,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
   /1/sources/{sourceID}/discover:
     post:
       tags:
@@ -17232,6 +17232,11 @@ components:
             Predicate to filter out specific products when indexing. For more
             information, see [Query
             Predicate](https://docs.commercetools.com/api/predicates/query).
+        useImagesObjects:
+          type: boolean
+          description: >
+            When set to true, the connector indexes objects with all images
+            attributes instead of only the URLs.
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
@@ -17568,6 +17573,11 @@ components:
             Predicate to filter out specific products when indexing. For more
             information, see [Query
             Predicate](https://docs.commercetools.com/api/predicates/query).
+        useImagesObjects:
+          type: boolean
+          description: >
+            When set to true, the connector indexes objects with all images
+            attributes instead of only the URLs.
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
@@ -17769,6 +17779,7 @@ components:
         - format
         - actions
     StreamingInput:
+      title: Streaming input
       type: object
       additionalProperties: false
       description: >-
@@ -17804,6 +17815,7 @@ components:
         - name
         - syncMode
     DockerStreamsInput:
+      title: Docker streams
       description: The selected streams of an airbyte connector.
       type: object
       properties:
@@ -17852,6 +17864,7 @@ components:
         - currencies
         - locales
     ShopifyInput:
+      title: Shopify input
       type: object
       additionalProperties: false
       description: >-
@@ -18328,6 +18341,7 @@ components:
         It is deprecated. Use the `input` field with proper `type` instead to
         specify the transformation code.
     TransformationCode:
+      title: Code
       type: object
       additionalProperties: false
       description: >-
@@ -18343,6 +18357,7 @@ components:
       type: object
       description: A step in a no-code transformation.
     TransformationNoCode:
+      title: No-code
       type: object
       additionalProperties: false
       description: Input for a no-code transformation that contains a series of steps.

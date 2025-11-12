@@ -31,6 +31,9 @@ public class SourceCommercetools implements SourceInput {
   @JsonProperty("productQueryPredicate")
   private String productQueryPredicate;
 
+  @JsonProperty("useImagesObjects")
+  private Boolean useImagesObjects;
+
   @JsonProperty("customFields")
   private CommercetoolsCustomFields customFields;
 
@@ -122,6 +125,20 @@ public class SourceCommercetools implements SourceInput {
     return productQueryPredicate;
   }
 
+  public SourceCommercetools setUseImagesObjects(Boolean useImagesObjects) {
+    this.useImagesObjects = useImagesObjects;
+    return this;
+  }
+
+  /**
+   * When set to true, the connector indexes objects with all images attributes instead of only the
+   * URLs.
+   */
+  @javax.annotation.Nullable
+  public Boolean getUseImagesObjects() {
+    return useImagesObjects;
+  }
+
   public SourceCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
     this.customFields = customFields;
     return this;
@@ -149,13 +166,14 @@ public class SourceCommercetools implements SourceInput {
       Objects.equals(this.projectKey, sourceCommercetools.projectKey) &&
       Objects.equals(this.fallbackIsInStockValue, sourceCommercetools.fallbackIsInStockValue) &&
       Objects.equals(this.productQueryPredicate, sourceCommercetools.productQueryPredicate) &&
+      Objects.equals(this.useImagesObjects, sourceCommercetools.useImagesObjects) &&
       Objects.equals(this.customFields, sourceCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales, url, projectKey, fallbackIsInStockValue, productQueryPredicate, customFields);
+    return Objects.hash(storeKeys, locales, url, projectKey, fallbackIsInStockValue, productQueryPredicate, useImagesObjects, customFields);
   }
 
   @Override
@@ -168,6 +186,7 @@ public class SourceCommercetools implements SourceInput {
     sb.append("    projectKey: ").append(toIndentedString(projectKey)).append("\n");
     sb.append("    fallbackIsInStockValue: ").append(toIndentedString(fallbackIsInStockValue)).append("\n");
     sb.append("    productQueryPredicate: ").append(toIndentedString(productQueryPredicate)).append("\n");
+    sb.append("    useImagesObjects: ").append(toIndentedString(useImagesObjects)).append("\n");
     sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();

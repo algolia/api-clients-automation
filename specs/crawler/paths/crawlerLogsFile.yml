@@ -14,7 +14,7 @@ get:
     - $ref: '../common/parameters.yml#/CrawlerLogIdParameter'
   responses:
     '200':
-      $ref: '../common/schemas/crawlerLogsResponse.yml'
+      $ref: '../common/schemas/crawlerLogsFileResponse.yml'
     '400':
       $ref: '../../common/responses/InvalidRequest.yml'
     '401':

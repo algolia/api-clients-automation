@@ -480,8 +480,8 @@
         "x-acl": [
           "editSettings"
         ],
-        "summary": "Upsert a composition",
-        "description": "Upsert a composition in the current Algolia application.\n",
+        "summary": "Update and insert (upsert) a composition",
+        "description": "Update and insert a composition in the current Algolia application.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/compositionID"
@@ -3964,9 +3964,11 @@
       "batchCompositionAction": {
         "oneOf": [
           {
+            "title": "Upsert (update and insert)",
             "$ref": "#/components/schemas/composition"
           },
           {
+            "title": "Delete",
             "$ref": "#/components/schemas/deleteCompositionAction"
           }
         ]
@@ -4115,9 +4117,11 @@
       "rulesBatchCompositionAction": {
         "oneOf": [
           {
+            "title": "Upsert (update and insert)",
             "$ref": "#/components/schemas/compositionRule"
           },
           {
+            "title": "Delete",
             "$ref": "#/components/schemas/deleteCompositionRuleAction"
           }
         ]
