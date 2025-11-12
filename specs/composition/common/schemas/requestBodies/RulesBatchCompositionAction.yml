@@ -9,8 +9,8 @@ deleteCompositionRuleAction:
     - objectID
 
 rulesBatchCompositionAction:
-oneOf:
-  - title: Upsert (update and insert)
-    $ref: '../components/CompositionRule.yml#/compositionRule'
-  - title: Delete
-    $ref: '#/deleteCompositionRuleAction'
+  oneOf:
+    - title: Upsert (update and insert)
+      $ref: '../components/CompositionRule.yml#/compositionRule'
+    - title: Delete
+      $ref: '#/deleteCompositionRuleAction'
