@@ -930,7 +930,7 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Upsert a composition in the current Algolia application.
+   * Update and insert a composition in the current Algolia application.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param composition (required)
@@ -947,7 +947,7 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * Upsert a composition in the current Algolia application.
+   * Update and insert a composition in the current Algolia application.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param composition (required)
@@ -958,7 +958,7 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Upsert a composition in the current Algolia application.
+   * (asynchronously) Update and insert a composition in the current Algolia application.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param composition (required)
@@ -984,7 +984,7 @@ public class CompositionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Upsert a composition in the current Algolia application.
+   * (asynchronously) Update and insert a composition in the current Algolia application.
    *
    * @param compositionID Unique Composition ObjectID. (required)
    * @param composition (required)

@@ -447,7 +447,7 @@ final class CompositionClient implements ApiClient {
     );
   }
 
-  /// Upsert a composition in the current Algolia application.
+  /// Update and insert a composition in the current Algolia application.
   ///
   /// Required API Key ACLs:
   ///   - editSettings

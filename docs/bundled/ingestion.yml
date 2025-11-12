@@ -17779,6 +17779,7 @@ components:
         - format
         - actions
     StreamingInput:
+      title: Streaming input
       type: object
       additionalProperties: false
       description: >-
@@ -17814,6 +17815,7 @@ components:
         - name
         - syncMode
     DockerStreamsInput:
+      title: Docker streams
       description: The selected streams of an airbyte connector.
       type: object
       properties:
@@ -17862,6 +17864,7 @@ components:
         - currencies
         - locales
     ShopifyInput:
+      title: Shopify input
       type: object
       additionalProperties: false
       description: >-
@@ -18338,6 +18341,7 @@ components:
         It is deprecated. Use the `input` field with proper `type` instead to
         specify the transformation code.
     TransformationCode:
+      title: Code
       type: object
       additionalProperties: false
       description: >-
@@ -18353,6 +18357,7 @@ components:
       type: object
       description: A step in a no-code transformation.
     TransformationNoCode:
+      title: No-code
       type: object
       additionalProperties: false
       description: Input for a no-code transformation that contains a series of steps.

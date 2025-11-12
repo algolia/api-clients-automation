@@ -3571,6 +3571,7 @@ components:
         - objectID
     trendingFacetHit:
       type: object
+      title: Trending facet hit
       description: Trending facet hit.
       required:
         - facetName

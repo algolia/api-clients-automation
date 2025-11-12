@@ -1340,9 +1340,11 @@
       "AddABTestsVariant": {
         "oneOf": [
           {
+            "title": "Variant",
             "$ref": "#/components/schemas/abTestsVariant"
           },
           {
+            "title": "Variant with search parameters",
             "$ref": "#/components/schemas/abTestsVariantSearchParams"
           }
         ]

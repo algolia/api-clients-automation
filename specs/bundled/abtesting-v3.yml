@@ -1130,8 +1130,10 @@ components:
         - $ref: '#/components/schemas/customSearchParams'
     AddABTestsVariant:
       oneOf:
-        - $ref: '#/components/schemas/abTestsVariant'
-        - $ref: '#/components/schemas/abTestsVariantSearchParams'
+        - title: Variant
+          $ref: '#/components/schemas/abTestsVariant'
+        - title: Variant with search parameters
+          $ref: '#/components/schemas/abTestsVariantSearchParams'
     createMetric:
       type: object
       description: Defines a metric to be retrieved during an A/B test.
