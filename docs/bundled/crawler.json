@@ -759,7 +759,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/crawlerLogsResponse"
+            "$ref": "#/components/responses/crawlerLogsFileResponse"
           },
           "400": {
             "$ref": "#/components/responses/InvalidRequest"
@@ -3603,6 +3603,26 @@
               "required": [
                 "logs",
                 "meta"
+              ]
+            }
+          }
+        }
+      },
+      "crawlerLogsFileResponse": {
+        "description": "Get Crawler File Response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "getCrawlerFileResponse",
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "crawlerLogFile",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "file"
               ]
             }
           }
