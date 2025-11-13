@@ -70,13 +70,13 @@ export async function playground({ language, client }: { language: AllLanguage; 
 export async function updatePlaygroundLanguageVersion(language: Language, languageVersion: string): Promise<void> {
   switch (language) {
     case 'csharp':
-      if (process.platform === 'linux') {
+      if (process.platform === 'darwin') {
         await run(
-          `sed -i 's|<TargetFramework>net.*</TargetFramework>|<TargetFramework>net'"${languageVersion}"'</TargetFramework>|g' playground/csharp/Playground/Playground.csproj`,
+          `sed -i '' 's|<TargetFramework>net.*</TargetFramework>|<TargetFramework>net${languageVersion}</TargetFramework>|g' playground/csharp/Playground/Playground.csproj`,
         );
       } else {
         await run(
-          `sed -i '' 's|<TargetFramework>net.*</TargetFramework>|<TargetFramework>net${languageVersion}</TargetFramework>|g' playground/csharp/Playground/Playground.csproj`,
+          `sed -i 's|<TargetFramework>net.*</TargetFramework>|<TargetFramework>net'"${languageVersion}"'</TargetFramework>|g' playground/csharp/Playground/Playground.csproj`,
         );
       }
       break;
