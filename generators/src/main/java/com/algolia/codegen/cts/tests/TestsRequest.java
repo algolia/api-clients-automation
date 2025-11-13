@@ -60,9 +60,7 @@ public class TestsRequest extends TestsGenerator {
     }
 
     switch (language) {
-      case "go": // jsonassert expect % to be formatted, we need to escape them
-        return body.replace("%", "%%");
-      case "dart": // Same thing but for $
+      case "dart": // Escape $ to avoid being used for string interpolation
         return body.replace("$", "\\$");
       default:
         return body;
