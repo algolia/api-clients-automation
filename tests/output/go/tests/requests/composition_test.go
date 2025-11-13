@@ -143,8 +143,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -154,8 +153,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -174,8 +172,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
@@ -194,8 +191,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
@@ -214,8 +210,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -241,8 +236,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -268,8 +262,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
@@ -288,8 +281,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
@@ -309,8 +301,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
@@ -330,8 +321,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
@@ -351,8 +341,7 @@ func TestComposition_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
@@ -378,8 +367,7 @@ func TestComposition_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -389,8 +377,7 @@ func TestComposition_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -545,11 +532,8 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"foo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"bar"}}}}}}},{"action":"delete","body":{"objectID":"baz"}}]}`)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -574,11 +558,8 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}}]}`)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -611,11 +592,8 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}]}`)
 	})
 	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
@@ -640,11 +618,8 @@ func TestComposition_MultipleBatch(t *testing.T) {
 		require.Equal(t, "/1/compositions/*/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}}]}`)
 	})
 }
 
@@ -674,11 +649,8 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "/1/compositions/1234", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"1234","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -701,11 +673,8 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "/1/compositions/my-external-injection-compo", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-external-injection-compo","name":"my first composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-external-group-key","source":{"external":{"index":"foo","ordering":"userDefined","params":{"filters":"brand:adidas"}}},"position":2,"length":1}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -737,11 +706,8 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "/1/compositions/my-metadata-compo", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-metadata-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}},{"key":"my-unique-group-key","source":{"search":{"index":"foo","params":{"filters":"brand:puma"}}},"position":5,"length":5,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}`)
 	})
 	t.Run("putComposition", func(t *testing.T) {
 		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
@@ -765,11 +731,8 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "/1/compositions/my-compo", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}`)
 	})
 }
 
@@ -804,11 +767,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "/1/compositions/compositionID/rules/ruleID", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"ruleID","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo"}},"position":2,"length":1}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -838,11 +798,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-metadata", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -874,11 +831,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-exernal-source", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}`)
 	})
 	t.Run("putCompositionRule", func(t *testing.T) {
 		_, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
@@ -912,11 +866,8 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 		require.Equal(t, "/1/compositions/compositionID/rules/rule-with-deduplication", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}`)
 	})
 }
 
@@ -947,11 +898,8 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "/1/compositions/foo/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"123","conditions":[{"pattern":"a"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"<YOUR_INDEX_NAME>"}}}}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -980,11 +928,8 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "/1/compositions/rule-with-metadata/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-metadata","conditions":[{"anchoring":"is","pattern":"test"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"foo"}}},"injectedItems":[{"key":"my-unique-group-from-rule-key","source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}},"position":2,"length":1,"metadata":{"hits":{"addItemKey":true,"extra":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}}}]}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -1014,11 +959,8 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "/1/compositions/rule-with-exernal-source/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-exernal-source","description":"my description","tags":["tag1","tag2"],"enabled":true,"validity":[{"from":1704063600,"until":1704083600}],"conditions":[{"anchoring":"contains","pattern":"harry"},{"anchoring":"contains","pattern":"potter"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-external-group-from-rule-key","source":{"external":{"index":"my-index","params":{"filters":"brand:adidas"},"ordering":"userDefined"}},"position":0,"length":3}]}}}}}]}`)
 	})
 	t.Run("saveRules", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
@@ -1045,11 +987,8 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "/1/compositions/my-compo/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}`)
 	})
 }
 
@@ -1069,8 +1008,7 @@ func TestComposition_Search(t *testing.T) {
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"params":{"query":"batman"}}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"query":"batman"}}`)
 	})
 	t.Run("search", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1087,11 +1025,8 @@ func TestComposition_Search(t *testing.T) {
 		require.Equal(t, "/1/compositions/foo/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}`)
 	})
 }
 
@@ -1110,8 +1045,7 @@ func TestComposition_SearchCompositionRules(t *testing.T) {
 		require.Equal(t, "/1/compositions/foo/rules/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"batman"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"batman"}`)
 	})
 }
 
@@ -1131,7 +1065,6 @@ func TestComposition_SearchForFacetValues(t *testing.T) {
 		require.Equal(t, "/1/compositions/foo/facets/brand/query", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"params":{"maxFacetHits":10}}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"maxFacetHits":10}}`)
 	})
 }

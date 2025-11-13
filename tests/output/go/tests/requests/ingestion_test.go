@@ -50,8 +50,8 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 		require.Equal(t, "/1/authentications", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}`)
 	})
 	t.Run("createAuthenticationAlgolia", func(t *testing.T) {
 		_, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(
@@ -66,8 +66,8 @@ func TestIngestion_CreateAuthentication(t *testing.T) {
 		require.Equal(t, "/1/authentications", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}`)
 	})
 }
 
@@ -87,11 +87,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 		require.Equal(t, "/1/destinations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 	t.Run("with transformationIDs", func(t *testing.T) {
 		_, err := client.CreateDestination(client.NewApiCreateDestinationRequest(
@@ -104,11 +101,8 @@ func TestIngestion_CreateDestination(t *testing.T) {
 		require.Equal(t, "/1/destinations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}`)
 	})
 }
 
@@ -138,11 +132,8 @@ func TestIngestion_CreateSource(t *testing.T) {
 		require.Equal(t, "/1/sources", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 	t.Run("push", func(t *testing.T) {
 		_, err := client.CreateSource(client.NewApiCreateSourceRequest(
@@ -153,8 +144,7 @@ func TestIngestion_CreateSource(t *testing.T) {
 		require.Equal(t, "/1/sources", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"push","name":"pushezpourentrer"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"type":"push","name":"pushezpourentrer"}`)
 	})
 }
 
@@ -173,8 +163,7 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationID","action":"replace"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationID","action":"replace"}`)
 	})
 	t.Run("task with cron", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
@@ -194,11 +183,8 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
 	})
 	t.Run("task shopify", func(t *testing.T) {
 		_, err := client.CreateTask(client.NewApiCreateTaskRequest(
@@ -219,11 +205,8 @@ func TestIngestion_CreateTask(t *testing.T) {
 		require.Equal(t, "/2/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -250,8 +233,8 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 	t.Run("createTaskSchedule", func(t *testing.T) {
 		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
@@ -271,11 +254,8 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}`)
 	})
 	t.Run("createTaskSubscription", func(t *testing.T) {
 		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
@@ -294,8 +274,8 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}`)
 	})
 	t.Run("task shopify", func(t *testing.T) {
 		_, err := client.CreateTaskV1(client.NewApiCreateTaskV1Request(
@@ -320,11 +300,8 @@ func TestIngestion_CreateTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -346,8 +323,7 @@ func TestIngestion_CreateTransformation(t *testing.T) {
 		require.Equal(t, "/1/transformations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
 	})
 }
 
@@ -464,8 +440,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -475,8 +450,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -495,8 +469,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
@@ -515,8 +488,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
@@ -535,8 +507,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -562,8 +533,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -589,8 +559,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
@@ -609,8 +578,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
@@ -630,8 +598,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
@@ -651,8 +618,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
@@ -672,8 +638,7 @@ func TestIngestion_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
@@ -699,8 +664,7 @@ func TestIngestion_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -710,8 +674,7 @@ func TestIngestion_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -1256,8 +1219,8 @@ func TestIngestion_Push(t *testing.T) {
 		require.Equal(t, "/1/push/foo", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 	})
 	t.Run("global push with watch mode", func(t *testing.T) {
 		_, err := client.Push(client.NewApiPushRequest(
@@ -1273,8 +1236,8 @@ func TestIngestion_Push(t *testing.T) {
 		require.Equal(t, "/1/push/bar", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"watch":"true","referenceIndexName":"foo"}`), &queryParams))
@@ -1306,8 +1269,8 @@ func TestIngestion_PushTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 	})
 	t.Run("allows for watch query parameter", func(t *testing.T) {
 		_, err := client.PushTask(client.NewApiPushTaskRequest(
@@ -1323,8 +1286,8 @@ func TestIngestion_PushTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"watch":"true"}`), &queryParams))
@@ -1351,8 +1314,7 @@ func TestIngestion_ReplaceTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"destinationID":"destinationID","action":"replace"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"destinationID":"destinationID","action":"replace"}`)
 	})
 	t.Run("fully replace task with cron", func(t *testing.T) {
 		_, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
@@ -1372,11 +1334,8 @@ func TestIngestion_ReplaceTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}`)
 	})
 	t.Run("fully replace task shopify", func(t *testing.T) {
 		_, err := client.ReplaceTask(client.NewApiReplaceTaskRequest(
@@ -1397,11 +1356,8 @@ func TestIngestion_ReplaceTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}`)
 	})
 }
 
@@ -1422,8 +1378,8 @@ func TestIngestion_RunSource(t *testing.T) {
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}`)
 	})
 }
 
@@ -1441,8 +1397,7 @@ func TestIngestion_RunTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 }
 
@@ -1460,8 +1415,7 @@ func TestIngestion_RunTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 }
 
@@ -1481,8 +1435,8 @@ func TestIngestion_SearchAuthentications(t *testing.T) {
 		require.Equal(t, "/1/authentications/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -1502,8 +1456,8 @@ func TestIngestion_SearchDestinations(t *testing.T) {
 		require.Equal(t, "/1/destinations/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -1523,8 +1477,7 @@ func TestIngestion_SearchSources(t *testing.T) {
 		require.Equal(t, "/1/sources/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}`)
 	})
 }
 
@@ -1544,11 +1497,8 @@ func TestIngestion_SearchTasks(t *testing.T) {
 		require.Equal(t, "/2/tasks/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
 	})
 }
 
@@ -1568,11 +1518,8 @@ func TestIngestion_SearchTasksV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
 	})
 }
 
@@ -1592,11 +1539,8 @@ func TestIngestion_SearchTransformations(t *testing.T) {
 		require.Equal(t, "/1/transformations/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}`)
 	})
 }
 
@@ -1637,8 +1581,7 @@ func TestIngestion_TryTransformation(t *testing.T) {
 		require.Equal(t, "/1/transformations/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("with authentications", func(t *testing.T) {
 		_, err := client.TryTransformation(client.NewApiTryTransformationRequest(
@@ -1658,11 +1601,8 @@ func TestIngestion_TryTransformation(t *testing.T) {
 		require.Equal(t, "/1/transformations/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
 	})
 }
 
@@ -1686,8 +1626,7 @@ func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}`)
 	})
 	t.Run("existing with authentications", func(t *testing.T) {
 		_, err := client.TryTransformationBeforeUpdate(client.NewApiTryTransformationBeforeUpdateRequest(
@@ -1708,11 +1647,8 @@ func TestIngestion_TryTransformationBeforeUpdate(t *testing.T) {
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}`)
 	})
 }
 
@@ -1731,8 +1667,7 @@ func TestIngestion_UpdateAuthentication(t *testing.T) {
 		require.Equal(t, "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PATCH", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"name":"newName"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"name":"newName"}`)
 	})
 }
 
@@ -1751,8 +1686,7 @@ func TestIngestion_UpdateDestination(t *testing.T) {
 		require.Equal(t, "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PATCH", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"name":"newName"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"name":"newName"}`)
 	})
 }
 
@@ -1771,8 +1705,7 @@ func TestIngestion_UpdateSource(t *testing.T) {
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PATCH", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"name":"newName"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"name":"newName"}`)
 	})
 }
 
@@ -1791,8 +1724,7 @@ func TestIngestion_UpdateTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PATCH", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"enabled":false,"cron":"* * * * *"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"enabled":false,"cron":"* * * * *"}`)
 	})
 }
 
@@ -1811,8 +1743,7 @@ func TestIngestion_UpdateTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PATCH", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"enabled":false}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"enabled":false}`)
 	})
 }
 
@@ -1834,8 +1765,7 @@ func TestIngestion_UpdateTransformation(t *testing.T) {
 		require.Equal(t, "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}`)
 	})
 }
 
@@ -1865,11 +1795,8 @@ func TestIngestion_ValidateSource(t *testing.T) {
 		require.Equal(t, "/1/sources/validate", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
 	})
 }
 
@@ -1888,7 +1815,6 @@ func TestIngestion_ValidateSourceBeforeUpdate(t *testing.T) {
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"name":"newName"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"name":"newName"}`)
 	})
 }

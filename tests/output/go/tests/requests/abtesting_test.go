@@ -49,11 +49,8 @@ func TestAbtesting_AddABTests(t *testing.T) {
 		require.Equal(t, "/2/abtests", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
 }
 
@@ -170,8 +167,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
@@ -181,8 +177,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -201,8 +196,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"myQueryParameter"}`), &queryParams))
@@ -221,8 +215,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","query2":"myQueryParameter"}`), &queryParams))
@@ -241,8 +234,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -268,8 +260,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		headers := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-api-key":"ALGOLIA_API_KEY"}`), &headers))
@@ -295,8 +286,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","isItWorking":"true"}`), &queryParams))
@@ -315,8 +305,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"2"}`), &queryParams))
@@ -336,8 +325,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"b%20and%20c%2Cd"}`), &queryParams))
@@ -357,8 +345,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}`), &queryParams))
@@ -378,8 +365,7 @@ func TestAbtesting_CustomPost(t *testing.T) {
 		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"facet":"filters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"facet":"filters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters","myParam":"1%2C2"}`), &queryParams))
@@ -405,8 +391,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
@@ -416,8 +401,7 @@ func TestAbtesting_CustomPut(t *testing.T) {
 		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"body":"parameters"}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"body":"parameters"}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"query":"parameters"}`), &queryParams))
@@ -468,11 +452,8 @@ func TestAbtesting_EstimateABTest(t *testing.T) {
 		require.Equal(t, "/2/abtests/estimate", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		ja := jsonassert.New(t)
-		ja.Assertf(
-			*echo.Body,
-			`{"configuration":{"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`,
-		)
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"configuration":{"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
 }
 

@@ -63,7 +63,7 @@ func TestSearchE2E_Browse(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -98,7 +98,7 @@ func TestSearchE2E_GetObject(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -133,7 +133,7 @@ func TestSearchE2E_GetRule(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -168,7 +168,7 @@ func TestSearchE2E_GetSettings(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -206,7 +206,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 	t.Run("search with highlight and snippet results", func(t *testing.T) {
 		t.Parallel()
@@ -243,7 +243,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
 		t.Parallel()
@@ -277,7 +277,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 	t.Run("search filters end to end", func(t *testing.T) {
 		t.Parallel()
@@ -309,7 +309,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%%3A%%27visual+studio%%27+OR+editor%%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%%5B%%22editor%%3A%%27visual+studio%%27%%22%%2C%%22editor%%3Aneovim%%22%%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%%5B%%22editor%%3A%%27visual+studio%%27%%22%%2C%%5B%%22editor%%3Aneovim%%22%%5D%%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%%5B%%22editor%%3A%%27visual+studio%%27%%22%%2C%%5B%%22editor%%3Aneovim%%22%%2C%%5B%%22editor%%3Agoland%%22%%5D%%5D%%5D"}]}`
+		expectedBodyRaw := `{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}`
 
 		var expectedBody any
 
@@ -320,7 +320,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -356,7 +356,7 @@ func TestSearchE2E_SearchDictionaryEntries(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -392,7 +392,7 @@ func TestSearchE2E_SearchRules(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -440,7 +440,7 @@ func TestSearchE2E_SearchSingleIndex(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
