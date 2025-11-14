@@ -284,7 +284,6 @@
     "**/ingestion/**",
     "**/monitoring/**",
     "**/recommend/**",
-    "clients/algoliasearch-client-csharp/global.json",
     "clients/algoliasearch-client-php/composer.json",
     "tests/output/dart/**",
     "tests/output/java/**",

@@ -34,6 +34,7 @@ const flags = {
     '-d, --debugger',
     'runs the generator in debug mode, it will wait for a Java debugger to be attached',
   ),
+  languageVersion: new Option('--lv, --language-version <version>', 'the version of the language to use'),
 };
 
 program.name('cli');
@@ -88,7 +89,8 @@ buildCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .addOption(flags.verbose)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
+  .addOption(flags.languageVersion)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -96,7 +98,7 @@ buildCommand
 
     setVerbose(Boolean(verbose));
 
-    await buildLanguages(generatorList({ language, client, clientList }), 'playground');
+    await buildLanguages(generatorList({ language, client, clientList }), 'playground', languageVersion);
   });
 
 buildCommand
@@ -176,7 +178,7 @@ ctsCommand
   .addArgument(args.clients)
   .addOption(flags.verbose)
   .addOption(flags.debugger)
-  .option('--lv, --language-version <version>', 'the version of the language to use')
+  .addOption(flags.languageVersion)
   .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
@@ -267,7 +269,8 @@ program
   .addArgument(args.clients)
   .addOption(flags.verbose)
   .addOption(flags.debugger)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
+  .addOption(flags.languageVersion)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -275,7 +278,12 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets', Boolean(withDebugger));
+    await docsGenerateMany(
+      generatorList({ language, client, clientList }),
+      'snippets',
+      Boolean(withDebugger),
+      languageVersion,
+    );
   });
 
 program
@@ -285,7 +293,8 @@ program
   .addArgument(args.clients)
   .addOption(flags.verbose)
   .addOption(flags.debugger)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
+  .addOption(flags.languageVersion)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -299,6 +308,7 @@ program
       ),
       'guides',
       Boolean(withDebugger),
+      languageVersion,
     );
   });
 
