@@ -80,7 +80,7 @@ Run:
 RunStatus:
   type: string
   description: Task run status.
-  enum: [created, started, idled, finished, skipped]
+  enum: [created, started, finished, skipped]
 
 RunOutcome:
   type: string
@@ -96,4 +96,4 @@ RunReasonCode:
   type: string
   description: A code for the task run's outcome. A readable description of the code is included in the `reason` response property.
   enum:
-    [internal, critical, no_events, too_many_errors, ok, discarded, blocking]
+    [internal, cancelled, critical, no_events, too_many_errors, lacking_events, ok, blocking, idle]
