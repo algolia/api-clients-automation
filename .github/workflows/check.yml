@@ -403,7 +403,7 @@ jobs:
         run: yarn cli build snippets ${{ matrix.client.language }}
 
       - name: Generate code guides
-        run: yarn cli guides ${{ matrix.client.language }} --language-version ${{ matrix.client.version }}
+        run: yarn cli guides ${{ matrix.client.language }} ${{ matrix.client.language == 'java' && '' || '--language-version ${{ matrix.client.version }}' }}
 
       - name: Build the guides to check validity
         run: yarn cli build guides ${{ matrix.client.language }}
