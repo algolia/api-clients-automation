@@ -8471,6 +8471,15 @@
             "items": {
               "$ref": "#/components/schemas/timeRange"
             }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scope": {
+            "type": "string"
           }
         },
         "required": [

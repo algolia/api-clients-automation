@@ -30,6 +30,12 @@ public class Rule {
   @JsonProperty("validity")
   private List<TimeRange> validity;
 
+  @JsonProperty("tags")
+  private List<String> tags;
+
+  @JsonProperty("scope")
+  private String scope;
+
   public Rule setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
@@ -116,6 +122,36 @@ public class Rule {
     return validity;
   }
 
+  public Rule setTags(List<String> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public Rule addTags(String tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+  /** Get tags */
+  @javax.annotation.Nullable
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public Rule setScope(String scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  /** Get scope */
+  @javax.annotation.Nullable
+  public String getScope() {
+    return scope;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -131,13 +167,15 @@ public class Rule {
       Objects.equals(this.consequence, rule.consequence) &&
       Objects.equals(this.description, rule.description) &&
       Objects.equals(this.enabled, rule.enabled) &&
-      Objects.equals(this.validity, rule.validity)
+      Objects.equals(this.validity, rule.validity) &&
+      Objects.equals(this.tags, rule.tags) &&
+      Objects.equals(this.scope, rule.scope)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objectID, conditions, consequence, description, enabled, validity);
+    return Objects.hash(objectID, conditions, consequence, description, enabled, validity, tags, scope);
   }
 
   @Override
@@ -150,6 +188,8 @@ public class Rule {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();
   }

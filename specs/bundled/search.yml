@@ -8071,6 +8071,12 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        tags:
+          type: array
+          items:
+            type: string
+        scope:
+          type: string
       required:
         - objectID
         - consequence
