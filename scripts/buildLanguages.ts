@@ -31,7 +31,7 @@ async function buildLanguage(
   language: Language,
   gens: Generator[],
   buildType: BuildType,
-  languageVersion?: string,
+  languageVersion = '',
 ): Promise<void> {
   if (!gens || gens.length === 0) {
     return;
@@ -108,11 +108,7 @@ async function buildLanguage(
   spinner.succeed();
 }
 
-export async function buildLanguages(
-  generators: Generator[],
-  scope: BuildType,
-  languageVersion?: string,
-): Promise<void> {
+export async function buildLanguages(generators: Generator[], scope: BuildType, languageVersion = ''): Promise<void> {
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const generatorsMap = generators.reduce(
     (map, gen) => {

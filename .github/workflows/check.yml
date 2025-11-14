@@ -397,13 +397,13 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }} --benchmark --no-client --no-requests --no-e2e
 
       - name: Generate code snippets
-        run: yarn cli snippets ${{ matrix.client.language }}
+        run: yarn cli snippets ${{ matrix.client.language }} --language-version ${{ matrix.client.version }}
 
       - name: Build the snippets to check validity
         run: yarn cli build snippets ${{ matrix.client.language }}
 
       - name: Generate code guides
-        run: yarn cli guides ${{ matrix.client.language }}
+        run: yarn cli guides ${{ matrix.client.language }} --language-version ${{ matrix.client.version }}
 
       - name: Build the guides to check validity
         run: yarn cli build guides ${{ matrix.client.language }}

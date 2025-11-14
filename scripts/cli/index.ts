@@ -269,7 +269,8 @@ program
   .addArgument(args.clients)
   .addOption(flags.verbose)
   .addOption(flags.debugger)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
+  .addOption(flags.languageVersion)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -277,7 +278,12 @@ program
 
     setVerbose(Boolean(verbose));
 
-    await docsGenerateMany(generatorList({ language, client, clientList }), 'snippets', Boolean(withDebugger));
+    await docsGenerateMany(
+      generatorList({ language, client, clientList }),
+      'snippets',
+      Boolean(withDebugger),
+      languageVersion,
+    );
   });
 
 program
@@ -287,7 +293,8 @@ program
   .addArgument(args.clients)
   .addOption(flags.verbose)
   .addOption(flags.debugger)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger }) => {
+  .addOption(flags.languageVersion)
+  .action(async (langArg: LangArg, clientArg: string[], { verbose, debugger: withDebugger, languageVersion }) => {
     const { language, client, clientList } = transformSelection({
       langArg,
       clientArg,
@@ -301,6 +308,7 @@ program
       ),
       'guides',
       Boolean(withDebugger),
+      languageVersion,
     );
   });
 

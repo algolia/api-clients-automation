@@ -7,12 +7,18 @@ export async function docsGenerateMany(
   generators: Generator[],
   scope: 'guides' | 'snippets',
   withDebugger: boolean,
+  languageVersion = '',
 ): Promise<void> {
-  await setupAndGen(generators, scope, async (gen) => {
-    if (getTestOutputFolder(gen.language)) {
-      await callGenerator(gen, withDebugger);
-    }
-  });
+  await setupAndGen(
+    generators,
+    scope,
+    async (gen) => {
+      if (getTestOutputFolder(gen.language)) {
+        await callGenerator(gen, withDebugger);
+      }
+    },
+    { languageVersion },
+  );
 
   const langs = [...new Set(generators.map((gen) => gen.language))];
   for (const lang of langs) {
