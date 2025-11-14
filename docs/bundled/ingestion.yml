@@ -18513,7 +18513,6 @@ components:
       enum:
         - created
         - started
-        - idled
         - finished
         - skipped
     RunType:
@@ -18546,12 +18545,14 @@ components:
         included in the `reason` response property.
       enum:
         - internal
+        - cancelled
         - critical
         - no_events
         - too_many_errors
+        - lacking_events
         - ok
-        - discarded
         - blocking
+        - idle
     startedAt:
       type: string
       description: Date of start in RFC 3339 format.

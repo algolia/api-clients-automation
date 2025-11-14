@@ -6199,7 +6199,6 @@
         "enum": [
           "created",
           "started",
-          "idled",
           "finished",
           "skipped"
         ]
@@ -6238,12 +6237,14 @@
         "description": "A code for the task run's outcome. A readable description of the code is included in the `reason` response property.",
         "enum": [
           "internal",
+          "cancelled",
           "critical",
           "no_events",
           "too_many_errors",
+          "lacking_events",
           "ok",
-          "discarded",
-          "blocking"
+          "blocking",
+          "idle"
         ]
       },
       "startedAt": {

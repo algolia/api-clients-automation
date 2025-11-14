@@ -36,6 +36,11 @@ public class GoCTSManager implements CTSManager {
   }
 
   @Override
+  public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
+    supportingFiles.add(new SupportingFile("tests/go.mod.mustache", "tests/output/go", "go.mod"));
+  }
+
+  @Override
   public void addSnippetsSupportingFiles(List<SupportingFile> supportingFiles, String output) {
     supportingFiles.add(new SupportingFile("snippets/.golangci.mustache", output + "/go/.golangci.yml"));
     supportingFiles.add(new SupportingFile("snippets/go.mod.mustache", output + "/go/go.mod"));

@@ -66,6 +66,6 @@ func TestRecommendE2E_GetRecommendations(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }

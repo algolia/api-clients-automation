@@ -49,7 +49,7 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
-  '!tests/output/go/go.*',
+  'tests/output/go/go.mod',
 
   // Java
   '!clients/algoliasearch-client-java/**',

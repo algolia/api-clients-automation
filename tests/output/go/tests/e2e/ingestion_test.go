@@ -63,7 +63,7 @@ func TestIngestionE2E_EnableTask(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -98,7 +98,7 @@ func TestIngestionE2E_EnableTaskV1(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -133,7 +133,7 @@ func TestIngestionE2E_GetSource(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -172,7 +172,7 @@ func TestIngestionE2E_ListAuthentications(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -209,7 +209,7 @@ func TestIngestionE2E_SearchTasks(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }
 
@@ -246,6 +246,6 @@ func TestIngestionE2E_SearchTasksV1(t *testing.T) {
 		unionBodyRaw, err := json.Marshal(unionBody)
 		require.NoError(t, err)
 
-		jsonassert.New(t).Assertf(string(unionBodyRaw), expectedBodyRaw)
+		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
 	})
 }

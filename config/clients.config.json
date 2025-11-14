@@ -103,7 +103,12 @@
     "snippets": {
       "extension": ".go",
       "outputFolder": "src"
-    }
+    },
+    "supportedVersions": [
+      "1.24.10",
+      "1.25.4",
+      "1.21.11"
+    ]
   },
   "java": {
     "clients": [

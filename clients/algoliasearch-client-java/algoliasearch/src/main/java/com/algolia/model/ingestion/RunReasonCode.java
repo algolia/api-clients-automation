@@ -13,17 +13,21 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum RunReasonCode {
   INTERNAL("internal"),
 
+  CANCELLED("cancelled"),
+
   CRITICAL("critical"),
 
   NO_EVENTS("no_events"),
 
   TOO_MANY_ERRORS("too_many_errors"),
 
+  LACKING_EVENTS("lacking_events"),
+
   OK("ok"),
 
-  DISCARDED("discarded"),
+  BLOCKING("blocking"),
 
-  BLOCKING("blocking");
+  IDLE("idle");
 
   private final String value;
 

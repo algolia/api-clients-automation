@@ -51,8 +51,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       require.Equal(t, "{{{method}}}", echo.Method)
 
       {{#body}}
-      ja := jsonassert.New(t)
-      ja.Assertf(*echo.Body, `{{{.}}}`)
+      jsonassert.New(t).Assertf(*echo.Body, "%s", `{{{.}}}`)
       {{/body}}
       {{^body}}
       {{#assertNullBody}}
