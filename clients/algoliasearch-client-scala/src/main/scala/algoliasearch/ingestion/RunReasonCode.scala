@@ -29,6 +29,9 @@ object RunReasonCode {
   case object Internal extends RunReasonCode {
     override def toString = "internal"
   }
+  case object Cancelled extends RunReasonCode {
+    override def toString = "cancelled"
+  }
   case object Critical extends RunReasonCode {
     override def toString = "critical"
   }
@@ -38,16 +41,20 @@ object RunReasonCode {
   case object TooManyErrors extends RunReasonCode {
     override def toString = "too_many_errors"
   }
+  case object LackingEvents extends RunReasonCode {
+    override def toString = "lacking_events"
+  }
   case object Ok extends RunReasonCode {
     override def toString = "ok"
-  }
-  case object Discarded extends RunReasonCode {
-    override def toString = "discarded"
   }
   case object Blocking extends RunReasonCode {
     override def toString = "blocking"
   }
-  val values: Seq[RunReasonCode] = Seq(Internal, Critical, NoEvents, TooManyErrors, Ok, Discarded, Blocking)
+  case object Idle extends RunReasonCode {
+    override def toString = "idle"
+  }
+  val values: Seq[RunReasonCode] =
+    Seq(Internal, Cancelled, Critical, NoEvents, TooManyErrors, LackingEvents, Ok, Blocking, Idle)
 
   def withName(name: String): RunReasonCode = RunReasonCode.values
     .find(_.toString == name)

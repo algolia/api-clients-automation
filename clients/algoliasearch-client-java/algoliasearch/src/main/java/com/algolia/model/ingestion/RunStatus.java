@@ -12,8 +12,6 @@ public enum RunStatus {
 
   STARTED("started"),
 
-  IDLED("idled"),
-
   FINISHED("finished"),
 
   SKIPPED("skipped");

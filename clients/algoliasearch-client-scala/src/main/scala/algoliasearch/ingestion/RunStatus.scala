@@ -32,16 +32,13 @@ object RunStatus {
   case object Started extends RunStatus {
     override def toString = "started"
   }
-  case object Idled extends RunStatus {
-    override def toString = "idled"
-  }
   case object Finished extends RunStatus {
     override def toString = "finished"
   }
   case object Skipped extends RunStatus {
     override def toString = "skipped"
   }
-  val values: Seq[RunStatus] = Seq(Created, Started, Idled, Finished, Skipped)
+  val values: Seq[RunStatus] = Seq(Created, Started, Finished, Skipped)
 
   def withName(name: String): RunStatus = RunStatus.values
     .find(_.toString == name)
