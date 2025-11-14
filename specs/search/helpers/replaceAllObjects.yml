@@ -26,8 +26,8 @@ method:
       2. Add the records from the `objects` parameter to the temporary index.
       3. Replace the original index with the temporary one.
       
-      If there's an error during one of these steps, the temporary index won't be deleted.
-      You can add the `deleteIndex` ACL to your API key to allow automatic deletion of the temporary index in case of failure.
+      If there's an error during one of these steps,
+      the temporary index is deleted if your API key has the `deleteIndex` ACL.
       
       If your API key restricts access to specific indices, make sure it also grants access to the temporary index INDEX_NAME_tmp_* (replace INDEX_NAME with the name of your original index).
       
