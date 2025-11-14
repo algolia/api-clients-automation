@@ -26,11 +26,7 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public String getLanguageVersion(String override) throws IOException {
-    if (override != null && !override.isEmpty()) {
-      return override.split("\\.")[0];
-    }
-
-    return Helpers.getLanguageVersion(getLanguage()).split("\\.")[0];
+    return CTSManager.super.getLanguageVersion(override).split("\\.")[0];
   }
 
   @Override
@@ -46,7 +42,6 @@ public class JavaCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", getVersion());
     bundle.put("import", Helpers.camelize(this.client).toLowerCase());
   }
 

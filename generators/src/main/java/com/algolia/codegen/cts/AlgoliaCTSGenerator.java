@@ -44,7 +44,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     mode = (String) additionalProperties.get("mode");
-    ctsManager = CTSManagerFactory.getManager(language, client);
+    ctsManager = CTSManagerFactory.getManager(language, client, (String) additionalProperties.getOrDefault("languageVersion", ""));
 
     if (ctsManager == null) {
       // skip the generation
@@ -161,6 +161,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       // restore the lambda from the original bundle
       ctsManager.addMustacheLambdas(lambda);
       bundle.put("lambda", lambda);
+
+      // Set some default values in the bundle
+      bundle.put("packageVersion", ctsManager.getPackageVersion());
 
       String languageVersion = ctsManager.getLanguageVersion((String) additionalProperties.getOrDefault("languageVersion", ""));
       bundle.put("languageVersion", languageVersion);

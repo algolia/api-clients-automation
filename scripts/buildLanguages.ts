@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { createClientName, run, toAbsolutePath } from './common.ts';
 import { getLanguageFolder, getSwiftBuildFolder } from './config.ts';
 import { formatter } from './formatter.ts';
+import { updatePlaygroundLanguageVersion } from './playground.ts';
 import { createSpinner } from './spinners.ts';
 import type { Generator, Language } from './types.ts';
 
@@ -26,9 +27,18 @@ function getFolder(buildType: BuildType, language: Language): string {
 /**
  * Build code for a specific language.
  */
-async function buildLanguage(language: Language, gens: Generator[], buildType: BuildType): Promise<void> {
+async function buildLanguage(
+  language: Language,
+  gens: Generator[],
+  buildType: BuildType,
+  languageVersion = '',
+): Promise<void> {
   if (!gens || gens.length === 0) {
     return;
+  }
+
+  if (buildType === 'playground' && languageVersion) {
+    await updatePlaygroundLanguageVersion(language, languageVersion);
   }
 
   const cwd = getFolder(buildType, language);
@@ -98,7 +108,7 @@ async function buildLanguage(language: Language, gens: Generator[], buildType: B
   spinner.succeed();
 }
 
-export async function buildLanguages(generators: Generator[], scope: BuildType): Promise<void> {
+export async function buildLanguages(generators: Generator[], scope: BuildType, languageVersion = ''): Promise<void> {
   const langs = [...new Set(generators.map((gen) => gen.language))];
   const generatorsMap = generators.reduce(
     (map, gen) => {
@@ -118,5 +128,5 @@ export async function buildLanguages(generators: Generator[], scope: BuildType):
     {} as Record<Language, Generator[]>,
   );
 
-  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], scope)));
+  await Promise.all(langs.map((lang) => buildLanguage(lang, generatorsMap[lang], scope, languageVersion)));
 }

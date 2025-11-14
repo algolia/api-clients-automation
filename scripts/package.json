@@ -10,7 +10,7 @@
     "pre-commit": "node ./ci/husky/pre-commit.mjs",
     "pushGeneratedCode": "yarn runScript ci/codegen/pushGeneratedCode.ts",
     "pushToRepository": "yarn runScript ci/codegen/pushToRepository.ts $*",
-    "runScript": "NODE_NO_WARNINGS=1 node --experimental-strip-types",
+    "runScript": "NODE_NO_WARNINGS=1 node",
     "setRunVariables": "yarn runScript ci/githubActions/setRunVariables.ts",
     "spreadGeneration": "yarn runScript ci/codegen/spreadGeneration.ts",
     "start": "yarn runScript cli/index.ts",

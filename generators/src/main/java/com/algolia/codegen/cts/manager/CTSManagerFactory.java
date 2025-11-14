@@ -6,7 +6,7 @@ public class CTSManagerFactory {
     // NO-OP
   }
 
-  public static CTSManager getManager(String language, String client) {
+  public static CTSManager getManager(String language, String client, String overrideLanguageVersion) {
     return switch (language) {
       case "javascript" -> new JavascriptCTSManager(client);
       case "java" -> new JavaCTSManager(client);
@@ -17,7 +17,7 @@ public class CTSManagerFactory {
       case "ruby" -> new RubyCTSManager(client);
       case "scala" -> new ScalaCTSManager(client);
       case "python" -> new PythonCTSManager(client);
-      case "csharp" -> new CSharpCTSManager(client);
+      case "csharp" -> new CSharpCTSManager(client, overrideLanguageVersion);
       case "swift" -> new SwiftCTSManager(client);
       default -> null;
     };

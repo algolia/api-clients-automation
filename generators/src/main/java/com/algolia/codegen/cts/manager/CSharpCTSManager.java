@@ -4,15 +4,18 @@ import com.algolia.codegen.cts.lambda.CSharpIdentifierLambda;
 import com.algolia.codegen.exceptions.GeneratorException;
 import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache.Lambda;
+import java.io.IOException;
 import java.util.*;
 import org.openapitools.codegen.SupportingFile;
 
 public class CSharpCTSManager implements CTSManager {
 
   private final String client;
+  private final String overrideLanguageVersion;
 
-  public CSharpCTSManager(String client) {
+  public CSharpCTSManager(String client, String overrideLanguageVersion) {
     this.client = client;
+    this.overrideLanguageVersion = overrideLanguageVersion;
   }
 
   public String getLanguage() {
@@ -25,7 +28,9 @@ public class CSharpCTSManager implements CTSManager {
 
   @Override
   public void addTestsSupportingFiles(List<SupportingFile> supportingFiles) {
-    supportingFiles.add(new SupportingFile("globaljson.mustache", "tests/output/csharp", "global.json"));
+    supportingFiles.add(
+      new SupportingFile("tests/Algolia.Search.Tests.csproj.mustache", "tests/output/csharp/src", "Algolia.Search.Tests.csproj")
+    );
   }
 
   @Override
@@ -43,7 +48,13 @@ public class CSharpCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    bundle.put("packageVersion", getVersion());
+    try {
+      String dotnetVersion = getLanguageVersion(overrideLanguageVersion);
+      String[] parts = dotnetVersion.split("\\.");
+      bundle.put("dotnetVersion", parts[0] + "." + parts[1]);
+    } catch (IOException e) {
+      throw new GeneratorException("Failed to compute dotnet version", e);
+    }
   }
 
   @Override
