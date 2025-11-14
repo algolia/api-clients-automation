@@ -26,8 +26,7 @@ method:
       2. Add the records from the `objects` parameter to the temporary index.
       3. Replace the original index with the temporary one.
       
-      If there's an error during one of these steps,
-      the temporary index is deleted if your API key has the `deleteIndex` ACL.
+      If there's an error during one of these steps, the temporary index is deleted if your API key has the `deleteIndex` ACL.
       
       If your API key restricts access to specific indices, make sure it also grants access to the temporary index INDEX_NAME_tmp_* (replace INDEX_NAME with the name of your original index).
       
@@ -36,7 +35,6 @@ method:
       The response includes the results of the individual API requests.
       
       This method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.
-      If you're on a legacy plan (before July 2020), this method counts two operations towards your usage (in addition to the number of records): copySettings and moveIndex.
     parameters:
       - in: query
         name: indexName
