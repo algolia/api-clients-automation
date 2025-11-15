@@ -3047,12 +3047,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:19.2.3":
-  version: 19.2.3
-  resolution: "@types/react@npm:19.2.3"
+"@types/react@npm:19.2.5":
+  version: 19.2.5
+  resolution: "@types/react@npm:19.2.5"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10/b75aa49a8fdaf4ffd14050e8bca2b31f7ed6634880f1a0dd90511060fe052b0418688191980c7baeda2572fb993930a13090fcbc05f6d6f8981d03f372dd30ec
+  checksum: 10/31067648e1380f6ddade8f586c7ff54db89c1b11e23cb307fb69e5bfceae22105721568e2eec15be2af03e63bf5fb6da4284b8621447d20ade7b7afab043b945
   languageName: node
   linkType: hard
 
@@ -6507,7 +6507,7 @@ __metadata:
   resolution: "javascript-playground-browser@workspace:playground/javascript/browser"
   dependencies:
     "@eslint/js": "npm:9.39.1"
-    "@types/react": "npm:19.2.3"
+    "@types/react": "npm:19.2.5"
     "@types/react-dom": "npm:19.2.3"
     "@vitejs/plugin-react-swc": "npm:4.2.2"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
