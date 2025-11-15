@@ -1,3 +1,8 @@
+## [1.41.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.41.0...1.41.1)
+
+- [ee5542a32](https://github.com/algolia/api-clients-automation/commit/ee5542a32) fix(specs): Add title values to key oneOfs ([#5581](https://github.com/algolia/api-clients-automation/pull/5581)) by [@gazconroy](https://github.com/gazconroy/)
+- [ae9ac597f](https://github.com/algolia/api-clients-automation/commit/ae9ac597f) fix(specs): add tags and scope to rules ([#5625](https://github.com/algolia/api-clients-automation/pull/5625)) by [@millotp](https://github.com/millotp/)
+
 ## [1.41.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.40.0...1.41.0)
 
 - [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
