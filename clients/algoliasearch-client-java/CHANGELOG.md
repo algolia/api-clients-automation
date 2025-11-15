@@ -1,3 +1,7 @@
+## [4.32.1](https://github.com/algolia/algoliasearch-client-java/compare/4.32.0...4.32.1)
+
+- [6c7a4ea99](https://github.com/algolia/api-clients-automation/commit/6c7a4ea99) fix(scripts): disable doclint when releasing java ([#5629](https://github.com/algolia/api-clients-automation/pull/5629)) by [@millotp](https://github.com/millotp/)
+
 ## [4.32.0](https://github.com/algolia/algoliasearch-client-java/compare/4.31.0...4.32.0)
 
 - [7d189e024](https://github.com/algolia/api-clients-automation/commit/7d189e024) feat(specs): add useImagesObjects property in commercetools source input ([#5586](https://github.com/algolia/api-clients-automation/pull/5586)) by [@sbellone](https://github.com/sbellone/)
