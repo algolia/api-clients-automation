@@ -2497,10 +2497,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/pluginutils@npm:1.0.0-beta.46":
-  version: 1.0.0-beta.46
-  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.46"
-  checksum: 10/00d52f8606757d67695cd185d7fb2e83c60e50543715e2112b9ed7dd80394c48d513701fdbad66bc34c4e54e669fb70b213168b82932417abf481cf9295c818f
+"@rolldown/pluginutils@npm:1.0.0-beta.47":
+  version: 1.0.0-beta.47
+  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.47"
+  checksum: 10/c1794cb39642e644dc7194043543780fd9f83e58052f1e5608d9d063a74592577bcb3b1283e3928db99ff52b208f7d5c47342f376de823f9fd584f189a371ed4
   languageName: node
   linkType: hard
 
@@ -3373,15 +3373,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react-swc@npm:4.2.1":
-  version: 4.2.1
-  resolution: "@vitejs/plugin-react-swc@npm:4.2.1"
+"@vitejs/plugin-react-swc@npm:4.2.2":
+  version: 4.2.2
+  resolution: "@vitejs/plugin-react-swc@npm:4.2.2"
   dependencies:
-    "@rolldown/pluginutils": "npm:1.0.0-beta.46"
+    "@rolldown/pluginutils": "npm:1.0.0-beta.47"
     "@swc/core": "npm:^1.13.5"
   peerDependencies:
     vite: ^4 || ^5 || ^6 || ^7
-  checksum: 10/1593eef152d8035f1b6df08bd40fee4c1a88cefa24999a7267e3e48d1194ff8883d7f9a17284de1a4807fa3832930e821d0ce149bb55563db9f5eb6baeb499d2
+  checksum: 10/2db234169f7dc177560ea0f5bfd02ab690e374e3f24459847643bb4f804994b6060610a3f5de7dbc83ed43131c7340b215e67978557ddd69e0be9a2024776f70
   languageName: node
   linkType: hard
 
@@ -6509,7 +6509,7 @@ __metadata:
     "@eslint/js": "npm:9.39.1"
     "@types/react": "npm:19.2.3"
     "@types/react-dom": "npm:19.2.3"
-    "@vitejs/plugin-react-swc": "npm:4.2.1"
+    "@vitejs/plugin-react-swc": "npm:4.2.2"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     eslint: "npm:9.39.1"
     eslint-plugin-react-hooks: "npm:7.0.1"
