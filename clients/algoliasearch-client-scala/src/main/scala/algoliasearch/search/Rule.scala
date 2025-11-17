@@ -54,5 +54,7 @@ case class Rule(
     consequence: Consequence,
     description: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,
-    validity: Option[Seq[TimeRange]] = scala.None
+    validity: Option[Seq[TimeRange]] = scala.None,
+    tags: Option[Seq[String]] = scala.None,
+    scope: Option[String] = scala.None
 )

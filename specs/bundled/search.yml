@@ -3574,33 +3574,41 @@ paths:
       operationId: replaceAllObjects
       summary: Replace all records in an index
       description: >
-        Replace all records from your index with a new set of records.
+        This method replaces all records in an index without interrupting
+        ongoing searches.
 
 
-        This method lets you replace all records in your index without downtime.
-        It performs these operations:
-          1. Copy settings, synonyms, and rules from your original index to a temporary index.
-          2. Add your new records to the temporary index.
-          3. Replace your original index with the temporary index.
+        It combines [batch](https://www.algolia.com/doc/rest-api/search/batch)
+        and
+        [copy/move](https://www.algolia.com/doc/rest-api/search/operation-index)
+        index operations:
 
-        Use the safe parameter to ensure that these (asynchronous) operations
-        are performed in sequence.
+        1. Copy settings, synonyms, and rules to a temporary index.
 
-        If there's an error duing one of these steps, the temporary index won't
-        be deleted.
+        2. Add the records from the `objects` parameter to the temporary index.
 
-        This operation is rate-limited.
+        3. Replace the original index with the temporary one.
+
+
+        If there's an error during one of these steps, the temporary index is
+        deleted if your API key has the `deleteIndex` ACL.
+
+
+        If your API key restricts access to specific indices, make sure it also
+        grants access to the temporary index INDEX_NAME_tmp_* (replace
+        INDEX_NAME with the name of your original index).
+
+
+        This method is subject to [indexing rate
+        limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
+
+
+        The response includes the results of the individual API requests.
+
 
         This method creates a temporary index: your record count is temporarily
         doubled. Algolia doesn't count the three days with the highest number of
         records towards your monthly usage.
-
-        If you're on a legacy plan (before July 2020), this method counts two
-        operations towards your usage (in addition to the number of records):
-        copySettings and moveIndex.
-
-        The API key you use for this operation must have access to the index
-        YourIndex and the temporary index YourIndex_tmp.
       parameters:
         - in: query
           name: indexName
@@ -3628,7 +3636,7 @@ paths:
         - in: query
           name: scopes
           description: >-
-            List of scopes to kepp in the index. Defaults to `settings`,
+            List of scopes to keep in the index. Defaults to `settings`,
             `synonyms`, and `rules`.
           required: false
           schema:
@@ -8071,6 +8079,12 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        tags:
+          type: array
+          items:
+            type: string
+        scope:
+          type: string
       required:
         - objectID
         - consequence

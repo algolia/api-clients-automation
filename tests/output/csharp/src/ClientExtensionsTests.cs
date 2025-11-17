@@ -343,13 +343,11 @@ public class ClientExtensionsTests
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
                 serializer.Serialize(
-                  new SearchResponses<object>(
-                    [
-                      new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
-                    ]
-                  )
+                  new SearchResponses<object>([
+                    new(new SearchForFacetValuesResponse() { FacetHits = new List<FacetHits>() }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
+                  ])
                 )
               )
             ),
@@ -391,13 +389,11 @@ public class ClientExtensionsTests
             Body = new MemoryStream(
               Encoding.UTF8.GetBytes(
                 serializer.Serialize(
-                  new SearchResponses<object>(
-                    [
-                      new(new SearchForFacetValuesResponse { FacetHits = [] }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
-                      new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
-                    ]
-                  )
+                  new SearchResponses<object>([
+                    new(new SearchForFacetValuesResponse { FacetHits = [] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "12345" }] }),
+                    new(new SearchResponse<object> { Hits = [new { ObjectID = "678910" }] }),
+                  ])
                 )
               )
             ),

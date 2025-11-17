@@ -93,7 +93,7 @@
       },
       "supportedVersions": {
         "type": "array",
-        "description": "hints the CI on what matrix to generate for this client, this must be language specific versions, e.g. versions of node",
+        "description": "hints the CI on what matrix to generate for this client, this must be language specific versions, e.g. versions of node. The last item is the version that will be released",
         "items": { "type": "string" }
       }
     },

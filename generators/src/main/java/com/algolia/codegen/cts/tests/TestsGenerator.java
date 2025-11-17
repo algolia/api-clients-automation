@@ -97,7 +97,7 @@ public abstract class TestsGenerator {
     return json
       .replace("${{language}}", language)
       .replace("${{languageCased}}", ctsManager.getLanguageCased())
-      .replace("${{languageVersion}}", ctsManager.getVersion())
+      .replace("${{languageVersion}}", ctsManager.getPackageVersion())
       .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(Helpers.getClientConfigClientName(client))))
       .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
   }
