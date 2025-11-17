@@ -1,9 +1,8 @@
 openapi: 3.0.2
 info:
   title: Personalization API
+  summary: The Personalization API lets you access user profiles built from the personalization strategy
   description: |
-    The Personalization API lets you access user profiles built from the personalization strategy.
-
     ## Base URLs
 
     The base URLs for requests to the Personalization API are:
