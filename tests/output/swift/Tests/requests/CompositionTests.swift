@@ -1724,7 +1724,6 @@ final class CompositionClientRequestsTests: XCTestCase {
         let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
-                query: "batman",
                 injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                     ExternalInjection(objectID: "my-object-1"),
                     ExternalInjection(
@@ -1736,7 +1735,8 @@ final class CompositionClientRequestsTests: XCTestCase {
                             "my-object": ["sub-key": "sub-value"],
                         ]
                     ),
-                ])]
+                ])],
+                query: "batman"
             ))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)

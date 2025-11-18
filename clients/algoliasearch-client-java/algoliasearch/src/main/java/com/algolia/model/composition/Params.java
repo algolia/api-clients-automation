@@ -14,35 +14,11 @@ import java.util.Objects;
 /** Params */
 public class Params {
 
-  @JsonProperty("query")
-  private String query;
+  @JsonProperty("analytics")
+  private Boolean analytics;
 
-  @JsonProperty("filters")
-  private String filters;
-
-  @JsonProperty("page")
-  private Integer page;
-
-  @JsonProperty("getRankingInfo")
-  private Boolean getRankingInfo;
-
-  @JsonProperty("relevancyStrictness")
-  private Integer relevancyStrictness;
-
-  @JsonProperty("facetFilters")
-  private FacetFilters facetFilters;
-
-  @JsonProperty("facets")
-  private List<String> facets;
-
-  @JsonProperty("optionalFilters")
-  private OptionalFilters optionalFilters;
-
-  @JsonProperty("numericFilters")
-  private NumericFilters numericFilters;
-
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
+  @JsonProperty("analyticsTags")
+  private List<String> analyticsTags;
 
   @JsonProperty("aroundLatLng")
   private String aroundLatLng;
@@ -56,8 +32,38 @@ public class Params {
   @JsonProperty("aroundPrecision")
   private AroundPrecision aroundPrecision;
 
-  @JsonProperty("minimumAroundRadius")
-  private Integer minimumAroundRadius;
+  @JsonProperty("clickAnalytics")
+  private Boolean clickAnalytics;
+
+  @JsonProperty("enableABTest")
+  private Boolean enableABTest;
+
+  @JsonProperty("enablePersonalization")
+  private Boolean enablePersonalization;
+
+  @JsonProperty("enableReRanking")
+  private Boolean enableReRanking;
+
+  @JsonProperty("enableRules")
+  private Boolean enableRules;
+
+  @JsonProperty("facetFilters")
+  private FacetFilters facetFilters;
+
+  @JsonProperty("facets")
+  private List<String> facets;
+
+  @JsonProperty("filters")
+  private String filters;
+
+  @JsonProperty("getRankingInfo")
+  private Boolean getRankingInfo;
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
+
+  @JsonProperty("injectedItems")
+  private Map<String, ExternalInjectedItem> injectedItems;
 
   @JsonProperty("insideBoundingBox")
   private InsideBoundingBox insideBoundingBox;
@@ -65,14 +71,29 @@ public class Params {
   @JsonProperty("insidePolygon")
   private List<List<Double>> insidePolygon;
 
-  @JsonProperty("queryLanguages")
-  private List<SupportedLanguage> queryLanguages;
+  @JsonProperty("minimumAroundRadius")
+  private Integer minimumAroundRadius;
 
   @JsonProperty("naturalLanguages")
   private List<SupportedLanguage> naturalLanguages;
 
-  @JsonProperty("enableRules")
-  private Boolean enableRules;
+  @JsonProperty("numericFilters")
+  private NumericFilters numericFilters;
+
+  @JsonProperty("optionalFilters")
+  private OptionalFilters optionalFilters;
+
+  @JsonProperty("page")
+  private Integer page;
+
+  @JsonProperty("query")
+  private String query;
+
+  @JsonProperty("relevancyStrictness")
+  private Integer relevancyStrictness;
+
+  @JsonProperty("queryLanguages")
+  private List<SupportedLanguage> queryLanguages;
 
   @JsonProperty("ruleContexts")
   private List<String> ruleContexts;
@@ -80,169 +101,37 @@ public class Params {
   @JsonProperty("userToken")
   private String userToken;
 
-  @JsonProperty("clickAnalytics")
-  private Boolean clickAnalytics;
-
-  @JsonProperty("analytics")
-  private Boolean analytics;
-
-  @JsonProperty("analyticsTags")
-  private List<String> analyticsTags;
-
-  @JsonProperty("enableABTest")
-  private Boolean enableABTest;
-
-  @JsonProperty("enableReRanking")
-  private Boolean enableReRanking;
-
-  @JsonProperty("injectedItems")
-  private Map<String, ExternalInjectedItem> injectedItems;
-
-  public Params setQuery(String query) {
-    this.query = query;
+  public Params setAnalytics(Boolean analytics) {
+    this.analytics = analytics;
     return this;
   }
 
-  /** Search query. */
+  /** Whether this search will be included in Analytics. */
   @javax.annotation.Nullable
-  public String getQuery() {
-    return query;
+  public Boolean getAnalytics() {
+    return analytics;
   }
 
-  public Params setFilters(String filters) {
-    this.filters = filters;
+  public Params setAnalyticsTags(List<String> analyticsTags) {
+    this.analyticsTags = analyticsTags;
     return this;
   }
 
-  /**
-   * Filter expression to only include items that match the filter criteria in the response. You can
-   * use these filter expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is
-   * one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where
-   * `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet
-   * filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and
-   * `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
-   * - **Boolean filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and
-   * `NOT` operators with the following restrictions: - You can only combine filters of the same
-   * type with `OR`. **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with
-   * combinations of filters. **Not supported:** `NOT(facet:value OR facet:value)` - You can't
-   * combine conjunctions (`AND`) with `OR`. **Not supported:** `facet:value OR (facet:value AND
-   * facet:value)` Use quotes around your filters, if the facet attribute name or facet value has
-   * spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
-   * matches if it matches at least one element of the array. For more information, see
-   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
-   */
-  @javax.annotation.Nullable
-  public String getFilters() {
-    return filters;
-  }
-
-  public Params setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nullable
-  public Integer getPage() {
-    return page;
-  }
-
-  public Params setGetRankingInfo(Boolean getRankingInfo) {
-    this.getRankingInfo = getRankingInfo;
-    return this;
-  }
-
-  /** Whether the run response should include detailed ranking information. */
-  @javax.annotation.Nullable
-  public Boolean getGetRankingInfo() {
-    return getRankingInfo;
-  }
-
-  public Params setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-    return this;
-  }
-
-  /**
-   * Relevancy threshold below which less relevant results aren't included in the results You can
-   * only set `relevancyStrictness` on [virtual replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-   * Use this setting to strike a balance between the relevance and number of returned results.
-   */
-  @javax.annotation.Nullable
-  public Integer getRelevancyStrictness() {
-    return relevancyStrictness;
-  }
-
-  public Params setFacetFilters(FacetFilters facetFilters) {
-    this.facetFilters = facetFilters;
-    return this;
-  }
-
-  /** Get facetFilters */
-  @javax.annotation.Nullable
-  public FacetFilters getFacetFilters() {
-    return facetFilters;
-  }
-
-  public Params setFacets(List<String> facets) {
-    this.facets = facets;
-    return this;
-  }
-
-  public Params addFacets(String facetsItem) {
-    if (this.facets == null) {
-      this.facets = new ArrayList<>();
+  public Params addAnalyticsTags(String analyticsTagsItem) {
+    if (this.analyticsTags == null) {
+      this.analyticsTags = new ArrayList<>();
     }
-    this.facets.add(facetsItem);
+    this.analyticsTags.add(analyticsTagsItem);
     return this;
   }
 
   /**
-   * Facets for which to retrieve facet values that match the search criteria and the number of
-   * matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve
-   * disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more
-   * information, see
-   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
-   * and [disjunctive faceting for Smart
-   * Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+   * Tags to apply to the query for [segmenting analytics
+   * data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
    */
   @javax.annotation.Nullable
-  public List<String> getFacets() {
-    return facets;
-  }
-
-  public Params setOptionalFilters(OptionalFilters optionalFilters) {
-    this.optionalFilters = optionalFilters;
-    return this;
-  }
-
-  /** Get optionalFilters */
-  @javax.annotation.Nullable
-  public OptionalFilters getOptionalFilters() {
-    return optionalFilters;
-  }
-
-  public Params setNumericFilters(NumericFilters numericFilters) {
-    this.numericFilters = numericFilters;
-    return this;
-  }
-
-  /** Get numericFilters */
-  @javax.annotation.Nullable
-  public NumericFilters getNumericFilters() {
-    return numericFilters;
-  }
-
-  public Params setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nullable
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
+  public List<String> getAnalyticsTags() {
+    return analyticsTags;
   }
 
   public Params setAroundLatLng(String aroundLatLng) {
@@ -295,18 +184,176 @@ public class Params {
     return aroundPrecision;
   }
 
-  public Params setMinimumAroundRadius(Integer minimumAroundRadius) {
-    this.minimumAroundRadius = minimumAroundRadius;
+  public Params setClickAnalytics(Boolean clickAnalytics) {
+    this.clickAnalytics = clickAnalytics;
     return this;
   }
 
   /**
-   * Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
-   * minimum: 1
+   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
+   * for a search query and is required for tracking [click and conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
   @javax.annotation.Nullable
-  public Integer getMinimumAroundRadius() {
-    return minimumAroundRadius;
+  public Boolean getClickAnalytics() {
+    return clickAnalytics;
+  }
+
+  public Params setEnableABTest(Boolean enableABTest) {
+    this.enableABTest = enableABTest;
+    return this;
+  }
+
+  /**
+   * Whether to enable index level A/B testing for this run request. If the composition mixes
+   * multiple indices, the A/B test is ignored.
+   */
+  @javax.annotation.Nullable
+  public Boolean getEnableABTest() {
+    return enableABTest;
+  }
+
+  public Params setEnablePersonalization(Boolean enablePersonalization) {
+    this.enablePersonalization = enablePersonalization;
+    return this;
+  }
+
+  /** Whether to enable Personalization. */
+  @javax.annotation.Nullable
+  public Boolean getEnablePersonalization() {
+    return enablePersonalization;
+  }
+
+  public Params setEnableReRanking(Boolean enableReRanking) {
+    this.enableReRanking = enableReRanking;
+    return this;
+  }
+
+  /**
+   * Whether this search will use [Dynamic
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
+   * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+   */
+  @javax.annotation.Nullable
+  public Boolean getEnableReRanking() {
+    return enableReRanking;
+  }
+
+  public Params setEnableRules(Boolean enableRules) {
+    this.enableRules = enableRules;
+    return this;
+  }
+
+  /** Whether to enable composition rules. */
+  @javax.annotation.Nullable
+  public Boolean getEnableRules() {
+    return enableRules;
+  }
+
+  public Params setFacetFilters(FacetFilters facetFilters) {
+    this.facetFilters = facetFilters;
+    return this;
+  }
+
+  /** Get facetFilters */
+  @javax.annotation.Nullable
+  public FacetFilters getFacetFilters() {
+    return facetFilters;
+  }
+
+  public Params setFacets(List<String> facets) {
+    this.facets = facets;
+    return this;
+  }
+
+  public Params addFacets(String facetsItem) {
+    if (this.facets == null) {
+      this.facets = new ArrayList<>();
+    }
+    this.facets.add(facetsItem);
+    return this;
+  }
+
+  /**
+   * Facets for which to retrieve facet values that match the search criteria and the number of
+   * matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve
+   * disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more
+   * information, see
+   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
+   * and [disjunctive faceting for Smart
+   * Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+   */
+  @javax.annotation.Nullable
+  public List<String> getFacets() {
+    return facets;
+  }
+
+  public Params setFilters(String filters) {
+    this.filters = filters;
+    return this;
+  }
+
+  /**
+   * Filter expression to only include items that match the filter criteria in the response. You can
+   * use these filter expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is
+   * one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where
+   * `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet
+   * filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and
+   * `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
+   * - **Boolean filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and
+   * `NOT` operators with the following restrictions: - You can only combine filters of the same
+   * type with `OR`. **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with
+   * combinations of filters. **Not supported:** `NOT(facet:value OR facet:value)` - You can't
+   * combine conjunctions (`AND`) with `OR`. **Not supported:** `facet:value OR (facet:value AND
+   * facet:value)` Use quotes around your filters, if the facet attribute name or facet value has
+   * spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+   * matches if it matches at least one element of the array. For more information, see
+   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
+   */
+  @javax.annotation.Nullable
+  public String getFilters() {
+    return filters;
+  }
+
+  public Params setGetRankingInfo(Boolean getRankingInfo) {
+    this.getRankingInfo = getRankingInfo;
+    return this;
+  }
+
+  /** Whether the run response should include detailed ranking information. */
+  @javax.annotation.Nullable
+  public Boolean getGetRankingInfo() {
+    return getRankingInfo;
+  }
+
+  public Params setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nullable
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
+  }
+
+  public Params setInjectedItems(Map<String, ExternalInjectedItem> injectedItems) {
+    this.injectedItems = injectedItems;
+    return this;
+  }
+
+  public Params putInjectedItems(String key, ExternalInjectedItem injectedItemsItem) {
+    if (this.injectedItems == null) {
+      this.injectedItems = new HashMap<>();
+    }
+    this.injectedItems.put(key, injectedItemsItem);
+    return this;
+  }
+
+  /** A list of extenrally injected objectID groups into from an external source. */
+  @javax.annotation.Nullable
+  public Map<String, ExternalInjectedItem> getInjectedItems() {
+    return injectedItems;
   }
 
   public Params setInsideBoundingBox(InsideBoundingBox insideBoundingBox) {
@@ -345,6 +392,104 @@ public class Params {
     return insidePolygon;
   }
 
+  public Params setMinimumAroundRadius(Integer minimumAroundRadius) {
+    this.minimumAroundRadius = minimumAroundRadius;
+    return this;
+  }
+
+  /**
+   * Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
+   * minimum: 1
+   */
+  @javax.annotation.Nullable
+  public Integer getMinimumAroundRadius() {
+    return minimumAroundRadius;
+  }
+
+  public Params setNaturalLanguages(List<SupportedLanguage> naturalLanguages) {
+    this.naturalLanguages = naturalLanguages;
+    return this;
+  }
+
+  public Params addNaturalLanguages(SupportedLanguage naturalLanguagesItem) {
+    if (this.naturalLanguages == null) {
+      this.naturalLanguages = new ArrayList<>();
+    }
+    this.naturalLanguages.add(naturalLanguagesItem);
+    return this;
+  }
+
+  /**
+   * ISO language codes that adjust settings that are useful for processing natural language queries
+   * (as opposed to keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of
+   * provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a
+   * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
+   */
+  @javax.annotation.Nullable
+  public List<SupportedLanguage> getNaturalLanguages() {
+    return naturalLanguages;
+  }
+
+  public Params setNumericFilters(NumericFilters numericFilters) {
+    this.numericFilters = numericFilters;
+    return this;
+  }
+
+  /** Get numericFilters */
+  @javax.annotation.Nullable
+  public NumericFilters getNumericFilters() {
+    return numericFilters;
+  }
+
+  public Params setOptionalFilters(OptionalFilters optionalFilters) {
+    this.optionalFilters = optionalFilters;
+    return this;
+  }
+
+  /** Get optionalFilters */
+  @javax.annotation.Nullable
+  public OptionalFilters getOptionalFilters() {
+    return optionalFilters;
+  }
+
+  public Params setPage(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /** Page of search results to retrieve. minimum: 0 */
+  @javax.annotation.Nullable
+  public Integer getPage() {
+    return page;
+  }
+
+  public Params setQuery(String query) {
+    this.query = query;
+    return this;
+  }
+
+  /** Search query. */
+  @javax.annotation.Nullable
+  public String getQuery() {
+    return query;
+  }
+
+  public Params setRelevancyStrictness(Integer relevancyStrictness) {
+    this.relevancyStrictness = relevancyStrictness;
+    return this;
+  }
+
+  /**
+   * Relevancy threshold below which less relevant results aren't included in the results You can
+   * only set `relevancyStrictness` on [virtual replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+   * Use this setting to strike a balance between the relevance and number of returned results.
+   */
+  @javax.annotation.Nullable
+  public Integer getRelevancyStrictness() {
+    return relevancyStrictness;
+  }
+
   public Params setQueryLanguages(List<SupportedLanguage> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
@@ -375,41 +520,6 @@ public class Params {
   @javax.annotation.Nullable
   public List<SupportedLanguage> getQueryLanguages() {
     return queryLanguages;
-  }
-
-  public Params setNaturalLanguages(List<SupportedLanguage> naturalLanguages) {
-    this.naturalLanguages = naturalLanguages;
-    return this;
-  }
-
-  public Params addNaturalLanguages(SupportedLanguage naturalLanguagesItem) {
-    if (this.naturalLanguages == null) {
-      this.naturalLanguages = new ArrayList<>();
-    }
-    this.naturalLanguages.add(naturalLanguagesItem);
-    return this;
-  }
-
-  /**
-   * ISO language codes that adjust settings that are useful for processing natural language queries
-   * (as opposed to keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of
-   * provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a
-   * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
-   */
-  @javax.annotation.Nullable
-  public List<SupportedLanguage> getNaturalLanguages() {
-    return naturalLanguages;
-  }
-
-  public Params setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-    return this;
-  }
-
-  /** Whether to enable composition rules. */
-  @javax.annotation.Nullable
-  public Boolean getEnableRules() {
-    return enableRules;
   }
 
   public Params setRuleContexts(List<String> ruleContexts) {
@@ -450,102 +560,6 @@ public class Params {
     return userToken;
   }
 
-  public Params setClickAnalytics(Boolean clickAnalytics) {
-    this.clickAnalytics = clickAnalytics;
-    return this;
-  }
-
-  /**
-   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
-   * for a search query and is required for tracking [click and conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/getting-started).
-   */
-  @javax.annotation.Nullable
-  public Boolean getClickAnalytics() {
-    return clickAnalytics;
-  }
-
-  public Params setAnalytics(Boolean analytics) {
-    this.analytics = analytics;
-    return this;
-  }
-
-  /** Whether this search will be included in Analytics. */
-  @javax.annotation.Nullable
-  public Boolean getAnalytics() {
-    return analytics;
-  }
-
-  public Params setAnalyticsTags(List<String> analyticsTags) {
-    this.analyticsTags = analyticsTags;
-    return this;
-  }
-
-  public Params addAnalyticsTags(String analyticsTagsItem) {
-    if (this.analyticsTags == null) {
-      this.analyticsTags = new ArrayList<>();
-    }
-    this.analyticsTags.add(analyticsTagsItem);
-    return this;
-  }
-
-  /**
-   * Tags to apply to the query for [segmenting analytics
-   * data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
-   */
-  @javax.annotation.Nullable
-  public List<String> getAnalyticsTags() {
-    return analyticsTags;
-  }
-
-  public Params setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-    return this;
-  }
-
-  /**
-   * Whether to enable index level A/B testing for this run request. If the composition mixes
-   * multiple indices, the A/B test is ignored.
-   */
-  @javax.annotation.Nullable
-  public Boolean getEnableABTest() {
-    return enableABTest;
-  }
-
-  public Params setEnableReRanking(Boolean enableReRanking) {
-    this.enableReRanking = enableReRanking;
-    return this;
-  }
-
-  /**
-   * Whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
-   * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
-   */
-  @javax.annotation.Nullable
-  public Boolean getEnableReRanking() {
-    return enableReRanking;
-  }
-
-  public Params setInjectedItems(Map<String, ExternalInjectedItem> injectedItems) {
-    this.injectedItems = injectedItems;
-    return this;
-  }
-
-  public Params putInjectedItems(String key, ExternalInjectedItem injectedItemsItem) {
-    if (this.injectedItems == null) {
-      this.injectedItems = new HashMap<>();
-    }
-    this.injectedItems.put(key, injectedItemsItem);
-    return this;
-  }
-
-  /** A list of extenrally injected objectID groups into from an external source. */
-  @javax.annotation.Nullable
-  public Map<String, ExternalInjectedItem> getInjectedItems() {
-    return injectedItems;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -556,68 +570,70 @@ public class Params {
     }
     Params params = (Params) o;
     return (
-      Objects.equals(this.query, params.query) &&
-      Objects.equals(this.filters, params.filters) &&
-      Objects.equals(this.page, params.page) &&
-      Objects.equals(this.getRankingInfo, params.getRankingInfo) &&
-      Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
-      Objects.equals(this.facetFilters, params.facetFilters) &&
-      Objects.equals(this.facets, params.facets) &&
-      Objects.equals(this.optionalFilters, params.optionalFilters) &&
-      Objects.equals(this.numericFilters, params.numericFilters) &&
-      Objects.equals(this.hitsPerPage, params.hitsPerPage) &&
+      Objects.equals(this.analytics, params.analytics) &&
+      Objects.equals(this.analyticsTags, params.analyticsTags) &&
       Objects.equals(this.aroundLatLng, params.aroundLatLng) &&
       Objects.equals(this.aroundLatLngViaIP, params.aroundLatLngViaIP) &&
       Objects.equals(this.aroundRadius, params.aroundRadius) &&
       Objects.equals(this.aroundPrecision, params.aroundPrecision) &&
-      Objects.equals(this.minimumAroundRadius, params.minimumAroundRadius) &&
+      Objects.equals(this.clickAnalytics, params.clickAnalytics) &&
+      Objects.equals(this.enableABTest, params.enableABTest) &&
+      Objects.equals(this.enablePersonalization, params.enablePersonalization) &&
+      Objects.equals(this.enableReRanking, params.enableReRanking) &&
+      Objects.equals(this.enableRules, params.enableRules) &&
+      Objects.equals(this.facetFilters, params.facetFilters) &&
+      Objects.equals(this.facets, params.facets) &&
+      Objects.equals(this.filters, params.filters) &&
+      Objects.equals(this.getRankingInfo, params.getRankingInfo) &&
+      Objects.equals(this.hitsPerPage, params.hitsPerPage) &&
+      Objects.equals(this.injectedItems, params.injectedItems) &&
       Objects.equals(this.insideBoundingBox, params.insideBoundingBox) &&
       Objects.equals(this.insidePolygon, params.insidePolygon) &&
-      Objects.equals(this.queryLanguages, params.queryLanguages) &&
+      Objects.equals(this.minimumAroundRadius, params.minimumAroundRadius) &&
       Objects.equals(this.naturalLanguages, params.naturalLanguages) &&
-      Objects.equals(this.enableRules, params.enableRules) &&
+      Objects.equals(this.numericFilters, params.numericFilters) &&
+      Objects.equals(this.optionalFilters, params.optionalFilters) &&
+      Objects.equals(this.page, params.page) &&
+      Objects.equals(this.query, params.query) &&
+      Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
+      Objects.equals(this.queryLanguages, params.queryLanguages) &&
       Objects.equals(this.ruleContexts, params.ruleContexts) &&
-      Objects.equals(this.userToken, params.userToken) &&
-      Objects.equals(this.clickAnalytics, params.clickAnalytics) &&
-      Objects.equals(this.analytics, params.analytics) &&
-      Objects.equals(this.analyticsTags, params.analyticsTags) &&
-      Objects.equals(this.enableABTest, params.enableABTest) &&
-      Objects.equals(this.enableReRanking, params.enableReRanking) &&
-      Objects.equals(this.injectedItems, params.injectedItems)
+      Objects.equals(this.userToken, params.userToken)
     );
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-      query,
-      filters,
-      page,
-      getRankingInfo,
-      relevancyStrictness,
-      facetFilters,
-      facets,
-      optionalFilters,
-      numericFilters,
-      hitsPerPage,
+      analytics,
+      analyticsTags,
       aroundLatLng,
       aroundLatLngViaIP,
       aroundRadius,
       aroundPrecision,
-      minimumAroundRadius,
+      clickAnalytics,
+      enableABTest,
+      enablePersonalization,
+      enableReRanking,
+      enableRules,
+      facetFilters,
+      facets,
+      filters,
+      getRankingInfo,
+      hitsPerPage,
+      injectedItems,
       insideBoundingBox,
       insidePolygon,
-      queryLanguages,
+      minimumAroundRadius,
       naturalLanguages,
-      enableRules,
+      numericFilters,
+      optionalFilters,
+      page,
+      query,
+      relevancyStrictness,
+      queryLanguages,
       ruleContexts,
-      userToken,
-      clickAnalytics,
-      analytics,
-      analyticsTags,
-      enableABTest,
-      enableReRanking,
-      injectedItems
+      userToken
     );
   }
 
@@ -625,34 +641,35 @@ public class Params {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Params {\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
-    sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
-    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
-    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
-    sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
-    sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
+    sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");
+    sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    aroundLatLngViaIP: ").append(toIndentedString(aroundLatLngViaIP)).append("\n");
     sb.append("    aroundRadius: ").append(toIndentedString(aroundRadius)).append("\n");
     sb.append("    aroundPrecision: ").append(toIndentedString(aroundPrecision)).append("\n");
-    sb.append("    minimumAroundRadius: ").append(toIndentedString(minimumAroundRadius)).append("\n");
+    sb.append("    clickAnalytics: ").append(toIndentedString(clickAnalytics)).append("\n");
+    sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
+    sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
+    sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
+    sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
+    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
+    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
+    sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
+    sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
+    sb.append("    injectedItems: ").append(toIndentedString(injectedItems)).append("\n");
     sb.append("    insideBoundingBox: ").append(toIndentedString(insideBoundingBox)).append("\n");
     sb.append("    insidePolygon: ").append(toIndentedString(insidePolygon)).append("\n");
-    sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
+    sb.append("    minimumAroundRadius: ").append(toIndentedString(minimumAroundRadius)).append("\n");
     sb.append("    naturalLanguages: ").append(toIndentedString(naturalLanguages)).append("\n");
-    sb.append("    enableRules: ").append(toIndentedString(enableRules)).append("\n");
+    sb.append("    numericFilters: ").append(toIndentedString(numericFilters)).append("\n");
+    sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
+    sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
     sb.append("    ruleContexts: ").append(toIndentedString(ruleContexts)).append("\n");
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
-    sb.append("    clickAnalytics: ").append(toIndentedString(clickAnalytics)).append("\n");
-    sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");
-    sb.append("    analyticsTags: ").append(toIndentedString(analyticsTags)).append("\n");
-    sb.append("    enableABTest: ").append(toIndentedString(enableABTest)).append("\n");
-    sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
-    sb.append("    injectedItems: ").append(toIndentedString(injectedItems)).append("\n");
     sb.append("}");
     return sb.toString();
   }
