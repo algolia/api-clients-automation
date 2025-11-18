@@ -1196,7 +1196,6 @@ final class CompositionClientSnippet {
         let response: CompositionSearchResponse<CompositionHit> = try await client.search(
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
-                query: "batman",
                 injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
                     ExternalInjection(objectID: "my-object-1"),
                     ExternalInjection(
@@ -1208,7 +1207,8 @@ final class CompositionClientSnippet {
                             "my-object": ["sub-key": "sub-value"],
                         ]
                     ),
-                ])]
+                ])],
+                query: "batman"
             ))
         )
         // >LOG

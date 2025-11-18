@@ -34,8 +34,39 @@ import algoliasearch.composition.SupportedLanguage._
 
 /** Params
   *
-  * @param query
-  *   Search query.
+  * @param analytics
+  *   Whether this search will be included in Analytics.
+  * @param analyticsTags
+  *   Tags to apply to the query for [segmenting analytics
+  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+  * @param aroundLatLng
+  *   Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude. Only
+  *   records included within a circle around this central location are included in the results. The radius of the
+  *   circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you
+  *   also specify `insidePolygon` or `insideBoundingBox`.
+  * @param aroundLatLngViaIP
+  *   Whether to obtain the coordinates from the request's IP address.
+  * @param clickAnalytics
+  *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
+  *   and is required for tracking [click and conversion
+  *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
+  * @param enableABTest
+  *   Whether to enable index level A/B testing for this run request. If the composition mixes multiple indices, the A/B
+  *   test is ignored.
+  * @param enablePersonalization
+  *   Whether to enable Personalization.
+  * @param enableReRanking
+  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This
+  *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+  * @param enableRules
+  *   Whether to enable composition rules.
+  * @param facets
+  *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+  *   To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets
+  *   with the `disjunctive` modifier. For more information, see
+  *   [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
+  *   and [disjunctive faceting for Smart
+  *   Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
   * @param filters
   *   Filter expression to only include items that match the filter criteria in the response. You can use these filter
   *   expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`,
@@ -50,39 +81,34 @@ import algoliasearch.composition.SupportedLanguage._
   *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
   *   matches if it matches at least one element of the array. For more information, see
   *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
-  * @param page
-  *   Page of search results to retrieve.
   * @param getRankingInfo
   *   Whether the run response should include detailed ranking information.
-  * @param relevancyStrictness
-  *   Relevancy threshold below which less relevant results aren't included in the results You can only set
-  *   `relevancyStrictness` on [virtual replica
-  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-  *   Use this setting to strike a balance between the relevance and number of returned results.
-  * @param facets
-  *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
-  *   To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets
-  *   with the `disjunctive` modifier. For more information, see
-  *   [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
-  *   and [disjunctive faceting for Smart
-  *   Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
   * @param hitsPerPage
   *   Number of hits per page.
-  * @param aroundLatLng
-  *   Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude. Only
-  *   records included within a circle around this central location are included in the results. The radius of the
-  *   circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you
-  *   also specify `insidePolygon` or `insideBoundingBox`.
-  * @param aroundLatLngViaIP
-  *   Whether to obtain the coordinates from the request's IP address.
-  * @param minimumAroundRadius
-  *   Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
+  * @param injectedItems
+  *   A list of extenrally injected objectID groups into from an external source.
   * @param insidePolygon
   *   Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each point is represented
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering
   *   inside
   *   polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
   *   This parameter is ignored if you also specify `insideBoundingBox`.
+  * @param minimumAroundRadius
+  *   Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
+  * @param naturalLanguages
+  *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
+  *   keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
+  *   `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and
+  *   `analyticsTags`.
+  * @param page
+  *   Page of search results to retrieve.
+  * @param query
+  *   Search query.
+  * @param relevancyStrictness
+  *   Relevancy threshold below which less relevant results aren't included in the results You can only set
+  *   `relevancyStrictness` on [virtual replica
+  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+  *   Use this setting to strike a balance between the relevance and number of returned results.
   * @param queryLanguages
   *   Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
   *   dictionaries This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
@@ -94,13 +120,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
   *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
-  * @param naturalLanguages
-  *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
-  *   keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
-  *   `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and
-  *   `analyticsTags`.
-  * @param enableRules
-  *   Whether to enable composition rules.
   * @param ruleContexts
   *   Assigns a rule context to the run query [Rule
   *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -108,51 +127,35 @@ import algoliasearch.composition.SupportedLanguage._
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
   *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
-  * @param clickAnalytics
-  *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
-  *   and is required for tracking [click and conversion
-  *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
-  * @param analytics
-  *   Whether this search will be included in Analytics.
-  * @param analyticsTags
-  *   Tags to apply to the query for [segmenting analytics
-  *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
-  * @param enableABTest
-  *   Whether to enable index level A/B testing for this run request. If the composition mixes multiple indices, the A/B
-  *   test is ignored.
-  * @param enableReRanking
-  *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This
-  *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
-  * @param injectedItems
-  *   A list of extenrally injected objectID groups into from an external source.
   */
 case class Params(
-    query: Option[String] = scala.None,
-    filters: Option[String] = scala.None,
-    page: Option[Int] = scala.None,
-    getRankingInfo: Option[Boolean] = scala.None,
-    relevancyStrictness: Option[Int] = scala.None,
-    facetFilters: Option[FacetFilters] = scala.None,
-    facets: Option[Seq[String]] = scala.None,
-    optionalFilters: Option[OptionalFilters] = scala.None,
-    numericFilters: Option[NumericFilters] = scala.None,
-    hitsPerPage: Option[Int] = scala.None,
+    analytics: Option[Boolean] = scala.None,
+    analyticsTags: Option[Seq[String]] = scala.None,
     aroundLatLng: Option[String] = scala.None,
     aroundLatLngViaIP: Option[Boolean] = scala.None,
     aroundRadius: Option[AroundRadius] = scala.None,
     aroundPrecision: Option[AroundPrecision] = scala.None,
-    minimumAroundRadius: Option[Int] = scala.None,
+    clickAnalytics: Option[Boolean] = scala.None,
+    enableABTest: Option[Boolean] = scala.None,
+    enablePersonalization: Option[Boolean] = scala.None,
+    enableReRanking: Option[Boolean] = scala.None,
+    enableRules: Option[Boolean] = scala.None,
+    facetFilters: Option[FacetFilters] = scala.None,
+    facets: Option[Seq[String]] = scala.None,
+    filters: Option[String] = scala.None,
+    getRankingInfo: Option[Boolean] = scala.None,
+    hitsPerPage: Option[Int] = scala.None,
+    injectedItems: Option[Map[String, ExternalInjectedItem]] = scala.None,
     insideBoundingBox: Option[InsideBoundingBox] = scala.None,
     insidePolygon: Option[Seq[Seq[Double]]] = scala.None,
-    queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
+    minimumAroundRadius: Option[Int] = scala.None,
     naturalLanguages: Option[Seq[SupportedLanguage]] = scala.None,
-    enableRules: Option[Boolean] = scala.None,
+    numericFilters: Option[NumericFilters] = scala.None,
+    optionalFilters: Option[OptionalFilters] = scala.None,
+    page: Option[Int] = scala.None,
+    query: Option[String] = scala.None,
+    relevancyStrictness: Option[Int] = scala.None,
+    queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     ruleContexts: Option[Seq[String]] = scala.None,
-    userToken: Option[String] = scala.None,
-    clickAnalytics: Option[Boolean] = scala.None,
-    analytics: Option[Boolean] = scala.None,
-    analyticsTags: Option[Seq[String]] = scala.None,
-    enableABTest: Option[Boolean] = scala.None,
-    enableReRanking: Option[Boolean] = scala.None,
-    injectedItems: Option[Map[String, ExternalInjectedItem]] = scala.None
+    userToken: Option[String] = scala.None
 )
