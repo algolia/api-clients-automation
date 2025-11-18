@@ -1,3 +1,7 @@
+## [2.34.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.34.1...2.34.2)
+
+- [5b042c47a](https://github.com/algolia/api-clients-automation/commit/5b042c47a) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.34.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.34.0...2.34.1)
 
 - [6c7a4ea99](https://github.com/algolia/api-clients-automation/commit/6c7a4ea99) fix(scripts): disable doclint when releasing java ([#5629](https://github.com/algolia/api-clients-automation/pull/5629)) by [@millotp](https://github.com/millotp/)

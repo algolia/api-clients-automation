@@ -2984,9 +2984,9 @@
       "releaseDate": "2025-11-14"
     },
     "4.32.1": {
-      "releaseDate": "2025-11-15",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2025-11-15"
     }
   },
   "javascript": {
@@ -4509,6 +4509,11 @@
       "slaStatus": "eligible",
       "supportStatus": "eligible",
       "releaseDate": "2025-11-14"
+    },
+    "5.44.1": {
+      "releaseDate": "2025-11-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "kotlin": {
@@ -8298,7 +8303,12 @@
       "releaseDate": "2025-11-14"
     },
     "2.34.1": {
-      "releaseDate": "2025-11-15",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible",
+      "releaseDate": "2025-11-15"
+    },
+    "2.34.2": {
+      "releaseDate": "2025-11-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -9111,6 +9121,11 @@
       "slaStatus": "eligible",
       "supportStatus": "eligible",
       "releaseDate": "2025-11-14"
+    },
+    "9.35.1": {
+      "releaseDate": "2025-11-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   }
 }

@@ -1,3 +1,7 @@
+## [9.35.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.35.0...9.35.1)
+
+- [4b2cd6b57](https://github.com/algolia/api-clients-automation/commit/4b2cd6b57) fix(swift): make response and disjunctiveFacets public in SearchDisjunctiveFacetingResponse ([#5647](https://github.com/algolia/api-clients-automation/pull/5647)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.35.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.34.0...9.35.0)
 
 - [7d189e024](https://github.com/algolia/api-clients-automation/commit/7d189e024) feat(specs): add useImagesObjects property in commercetools source input ([#5586](https://github.com/algolia/api-clients-automation/pull/5586)) by [@sbellone](https://github.com/sbellone/)

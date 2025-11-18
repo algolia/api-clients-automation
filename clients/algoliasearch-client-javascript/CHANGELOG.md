@@ -1,3 +1,7 @@
+## [5.44.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.44.0...5.44.1)
+
+- [5b042c47a](https://github.com/algolia/api-clients-automation/commit/5b042c47a) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.44.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.43.0...5.44.0)
 
 - [7d189e024](https://github.com/algolia/api-clients-automation/commit/7d189e024) feat(specs): add useImagesObjects property in commercetools source input ([#5586](https://github.com/algolia/api-clients-automation/pull/5586)) by [@sbellone](https://github.com/sbellone/)
