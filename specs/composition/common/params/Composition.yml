@@ -12,13 +12,15 @@ facets:
     To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.
     For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
   default: []
-  examples:
+  example:
     facetSpecificList:
       summary: Specify which facet to retrieve with some marked as disjunctive
-      value: ['category', 'disjunctive(brand)', 'price']
+      value: 
+        - ['category', 'disjunctive(brand)', 'price']
     facetAll:
       summary: Retrieve all facets
-      value: ['*']
+      value: 
+        - ['*']
   x-categories:
     - Faceting
 
