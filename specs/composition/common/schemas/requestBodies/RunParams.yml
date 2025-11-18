@@ -19,6 +19,8 @@ params:
       $ref: '../../params/Search.yml#/clickAnalytics'
     enableABTest:
       $ref: '../../params/Composition.yml#/enableABTest'
+    enablePersonalization:
+      $ref: '../../params/Search.yml#/enablePersonalization'
     enableReRanking:
       $ref: '../../params/Search.yml#/enableReRanking'
     enableRules:
