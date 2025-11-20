@@ -1,6 +1,5 @@
-/** Recommend API The Recommend API lets you retrieve recommendations from one of Algolia's AI recommendation models
-  * that you previously trained on your data. ## Client libraries Use Algolia's API clients and libraries to reliably
-  * integrate Algolia's APIs with your apps. The official API clients are covered by Algolia's [Service Level
+/** Recommend API ## Client libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with
+  * your apps. The official API clients are covered by Algolia's [Service Level
   * Agreement](https://www.algolia.com/policies/sla). See: [Algolia's
   * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem) ## Base URLs The
   * base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -

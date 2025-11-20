@@ -1,11 +1,10 @@
 openapi: 3.0.2
 info:
   title: A/B Testing API
-  description: >
+  summary: >-
     The Algolia A/B Testing API lets you manage your Algolia A/B tests to
-    optimize your search experience.
-
-
+    optimize your search experience
+  description: >
     ## Base URLs
 
 

@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
   title: Query Suggestions API
-  description: >
+  summary: >-
     The Query Suggestions API lets you manage your Query Suggestions
-    configurations.
-
+    configurations
+  description: >
     Query Suggestions add new indices to your Algolia application with popular
     search queries, external suggestions, or facet values.
 

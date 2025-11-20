@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
   title: Insights API
-  description: >
+  summary: >-
     The Insights API lets you collect events related to your search and
-    discovery experience.
-
+    discovery experience
+  description: >
     Events represent user interactions with your app or website.
 
     They unlock powerful features, such as recommendations, personalization,

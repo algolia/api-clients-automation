@@ -1,11 +1,10 @@
 openapi: 3.0.2
 info:
   title: Analytics API
-  description: >
+  summary: >-
     The Analytics API gives you access to metrics related to your Algolia search
-    experience.
-
-
+    experience
+  description: >
     ## Base URLs
 
 

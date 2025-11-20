@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
   title: Ingestion API
-  description: >
+  summary: >-
     The Ingestion API lets you connect third-party services and platforms with
-    Algolia and schedule tasks to ingest your data.
-
+    Algolia and schedule tasks to ingest your data
+  description: >
     The Ingestion API powers the no-code [data
     connectors](https://dashboard.algolia.com/connectors).
 

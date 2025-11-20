@@ -1,10 +1,8 @@
 openapi: 3.0.2
 info:
   title: Crawler API
+  summary: The Crawler API lets you manage and run your crawlers
   description: >
-    The Crawler API lets you manage and run your crawlers.
-
-
     ## Base URL
 
 

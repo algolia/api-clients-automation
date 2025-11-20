@@ -1,8 +1,7 @@
-/** Personalization API The Personalization API lets you access user profiles built from the personalization strategy.
-  * ## Base URLs The base URLs for requests to the Personalization API are: - `https://personalization.us.algolia.com` -
-  * `https://personalization.eu.algolia.com` Use the URL that matches your [analytics
-  * region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.** ##
-  * Authentication To authenticate your API requests, add these headers: - `x-algolia-application-id`. Your Algolia
+/** Personalization API ## Base URLs The base URLs for requests to the Personalization API are: -
+  * `https://personalization.us.algolia.com` - `https://personalization.eu.algolia.com` Use the URL that matches your
+  * [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.**
+  * ## Authentication To authenticate your API requests, add these headers: - `x-algolia-application-id`. Your Algolia
   * application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The required
   * access control list (ACL) to make a request is listed in each endpoint's reference. You can find your application ID
   * and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Request

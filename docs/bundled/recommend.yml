@@ -1,11 +1,10 @@
 openapi: 3.0.2
 info:
   title: Recommend API
-  description: >
+  summary: >-
     The Recommend API lets you retrieve recommendations from one of Algolia's AI
-    recommendation models that you previously trained on your data.
-
-
+    recommendation models that you previously trained on your data
+  description: >
     ## Client libraries
 
 

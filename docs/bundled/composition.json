@@ -2,7 +2,8 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Composition API",
-    "description": "The Algolia Composition API lets you run composed search requests on your Compositions.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "summary": "The Algolia Composition API lets you run composed search requests on your Compositions",
+    "description": "## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -1441,16 +1442,26 @@
         },
         "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nTo retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).\n",
         "default": [],
-        "example": [
-          [
-            "category",
-            "disjunctive(brand)",
-            "price"
-          ],
-          [
-            "*"
-          ]
-        ],
+        "example": {
+          "facetSpecificList": {
+            "summary": "Specify which facet to retrieve with some marked as disjunctive",
+            "value": [
+              [
+                "category",
+                "disjunctive(brand)",
+                "price"
+              ]
+            ]
+          },
+          "facetAll": {
+            "summary": "Retrieve all facets",
+            "value": [
+              [
+                "*"
+              ]
+            ]
+          }
+        },
         "x-categories": [
           "Faceting"
         ]

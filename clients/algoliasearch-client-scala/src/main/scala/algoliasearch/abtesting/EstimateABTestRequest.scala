@@ -1,12 +1,12 @@
-/** A/B Testing API The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search
-  * experience. ## Base URLs The base URLs for requests to the A/B testing API are: - `https://analytics.us.algolia.com`
-  * \- `https://analytics.de.algolia.com` - `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`) Use
-  * the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All
-  * requests must use HTTPS.** ## Availability and authentication Access to the A/B testing API is available as part of
-  * the [Premium or Elevate plans](https://www.algolia.com/pricing). To authenticate your API requests, add these
-  * headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
-  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
-  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+/** A/B Testing API ## Base URLs The base URLs for requests to the A/B testing API are: -
+  * `https://analytics.us.algolia.com` - `https://analytics.de.algolia.com` - `https://analytics.algolia.com` (alias of
+  * `analytics.us.algolia.com`) Use the URL that matches your [analytics
+  * region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.** ##
+  * Availability and authentication Access to the A/B testing API is available as part of the [Premium or Elevate
+  * plans](https://www.algolia.com/pricing). To authenticate your API requests, add these headers: -
+  * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
+  * permissions to make the request. The required access control list (ACL) to make a request is listed in each
+  * endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account/api-keys). ## Rate limits You can make up to **100 requests per
   * minute per app** to the A/B testing API. The response includes headers with information about the limits. ##
   * Parameters Query parameters must be

@@ -1,11 +1,10 @@
 openapi: 3.0.2
 info:
   title: Composition API
-  description: >
+  summary: >-
     The Algolia Composition API lets you run composed search requests on your
-    Compositions.
-
-
+    Compositions
+  description: >
     ## Client libraries
 
 
@@ -1196,12 +1195,18 @@ components:
         Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
       default: []
       example:
-        -
-          - category
-          - disjunctive(brand)
-          - price
-        -
-          - '*'
+        facetSpecificList:
+          summary: Specify which facet to retrieve with some marked as disjunctive
+          value:
+            -
+              - category
+              - disjunctive(brand)
+              - price
+        facetAll:
+          summary: Retrieve all facets
+          value:
+            -
+              - '*'
       x-categories:
         - Faceting
     filters:
