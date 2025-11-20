@@ -11,55 +11,28 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Params(
-          query: $checkedConvert('query', (v) => v as String?),
-          filters: $checkedConvert('filters', (v) => v as String?),
-          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
-          getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
-          relevancyStrictness: $checkedConvert(
-              'relevancyStrictness', (v) => (v as num?)?.toInt()),
-          facetFilters: $checkedConvert('facetFilters', (v) => v),
-          facets: $checkedConvert('facets',
+          analytics: $checkedConvert('analytics', (v) => v as bool?),
+          analyticsTags: $checkedConvert('analyticsTags',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          optionalFilters: $checkedConvert('optionalFilters', (v) => v),
-          numericFilters: $checkedConvert('numericFilters', (v) => v),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius: $checkedConvert(
-              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
-          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
-          insidePolygon: $checkedConvert(
-              'insidePolygon',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => (e as List<dynamic>)
-                      .map((e) => (e as num).toDouble())
-                      .toList())
-                  .toList()),
-          queryLanguages: $checkedConvert(
-              'queryLanguages',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
-                  .toList()),
-          naturalLanguages: $checkedConvert(
-              'naturalLanguages',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
-                  .toList()),
-          enableRules: $checkedConvert('enableRules', (v) => v as bool?),
-          ruleContexts: $checkedConvert('ruleContexts',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          userToken: $checkedConvert('userToken', (v) => v as String?),
           clickAnalytics: $checkedConvert('clickAnalytics', (v) => v as bool?),
-          analytics: $checkedConvert('analytics', (v) => v as bool?),
-          analyticsTags: $checkedConvert('analyticsTags',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
+          enablePersonalization:
+              $checkedConvert('enablePersonalization', (v) => v as bool?),
           enableReRanking:
               $checkedConvert('enableReRanking', (v) => v as bool?),
+          enableRules: $checkedConvert('enableRules', (v) => v as bool?),
+          facetFilters: $checkedConvert('facetFilters', (v) => v),
+          facets: $checkedConvert('facets',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          filters: $checkedConvert('filters', (v) => v as String?),
+          getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           injectedItems: $checkedConvert(
               'injectedItems',
               (v) => (v as Map<String, dynamic>?)?.map(
@@ -68,6 +41,35 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
                         ExternalInjectedItem.fromJson(
                             e as Map<String, dynamic>)),
                   )),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
+          insidePolygon: $checkedConvert(
+              'insidePolygon',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => (e as List<dynamic>)
+                      .map((e) => (e as num).toDouble())
+                      .toList())
+                  .toList()),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
+          naturalLanguages: $checkedConvert(
+              'naturalLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
+          numericFilters: $checkedConvert('numericFilters', (v) => v),
+          optionalFilters: $checkedConvert('optionalFilters', (v) => v),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          query: $checkedConvert('query', (v) => v as String?),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
+          queryLanguages: $checkedConvert(
+              'queryLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
+          ruleContexts: $checkedConvert('ruleContexts',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          userToken: $checkedConvert('userToken', (v) => v as String?),
         );
         return val;
       },
@@ -82,37 +84,38 @@ Map<String, dynamic> _$ParamsToJson(Params instance) {
     }
   }
 
-  writeNotNull('query', instance.query);
-  writeNotNull('filters', instance.filters);
-  writeNotNull('page', instance.page);
-  writeNotNull('getRankingInfo', instance.getRankingInfo);
-  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
-  writeNotNull('facetFilters', instance.facetFilters);
-  writeNotNull('facets', instance.facets);
-  writeNotNull('optionalFilters', instance.optionalFilters);
-  writeNotNull('numericFilters', instance.numericFilters);
-  writeNotNull('hitsPerPage', instance.hitsPerPage);
+  writeNotNull('analytics', instance.analytics);
+  writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('aroundLatLng', instance.aroundLatLng);
   writeNotNull('aroundLatLngViaIP', instance.aroundLatLngViaIP);
   writeNotNull('aroundRadius', instance.aroundRadius);
   writeNotNull('aroundPrecision', instance.aroundPrecision);
-  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
-  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
-  writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('queryLanguages',
-      instance.queryLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('naturalLanguages',
-      instance.naturalLanguages?.map((e) => e.toJson()).toList());
-  writeNotNull('enableRules', instance.enableRules);
-  writeNotNull('ruleContexts', instance.ruleContexts);
-  writeNotNull('userToken', instance.userToken);
   writeNotNull('clickAnalytics', instance.clickAnalytics);
-  writeNotNull('analytics', instance.analytics);
-  writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('enableABTest', instance.enableABTest);
+  writeNotNull('enablePersonalization', instance.enablePersonalization);
   writeNotNull('enableReRanking', instance.enableReRanking);
+  writeNotNull('enableRules', instance.enableRules);
+  writeNotNull('facetFilters', instance.facetFilters);
+  writeNotNull('facets', instance.facets);
+  writeNotNull('filters', instance.filters);
+  writeNotNull('getRankingInfo', instance.getRankingInfo);
+  writeNotNull('hitsPerPage', instance.hitsPerPage);
   writeNotNull('injectedItems',
       instance.injectedItems?.map((k, e) => MapEntry(k, e.toJson())));
+  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
+  writeNotNull('insidePolygon', instance.insidePolygon);
+  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('numericFilters', instance.numericFilters);
+  writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('page', instance.page);
+  writeNotNull('query', instance.query);
+  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
+  writeNotNull('queryLanguages',
+      instance.queryLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('ruleContexts', instance.ruleContexts);
+  writeNotNull('userToken', instance.userToken);
   return val;
 }
 
