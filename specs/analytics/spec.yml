@@ -4,9 +4,8 @@ externalDocs:
   description: Search analytics.
 info:
   title: Analytics API
+  summary: The Analytics API gives you access to metrics related to your Algolia search experience
   description: |
-    The Analytics API gives you access to metrics related to your Algolia search experience.
-
     ## Base URLs
 
     The base URLs for requests to the Analytics API are:

@@ -35,6 +35,7 @@ export async function generateOpenapitools(
         mode,
         ...additionalProperties,
       },
+      skipValidateSpec: true,
       'openapi-normalizer': {
         // if this is set to true, it causes a breaking change on PlatformWithNone, this can be removed in the next major
         SIMPLIFY_ONEOF_ANYOF_ENUM: false,

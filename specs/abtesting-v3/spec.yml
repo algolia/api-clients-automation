@@ -4,9 +4,8 @@ externalDocs:
   description: A/B testing.
 info:
   title: A/B Testing API
+  summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience
   description: |
-    The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience.
-
     ## Base URLs
 
     The base URLs for requests to the A/B testing API are:

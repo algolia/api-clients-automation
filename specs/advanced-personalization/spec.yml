@@ -1,9 +1,8 @@
 openapi: 3.0.2
 info:
   title: Advanced Personalization API
+  summary: The Advanced Personalization API lets you access user profiles built based on the behavior of your users on your website or app
   description: |
-    The Advanced Personalization API lets you access user profiles built based on the behavior of your users on your website or app.
-
     ## Client libraries
 
     Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.

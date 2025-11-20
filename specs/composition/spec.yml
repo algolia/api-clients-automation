@@ -1,9 +1,8 @@
 openapi: 3.0.2
 info:
   title: Composition API
+  summary: The Algolia Composition API lets you run composed search requests on your Compositions
   description: |
-    The Algolia Composition API lets you run composed search requests on your Compositions.
-
     ## Client libraries
 
     Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.
