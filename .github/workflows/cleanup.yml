@@ -12,6 +12,6 @@ jobs:
       pull-requests: write
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: git push -d origin "generated/${{ github.head_ref }}" || true
