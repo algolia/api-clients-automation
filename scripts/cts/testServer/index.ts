@@ -12,7 +12,7 @@ import { algoliaMockServer } from './algoliaMock.ts';
 import { apiKeyServer } from './apiKey.ts';
 import { benchmarkServer } from './benchmark.ts';
 import { chunkWrapperServer } from './chunkWrapper.ts';
-import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice } from './error.ts';
+import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice, neverCalledServer } from './error.ts';
 import { gzipServer } from './gzip.ts';
 import { pushMockServer, pushMockServerRetriedOnce } from './pushMock.ts';
 import { replaceAllObjectsServer } from './replaceAllObjects.ts';
@@ -31,6 +31,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       errorServer(),
       errorServerRetriedOnce(),
       errorServerRetriedTwice(),
+      neverCalledServer(),
       gzipServer(),
       timeoutServerBis(),
       accountCopyIndexServer(),

@@ -6,6 +6,7 @@ import type express from 'express';
 import { setupServer } from './index.ts';
 
 const errorState: Record<string, { errorCount: number; maxError: number }> = {};
+const neverCalledState: Record<string, number> = {};
 
 export function assertValidErrors(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out
@@ -23,6 +24,29 @@ export function assertValidErrors(expectedCount: number): void {
     }
 
     expect(state.errorCount).to.equal(state.maxError);
+  }
+}
+
+export function assertNeverCalledServerWasNotCalled(expectedCount: number): void {
+  // Verify that the fallback server was never called when the first host succeeds
+  if (Object.keys(neverCalledState).length !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} language(s) to test the never-called server`);
+  }
+
+  for (const [lang, callCount] of Object.entries(neverCalledState)) {
+    // python has sync and async tests
+    if (lang === 'python') {
+      expect(callCount).to.equal(
+        0,
+        `Never-called server was called ${callCount} times for ${lang}, but should never be called`,
+      );
+      continue;
+    }
+
+    expect(callCount).to.equal(
+      0,
+      `Never-called server was called ${callCount} times for ${lang}, but should never be called`,
+    );
   }
 }
 
@@ -57,4 +81,25 @@ export function errorServerRetriedOnce(): Promise<Server> {
 
 export function errorServerRetriedTwice(): Promise<Server> {
   return setupServer('errorRetriedTwice', 6673, addRoutes);
+}
+
+function addNeverCalledRoutes(app: express.Express): void {
+  app.get('/1/test/retry/:lang', (req, res) => {
+    const lang = req.params.lang;
+    if (!neverCalledState[lang]) {
+      neverCalledState[lang] = 0;
+    }
+
+    neverCalledState[lang]++;
+
+    // This should never be reached if the retry strategy correctly reuses successful hosts
+    res.status(500).json({
+      message: 'This fallback server should never be called when the first host succeeds',
+      callCount: neverCalledState[lang],
+    });
+  });
+}
+
+export function neverCalledServer(): Promise<Server> {
+  return setupServer('neverCalled', 6674, addNeverCalledRoutes);
 }
