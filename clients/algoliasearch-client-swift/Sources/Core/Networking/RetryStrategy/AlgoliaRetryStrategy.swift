@@ -63,7 +63,6 @@ class AlgoliaRetryStrategy: RetryStrategy {
             }
 
             guard let error else {
-                self.hosts[hostIndex].reset()
                 return
             }
 
