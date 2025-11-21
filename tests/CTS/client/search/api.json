@@ -348,7 +348,7 @@
           "apiKey": "test-api-key",
           "customHosts": [
             {
-              "port": 6678
+              "port": 6675
             },
             {
               "port": 6674
@@ -360,12 +360,12 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "1/test/retry/${{language}}"
+          "path": "1/test/calling/${{language}}"
         },
         "expected": {
           "type": "response",
           "match": {
-            "message": "ok test server response"
+            "message": "success server response"
           }
         }
       },
@@ -373,12 +373,12 @@
         "type": "method",
         "method": "customGet",
         "parameters": {
-          "path": "1/test/retry/${{language}}"
+          "path": "1/test/calling/${{language}}"
         },
         "expected": {
           "type": "response",
           "match": {
-            "message": "ok test server response"
+            "message": "success server response"
           }
         }
       }

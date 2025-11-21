@@ -27,22 +27,8 @@ export function assertValidErrors(expectedCount: number): void {
   }
 }
 
-export function assertNeverCalledServerWasNotCalled(expectedCount: number): void {
-  // Verify that the fallback server was never called when the first host succeeds
-  if (Object.keys(neverCalledState).length !== expectedCount) {
-    throw new Error(`Expected ${expectedCount} language(s) to test the never-called server`);
-  }
-
+export function assertNeverCalledServerWasNotCalled(): void {
   for (const [lang, callCount] of Object.entries(neverCalledState)) {
-    // python has sync and async tests
-    if (lang === 'python') {
-      expect(callCount).to.equal(
-        0,
-        `Never-called server was called ${callCount} times for ${lang}, but should never be called`,
-      );
-      continue;
-    }
-
     expect(callCount).to.equal(
       0,
       `Never-called server was called ${callCount} times for ${lang}, but should never be called`,
@@ -84,7 +70,7 @@ export function errorServerRetriedTwice(): Promise<Server> {
 }
 
 function addNeverCalledRoutes(app: express.Express): void {
-  app.get('/1/test/retry/:lang', (req, res) => {
+  app.get('/1/test/calling/:lang', (req, res) => {
     const lang = req.params.lang;
     if (!neverCalledState[lang]) {
       neverCalledState[lang] = 0;

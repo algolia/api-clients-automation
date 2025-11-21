@@ -19,6 +19,7 @@ import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
 import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
 import { replaceAllObjectsWithTransformationServer } from './replaceAllObjectsWithTransformation.ts';
+import { successServer } from './success.ts';
 import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
@@ -32,6 +33,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       errorServerRetriedOnce(),
       errorServerRetriedTwice(),
       neverCalledServer(),
+      successServer(),
       gzipServer(),
       timeoutServerBis(),
       accountCopyIndexServer(),
