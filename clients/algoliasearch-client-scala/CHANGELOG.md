@@ -1,3 +1,9 @@
+## [2.35.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.34.1...2.35.0)
+
+- [5b042c47af](https://github.com/algolia/api-clients-automation/commit/5b042c47af) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [6a48ef151a](https://github.com/algolia/api-clients-automation/commit/6a48ef151a) feat(specs): allow `enablePersonalization` query parameter at run time for Composition API ([#5651](https://github.com/algolia/api-clients-automation/pull/5651)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [c286dce46f](https://github.com/algolia/api-clients-automation/commit/c286dce46f) fix(specs): use summary fields ([#5645](https://github.com/algolia/api-clients-automation/pull/5645)) by [@kai687](https://github.com/kai687/)
+
 ## [2.34.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.34.0...2.34.1)
 
 - [6c7a4ea99](https://github.com/algolia/api-clients-automation/commit/6c7a4ea99) fix(scripts): disable doclint when releasing java ([#5629](https://github.com/algolia/api-clients-automation/pull/5629)) by [@millotp](https://github.com/millotp/)

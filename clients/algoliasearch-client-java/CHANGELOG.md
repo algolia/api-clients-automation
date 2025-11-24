@@ -1,3 +1,7 @@
+## [4.33.0](https://github.com/algolia/algoliasearch-client-java/compare/4.32.1...4.33.0)
+
+- [6a48ef151a](https://github.com/algolia/api-clients-automation/commit/6a48ef151a) feat(specs): allow `enablePersonalization` query parameter at run time for Composition API ([#5651](https://github.com/algolia/api-clients-automation/pull/5651)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [4.32.1](https://github.com/algolia/algoliasearch-client-java/compare/4.32.0...4.32.1)
 
 - [6c7a4ea99](https://github.com/algolia/api-clients-automation/commit/6c7a4ea99) fix(scripts): disable doclint when releasing java ([#5629](https://github.com/algolia/api-clients-automation/pull/5629)) by [@millotp](https://github.com/millotp/)
