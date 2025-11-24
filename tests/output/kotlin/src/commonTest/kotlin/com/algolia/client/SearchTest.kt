@@ -287,6 +287,54 @@ class SearchTest {
   }
 
   @Test
+  fun `does not retry on success`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6675,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6674,
+                ),
+              )
+          ),
+      )
+    client.runTest(
+      call = { customGet(path = "1/test/calling/kotlin") },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"success server response"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+
+    client.runTest(
+      call = { customGet(path = "1/test/calling/kotlin") },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"success server response"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `calls api with correct user agent`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
@@ -312,7 +360,7 @@ class SearchTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.35.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.36.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),

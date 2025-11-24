@@ -236,6 +236,35 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # does not retry on success
+  def test_api11
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6675,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6674,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.custom_get("1/test/calling/ruby")
+    assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    req = client.custom_get("1/test/calling/ruby")
+    assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::SearchClient.create(
@@ -261,7 +290,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.32.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.33.0\).*/))
   end
 
   # call deleteObjects without error

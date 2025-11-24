@@ -200,6 +200,28 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('does not retry on success')]
+    public function test11api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6675', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6674']));
+
+        $res = $client->customGet(
+            '1/test/calling/php',
+        );
+        $this->assertEquals(
+            '{"message":"success server response"}',
+            json_encode($res)
+        );
+
+        $res = $client->customGet(
+            '1/test/calling/php',
+        );
+        $this->assertEquals(
+            '{"message":"success server response"}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -224,7 +246,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.35.0\).*/',
+                '/^Algolia for PHP \(4.36.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
