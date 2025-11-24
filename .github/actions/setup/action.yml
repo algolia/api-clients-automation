@@ -197,7 +197,7 @@ runs:
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: nicklockwood/SwiftFormat
         ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}
