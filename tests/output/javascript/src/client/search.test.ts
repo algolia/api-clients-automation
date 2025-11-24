@@ -202,6 +202,36 @@ describe('api', () => {
 
     expect(result).toEqual({ objectID: 'ruleObjectID', consequence: { promote: [{ objectID: '1', position: 10 }] } });
   }, 25000);
+
+  test('does not retry on success', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6675,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6674,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.customGet({ path: '1/test/calling/javascript' });
+
+      expect(result).toEqual({ message: 'success server response' });
+    }
+    {
+      const result = await client.customGet({ path: '1/test/calling/javascript' });
+
+      expect(result).toEqual({ message: 'success server response' });
+    }
+  }, 25000);
 });
 
 describe('commonApi', () => {

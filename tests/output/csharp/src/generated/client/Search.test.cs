@@ -327,6 +327,61 @@ public class SearchClientTests
     );
   }
 
+  [Fact(DisplayName = "does not retry on success")]
+  public async Task ApiTest11()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6675,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6674,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("1/test/calling/csharp");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"message\":\"success server response\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      var res = await client.CustomGetAsync("1/test/calling/csharp");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"message\":\"success server response\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
   [Fact(DisplayName = "calls api with correct user agent")]
   public async Task CommonApiTest0()
   {

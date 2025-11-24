@@ -262,6 +262,52 @@ class TestSearchClient:
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
 
+    async def test_api_11(self):
+        """
+        does not retry on success
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6675,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6674,
+                ),
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/calling/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"success server response"}""")
+        _req = await _client.custom_get(
+            path="1/test/calling/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"success server response"}""")
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -1643,6 +1689,52 @@ class TestSearchClientSync:
         ) == loads(
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
+
+    def test_api_11(self):
+        """
+        does not retry on success
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6675,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6674,
+                ),
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/calling/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"success server response"}""")
+        _req = _client.custom_get(
+            path="1/test/calling/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"success server response"}""")
 
     def test_common_api_0(self):
         """
