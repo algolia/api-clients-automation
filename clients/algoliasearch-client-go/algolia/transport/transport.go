@@ -45,22 +45,18 @@ func New(cfg Configuration) *Transport {
 }
 
 func prepareRetryableRequest(req *http.Request) (*http.Request, error) {
-	// Read the original body
 	if req.Body == nil {
 		return req, nil // Nothing to do if there's no body
 	}
 
-	bodyBytes, err := io.ReadAll(req.Body)
-	if err != nil {
-		return nil, fmt.Errorf("cannot read body: %w", err)
-	}
-
-	_ = req.Body.Close() // close the original body
+	// Since the request will be retried, we need to reuse the body multiple times.
+	// Use io.TeeReader to read and store the body content for the next retries.
+	bodyCopy := &bytes.Buffer{}
+	req.Body = io.NopCloser(io.TeeReader(req.Body, bodyCopy))
 
 	// Set up GetBody to recreate the body for retries
-	req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 	req.GetBody = func() (io.ReadCloser, error) {
-		return io.NopCloser(bytes.NewReader(bodyBytes)), nil
+		return io.NopCloser(bytes.NewReader(bodyCopy.Bytes())), nil
 	}
 
 	return req, nil
