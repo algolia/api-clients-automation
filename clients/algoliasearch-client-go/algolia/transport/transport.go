@@ -44,9 +44,9 @@ func New(cfg Configuration) *Transport {
 	return transport
 }
 
-func prepareRetryableRequest(req *http.Request) (*http.Request, error) {
+func prepareRetryableRequest(req *http.Request) {
 	if req.Body == nil {
-		return req, nil // Nothing to do if there's no body
+		return // Nothing to do if there's no body
 	}
 
 	// Since the request will be retried, we need to reuse the body multiple times.
@@ -58,8 +58,6 @@ func prepareRetryableRequest(req *http.Request) (*http.Request, error) {
 	req.GetBody = func() (io.ReadCloser, error) {
 		return io.NopCloser(bytes.NewReader(bodyCopy.Bytes())), nil
 	}
-
-	return req, nil
 }
 
 func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind, c RequestConfiguration) (*http.Response, []byte, error) {
@@ -71,10 +69,7 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 	}
 
 	// Prepare the request to be retryable.
-	req, err := prepareRetryableRequest(req)
-	if err != nil {
-		return nil, nil, err
-	}
+	prepareRetryableRequest(req)
 
 	for i, h := range t.retryStrategy.GetTryableHosts(k) {
 		// Handle per-request timeout by using a context with timeout.
