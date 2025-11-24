@@ -12,13 +12,14 @@ import { algoliaMockServer } from './algoliaMock.ts';
 import { apiKeyServer } from './apiKey.ts';
 import { benchmarkServer } from './benchmark.ts';
 import { chunkWrapperServer } from './chunkWrapper.ts';
-import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice } from './error.ts';
+import { errorServer, errorServerRetriedOnce, errorServerRetriedTwice, neverCalledServer } from './error.ts';
 import { gzipServer } from './gzip.ts';
 import { pushMockServer, pushMockServerRetriedOnce } from './pushMock.ts';
 import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
 import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
 import { replaceAllObjectsWithTransformationServer } from './replaceAllObjectsWithTransformation.ts';
+import { successServer } from './success.ts';
 import { timeoutServer } from './timeout.ts';
 import { timeoutServerBis } from './timeoutBis.ts';
 import { waitForApiKeyServer } from './waitFor.ts';
@@ -31,6 +32,8 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       errorServer(),
       errorServerRetriedOnce(),
       errorServerRetriedTwice(),
+      neverCalledServer(),
+      successServer(),
       gzipServer(),
       timeoutServerBis(),
       accountCopyIndexServer(),
