@@ -1,6 +1,7 @@
 browseParams:
   oneOf:
-    - $ref: '#/browseParamsObject'
+    - title: Search parameters as object
+      $ref: '#/browseParamsObject'
     - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsString'
 
 browseParamsObject:
