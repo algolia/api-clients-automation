@@ -1,7 +1,7 @@
 browseParams:
   oneOf:
-    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsString'
     - $ref: '#/browseParamsObject'
+    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsString'
 
 browseParamsObject:
   allOf:

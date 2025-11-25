@@ -1,7 +1,7 @@
 searchParams:
   oneOf:
-    - $ref: '#/searchParamsString'
     - $ref: '#/searchParamsObject'
+    - $ref: '#/searchParamsString'
 
 searchParamsObject:
   title: Search parameters as object
