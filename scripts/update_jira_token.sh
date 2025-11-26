@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script updates the JIRA_TOKEN secret in the GitHub repository
 # Usage: ./scripts/update_jira_token.sh <jira_email> <new_jira_token>
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <jira_email> <new_jira_token>"
     exit 1
 fi
