@@ -25,6 +25,11 @@ repositories=(
   "algolia/algoliasearch-client-ruby"
   "algolia/algoliasearch-client-scala"
   "algolia/algoliasearch-client-swift"
+  "algolia/algoliasearch-django"
+  "algolia/scout-extended"
+  "algolia/search-bundle"
+  "algolia/firestore-algolia-search"
+  "algolia/algoliasearch-rails"
 )
 
 for repo in "${repositories[@]}"; do
