@@ -27,7 +27,7 @@ compositionBehavior:
                       description: Composition Main Index name.
                       example: Products
                     params:
-                      $ref: './Injection.yml#/mainInjectionQueryParameters'
+                      $ref: './injection/QueryParams.yml#/mainInjectionQueryParameters'
                   required:
                     - index
               required:
@@ -99,8 +99,8 @@ injectedItem:
 
 injectedItemSource:
   oneOf:
-    - $ref: './InjectionSource.yml#/SearchSource'
-    - $ref: './InjectionSource.yml#/ExternalSource'
+    - $ref: './injection/Source.yml#/SearchSource'
+    - $ref: './injection/Source.yml#/ExternalSource'
 
 dedupPositioning:
   type: string
