@@ -1,0 +1,111 @@
+injectionBehaviour:
+  title: injection
+  type: object
+  additionalProperties: false
+  properties:
+    main:
+      title: main
+      type: object
+      additionalProperties: false
+      properties:
+        source:
+          title: compositionSource
+          type: object
+          additionalProperties: false
+          properties:
+            search:
+              title: compositionSourceSearch
+              type: object
+              additionalProperties: false
+              properties:
+                index:
+                  type: string
+                  description: Composition Main Index name.
+                  example: Products
+                params:
+                  $ref: './QueryParams.yml#/mainInjectionQueryParameters'
+              required:
+                - index
+          required:
+            - search
+      required:
+        - source
+    injectedItems:
+      type: array
+      description: list of injected items of the current Composition.
+      minItems: 0
+      maxItems: 2
+      items:
+        $ref: '#/injectedItem'
+    deduplication:
+      title: deduplication
+      type: object
+      additionalProperties: false
+      description: Deduplication configures the methods used to resolve duplicate items between main search results and injected group results.
+      properties:
+        positioning:
+          $ref: '#/dedupPositioning'
+      required:
+        - positioning
+  required:
+    - main
+
+injectedItem:
+  type: object
+  additionalProperties: false
+  properties:
+    key:
+      type: string
+      description: injected Item unique identifier.
+    source:
+      description: Search source to be used to inject items into result set.
+      $ref: '#/injectedItemSource'
+    position:
+      type: integer
+      minimum: 0
+      maximum: 19
+    length:
+      type: integer
+      minimum: 0
+      maximum: 20
+    metadata:
+      title: injectedItemMetadata
+      type: object
+      description: Used to add metadata to the results of the injectedItem.
+      properties:
+        hits:
+          title: injectedItemHitsMetadata
+          type: object
+          description: Adds the provided metadata to each injected hit via an `_extra` attribute.
+          properties:
+            addItemKey:
+              type: boolean
+              description: When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit.
+            extra:
+              type: object
+              additionalProperties: true
+              description: The user-defined key-value pairs that will be placed in the `_extra` field of each affected hit.
+  required:
+    - key
+    - source
+    - position
+    - length
+
+injectedItemSource:
+  oneOf:
+    - $ref: './Source.yml#/SearchSource'
+    - $ref: './Source.yml#/ExternalSource'
+
+dedupPositioning:
+  type: string
+  enum:
+    - highest
+    - highestInjected
+  description: |
+    Deduplication positioning configures how a duplicate result should be resolved between an injected item and main search results.
+    Current configuration supports:
+    - 'highest': always select the item in the highest position, and remove duplicates that appear lower in the results.
+    - 'highestInjected': duplicate result will be moved to its highest possible injected position, but not higher. 
+      If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
+  example: highest
+  default: highestInjected
