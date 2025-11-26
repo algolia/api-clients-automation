@@ -37,7 +37,8 @@
     "browse": {
       "browse with minimal parameters": "var response = await client.BrowseAsync<Hit>(\"<YOUR_INDEX_NAME>\");",
       "browse with search parameters": "var response = await client.BrowseAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new BrowseParams(\n    new BrowseParamsObject\n    {\n      Query = \"myQuery\",\n      FacetFilters = new FacetFilters(\n        new List<FacetFilters> { new FacetFilters(\"tags:algolia\") }\n      ),\n    }\n  )\n);",
-      "browse allow a cursor in parameters": "var response = await client.BrowseAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new BrowseParams(new BrowseParamsObject { Cursor = \"test\" })\n);"
+      "browse allow a cursor in parameters": "var response = await client.BrowseAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new BrowseParams(new BrowseParamsObject { Cursor = \"test\" })\n);",
+      "browse with query string": "var response = await client.BrowseAsync<Hit>(\n  \"<YOUR_INDEX_NAME>\",\n  new BrowseParams(new SearchParamsString { Params = \"foo=bar&cursor=test\" })\n);"
     },
     "clearObjects": {
       "default": "var response = await client.ClearObjectsAsync(\"<YOUR_INDEX_NAME>\");"
@@ -627,7 +628,8 @@
     "browse": {
       "browse with minimal parameters": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);",
       "browse with search parameters": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  browseParams: BrowseParamsObject(\n    query: \"myQuery\",\n    facetFilters: [\n      \"tags:algolia\",\n    ],\n  ),\n);",
-      "browse allow a cursor in parameters": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  browseParams: BrowseParamsObject(\n    cursor: \"test\",\n  ),\n);"
+      "browse allow a cursor in parameters": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  browseParams: BrowseParamsObject(\n    cursor: \"test\",\n  ),\n);",
+      "browse with query string": "final response = await client.browse(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  browseParams: SearchParamsString(\n    params: \"foo=bar&cursor=test\",\n  ),\n);"
     },
     "clearObjects": {
       "default": "final response = await client.clearObjects(\n  indexName: \"<YOUR_INDEX_NAME>\",\n);"
@@ -1165,7 +1167,8 @@
     "browse": {
       "browse with minimal parameters": "response, err := client.Browse(client.NewApiBrowseRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "browse with search parameters": "response, err := client.Browse(client.NewApiBrowseRequest(\n  \"<YOUR_INDEX_NAME>\").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(\n  search.NewEmptyBrowseParamsObject().SetQuery(\"myQuery\").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(\n    []search.FacetFilters{*search.StringAsFacetFilters(\"tags:algolia\")})))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "browse allow a cursor in parameters": "response, err := client.Browse(client.NewApiBrowseRequest(\n  \"<YOUR_INDEX_NAME>\").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(\n  search.NewEmptyBrowseParamsObject().SetCursor(\"test\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "browse allow a cursor in parameters": "response, err := client.Browse(client.NewApiBrowseRequest(\n  \"<YOUR_INDEX_NAME>\").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(\n  search.NewEmptyBrowseParamsObject().SetCursor(\"test\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "browse with query string": "response, err := client.Browse(client.NewApiBrowseRequest(\n  \"<YOUR_INDEX_NAME>\").WithBrowseParams(search.SearchParamsStringAsBrowseParams(\n  search.NewEmptySearchParamsString().SetParams(\"foo=bar&cursor=test\"))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "clearObjects": {
       "default": "response, err := client.ClearObjects(client.NewApiClearObjectsRequest(\n  \"<YOUR_INDEX_NAME>\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -1755,7 +1758,8 @@
     "browse": {
       "browse with minimal parameters": "BrowseResponse response = client.browse(\"<YOUR_INDEX_NAME>\", Hit.class);",
       "browse with search parameters": "BrowseResponse response = client.browse(\n  \"<YOUR_INDEX_NAME>\",\n  new BrowseParamsObject().setQuery(\"myQuery\").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of(\"tags:algolia\")))),\n  Hit.class\n);",
-      "browse allow a cursor in parameters": "BrowseResponse response = client.browse(\"<YOUR_INDEX_NAME>\", new BrowseParamsObject().setCursor(\"test\"), Hit.class);"
+      "browse allow a cursor in parameters": "BrowseResponse response = client.browse(\"<YOUR_INDEX_NAME>\", new BrowseParamsObject().setCursor(\"test\"), Hit.class);",
+      "browse with query string": "BrowseResponse response = client.browse(\"<YOUR_INDEX_NAME>\", new SearchParamsString().setParams(\"foo=bar&cursor=test\"), Hit.class);"
     },
     "clearObjects": {
       "default": "UpdatedAtResponse response = client.clearObjects(\"<YOUR_INDEX_NAME>\");"
@@ -2348,7 +2352,8 @@
     "browse": {
       "browse with minimal parameters": "const response = await client.browse({ indexName: 'cts_e2e_browse' });",
       "browse with search parameters": "const response = await client.browse({\n  indexName: 'indexName',\n  browseParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },\n});",
-      "browse allow a cursor in parameters": "const response = await client.browse({ indexName: 'indexName', browseParams: { cursor: 'test' } });"
+      "browse allow a cursor in parameters": "const response = await client.browse({ indexName: 'indexName', browseParams: { cursor: 'test' } });",
+      "browse with query string": "const response = await client.browse({ indexName: 'indexName', browseParams: { params: 'foo=bar&cursor=test' } });"
     },
     "clearObjects": {
       "default": "const response = await client.clearObjects({ indexName: 'theIndexName' });"
@@ -2935,7 +2940,8 @@
     "browse": {
       "browse with minimal parameters": "var response = client.browse(indexName = \"<YOUR_INDEX_NAME>\")",
       "browse with search parameters": "var response =\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams =\n      BrowseParamsObject(\n        query = \"myQuery\",\n        facetFilters = FacetFilters.of(listOf(FacetFilters.of(\"tags:algolia\"))),\n      ),\n  )",
-      "browse allow a cursor in parameters": "var response =\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = BrowseParamsObject(cursor = \"test\"),\n  )"
+      "browse allow a cursor in parameters": "var response =\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = BrowseParamsObject(cursor = \"test\"),\n  )",
+      "browse with query string": "var response =\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = SearchParamsString(params = \"foo=bar&cursor=test\"),\n  )"
     },
     "clearObjects": {
       "default": "var response = client.clearObjects(indexName = \"<YOUR_INDEX_NAME>\")"
@@ -3516,7 +3522,8 @@
     "browse": {
       "browse with minimal parameters": "$response = $client->browse(\n    '<YOUR_INDEX_NAME>',\n);",
       "browse with search parameters": "$response = $client->browse(\n    '<YOUR_INDEX_NAME>',\n    ['query' => 'myQuery',\n        'facetFilters' => [\n            'tags:algolia',\n        ],\n    ],\n);",
-      "browse allow a cursor in parameters": "$response = $client->browse(\n    '<YOUR_INDEX_NAME>',\n    ['cursor' => 'test',\n    ],\n);"
+      "browse allow a cursor in parameters": "$response = $client->browse(\n    '<YOUR_INDEX_NAME>',\n    ['cursor' => 'test',\n    ],\n);",
+      "browse with query string": "$response = $client->browse(\n    '<YOUR_INDEX_NAME>',\n    ['params' => 'foo=bar&cursor=test',\n    ],\n);"
     },
     "clearObjects": {
       "default": "$response = $client->clearObjects(\n    '<YOUR_INDEX_NAME>',\n);"
@@ -4106,7 +4113,8 @@
     "browse": {
       "browse with minimal parameters": "response = client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)",
       "browse with search parameters": "response = client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    browse_params={\n        \"query\": \"myQuery\",\n        \"facetFilters\": [\n            \"tags:algolia\",\n        ],\n    },\n)",
-      "browse allow a cursor in parameters": "response = client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    browse_params={\n        \"cursor\": \"test\",\n    },\n)"
+      "browse allow a cursor in parameters": "response = client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    browse_params={\n        \"cursor\": \"test\",\n    },\n)",
+      "browse with query string": "response = client.browse(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    browse_params={\n        \"params\": \"foo=bar&cursor=test\",\n    },\n)"
     },
     "clearObjects": {
       "default": "response = client.clear_objects(\n    index_name=\"<YOUR_INDEX_NAME>\",\n)"
@@ -4696,7 +4704,8 @@
     "browse": {
       "browse with minimal parameters": "response = client.browse(\"<YOUR_INDEX_NAME>\")",
       "browse with search parameters": "response = client.browse(\n  \"<YOUR_INDEX_NAME>\",\n  Algolia::Search::BrowseParamsObject.new(query: \"myQuery\", facet_filters: [\"tags:algolia\"])\n)",
-      "browse allow a cursor in parameters": "response = client.browse(\"<YOUR_INDEX_NAME>\", Algolia::Search::BrowseParamsObject.new(cursor: \"test\"))"
+      "browse allow a cursor in parameters": "response = client.browse(\"<YOUR_INDEX_NAME>\", Algolia::Search::BrowseParamsObject.new(cursor: \"test\"))",
+      "browse with query string": "response = client.browse(\"<YOUR_INDEX_NAME>\", Algolia::Search::SearchParamsString.new(params: \"foo=bar&cursor=test\"))"
     },
     "clearObjects": {
       "default": "response = client.clear_objects(\"<YOUR_INDEX_NAME>\")"
@@ -5277,7 +5286,8 @@
     "browse": {
       "browse with minimal parameters": "val response = Await.result(\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)",
       "browse with search parameters": "val response = Await.result(\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = Some(\n      BrowseParamsObject(\n        query = Some(\"myQuery\"),\n        facetFilters = Some(FacetFilters(Seq(FacetFilters(\"tags:algolia\"))))\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "browse allow a cursor in parameters": "val response = Await.result(\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = Some(\n      BrowseParamsObject(\n        cursor = Some(\"test\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "browse allow a cursor in parameters": "val response = Await.result(\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = Some(\n      BrowseParamsObject(\n        cursor = Some(\"test\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "browse with query string": "val response = Await.result(\n  client.browse(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    browseParams = Some(\n      SearchParamsString(\n        params = Some(\"foo=bar&cursor=test\")\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "clearObjects": {
       "default": "val response = Await.result(\n  client.clearObjects(\n    indexName = \"<YOUR_INDEX_NAME>\"\n  ),\n  Duration(100, \"sec\")\n)"
@@ -5858,7 +5868,8 @@
     "browse": {
       "browse with minimal parameters": "let response: BrowseResponse<Hit> = try await client.browse(indexName: \"<YOUR_INDEX_NAME>\")",
       "browse with search parameters": "let response: BrowseResponse<Hit> = try await client.browse(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(\n        query: \"myQuery\",\n        facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string(\"tags:algolia\")])\n    ))\n)",
-      "browse allow a cursor in parameters": "let response: BrowseResponse<Hit> = try await client.browse(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: \"test\"))\n)"
+      "browse allow a cursor in parameters": "let response: BrowseResponse<Hit> = try await client.browse(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: \"test\"))\n)",
+      "browse with query string": "let response: BrowseResponse<Hit> = try await client.browse(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    browseParams: BrowseParams.searchParamsString(SearchParamsString(params: \"foo=bar&cursor=test\"))\n)"
     },
     "clearObjects": {
       "default": "let response = try await client.clearObjects(indexName: \"<YOUR_INDEX_NAME>\")"

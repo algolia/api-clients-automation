@@ -590,6 +590,29 @@ void main() {
     ),
   );
 
+  // browse
+  test(
+    'browse with query string',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.browse(
+        indexName: "indexName",
+        browseParams: SearchParamsString(
+          params: "foo=bar&cursor=test",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/indexName/browse');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"params":"foo=bar&cursor=test"}""");
+      },
+    ),
+  );
+
   // clearObjects
   test(
     'clearObjects',

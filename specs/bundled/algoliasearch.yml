@@ -455,7 +455,7 @@ components:
       default: ''
     searchParamsString:
       type: object
-      title: Search parameters as query string.
+      title: Search parameters as query string
       description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:

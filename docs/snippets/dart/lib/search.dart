@@ -551,6 +551,28 @@ void snippetForbrowse2() async {
   // SEPARATOR<
 }
 
+// Snippet for the browse method.
+//
+// browse with query string
+void snippetForbrowse3() async {
+  // >SEPARATOR browse browse with query string
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.browse(
+    indexName: "<YOUR_INDEX_NAME>",
+    browseParams: SearchParamsString(
+      params: "foo=bar&cursor=test",
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the clearObjects method.
 //
 // clearObjects

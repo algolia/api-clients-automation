@@ -4311,7 +4311,7 @@ components:
       default: ''
     searchParamsString:
       type: object
-      title: Search parameters as query string.
+      title: Search parameters as query string
       description: Search parameters as query string.
       additionalProperties: false
       x-discriminator-fields:
@@ -6797,8 +6797,9 @@ components:
         - $ref: '#/components/schemas/cursor'
     browseParams:
       oneOf:
+        - title: Search parameters as object
+          $ref: '#/components/schemas/browseParamsObject'
         - $ref: '#/components/schemas/searchParamsString'
-        - $ref: '#/components/schemas/browseParamsObject'
     BrowsePagination:
       type: object
       additionalProperties: false
