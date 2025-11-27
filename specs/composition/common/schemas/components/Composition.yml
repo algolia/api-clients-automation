@@ -17,13 +17,20 @@ composition:
     sortingStrategy:
       type: object
       description: |
-        Sorting Label to indices. Up to 20 sorting strategies can be defined.
-      example:
-        {
-          "Price (asc)": "products-low-to-high",
-          "Price (desc)": "products-high-to-low",
-        }
+        A mapping of sorting labels to the indices (or replicas) that implement those sorting rules.
 
+        Each key is the label your frontend sends at runtime (for example, "Price (asc)"), and each value is the name of the index that should be queried when that label is selected.
+        When a request includes a "sortBy" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main injection targeted index is replaced
+        with the sorting strategy index it is mapped to.
+
+        Up to 20 sorting strategies can be defined.
+      maxItems: 20
+      additionalProperties:
+        type: string
+      example:
+        'Price (asc)': 'products-low-to-high'
+        'Price (desc)': 'products-high-to-low'
+        
   required:
     - objectID
     - behavior

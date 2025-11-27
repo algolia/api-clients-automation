@@ -116,7 +116,13 @@ enableABTest:
 sortBy:
   type: string
   description: |
-    Parameter targeting the `sortingStrategy` setting set in the Composition body.
+    Indicates which sorting strategy to apply for the request.
+    The value must match one of the labels defined in the "sortingStrategy" mapping. For example, "Price (asc)", see Upsert Composition.
+    At runtime, this label is used to look up the corresponding index or replica configured in "sortingStrategy", and the query is executed using that index’s in the main injection.
+
+    In addition to "sortingStrategy", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on "sortBy", see Composition Rules.
+
+    If no value is provided, no sorting strategy is applied.
   default: ''
   example:
-    "Price (asc)"
+    'Price (asc)'
