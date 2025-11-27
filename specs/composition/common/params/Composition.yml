@@ -108,3 +108,15 @@ enableABTest:
   default: true
   x-categories:
     - Advanced
+
+# #######################
+# ### Category SortBy ###
+# #######################
+
+sortBy:
+  type: string
+  description: |
+    Parameter targeting the `sortingStrategy` setting set in the Composition body.
+  default: ''
+  example:
+    "Price (asc)"

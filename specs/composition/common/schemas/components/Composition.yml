@@ -14,6 +14,16 @@ composition:
       example: 'my lovely crafted composition that is used for X purpose'
     behavior:
       $ref: './CompositionBehavior.yml#/compositionBehavior'
+    sortingStrategy:
+      type: object
+      description: |
+        Sorting Label to indices. Up to 20 sorting strategies can be defined.
+      example:
+        {
+          "Price (asc)": "products-low-to-high",
+          "Price (desc)": "products-high-to-low",
+        }
+
   required:
     - objectID
     - behavior
