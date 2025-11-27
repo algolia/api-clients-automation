@@ -361,5 +361,53 @@
         }
       }
     }
+  },
+
+  {
+    "parameters": {
+      "compositionID": "my-compo",
+      "composition": {
+        "objectID": "my-compo",
+        "name": "my composition",
+        "sortingStrategy": {
+          "Price (asc)": "products-low-to-high",
+          "Price (desc)": "products-high-to-low"
+        },
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "products"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/my-compo",
+      "method": "PUT",
+      "body": {
+        "objectID": "my-compo",
+        "name": "my composition",
+        "sortingStrategy": {
+          "Price (asc)": "products-low-to-high",
+          "Price (desc)": "products-high-to-low"
+        },
+        "behavior": {
+          "injection": {
+            "main": {
+              "source": {
+                "search": {
+                  "index": "products"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 ]
