@@ -21,7 +21,7 @@ post:
               description: A/B test configuration for estimating the sample size and duration using minimum detectable effect.
               properties:
                 featureFilters:
-                  $ref: '../../common/schemas/FeatureFilters.yml#/LegacyFeatureFilters'
+                  $ref: '../common/schemas/ABTest.yml#/FeatureFilters'
                 outliers:
                   $ref: '../common/schemas/ABTest.yml#/Outliers'
                 emptySearch:

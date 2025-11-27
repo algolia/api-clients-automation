@@ -62,8 +62,6 @@ ABTestConfiguration:
   properties:
     minimumDetectableEffect:
       $ref: '#/MinimumDetectableEffect'
-    featureFilters:
-      $ref: '../../../common/schemas/FeatureFilters.yml#/FeatureFilters'
     filters:
       $ref: '#/MetricsFilters'
     errorCorrection:
