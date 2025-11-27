@@ -1,0 +1,17 @@
+[
+  {
+    "parameters": {
+      "compositionID": "my-compo",
+      "Price-asc": "products-low-to-high",
+      "Price-desc": "products-high-to-low"
+    },
+    "request": {
+      "path": "/1/compositions/my-compo/sortingStrategy",
+      "method": "POST",
+      "body": {
+        "Price-asc": "products-low-to-high",
+        "Price-desc": "products-high-to-low"
+      }
+    }
+  }
+]
