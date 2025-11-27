@@ -32,7 +32,6 @@ sortingStrategy:
     with the sorting strategy index it is mapped to.
 
     Up to 20 sorting strategies can be defined.
-  maxItems: 20
   additionalProperties:
     type: string
   example:
