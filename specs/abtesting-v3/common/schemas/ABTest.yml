@@ -62,6 +62,8 @@ ABTestConfiguration:
   properties:
     minimumDetectableEffect:
       $ref: '#/MinimumDetectableEffect'
+    featureFilters:
+      $ref: '#/FeatureFilters'
     filters:
       $ref: '#/MetricsFilters'
     errorCorrection:
@@ -124,6 +126,20 @@ MetricsFilter:
   required:
     - domain
     - name
+
+FeatureFilters:
+  type: object
+  description: Configuration of feature-based filters applied to the A/B test population.
+  properties:
+    dynamicReRanking:
+      type: boolean
+      description: Whether to apply dynamic re-ranking feature filters.
+    aiPerso:
+      type: boolean
+      description: Whether to apply AI Personalization feature filters.
+    multiSignalRanking:
+      type: boolean
+      description: Whether to apply Multi-Signal Re-Ranking feature filters.
 
 MetricsFilters:
   type: array
