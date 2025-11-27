@@ -61,3 +61,5 @@ params:
       $ref: '../../params/Composition.yml#/ruleContexts'
     userToken:
       $ref: '../../params/Search.yml#/userToken'
+    sortBy:
+      $ref: '../../params/Composition.yml#/sortBy'
