@@ -1,12 +1,16 @@
 post:
   tags:
     - Compositions
-  operationId: updateCompositionSortingStrategy
+  operationId: updateSortingStrategyComposition
   x-acl:
     - editSettings
-  summary: Update sortingStrategy for an existing composition
+  summary: Set or update the "sortingStrategy" configuration for an existing composition
   description: |
-    Update Update sortingStrategy for an existing composition in the current Algolia application.
+    Updates the "sortingStrategy" field of an existing composition.
+    This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one.
+    The provided sorting indices must be associated indices or replicas of the main targeted index.
+
+    The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
   parameters:
     - $ref: '../urlParams.yml#/compositionID'
   requestBody:
