@@ -1,4 +1,4 @@
-injectionBehaviour:
+InjectionBehaviour:
   title: injection
   type: object
   additionalProperties: false
