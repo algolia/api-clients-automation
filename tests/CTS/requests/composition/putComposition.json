@@ -370,8 +370,8 @@
         "objectID": "my-compo",
         "name": "my composition",
         "sortingStrategy": {
-          "Price (asc)": "products-low-to-high",
-          "Price (desc)": "products-high-to-low"
+          "Price-asc": "products-low-to-high",
+          "Price-desc": "products-high-to-low"
         },
         "behavior": {
           "injection": {
@@ -393,8 +393,8 @@
         "objectID": "my-compo",
         "name": "my composition",
         "sortingStrategy": {
-          "Price (asc)": "products-low-to-high",
-          "Price (desc)": "products-high-to-low"
+          "Price-asc": "products-low-to-high",
+          "Price-desc": "products-high-to-low"
         },
         "behavior": {
           "injection": {
