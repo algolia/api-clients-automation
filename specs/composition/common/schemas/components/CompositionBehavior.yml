@@ -3,6 +3,6 @@ compositionBehavior:
   additionalProperties: false
   properties:
     injection:
-      $ref: './injection/Behaviour.yml#/InjectionBehaviour'
+      $ref: './injection/Behaviour.yml#/injection'
   required:
     - injection
