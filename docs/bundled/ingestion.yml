@@ -16694,6 +16694,7 @@ components:
             Algolia API key with the ACL: `search`.
             This field is `null` in the API response.
     AuthSecrets:
+      title: Key:value
       type: object
       description: A key:value authentication for your transformations.
       additionalProperties:
@@ -16763,6 +16764,7 @@ components:
         - nbItems
         - itemsPerPage
     AuthGoogleServiceAccount:
+      title: Google
       type: object
       description: >-
         Credentials for authenticating with a Google service account, such as
@@ -16785,6 +16787,7 @@ components:
         - clientEmail
         - privateKey
     AuthBasic:
+      title: Basic
       type: object
       description: Credentials for authenticating with user name and password.
       additionalProperties: false
@@ -16802,6 +16805,7 @@ components:
         - username
         - password
     AuthAPIKey:
+      title: API key
       type: object
       description: Credentials for authenticating with an API key.
       additionalProperties: false
@@ -16814,6 +16818,7 @@ components:
       x-discriminator-fields:
         - key
     AuthOAuth:
+      title: OAuth 2.0
       type: object
       description: Credentials for authenticating with OAuth 2.0.
       additionalProperties: false
@@ -16840,6 +16845,7 @@ components:
         - client_id
         - client_secret
     AuthAlgolia:
+      title: Algolia
       type: object
       additionalProperties: false
       description: Credentials for authenticating with Algolia.
@@ -16858,6 +16864,7 @@ components:
         - appID
         - apiKey
     AuthAlgoliaInsights:
+      title: Algolia Insights
       type: object
       additionalProperties: false
       description: Credentials for authenticating with the Algolia Insights API.

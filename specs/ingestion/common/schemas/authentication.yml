@@ -305,7 +305,7 @@ AuthAlgolia:
     - apiKey
 
 AuthSecrets:
-  title: "Key:value"
+  title: 'Key:value'
   type: object
   description: A key:value authentication for your transformations.
   additionalProperties:
