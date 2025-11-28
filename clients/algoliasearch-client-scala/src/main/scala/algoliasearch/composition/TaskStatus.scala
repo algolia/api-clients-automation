@@ -15,13 +15,11 @@
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Depending on the endpoint, request
   * bodies are either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed in the request body
-  * for POST and PUT requests. Query parameters must be
-  * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
-  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The Composition API
-  * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
-  * the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
-  * indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The current
-  * version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.
+  * for POST and PUT requests. ## Response status and errors The Composition API returns JSON responses. Since JSON
+  * doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response. Successful
+  * responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+  * Error responses have a `message` property with more information. ## Version The current version of the Composition
+  * API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *

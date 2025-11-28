@@ -86,13 +86,6 @@ info:
 
     Parameters are passed in the request body for POST and PUT requests.
 
-    Query parameters must be
-    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-
-    Non-ASCII characters must be UTF-8 encoded.
-
-    Plus characters (`+`) are interpreted as spaces.
-
 
     ## Response status and errors
 
