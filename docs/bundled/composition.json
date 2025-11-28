@@ -1540,7 +1540,20 @@
         "default": {},
         "x-categories": [
           "Retail Media Network"
-        ]
+        ],
+        "example": {
+          "my-group-key": [
+            {
+              "objectID": "my-object-1",
+              "metadata": {
+                "my-field": "my-value"
+              }
+            },
+            {
+              "objectID": "my-object-2"
+            }
+          ]
+        }
       },
       "insideBoundingBoxArray": {
         "type": "array",
