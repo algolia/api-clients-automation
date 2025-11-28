@@ -53,13 +53,13 @@ params:
       $ref: '../../params/Search.yml#/page'
     query:
       $ref: '../../params/Search.yml#/query'
-    relevancyStrictness:
-      $ref: '../../params/Search.yml#/relevancyStrictness'
     queryLanguages:
       $ref: '../../params/Search.yml#/queryLanguages'
+    relevancyStrictness:
+      $ref: '../../params/Search.yml#/relevancyStrictness'
     ruleContexts:
       $ref: '../../params/Composition.yml#/ruleContexts'
-    userToken:
-      $ref: '../../params/Search.yml#/userToken'
     sortBy:
       $ref: '../../params/Composition.yml#/sortBy'
+    userToken:
+      $ref: '../../params/Search.yml#/userToken'
