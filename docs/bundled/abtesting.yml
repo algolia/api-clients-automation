@@ -2395,6 +2395,8 @@ paths:
                     A/B test configuration for estimating the sample size and
                     duration using minimum detectable effect.
                   properties:
+                    featureFilters:
+                      $ref: '#/components/schemas/FeatureFilters'
                     outliers:
                       $ref: '#/components/schemas/Outliers'
                     emptySearch:
@@ -2796,7 +2798,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"configuration":{"outliers":{"exclude":true},"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
+              --data '{"configuration":{"featureFilters":{"dynamicReRanking":true,"aiPerso":true,"multiSignalRanking":true},"outliers":{"exclude":true},"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
 components:
   securitySchemes:
     appId:
@@ -3148,6 +3150,21 @@ components:
         test against the control.
       items:
         $ref: '#/components/schemas/variant'
+    FeatureFilters:
+      type: object
+      description: >-
+        Configuration of feature-based filters applied to the A/B test
+        population.
+      properties:
+        dynamicReRanking:
+          type: boolean
+          description: Whether to apply Dynamic Re-Ranking feature filters.
+        aiPerso:
+          type: boolean
+          description: Whether to apply AI Personalization feature filters.
+        multiSignalRanking:
+          type: boolean
+          description: Whether to apply Multi-Signal Re-Ranking feature filters.
     Outliers:
       type: object
       description: Configuration for handling outliers.
@@ -3197,6 +3214,8 @@ components:
       type: object
       description: A/B test configuration.
       properties:
+        featureFilters:
+          $ref: '#/components/schemas/FeatureFilters'
         outliers:
           $ref: '#/components/schemas/Outliers'
         emptySearch:
