@@ -799,6 +799,38 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # putComposition
+  def test_put_composition4
+    req = @client.put_composition_with_http_info(
+      "my-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-compo",
+        name: "my composition",
+        sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+        behavior: Algolia::Composition::CompositionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::Main.new(
+              source: Algolia::Composition::CompositionSource.new(
+                search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+              )
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # putCompositionRule
   def test_put_composition_rule
     req = @client.put_composition_rule_with_http_info(
@@ -1278,6 +1310,22 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # search
+  def test_search2
+    req = @client.search_with_http_info(
+      "foo",
+      Algolia::Composition::RequestBody.new(
+        params: Algolia::Composition::Params.new(query: "batman", sort_by: "Price (asc)")
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}"), JSON.parse(req.body))
+  end
+
   # searchCompositionRules
   def test_search_composition_rules
     req = @client.search_composition_rules_with_http_info(
@@ -1307,6 +1355,23 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"params\":{\"maxFacetHits\":10}}"), JSON.parse(req.body))
+  end
+
+  # updateSortingStrategyComposition
+  def test_update_sorting_strategy_composition
+    req = @client.update_sorting_strategy_composition_with_http_info(
+      "my-compo",
+      {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/my-compo/sortingStrategy", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"}"),
+      JSON.parse(req.body)
+    )
   end
 
 end

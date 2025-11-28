@@ -822,6 +822,31 @@ export async function snippetForPutComposition3(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition4(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-compo',
+    composition: {
+      objectID: 'my-compo',
+      name: 'my composition',
+      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+      behavior: { injection: { main: { source: { search: { index: 'products' } } } } },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the putCompositionRule method.
 //
 // putCompositionRule
@@ -1237,6 +1262,26 @@ export async function snippetForSearch1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch2(): Promise<void> {
+  // >SEPARATOR search search
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    compositionID: 'foo',
+    requestBody: { params: { query: 'batman', sortBy: 'Price (asc)' } },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchCompositionRules method.
 //
 // searchCompositionRules
@@ -1290,5 +1335,25 @@ export function snippetForSetClientApiKey(): void {
   client.setClientApiKey({ apiKey: 'updated-api-key' });
 
   // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the updateSortingStrategyComposition method.
+//
+// updateSortingStrategyComposition
+export async function snippetForUpdateSortingStrategyComposition(): Promise<void> {
+  // >SEPARATOR updateSortingStrategyComposition default
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.updateSortingStrategyComposition({
+    compositionID: 'my-compo',
+    requestBody: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
   // SEPARATOR<
 }

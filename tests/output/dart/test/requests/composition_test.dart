@@ -1173,6 +1173,46 @@ void main() {
     ),
   );
 
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-compo",
+        composition: Composition(
+          objectID: "my-compo",
+          name: "my composition",
+          sortingStrategy: {
+            'Price-asc': "products-low-to-high",
+            'Price-desc': "products-high-to-low",
+          },
+          behavior: CompositionBehavior(
+            injection: Injection(
+              main: Main(
+                source: CompositionSource(
+                  search: CompositionSourceSearch(
+                    index: "products",
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}""");
+      },
+    ),
+  );
+
   // putCompositionRule
   test(
     'putCompositionRule',
@@ -1798,6 +1838,33 @@ void main() {
     ),
   );
 
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "batman",
+            sortBy: "Price (asc)",
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"batman","sortBy":"Price (asc)"}}""");
+      },
+    ),
+  );
+
   // searchCompositionRules
   test(
     'searchCompositionRules',
@@ -1843,6 +1910,31 @@ void main() {
         expectPath(request.path, '/1/compositions/foo/facets/brand/query');
         expect(request.method, 'post');
         expectBody(request.body, """{"params":{"maxFacetHits":10}}""");
+      },
+    ),
+  );
+
+  // updateSortingStrategyComposition
+  test(
+    'updateSortingStrategyComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.updateSortingStrategyComposition(
+        compositionID: "my-compo",
+        requestBody: {
+          'Price-asc': "products-low-to-high",
+          'Price-desc': "products-high-to-low",
+        },
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo/sortingStrategy');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}""");
       },
     ),
   );
