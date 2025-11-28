@@ -1249,8 +1249,8 @@ class TestCompositionClient < Test::Unit::TestCase
           injected_items: {
             :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
               items: [
-                Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
-                Algolia::Composition::ExternalInjection.new(
+                Algolia::Composition::ExternalGroupKey.new(algolia_object_id: "my-object-1"),
+                Algolia::Composition::ExternalGroupKey.new(
                   algolia_object_id: "my-object-2",
                   metadata: {
                     :"my-string" => "string",

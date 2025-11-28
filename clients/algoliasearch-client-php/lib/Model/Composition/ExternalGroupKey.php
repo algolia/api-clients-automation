@@ -8,11 +8,11 @@ use Algolia\AlgoliaSearch\Model\AbstractModel;
 use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
- * ExternalInjection Class Doc Comment.
+ * ExternalGroupKey Class Doc Comment.
  *
  * @category Class
  */
-class ExternalInjection extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class ExternalGroupKey extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.

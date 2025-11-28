@@ -3,12 +3,12 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'external_injection.g.dart';
+part 'external_group_key.g.dart';
 
 @JsonSerializable()
-final class ExternalInjection {
-  /// Returns a new [ExternalInjection] instance.
-  const ExternalInjection({
+final class ExternalGroupKey {
+  /// Returns a new [ExternalGroupKey] instance.
+  const ExternalGroupKey({
     required this.objectID,
     this.metadata,
   });
@@ -24,17 +24,17 @@ final class ExternalInjection {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExternalInjection &&
+      other is ExternalGroupKey &&
           other.objectID == objectID &&
           other.metadata == metadata;
 
   @override
   int get hashCode => objectID.hashCode + metadata.hashCode;
 
-  factory ExternalInjection.fromJson(Map<String, dynamic> json) =>
-      _$ExternalInjectionFromJson(json);
+  factory ExternalGroupKey.fromJson(Map<String, dynamic> json) =>
+      _$ExternalGroupKeyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ExternalInjectionToJson(this);
+  Map<String, dynamic> toJson() => _$ExternalGroupKeyToJson(this);
 
   @override
   String toString() {

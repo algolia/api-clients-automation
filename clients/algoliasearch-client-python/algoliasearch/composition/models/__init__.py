@@ -44,8 +44,8 @@ from .error_base import ErrorBase
 from .exact_on_single_word_query import ExactOnSingleWordQuery
 from .exhaustive import Exhaustive
 from .external import External
+from .external_group_key import ExternalGroupKey
 from .external_injected_item import ExternalInjectedItem
-from .external_injection import ExternalInjection
 from .external_ordering import ExternalOrdering
 from .external_source import ExternalSource
 from .facet_filters import FacetFilters
@@ -155,8 +155,8 @@ __all__ = (
     "ExactOnSingleWordQuery",
     "Exhaustive",
     "External",
+    "ExternalGroupKey",
     "ExternalInjectedItem",
-    "ExternalInjection",
     "ExternalOrdering",
     "ExternalSource",
     "FacetFilters",

@@ -1517,8 +1517,8 @@ class SnippetCompositionClient {
                   "my-unique-external-group-key",
                   new ExternalInjectedItem().setItems(
                     Arrays.asList(
-                      new ExternalInjection().setObjectID("my-object-1"),
-                      new ExternalInjection()
+                      new ExternalGroupKey().setObjectID("my-object-1"),
+                      new ExternalGroupKey()
                         .setObjectID("my-object-2")
                         .setMetadata(
                           new HashMap() {

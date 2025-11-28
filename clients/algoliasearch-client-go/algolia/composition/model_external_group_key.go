@@ -6,28 +6,28 @@ import (
 	"fmt"
 )
 
-// ExternalInjection struct for ExternalInjection.
-type ExternalInjection struct {
+// ExternalGroupKey struct for ExternalGroupKey.
+type ExternalGroupKey struct {
 	// An objectID injected into an external source.
 	ObjectID string `json:"objectID"`
 	// User-defined key-values that will be added to the injected item in the response. This is identical to Hits metadata defined in Composition or Composition Rule, with the benefit of being set at runtime.
 	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
-type ExternalInjectionOption func(f *ExternalInjection)
+type ExternalGroupKeyOption func(f *ExternalGroupKey)
 
-func WithExternalInjectionMetadata(val map[string]any) ExternalInjectionOption {
-	return func(f *ExternalInjection) {
+func WithExternalGroupKeyMetadata(val map[string]any) ExternalGroupKeyOption {
+	return func(f *ExternalGroupKey) {
 		f.Metadata = val
 	}
 }
 
-// NewExternalInjection instantiates a new ExternalInjection object
+// NewExternalGroupKey instantiates a new ExternalGroupKey object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewExternalInjection(objectID string, opts ...ExternalInjectionOption) *ExternalInjection {
-	this := &ExternalInjection{}
+func NewExternalGroupKey(objectID string, opts ...ExternalGroupKeyOption) *ExternalGroupKey {
+	this := &ExternalGroupKey{}
 
 	this.ObjectID = objectID
 	for _, opt := range opts {
@@ -37,13 +37,13 @@ func NewExternalInjection(objectID string, opts ...ExternalInjectionOption) *Ext
 	return this
 }
 
-// NewEmptyExternalInjection return a pointer to an empty ExternalInjection object.
-func NewEmptyExternalInjection() *ExternalInjection {
-	return &ExternalInjection{}
+// NewEmptyExternalGroupKey return a pointer to an empty ExternalGroupKey object.
+func NewEmptyExternalGroupKey() *ExternalGroupKey {
+	return &ExternalGroupKey{}
 }
 
 // GetObjectID returns the ObjectID field value.
-func (o *ExternalInjection) GetObjectID() string {
+func (o *ExternalGroupKey) GetObjectID() string {
 	if o == nil {
 		var ret string
 
@@ -55,7 +55,7 @@ func (o *ExternalInjection) GetObjectID() string {
 
 // GetObjectIDOk returns a tuple with the ObjectID field value
 // and a boolean to check if the value has been set.
-func (o *ExternalInjection) GetObjectIDOk() (*string, bool) {
+func (o *ExternalGroupKey) GetObjectIDOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -64,14 +64,14 @@ func (o *ExternalInjection) GetObjectIDOk() (*string, bool) {
 }
 
 // SetObjectID sets field value.
-func (o *ExternalInjection) SetObjectID(v string) *ExternalInjection {
+func (o *ExternalGroupKey) SetObjectID(v string) *ExternalGroupKey {
 	o.ObjectID = v
 
 	return o
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *ExternalInjection) GetMetadata() map[string]any {
+func (o *ExternalGroupKey) GetMetadata() map[string]any {
 	if o == nil || o.Metadata == nil {
 		var ret map[string]any
 
@@ -83,7 +83,7 @@ func (o *ExternalInjection) GetMetadata() map[string]any {
 
 // GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExternalInjection) GetMetadataOk() (map[string]any, bool) {
+func (o *ExternalGroupKey) GetMetadataOk() (map[string]any, bool) {
 	if o == nil || o.Metadata == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *ExternalInjection) GetMetadataOk() (map[string]any, bool) {
 }
 
 // HasMetadata returns a boolean if a field has been set.
-func (o *ExternalInjection) HasMetadata() bool {
+func (o *ExternalGroupKey) HasMetadata() bool {
 	if o != nil && o.Metadata != nil {
 		return true
 	}
@@ -101,13 +101,13 @@ func (o *ExternalInjection) HasMetadata() bool {
 }
 
 // SetMetadata gets a reference to the given map[string]any and assigns it to the Metadata field.
-func (o *ExternalInjection) SetMetadata(v map[string]any) *ExternalInjection {
+func (o *ExternalGroupKey) SetMetadata(v map[string]any) *ExternalGroupKey {
 	o.Metadata = v
 
 	return o
 }
 
-func (o ExternalInjection) MarshalJSON() ([]byte, error) {
+func (o ExternalGroupKey) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 
 	toSerialize["objectID"] = o.ObjectID
@@ -117,16 +117,16 @@ func (o ExternalInjection) MarshalJSON() ([]byte, error) {
 
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal ExternalInjection: %w", err)
+		return nil, fmt.Errorf("failed to marshal ExternalGroupKey: %w", err)
 	}
 
 	return serialized, nil
 }
 
-func (o ExternalInjection) String() string {
+func (o ExternalGroupKey) String() string {
 	out := ""
 	out += fmt.Sprintf("  objectID=%v\n", o.ObjectID)
 	out += fmt.Sprintf("  metadata=%v\n", o.Metadata)
 
-	return fmt.Sprintf("ExternalInjection {\n%s}", out)
+	return fmt.Sprintf("ExternalGroupKey {\n%s}", out)
 }

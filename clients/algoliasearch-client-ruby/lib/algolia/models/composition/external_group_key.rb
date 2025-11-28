@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Composition
-    class ExternalInjection
+    class ExternalGroupKey
       # An objectID injected into an external source.
       attr_accessor :algolia_object_id
 
@@ -43,7 +43,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::ExternalInjection` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ExternalGroupKey` initialize method"
           )
         end
 
@@ -52,7 +52,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ExternalInjection`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ExternalGroupKey`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end

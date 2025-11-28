@@ -1779,10 +1779,10 @@ class CompositionTest extends AnyFunSuite {
               Map(
                 "my-unique-external-group-key" -> ExternalInjectedItem(
                   items = Seq(
-                    ExternalInjection(
+                    ExternalGroupKey(
                       objectID = "my-object-1"
                     ),
-                    ExternalInjection(
+                    ExternalGroupKey(
                       objectID = "my-object-2",
                       metadata = Some(
                         Map(

@@ -28,7 +28,7 @@
   */
 package algoliasearch.composition
 
-/** ExternalInjection
+/** ExternalGroupKey
   *
   * @param objectID
   *   An objectID injected into an external source.
@@ -36,7 +36,7 @@ package algoliasearch.composition
   *   User-defined key-values that will be added to the injected item in the response. This is identical to Hits
   *   metadata defined in Composition or Composition Rule, with the benefit of being set at runtime.
   */
-case class ExternalInjection(
+case class ExternalGroupKey(
     objectID: String,
     metadata: Option[Map[String, Any]] = scala.None
 )

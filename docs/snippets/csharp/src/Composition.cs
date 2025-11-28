@@ -1922,10 +1922,10 @@ public class SnippetCompositionClient
               "my-unique-external-group-key",
               new ExternalInjectedItem
               {
-                Items = new List<ExternalInjection>
+                Items = new List<ExternalGroupKey>
                 {
-                  new ExternalInjection { ObjectID = "my-object-1" },
-                  new ExternalInjection
+                  new ExternalGroupKey { ObjectID = "my-object-1" },
+                  new ExternalGroupKey
                   {
                     ObjectID = "my-object-2",
                     Metadata = new Dictionary<string, object>

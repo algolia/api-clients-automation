@@ -1769,10 +1769,10 @@ void main() {
             injectedItems: {
               'my-unique-external-group-key': ExternalInjectedItem(
                 items: [
-                  ExternalInjection(
+                  ExternalGroupKey(
                     objectID: "my-object-1",
                   ),
-                  ExternalInjection(
+                  ExternalGroupKey(
                     objectID: "my-object-2",
                     metadata: {
                       'my-string': "string",

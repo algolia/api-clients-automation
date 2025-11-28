@@ -13,21 +13,21 @@ import java.util.Objects;
 public class ExternalInjectedItem {
 
   @JsonProperty("items")
-  private List<ExternalInjection> items = new ArrayList<>();
+  private List<ExternalGroupKey> items = new ArrayList<>();
 
-  public ExternalInjectedItem setItems(List<ExternalInjection> items) {
+  public ExternalInjectedItem setItems(List<ExternalGroupKey> items) {
     this.items = items;
     return this;
   }
 
-  public ExternalInjectedItem addItems(ExternalInjection itemsItem) {
+  public ExternalInjectedItem addItems(ExternalGroupKey itemsItem) {
     this.items.add(itemsItem);
     return this;
   }
 
   /** Get items */
   @javax.annotation.Nonnull
-  public List<ExternalInjection> getItems() {
+  public List<ExternalGroupKey> getItems() {
     return items;
   }
 

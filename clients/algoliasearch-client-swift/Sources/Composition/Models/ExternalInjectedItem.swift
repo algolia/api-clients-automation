@@ -7,9 +7,9 @@ import Foundation
 #endif
 
 public struct ExternalInjectedItem: Codable, JSONEncodable {
-    public var items: [ExternalInjection]
+    public var items: [ExternalGroupKey]
 
-    public init(items: [ExternalInjection]) {
+    public init(items: [ExternalGroupKey]) {
         self.items = items
     }
 

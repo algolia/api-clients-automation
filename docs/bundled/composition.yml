@@ -1143,10 +1143,10 @@ paths:
                       "my-unique-external-group-key",
                       new ExternalInjectedItem
                       {
-                        Items = new List<ExternalInjection>
+                        Items = new List<ExternalGroupKey>
                         {
-                          new ExternalInjection { ObjectID = "my-object-1" },
-                          new ExternalInjection
+                          new ExternalGroupKey { ObjectID = "my-object-1" },
+                          new ExternalGroupKey
                           {
                             ObjectID = "my-object-2",
                             Metadata = new Dictionary<string, object>
@@ -1186,10 +1186,10 @@ paths:
                   injectedItems: {
                     'my-unique-external-group-key': ExternalInjectedItem(
                       items: [
-                        ExternalInjection(
+                        ExternalGroupKey(
                           objectID: "my-object-1",
                         ),
-                        ExternalInjection(
+                        ExternalGroupKey(
                           objectID: "my-object-2",
                           metadata: {
                             'my-string': "string",
@@ -1231,7 +1231,7 @@ paths:
                 composition.NewEmptyParams().
                   SetQuery("batman").
                   SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
-                    []composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
+                    []composition.ExternalGroupKey{*composition.NewEmptyExternalGroupKey().SetObjectID("my-object-1"), *composition.NewEmptyExternalGroupKey().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
               ),
             ))
 
@@ -1268,8 +1268,8 @@ paths:
                           "my-unique-external-group-key",
                           new ExternalInjectedItem().setItems(
                             Arrays.asList(
-                              new ExternalInjection().setObjectID("my-object-1"),
-                              new ExternalInjection()
+                              new ExternalGroupKey().setObjectID("my-object-1"),
+                              new ExternalGroupKey()
                                 .setObjectID("my-object-2")
                                 .setMetadata(
                                   new HashMap() {
@@ -1466,8 +1466,8 @@ paths:
                   injected_items: {
                     :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
                       items: [
-                        Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
-                        Algolia::Composition::ExternalInjection.new(
+                        Algolia::Composition::ExternalGroupKey.new(algolia_object_id: "my-object-1"),
+                        Algolia::Composition::ExternalGroupKey.new(
                           algolia_object_id: "my-object-2",
                           metadata: {
                             :"my-string" => "string",
@@ -1510,10 +1510,10 @@ paths:
                         Map(
                           "my-unique-external-group-key" -> ExternalInjectedItem(
                             items = Seq(
-                              ExternalInjection(
+                              ExternalGroupKey(
                                 objectID = "my-object-1"
                               ),
-                              ExternalInjection(
+                              ExternalGroupKey(
                                 objectID = "my-object-2",
                                 metadata = Some(
                                   Map(
@@ -1559,8 +1559,8 @@ paths:
                 compositionID: "foo",
                 requestBody: RequestBody(params: CompositionParams(
                     injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
-                        ExternalInjection(objectID: "my-object-1"),
-                        ExternalInjection(
+                        ExternalGroupKey(objectID: "my-object-1"),
+                        ExternalGroupKey(
                             objectID: "my-object-2",
                             metadata: [
                                 "my-string": AnyCodable("string"),
@@ -6687,7 +6687,7 @@ components:
         items:
           type: array
           items:
-            title: externalInjection
+            title: externalGroupKey
             type: object
             additionalProperties: false
             properties:

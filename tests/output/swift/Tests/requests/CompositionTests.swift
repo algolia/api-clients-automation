@@ -1725,8 +1725,8 @@ final class CompositionClientRequestsTests: XCTestCase {
             compositionID: "foo",
             requestBody: RequestBody(params: CompositionParams(
                 injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
-                    ExternalInjection(objectID: "my-object-1"),
-                    ExternalInjection(
+                    ExternalGroupKey(objectID: "my-object-1"),
+                    ExternalGroupKey(
                         objectID: "my-object-2",
                         metadata: [
                             "my-string": AnyCodable("string"),

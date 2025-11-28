@@ -18,7 +18,7 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.external_injection import ExternalInjection
+from algoliasearch.composition.models.external_group_key import ExternalGroupKey
 
 _ALIASES = {
     "items": "items",
@@ -34,7 +34,7 @@ class ExternalInjectedItem(BaseModel):
     ExternalInjectedItem
     """
 
-    items: List[ExternalInjection]
+    items: List[ExternalGroupKey]
 
     model_config = ConfigDict(
         strict=False,
@@ -72,7 +72,7 @@ class ExternalInjectedItem(BaseModel):
             return cls.model_validate(obj)
 
         obj["items"] = (
-            [ExternalInjection.from_dict(_item) for _item in obj["items"]]
+            [ExternalGroupKey.from_dict(_item) for _item in obj["items"]]
             if obj.get("items") is not None
             else None
         )

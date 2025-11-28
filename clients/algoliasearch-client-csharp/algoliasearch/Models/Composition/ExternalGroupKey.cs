@@ -12,21 +12,21 @@ using Algolia.Search.Serializer;
 namespace Algolia.Search.Models.Composition;
 
 /// <summary>
-/// ExternalInjection
+/// ExternalGroupKey
 /// </summary>
-public partial class ExternalInjection
+public partial class ExternalGroupKey
 {
   /// <summary>
-  /// Initializes a new instance of the ExternalInjection class.
+  /// Initializes a new instance of the ExternalGroupKey class.
   /// </summary>
   [JsonConstructor]
-  public ExternalInjection() { }
+  public ExternalGroupKey() { }
 
   /// <summary>
-  /// Initializes a new instance of the ExternalInjection class.
+  /// Initializes a new instance of the ExternalGroupKey class.
   /// </summary>
   /// <param name="objectID">An objectID injected into an external source. (required).</param>
-  public ExternalInjection(string objectID)
+  public ExternalGroupKey(string objectID)
   {
     ObjectID = objectID ?? throw new ArgumentNullException(nameof(objectID));
   }
@@ -52,7 +52,7 @@ public partial class ExternalInjection
   public override string ToString()
   {
     StringBuilder sb = new StringBuilder();
-    sb.Append("class ExternalInjection {\n");
+    sb.Append("class ExternalGroupKey {\n");
     sb.Append("  ObjectID: ").Append(ObjectID).Append("\n");
     sb.Append("  Metadata: ").Append(Metadata).Append("\n");
     sb.Append("}\n");
@@ -75,7 +75,7 @@ public partial class ExternalInjection
   /// <returns>Boolean</returns>
   public override bool Equals(object obj)
   {
-    if (obj is not ExternalInjection input)
+    if (obj is not ExternalGroupKey input)
     {
       return false;
     }

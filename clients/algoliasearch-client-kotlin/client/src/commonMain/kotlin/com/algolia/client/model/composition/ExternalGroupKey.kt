@@ -8,7 +8,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
 /**
- * ExternalInjection
+ * ExternalGroupKey
  *
  * @param objectID An objectID injected into an external source.
  * @param metadata User-defined key-values that will be added to the injected item in the response.
@@ -16,7 +16,7 @@ import kotlinx.serialization.json.*
  *   of being set at runtime.
  */
 @Serializable
-public data class ExternalInjection(
+public data class ExternalGroupKey(
 
   /** An objectID injected into an external source. */
   @SerialName(value = "objectID") val objectID: String,

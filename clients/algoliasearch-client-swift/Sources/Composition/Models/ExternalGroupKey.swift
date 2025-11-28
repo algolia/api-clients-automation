@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ExternalInjection: Codable, JSONEncodable {
+public struct ExternalGroupKey: Codable, JSONEncodable {
     /// An objectID injected into an external source.
     public var objectID: String
     /// User-defined key-values that will be added to the injected item in the response. This is identical to Hits
@@ -32,14 +32,14 @@ public struct ExternalInjection: Codable, JSONEncodable {
     }
 }
 
-extension ExternalInjection: Equatable {
-    public static func ==(lhs: ExternalInjection, rhs: ExternalInjection) -> Bool {
+extension ExternalGroupKey: Equatable {
+    public static func ==(lhs: ExternalGroupKey, rhs: ExternalGroupKey) -> Bool {
         lhs.objectID == rhs.objectID &&
             lhs.metadata == rhs.metadata
     }
 }
 
-extension ExternalInjection: Hashable {
+extension ExternalGroupKey: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.objectID.hashValue)
         hasher.combine(self.metadata?.hashValue)

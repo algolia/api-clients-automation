@@ -8,14 +8,14 @@ import (
 
 // ExternalInjectedItem struct for ExternalInjectedItem.
 type ExternalInjectedItem struct {
-	Items []ExternalInjection `json:"items"`
+	Items []ExternalGroupKey `json:"items"`
 }
 
 // NewExternalInjectedItem instantiates a new ExternalInjectedItem object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewExternalInjectedItem(items []ExternalInjection) *ExternalInjectedItem {
+func NewExternalInjectedItem(items []ExternalGroupKey) *ExternalInjectedItem {
 	this := &ExternalInjectedItem{}
 	this.Items = items
 
@@ -28,9 +28,9 @@ func NewEmptyExternalInjectedItem() *ExternalInjectedItem {
 }
 
 // GetItems returns the Items field value.
-func (o *ExternalInjectedItem) GetItems() []ExternalInjection {
+func (o *ExternalInjectedItem) GetItems() []ExternalGroupKey {
 	if o == nil {
-		var ret []ExternalInjection
+		var ret []ExternalGroupKey
 
 		return ret
 	}
@@ -40,7 +40,7 @@ func (o *ExternalInjectedItem) GetItems() []ExternalInjection {
 
 // GetItemsOk returns a tuple with the Items field value
 // and a boolean to check if the value has been set.
-func (o *ExternalInjectedItem) GetItemsOk() ([]ExternalInjection, bool) {
+func (o *ExternalInjectedItem) GetItemsOk() ([]ExternalGroupKey, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -49,7 +49,7 @@ func (o *ExternalInjectedItem) GetItemsOk() ([]ExternalInjection, bool) {
 }
 
 // SetItems sets field value.
-func (o *ExternalInjectedItem) SetItems(v []ExternalInjection) *ExternalInjectedItem {
+func (o *ExternalInjectedItem) SetItems(v []ExternalGroupKey) *ExternalInjectedItem {
 	o.Items = v
 
 	return o

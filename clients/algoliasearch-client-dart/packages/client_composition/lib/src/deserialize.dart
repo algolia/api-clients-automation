@@ -33,8 +33,8 @@ import 'package:algolia_client_composition/src/model/error_base.dart';
 import 'package:algolia_client_composition/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_composition/src/model/exhaustive.dart';
 import 'package:algolia_client_composition/src/model/external.dart';
+import 'package:algolia_client_composition/src/model/external_group_key.dart';
 import 'package:algolia_client_composition/src/model/external_injected_item.dart';
-import 'package:algolia_client_composition/src/model/external_injection.dart';
 import 'package:algolia_client_composition/src/model/external_ordering.dart';
 import 'package:algolia_client_composition/src/model/external_source.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
@@ -205,11 +205,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Exhaustive.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'External':
       return External.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ExternalGroupKey':
+      return ExternalGroupKey.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ExternalInjectedItem':
       return ExternalInjectedItem.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ExternalInjection':
-      return ExternalInjection.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ExternalOrdering':
       return ExternalOrdering.fromJson(value) as ReturnType;

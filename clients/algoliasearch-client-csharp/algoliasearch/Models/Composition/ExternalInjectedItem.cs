@@ -26,7 +26,7 @@ public partial class ExternalInjectedItem
   /// Initializes a new instance of the ExternalInjectedItem class.
   /// </summary>
   /// <param name="items">items (required).</param>
-  public ExternalInjectedItem(List<ExternalInjection> items)
+  public ExternalInjectedItem(List<ExternalGroupKey> items)
   {
     Items = items ?? throw new ArgumentNullException(nameof(items));
   }
@@ -35,7 +35,7 @@ public partial class ExternalInjectedItem
   /// Gets or Sets Items
   /// </summary>
   [JsonPropertyName("items")]
-  public List<ExternalInjection> Items { get; set; }
+  public List<ExternalGroupKey> Items { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

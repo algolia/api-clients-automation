@@ -28,9 +28,9 @@ def _alias_generator(name: str) -> str:
     return _ALIASES.get(name, name)
 
 
-class ExternalInjection(BaseModel):
+class ExternalGroupKey(BaseModel):
     """
-    ExternalInjection
+    ExternalGroupKey
     """
 
     object_id: str
@@ -53,7 +53,7 @@ class ExternalInjection(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExternalInjection from a JSON string"""
+        """Create an instance of ExternalGroupKey from a JSON string"""
         return cls.from_dict(loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,7 +66,7 @@ class ExternalInjection(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExternalInjection from a dict"""
+        """Create an instance of ExternalGroupKey from a dict"""
         if obj is None:
             return None
 

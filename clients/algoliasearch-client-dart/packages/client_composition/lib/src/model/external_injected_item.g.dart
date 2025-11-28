@@ -17,7 +17,7 @@ ExternalInjectedItem _$ExternalInjectedItemFromJson(
               'items',
               (v) => (v as List<dynamic>)
                   .map((e) =>
-                      ExternalInjection.fromJson(e as Map<String, dynamic>))
+                      ExternalGroupKey.fromJson(e as Map<String, dynamic>))
                   .toList()),
         );
         return val;

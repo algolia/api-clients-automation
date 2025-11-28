@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'external_injection.dart';
+part of 'external_group_key.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExternalInjection _$ExternalInjectionFromJson(Map<String, dynamic> json) =>
+ExternalGroupKey _$ExternalGroupKeyFromJson(Map<String, dynamic> json) =>
     $checkedCreate(
-      'ExternalInjection',
+      'ExternalGroupKey',
       json,
       ($checkedConvert) {
-        final val = ExternalInjection(
+        final val = ExternalGroupKey(
           objectID: $checkedConvert('objectID', (v) => v as String),
           metadata: $checkedConvert(
               'metadata',
@@ -23,7 +23,7 @@ ExternalInjection _$ExternalInjectionFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$ExternalInjectionToJson(ExternalInjection instance) {
+Map<String, dynamic> _$ExternalGroupKeyToJson(ExternalGroupKey instance) {
   final val = <String, dynamic>{
     'objectID': instance.objectID,
   };

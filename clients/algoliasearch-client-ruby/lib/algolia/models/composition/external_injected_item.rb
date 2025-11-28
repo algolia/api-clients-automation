@@ -20,7 +20,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :items => :"Array<ExternalInjection>"
+          :items => :"Array<ExternalGroupKey>"
         }
       end
 

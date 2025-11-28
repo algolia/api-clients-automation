@@ -20,7 +20,7 @@ class ExternalInjectedItem extends AbstractModel implements ModelInterface, \Arr
      * @var string[]
      */
     protected static $modelTypes = [
-        'items' => '\Algolia\AlgoliaSearch\Model\Composition\ExternalInjection[]',
+        'items' => '\Algolia\AlgoliaSearch\Model\Composition\ExternalGroupKey[]',
     ];
 
     /**
@@ -160,7 +160,7 @@ class ExternalInjectedItem extends AbstractModel implements ModelInterface, \Arr
     /**
      * Gets items.
      *
-     * @return ExternalInjection[]
+     * @return ExternalGroupKey[]
      */
     public function getItems()
     {
@@ -170,7 +170,7 @@ class ExternalInjectedItem extends AbstractModel implements ModelInterface, \Arr
     /**
      * Sets items.
      *
-     * @param ExternalInjection[] $items items
+     * @param ExternalGroupKey[] $items items
      *
      * @return self
      */

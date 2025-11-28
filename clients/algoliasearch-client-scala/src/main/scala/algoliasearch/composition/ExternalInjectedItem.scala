@@ -31,5 +31,5 @@ package algoliasearch.composition
 /** ExternalInjectedItem
   */
 case class ExternalInjectedItem(
-    items: Seq[ExternalInjection]
+    items: Seq[ExternalGroupKey]
 )

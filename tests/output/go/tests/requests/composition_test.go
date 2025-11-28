@@ -1017,7 +1017,7 @@ func TestComposition_Search(t *testing.T) {
 				composition.NewEmptyParams().
 					SetQuery("batman").
 					SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
-						[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
+						[]composition.ExternalGroupKey{*composition.NewEmptyExternalGroupKey().SetObjectID("my-object-1"), *composition.NewEmptyExternalGroupKey().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
 			),
 		))
 		require.NoError(t, err)

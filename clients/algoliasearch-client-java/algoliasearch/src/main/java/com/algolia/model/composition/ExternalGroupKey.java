@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** ExternalInjection */
-public class ExternalInjection {
+/** ExternalGroupKey */
+public class ExternalGroupKey {
 
   @JsonProperty("objectID")
   private String objectID;
@@ -18,7 +18,7 @@ public class ExternalInjection {
   @JsonProperty("metadata")
   private Map<String, Object> metadata;
 
-  public ExternalInjection setObjectID(String objectID) {
+  public ExternalGroupKey setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -29,12 +29,12 @@ public class ExternalInjection {
     return objectID;
   }
 
-  public ExternalInjection setMetadata(Map<String, Object> metadata) {
+  public ExternalGroupKey setMetadata(Map<String, Object> metadata) {
     this.metadata = metadata;
     return this;
   }
 
-  public ExternalInjection putMetadata(String key, Object metadataItem) {
+  public ExternalGroupKey putMetadata(String key, Object metadataItem) {
     if (this.metadata == null) {
       this.metadata = new HashMap<>();
     }
@@ -60,8 +60,8 @@ public class ExternalInjection {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ExternalInjection externalInjection = (ExternalInjection) o;
-    return Objects.equals(this.objectID, externalInjection.objectID) && Objects.equals(this.metadata, externalInjection.metadata);
+    ExternalGroupKey externalGroupKey = (ExternalGroupKey) o;
+    return Objects.equals(this.objectID, externalGroupKey.objectID) && Objects.equals(this.metadata, externalGroupKey.metadata);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class ExternalInjection {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ExternalInjection {\n");
+    sb.append("class ExternalGroupKey {\n");
     sb.append("    objectID: ").append(toIndentedString(objectID)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("}");

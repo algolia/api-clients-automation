@@ -14,5 +14,5 @@ import kotlinx.serialization.json.*
  */
 @Serializable
 public data class ExternalInjectedItem(
-  @SerialName(value = "items") val items: List<ExternalInjection>
+  @SerialName(value = "items") val items: List<ExternalGroupKey>
 ) {}
