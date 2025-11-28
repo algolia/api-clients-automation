@@ -1113,6 +1113,44 @@ void snippetForputComposition3() async {
   // SEPARATOR<
 }
 
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition4() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-compo",
+    composition: Composition(
+      objectID: "my-compo",
+      name: "my composition",
+      sortingStrategy: {
+        'Price-asc': "products-low-to-high",
+        'Price-desc': "products-high-to-low",
+      },
+      behavior: CompositionBehavior(
+        injection: Injection(
+          main: Main(
+            source: CompositionSource(
+              search: CompositionSourceSearch(
+                index: "products",
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the putCompositionRule method.
 //
 // putCompositionRule
@@ -1703,6 +1741,31 @@ void snippetForsearch1() async {
             ],
           ),
         },
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+void snippetForsearch2() async {
+  // >SEPARATOR search search
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    compositionID: "foo",
+    requestBody: RequestBody(
+      params: Params(
+        query: "batman",
+        sortBy: "Price (asc)",
       ),
     ),
   );

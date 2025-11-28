@@ -673,6 +673,46 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `putComposition4`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-compo",
+          composition =
+            Composition(
+              objectID = "my-compo",
+              name = "my composition",
+              sortingStrategy =
+                mapOf(
+                  "Price-asc" to "products-low-to-high",
+                  "Price-desc" to "products-high-to-low",
+                ),
+              behavior =
+                CompositionBehavior(
+                  injection =
+                    Injection(
+                      main =
+                        Main(
+                          source =
+                            CompositionSource(search = CompositionSourceSearch(index = "products"))
+                        )
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-compo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // putCompositionRule
 
   @Test
@@ -1116,6 +1156,23 @@ class CompositionTest {
         assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"params":{"query":"batman"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search2`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          compositionID = "foo",
+          requestBody = RequestBody(params = Params(query = "batman", sortBy = "Price (asc)")),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"params":{"query":"batman","sortBy":"Price (asc)"}}""", it.body)
       },
     )
   }

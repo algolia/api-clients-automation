@@ -1169,6 +1169,40 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("putComposition4") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-compo",
+      composition = Composition(
+        objectID = "my-compo",
+        name = "my composition",
+        sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "products"
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("putCompositionRule") {
     val (client, echo) = testClient()
     val future = client.putCompositionRule(
@@ -1814,6 +1848,30 @@ class CompositionTest extends AnyFunSuite {
     val expectedBody = parse(
       """{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
     )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search2") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("batman"),
+            sortBy = Some("Price (asc)")
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"params":{"query":"batman","sortBy":"Price (asc)"}}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

@@ -1038,6 +1038,42 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition4() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
+      "my-compo",
+      new Composition()
+        .setObjectID("my-compo")
+        .setName("my composition")
+        .setSortingStrategy(
+          new HashMap() {
+            {
+              put("Price-asc", "products-low-to-high");
+              put("Price-desc", "products-high-to-low");
+            }
+          }
+        )
+        .setBehavior(
+          new CompositionBehavior().setInjection(
+            new Injection().setMain(
+              new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+            )
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the putCompositionRule method.
   //
   // putCompositionRule
@@ -1544,6 +1580,26 @@ class SnippetCompositionClient {
             }
           )
       ),
+      Hit.class
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // search
+  void snippetForSearch2() throws Exception {
+    // >SEPARATOR search search
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchResponse response = client.search(
+      "foo",
+      new RequestBody().setParams(new Params().setQuery("batman").setSortBy("Price (asc)")),
       Hit.class
     );
     // >LOG

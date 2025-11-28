@@ -1235,6 +1235,45 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("putComposition")
+  void putCompositionTest4() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-compo",
+        new Composition()
+          .setObjectID("my-compo")
+          .setName("my composition")
+          .setSortingStrategy(
+            new HashMap() {
+              {
+                put("Price-asc", "products-low-to-high");
+                put("Price-desc", "products-high-to-low");
+              }
+            }
+          )
+          .setBehavior(
+            new CompositionBehavior().setInjection(
+              new Injection().setMain(
+                new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+              )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-compo\",\"name\":\"my" +
+          " composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putCompositionRule")
   void putCompositionRuleTest() {
     assertDoesNotThrow(() -> {
@@ -1765,6 +1804,20 @@ class CompositionClientRequestsTests {
         req.body,
         JSONCompareMode.STRICT
       )
+    );
+  }
+
+  @Test
+  @DisplayName("search")
+  void searchTest2() {
+    assertDoesNotThrow(() -> {
+      client.search("foo", new RequestBody().setParams(new Params().setQuery("batman").setSortBy("Price (asc)")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/foo/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}", req.body, JSONCompareMode.STRICT)
     );
   }
 

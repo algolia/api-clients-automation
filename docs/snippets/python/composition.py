@@ -1175,6 +1175,47 @@ def snippet_for_put_composition3():
     # SEPARATOR<
 
 
+def snippet_for_put_composition4():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-compo",
+        composition={
+            "objectID": "my-compo",
+            "name": "my composition",
+            "sortingStrategy": {
+                "Price-asc": "products-low-to-high",
+                "Price-desc": "products-high-to-low",
+            },
+            "behavior": {
+                "injection": {
+                    "main": {
+                        "source": {
+                            "search": {
+                                "index": "products",
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_put_composition_rule():
     """
     Snippet for the putCompositionRule method.
@@ -1790,6 +1831,34 @@ def snippet_for_search1():
                         ],
                     },
                 },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search2():
+    """
+    Snippet for the search method.
+
+    search
+    """
+    # >SEPARATOR search search
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search(
+        composition_id="foo",
+        request_body={
+            "params": {
+                "query": "batman",
+                "sortBy": "Price (asc)",
             },
         },
     )

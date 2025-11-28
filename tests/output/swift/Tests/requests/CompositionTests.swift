@@ -1255,6 +1255,46 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// putComposition
+    func testPutCompositionTest4() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(
+                    injection: Injection(main: CompositionMain(
+                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                    ))
+                ),
+                sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// putCompositionRule
     func testPutCompositionRuleTest() async throws {
         let configuration = try CompositionClientConfiguration(
@@ -1747,6 +1787,36 @@ final class CompositionClientRequestsTests: XCTestCase {
 
         let expectedBodyData = "{\"params\":{\"query\":\"batman\",\"injectedItems\":{\"my-unique-external-group-key\":{\"items\":[{\"objectID\":\"my-object-1\"},{\"objectID\":\"my-object-2\",\"metadata\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}]}}}}"
             .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/foo/run")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search
+    func testSearchTest2() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
+            compositionID: "foo",
+            requestBody: RequestBody(params: CompositionParams(query: "batman", sortBy: "Price (asc)"))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

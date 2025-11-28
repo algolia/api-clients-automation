@@ -1240,6 +1240,44 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition4(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-compo",
+        composition = Composition(
+          objectID = "my-compo",
+          name = "my composition",
+          sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
+          behavior = CompositionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "products"
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the putCompositionRule method.
     *
     * putCompositionRule
@@ -1919,6 +1957,36 @@ class SnippetCompositionClient {
                   )
                 )
               )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the search method.
+    *
+    * search
+    */
+  def snippetForCompositionClientSearch2(): Unit = {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.search(
+        compositionID = "foo",
+        requestBody = RequestBody(
+          params = Some(
+            Params(
+              query = Some("batman"),
+              sortBy = Some("Price (asc)")
             )
           )
         )

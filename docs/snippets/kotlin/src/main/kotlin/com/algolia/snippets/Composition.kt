@@ -696,6 +696,43 @@ class SnippetCompositionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForPutComposition4() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-compo",
+        composition =
+          Composition(
+            objectID = "my-compo",
+            name = "my composition",
+            sortingStrategy =
+              mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
+            behavior =
+              CompositionBehavior(
+                injection =
+                  Injection(
+                    main =
+                      Main(
+                        source =
+                          CompositionSource(search = CompositionSourceSearch(index = "products"))
+                      )
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForPutCompositionRule() {
     // >SEPARATOR putCompositionRule putCompositionRule
     // Initialize the client
@@ -1117,6 +1154,26 @@ class SnippetCompositionClient {
       client.search(
         compositionID = "foo",
         requestBody = RequestBody(params = Params(query = "batman")),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch2() {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        compositionID = "foo",
+        requestBody = RequestBody(params = Params(query = "batman", sortBy = "Price (asc)")),
       )
 
     // >LOG

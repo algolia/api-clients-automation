@@ -925,6 +925,39 @@ def snippet_for_put_composition3
   # SEPARATOR<
 end
 
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition4
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-compo",
+      name: "my composition",
+      sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+      behavior: Algolia::Composition::CompositionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::Main.new(
+            source: Algolia::Composition::CompositionSource.new(
+              search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+            )
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the putCompositionRule method.
 #
 # putCompositionRule
@@ -1410,6 +1443,28 @@ def snippet_for_search1
           )
         }
       )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the search method.
+#
+# search
+def snippet_for_search2
+  # >SEPARATOR search search
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    "foo",
+    Algolia::Composition::RequestBody.new(
+      params: Algolia::Composition::Params.new(query: "batman", sort_by: "Price (asc)")
     )
   )
 
