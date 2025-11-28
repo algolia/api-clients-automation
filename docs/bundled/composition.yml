@@ -86,13 +86,6 @@ info:
 
     Parameters are passed in the request body for POST and PUT requests.
 
-    Query parameters must be
-    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-
-    Non-ASCII characters must be UTF-8 encoded.
-
-    Plus characters (`+`) are interpreted as spaces.
-
 
     ## Response status and errors
 
@@ -8998,63 +8991,65 @@ components:
           If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
       example: highest
       default: highestInjected
+    injection:
+      title: injection
+      type: object
+      additionalProperties: false
+      properties:
+        main:
+          title: main
+          type: object
+          additionalProperties: false
+          properties:
+            source:
+              title: compositionSource
+              type: object
+              additionalProperties: false
+              properties:
+                search:
+                  title: compositionSourceSearch
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    index:
+                      type: string
+                      description: Composition Main Index name.
+                      example: Products
+                    params:
+                      $ref: '#/components/schemas/mainInjectionQueryParameters'
+                  required:
+                    - index
+              required:
+                - search
+          required:
+            - source
+        injectedItems:
+          type: array
+          description: list of injected items of the current Composition.
+          minItems: 0
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/injectedItem'
+        deduplication:
+          title: deduplication
+          type: object
+          additionalProperties: false
+          description: >-
+            Deduplication configures the methods used to resolve duplicate items
+            between main search results and injected group results.
+          properties:
+            positioning:
+              $ref: '#/components/schemas/dedupPositioning'
+          required:
+            - positioning
+      required:
+        - main
     compositionBehavior:
       type: object
       additionalProperties: false
       properties:
         injection:
-          title: injection
-          type: object
-          additionalProperties: false
-          properties:
-            main:
-              title: main
-              type: object
-              additionalProperties: false
-              properties:
-                source:
-                  title: compositionSource
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    search:
-                      title: compositionSourceSearch
-                      type: object
-                      additionalProperties: false
-                      properties:
-                        index:
-                          type: string
-                          description: Composition Main Index name.
-                          example: Products
-                        params:
-                          $ref: '#/components/schemas/mainInjectionQueryParameters'
-                      required:
-                        - index
-                  required:
-                    - search
-              required:
-                - source
-            injectedItems:
-              type: array
-              description: list of injected items of the current Composition.
-              minItems: 0
-              maxItems: 2
-              items:
-                $ref: '#/components/schemas/injectedItem'
-            deduplication:
-              title: deduplication
-              type: object
-              additionalProperties: false
-              description: >-
-                Deduplication configures the methods used to resolve duplicate
-                items between main search results and injected group results.
-              properties:
-                positioning:
-                  $ref: '#/components/schemas/dedupPositioning'
-              required:
-                - positioning
-          required:
-            - main
+          $ref: '#/components/schemas/injection'
       required:
         - injection
     composition:

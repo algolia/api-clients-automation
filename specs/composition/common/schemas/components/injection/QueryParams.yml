@@ -1,0 +1,127 @@
+baseInjectionQueryParameters:
+  title: Composition common query parameters between main and injected items as object
+  type: object
+  additionalProperties: false
+  properties:
+    advancedSyntax:
+      $ref: '../../../params/Search.yml#/advancedSyntax'
+    advancedSyntaxFeatures:
+      $ref: '../../../params/Search.yml#/advancedSyntaxFeatures'
+    allowTyposOnNumericTokens:
+      $ref: '../../../params/Search.yml#/allowTyposOnNumericTokens'
+    alternativesAsExact:
+      $ref: '../../../params/Search.yml#/alternativesAsExact'
+    analytics:
+      $ref: '../../../params/Search.yml#/analytics'
+    attributeCriteriaComputedByMinProximity:
+      $ref: '../../../params/Search.yml#/attributeCriteriaComputedByMinProximity'
+    attributesToHighlight:
+      $ref: '../../../params/Search.yml#/attributesToHighlight'
+    attributesToRetrieve:
+      $ref: '../../../params/Search.yml#/attributesToRetrieve'
+    attributesToSnippet:
+      $ref: '../../../params/Search.yml#/attributesToSnippet'
+    clickAnalytics:
+      $ref: '../../../params/Search.yml#/clickAnalytics'
+    decompoundQuery:
+      $ref: '../../../params/Search.yml#/decompoundQuery'
+    disableExactOnAttributes:
+      $ref: '../../../params/Search.yml#/disableExactOnAttributes'
+    disableTypoToleranceOnAttributes:
+      $ref: '../../../params/Search.yml#/disableTypoToleranceOnAttributes'    
+    distinct:
+      $ref: '../../../params/Search.yml#/distinct'
+    enableABTest:
+      $ref: '../../../params/Search.yml#/enableABTest'
+    enablePersonalization:
+      $ref: '../../../params/Search.yml#/enablePersonalization'
+    enableReRanking:
+      $ref: '../../../params/Search.yml#/enableReRanking'
+    enableRules:
+      $ref: '../../../params/Search.yml#/enableRules'
+    exactOnSingleWordQuery:
+      $ref: '../../../params/Search.yml#/exactOnSingleWordQuery'
+    facetFilters:
+      $ref: '../../../params/Search.yml#/facetFilters'
+    filters:
+      $ref: '../../../params/Search.yml#/filters'
+    getRankingInfo:
+      $ref: '../../../params/Search.yml#/getRankingInfo'
+    highlightPostTag:
+      $ref: '../../../params/Search.yml#/highlightPostTag'
+    highlightPreTag:
+      $ref: '../../../params/Search.yml#/highlightPreTag'
+    ignorePlurals:
+      $ref: '../../../params/Search.yml#/ignorePlurals'
+    maxFacetHits:
+      $ref: '../../../params/Search.yml#/maxFacetHits'
+    minProximity:
+      $ref: '../../../params/Search.yml#/minProximity'
+    minWordSizefor1Typo:
+      $ref: '../../../params/Search.yml#/minWordSizefor1Typo'
+    minWordSizefor2Typos:
+      $ref: '../../../params/Search.yml#/minWordSizefor2Typos'
+    naturalLanguages:
+      $ref: '../../../params/Search.yml#/naturalLanguages'
+    numericFilters:
+      $ref: '../../../params/Search.yml#/numericFilters'
+    optionalFilters:
+      $ref: '../../../params/Search.yml#/optionalFilters'
+    optionalWords:
+      $ref: '../../../params/Search.yml#/optionalWords'
+    percentileComputation:
+      $ref: '../../../params/Search.yml#/percentileComputation'
+    personalizationImpact:
+      $ref: '../../../params/Search.yml#/personalizationImpact'
+    queryLanguages:
+      $ref: '../../../params/Search.yml#/queryLanguages'
+    queryType:
+      $ref: '../../../params/Search.yml#/queryType'
+    removeStopWords:
+      $ref: '../../../params/Search.yml#/removeStopWords'
+    removeWordsIfNoResults:
+      $ref: '../../../params/Search.yml#/removeWordsIfNoResults'
+    replaceSynonymsInHighlight:
+      $ref: '../../../params/Search.yml#/replaceSynonymsInHighlight'
+    responseFields:
+      $ref: '../../../params/Search.yml#/responseFields'
+    restrictHighlightAndSnippetArrays:
+      $ref: '../../../params/Search.yml#/restrictHighlightAndSnippetArrays'
+    restrictSearchableAttributes:
+      $ref: '../../../params/Search.yml#/restrictSearchableAttributes'
+    ruleContexts:
+      $ref: '../../../params/Search.yml#/ruleContexts'
+    snippetEllipsisText:
+      $ref: '../../../params/Search.yml#/snippetEllipsisText'
+    synonyms:
+      $ref: '../../../params/Search.yml#/synonyms'
+    typoTolerance:
+      $ref: '../../../params/Search.yml#/typoTolerance'
+
+mainInjectionQueryParameters:
+  title: Composition Main Injection Query parameters as object
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '#/baseInjectionQueryParameters'
+    - type: object
+      additionalProperties: false
+      properties:
+        facetingAfterDistinct:
+          $ref: '../../../params/Search.yml#/facetingAfterDistinct'
+        facets:
+          $ref: '../../../params/Composition.yml#/facets'
+        hitsPerPage:
+          $ref: '../../../params/Search.yml#/hitsPerPage'
+        maxValuesPerFacet:
+          $ref: '../../../params/Search.yml#/maxValuesPerFacet'
+        renderingContent:
+          $ref: '../../../params/Search.yml#/renderingContent'
+        sortFacetValuesBy:
+          $ref: '../../../params/Search.yml#/sortFacetValuesBy'
+        sumOrFiltersScores:
+          $ref: '../../../params/Search.yml#/sumOrFiltersScores'
+
+injectedItemsQueryParameters:
+  title: Composition injectedItems Query parameters as object
+  $ref: '#/baseInjectionQueryParameters'
