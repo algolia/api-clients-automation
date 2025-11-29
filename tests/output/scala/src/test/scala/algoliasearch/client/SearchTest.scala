@@ -311,6 +311,52 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
+  test("does not retry on success") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6675)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6674)
+            )
+          )
+        )
+        .build()
+    )
+
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/calling/scala"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"message\":\"success server response\"}"))
+    }
+    {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/calling/scala"
+        ),
+        Duration.Inf
+      )
+      assert(parse(write(res)) == parse("{\"message\":\"success server response\"}"))
+    }
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -335,7 +381,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.34.1\).*""".r
+    val regexp = """^Algolia for Scala \(2.35.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

@@ -230,6 +230,45 @@ void main() {
     }
   });
 
+  test('does not retry on success', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6675',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6674',
+              scheme: 'http'),
+        ]));
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "1/test/calling/dart",
+        );
+        expectBody(res, """{"message":"success server response"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "1/test/calling/dart",
+        );
+        expectBody(res, """{"message":"success server response"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

@@ -584,6 +584,30 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the Browse method.
+     *
+     * browse with query string
+     */
+    public function snippetForBrowse3(): void
+    {
+        // >SEPARATOR browse browse with query string
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->browse(
+            '<YOUR_INDEX_NAME>',
+            ['params' => 'foo=bar&cursor=test',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the ClearObjects method.
      *
      * clearObjects

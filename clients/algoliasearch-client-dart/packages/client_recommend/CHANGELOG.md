@@ -1,3 +1,7 @@
+## [1.42.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.41.1...1.42.0)
+
+- [6a48ef151a](https://github.com/algolia/api-clients-automation/commit/6a48ef151a) feat(specs): allow `enablePersonalization` query parameter at run time for Composition API ([#5651](https://github.com/algolia/api-clients-automation/pull/5651)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [1.41.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.41.0...1.41.1)
 
 - [ee5542a32](https://github.com/algolia/api-clients-automation/commit/ee5542a32) fix(specs): Add title values to key oneOfs ([#5581](https://github.com/algolia/api-clients-automation/pull/5581)) by [@gazconroy](https://github.com/gazconroy/)

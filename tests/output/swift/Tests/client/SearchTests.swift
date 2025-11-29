@@ -207,6 +207,34 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
+    /// does not retry on success
+    func testApiTest11() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6675")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6674")!),
+            ]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        do {
+            let response = try await client.customGet(path: "1/test/calling/swift")
+
+            XTCJSONEquals(received: response, expected: "{\"message\":\"success server response\"}")
+        }
+        do {
+            let response = try await client.customGet(path: "1/test/calling/swift")
+
+            XTCJSONEquals(received: response, expected: "{\"message\":\"success server response\"}")
+        }
+    }
+
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
@@ -234,7 +262,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.35.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.36.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

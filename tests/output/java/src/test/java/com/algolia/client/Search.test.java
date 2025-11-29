@@ -310,6 +310,47 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("does not retry on success")
+  void apiTest11() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6675
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6674
+          )
+        ),
+        false
+      )
+    );
+
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("1/test/calling/java");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"message\":\"success server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+    assertDoesNotThrow(() -> {
+      Object res = client.customGet("1/test/calling/java");
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("{\"message\":\"success server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     SearchClient client = createClient();
@@ -337,7 +378,7 @@ class SearchClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.32.1\\).*";
+      String regexp = "^Algolia for Java \\(4.33.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

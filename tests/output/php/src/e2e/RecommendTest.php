@@ -5,10 +5,16 @@
 namespace Algolia\AlgoliaSearch\Test\RequestE2E;
 
 use Algolia\AlgoliaSearch\Api\RecommendClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (getenv('ALGOLIA_APPLICATION_ID')) {
@@ -18,33 +24,9 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
     $dotenv->load();
 }
 
-/**
- * @internal
- */
 #[CoversClass(RecommendClient::class)]
-class RecommendTest extends TestCase
+class RecommendTest extends TestCase 
 {
-    #[TestDox('get recommendations with e2e to check oneOf model')]
-    public function testGetRecommendations1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->getRecommendations(
-            ['requests' => [
-                ['indexName' => 'cts_e2e_browse',
-                    'objectID' => 'Æon Flux',
-                    'model' => 'related-products',
-                    'threshold' => 20.0,
-                    'maxRecommendations' => 2,
-                ],
-            ],
-            ],
-        );
-
-        $expected = json_decode('{"results":[{"exhaustive":{"nbHits":true,"typo":true},"exhaustiveNbHits":true,"exhaustiveTypo":true,"index":"cts_e2e_browse","page":0,"nbHits":2,"nbPages":1,"hitsPerPage":2,"hits":[{"objectID":"The Transformers: The Movie","_highlightResult":{"genres":[{"matchLevel":"none","matchedWords":[],"value":"Animated"},{"matchLevel":"none","matchedWords":[],"value":"Action"},{"matchLevel":"none","matchedWords":[],"value":"Science Fiction"}],"href":{"matchLevel":"none","matchedWords":[],"value":"The_Transformers:_The_Movie"}},"_score":100.0,"cast":["Judd Nelson","Leonard Nimoy","Robert Stack","Orson Welles","Michael Bell","Eric Idle","Chris Latta","Peter Cullen","Frank Welker","Neil Ross","Paul Eiding"],"extract":"The Transformers: The Movie is a 1986 animated science fiction action film based on the Transformers television series. It was released in North America on August 8, 1986, and in the United Kingdom on December 12, 1986. It was co-produced and directed by Nelson Shin, who also produced the television series. The screenplay was written by Ron Friedman, who created Bionic Six a year later.","title":"The Transformers: The Movie","year":1986},{"objectID":"Treasure Planet","_score":90.56,"title":"Treasure Planet","year":2002}]}]}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
@@ -56,12 +38,39 @@ class RecommendTest extends TestCase
 
             return $res;
         }
-
+        
         return $received;
     }
 
     protected function getClient(): RecommendClient
     {
         return RecommendClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY']);
+    }
+
+    #[TestDox('get recommendations with e2e to check oneOf model')]
+    public function testGetRecommendations1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getRecommendations(
+  ["requests" => 
+  [
+  ["indexName" => 
+  "cts_e2e_browse",
+"objectID" => 
+  "Æon Flux",
+"model" => 
+  "related-products",
+"threshold" => 
+  20.0,
+"maxRecommendations" => 
+  2,
+],
+],
+],
+);
+
+        $expected = json_decode('{"results":[{"exhaustive":{"nbHits":true,"typo":true},"exhaustiveNbHits":true,"exhaustiveTypo":true,"index":"cts_e2e_browse","page":0,"nbHits":2,"nbPages":1,"hitsPerPage":2,"hits":[{"objectID":"The Transformers: The Movie","_highlightResult":{"genres":[{"matchLevel":"none","matchedWords":[],"value":"Animated"},{"matchLevel":"none","matchedWords":[],"value":"Action"},{"matchLevel":"none","matchedWords":[],"value":"Science Fiction"}],"href":{"matchLevel":"none","matchedWords":[],"value":"The_Transformers:_The_Movie"}},"_score":100.0,"cast":["Judd Nelson","Leonard Nimoy","Robert Stack","Orson Welles","Michael Bell","Eric Idle","Chris Latta","Peter Cullen","Frank Welker","Neil Ross","Paul Eiding"],"extract":"The Transformers: The Movie is a 1986 animated science fiction action film based on the Transformers television series. It was released in North America on August 8, 1986, and in the United Kingdom on December 12, 1986. It was co-produced and directed by Nelson Shin, who also produced the television series. The screenplay was written by Ron Friedman, who created Bionic Six a year later.","title":"The Transformers: The Movie","year":1986},{"objectID":"Treasure Planet","_score":90.56,"title":"Treasure Planet","year":2002}]}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 }

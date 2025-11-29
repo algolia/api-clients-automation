@@ -5,10 +5,16 @@
 namespace Algolia\AlgoliaSearch\Test\RequestE2E;
 
 use Algolia\AlgoliaSearch\Api\QuerySuggestionsClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Configuration\QuerySuggestionsConfig;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (getenv('ALGOLIA_APPLICATION_ID')) {
@@ -18,25 +24,9 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
     $dotenv->load();
 }
 
-/**
- * @internal
- */
 #[CoversClass(QuerySuggestionsClient::class)]
-class QuerySuggestionsTest extends TestCase
+class QuerySuggestionsTest extends TestCase 
 {
-    #[TestDox('Retrieve QS config e2e')]
-    public function testGetConfig(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->getConfig(
-            'cts_e2e_browse_query_suggestions',
-        );
-
-        $expected = json_decode('{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
@@ -48,12 +38,25 @@ class QuerySuggestionsTest extends TestCase
 
             return $res;
         }
-
+        
         return $received;
     }
 
     protected function getClient(): QuerySuggestionsClient
     {
-        return QuerySuggestionsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
+        return QuerySuggestionsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'],'us' );
+    }
+
+    #[TestDox('Retrieve QS config e2e')]
+    public function testGetConfig(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getConfig(
+  "cts_e2e_browse_query_suggestions",
+);
+
+        $expected = json_decode('{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 }

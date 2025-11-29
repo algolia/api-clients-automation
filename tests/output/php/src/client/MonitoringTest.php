@@ -9,15 +9,14 @@ use Algolia\AlgoliaSearch\Configuration\MonitoringConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Client tests for MonitoringClient.
- *
- * @internal
+ * Client tests for MonitoringClient
  */
 #[CoversClass(MonitoringClient::class)]
 class MonitoringTest extends TestCase implements HttpClientInterface
@@ -26,6 +25,18 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     public const API_KEY = 'test-api-key';
 
     private $recordedRequest;
+
+    /**
+     * @return MonitoringClient
+     */
+    private function createClient($appId, $apiKey): MonitoringClient
+    {
+        $config = MonitoringConfig::create($appId, $apiKey);
+        $clusterHosts = MonitoringClient::getClusterHosts($config);
+        $api = new ApiWrapper($this, $config, $clusterHosts);
+
+        return new MonitoringClient($api, $config);
+    }
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
@@ -41,87 +52,83 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
-    #[TestDox('the user agent contains the latest version')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
+#[TestDox('the user agent contains the latest version')]
     public function test1commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(4.35.0\).*/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(4.36.0\).*/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
     #[TestDox('use the correct host')]
     public function test0parameters(): void
     {
-        $client = $this->createClient(
-            'my-app-id',
-            'my-api-key'
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "my-app-id",
+    "my-api-key"
+);
+$this->assertIsObject($client);
 
-        $client->customDelete(
-            'test',
-        );
-        $this->assertEquals(
-            'status.algolia.com',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->customDelete(
+  "test",
+);
+                    $this->assertEquals(
+                    
+  "status.algolia.com",
 
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = MonitoringClient::createWithConfig(MonitoringConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
+                                    
+$client = MonitoringClient::createWithConfig(MonitoringConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6683"]));
 
-        $res = $client->customGet(
-            'check-api-key/1',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"test-api-key"}',
-            json_encode($res)
-        );
 
-        $client->setClientApiKey(
-            'updated-api-key',
-        );
-
-        $res = $client->customGet(
-            'check-api-key/2',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"updated-api-key"}',
-            json_encode($res)
-        );
-    }
-
-    /**
-     * @param mixed $appId
-     * @param mixed $apiKey
-     */
-    private function createClient($appId, $apiKey): MonitoringClient
-    {
-        $config = MonitoringConfig::create($appId, $apiKey);
-        $clusterHosts = MonitoringClient::getClusterHosts($config);
-        $api = new ApiWrapper($this, $config, $clusterHosts);
-
-        return new MonitoringClient($api, $config);
-    }
+                                                            {
+                $res = $client->customGet(
+  "check-api-key/1",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"test-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                                            {
+                $client->setClientApiKey(
+  "updated-api-key",
+);
+                                }
+                                            {
+                $res = $client->customGet(
+  "check-api-key/2",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"updated-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
 }

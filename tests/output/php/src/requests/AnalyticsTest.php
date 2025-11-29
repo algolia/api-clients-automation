@@ -11,1280 +11,15 @@ use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
-/**
- * @internal
- */
 #[CoversClass(AnalyticsClient::class)]
 class AnalyticsTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
-
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
-    {
-        $this->recordedRequests[] = $request;
-
-        return new Response(200, [], '{}');
-    }
-
-    #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'DELETE',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'parameters with space',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'to be overridden',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'parameters with space',
-                    'and an array' => ['array', 'with spaces',
-                    ],
-                ],
-                'headers' => [
-                    'x-header-1' => 'spaces are left alone',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
-                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'POST',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query2' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","query2":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'isItWorking' => true,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","isItWorking":"true"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => 2,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => ['b and c', 'd',
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [true, true, false,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [1, 2,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'PUT',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getAddToCartRate with minimal parameters')]
-    public function testGetAddToCartRate(): void
-    {
-        $client = $this->getClient();
-        $client->getAddToCartRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/addToCartRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getAddToCartRate with all parameters')]
-    public function testGetAddToCartRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getAddToCartRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/addToCartRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getAverageClickPosition with minimal parameters')]
-    public function testGetAverageClickPosition(): void
-    {
-        $client = $this->getClient();
-        $client->getAverageClickPosition(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/averageClickPosition',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getAverageClickPosition with all parameters')]
-    public function testGetAverageClickPosition1(): void
-    {
-        $client = $this->getClient();
-        $client->getAverageClickPosition(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/averageClickPosition',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getClickPositions with minimal parameters')]
-    public function testGetClickPositions(): void
-    {
-        $client = $this->getClient();
-        $client->getClickPositions(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/positions',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getClickPositions with all parameters')]
-    public function testGetClickPositions1(): void
-    {
-        $client = $this->getClient();
-        $client->getClickPositions(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/positions',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getClickThroughRate with minimal parameters')]
-    public function testGetClickThroughRate(): void
-    {
-        $client = $this->getClient();
-        $client->getClickThroughRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/clickThroughRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getClickThroughRate with all parameters')]
-    public function testGetClickThroughRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getClickThroughRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/clicks/clickThroughRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getConversationRate with minimal parameters')]
-    public function testGetConversionRate(): void
-    {
-        $client = $this->getClient();
-        $client->getConversionRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/conversionRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getConversationRate with all parameters')]
-    public function testGetConversionRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getConversionRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/conversionRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getNoClickRate with minimal parameters')]
-    public function testGetNoClickRate(): void
-    {
-        $client = $this->getClient();
-        $client->getNoClickRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClickRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getNoClickRate with all parameters')]
-    public function testGetNoClickRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getNoClickRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClickRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getNoResultsRate with minimal parameters')]
-    public function testGetNoResultsRate(): void
-    {
-        $client = $this->getClient();
-        $client->getNoResultsRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResultRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getNoResultsRate with all parameters')]
-    public function testGetNoResultsRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getNoResultsRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResultRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getPurchaseRate with minimal parameters')]
-    public function testGetPurchaseRate(): void
-    {
-        $client = $this->getClient();
-        $client->getPurchaseRate(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/purchaseRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getPurchaseRate with all parameters')]
-    public function testGetPurchaseRate1(): void
-    {
-        $client = $this->getClient();
-        $client->getPurchaseRate(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/purchaseRate',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getRevenue with minimal parameters')]
-    public function testGetRevenue(): void
-    {
-        $client = $this->getClient();
-        $client->getRevenue(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/revenue',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getRevenue with all parameters')]
-    public function testGetRevenue1(): void
-    {
-        $client = $this->getClient();
-        $client->getRevenue(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/conversions/revenue',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesCount with minimal parameters')]
-    public function testGetSearchesCount(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesCount(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/count',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesCount with all parameters')]
-    public function testGetSearchesCount1(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesCount(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/count',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesNoClicks with minimal parameters')]
-    public function testGetSearchesNoClicks(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesNoClicks(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClicks',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesNoClicks with all parameters')]
-    public function testGetSearchesNoClicks1(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesNoClicks(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noClicks',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesNoResults with minimal parameters')]
-    public function testGetSearchesNoResults(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesNoResults(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResults',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getSearchesNoResults with all parameters')]
-    public function testGetSearchesNoResults1(): void
-    {
-        $client = $this->getClient();
-        $client->getSearchesNoResults(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches/noResults',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getStatus with minimal parameters')]
-    public function testGetStatus(): void
-    {
-        $client = $this->getClient();
-        $client->getStatus(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/status',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopCountries with minimal parameters')]
-    public function testGetTopCountries(): void
-    {
-        $client = $this->getClient();
-        $client->getTopCountries(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/countries',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopCountries with all parameters')]
-    public function testGetTopCountries1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopCountries(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/countries',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterAttributes with minimal parameters')]
-    public function testGetTopFilterAttributes(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterAttributes(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterAttributes with all parameters')]
-    public function testGetTopFilterAttributes1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterAttributes(
-            'index',
-            'mySearch',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterForAttribute with minimal parameters')]
-    public function testGetTopFilterForAttribute(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterForAttribute(
-            'myAttribute',
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/myAttribute',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterForAttribute with minimal parameters and multiple attributes')]
-    public function testGetTopFilterForAttribute1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterForAttribute(
-            'myAttribute1,myAttribute2',
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/myAttribute1%2CmyAttribute2',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterForAttribute with all parameters')]
-    public function testGetTopFilterForAttribute2(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterForAttribute(
-            'myAttribute',
-            'index',
-            'mySearch',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/myAttribute',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFilterForAttribute with all parameters and multiple attributes')]
-    public function testGetTopFilterForAttribute3(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFilterForAttribute(
-            'myAttribute1,myAttribute2',
-            'index',
-            'mySearch',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/myAttribute1%2CmyAttribute2',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFiltersNoResults with minimal parameters')]
-    public function testGetTopFiltersNoResults(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFiltersNoResults(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/noResults',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopFiltersNoResults with all parameters')]
-    public function testGetTopFiltersNoResults1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopFiltersNoResults(
-            'index',
-            'mySearch',
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/filters/noResults',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopHits with minimal parameters')]
-    public function testGetTopHits(): void
-    {
-        $client = $this->getClient();
-        $client->getTopHits(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/hits',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopHits with all parameters')]
-    public function testGetTopHits1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopHits(
-            'index',
-            'mySearch',
-            true,
-            true,
-            '1999-09-19',
-            '2001-01-01',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/hits',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopSearches with minimal parameters')]
-    public function testGetTopSearches(): void
-    {
-        $client = $this->getClient();
-        $client->getTopSearches(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getTopSearches with all parameters')]
-    public function testGetTopSearches1(): void
-    {
-        $client = $this->getClient();
-        $client->getTopSearches(
-            'index',
-            true,
-            true,
-            '1999-09-19',
-            '2001-01-01',
-            'searchCount',
-            'asc',
-            21,
-            42,
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/searches',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getUsersCount with minimal parameters')]
-    public function testGetUsersCount(): void
-    {
-        $client = $this->getClient();
-        $client->getUsersCount(
-            'index',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/users/count',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('get getUsersCount with all parameters')]
-    public function testGetUsersCount1(): void
-    {
-        $client = $this->getClient();
-        $client->getUsersCount(
-            'index',
-            '1999-09-19',
-            '2001-01-01',
-            'tag',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/users/count',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
-            ],
-        ]);
-    }
 
     protected function assertRequests(array $requests): void
     {
@@ -1327,11 +62,1364 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         }
     }
 
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
+    {
+        $this->recordedRequests[] = $request;
+
+        return new Response(200, [], '{}');
+    }
+
     protected function getClient(): AnalyticsClient
     {
-        $config = AnalyticsConfig::create('appID', 'apiKey', 'us');
+        $config = AnalyticsConfig::create('appID', 'apiKey','us' );
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new AnalyticsClient($api, $config);
+    }
+
+    #[TestDox('allow del method for a custom path with minimal parameters')]
+    public function testCustomDelete(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow del method for a custom path with all parameters')]
+    public function testCustomDelete1(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "DELETE",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with minimal parameters')]
+    public function testCustomGet(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with all parameters')]
+    public function testCustomGet1(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "parameters with space",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions should be escaped too')]
+    public function testCustomGet2(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "to be overridden",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "parameters with space"
+,
+        'and an array' =>   [  "array"
+,  "with spaces"
+]
+,
+    ],
+    'headers' => [
+        'x-header-1' => 'spaces are left alone',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}", true),
+                "headers" => json_decode("{\"x-header-1\":\"spaces are left alone\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with minimal parameters')]
+    public function testCustomPost(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "POST",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with all parameters')]
+    public function testCustomPost1(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "POST",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default query parameters')]
+    public function testCustomPost2(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges query parameters with default ones')]
+    public function testCustomPost3(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query2' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default headers')]
+    public function testCustomPost4(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges headers with default ones')]
+    public function testCustomPost5(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts booleans')]
+    public function testCustomPost6(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'isItWorking' =>   true
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"isItWorking\":\"true\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts integers')]
+    public function testCustomPost7(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   2
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of string')]
+    public function testCustomPost8(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  "b and c"
+,  "d"
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of booleans')]
+    public function testCustomPost9(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  true
+,  true
+,  false
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of integers')]
+    public function testCustomPost10(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  1
+,  2
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with minimal parameters')]
+    public function testCustomPut(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "PUT",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with all parameters')]
+    public function testCustomPut1(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "PUT",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getAddToCartRate with minimal parameters')]
+    public function testGetAddToCartRate(): void
+    {
+        $client = $this->getClient();
+        $client->getAddToCartRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/addToCartRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getAddToCartRate with all parameters')]
+    public function testGetAddToCartRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getAddToCartRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/addToCartRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getAverageClickPosition with minimal parameters')]
+    public function testGetAverageClickPosition(): void
+    {
+        $client = $this->getClient();
+        $client->getAverageClickPosition(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/averageClickPosition",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getAverageClickPosition with all parameters')]
+    public function testGetAverageClickPosition1(): void
+    {
+        $client = $this->getClient();
+        $client->getAverageClickPosition(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/averageClickPosition",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getClickPositions with minimal parameters')]
+    public function testGetClickPositions(): void
+    {
+        $client = $this->getClient();
+        $client->getClickPositions(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/positions",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getClickPositions with all parameters')]
+    public function testGetClickPositions1(): void
+    {
+        $client = $this->getClient();
+        $client->getClickPositions(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/positions",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getClickThroughRate with minimal parameters')]
+    public function testGetClickThroughRate(): void
+    {
+        $client = $this->getClient();
+        $client->getClickThroughRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/clickThroughRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getClickThroughRate with all parameters')]
+    public function testGetClickThroughRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getClickThroughRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/clicks/clickThroughRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getConversationRate with minimal parameters')]
+    public function testGetConversionRate(): void
+    {
+        $client = $this->getClient();
+        $client->getConversionRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/conversionRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getConversationRate with all parameters')]
+    public function testGetConversionRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getConversionRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/conversionRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getNoClickRate with minimal parameters')]
+    public function testGetNoClickRate(): void
+    {
+        $client = $this->getClient();
+        $client->getNoClickRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noClickRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getNoClickRate with all parameters')]
+    public function testGetNoClickRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getNoClickRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noClickRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getNoResultsRate with minimal parameters')]
+    public function testGetNoResultsRate(): void
+    {
+        $client = $this->getClient();
+        $client->getNoResultsRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noResultRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getNoResultsRate with all parameters')]
+    public function testGetNoResultsRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getNoResultsRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noResultRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getPurchaseRate with minimal parameters')]
+    public function testGetPurchaseRate(): void
+    {
+        $client = $this->getClient();
+        $client->getPurchaseRate(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/purchaseRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getPurchaseRate with all parameters')]
+    public function testGetPurchaseRate1(): void
+    {
+        $client = $this->getClient();
+        $client->getPurchaseRate(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/purchaseRate",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getRevenue with minimal parameters')]
+    public function testGetRevenue(): void
+    {
+        $client = $this->getClient();
+        $client->getRevenue(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/revenue",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getRevenue with all parameters')]
+    public function testGetRevenue1(): void
+    {
+        $client = $this->getClient();
+        $client->getRevenue(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/conversions/revenue",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesCount with minimal parameters')]
+    public function testGetSearchesCount(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesCount(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/count",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesCount with all parameters')]
+    public function testGetSearchesCount1(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesCount(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/count",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesNoClicks with minimal parameters')]
+    public function testGetSearchesNoClicks(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesNoClicks(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noClicks",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesNoClicks with all parameters')]
+    public function testGetSearchesNoClicks1(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesNoClicks(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noClicks",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesNoResults with minimal parameters')]
+    public function testGetSearchesNoResults(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesNoResults(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noResults",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getSearchesNoResults with all parameters')]
+    public function testGetSearchesNoResults1(): void
+    {
+        $client = $this->getClient();
+        $client->getSearchesNoResults(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches/noResults",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getStatus with minimal parameters')]
+    public function testGetStatus(): void
+    {
+        $client = $this->getClient();
+        $client->getStatus(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/status",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopCountries with minimal parameters')]
+    public function testGetTopCountries(): void
+    {
+        $client = $this->getClient();
+        $client->getTopCountries(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/countries",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopCountries with all parameters')]
+    public function testGetTopCountries1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopCountries(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/countries",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterAttributes with minimal parameters')]
+    public function testGetTopFilterAttributes(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterAttributes(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterAttributes with all parameters')]
+    public function testGetTopFilterAttributes1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterAttributes(
+  "index",
+
+  "mySearch",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterForAttribute with minimal parameters')]
+    public function testGetTopFilterForAttribute(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterForAttribute(
+  "myAttribute",
+
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/myAttribute",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterForAttribute with minimal parameters and multiple attributes')]
+    public function testGetTopFilterForAttribute1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterForAttribute(
+  "myAttribute1,myAttribute2",
+
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/myAttribute1%2CmyAttribute2",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterForAttribute with all parameters')]
+    public function testGetTopFilterForAttribute2(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterForAttribute(
+  "myAttribute",
+
+  "index",
+
+  "mySearch",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/myAttribute",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFilterForAttribute with all parameters and multiple attributes')]
+    public function testGetTopFilterForAttribute3(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFilterForAttribute(
+  "myAttribute1,myAttribute2",
+
+  "index",
+
+  "mySearch",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/myAttribute1%2CmyAttribute2",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFiltersNoResults with minimal parameters')]
+    public function testGetTopFiltersNoResults(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFiltersNoResults(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/noResults",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopFiltersNoResults with all parameters')]
+    public function testGetTopFiltersNoResults1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopFiltersNoResults(
+  "index",
+
+  "mySearch",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/filters/noResults",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"search\":\"mySearch\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopHits with minimal parameters')]
+    public function testGetTopHits(): void
+    {
+        $client = $this->getClient();
+        $client->getTopHits(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/hits",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopHits with all parameters')]
+    public function testGetTopHits1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopHits(
+  "index",
+
+  "mySearch",
+
+  true,
+
+  true,
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/hits",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopSearches with minimal parameters')]
+    public function testGetTopSearches(): void
+    {
+        $client = $this->getClient();
+        $client->getTopSearches(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getTopSearches with all parameters')]
+    public function testGetTopSearches1(): void
+    {
+        $client = $this->getClient();
+        $client->getTopSearches(
+  "index",
+
+  true,
+
+  true,
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "searchCount",
+
+  "asc",
+
+  21,
+
+  42,
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/searches",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getUsersCount with minimal parameters')]
+    public function testGetUsersCount(): void
+    {
+        $client = $this->getClient();
+        $client->getUsersCount(
+  "index",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/users/count",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('get getUsersCount with all parameters')]
+    public function testGetUsersCount1(): void
+    {
+        $client = $this->getClient();
+        $client->getUsersCount(
+  "index",
+
+  "1999-09-19",
+
+  "2001-01-01",
+
+  "tag",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/users/count",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}", true),
+            ],
+        ]);
     }
 }

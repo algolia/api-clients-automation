@@ -11,1950 +11,15 @@ use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
-/**
- * @internal
- */
 #[CoversClass(IngestionClient::class)]
 class IngestionTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
-
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
-    {
-        $this->recordedRequests[] = $request;
-
-        return new Response(200, [], '{}');
-    }
-
-    #[TestDox('createAuthenticationOAuth')]
-    public function testCreateAuthentication(): void
-    {
-        $client = $this->getClient();
-        $client->createAuthentication(
-            ['type' => 'oauth',
-                'name' => 'authName',
-                'input' => ['url' => 'http://test.oauth',
-                    'client_id' => 'myID',
-                    'client_secret' => 'mySecret',
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createAuthenticationAlgolia')]
-    public function testCreateAuthentication1(): void
-    {
-        $client = $this->getClient();
-        $client->createAuthentication(
-            ['type' => 'algolia',
-                'name' => 'authName',
-                'input' => ['appID' => 'ALGOLIA_APPLICATION_ID',
-                    'apiKey' => 'ALGOLIA_API_KEY',
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"algolia","name":"authName","input":{"appID":"ALGOLIA_APPLICATION_ID","apiKey":"ALGOLIA_API_KEY"}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createDestination')]
-    public function testCreateDestination(): void
-    {
-        $client = $this->getClient();
-        $client->createDestination(
-            ['type' => 'search',
-                'name' => 'destinationName',
-                'input' => ['indexName' => 'full_name______',
-                ],
-                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('with transformationIDs')]
-    public function testCreateDestination1(): void
-    {
-        $client = $this->getClient();
-        $client->createDestination(
-            ['type' => 'search',
-                'name' => 'destinationName',
-                'input' => ['indexName' => 'full_name______',
-                ],
-                'transformationIDs' => [
-                    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"search","name":"destinationName","input":{"indexName":"full_name______"},"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createSource')]
-    public function testCreateSource(): void
-    {
-        $client = $this->getClient();
-        $client->createSource(
-            ['type' => 'commercetools',
-                'name' => 'sourceName',
-                'input' => ['storeKeys' => [
-                    'myStore',
-                ],
-                    'locales' => [
-                        'de',
-                    ],
-                    'url' => 'http://commercetools.com',
-                    'projectKey' => 'keyID',
-                    'productQueryPredicate' => 'masterVariant(attributes(name="Brand" and value="Algolia"))',
-                ],
-                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID","productQueryPredicate":"masterVariant(attributes(name="Brand" and value="Algolia"))"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('push')]
-    public function testCreateSource1(): void
-    {
-        $client = $this->getClient();
-        $client->createSource(
-            ['type' => 'push',
-                'name' => 'pushezpourentrer',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"push","name":"pushezpourentrer"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('task without cron')]
-    public function testCreateTask(): void
-    {
-        $client = $this->getClient();
-        $client->createTask(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationID',
-                'action' => 'replace',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","action":"replace"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('task with cron')]
-    public function testCreateTask1(): void
-    {
-        $client = $this->getClient();
-        $client->createTask(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationID',
-                'cron' => '* * * * *',
-                'action' => 'replace',
-                'notifications' => ['email' => ['enabled' => true,
-                ],
-                ],
-                'policies' => ['criticalThreshold' => 8,
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('task shopify')]
-    public function testCreateTask2(): void
-    {
-        $client = $this->getClient();
-        $client->createTask(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationID',
-                'cron' => '* * * * *',
-                'action' => 'replace',
-                'input' => ['streams' => [
-                    ['name' => 'foo',
-                        'syncMode' => 'incremental',
-                    ],
-                ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createTaskOnDemand')]
-    public function testCreateTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->createTaskV1(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
-                'trigger' => ['type' => 'onDemand',
-                ],
-                'action' => 'replace',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createTaskSchedule')]
-    public function testCreateTaskV11(): void
-    {
-        $client = $this->getClient();
-        $client->createTaskV1(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
-                'trigger' => ['type' => 'schedule',
-                    'cron' => '* * * * *',
-                ],
-                'action' => 'replace',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"schedule","cron":"* * * * *"},"action":"replace"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createTaskSubscription')]
-    public function testCreateTaskV12(): void
-    {
-        $client = $this->getClient();
-        $client->createTaskV1(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
-                'trigger' => ['type' => 'onDemand',
-                ],
-                'action' => 'replace',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('task shopify')]
-    public function testCreateTaskV13(): void
-    {
-        $client = $this->getClient();
-        $client->createTaskV1(
-            ['sourceID' => 'search',
-                'destinationID' => 'destinationName',
-                'trigger' => ['type' => 'onDemand',
-                ],
-                'action' => 'replace',
-                'input' => ['streams' => [
-                    ['name' => 'foo',
-                        'syncMode' => 'incremental',
-                    ],
-                ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('createTransformation')]
-    public function testCreateTransformation(): void
-    {
-        $client = $this->getClient();
-        $client->createTransformation(
-            ['input' => ['code' => 'foo',
-            ],
-                'type' => 'code',
-                'name' => 'bar',
-                'description' => 'baz',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations',
-                'method' => 'POST',
-                'body' => json_decode('{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'DELETE',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'parameters with space',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'to be overridden',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'parameters with space',
-                    'and an array' => ['array', 'with spaces',
-                    ],
-                ],
-                'headers' => [
-                    'x-header-1' => 'spaces are left alone',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
-                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'POST',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query2' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","query2":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'isItWorking' => true,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","isItWorking":"true"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => 2,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => ['b and c', 'd',
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [true, true, false,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [1, 2,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'PUT',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteAuthentication')]
-    public function testDeleteAuthentication(): void
-    {
-        $client = $this->getClient();
-        $client->deleteAuthentication(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteDestination')]
-    public function testDeleteDestination(): void
-    {
-        $client = $this->getClient();
-        $client->deleteDestination(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteSource')]
-    public function testDeleteSource(): void
-    {
-        $client = $this->getClient();
-        $client->deleteSource(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteTask')]
-    public function testDeleteTask(): void
-    {
-        $client = $this->getClient();
-        $client->deleteTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteTaskV1')]
-    public function testDeleteTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->deleteTaskV1(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('deleteTransformation')]
-    public function testDeleteTransformation(): void
-    {
-        $client = $this->getClient();
-        $client->deleteTransformation(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('disableTask')]
-    public function testDisableTask(): void
-    {
-        $client = $this->getClient();
-        $client->disableTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
-                'method' => 'PUT',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    #[TestDox('disableTaskV1')]
-    public function testDisableTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->disableTaskV1(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
-                'method' => 'PUT',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    #[TestDox('enableTask')]
-    public function testEnableTask(): void
-    {
-        $client = $this->getClient();
-        $client->enableTask(
-            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
-                'method' => 'PUT',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    #[TestDox('enableTaskV1')]
-    public function testEnableTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->enableTaskV1(
-            '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
-                'method' => 'PUT',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    #[TestDox('getAuthentication')]
-    public function testGetAuthentication(): void
-    {
-        $client = $this->getClient();
-        $client->getAuthentication(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getDestination')]
-    public function testGetDestination(): void
-    {
-        $client = $this->getClient();
-        $client->getDestination(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getEvent')]
-    public function testGetEvent(): void
-    {
-        $client = $this->getClient();
-        $client->getEvent(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0c',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getRun')]
-    public function testGetRun(): void
-    {
-        $client = $this->getClient();
-        $client->getRun(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getSource')]
-    public function testGetSource(): void
-    {
-        $client = $this->getClient();
-        $client->getSource(
-            '75eeb306-51d3-4e5e-a279-3c92bd8893ac',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getTask')]
-    public function testGetTask(): void
-    {
-        $client = $this->getClient();
-        $client->getTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getTaskV1')]
-    public function testGetTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->getTaskV1(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getTransformation')]
-    public function testGetTransformation(): void
-    {
-        $client = $this->getClient();
-        $client->getTransformation(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getAuthentications')]
-    public function testListAuthentications(): void
-    {
-        $client = $this->getClient();
-        $client->listAuthentications();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getAuthentications with query params')]
-    public function testListAuthentications1(): void
-    {
-        $client = $this->getClient();
-        $client->listAuthentications(
-            2,
-            1,
-            [
-                'basic',
-
-                'algolia',
-            ],
-            [
-                'none',
-            ],
-            'createdAt',
-            'asc',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('getDestinations')]
-    public function testListDestinations(): void
-    {
-        $client = $this->getClient();
-        $client->listDestinations();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('getEvents')]
-    public function testListEvents(): void
-    {
-        $client = $this->getClient();
-        $client->listEvents(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('listRuns')]
-    public function testListRuns(): void
-    {
-        $client = $this->getClient();
-        $client->listRuns();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/runs',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('listSources')]
-    public function testListSources(): void
-    {
-        $client = $this->getClient();
-        $client->listSources();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('listTasks')]
-    public function testListTasks(): void
-    {
-        $client = $this->getClient();
-        $client->listTasks();
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('listTasksV1')]
-    public function testListTasksV1(): void
-    {
-        $client = $this->getClient();
-        $client->listTasksV1();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('listTransformations')]
-    public function testListTransformations(): void
-    {
-        $client = $this->getClient();
-        $client->listTransformations();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('list with every parameters')]
-    public function testListTransformations1(): void
-    {
-        $client = $this->getClient();
-        $client->listTransformations(
-            2,
-            1,
-            'createdAt',
-            'asc',
-            'noCode',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","sort":"createdAt","order":"asc","type":"noCode"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('global push')]
-    public function testPush(): void
-    {
-        $client = $this->getClient();
-        $client->push(
-            'foo',
-            ['action' => 'addObject',
-                'records' => [
-                    ['key' => 'bar',
-                        'foo' => '1',
-                        'objectID' => 'o',
-                    ],
-
-                    ['key' => 'baz',
-                        'foo' => '2',
-                        'objectID' => 'k',
-                    ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/push/foo',
-                'method' => 'POST',
-                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('global push with watch mode')]
-    public function testPush1(): void
-    {
-        $client = $this->getClient();
-        $client->push(
-            'bar',
-            ['action' => 'addObject',
-                'records' => [
-                    ['key' => 'bar',
-                        'foo' => '1',
-                        'objectID' => 'o',
-                    ],
-
-                    ['key' => 'baz',
-                        'foo' => '2',
-                        'objectID' => 'k',
-                    ],
-                ],
-            ],
-            true,
-            'foo',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/push/bar',
-                'method' => 'POST',
-                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
-                'queryParameters' => json_decode('{"watch":"true","referenceIndexName":"foo"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('pushTask')]
-    public function testPushTask(): void
-    {
-        $client = $this->getClient();
-        $client->pushTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['action' => 'addObject',
-                'records' => [
-                    ['key' => 'bar',
-                        'foo' => '1',
-                        'objectID' => 'o',
-                    ],
-
-                    ['key' => 'baz',
-                        'foo' => '2',
-                        'objectID' => 'k',
-                    ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
-                'method' => 'POST',
-                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allows for watch query parameter')]
-    public function testPushTask1(): void
-    {
-        $client = $this->getClient();
-        $client->pushTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['action' => 'addObject',
-                'records' => [
-                    ['key' => 'bar',
-                        'foo' => '1',
-                        'objectID' => 'o',
-                    ],
-
-                    ['key' => 'baz',
-                        'foo' => '2',
-                        'objectID' => 'k',
-                    ],
-                ],
-            ],
-            true,
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push',
-                'method' => 'POST',
-                'body' => json_decode('{"action":"addObject","records":[{"key":"bar","foo":"1","objectID":"o"},{"key":"baz","foo":"2","objectID":"k"}]}'),
-                'queryParameters' => json_decode('{"watch":"true"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('fully replace task without cron')]
-    public function testReplaceTask(): void
-    {
-        $client = $this->getClient();
-        $client->replaceTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['destinationID' => 'destinationID',
-                'action' => 'replace',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PUT',
-                'body' => json_decode('{"destinationID":"destinationID","action":"replace"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('fully replace task with cron')]
-    public function testReplaceTask1(): void
-    {
-        $client = $this->getClient();
-        $client->replaceTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['destinationID' => 'destinationID',
-                'cron' => '* * * * *',
-                'action' => 'replace',
-                'notifications' => ['email' => ['enabled' => true,
-                ],
-                ],
-                'policies' => ['criticalThreshold' => 8,
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PUT',
-                'body' => json_decode('{"destinationID":"destinationID","cron":"* * * * *","action":"replace","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":8}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('fully replace task shopify')]
-    public function testReplaceTask2(): void
-    {
-        $client = $this->getClient();
-        $client->replaceTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['destinationID' => 'destinationID',
-                'cron' => '* * * * *',
-                'action' => 'replace',
-                'input' => ['streams' => [
-                    ['name' => 'foo',
-                        'syncMode' => 'incremental',
-                    ],
-                ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PUT',
-                'body' => json_decode('{"destinationID":"destinationID","cron":"* * * * *","action":"replace","input":{"streams":[{"name":"foo","syncMode":"incremental"}]}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('runSource')]
-    public function testRunSource(): void
-    {
-        $client = $this->getClient();
-        $client->runSource(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['indexToInclude' => [
-                'products_us',
-
-                'products eu',
-            ],
-                'entityIDs' => [
-                    '1234',
-
-                    '5678',
-                ],
-                'entityType' => 'product',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
-                'method' => 'POST',
-                'body' => json_decode('{"indexToInclude":["products_us","products eu"],"entityIDs":["1234","5678"],"entityType":"product"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('runTask')]
-    public function testRunTask(): void
-    {
-        $client = $this->getClient();
-        $client->runTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
-                'method' => 'POST',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('runTaskV1')]
-    public function testRunTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->runTaskV1(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run',
-                'method' => 'POST',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchAuthentications')]
-    public function testSearchAuthentications(): void
-    {
-        $client = $this->getClient();
-        $client->searchAuthentications(
-            ['authenticationIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications/search',
-                'method' => 'POST',
-                'body' => json_decode('{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchDestinations')]
-    public function testSearchDestinations(): void
-    {
-        $client = $this->getClient();
-        $client->searchDestinations(
-            ['destinationIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations/search',
-                'method' => 'POST',
-                'body' => json_decode('{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchSources')]
-    public function testSearchSources(): void
-    {
-        $client = $this->getClient();
-        $client->searchSources(
-            ['sourceIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/search',
-                'method' => 'POST',
-                'body' => json_decode('{"sourceIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchTasks')]
-    public function testSearchTasks(): void
-    {
-        $client = $this->getClient();
-        $client->searchTasks(
-            ['taskIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-
-                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/search',
-                'method' => 'POST',
-                'body' => json_decode('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchTasksV1')]
-    public function testSearchTasksV1(): void
-    {
-        $client = $this->getClient();
-        $client->searchTasksV1(
-            ['taskIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-
-                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/search',
-                'method' => 'POST',
-                'body' => json_decode('{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('searchTransformations')]
-    public function testSearchTransformations(): void
-    {
-        $client = $this->getClient();
-        $client->searchTransformations(
-            ['transformationIDs' => [
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-
-                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
-
-                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/search',
-                'method' => 'POST',
-                'body' => json_decode('{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('triggerDockerSourceDiscover')]
-    public function testTriggerDockerSourceDiscover(): void
-    {
-        $client = $this->getClient();
-        $client->triggerDockerSourceDiscover(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
-                'method' => 'POST',
-                'body' => json_decode(''),
-            ],
-        ]);
-    }
-
-    #[TestDox('tryTransformation')]
-    public function testTryTransformation(): void
-    {
-        $client = $this->getClient();
-        $client->tryTransformation(
-            ['type' => 'code',
-                'input' => ['code' => 'foo',
-                ],
-                'sampleRecord' => ['bar' => 'baz',
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/try',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('with authentications')]
-    public function testTryTransformation1(): void
-    {
-        $client = $this->getClient();
-        $client->tryTransformation(
-            ['type' => 'code',
-                'input' => ['code' => 'foo',
-                ],
-                'sampleRecord' => ['bar' => 'baz',
-                ],
-                'authentications' => [
-                    ['type' => 'oauth',
-                        'name' => 'authName',
-                        'input' => ['url' => 'http://test.oauth',
-                            'client_id' => 'myID',
-                            'client_secret' => 'mySecret',
-                        ],
-                    ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/try',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('tryTransformationBeforeUpdate')]
-    public function testTryTransformationBeforeUpdate(): void
-    {
-        $client = $this->getClient();
-        $client->tryTransformationBeforeUpdate(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['type' => 'code',
-                'input' => ['code' => 'foo',
-                ],
-                'sampleRecord' => ['bar' => 'baz',
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('existing with authentications')]
-    public function testTryTransformationBeforeUpdate1(): void
-    {
-        $client = $this->getClient();
-        $client->tryTransformationBeforeUpdate(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['type' => 'code',
-                'input' => ['code' => 'foo',
-                ],
-                'sampleRecord' => ['bar' => 'baz',
-                ],
-                'authentications' => [
-                    ['type' => 'oauth',
-                        'name' => 'authName',
-                        'input' => ['url' => 'http://test.oauth',
-                            'client_id' => 'myID',
-                            'client_secret' => 'mySecret',
-                        ],
-                    ],
-                ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"code","input":{"code":"foo"},"sampleRecord":{"bar":"baz"},"authentications":[{"type":"oauth","name":"authName","input":{"url":"http://test.oauth","client_id":"myID","client_secret":"mySecret"}}]}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateAuthentication')]
-    public function testUpdateAuthentication(): void
-    {
-        $client = $this->getClient();
-        $client->updateAuthentication(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['name' => 'newName',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PATCH',
-                'body' => json_decode('{"name":"newName"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateDestination')]
-    public function testUpdateDestination(): void
-    {
-        $client = $this->getClient();
-        $client->updateDestination(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['name' => 'newName',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PATCH',
-                'body' => json_decode('{"name":"newName"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateSource')]
-    public function testUpdateSource(): void
-    {
-        $client = $this->getClient();
-        $client->updateSource(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['name' => 'newName',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PATCH',
-                'body' => json_decode('{"name":"newName"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateTask')]
-    public function testUpdateTask(): void
-    {
-        $client = $this->getClient();
-        $client->updateTask(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['enabled' => false,
-                'cron' => '* * * * *',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PATCH',
-                'body' => json_decode('{"enabled":false,"cron":"* * * * *"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateTaskV1')]
-    public function testUpdateTaskV1(): void
-    {
-        $client = $this->getClient();
-        $client->updateTaskV1(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['enabled' => false,
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PATCH',
-                'body' => json_decode('{"enabled":false}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('updateTransformation')]
-    public function testUpdateTransformation(): void
-    {
-        $client = $this->getClient();
-        $client->updateTransformation(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['input' => ['code' => 'foo',
-            ],
-                'type' => 'code',
-                'name' => 'bar',
-                'description' => 'baz',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-                'method' => 'PUT',
-                'body' => json_decode('{"input":{"code":"foo"},"type":"code","name":"bar","description":"baz"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('validateSource')]
-    public function testValidateSource(): void
-    {
-        $client = $this->getClient();
-        $client->validateSource(
-            ['type' => 'commercetools',
-                'name' => 'sourceName',
-                'input' => ['storeKeys' => [
-                    'myStore',
-                ],
-                    'locales' => [
-                        'de',
-                    ],
-                    'url' => 'http://commercetools.com',
-                    'projectKey' => 'keyID',
-                ],
-                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/validate',
-                'method' => 'POST',
-                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('validateSourceBeforeUpdate')]
-    public function testValidateSourceBeforeUpdate(): void
-    {
-        $client = $this->getClient();
-        $client->validateSourceBeforeUpdate(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            ['name' => 'newName',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate',
-                'method' => 'POST',
-                'body' => json_decode('{"name":"newName"}'),
-            ],
-        ]);
-    }
 
     protected function assertRequests(array $requests): void
     {
@@ -1997,11 +62,2135 @@ class IngestionTest extends TestCase implements HttpClientInterface
         }
     }
 
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
+    {
+        $this->recordedRequests[] = $request;
+
+        return new Response(200, [], '{}');
+    }
+
     protected function getClient(): IngestionClient
     {
-        $config = IngestionConfig::create('appID', 'apiKey', 'us');
+        $config = IngestionConfig::create('appID', 'apiKey','us' );
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new IngestionClient($api, $config);
+    }
+
+    #[TestDox('createAuthenticationOAuth')]
+    public function testCreateAuthentication(): void
+    {
+        $client = $this->getClient();
+        $client->createAuthentication(
+  ["type" => 
+  "oauth",
+"name" => 
+  "authName",
+"input" => 
+  ["url" => 
+  "http://test.oauth",
+"client_id" => 
+  "myID",
+"client_secret" => 
+  "mySecret",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}"),
+            ],
+        ]);
+    }
+    #[TestDox('createAuthenticationAlgolia')]
+    public function testCreateAuthentication1(): void
+    {
+        $client = $this->getClient();
+        $client->createAuthentication(
+  ["type" => 
+  "algolia",
+"name" => 
+  "authName",
+"input" => 
+  ["appID" => 
+  "ALGOLIA_APPLICATION_ID",
+"apiKey" => 
+  "ALGOLIA_API_KEY",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"algolia\",\"name\":\"authName\",\"input\":{\"appID\":\"ALGOLIA_APPLICATION_ID\",\"apiKey\":\"ALGOLIA_API_KEY\"}}"),
+            ],
+        ]);
+    }
+    #[TestDox('createDestination')]
+    public function testCreateDestination(): void
+    {
+        $client = $this->getClient();
+        $client->createDestination(
+  ["type" => 
+  "search",
+"name" => 
+  "destinationName",
+"input" => 
+  ["indexName" => 
+  "full_name______",
+],
+"authenticationID" => 
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('with transformationIDs')]
+    public function testCreateDestination1(): void
+    {
+        $client = $this->getClient();
+        $client->createDestination(
+  ["type" => 
+  "search",
+"name" => 
+  "destinationName",
+"input" => 
+  ["indexName" => 
+  "full_name______",
+],
+"transformationIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"search\",\"name\":\"destinationName\",\"input\":{\"indexName\":\"full_name______\"},\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('createSource')]
+    public function testCreateSource(): void
+    {
+        $client = $this->getClient();
+        $client->createSource(
+  ["type" => 
+  "commercetools",
+"name" => 
+  "sourceName",
+"input" => 
+  ["storeKeys" => 
+  [
+  "myStore",
+],
+"locales" => 
+  [
+  "de",
+],
+"url" => 
+  "http://commercetools.com",
+"projectKey" => 
+  "keyID",
+"productQueryPredicate" => 
+  "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
+],
+"authenticationID" => 
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\",\"productQueryPredicate\":\"masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('push')]
+    public function testCreateSource1(): void
+    {
+        $client = $this->getClient();
+        $client->createSource(
+  ["type" => 
+  "push",
+"name" => 
+  "pushezpourentrer",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"push\",\"name\":\"pushezpourentrer\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('task without cron')]
+    public function testCreateTask(): void
+    {
+        $client = $this->getClient();
+        $client->createTask(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationID",
+"action" => 
+  "replace",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"action\":\"replace\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('task with cron')]
+    public function testCreateTask1(): void
+    {
+        $client = $this->getClient();
+        $client->createTask(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationID",
+"cron" => 
+  "* * * * *",
+"action" => 
+  "replace",
+"notifications" => 
+  ["email" => 
+  ["enabled" => 
+  true,
+],
+],
+"policies" => 
+  ["criticalThreshold" => 
+  8,
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"),
+            ],
+        ]);
+    }
+    #[TestDox('task shopify')]
+    public function testCreateTask2(): void
+    {
+        $client = $this->getClient();
+        $client->createTask(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationID",
+"cron" => 
+  "* * * * *",
+"action" => 
+  "replace",
+"input" => 
+  ["streams" => 
+  [
+  ["name" => 
+  "foo",
+"syncMode" => 
+  "incremental",
+],
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"),
+            ],
+        ]);
+    }
+    #[TestDox('createTaskOnDemand')]
+    public function testCreateTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationName",
+"trigger" => 
+  ["type" => 
+  "onDemand",
+],
+"action" => 
+  "replace",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('createTaskSchedule')]
+    public function testCreateTaskV11(): void
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationName",
+"trigger" => 
+  ["type" => 
+  "schedule",
+"cron" => 
+  "* * * * *",
+],
+"action" => 
+  "replace",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"schedule\",\"cron\":\"* * * * *\"},\"action\":\"replace\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('createTaskSubscription')]
+    public function testCreateTaskV12(): void
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationName",
+"trigger" => 
+  ["type" => 
+  "onDemand",
+],
+"action" => 
+  "replace",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('task shopify')]
+    public function testCreateTaskV13(): void
+    {
+        $client = $this->getClient();
+        $client->createTaskV1(
+  ["sourceID" => 
+  "search",
+"destinationID" => 
+  "destinationName",
+"trigger" => 
+  ["type" => 
+  "onDemand",
+],
+"action" => 
+  "replace",
+"input" => 
+  ["streams" => 
+  [
+  ["name" => 
+  "foo",
+"syncMode" => 
+  "incremental",
+],
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceID\":\"search\",\"destinationID\":\"destinationName\",\"trigger\":{\"type\":\"onDemand\"},\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"),
+            ],
+        ]);
+    }
+    #[TestDox('createTransformation')]
+    public function testCreateTransformation(): void
+    {
+        $client = $this->getClient();
+        $client->createTransformation(
+  ["input" => 
+  ["code" => 
+  "foo",
+],
+"type" => 
+  "code",
+"name" => 
+  "bar",
+"description" => 
+  "baz",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations",
+                "method" => "POST",
+                "body" => json_decode("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow del method for a custom path with minimal parameters')]
+    public function testCustomDelete(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow del method for a custom path with all parameters')]
+    public function testCustomDelete1(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "DELETE",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with minimal parameters')]
+    public function testCustomGet(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with all parameters')]
+    public function testCustomGet1(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "parameters with space",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions should be escaped too')]
+    public function testCustomGet2(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "to be overridden",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "parameters with space"
+,
+        'and an array' =>   [  "array"
+,  "with spaces"
+]
+,
+    ],
+    'headers' => [
+        'x-header-1' => 'spaces are left alone',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}", true),
+                "headers" => json_decode("{\"x-header-1\":\"spaces are left alone\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with minimal parameters')]
+    public function testCustomPost(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "POST",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with all parameters')]
+    public function testCustomPost1(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "POST",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default query parameters')]
+    public function testCustomPost2(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges query parameters with default ones')]
+    public function testCustomPost3(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query2' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default headers')]
+    public function testCustomPost4(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges headers with default ones')]
+    public function testCustomPost5(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts booleans')]
+    public function testCustomPost6(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'isItWorking' =>   true
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"isItWorking\":\"true\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts integers')]
+    public function testCustomPost7(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   2
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of string')]
+    public function testCustomPost8(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  "b and c"
+,  "d"
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of booleans')]
+    public function testCustomPost9(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  true
+,  true
+,  false
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of integers')]
+    public function testCustomPost10(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  1
+,  2
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with minimal parameters')]
+    public function testCustomPut(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "PUT",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with all parameters')]
+    public function testCustomPut1(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "PUT",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('deleteAuthentication')]
+    public function testDeleteAuthentication(): void
+    {
+        $client = $this->getClient();
+        $client->deleteAuthentication(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('deleteDestination')]
+    public function testDeleteDestination(): void
+    {
+        $client = $this->getClient();
+        $client->deleteDestination(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('deleteSource')]
+    public function testDeleteSource(): void
+    {
+        $client = $this->getClient();
+        $client->deleteSource(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('deleteTask')]
+    public function testDeleteTask(): void
+    {
+        $client = $this->getClient();
+        $client->deleteTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('deleteTaskV1')]
+    public function testDeleteTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->deleteTaskV1(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('deleteTransformation')]
+    public function testDeleteTransformation(): void
+    {
+        $client = $this->getClient();
+        $client->deleteTransformation(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('disableTask')]
+    public function testDisableTask(): void
+    {
+        $client = $this->getClient();
+        $client->disableTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable",
+                "method" => "PUT",
+                "body" => json_decode(""),
+            ],
+        ]);
+    }
+    #[TestDox('disableTaskV1')]
+    public function testDisableTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->disableTaskV1(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable",
+                "method" => "PUT",
+                "body" => json_decode(""),
+            ],
+        ]);
+    }
+    #[TestDox('enableTask')]
+    public function testEnableTask(): void
+    {
+        $client = $this->getClient();
+        $client->enableTask(
+  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable",
+                "method" => "PUT",
+                "body" => json_decode(""),
+            ],
+        ]);
+    }
+    #[TestDox('enableTaskV1')]
+    public function testEnableTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->enableTaskV1(
+  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable",
+                "method" => "PUT",
+                "body" => json_decode(""),
+            ],
+        ]);
+    }
+    #[TestDox('getAuthentication')]
+    public function testGetAuthentication(): void
+    {
+        $client = $this->getClient();
+        $client->getAuthentication(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getDestination')]
+    public function testGetDestination(): void
+    {
+        $client = $this->getClient();
+        $client->getDestination(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getEvent')]
+    public function testGetEvent(): void
+    {
+        $client = $this->getClient();
+        $client->getEvent(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getRun')]
+    public function testGetRun(): void
+    {
+        $client = $this->getClient();
+        $client->getRun(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getSource')]
+    public function testGetSource(): void
+    {
+        $client = $this->getClient();
+        $client->getSource(
+  "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getTask')]
+    public function testGetTask(): void
+    {
+        $client = $this->getClient();
+        $client->getTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getTaskV1')]
+    public function testGetTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->getTaskV1(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getTransformation')]
+    public function testGetTransformation(): void
+    {
+        $client = $this->getClient();
+        $client->getTransformation(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getAuthentications')]
+    public function testListAuthentications(): void
+    {
+        $client = $this->getClient();
+        $client->listAuthentications();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getAuthentications with query params')]
+    public function testListAuthentications1(): void
+    {
+        $client = $this->getClient();
+        $client->listAuthentications(
+  2,
+
+  1,
+
+  [
+  "basic",
+
+  "algolia",
+],
+
+  [
+  "none",
+],
+
+  "createdAt",
+
+  "asc",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('getDestinations')]
+    public function testListDestinations(): void
+    {
+        $client = $this->getClient();
+        $client->listDestinations();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('getEvents')]
+    public function testListEvents(): void
+    {
+        $client = $this->getClient();
+        $client->listEvents(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('listRuns')]
+    public function testListRuns(): void
+    {
+        $client = $this->getClient();
+        $client->listRuns();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/runs",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('listSources')]
+    public function testListSources(): void
+    {
+        $client = $this->getClient();
+        $client->listSources();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('listTasks')]
+    public function testListTasks(): void
+    {
+        $client = $this->getClient();
+        $client->listTasks();
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('listTasksV1')]
+    public function testListTasksV1(): void
+    {
+        $client = $this->getClient();
+        $client->listTasksV1();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('listTransformations')]
+    public function testListTransformations(): void
+    {
+        $client = $this->getClient();
+        $client->listTransformations();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('list with every parameters')]
+    public function testListTransformations1(): void
+    {
+        $client = $this->getClient();
+        $client->listTransformations(
+  2,
+
+  1,
+
+  "createdAt",
+
+  "asc",
+
+  "noCode",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"itemsPerPage\":\"2\",\"page\":\"1\",\"sort\":\"createdAt\",\"order\":\"asc\",\"type\":\"noCode\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('global push')]
+    public function testPush(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+  "foo",
+
+  ["action" => 
+  "addObject",
+"records" => 
+  [
+  ["key" => 
+  "bar",
+"foo" => 
+  "1",
+"objectID" => 
+  "o",
+],
+
+  ["key" => 
+  "baz",
+"foo" => 
+  "2",
+"objectID" => 
+  "k",
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/push/foo",
+                "method" => "POST",
+                "body" => json_decode("{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"),
+            ],
+        ]);
+    }
+    #[TestDox('global push with watch mode')]
+    public function testPush1(): void
+    {
+        $client = $this->getClient();
+        $client->push(
+  "bar",
+
+  ["action" => 
+  "addObject",
+"records" => 
+  [
+  ["key" => 
+  "bar",
+"foo" => 
+  "1",
+"objectID" => 
+  "o",
+],
+
+  ["key" => 
+  "baz",
+"foo" => 
+  "2",
+"objectID" => 
+  "k",
+],
+],
+],
+
+  true,
+
+  "foo",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/push/bar",
+                "method" => "POST",
+                "body" => json_decode("{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"),
+                "queryParameters" => json_decode("{\"watch\":\"true\",\"referenceIndexName\":\"foo\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('pushTask')]
+    public function testPushTask(): void
+    {
+        $client = $this->getClient();
+        $client->pushTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["action" => 
+  "addObject",
+"records" => 
+  [
+  ["key" => 
+  "bar",
+"foo" => 
+  "1",
+"objectID" => 
+  "o",
+],
+
+  ["key" => 
+  "baz",
+"foo" => 
+  "2",
+"objectID" => 
+  "k",
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push",
+                "method" => "POST",
+                "body" => json_decode("{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"),
+            ],
+        ]);
+    }
+    #[TestDox('allows for watch query parameter')]
+    public function testPushTask1(): void
+    {
+        $client = $this->getClient();
+        $client->pushTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["action" => 
+  "addObject",
+"records" => 
+  [
+  ["key" => 
+  "bar",
+"foo" => 
+  "1",
+"objectID" => 
+  "o",
+],
+
+  ["key" => 
+  "baz",
+"foo" => 
+  "2",
+"objectID" => 
+  "k",
+],
+],
+],
+
+  true,
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/push",
+                "method" => "POST",
+                "body" => json_decode("{\"action\":\"addObject\",\"records\":[{\"key\":\"bar\",\"foo\":\"1\",\"objectID\":\"o\"},{\"key\":\"baz\",\"foo\":\"2\",\"objectID\":\"k\"}]}"),
+                "queryParameters" => json_decode("{\"watch\":\"true\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('fully replace task without cron')]
+    public function testReplaceTask(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["destinationID" => 
+  "destinationID",
+"action" => 
+  "replace",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PUT",
+                "body" => json_decode("{\"destinationID\":\"destinationID\",\"action\":\"replace\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('fully replace task with cron')]
+    public function testReplaceTask1(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["destinationID" => 
+  "destinationID",
+"cron" => 
+  "* * * * *",
+"action" => 
+  "replace",
+"notifications" => 
+  ["email" => 
+  ["enabled" => 
+  true,
+],
+],
+"policies" => 
+  ["criticalThreshold" => 
+  8,
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PUT",
+                "body" => json_decode("{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"notifications\":{\"email\":{\"enabled\":true}},\"policies\":{\"criticalThreshold\":8}}"),
+            ],
+        ]);
+    }
+    #[TestDox('fully replace task shopify')]
+    public function testReplaceTask2(): void
+    {
+        $client = $this->getClient();
+        $client->replaceTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["destinationID" => 
+  "destinationID",
+"cron" => 
+  "* * * * *",
+"action" => 
+  "replace",
+"input" => 
+  ["streams" => 
+  [
+  ["name" => 
+  "foo",
+"syncMode" => 
+  "incremental",
+],
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PUT",
+                "body" => json_decode("{\"destinationID\":\"destinationID\",\"cron\":\"* * * * *\",\"action\":\"replace\",\"input\":{\"streams\":[{\"name\":\"foo\",\"syncMode\":\"incremental\"}]}}"),
+            ],
+        ]);
+    }
+    #[TestDox('runSource')]
+    public function testRunSource(): void
+    {
+        $client = $this->getClient();
+        $client->runSource(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["indexToInclude" => 
+  [
+  "products_us",
+
+  "products eu",
+],
+"entityIDs" => 
+  [
+  "1234",
+
+  "5678",
+],
+"entityType" => 
+  "product",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run",
+                "method" => "POST",
+                "body" => json_decode("{\"indexToInclude\":[\"products_us\",\"products eu\"],\"entityIDs\":[\"1234\",\"5678\"],\"entityType\":\"product\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('runTask')]
+    public function testRunTask(): void
+    {
+        $client = $this->getClient();
+        $client->runTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run",
+                "method" => "POST",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('runTaskV1')]
+    public function testRunTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->runTaskV1(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/run",
+                "method" => "POST",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchAuthentications')]
+    public function testSearchAuthentications(): void
+    {
+        $client = $this->getClient();
+        $client->searchAuthentications(
+  ["authenticationIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications/search",
+                "method" => "POST",
+                "body" => json_decode("{\"authenticationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchDestinations')]
+    public function testSearchDestinations(): void
+    {
+        $client = $this->getClient();
+        $client->searchDestinations(
+  ["destinationIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations/search",
+                "method" => "POST",
+                "body" => json_decode("{\"destinationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchSources')]
+    public function testSearchSources(): void
+    {
+        $client = $this->getClient();
+        $client->searchSources(
+  ["sourceIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/search",
+                "method" => "POST",
+                "body" => json_decode("{\"sourceIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchTasks')]
+    public function testSearchTasks(): void
+    {
+        $client = $this->getClient();
+        $client->searchTasks(
+  ["taskIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+
+  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/search",
+                "method" => "POST",
+                "body" => json_decode("{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchTasksV1')]
+    public function testSearchTasksV1(): void
+    {
+        $client = $this->getClient();
+        $client->searchTasksV1(
+  ["taskIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+
+  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/search",
+                "method" => "POST",
+                "body" => json_decode("{\"taskIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('searchTransformations')]
+    public function testSearchTransformations(): void
+    {
+        $client = $this->getClient();
+        $client->searchTransformations(
+  ["transformationIDs" => 
+  [
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+
+  "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/search",
+                "method" => "POST",
+                "body" => json_decode("{\"transformationIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}"),
+            ],
+        ]);
+    }
+    #[TestDox('triggerDockerSourceDiscover')]
+    public function testTriggerDockerSourceDiscover(): void
+    {
+        $client = $this->getClient();
+        $client->triggerDockerSourceDiscover(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover",
+                "method" => "POST",
+                "body" => json_decode(""),
+            ],
+        ]);
+    }
+    #[TestDox('tryTransformation')]
+    public function testTryTransformation(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformation(
+  ["type" => 
+  "code",
+"input" => 
+  ["code" => 
+  "foo",
+],
+"sampleRecord" => 
+  ["bar" => 
+  "baz",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/try",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"),
+            ],
+        ]);
+    }
+    #[TestDox('with authentications')]
+    public function testTryTransformation1(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformation(
+  ["type" => 
+  "code",
+"input" => 
+  ["code" => 
+  "foo",
+],
+"sampleRecord" => 
+  ["bar" => 
+  "baz",
+],
+"authentications" => 
+  [
+  ["type" => 
+  "oauth",
+"name" => 
+  "authName",
+"input" => 
+  ["url" => 
+  "http://test.oauth",
+"client_id" => 
+  "myID",
+"client_secret" => 
+  "mySecret",
+],
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/try",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"),
+            ],
+        ]);
+    }
+    #[TestDox('tryTransformationBeforeUpdate')]
+    public function testTryTransformationBeforeUpdate(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["type" => 
+  "code",
+"input" => 
+  ["code" => 
+  "foo",
+],
+"sampleRecord" => 
+  ["bar" => 
+  "baz",
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"}}"),
+            ],
+        ]);
+    }
+    #[TestDox('existing with authentications')]
+    public function testTryTransformationBeforeUpdate1(): void
+    {
+        $client = $this->getClient();
+        $client->tryTransformationBeforeUpdate(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["type" => 
+  "code",
+"input" => 
+  ["code" => 
+  "foo",
+],
+"sampleRecord" => 
+  ["bar" => 
+  "baz",
+],
+"authentications" => 
+  [
+  ["type" => 
+  "oauth",
+"name" => 
+  "authName",
+"input" => 
+  ["url" => 
+  "http://test.oauth",
+"client_id" => 
+  "myID",
+"client_secret" => 
+  "mySecret",
+],
+],
+],
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f/try",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"code\",\"input\":{\"code\":\"foo\"},\"sampleRecord\":{\"bar\":\"baz\"},\"authentications\":[{\"type\":\"oauth\",\"name\":\"authName\",\"input\":{\"url\":\"http://test.oauth\",\"client_id\":\"myID\",\"client_secret\":\"mySecret\"}}]}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateAuthentication')]
+    public function testUpdateAuthentication(): void
+    {
+        $client = $this->getClient();
+        $client->updateAuthentication(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["name" => 
+  "newName",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PATCH",
+                "body" => json_decode("{\"name\":\"newName\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateDestination')]
+    public function testUpdateDestination(): void
+    {
+        $client = $this->getClient();
+        $client->updateDestination(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["name" => 
+  "newName",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PATCH",
+                "body" => json_decode("{\"name\":\"newName\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateSource')]
+    public function testUpdateSource(): void
+    {
+        $client = $this->getClient();
+        $client->updateSource(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["name" => 
+  "newName",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PATCH",
+                "body" => json_decode("{\"name\":\"newName\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateTask')]
+    public function testUpdateTask(): void
+    {
+        $client = $this->getClient();
+        $client->updateTask(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["enabled" => 
+  false,
+"cron" => 
+  "* * * * *",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PATCH",
+                "body" => json_decode("{\"enabled\":false,\"cron\":\"* * * * *\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateTaskV1')]
+    public function testUpdateTaskV1(): void
+    {
+        $client = $this->getClient();
+        $client->updateTaskV1(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["enabled" => 
+  false,
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PATCH",
+                "body" => json_decode("{\"enabled\":false}"),
+            ],
+        ]);
+    }
+    #[TestDox('updateTransformation')]
+    public function testUpdateTransformation(): void
+    {
+        $client = $this->getClient();
+        $client->updateTransformation(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["input" => 
+  ["code" => 
+  "foo",
+],
+"type" => 
+  "code",
+"name" => 
+  "bar",
+"description" => 
+  "baz",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "method" => "PUT",
+                "body" => json_decode("{\"input\":{\"code\":\"foo\"},\"type\":\"code\",\"name\":\"bar\",\"description\":\"baz\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('validateSource')]
+    public function testValidateSource(): void
+    {
+        $client = $this->getClient();
+        $client->validateSource(
+  ["type" => 
+  "commercetools",
+"name" => 
+  "sourceName",
+"input" => 
+  ["storeKeys" => 
+  [
+  "myStore",
+],
+"locales" => 
+  [
+  "de",
+],
+"url" => 
+  "http://commercetools.com",
+"projectKey" => 
+  "keyID",
+],
+"authenticationID" => 
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/validate",
+                "method" => "POST",
+                "body" => json_decode("{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}"),
+            ],
+        ]);
+    }
+    #[TestDox('validateSourceBeforeUpdate')]
+    public function testValidateSourceBeforeUpdate(): void
+    {
+        $client = $this->getClient();
+        $client->validateSourceBeforeUpdate(
+  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+
+  ["name" => 
+  "newName",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate",
+                "method" => "POST",
+                "body" => json_decode("{\"name\":\"newName\"}"),
+            ],
+        ]);
     }
 }

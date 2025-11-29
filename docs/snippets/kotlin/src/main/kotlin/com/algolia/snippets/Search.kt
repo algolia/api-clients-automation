@@ -546,6 +546,26 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForBrowse3() {
+    // >SEPARATOR browse browse with query string
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.browse(
+        indexName = "<YOUR_INDEX_NAME>",
+        browseParams = SearchParamsString(params = "foo=bar&cursor=test"),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForClearObjects() {
     // >SEPARATOR clearObjects default
     // Initialize the client

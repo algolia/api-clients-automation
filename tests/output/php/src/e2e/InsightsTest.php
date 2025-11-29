@@ -5,10 +5,16 @@
 namespace Algolia\AlgoliaSearch\Test\RequestE2E;
 
 use Algolia\AlgoliaSearch\Api\InsightsClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Configuration\InsightsConfig;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (getenv('ALGOLIA_APPLICATION_ID')) {
@@ -18,53 +24,9 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
     $dotenv->load();
 }
 
-/**
- * @internal
- */
 #[CoversClass(InsightsClient::class)]
-class InsightsTest extends TestCase
+class InsightsTest extends TestCase 
 {
-    #[TestDox('Many events type')]
-    public function testPushEvents1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->pushEvents(
-            ['events' => [
-                ['eventType' => 'conversion',
-                    'eventName' => 'Product Purchased',
-                    'index' => 'products',
-                    'userToken' => 'user-123456',
-                    'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1763596800000,
-                    'objectIDs' => [
-                        '9780545139700',
-
-                        '9780439784542',
-                    ],
-                    'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
-                ],
-
-                ['eventType' => 'view',
-                    'eventName' => 'Product Detail Page Viewed',
-                    'index' => 'products',
-                    'userToken' => 'user-123456',
-                    'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1763596800000,
-                    'objectIDs' => [
-                        '9780545139700',
-
-                        '9780439784542',
-                    ],
-                ],
-            ],
-            ],
-        );
-
-        $expected = json_decode('{"message":"OK","status":200}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
@@ -76,12 +38,69 @@ class InsightsTest extends TestCase
 
             return $res;
         }
-
+        
         return $received;
     }
 
     protected function getClient(): InsightsClient
     {
-        return InsightsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
+        return InsightsClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'],'us' );
+    }
+
+    #[TestDox('Many events type')]
+    public function testPushEvents1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->pushEvents(
+  ["events" => 
+  [
+  ["eventType" => 
+  "conversion",
+"eventName" => 
+  "Product Purchased",
+"index" => 
+  "products",
+"userToken" => 
+  "user-123456",
+"authenticatedUserToken" => 
+  "user-123456",
+"timestamp" => 
+  1764374400000,
+"objectIDs" => 
+  [
+  "9780545139700",
+
+  "9780439784542",
+],
+"queryID" => 
+  "43b15df305339e827f0ac0bdc5ebcaa7",
+],
+
+  ["eventType" => 
+  "view",
+"eventName" => 
+  "Product Detail Page Viewed",
+"index" => 
+  "products",
+"userToken" => 
+  "user-123456",
+"authenticatedUserToken" => 
+  "user-123456",
+"timestamp" => 
+  1764374400000,
+"objectIDs" => 
+  [
+  "9780545139700",
+
+  "9780439784542",
+],
+],
+],
+],
+);
+
+        $expected = json_decode('{"message":"OK","status":200}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 }

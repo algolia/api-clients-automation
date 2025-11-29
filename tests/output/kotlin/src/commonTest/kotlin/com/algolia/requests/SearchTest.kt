@@ -531,6 +531,23 @@ class SearchTest {
     )
   }
 
+  @Test
+  fun `browse with query string3`() = runTest {
+    client.runTest(
+      call = {
+        browse(
+          indexName = "indexName",
+          browseParams = SearchParamsString(params = "foo=bar&cursor=test"),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/indexName/browse".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"params":"foo=bar&cursor=test"}""", it.body)
+      },
+    )
+  }
+
   // clearObjects
 
   @Test

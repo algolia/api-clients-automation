@@ -375,6 +375,53 @@ func TestSearchapi10(t *testing.T) {
 	require.JSONEq(t, `{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}`, string(rawBody))
 }
 
+// does not retry on success.
+func TestSearchapi11(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6675", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6674", call.IsReadWrite),
+			},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"1/test/calling/go"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"message":"success server response"}`, string(rawBody))
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"1/test/calling/go"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"message":"success server response"}`, string(rawBody))
+	}
+}
+
 // calls api with correct user agent.
 func TestSearchcommonApi0(t *testing.T) {
 	var (
@@ -408,7 +455,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.32.0\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.33.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.

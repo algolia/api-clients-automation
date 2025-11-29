@@ -11,527 +11,15 @@ use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
-/**
- * @internal
- */
 #[CoversClass(PersonalizationClient::class)]
 class PersonalizationTest extends TestCase implements HttpClientInterface
 {
     private $recordedRequests = [];
-
-    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
-    {
-        $this->recordedRequests[] = $request;
-
-        return new Response(200, [], '{}');
-    }
-
-    #[TestDox('allow del method for a custom path with minimal parameters')]
-    public function testCustomDelete(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow del method for a custom path with all parameters')]
-    public function testCustomDelete1(): void
-    {
-        $client = $this->getClient();
-        $client->customDelete(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'DELETE',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with minimal parameters')]
-    public function testCustomGet(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('allow get method for a custom path with all parameters')]
-    public function testCustomGet1(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'parameters with space',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions should be escaped too')]
-    public function testCustomGet2(): void
-    {
-        $client = $this->getClient();
-        $client->customGet(
-            'test/all',
-            ['query' => 'to be overridden',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'parameters with space',
-                    'and an array' => ['array', 'with spaces',
-                    ],
-                ],
-                'headers' => [
-                    'x-header-1' => 'spaces are left alone',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
-                'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with minimal parameters')]
-    public function testCustomPost(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'POST',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow post method for a custom path with all parameters')]
-    public function testCustomPost1(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'POST',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default query parameters')]
-    public function testCustomPost2(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges query parameters with default ones')]
-    public function testCustomPost3(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'query2' => 'myQueryParameter',
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","query2":"myQueryParameter"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions can override default headers')]
-    public function testCustomPost4(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions merges headers with default ones')]
-    public function testCustomPost5(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'headers' => [
-                    'x-algolia-api-key' => 'ALGOLIA_API_KEY',
-                ],
-            ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-                'headers' => json_decode('{"x-algolia-api-key":"ALGOLIA_API_KEY"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts booleans')]
-    public function testCustomPost6(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'isItWorking' => true,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","isItWorking":"true"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts integers')]
-    public function testCustomPost7(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => 2,
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of string')]
-    public function testCustomPost8(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => ['b and c', 'd',
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of booleans')]
-    public function testCustomPost9(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [true, true, false,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('requestOptions queryParameters accepts list of integers')]
-    public function testCustomPost10(): void
-    {
-        $client = $this->getClient();
-        $client->customPost(
-            'test/requestOptions',
-            ['query' => 'parameters',
-            ],
-            ['facet' => 'filters',
-            ],
-            [
-                'queryParameters' => [
-                    'myParam' => [1, 2,
-                    ],
-                ], ]
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/requestOptions',
-                'method' => 'POST',
-                'body' => json_decode('{"facet":"filters"}'),
-                'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with minimal parameters')]
-    public function testCustomPut(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/minimal',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/minimal',
-                'method' => 'PUT',
-                'body' => json_decode('{}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('allow put method for a custom path with all parameters')]
-    public function testCustomPut1(): void
-    {
-        $client = $this->getClient();
-        $client->customPut(
-            'test/all',
-            ['query' => 'parameters',
-            ],
-            ['body' => 'parameters',
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/test/all',
-                'method' => 'PUT',
-                'body' => json_decode('{"body":"parameters"}'),
-                'queryParameters' => json_decode('{"query":"parameters"}', true),
-            ],
-        ]);
-    }
-
-    #[TestDox('delete deleteUserProfile')]
-    public function testDeleteUserProfile(): void
-    {
-        $client = $this->getClient();
-        $client->deleteUserProfile(
-            'UserToken',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/profiles/UserToken',
-                'method' => 'DELETE',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('get getPersonalizationStrategy')]
-    public function testGetPersonalizationStrategy(): void
-    {
-        $client = $this->getClient();
-        $client->getPersonalizationStrategy();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/strategies/personalization',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('get getUserTokenProfile')]
-    public function testGetUserTokenProfile(): void
-    {
-        $client = $this->getClient();
-        $client->getUserTokenProfile(
-            'UserToken',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/profiles/personalization/UserToken',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('set setPersonalizationStrategy')]
-    public function testSetPersonalizationStrategy(): void
-    {
-        $client = $this->getClient();
-        $client->setPersonalizationStrategy(
-            ['eventsScoring' => [
-                ['score' => 42,
-                    'eventName' => 'Algolia',
-                    'eventType' => 'click',
-                ],
-            ],
-                'facetsScoring' => [
-                    ['score' => 42,
-                        'facetName' => 'Event',
-                    ],
-                ],
-                'personalizationImpact' => 42,
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/strategies/personalization',
-                'method' => 'POST',
-                'body' => json_decode('{"eventsScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
-            ],
-        ]);
-    }
 
     protected function assertRequests(array $requests): void
     {
@@ -574,11 +62,563 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
         }
     }
 
+    public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
+    {
+        $this->recordedRequests[] = $request;
+
+        return new Response(200, [], '{}');
+    }
+
     protected function getClient(): PersonalizationClient
     {
-        $config = PersonalizationConfig::create('appID', 'apiKey', 'us');
+        $config = PersonalizationConfig::create('appID', 'apiKey','us' );
         $api = new ApiWrapper($this, $config, ClusterHosts::create('127.0.0.1'));
 
         return new PersonalizationClient($api, $config);
+    }
+
+    #[TestDox('allow del method for a custom path with minimal parameters')]
+    public function testCustomDelete(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow del method for a custom path with all parameters')]
+    public function testCustomDelete1(): void
+    {
+        $client = $this->getClient();
+        $client->customDelete(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "DELETE",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with minimal parameters')]
+    public function testCustomGet(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('allow get method for a custom path with all parameters')]
+    public function testCustomGet1(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "parameters with space",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions should be escaped too')]
+    public function testCustomGet2(): void
+    {
+        $client = $this->getClient();
+        $client->customGet(
+  "test/all",
+
+  ["query" => 
+  "to be overridden",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "parameters with space"
+,
+        'and an array' =>   [  "array"
+,  "with spaces"
+]
+,
+    ],
+    'headers' => [
+        'x-header-1' => 'spaces are left alone',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "GET",
+                "body" => null,
+                "queryParameters" => json_decode("{\"query\":\"parameters%20with%20space\",\"and%20an%20array\":\"array%2Cwith%20spaces\"}", true),
+                "headers" => json_decode("{\"x-header-1\":\"spaces are left alone\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with minimal parameters')]
+    public function testCustomPost(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "POST",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow post method for a custom path with all parameters')]
+    public function testCustomPost1(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "POST",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default query parameters')]
+    public function testCustomPost2(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges query parameters with default ones')]
+    public function testCustomPost3(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'query2' =>   "myQueryParameter"
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"query2\":\"myQueryParameter\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions can override default headers')]
+    public function testCustomPost4(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions merges headers with default ones')]
+    public function testCustomPost5(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+
+    'headers' => [
+        'x-algolia-api-key' => 'ALGOLIA_API_KEY',
+    ],
+  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+                "headers" => json_decode("{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts booleans')]
+    public function testCustomPost6(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'isItWorking' =>   true
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"isItWorking\":\"true\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts integers')]
+    public function testCustomPost7(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   2
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of string')]
+    public function testCustomPost8(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  "b and c"
+,  "d"
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"b%20and%20c%2Cd\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of booleans')]
+    public function testCustomPost9(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  true
+,  true
+,  false
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"true%2Ctrue%2Cfalse\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('requestOptions queryParameters accepts list of integers')]
+    public function testCustomPost10(): void
+    {
+        $client = $this->getClient();
+        $client->customPost(
+  "test/requestOptions",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["facet" => 
+  "filters",
+],
+ [
+    'queryParameters' => [
+        'myParam' =>   [  1
+,  2
+]
+,
+    ],  ]);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/requestOptions",
+                "method" => "POST",
+                "body" => json_decode("{\"facet\":\"filters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\",\"myParam\":\"1%2C2\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with minimal parameters')]
+    public function testCustomPut(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/minimal",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/minimal",
+                "method" => "PUT",
+                "body" => json_decode("{}"),
+            ],
+        ]);
+    }
+    #[TestDox('allow put method for a custom path with all parameters')]
+    public function testCustomPut1(): void
+    {
+        $client = $this->getClient();
+        $client->customPut(
+  "test/all",
+
+  ["query" => 
+  "parameters",
+],
+
+  ["body" => 
+  "parameters",
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/test/all",
+                "method" => "PUT",
+                "body" => json_decode("{\"body\":\"parameters\"}"),
+                "queryParameters" => json_decode("{\"query\":\"parameters\"}", true),
+            ],
+        ]);
+    }
+    #[TestDox('delete deleteUserProfile')]
+    public function testDeleteUserProfile(): void
+    {
+        $client = $this->getClient();
+        $client->deleteUserProfile(
+  "UserToken",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/profiles/UserToken",
+                "method" => "DELETE",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('get getPersonalizationStrategy')]
+    public function testGetPersonalizationStrategy(): void
+    {
+        $client = $this->getClient();
+        $client->getPersonalizationStrategy();
+
+        $this->assertRequests([
+            [
+                "path" => "/1/strategies/personalization",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('get getUserTokenProfile')]
+    public function testGetUserTokenProfile(): void
+    {
+        $client = $this->getClient();
+        $client->getUserTokenProfile(
+  "UserToken",
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/profiles/personalization/UserToken",
+                "method" => "GET",
+                "body" => null,
+            ],
+        ]);
+    }
+    #[TestDox('set setPersonalizationStrategy')]
+    public function testSetPersonalizationStrategy(): void
+    {
+        $client = $this->getClient();
+        $client->setPersonalizationStrategy(
+  ["eventsScoring" => 
+  [
+  ["score" => 
+  42,
+"eventName" => 
+  "Algolia",
+"eventType" => 
+  "click",
+],
+],
+"facetsScoring" => 
+  [
+  ["score" => 
+  42,
+"facetName" => 
+  "Event",
+],
+],
+"personalizationImpact" => 
+  42,
+],
+);
+
+        $this->assertRequests([
+            [
+                "path" => "/1/strategies/personalization",
+                "method" => "POST",
+                "body" => json_decode("{\"eventsScoring\":[{\"score\":42,\"eventName\":\"Algolia\",\"eventType\":\"click\"}],\"facetsScoring\":[{\"score\":42,\"facetName\":\"Event\"}],\"personalizationImpact\":42}"),
+            ],
+        ]);
     }
 }
