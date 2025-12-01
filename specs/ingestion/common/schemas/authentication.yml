@@ -206,6 +206,7 @@ AuthAlgoliaInsightsPartial:
         This field is `null` in the API response.
 
 AuthGoogleServiceAccount:
+  title: Google
   type: object
   description: Credentials for authenticating with a Google service account, such as BigQuery.
   additionalProperties: false
@@ -225,6 +226,7 @@ AuthGoogleServiceAccount:
     - privateKey
 
 AuthBasic:
+  title: Basic
   type: object
   description: Credentials for authenticating with user name and password.
   additionalProperties: false
@@ -243,6 +245,7 @@ AuthBasic:
     - password
 
 AuthAPIKey:
+  title: API key
   type: object
   description: Credentials for authenticating with an API key.
   additionalProperties: false
@@ -256,6 +259,7 @@ AuthAPIKey:
     - key
 
 AuthOAuth:
+  title: OAuth 2.0
   type: object
   description: Credentials for authenticating with OAuth 2.0.
   additionalProperties: false
@@ -283,6 +287,7 @@ AuthOAuth:
     - client_secret
 
 AuthAlgolia:
+  title: Algolia
   type: object
   additionalProperties: false
   description: Credentials for authenticating with Algolia.
@@ -300,12 +305,14 @@ AuthAlgolia:
     - apiKey
 
 AuthSecrets:
+  title: 'Key:value'
   type: object
   description: A key:value authentication for your transformations.
   additionalProperties:
     type: string
 
 AuthAlgoliaInsights:
+  title: Algolia Insights
   type: object
   additionalProperties: false
   description: Credentials for authenticating with the Algolia Insights API.
