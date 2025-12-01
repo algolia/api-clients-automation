@@ -5343,9 +5343,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:9.6.0":
-  version: 9.6.0
-  resolution: "execa@npm:9.6.0"
+"execa@npm:9.6.1":
+  version: 9.6.1
+  resolution: "execa@npm:9.6.1"
   dependencies:
     "@sindresorhus/merge-streams": "npm:^4.0.0"
     cross-spawn: "npm:^7.0.6"
@@ -5359,7 +5359,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     strip-final-newline: "npm:^4.0.0"
     yoctocolors: "npm:^2.1.1"
-  checksum: 10/53443be93d847ff5b52d31ed3714f77aab764fb6c1d72dc7019214ab1cb1a69888e2158ba846426a8ea51443c110fe7a86de61ffb9ee5687b00120fbd739b8a4
+  checksum: 10/d0f7a2185152379f8772f6d780b188f2728a95b9a68d1a897f58805d7ba6bd55eaa5e128cb66a274251a6b5e4d9388332b1417bd7d46c25e020e4e55725cf79e
   languageName: node
   linkType: hard
 
@@ -8592,7 +8592,7 @@ __metadata:
     commander: "npm:14.0.2"
     crc: "npm:4.3.2"
     esbuild: "npm:0.27.0"
-    execa: "npm:9.6.0"
+    execa: "npm:9.6.1"
     express: "npm:5.1.0"
     folder-hash: "npm:4.1.1"
     fs-extra: "npm:11.3.2"
