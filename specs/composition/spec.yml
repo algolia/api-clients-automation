@@ -136,6 +136,8 @@ paths:
     $ref: 'paths/compositions/composition.yml'
   /1/compositions/*/batch:
     $ref: 'paths/compositions/batch.yml'
+  /1/compositions/{compositionID}/sortingStrategy:
+    $ref: 'paths/compositions/updateSortingStrategy.yml'
 
   # ##########################################
   # ### Manage Composition Rules Endpoints ###
