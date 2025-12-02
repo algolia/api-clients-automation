@@ -1723,6 +1723,9 @@ void main() {
                     anchoring: Anchoring.fromJson("contains"),
                     pattern: "harry",
                   ),
+                  Condition(
+                    sortBy: "price-low-to-high",
+                  ),
                 ],
                 consequence: CompositionRuleConsequence(
                   behavior: CompositionBehavior(
@@ -1762,7 +1765,7 @@ void main() {
         expectPath(request.path, '/1/compositions/my-compo/rules/batch');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}""");
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}""");
       },
     ),
   );

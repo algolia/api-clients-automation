@@ -1216,7 +1216,10 @@ class TestCompositionClient < Test::Unit::TestCase
               algolia_object_id: "rule-with-deduplication",
               description: "my description",
               enabled: true,
-              conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+              conditions: [
+                Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+                Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
+              ],
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
                 behavior: Algolia::Composition::CompositionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
@@ -1251,7 +1254,7 @@ class TestCompositionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
+        "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"sortBy\":\"price-low-to-high\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
       ),
       JSON.parse(req.body)
     )

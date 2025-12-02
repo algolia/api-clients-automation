@@ -3906,6 +3906,18 @@ components:
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
           example: genre:comedy
+        sortBy:
+          type: string
+          description: >
+            Sort criteria that trigger the rule.
+
+
+            You can trigger composition rules based on the selected sorting
+            strategy set by the parameter `sortBy`.
+
+            The rule will trigger if the value passed to `sortBy` matches the
+            one defined in the condition.
+          example: price-low-to-high
     timeRange:
       type: object
       additionalProperties: false

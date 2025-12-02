@@ -1336,6 +1336,9 @@ class CompositionTest extends TestCase implements HttpClientInterface
                             ['anchoring' => 'contains',
                                 'pattern' => 'harry',
                             ],
+
+                            ['sortBy' => 'price-low-to-high',
+                            ],
                         ],
                         'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
                         ],
@@ -1365,7 +1368,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/my-compo/rules/batch',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}'),
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}'),
             ],
         ]);
     }

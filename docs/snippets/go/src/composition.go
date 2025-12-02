@@ -1490,7 +1490,7 @@ func SnippetForSaveRulesOfComposition3() {
 			[]composition.RulesMultipleBatchRequest{
 				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
 					composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetSortBy("price-low-to-high")}).SetConsequence(
 						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
 							composition.NewEmptyCompositionBehavior().SetInjection(
 								composition.NewEmptyInjection().SetMain(

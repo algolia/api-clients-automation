@@ -1485,7 +1485,12 @@ class SnippetCompositionClient {
                 .setObjectID("rule-with-deduplication")
                 .setDescription("my description")
                 .setEnabled(true)
-                .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                .setConditions(
+                  Arrays.asList(
+                    new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
+                    new Condition().setSortBy("price-low-to-high")
+                  )
+                )
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
                     new CompositionBehavior().setInjection(

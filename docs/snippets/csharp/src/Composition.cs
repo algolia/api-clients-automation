@@ -1866,6 +1866,7 @@ public class SnippetCompositionClient
                     Anchoring = Enum.Parse<Anchoring>("Contains"),
                     Pattern = "harry",
                   },
+                  new Condition { SortBy = "price-low-to-high" },
                 },
                 Consequence = new CompositionRuleConsequence
                 {

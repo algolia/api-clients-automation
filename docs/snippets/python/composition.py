@@ -1728,6 +1728,9 @@ def snippet_for_save_rules3():
                                 "anchoring": "contains",
                                 "pattern": "harry",
                             },
+                            {
+                                "sortBy": "price-low-to-high",
+                            },
                         ],
                         "consequence": {
                             "behavior": {

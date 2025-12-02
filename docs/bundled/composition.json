@@ -4133,6 +4133,11 @@
             "type": "string",
             "description": "Filters that trigger the rule.\n\nYou can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.\nYou can use `filters` on its own or combine it with the `pattern` parameter.\n",
             "example": "genre:comedy"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Sort criteria that trigger the rule.\n\nYou can trigger composition rules based on the selected sorting strategy set by the parameter `sortBy`.\nThe rule will trigger if the value passed to `sortBy` matches the one defined in the condition.\n",
+            "example": "price-low-to-high"
           }
         }
       },

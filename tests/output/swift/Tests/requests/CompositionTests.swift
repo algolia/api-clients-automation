@@ -1685,7 +1685,10 @@ final class CompositionClientRequestsTests: XCTestCase {
                 action: CompositionAction.upsert,
                 body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                     objectID: "rule-with-deduplication",
-                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    conditions: [
+                        CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
+                        CompositionCondition(sortBy: "price-low-to-high"),
+                    ],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(
                             source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
@@ -1710,7 +1713,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
+        let expectedBodyData = "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"sortBy\":\"price-low-to-high\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

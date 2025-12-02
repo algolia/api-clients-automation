@@ -1512,6 +1512,9 @@ class SnippetCompositionClient
                             ['anchoring' => 'contains',
                                 'pattern' => 'harry',
                             ],
+
+                            ['sortBy' => 'price-low-to-high',
+                            ],
                         ],
                         'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
                         ],

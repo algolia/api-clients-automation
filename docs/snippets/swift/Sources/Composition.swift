@@ -1168,7 +1168,10 @@ final class CompositionClientSnippet {
                 action: CompositionAction.upsert,
                 body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                     objectID: "rule-with-deduplication",
-                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    conditions: [
+                        CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
+                        CompositionCondition(sortBy: "price-low-to-high"),
+                    ],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(
                             source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))

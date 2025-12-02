@@ -1837,6 +1837,9 @@ class SnippetCompositionClient {
                     Condition(
                       anchoring = Some(Anchoring.withName("contains")),
                       pattern = Some("harry")
+                    ),
+                    Condition(
+                      sortBy = Some("price-low-to-high")
                     )
                   ),
                   consequence = CompositionRuleConsequence(

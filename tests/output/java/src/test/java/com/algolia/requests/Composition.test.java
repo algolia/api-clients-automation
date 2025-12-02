@@ -1698,7 +1698,12 @@ class CompositionClientRequestsTests {
                   .setObjectID("rule-with-deduplication")
                   .setDescription("my description")
                   .setEnabled(true)
-                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                  .setConditions(
+                    Arrays.asList(
+                      new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
+                      new Condition().setSortBy("price-low-to-high")
+                    )
+                  )
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
                       new CompositionBehavior().setInjection(
@@ -1730,7 +1735,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
-          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
+          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"sortBy\":\"price-low-to-high\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )

@@ -45,10 +45,15 @@ import algoliasearch.composition.Anchoring._
   *   Filters that trigger the rule. You can add add filters using the syntax `facet:value` so that the rule is
   *   triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern`
   *   parameter.
+  * @param sortBy
+  *   Sort criteria that trigger the rule. You can trigger composition rules based on the selected sorting strategy set
+  *   by the parameter `sortBy`. The rule will trigger if the value passed to `sortBy` matches the one defined in the
+  *   condition.
   */
 case class Condition(
     pattern: Option[String] = scala.None,
     anchoring: Option[Anchoring] = scala.None,
     context: Option[String] = scala.None,
-    filters: Option[String] = scala.None
+    filters: Option[String] = scala.None,
+    sortBy: Option[String] = scala.None
 )

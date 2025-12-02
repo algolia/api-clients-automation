@@ -1357,7 +1357,10 @@ def snippet_for_save_rules3
             algolia_object_id: "rule-with-deduplication",
             description: "my description",
             enabled: true,
-            conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+            conditions: [
+              Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+              Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
+            ],
             consequence: Algolia::Composition::CompositionRuleConsequence.new(
               behavior: Algolia::Composition::CompositionBehavior.new(
                 injection: Algolia::Composition::Injection.new(

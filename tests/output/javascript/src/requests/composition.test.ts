@@ -1259,7 +1259,7 @@ describe('saveRules', () => {
               objectID: 'rule-with-deduplication',
               description: 'my description',
               enabled: true,
-              conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+              conditions: [{ anchoring: 'contains', pattern: 'harry' }, { sortBy: 'price-low-to-high' }],
               consequence: {
                 behavior: {
                   injection: {
@@ -1292,7 +1292,7 @@ describe('saveRules', () => {
             objectID: 'rule-with-deduplication',
             description: 'my description',
             enabled: true,
-            conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+            conditions: [{ anchoring: 'contains', pattern: 'harry' }, { sortBy: 'price-low-to-high' }],
             consequence: {
               behavior: {
                 injection: {

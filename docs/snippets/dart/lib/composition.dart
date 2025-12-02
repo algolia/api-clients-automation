@@ -1642,6 +1642,9 @@ void snippetForsaveRules3() async {
                 anchoring: Anchoring.fromJson("contains"),
                 pattern: "harry",
               ),
+              Condition(
+                sortBy: "price-low-to-high",
+              ),
             ],
             consequence: CompositionRuleConsequence(
               behavior: CompositionBehavior(
