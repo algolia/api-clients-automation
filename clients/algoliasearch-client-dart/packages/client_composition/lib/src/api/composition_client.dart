@@ -683,6 +683,42 @@ final class CompositionClient implements ApiClient {
     );
   }
 
+  /// Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [compositionID] Unique Composition ObjectID.
+  /// * [requestBody]
+  /// * [requestOptions] additional request configuration.
+  Future<TaskIDResponse> updateSortingStrategyComposition({
+    required String compositionID,
+    required Map<String, String> requestBody,
+    RequestOptions? requestOptions,
+  }) async {
+    assert(
+      compositionID.isNotEmpty,
+      'Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.',
+    );
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/compositions/{compositionID}/sortingStrategy'.replaceAll(
+          '{' r'compositionID' '}',
+          Uri.encodeComponent(compositionID.toString())),
+      body: requestBody,
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskIDResponse, TaskIDResponse>(
+      response,
+      'TaskIDResponse',
+      growable: true,
+    );
+  }
+
   @override
   void dispose() => _retryStrategy.dispose();
 }
