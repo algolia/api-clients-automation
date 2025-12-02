@@ -1587,7 +1587,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}'
+              --data '{"params":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -1932,7 +1932,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}}'
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}}'
   /1/compositions:
     get:
       tags:
@@ -6725,6 +6725,12 @@ components:
       default: {}
       x-categories:
         - Retail Media Network
+      example:
+        my-group-key:
+          - objectID: my-object-1
+            metadata:
+              my-field: my-value
+          - objectID: my-object-2
     insideBoundingBoxArray:
       type: array
       items:
