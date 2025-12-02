@@ -334,6 +334,9 @@
                 {
                   "anchoring": "contains",
                   "pattern": "harry"
+                },
+                {
+                  "sortBy": "price-low-to-high"
                 }
               ],
               "consequence": {
@@ -384,6 +387,9 @@
                 {
                   "anchoring": "contains",
                   "pattern": "harry"
+                },
+                {
+                  "sortBy": "price-low-to-high"
                 }
               ],
               "consequence": {
