@@ -1,3 +1,9 @@
+## [2.35.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.35.0...2.35.1)
+
+- [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
+- [d6bde0f0c](https://github.com/algolia/api-clients-automation/commit/d6bde0f0c) chore(scripts): remove component from jira ticket ([#5680](https://github.com/algolia/api-clients-automation/pull/5680)) by [@millotp](https://github.com/millotp/)
+- [65480ee21](https://github.com/algolia/api-clients-automation/commit/65480ee21) fix(specs): Comp API overview is not accurate for `Parameters` section ([#5685](https://github.com/algolia/api-clients-automation/pull/5685)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [2.35.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.34.1...2.35.0)
 
 - [5b042c47af](https://github.com/algolia/api-clients-automation/commit/5b042c47af) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)

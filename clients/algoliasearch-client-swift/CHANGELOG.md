@@ -1,3 +1,8 @@
+## [9.36.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.36.0...9.36.1)
+
+- [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
+- [d6bde0f0c](https://github.com/algolia/api-clients-automation/commit/d6bde0f0c) chore(scripts): remove component from jira ticket ([#5680](https://github.com/algolia/api-clients-automation/pull/5680)) by [@millotp](https://github.com/millotp/)
+
 ## [9.36.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.35.0...9.36.0)
 
 - [4b2cd6b577](https://github.com/algolia/api-clients-automation/commit/4b2cd6b577) fix(swift): make response and disjunctiveFacets public in SearchDisjunctiveFacetingResponse ([#5647](https://github.com/algolia/api-clients-automation/pull/5647)) by [@Fluf22](https://github.com/Fluf22/)

@@ -1,3 +1,9 @@
+## [4.36.1](https://github.com/algolia/algoliasearch-client-php/compare/4.36.0...4.36.1)
+
+- [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
+- [d6bde0f0c](https://github.com/algolia/api-clients-automation/commit/d6bde0f0c) chore(scripts): remove component from jira ticket ([#5680](https://github.com/algolia/api-clients-automation/pull/5680)) by [@millotp](https://github.com/millotp/)
+- [bc8460c30](https://github.com/algolia/api-clients-automation/commit/bc8460c30) chore(specs): change oneOf order for docs ([#5676](https://github.com/algolia/api-clients-automation/pull/5676)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.36.0](https://github.com/algolia/algoliasearch-client-php/compare/4.35.0...4.36.0)
 
 - [6a48ef151a](https://github.com/algolia/api-clients-automation/commit/6a48ef151a) feat(specs): allow `enablePersonalization` query parameter at run time for Composition API ([#5651](https://github.com/algolia/api-clients-automation/pull/5651)) by [@ClaraMuller](https://github.com/ClaraMuller/)

@@ -1,3 +1,9 @@
+## [5.45.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.45.0...5.45.1)
+
+- [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
+- [d6bde0f0c](https://github.com/algolia/api-clients-automation/commit/d6bde0f0c) chore(scripts): remove component from jira ticket ([#5680](https://github.com/algolia/api-clients-automation/pull/5680)) by [@millotp](https://github.com/millotp/)
+- [bc8460c30](https://github.com/algolia/api-clients-automation/commit/bc8460c30) chore(specs): change oneOf order for docs ([#5676](https://github.com/algolia/api-clients-automation/pull/5676)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.45.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.44.0...5.45.0)
 
 - [5b042c47af](https://github.com/algolia/api-clients-automation/commit/5b042c47af) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)
