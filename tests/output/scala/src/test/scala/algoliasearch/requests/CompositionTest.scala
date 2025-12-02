@@ -1169,6 +1169,40 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("putComposition4") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-compo",
+      composition = Composition(
+        objectID = "my-compo",
+        name = "my composition",
+        sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
+        behavior = CompositionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "products"
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("putCompositionRule") {
     val (client, echo) = testClient()
     val future = client.putCompositionRule(
@@ -1818,6 +1852,30 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("search2") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("batman"),
+            sortBy = Some("Price (asc)")
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"params":{"query":"batman","sortBy":"Price (asc)"}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("searchCompositionRules") {
     val (client, echo) = testClient()
     val future = client.searchCompositionRules(
@@ -1861,6 +1919,23 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/foo/facets/brand/query")
     assert(res.method == "POST")
     val expectedBody = parse("""{"params":{"maxFacetHits":10}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateSortingStrategyComposition") {
+    val (client, echo) = testClient()
+    val future = client.updateSortingStrategyComposition(
+      compositionID = "my-compo",
+      requestBody = Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo/sortingStrategy")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
