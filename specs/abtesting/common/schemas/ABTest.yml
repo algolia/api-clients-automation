@@ -119,6 +119,8 @@ ABTestConfiguration:
   type: object
   description: A/B test configuration.
   properties:
+    featureFilters:
+      $ref: '#/FeatureFilters'
     outliers:
       $ref: '#/Outliers'
     emptySearch:
@@ -169,3 +171,17 @@ EffectMetric:
     - clickThroughRate
     - conversionRate
     - purchaseRate
+
+FeatureFilters:
+  type: object
+  description: Configuration of feature-based filters applied to the A/B test population.
+  properties:
+    dynamicReRanking:
+      type: boolean
+      description: Whether to apply Dynamic Re-Ranking feature filters.
+    aiPerso:
+      type: boolean
+      description: Whether to apply AI Personalization feature filters.
+    multiSignalRanking:
+      type: boolean
+      description: Whether to apply Multi-Signal Re-Ranking feature filters.
