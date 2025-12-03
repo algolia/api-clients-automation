@@ -222,7 +222,7 @@ public class {{classname}} extends ApiClient {
     * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
     {{> api_javadoc}}
   public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<Response> innerType, {{/x-is-generic}}{{/vendorExtensions}} @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
+    return this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
   }
   {{/optionalParams.0}}
 
@@ -246,7 +246,7 @@ public class {{classname}} extends ApiClient {
     {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
     {{> api_javadoc}}
   public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+    return this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
   {{/optionalParams.0}}
 
