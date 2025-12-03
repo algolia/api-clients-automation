@@ -79,5 +79,27 @@
         }
       }
     }
+  },
+
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "requestBody": {
+        "params": {
+          "query": "batman",
+          "sortBy": "Price (asc)"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/run",
+      "method": "POST",
+      "body": {
+        "params": {
+          "query": "batman",
+          "sortBy": "Price (asc)"
+        }
+      }
+    }
   }
 ]

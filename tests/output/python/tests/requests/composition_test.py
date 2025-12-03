@@ -962,6 +962,41 @@ class TestCompositionClient:
             """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}"""
         )
 
+    async def test_put_composition_4(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "sortingStrategy": {
+                    "Price-asc": "products-low-to-high",
+                    "Price-desc": "products-high-to-low",
+                },
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "products",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
+        )
+
     async def test_put_composition_rule_(self):
         """
         putCompositionRule
@@ -1428,6 +1463,9 @@ class TestCompositionClient:
                                     "anchoring": "contains",
                                     "pattern": "harry",
                                 },
+                                {
+                                    "sortBy": "price-low-to-high",
+                                },
                             ],
                             "consequence": {
                                 "behavior": {
@@ -1468,7 +1506,7 @@ class TestCompositionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
         )
 
     async def test_search_(self):
@@ -1529,6 +1567,28 @@ class TestCompositionClient:
             """{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
         )
 
+    async def test_search_2(self):
+        """
+        search
+        """
+        _req = await self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                    "sortBy": "Price (asc)",
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman","sortBy":"Price (asc)"}}"""
+        )
+
     async def test_search_composition_rules_(self):
         """
         searchCompositionRules
@@ -1565,6 +1625,26 @@ class TestCompositionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"params":{"maxFacetHits":10}}""")
+
+    async def test_update_sorting_strategy_composition_(self):
+        """
+        updateSortingStrategyComposition
+        """
+        _req = await self._client.update_sorting_strategy_composition_with_http_info(
+            composition_id="my-compo",
+            request_body={
+                "Price-asc": "products-low-to-high",
+                "Price-desc": "products-high-to-low",
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo/sortingStrategy"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}"""
+        )
 
 
 class TestCompositionClientSync:
@@ -2522,6 +2602,41 @@ class TestCompositionClientSync:
             """{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}"""
         )
 
+    def test_put_composition_4(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "sortingStrategy": {
+                    "Price-asc": "products-low-to-high",
+                    "Price-desc": "products-high-to-low",
+                },
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "products",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
+        )
+
     def test_put_composition_rule_(self):
         """
         putCompositionRule
@@ -2988,6 +3103,9 @@ class TestCompositionClientSync:
                                     "anchoring": "contains",
                                     "pattern": "harry",
                                 },
+                                {
+                                    "sortBy": "price-low-to-high",
+                                },
                             ],
                             "consequence": {
                                 "behavior": {
@@ -3028,7 +3146,7 @@ class TestCompositionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
+            """{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}"""
         )
 
     def test_search_(self):
@@ -3089,6 +3207,28 @@ class TestCompositionClientSync:
             """{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}"""
         )
 
+    def test_search_2(self):
+        """
+        search
+        """
+        _req = self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                    "sortBy": "Price (asc)",
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman","sortBy":"Price (asc)"}}"""
+        )
+
     def test_search_composition_rules_(self):
         """
         searchCompositionRules
@@ -3125,3 +3265,23 @@ class TestCompositionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"params":{"maxFacetHits":10}}""")
+
+    def test_update_sorting_strategy_composition_(self):
+        """
+        updateSortingStrategyComposition
+        """
+        _req = self._client.update_sorting_strategy_composition_with_http_info(
+            composition_id="my-compo",
+            request_body={
+                "Price-asc": "products-low-to-high",
+                "Price-desc": "products-high-to-low",
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo/sortingStrategy"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}"""
+        )

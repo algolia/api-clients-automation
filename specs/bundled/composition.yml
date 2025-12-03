@@ -86,13 +86,6 @@ info:
 
     Parameters are passed in the request body for POST and PUT requests.
 
-    Query parameters must be
-    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-
-    Non-ASCII characters must be UTF-8 encoded.
-
-    Plus characters (`+`) are interpreted as spaces.
-
 
     ## Response status and errors
 
@@ -550,6 +543,63 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/compositions/{compositionID}/sortingStrategy:
+    post:
+      tags:
+        - composition
+      operationId: updateSortingStrategyComposition
+      x-acl:
+        - editSettings
+      summary: >-
+        Set or update the "sortingStrategy" configuration for an existing
+        composition
+      description: >
+        Updates the "sortingStrategy" field of an existing composition.
+
+        This endpoint allows you to create a new sorting strategy mapping or
+        replace the currently configured one.
+
+        The provided sorting indices MUST be associated indices or replicas of
+        the main targeted index.
+
+
+        WARNING: This endpoint cannot validate if the sort index is related to
+        the composition's main index.
+          Validation will fail at runtime if the index you updated is not related!
+
+        The update is applied to the specified composition within the current
+        Algolia application and returns a taskID that can be used to track the
+        operation’s completion.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sortingStrategy'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -1314,6 +1364,12 @@ components:
       default: {}
       x-categories:
         - Retail Media Network
+      example:
+        my-group-key:
+          - objectID: my-object-1
+            metadata:
+              my-field: my-value
+          - objectID: my-object-2
     insideBoundingBoxArray:
       type: array
       items:
@@ -1568,21 +1624,6 @@ components:
       default: ''
       x-categories:
         - Search
-    relevancyStrictness:
-      type: integer
-      example: 90
-      description: >
-        Relevancy threshold below which less relevant results aren't included in
-        the results
-
-        You can only set `relevancyStrictness` on [virtual replica
-        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-
-        Use this setting to strike a balance between the relevance and number of
-        returned results.
-      default: 100
-      x-categories:
-        - Ranking
     queryLanguages:
       type: array
       items:
@@ -1619,6 +1660,21 @@ components:
       default: []
       x-categories:
         - Languages
+    relevancyStrictness:
+      type: integer
+      example: 90
+      description: >
+        Relevancy threshold below which less relevant results aren't included in
+        the results
+
+        You can only set `relevancyStrictness` on [virtual replica
+        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+
+        Use this setting to strike a balance between the relevance and number of
+        returned results.
+      default: 100
+      x-categories:
+        - Ranking
     ruleContexts:
       type: array
       items:
@@ -1634,6 +1690,28 @@ components:
         - mobile
       x-categories:
         - Composition Rules
+    sortBy:
+      type: string
+      description: >
+        Indicates which sorting strategy to apply for the request.
+
+        The value must match one of the labels defined in the "sortingStrategy"
+        mapping. For example, "Price (asc)", see Upsert Composition.
+
+        At runtime, this label is used to look up the corresponding index or
+        replica configured in "sortingStrategy", and the query is executed using
+        that index instead of main's.
+
+
+        In addition to "sortingStrategy", this parameter is also used to apply a
+        matching Composition Rule that contains a condition defined to trigger
+        on "sortBy", see Composition Rules.
+
+
+        If no value is provided or an invalid value, no sorting strategy is
+        applied.
+      default: ''
+      example: Price (asc)
     userToken:
       type: string
       description: >
@@ -1702,12 +1780,14 @@ components:
           $ref: '#/components/schemas/page'
         query:
           $ref: '#/components/schemas/query'
-        relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
         queryLanguages:
           $ref: '#/components/schemas/queryLanguages'
+        relevancyStrictness:
+          $ref: '#/components/schemas/relevancyStrictness'
         ruleContexts:
           $ref: '#/components/schemas/ruleContexts'
+        sortBy:
+          $ref: '#/components/schemas/sortBy'
         userToken:
           $ref: '#/components/schemas/userToken'
     objectID:
@@ -3580,65 +3660,92 @@ components:
           If a duplicate appears higher in main search results, it will be removed to stay it's intended group position (which could be lower than main).
       example: highest
       default: highestInjected
+    injection:
+      title: injection
+      type: object
+      additionalProperties: false
+      properties:
+        main:
+          title: main
+          type: object
+          additionalProperties: false
+          properties:
+            source:
+              title: compositionSource
+              type: object
+              additionalProperties: false
+              properties:
+                search:
+                  title: compositionSourceSearch
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    index:
+                      type: string
+                      description: Composition Main Index name.
+                      example: Products
+                    params:
+                      $ref: '#/components/schemas/mainInjectionQueryParameters'
+                  required:
+                    - index
+              required:
+                - search
+          required:
+            - source
+        injectedItems:
+          type: array
+          description: list of injected items of the current Composition.
+          minItems: 0
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/injectedItem'
+        deduplication:
+          title: deduplication
+          type: object
+          additionalProperties: false
+          description: >-
+            Deduplication configures the methods used to resolve duplicate items
+            between main search results and injected group results.
+          properties:
+            positioning:
+              $ref: '#/components/schemas/dedupPositioning'
+          required:
+            - positioning
+      required:
+        - main
     compositionBehavior:
       type: object
       additionalProperties: false
       properties:
         injection:
-          title: injection
-          type: object
-          additionalProperties: false
-          properties:
-            main:
-              title: main
-              type: object
-              additionalProperties: false
-              properties:
-                source:
-                  title: compositionSource
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    search:
-                      title: compositionSourceSearch
-                      type: object
-                      additionalProperties: false
-                      properties:
-                        index:
-                          type: string
-                          description: Composition Main Index name.
-                          example: Products
-                        params:
-                          $ref: '#/components/schemas/mainInjectionQueryParameters'
-                      required:
-                        - index
-                  required:
-                    - search
-              required:
-                - source
-            injectedItems:
-              type: array
-              description: list of injected items of the current Composition.
-              minItems: 0
-              maxItems: 2
-              items:
-                $ref: '#/components/schemas/injectedItem'
-            deduplication:
-              title: deduplication
-              type: object
-              additionalProperties: false
-              description: >-
-                Deduplication configures the methods used to resolve duplicate
-                items between main search results and injected group results.
-              properties:
-                positioning:
-                  $ref: '#/components/schemas/dedupPositioning'
-              required:
-                - positioning
-          required:
-            - main
+          $ref: '#/components/schemas/injection'
       required:
         - injection
+    sortingStrategy:
+      type: object
+      description: >
+        A mapping of sorting labels to the indices (or replicas) that implement
+        those sorting rules. The sorting indices MUST be related to the
+        associated main targeted index in the composition.
+
+        Each key is the label your frontend sends at runtime (for example,
+        "Price (asc)"), and each value is the name of the index that should be
+        queried when that label is selected.
+
+
+        When a request includes a "sortBy" parameter, the platform looks up the
+        corresponding index in this mapping and uses it to execute the query.
+        The main targeted index is replaced
+
+        with the sorting strategy index it is mapped to.
+
+
+        Up to 20 sorting strategies can be defined.
+      additionalProperties:
+        type: string
+      example:
+        Price (asc): products-low-to-high
+        Price (desc): products-high-to-low
     composition:
       type: object
       additionalProperties: false
@@ -3655,6 +3762,8 @@ components:
           example: my lovely crafted composition that is used for X purpose
         behavior:
           $ref: '#/components/schemas/compositionBehavior'
+        sortingStrategy:
+          $ref: '#/components/schemas/sortingStrategy'
       required:
         - objectID
         - behavior
@@ -3797,6 +3906,18 @@ components:
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
           example: genre:comedy
+        sortBy:
+          type: string
+          description: >
+            Sort criteria that trigger the rule.
+
+
+            You can trigger composition rules based on the selected sorting
+            strategy set by the parameter `sortBy`.
+
+            The rule will trigger if the value passed to `sortBy` matches the
+            one defined in the condition.
+          example: price-low-to-high
     timeRange:
       type: object
       additionalProperties: false

@@ -14,7 +14,7 @@ SearchSource:
           description: Composition Index name.
           example: Products
         params:
-          $ref: './Injection.yml#/injectedItemsQueryParameters'
+          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
       required:
         - index
   required:
@@ -36,7 +36,7 @@ ExternalSource:
           description: Composition Index name.
           example: Products
         params:
-          $ref: './Injection.yml#/injectedItemsQueryParameters'
+          $ref: './QueryParams.yml#/injectedItemsQueryParameters'
         ordering:
           $ref: '#/externalOrdering'
       required:

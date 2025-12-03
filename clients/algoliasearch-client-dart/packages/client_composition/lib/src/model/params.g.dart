@@ -60,15 +60,16 @@ Params _$ParamsFromJson(Map<String, dynamic> json) => $checkedCreate(
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
           page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
           query: $checkedConvert('query', (v) => v as String?),
-          relevancyStrictness: $checkedConvert(
-              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           queryLanguages: $checkedConvert(
               'queryLanguages',
               (v) => (v as List<dynamic>?)
                   ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
                   .toList()),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          sortBy: $checkedConvert('sortBy', (v) => v as String?),
           userToken: $checkedConvert('userToken', (v) => v as String?),
         );
         return val;
@@ -111,10 +112,11 @@ Map<String, dynamic> _$ParamsToJson(Params instance) {
   writeNotNull('optionalFilters', instance.optionalFilters);
   writeNotNull('page', instance.page);
   writeNotNull('query', instance.query);
-  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
   writeNotNull('queryLanguages',
       instance.queryLanguages?.map((e) => e.toJson()).toList());
+  writeNotNull('relevancyStrictness', instance.relevancyStrictness);
   writeNotNull('ruleContexts', instance.ruleContexts);
+  writeNotNull('sortBy', instance.sortBy);
   writeNotNull('userToken', instance.userToken);
   return val;
 }

@@ -3,7 +3,7 @@
   "info": {
     "title": "Composition API",
     "summary": "The Algolia Composition API lets you run composed search requests on your Compositions",
-    "description": "## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -666,6 +666,68 @@
           },
           "404": {
             "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/1/compositions/{compositionID}/sortingStrategy": {
+      "post": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "updateSortingStrategyComposition",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Set or update the \"sortingStrategy\" configuration for an existing composition",
+        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint allows you to create a new sorting strategy mapping or replace the currently configured one.\nThe provided sorting indices MUST be associated indices or replicas of the main targeted index.\n\nWARNING: This endpoint cannot validate if the sort index is related to the composition's main index.\n  Validation will fail at runtime if the index you updated is not related!\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sortingStrategy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
           }
         }
       }
@@ -1540,7 +1602,20 @@
         "default": {},
         "x-categories": [
           "Retail Media Network"
-        ]
+        ],
+        "example": {
+          "my-group-key": [
+            {
+              "objectID": "my-object-1",
+              "metadata": {
+                "my-field": "my-value"
+              }
+            },
+            {
+              "objectID": "my-object-2"
+            }
+          ]
+        }
       },
       "insideBoundingBoxArray": {
         "type": "array",
@@ -1774,15 +1849,6 @@
           "Search"
         ]
       },
-      "relevancyStrictness": {
-        "type": "integer",
-        "example": 90,
-        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
-        "default": 100,
-        "x-categories": [
-          "Ranking"
-        ]
-      },
       "queryLanguages": {
         "type": "array",
         "items": {
@@ -1795,6 +1861,15 @@
         "default": [],
         "x-categories": [
           "Languages"
+        ]
+      },
+      "relevancyStrictness": {
+        "type": "integer",
+        "example": 90,
+        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
+        "default": 100,
+        "x-categories": [
+          "Ranking"
         ]
       },
       "ruleContexts": {
@@ -1810,6 +1885,12 @@
         "x-categories": [
           "Composition Rules"
         ]
+      },
+      "sortBy": {
+        "type": "string",
+        "description": "Indicates which sorting strategy to apply for the request.\nThe value must match one of the labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition.\nAt runtime, this label is used to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using that index instead of main's.\n\nIn addition to \"sortingStrategy\", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules.\n\nIf no value is provided or an invalid value, no sorting strategy is applied.\n",
+        "default": "",
+        "example": "Price (asc)"
       },
       "userToken": {
         "type": "string",
@@ -1899,14 +1980,17 @@
           "query": {
             "$ref": "#/components/schemas/query"
           },
-          "relevancyStrictness": {
-            "$ref": "#/components/schemas/relevancyStrictness"
-          },
           "queryLanguages": {
             "$ref": "#/components/schemas/queryLanguages"
           },
+          "relevancyStrictness": {
+            "$ref": "#/components/schemas/relevancyStrictness"
+          },
           "ruleContexts": {
             "$ref": "#/components/schemas/ruleContexts"
+          },
+          "sortBy": {
+            "$ref": "#/components/schemas/sortBy"
           },
           "userToken": {
             "$ref": "#/components/schemas/userToken"
@@ -3801,85 +3885,99 @@
         "example": "highest",
         "default": "highestInjected"
       },
+      "injection": {
+        "title": "injection",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "main": {
+            "title": "main",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "source": {
+                "title": "compositionSource",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "search": {
+                    "title": "compositionSourceSearch",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "index": {
+                        "type": "string",
+                        "description": "Composition Main Index name.",
+                        "example": "Products"
+                      },
+                      "params": {
+                        "$ref": "#/components/schemas/mainInjectionQueryParameters"
+                      }
+                    },
+                    "required": [
+                      "index"
+                    ]
+                  }
+                },
+                "required": [
+                  "search"
+                ]
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "injectedItems": {
+            "type": "array",
+            "description": "list of injected items of the current Composition.",
+            "minItems": 0,
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/injectedItem"
+            }
+          },
+          "deduplication": {
+            "title": "deduplication",
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Deduplication configures the methods used to resolve duplicate items between main search results and injected group results.",
+            "properties": {
+              "positioning": {
+                "$ref": "#/components/schemas/dedupPositioning"
+              }
+            },
+            "required": [
+              "positioning"
+            ]
+          }
+        },
+        "required": [
+          "main"
+        ]
+      },
       "compositionBehavior": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "injection": {
-            "title": "injection",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "main": {
-                "title": "main",
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "source": {
-                    "title": "compositionSource",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "search": {
-                        "title": "compositionSourceSearch",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "index": {
-                            "type": "string",
-                            "description": "Composition Main Index name.",
-                            "example": "Products"
-                          },
-                          "params": {
-                            "$ref": "#/components/schemas/mainInjectionQueryParameters"
-                          }
-                        },
-                        "required": [
-                          "index"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "search"
-                    ]
-                  }
-                },
-                "required": [
-                  "source"
-                ]
-              },
-              "injectedItems": {
-                "type": "array",
-                "description": "list of injected items of the current Composition.",
-                "minItems": 0,
-                "maxItems": 2,
-                "items": {
-                  "$ref": "#/components/schemas/injectedItem"
-                }
-              },
-              "deduplication": {
-                "title": "deduplication",
-                "type": "object",
-                "additionalProperties": false,
-                "description": "Deduplication configures the methods used to resolve duplicate items between main search results and injected group results.",
-                "properties": {
-                  "positioning": {
-                    "$ref": "#/components/schemas/dedupPositioning"
-                  }
-                },
-                "required": [
-                  "positioning"
-                ]
-              }
-            },
-            "required": [
-              "main"
-            ]
+            "$ref": "#/components/schemas/injection"
           }
         },
         "required": [
           "injection"
         ]
+      },
+      "sortingStrategy": {
+        "type": "object",
+        "description": "A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The sorting indices MUST be related to the associated main targeted index in the composition.\nEach key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each value is the name of the index that should be queried when that label is selected.\n\nWhen a request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main targeted index is replaced\nwith the sorting strategy index it is mapped to.\n\nUp to 20 sorting strategies can be defined.\n",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "example": {
+          "Price (asc)": "products-low-to-high",
+          "Price (desc)": "products-high-to-low"
+        }
       },
       "composition": {
         "type": "object",
@@ -3900,6 +3998,9 @@
           },
           "behavior": {
             "$ref": "#/components/schemas/compositionBehavior"
+          },
+          "sortingStrategy": {
+            "$ref": "#/components/schemas/sortingStrategy"
           }
         },
         "required": [
@@ -4032,6 +4133,11 @@
             "type": "string",
             "description": "Filters that trigger the rule.\n\nYou can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.\nYou can use `filters` on its own or combine it with the `pattern` parameter.\n",
             "example": "genre:comedy"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Sort criteria that trigger the rule.\n\nYou can trigger composition rules based on the selected sorting strategy set by the parameter `sortBy`.\nThe rule will trigger if the value passed to `sortBy` matches the one defined in the condition.\n",
+            "example": "price-low-to-high"
           }
         }
       },

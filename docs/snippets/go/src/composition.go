@@ -1102,6 +1102,46 @@ func SnippetForPutCompositionOfComposition3() {
 	// SEPARATOR<
 }
 
+func SnippetForPutCompositionOfComposition4() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-compo").
+			SetName("my composition").
+			SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
+			SetBehavior(
+				composition.NewEmptyCompositionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyMain().SetSource(
+							composition.NewEmptyCompositionSource().SetSearch(
+								composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForPutCompositionRuleOfComposition() {
 	/*
 	   Snippet for the putCompositionRule method.
@@ -1450,7 +1490,7 @@ func SnippetForSaveRulesOfComposition3() {
 			[]composition.RulesMultipleBatchRequest{
 				*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
 					composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
+						[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetSortBy("price-low-to-high")}).SetConsequence(
 						composition.NewEmptyCompositionRuleConsequence().SetBehavior(
 							composition.NewEmptyCompositionBehavior().SetInjection(
 								composition.NewEmptyInjection().SetMain(
@@ -1530,6 +1570,37 @@ func SnippetForSearchOfComposition1() {
 					[]composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
 		),
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSearchOfComposition2() {
+	/*
+	   Snippet for the search method.
+
+	   search
+	*/
+
+	// >SEPARATOR search search
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+		"foo",
+		composition.NewEmptyRequestBody().SetParams(
+			composition.NewEmptyParams().SetQuery("batman").SetSortBy("Price (asc)"))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1626,5 +1697,34 @@ func SnippetForSetClientApiKeyOfComposition() {
 	}
 
 	// >LOG
+	// SEPARATOR<
+}
+
+func SnippetForUpdateSortingStrategyCompositionOfComposition() {
+	/*
+	   Snippet for the updateSortingStrategyComposition method.
+
+	   updateSortingStrategyComposition
+	*/
+
+	// >SEPARATOR updateSortingStrategyComposition default
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.UpdateSortingStrategyComposition(client.NewApiUpdateSortingStrategyCompositionRequest(
+		"my-compo", map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
 	// SEPARATOR<
 }

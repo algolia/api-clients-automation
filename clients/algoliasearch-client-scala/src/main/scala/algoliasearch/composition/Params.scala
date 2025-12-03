@@ -15,13 +15,11 @@
   * each endpoint's reference. You can find your application ID and API key in the [Algolia
   * dashboard](https://dashboard.algolia.com/account/api-keys). ## Request format Depending on the endpoint, request
   * bodies are either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed in the request body
-  * for POST and PUT requests. Query parameters must be
-  * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
-  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The Composition API
-  * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
-  * the API response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
-  * indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The current
-  * version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.
+  * for POST and PUT requests. ## Response status and errors The Composition API returns JSON responses. Since JSON
+  * doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response. Successful
+  * responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+  * Error responses have a `message` property with more information. ## Version The current version of the Composition
+  * API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -104,11 +102,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   Page of search results to retrieve.
   * @param query
   *   Search query.
-  * @param relevancyStrictness
-  *   Relevancy threshold below which less relevant results aren't included in the results You can only set
-  *   `relevancyStrictness` on [virtual replica
-  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-  *   Use this setting to strike a balance between the relevance and number of returned results.
   * @param queryLanguages
   *   Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
   *   dictionaries This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
@@ -120,10 +113,22 @@ import algoliasearch.composition.SupportedLanguage._
   *   or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to
   *   unexpected search results. For more information, see [Language-specific
   *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+  * @param relevancyStrictness
+  *   Relevancy threshold below which less relevant results aren't included in the results You can only set
+  *   `relevancyStrictness` on [virtual replica
+  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+  *   Use this setting to strike a balance between the relevance and number of returned results.
   * @param ruleContexts
   *   Assigns a rule context to the run query [Rule
   *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
   *   are strings that you can use to trigger matching rules.
+  * @param sortBy
+  *   Indicates which sorting strategy to apply for the request. The value must match one of the labels defined in the
+  *   \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition. At runtime, this label is used
+  *   to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using
+  *   that index instead of main's. In addition to \"sortingStrategy\", this parameter is also used to apply a matching
+  *   Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules. If no value is
+  *   provided or an invalid value, no sorting strategy is applied.
   * @param userToken
   *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
   *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
@@ -154,8 +159,9 @@ case class Params(
     optionalFilters: Option[OptionalFilters] = scala.None,
     page: Option[Int] = scala.None,
     query: Option[String] = scala.None,
-    relevancyStrictness: Option[Int] = scala.None,
     queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
+    relevancyStrictness: Option[Int] = scala.None,
     ruleContexts: Option[Seq[String]] = scala.None,
+    sortBy: Option[String] = scala.None,
     userToken: Option[String] = scala.None
 )
