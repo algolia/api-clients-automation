@@ -325,6 +325,18 @@ describe('browse', () => {
     expect(req.data).toEqual({ cursor: 'test' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('browse with query string', async () => {
+    const req = (await client.browse({
+      indexName: 'indexName',
+      browseParams: { params: 'foo=bar&cursor=test' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/browse');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ params: 'foo=bar&cursor=test' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('clearObjects', () => {

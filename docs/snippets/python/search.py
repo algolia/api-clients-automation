@@ -612,6 +612,31 @@ def snippet_for_browse2():
     # SEPARATOR<
 
 
+def snippet_for_browse3():
+    """
+    Snippet for the browse method.
+
+    browse with query string
+    """
+    # >SEPARATOR browse browse with query string
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.browse(
+        index_name="<YOUR_INDEX_NAME>",
+        browse_params={
+            "params": "foo=bar&cursor=test",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_clear_objects():
     """
     Snippet for the clearObjects method.

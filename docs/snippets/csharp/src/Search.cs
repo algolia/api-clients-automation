@@ -588,6 +588,28 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the Browse method.
+  ///
+  /// browse with query string
+  /// </summary>
+  public async Task SnippetForSearchClientBrowse3()
+  {
+    // >SEPARATOR browse browse with query string
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.BrowseAsync<Hit>(
+      "<YOUR_INDEX_NAME>",
+      new BrowseParams(new SearchParamsString { Params = "foo=bar&cursor=test" })
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the ClearObjects method.
   ///
   /// clearObjects

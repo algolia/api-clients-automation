@@ -569,6 +569,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("browse with query string")
+  void browseTest3() {
+    assertDoesNotThrow(() -> {
+      client.browse("indexName", new SearchParamsString().setParams("foo=bar&cursor=test"), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/browse", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"params\":\"foo=bar&cursor=test\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("clearObjects")
   void clearObjectsTest() {
     assertDoesNotThrow(() -> {

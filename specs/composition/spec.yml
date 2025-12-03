@@ -52,9 +52,6 @@ info:
     ## Parameters
 
     Parameters are passed in the request body for POST and PUT requests.
-    Query parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-    Non-ASCII characters must be UTF-8 encoded.
-    Plus characters (`+`) are interpreted as spaces.
 
     ## Response status and errors
 
@@ -139,6 +136,8 @@ paths:
     $ref: 'paths/compositions/composition.yml'
   /1/compositions/*/batch:
     $ref: 'paths/compositions/batch.yml'
+  /1/compositions/{compositionID}/sortingStrategy:
+    $ref: 'paths/compositions/updateSortingStrategy.yml'
 
   # ##########################################
   # ### Manage Composition Rules Endpoints ###

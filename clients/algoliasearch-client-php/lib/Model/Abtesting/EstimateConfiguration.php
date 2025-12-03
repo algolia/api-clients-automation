@@ -22,6 +22,7 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      * @var string[]
      */
     protected static $modelTypes = [
+        'featureFilters' => '\Algolia\AlgoliaSearch\Model\Abtesting\FeatureFilters',
         'outliers' => '\Algolia\AlgoliaSearch\Model\Abtesting\Outliers',
         'emptySearch' => '\Algolia\AlgoliaSearch\Model\Abtesting\EmptySearch',
         'minimumDetectableEffect' => '\Algolia\AlgoliaSearch\Model\Abtesting\MinimumDetectableEffect',
@@ -33,6 +34,7 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      * @var string[]
      */
     protected static $modelFormats = [
+        'featureFilters' => null,
         'outliers' => null,
         'emptySearch' => null,
         'minimumDetectableEffect' => null,
@@ -45,6 +47,7 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      * @var string[]
      */
     protected static $attributeMap = [
+        'featureFilters' => 'featureFilters',
         'outliers' => 'outliers',
         'emptySearch' => 'emptySearch',
         'minimumDetectableEffect' => 'minimumDetectableEffect',
@@ -56,6 +59,7 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      * @var string[]
      */
     protected static $setters = [
+        'featureFilters' => 'setFeatureFilters',
         'outliers' => 'setOutliers',
         'emptySearch' => 'setEmptySearch',
         'minimumDetectableEffect' => 'setMinimumDetectableEffect',
@@ -67,6 +71,7 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      * @var string[]
      */
     protected static $getters = [
+        'featureFilters' => 'getFeatureFilters',
         'outliers' => 'getOutliers',
         'emptySearch' => 'getEmptySearch',
         'minimumDetectableEffect' => 'getMinimumDetectableEffect',
@@ -86,6 +91,9 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
      */
     public function __construct(?array $data = null)
     {
+        if (isset($data['featureFilters'])) {
+            $this->container['featureFilters'] = $data['featureFilters'];
+        }
         if (isset($data['outliers'])) {
             $this->container['outliers'] = $data['outliers'];
         }
@@ -173,6 +181,30 @@ class EstimateConfiguration extends AbstractModel implements ModelInterface, \Ar
     public function valid()
     {
         return 0 === count($this->listInvalidProperties());
+    }
+
+    /**
+     * Gets featureFilters.
+     *
+     * @return null|FeatureFilters
+     */
+    public function getFeatureFilters()
+    {
+        return $this->container['featureFilters'] ?? null;
+    }
+
+    /**
+     * Sets featureFilters.
+     *
+     * @param null|FeatureFilters $featureFilters featureFilters
+     *
+     * @return self
+     */
+    public function setFeatureFilters($featureFilters)
+    {
+        $this->container['featureFilters'] = $featureFilters;
+
+        return $this;
     }
 
     /**

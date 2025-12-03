@@ -506,6 +506,25 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('browse with query string')]
+    public function testBrowse3(): void
+    {
+        $client = $this->getClient();
+        $client->browse(
+            'indexName',
+            ['params' => 'foo=bar&cursor=test',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/browse',
+                'method' => 'POST',
+                'body' => json_decode('{"params":"foo=bar&cursor=test"}'),
+            ],
+        ]);
+    }
+
     #[TestDox('clearObjects')]
     public function testClearObjects(): void
     {

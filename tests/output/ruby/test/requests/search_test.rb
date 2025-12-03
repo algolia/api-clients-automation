@@ -385,6 +385,20 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"cursor\":\"test\"}"), JSON.parse(req.body))
   end
 
+  # browse with query string
+  def test_browse3
+    req = @client.browse_with_http_info(
+      "indexName",
+      Algolia::Search::SearchParamsString.new(params: "foo=bar&cursor=test")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/browse", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"params\":\"foo=bar&cursor=test\"}"), JSON.parse(req.body))
+  end
+
   # clearObjects
   def test_clear_objects
     req = @client.clear_objects_with_http_info("theIndexName")

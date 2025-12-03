@@ -1,0 +1,46 @@
+post:
+  tags:
+    - Compositions
+  operationId: updateSortingStrategyComposition
+  x-acl:
+    - editSettings
+  summary: Set or update the "sortingStrategy" configuration for an existing composition
+  description: |
+    Updates the "sortingStrategy" field of an existing composition.
+    This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one.
+    The provided sorting indices MUST be associated indices or replicas of the main targeted index.
+
+    WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.
+      Validation will fail at runtime if the index you updated is not related!
+
+    The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+  parameters:
+    - $ref: '../urlParams.yml#/compositionID'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/components/Composition.yml#/sortingStrategy'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: taskIDResponse
+            type: object
+            additionalProperties: false
+            properties:
+              taskID:
+                $ref: '../../../common/responses/common.yml#/taskID'
+            required:
+              - taskID
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/CompositionNotFound.yml'

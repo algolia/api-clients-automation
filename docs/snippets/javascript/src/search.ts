@@ -441,6 +441,23 @@ export async function snippetForBrowse2(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the browse method.
+//
+// browse with query string
+export async function snippetForBrowse3(): Promise<void> {
+  // >SEPARATOR browse browse with query string
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.browse({ indexName: 'indexName', browseParams: { params: 'foo=bar&cursor=test' } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the clearObjects method.
 //
 // clearObjects

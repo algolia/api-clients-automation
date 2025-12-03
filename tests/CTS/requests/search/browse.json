@@ -57,5 +57,21 @@
         "cursor": "test"
       }
     }
+  },
+  {
+    "testName": "browse with query string",
+    "parameters": {
+      "indexName": "indexName",
+      "browseParams": {
+        "params": "foo=bar&cursor=test"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/browse",
+      "method": "POST",
+      "body": {
+        "params": "foo=bar&cursor=test"
+      }
+    }
   }
 ]

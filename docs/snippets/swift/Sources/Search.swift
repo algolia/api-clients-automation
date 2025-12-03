@@ -438,6 +438,25 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the browse method.
+    ///
+    /// browse with query string
+    func snippetForBrowse3() async throws {
+        // >SEPARATOR browse browse with query string
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: BrowseResponse<Hit> = try await client.browse(
+            indexName: "<YOUR_INDEX_NAME>",
+            browseParams: BrowseParams.searchParamsString(SearchParamsString(params: "foo=bar&cursor=test"))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the clearObjects method.
     ///
     /// clearObjects

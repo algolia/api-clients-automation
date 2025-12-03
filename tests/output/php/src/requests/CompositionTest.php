@@ -937,6 +937,35 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('putComposition')]
+    public function testPutComposition4(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
+                    'Price-desc' => 'products-high-to-low',
+                ],
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                ],
+                ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('putCompositionRule')]
     public function testPutCompositionRule(): void
     {
@@ -1307,6 +1336,9 @@ class CompositionTest extends TestCase implements HttpClientInterface
                             ['anchoring' => 'contains',
                                 'pattern' => 'harry',
                             ],
+
+                            ['sortBy' => 'price-low-to-high',
+                            ],
                         ],
                         'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
                         ],
@@ -1336,7 +1368,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/my-compo/rules/batch',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}'),
+                'body' => json_decode('{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}'),
             ],
         ]);
     }
@@ -1395,6 +1427,27 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('search')]
+    public function testSearch2(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+                'sortBy' => 'Price (asc)',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"batman","sortBy":"Price (asc)"}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchCompositionRules')]
     public function testSearchCompositionRules(): void
     {
@@ -1431,6 +1484,26 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/foo/facets/brand/query',
                 'method' => 'POST',
                 'body' => json_decode('{"params":{"maxFacetHits":10}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateSortingStrategyComposition')]
+    public function testUpdateSortingStrategyComposition(): void
+    {
+        $client = $this->getClient();
+        $client->updateSortingStrategyComposition(
+            'my-compo',
+            ['Price-asc' => 'products-low-to-high',
+                'Price-desc' => 'products-high-to-low',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-compo/sortingStrategy',
+                'method' => 'POST',
+                'body' => json_decode('{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}'),
             ],
         ]);
     }

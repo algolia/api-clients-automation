@@ -440,6 +440,23 @@ def snippet_for_browse2
   # SEPARATOR<
 end
 
+# Snippet for the browse method.
+#
+# browse with query string
+def snippet_for_browse3
+  # >SEPARATOR browse browse with query string
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.browse("<YOUR_INDEX_NAME>", Algolia::Search::SearchParamsString.new(params: "foo=bar&cursor=test"))
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the clearObjects method.
 #
 # clearObjects

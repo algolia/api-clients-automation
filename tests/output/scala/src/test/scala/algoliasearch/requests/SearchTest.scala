@@ -512,6 +512,27 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("browse with query string3") {
+    val (client, echo) = testClient()
+    val future = client.browse(
+      indexName = "indexName",
+      browseParams = Some(
+        SearchParamsString(
+          params = Some("foo=bar&cursor=test")
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/browse")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"params":"foo=bar&cursor=test"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("clearObjects") {
     val (client, echo) = testClient()
     val future = client.clearObjects(

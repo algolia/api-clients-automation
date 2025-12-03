@@ -3729,6 +3729,7 @@
         }
       },
       "AuthSecrets": {
+        "title": "Key:value",
         "type": "object",
         "description": "A key:value authentication for your transformations.",
         "additionalProperties": {
@@ -3833,6 +3834,7 @@
         ]
       },
       "AuthGoogleServiceAccount": {
+        "title": "Google",
         "type": "object",
         "description": "Credentials for authenticating with a Google service account, such as BigQuery.",
         "additionalProperties": false,
@@ -3857,6 +3859,7 @@
         ]
       },
       "AuthBasic": {
+        "title": "Basic",
         "type": "object",
         "description": "Credentials for authenticating with user name and password.",
         "additionalProperties": false,
@@ -3880,6 +3883,7 @@
         ]
       },
       "AuthAPIKey": {
+        "title": "API key",
         "type": "object",
         "description": "Credentials for authenticating with an API key.",
         "additionalProperties": false,
@@ -3897,6 +3901,7 @@
         ]
       },
       "AuthOAuth": {
+        "title": "OAuth 2.0",
         "type": "object",
         "description": "Credentials for authenticating with OAuth 2.0.",
         "additionalProperties": false,
@@ -3931,6 +3936,7 @@
         ]
       },
       "AuthAlgolia": {
+        "title": "Algolia",
         "type": "object",
         "additionalProperties": false,
         "description": "Credentials for authenticating with Algolia.",
@@ -3950,6 +3956,7 @@
         ]
       },
       "AuthAlgoliaInsights": {
+        "title": "Algolia Insights",
         "type": "object",
         "additionalProperties": false,
         "description": "Credentials for authenticating with the Algolia Insights API.",
