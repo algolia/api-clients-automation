@@ -74,6 +74,51 @@ namespace Algolia.Search.Clients;
       {{/isDeprecated}}
       {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#returnType}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
 
+      /// <summary>
+      /// {{{notes}}}
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+      ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
+      {{#allParams}}
+      /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      {{/allParams}}
+      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+      /// <returns>Task of {{> return_type_doc}}</returns>
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      Task<Response> {{operationId}}WithHTTPInfoAsync{{#returnType}}{{#vendorExtensions.x-is-generic}}<Response>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+
+      /// <summary>
+      /// {{{notes}}} (Synchronous version)
+      /// </summary>{{#vendorExtensions}}{{#x-acl.0}}
+      ///
+      /// Required API Key ACLs:{{/x-acl.0}}
+      {{#x-acl}}
+        ///   - {{.}}
+      {{/x-acl}}
+      {{/vendorExtensions}}
+      {{#allParams}}
+      /// <param name="{{paramName}}">{{{description}}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}</param>
+      {{/allParams}}
+      /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+      /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+      /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+      /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+      /// <returns>{{> return_type_doc}}</returns>
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      Response {{operationId}}WithHTTPInfo{{#returnType}}{{#vendorExtensions.x-is-generic}}<Response>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
       {{/operation}}
   }
 
@@ -287,6 +332,94 @@ namespace Algolia.Search.Clients;
       {{/isDeprecated}}
       public {{^returnType}}void{{/returnType}}{{#returnType}}{{> return_type}}{{/returnType}} {{operationId}}{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
         AsyncHelper.RunSync(() => {{operationId}}Async{{#vendorExtensions.x-is-generic}}<T>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
+
+      /// <inheritdoc />
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      public async Task<Response>{{operationId}}WithHTTPInfoAsync{{#returnType}}{{#vendorExtensions.x-is-generic}}<Response>{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+      {
+          {{#allParams}}
+          {{#required}}
+          {{^vendorExtensions.x-csharp-value-type}}{{^isEnumRef}}
+          if ({{paramName}} == null)
+              throw new ArgumentException("Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+            {{/isEnumRef}}{{/vendorExtensions.x-csharp-value-type}}
+          {{/required}}
+          {{/allParams}}
+          var requestOptions = new InternalRequestOptions(options);
+          {{#vendorExtensions.x-is-custom-request}}
+          {{#pathParams}}
+          requestOptions.CustomPathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
+          {{/pathParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{#vendorExtensions}}{{^x-is-custom-request}}
+          {{#pathParams}}
+          {{#required}}
+          requestOptions.PathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.PathParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}}));
+          }
+          {{/required}}
+          {{/pathParams}}
+          {{/x-is-custom-request}}{{/vendorExtensions}}
+          {{#vendorExtensions.x-is-custom-request}}
+          {{#queryParams}}
+          requestOptions.AddCustomQueryParameters({{paramName}});
+          {{/queryParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{^vendorExtensions.x-is-custom-request}}
+          {{#queryParams}}
+          requestOptions.AddQueryParameter("{{baseName}}", {{paramName}});
+          {{/queryParams}}
+          {{/vendorExtensions.x-is-custom-request}}
+          {{#headerParams}}
+          {{#required}}
+          requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), QueryStringHelper.ParameterToString({{paramName}})); // header parameter
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.HeaderParameters.Add("{{baseName}}".ToLowerInvariant(), QueryStringHelper.ParameterToString({{paramName}})); // header parameter
+          }
+          {{/required}}
+          {{/headerParams}}
+          {{#formParams}}
+          {{#required}}
+          requestOptions.FormParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}})); // form parameter
+          {{/required}}
+          {{^required}}
+          if ({{paramName}} != null)
+          {
+              requestOptions.FormParameters.Add("{{baseName}}", QueryStringHelper.ParameterToString({{paramName}})); // form parameter
+          }
+          {{/required}}
+          {{/formParams}}
+          {{#bodyParam}}
+          requestOptions.Data = {{paramName}};
+          {{/bodyParam}}
+          {{#vendorExtensions}}
+          {{#x-use-read-transporter}}
+          requestOptions.UseReadTransporter = true;
+          {{/x-use-read-transporter}}
+          {{#vendorExtensions.x-timeouts}}
+          requestOptions.ReadTimeout ??= TimeSpan.FromMilliseconds({{read}});
+          requestOptions.WriteTimeout ??= TimeSpan.FromMilliseconds({{write}});
+          requestOptions.ConnectTimeout ??= TimeSpan.FromMilliseconds({{connect}});
+          {{/vendorExtensions.x-timeouts}}
+          {{/vendorExtensions}}
+          return await _transport.ExecuteRequestAsync<Response>(new HttpMethod("{{httpMethod}}"),"{{{path}}}", requestOptions, cancellationToken).ConfigureAwait(false);
+      }
+
+      /// <inheritdoc />
+      {{#isDeprecated}}
+      [Obsolete]
+      {{/isDeprecated}}
+      public Response {{operationId}}WithHTTPInfo{{#vendorExtensions.x-is-generic}}<Response>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
+        AsyncHelper.RunSync(() => {{operationId}}WithHTTPInfoAsync{{#vendorExtensions.x-is-generic}}<Response>{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
 
       {{/supportsAsync}}
       {{/operation}}

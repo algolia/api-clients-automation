@@ -180,6 +180,11 @@ internal class HttpTransport
             response.Body.Seek(0, SeekOrigin.Begin);
           }
 
+          if (typeof(TResult) == typeof(Response))
+          {
+            return response as TResult;
+          }
+
           var deserialized = await _serializer
             .Deserialize<TResult>(response.Body)
             .ConfigureAwait(false);
