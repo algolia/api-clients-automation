@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import okhttp3.Response;
 
 public class IngestionClient extends ApiClient {
 
@@ -84,11 +85,36 @@ public class IngestionClient extends ApiClient {
    * Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAuthenticationWithHTTPInfo(
+    @Nonnull AuthenticationCreate authenticationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createAuthenticationWithHTTPInfoAsync(authenticationCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new authentication resource.
+   *
+   * @param authenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public AuthenticationCreateResponse createAuthentication(@Nonnull AuthenticationCreate authenticationCreate)
     throws AlgoliaRuntimeException {
     return this.createAuthentication(authenticationCreate, null);
+  }
+
+  /**
+   * Creates a new authentication resource.
+   *
+   * @param authenticationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAuthenticationWithHTTPInfo(@Nonnull AuthenticationCreate authenticationCreate) throws AlgoliaRuntimeException {
+    return this.createAuthenticationWithHTTPInfo(authenticationCreate, null);
   }
 
   /**
@@ -113,11 +139,40 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAuthenticationWithHTTPInfoAsync(
+    @Nonnull AuthenticationCreate authenticationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(authenticationCreate, "Parameter `authenticationCreate` is required when calling `createAuthentication`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/authentications").setMethod("POST").setBody(authenticationCreate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new authentication resource.
+   *
+   * @param authenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<AuthenticationCreateResponse> createAuthenticationAsync(@Nonnull AuthenticationCreate authenticationCreate)
     throws AlgoliaRuntimeException {
     return this.createAuthenticationAsync(authenticationCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new authentication resource.
+   *
+   * @param authenticationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAuthenticationWithHTTPInfoAsync(@Nonnull AuthenticationCreate authenticationCreate)
+    throws AlgoliaRuntimeException {
+    return this.createAuthenticationWithHTTPInfoAsync(authenticationCreate, null);
   }
 
   /**
@@ -137,10 +192,33 @@ public class IngestionClient extends ApiClient {
    * Creates a new destination.
    *
    * @param destinationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createDestinationWithHTTPInfo(@Nonnull DestinationCreate destinationCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createDestinationWithHTTPInfoAsync(destinationCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new destination.
+   *
+   * @param destinationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DestinationCreateResponse createDestination(@Nonnull DestinationCreate destinationCreate) throws AlgoliaRuntimeException {
     return this.createDestination(destinationCreate, null);
+  }
+
+  /**
+   * Creates a new destination.
+   *
+   * @param destinationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createDestinationWithHTTPInfo(@Nonnull DestinationCreate destinationCreate) throws AlgoliaRuntimeException {
+    return this.createDestinationWithHTTPInfo(destinationCreate, null);
   }
 
   /**
@@ -165,11 +243,40 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new destination.
    *
    * @param destinationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createDestinationWithHTTPInfoAsync(
+    @Nonnull DestinationCreate destinationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(destinationCreate, "Parameter `destinationCreate` is required when calling `createDestination`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/destinations").setMethod("POST").setBody(destinationCreate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new destination.
+   *
+   * @param destinationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DestinationCreateResponse> createDestinationAsync(@Nonnull DestinationCreate destinationCreate)
     throws AlgoliaRuntimeException {
     return this.createDestinationAsync(destinationCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new destination.
+   *
+   * @param destinationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createDestinationWithHTTPInfoAsync(@Nonnull DestinationCreate destinationCreate)
+    throws AlgoliaRuntimeException {
+    return this.createDestinationWithHTTPInfoAsync(destinationCreate, null);
   }
 
   /**
@@ -189,10 +296,33 @@ public class IngestionClient extends ApiClient {
    * Creates a new source.
    *
    * @param sourceCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createSourceWithHTTPInfo(@Nonnull SourceCreate sourceCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createSourceWithHTTPInfoAsync(sourceCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new source.
+   *
+   * @param sourceCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SourceCreateResponse createSource(@Nonnull SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.createSource(sourceCreate, null);
+  }
+
+  /**
+   * Creates a new source.
+   *
+   * @param sourceCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createSourceWithHTTPInfo(@Nonnull SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.createSourceWithHTTPInfo(sourceCreate, null);
   }
 
   /**
@@ -218,10 +348,39 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new source.
    *
    * @param sourceCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createSourceWithHTTPInfoAsync(
+    @Nonnull SourceCreate sourceCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceCreate, "Parameter `sourceCreate` is required when calling `createSource`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources").setMethod("POST").setBody(sourceCreate).build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new source.
+   *
+   * @param sourceCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SourceCreateResponse> createSourceAsync(@Nonnull SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.createSourceAsync(sourceCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new source.
+   *
+   * @param sourceCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createSourceWithHTTPInfoAsync(@Nonnull SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.createSourceWithHTTPInfoAsync(sourceCreate, null);
   }
 
   /**
@@ -241,10 +400,33 @@ public class IngestionClient extends ApiClient {
    * Creates a new task.
    *
    * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createTaskWithHTTPInfo(@Nonnull TaskCreate taskCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createTaskWithHTTPInfoAsync(taskCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new task.
+   *
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskCreateResponse createTask(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
     return this.createTask(taskCreate, null);
+  }
+
+  /**
+   * Creates a new task.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createTaskWithHTTPInfo(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskWithHTTPInfo(taskCreate, null);
   }
 
   /**
@@ -268,10 +450,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new task.
    *
    * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createTaskWithHTTPInfoAsync(@Nonnull TaskCreate taskCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskCreate, "Parameter `taskCreate` is required when calling `createTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks").setMethod("POST").setBody(taskCreate).build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new task.
+   *
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskCreateResponse> createTaskAsync(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
     return this.createTaskAsync(taskCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new task.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createTaskWithHTTPInfoAsync(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskWithHTTPInfoAsync(taskCreate, null);
   }
 
   /**
@@ -293,12 +502,39 @@ public class IngestionClient extends ApiClient {
    * Creates a new task using the v1 endpoint, please use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response createTaskV1WithHTTPInfo(@Nonnull TaskCreateV1 taskCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createTaskV1WithHTTPInfoAsync(taskCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public TaskCreateResponse createTaskV1(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
     return this.createTaskV1(taskCreate, null);
+  }
+
+  /**
+   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response createTaskV1WithHTTPInfo(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskV1WithHTTPInfo(taskCreate, null);
   }
 
   /**
@@ -324,12 +560,45 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> createTaskV1WithHTTPInfoAsync(
+    @Nonnull TaskCreateV1 taskCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskCreate, "Parameter `taskCreate` is required when calling `createTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks").setMethod("POST").setBody(taskCreate).build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<TaskCreateResponse> createTaskV1Async(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
     return this.createTaskV1Async(taskCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   *
+   * @param taskCreate Request body for creating a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> createTaskV1WithHTTPInfoAsync(@Nonnull TaskCreateV1 taskCreate) throws AlgoliaRuntimeException {
+    return this.createTaskV1WithHTTPInfoAsync(taskCreate, null);
   }
 
   /**
@@ -351,11 +620,36 @@ public class IngestionClient extends ApiClient {
    * Creates a new transformation.
    *
    * @param transformationCreate Request body for creating a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createTransformationWithHTTPInfo(
+    @Nonnull TransformationCreate transformationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createTransformationWithHTTPInfoAsync(transformationCreate, requestOptions));
+  }
+
+  /**
+   * Creates a new transformation.
+   *
+   * @param transformationCreate Request body for creating a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TransformationCreateResponse createTransformation(@Nonnull TransformationCreate transformationCreate)
     throws AlgoliaRuntimeException {
     return this.createTransformation(transformationCreate, null);
+  }
+
+  /**
+   * Creates a new transformation.
+   *
+   * @param transformationCreate Request body for creating a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createTransformationWithHTTPInfo(@Nonnull TransformationCreate transformationCreate) throws AlgoliaRuntimeException {
+    return this.createTransformationWithHTTPInfo(transformationCreate, null);
   }
 
   /**
@@ -380,11 +674,40 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Creates a new transformation.
    *
    * @param transformationCreate Request body for creating a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createTransformationWithHTTPInfoAsync(
+    @Nonnull TransformationCreate transformationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `createTransformation`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/transformations").setMethod("POST").setBody(transformationCreate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Creates a new transformation.
+   *
+   * @param transformationCreate Request body for creating a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TransformationCreateResponse> createTransformationAsync(@Nonnull TransformationCreate transformationCreate)
     throws AlgoliaRuntimeException {
     return this.createTransformationAsync(transformationCreate, null);
+  }
+
+  /**
+   * (asynchronously) Creates a new transformation.
+   *
+   * @param transformationCreate Request body for creating a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createTransformationWithHTTPInfoAsync(@Nonnull TransformationCreate transformationCreate)
+    throws AlgoliaRuntimeException {
+    return this.createTransformationWithHTTPInfoAsync(transformationCreate, null);
   }
 
   /**
@@ -406,10 +729,35 @@ public class IngestionClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -428,10 +776,32 @@ public class IngestionClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDelete(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -459,10 +829,42 @@ public class IngestionClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -482,10 +884,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -507,10 +932,35 @@ public class IngestionClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -529,10 +979,32 @@ public class IngestionClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGet(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -560,10 +1032,42 @@ public class IngestionClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -583,10 +1087,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -610,10 +1137,41 @@ public class IngestionClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -632,10 +1190,32 @@ public class IngestionClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -671,11 +1251,51 @@ public class IngestionClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -695,10 +1315,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -722,10 +1365,41 @@ public class IngestionClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -744,10 +1418,32 @@ public class IngestionClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -783,11 +1479,51 @@ public class IngestionClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -807,10 +1543,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -832,10 +1591,35 @@ public class IngestionClient extends ApiClient {
    * a source or a destination.
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteAuthenticationWithHTTPInfo(@Nonnull String authenticationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteAuthenticationWithHTTPInfoAsync(authenticationID, requestOptions));
+  }
+
+  /**
+   * Deletes an authentication resource. You can't delete authentication resources that are used by
+   * a source or a destination.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteAuthentication(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
     return this.deleteAuthentication(authenticationID, null);
+  }
+
+  /**
+   * Deletes an authentication resource. You can't delete authentication resources that are used by
+   * a source or a destination.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteAuthenticationWithHTTPInfo(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
+    return this.deleteAuthenticationWithHTTPInfo(authenticationID, null);
   }
 
   /**
@@ -865,10 +1649,44 @@ public class IngestionClient extends ApiClient {
    * that are used by a source or a destination.
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteAuthenticationWithHTTPInfoAsync(
+    @Nonnull String authenticationID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/authentications/{authenticationID}", authenticationID)
+      .setMethod("DELETE")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes an authentication resource. You can't delete authentication resources
+   * that are used by a source or a destination.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteAuthenticationAsync(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
     return this.deleteAuthenticationAsync(authenticationID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes an authentication resource. You can't delete authentication resources
+   * that are used by a source or a destination.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteAuthenticationWithHTTPInfoAsync(@Nonnull String authenticationID)
+    throws AlgoliaRuntimeException {
+    return this.deleteAuthenticationWithHTTPInfoAsync(authenticationID, null);
   }
 
   /**
@@ -888,10 +1706,33 @@ public class IngestionClient extends ApiClient {
    * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
    *
    * @param destinationID Unique identifier of a destination. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteDestinationWithHTTPInfo(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteDestinationWithHTTPInfoAsync(destinationID, requestOptions));
+  }
+
+  /**
+   * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteDestination(@Nonnull String destinationID) throws AlgoliaRuntimeException {
     return this.deleteDestination(destinationID, null);
+  }
+
+  /**
+   * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteDestinationWithHTTPInfo(@Nonnull String destinationID) throws AlgoliaRuntimeException {
+    return this.deleteDestinationWithHTTPInfo(destinationID, null);
   }
 
   /**
@@ -916,10 +1757,40 @@ public class IngestionClient extends ApiClient {
    * referenced in tasks.
    *
    * @param destinationID Unique identifier of a destination. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteDestinationWithHTTPInfoAsync(
+    @Nonnull String destinationID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `deleteDestination`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("DELETE").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a destination by its ID. You can't delete destinations that are
+   * referenced in tasks.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteDestinationAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
     return this.deleteDestinationAsync(destinationID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a destination by its ID. You can't delete destinations that are
+   * referenced in tasks.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteDestinationWithHTTPInfoAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
+    return this.deleteDestinationWithHTTPInfoAsync(destinationID, null);
   }
 
   /**
@@ -938,10 +1809,33 @@ public class IngestionClient extends ApiClient {
    * Deletes a source by its ID. You can't delete sources that are referenced in tasks.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteSourceWithHTTPInfo(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteSourceWithHTTPInfoAsync(sourceID, requestOptions));
+  }
+
+  /**
+   * Deletes a source by its ID. You can't delete sources that are referenced in tasks.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.deleteSource(sourceID, null);
+  }
+
+  /**
+   * Deletes a source by its ID. You can't delete sources that are referenced in tasks.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteSourceWithHTTPInfo(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.deleteSourceWithHTTPInfo(sourceID, null);
   }
 
   /**
@@ -966,10 +1860,38 @@ public class IngestionClient extends ApiClient {
    * tasks.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `deleteSource`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("DELETE").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a source by its ID. You can't delete sources that are referenced in
+   * tasks.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.deleteSourceAsync(sourceID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a source by its ID. You can't delete sources that are referenced in
+   * tasks.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteSourceWithHTTPInfoAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.deleteSourceWithHTTPInfoAsync(sourceID, null);
   }
 
   /**
@@ -988,10 +1910,32 @@ public class IngestionClient extends ApiClient {
    * Deletes a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteTaskWithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteTaskWithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Deletes a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.deleteTask(taskID, null);
+  }
+
+  /**
+   * Deletes a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteTaskWithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskWithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1015,10 +1959,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Deletes a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("DELETE").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.deleteTaskAsync(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteTaskWithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskWithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1039,12 +2010,38 @@ public class IngestionClient extends ApiClient {
    * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response deleteTaskV1WithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteTaskV1WithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public DeleteResponse deleteTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.deleteTaskV1(taskID, null);
+  }
+
+  /**
+   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response deleteTaskV1WithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskV1WithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1072,12 +2069,45 @@ public class IngestionClient extends ApiClient {
    * instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> deleteTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `deleteTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("DELETE").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<DeleteResponse> deleteTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.deleteTaskV1Async(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> deleteTaskV1WithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.deleteTaskV1WithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1097,10 +2127,33 @@ public class IngestionClient extends ApiClient {
    * Deletes a transformation by its ID.
    *
    * @param transformationID Unique identifier of a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteTransformationWithHTTPInfo(@Nonnull String transformationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteTransformationWithHTTPInfoAsync(transformationID, requestOptions));
+  }
+
+  /**
+   * Deletes a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteTransformation(@Nonnull String transformationID) throws AlgoliaRuntimeException {
     return this.deleteTransformation(transformationID, null);
+  }
+
+  /**
+   * Deletes a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteTransformationWithHTTPInfo(@Nonnull String transformationID) throws AlgoliaRuntimeException {
+    return this.deleteTransformationWithHTTPInfo(transformationID, null);
   }
 
   /**
@@ -1128,10 +2181,42 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Deletes a transformation by its ID.
    *
    * @param transformationID Unique identifier of a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteTransformationWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations/{transformationID}", transformationID)
+      .setMethod("DELETE")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteTransformationAsync(@Nonnull String transformationID) throws AlgoliaRuntimeException {
     return this.deleteTransformationAsync(transformationID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteTransformationWithHTTPInfoAsync(@Nonnull String transformationID)
+    throws AlgoliaRuntimeException {
+    return this.deleteTransformationWithHTTPInfoAsync(transformationID, null);
   }
 
   /**
@@ -1150,10 +2235,32 @@ public class IngestionClient extends ApiClient {
    * Disables a task.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response disableTaskWithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(disableTaskWithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Disables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse disableTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.disableTask(taskID, null);
+  }
+
+  /**
+   * Disables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response disableTaskWithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskWithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1177,10 +2284,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Disables a task.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> disableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Disables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> disableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.disableTaskAsync(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Disables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> disableTaskWithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskWithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1201,12 +2335,39 @@ public class IngestionClient extends ApiClient {
    * Disables a task using the v1 endpoint, please use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response disableTaskV1WithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(disableTaskV1WithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public TaskUpdateResponse disableTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.disableTaskV1(taskID, null);
+  }
+
+  /**
+   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response disableTaskV1WithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskV1WithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1232,12 +2393,43 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> disableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `disableTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/disable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<TaskUpdateResponse> disableTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.disableTaskV1Async(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> disableTaskV1WithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.disableTaskV1WithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1256,10 +2448,32 @@ public class IngestionClient extends ApiClient {
    * Enables a task.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response enableTaskWithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(enableTaskWithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Enables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse enableTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.enableTask(taskID, null);
+  }
+
+  /**
+   * Enables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response enableTaskWithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskWithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1283,10 +2497,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Enables a task.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> enableTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Enables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> enableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.enableTaskAsync(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Enables a task.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> enableTaskWithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskWithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1307,12 +2548,38 @@ public class IngestionClient extends ApiClient {
    * Enables a task using the v1 endpoint, please use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response enableTaskV1WithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(enableTaskV1WithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public TaskUpdateResponse enableTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.enableTaskV1(taskID, null);
+  }
+
+  /**
+   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response enableTaskV1WithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskV1WithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1338,12 +2605,43 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> enableTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `enableTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/enable", taskID).setMethod("PUT").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<TaskUpdateResponse> enableTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.enableTaskV1Async(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> enableTaskV1WithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.enableTaskV1WithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1363,10 +2661,33 @@ public class IngestionClient extends ApiClient {
    * Retrieves an authentication resource by its ID.
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAuthenticationWithHTTPInfo(@Nonnull String authenticationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAuthenticationWithHTTPInfoAsync(authenticationID, requestOptions));
+  }
+
+  /**
+   * Retrieves an authentication resource by its ID.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Authentication getAuthentication(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
     return this.getAuthentication(authenticationID, null);
+  }
+
+  /**
+   * Retrieves an authentication resource by its ID.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAuthenticationWithHTTPInfo(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
+    return this.getAuthenticationWithHTTPInfo(authenticationID, null);
   }
 
   /**
@@ -1389,10 +2710,38 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves an authentication resource by its ID.
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAuthenticationWithHTTPInfoAsync(
+    @Nonnull String authenticationID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `getAuthentication`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/authentications/{authenticationID}", authenticationID).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves an authentication resource by its ID.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Authentication> getAuthenticationAsync(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
     return this.getAuthenticationAsync(authenticationID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves an authentication resource by its ID.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAuthenticationWithHTTPInfoAsync(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
+    return this.getAuthenticationWithHTTPInfoAsync(authenticationID, null);
   }
 
   /**
@@ -1411,10 +2760,33 @@ public class IngestionClient extends ApiClient {
    * Retrieves a destination by its ID.
    *
    * @param destinationID Unique identifier of a destination. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getDestinationWithHTTPInfo(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getDestinationWithHTTPInfoAsync(destinationID, requestOptions));
+  }
+
+  /**
+   * Retrieves a destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Destination getDestination(@Nonnull String destinationID) throws AlgoliaRuntimeException {
     return this.getDestination(destinationID, null);
+  }
+
+  /**
+   * Retrieves a destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getDestinationWithHTTPInfo(@Nonnull String destinationID) throws AlgoliaRuntimeException {
+    return this.getDestinationWithHTTPInfo(destinationID, null);
   }
 
   /**
@@ -1437,10 +2809,36 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a destination by its ID.
    *
    * @param destinationID Unique identifier of a destination. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getDestinationWithHTTPInfoAsync(@Nonnull String destinationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `getDestination`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/destinations/{destinationID}", destinationID).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Destination> getDestinationAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
     return this.getDestinationAsync(destinationID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getDestinationWithHTTPInfoAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
+    return this.getDestinationWithHTTPInfoAsync(destinationID, null);
   }
 
   /**
@@ -1462,10 +2860,35 @@ public class IngestionClient extends ApiClient {
    *
    * @param runID Unique identifier of a task run. (required)
    * @param eventID Unique identifier of an event. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getEventWithHTTPInfo(@Nonnull String runID, @Nonnull String eventID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getEventWithHTTPInfoAsync(runID, eventID, requestOptions));
+  }
+
+  /**
+   * Retrieves a single task run event by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Event getEvent(@Nonnull String runID, @Nonnull String eventID) throws AlgoliaRuntimeException {
     return this.getEvent(runID, eventID, null);
+  }
+
+  /**
+   * Retrieves a single task run event by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getEventWithHTTPInfo(@Nonnull String runID, @Nonnull String eventID) throws AlgoliaRuntimeException {
+    return this.getEventWithHTTPInfo(runID, eventID, null);
   }
 
   /**
@@ -1492,10 +2915,44 @@ public class IngestionClient extends ApiClient {
    *
    * @param runID Unique identifier of a task run. (required)
    * @param eventID Unique identifier of an event. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getEventWithHTTPInfoAsync(
+    @Nonnull String runID,
+    @Nonnull String eventID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvent`.");
+
+    Parameters.requireNonNull(eventID, "Parameter `eventID` is required when calling `getEvent`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}/events/{eventID}", runID, eventID).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a single task run event by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Event> getEventAsync(@Nonnull String runID, @Nonnull String eventID) throws AlgoliaRuntimeException {
     return this.getEventAsync(runID, eventID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a single task run event by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getEventWithHTTPInfoAsync(@Nonnull String runID, @Nonnull String eventID)
+    throws AlgoliaRuntimeException {
+    return this.getEventWithHTTPInfoAsync(runID, eventID, null);
   }
 
   /**
@@ -1514,10 +2971,32 @@ public class IngestionClient extends ApiClient {
    * Retrieve a single task run by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRunWithHTTPInfo(@Nonnull String runID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRunWithHTTPInfoAsync(runID, requestOptions));
+  }
+
+  /**
+   * Retrieve a single task run by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Run getRun(@Nonnull String runID) throws AlgoliaRuntimeException {
     return this.getRun(runID, null);
+  }
+
+  /**
+   * Retrieve a single task run by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRunWithHTTPInfo(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.getRunWithHTTPInfo(runID, null);
   }
 
   /**
@@ -1540,10 +3019,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieve a single task run by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRunWithHTTPInfoAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getRun`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/runs/{runID}", runID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieve a single task run by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Run> getRunAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
     return this.getRunAsync(runID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a single task run by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRunWithHTTPInfoAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.getRunWithHTTPInfoAsync(runID, null);
   }
 
   /**
@@ -1562,10 +3068,32 @@ public class IngestionClient extends ApiClient {
    * Retrieve a source by its ID.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSourceWithHTTPInfo(@Nonnull String sourceID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSourceWithHTTPInfoAsync(sourceID, requestOptions));
+  }
+
+  /**
+   * Retrieve a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Source getSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.getSource(sourceID, null);
+  }
+
+  /**
+   * Retrieve a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSourceWithHTTPInfo(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.getSourceWithHTTPInfo(sourceID, null);
   }
 
   /**
@@ -1589,10 +3117,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieve a source by its ID.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getSource`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieve a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Source> getSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.getSourceAsync(sourceID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSourceWithHTTPInfoAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.getSourceWithHTTPInfoAsync(sourceID, null);
   }
 
   /**
@@ -1611,10 +3166,32 @@ public class IngestionClient extends ApiClient {
    * Retrieves a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTaskWithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTaskWithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Retrieves a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Task getTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.getTask(taskID, null);
+  }
+
+  /**
+   * Retrieves a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTaskWithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskWithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1638,10 +3215,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a task by its ID.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Task> getTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.getTaskAsync(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTaskWithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskWithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1662,12 +3266,38 @@ public class IngestionClient extends ApiClient {
    * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response getTaskV1WithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTaskV1WithHTTPInfoAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public TaskV1 getTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.getTaskV1(taskID, null);
+  }
+
+  /**
+   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response getTaskV1WithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskV1WithHTTPInfo(taskID, null);
   }
 
   /**
@@ -1695,12 +3325,45 @@ public class IngestionClient extends ApiClient {
    * instead.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> getTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<TaskV1> getTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.getTaskV1Async(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> getTaskV1WithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.getTaskV1WithHTTPInfoAsync(taskID, null);
   }
 
   /**
@@ -1720,10 +3383,33 @@ public class IngestionClient extends ApiClient {
    * Retrieves a transformation by its ID.
    *
    * @param transformationID Unique identifier of a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTransformationWithHTTPInfo(@Nonnull String transformationID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTransformationWithHTTPInfoAsync(transformationID, requestOptions));
+  }
+
+  /**
+   * Retrieves a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Transformation getTransformation(@Nonnull String transformationID) throws AlgoliaRuntimeException {
     return this.getTransformation(transformationID, null);
+  }
+
+  /**
+   * Retrieves a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTransformationWithHTTPInfo(@Nonnull String transformationID) throws AlgoliaRuntimeException {
+    return this.getTransformationWithHTTPInfo(transformationID, null);
   }
 
   /**
@@ -1746,10 +3432,38 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a transformation by its ID.
    *
    * @param transformationID Unique identifier of a transformation. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTransformationWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/transformations/{transformationID}", transformationID).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Transformation> getTransformationAsync(@Nonnull String transformationID) throws AlgoliaRuntimeException {
     return this.getTransformationAsync(transformationID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTransformationWithHTTPInfoAsync(@Nonnull String transformationID) throws AlgoliaRuntimeException {
+    return this.getTransformationWithHTTPInfoAsync(transformationID, null);
   }
 
   /**
@@ -1788,6 +3502,32 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of authentications. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listAuthenticationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listAuthenticationsWithHTTPInfoAsync(itemsPerPage, page, type, platform, sort, order, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListAuthenticationsResponse listAuthentications(
@@ -1804,6 +3544,29 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of all authentication resources.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listAuthenticationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfo(itemsPerPage, page, type, platform, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1815,10 +3578,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of all authentication resources.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listAuthenticationsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfo(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListAuthenticationsResponse listAuthentications() throws AlgoliaRuntimeException {
     return this.listAuthentications(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of all authentication resources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listAuthenticationsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfo(null, null, null, null, null, null, null);
   }
 
   /**
@@ -1867,6 +3650,42 @@ public class IngestionClient extends ApiClient {
    * @param sort Property by which to sort the list of authentications. (optional, default to
    *     createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listAuthenticationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/authentications")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("platform", platform)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync(
@@ -1878,6 +3697,29 @@ public class IngestionClient extends ApiClient {
     OrderKeys order
   ) throws AlgoliaRuntimeException {
     return this.listAuthenticationsAsync(itemsPerPage, page, type, platform, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentications. (optional)
+   * @param sort Property by which to sort the list of authentications. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listAuthenticationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<AuthenticationType> type,
+    List<PlatformWithNone> platform,
+    AuthenticationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfoAsync(itemsPerPage, page, type, platform, sort, order, null);
   }
 
   /**
@@ -1895,10 +3737,31 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of all authentication resources.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listAuthenticationsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfoAsync(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListAuthenticationsResponse> listAuthenticationsAsync() throws AlgoliaRuntimeException {
     return this.listAuthenticationsAsync(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of all authentication resources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listAuthenticationsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listAuthenticationsWithHTTPInfoAsync(null, null, null, null, null, null, null);
   }
 
   /**
@@ -1940,6 +3803,35 @@ public class IngestionClient extends ApiClient {
    * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listDestinationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    String transformationID,
+    DestinationSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listDestinationsWithHTTPInfoAsync(itemsPerPage, page, type, authenticationID, transformationID, sort, order, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListDestinationsResponse listDestinations(
@@ -1957,6 +3849,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of destinations.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listDestinationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    String transformationID,
+    DestinationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfo(itemsPerPage, page, type, authenticationID, transformationID, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1968,10 +3884,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of destinations.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listDestinationsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfo(null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListDestinationsResponse listDestinations() throws AlgoliaRuntimeException {
     return this.listDestinations(null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of destinations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listDestinationsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfo(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2022,6 +3958,44 @@ public class IngestionClient extends ApiClient {
    * @param transformationID Get the list of destinations used by a transformation. (optional)
    * @param sort Property by which to sort the destinations. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listDestinationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    String transformationID,
+    DestinationSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/destinations")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("authenticationID", authenticationID)
+      .addQueryParameter("transformationID", transformationID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListDestinationsResponse> listDestinationsAsync(
@@ -2039,6 +4013,30 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of destinations.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param transformationID Get the list of destinations used by a transformation. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listDestinationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<DestinationType> type,
+    List<String> authenticationID,
+    String transformationID,
+    DestinationSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfoAsync(itemsPerPage, page, type, authenticationID, transformationID, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2051,10 +4049,31 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of destinations.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listDestinationsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfoAsync(null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListDestinationsResponse> listDestinationsAsync() throws AlgoliaRuntimeException {
     return this.listDestinationsAsync(null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of destinations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listDestinationsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listDestinationsWithHTTPInfoAsync(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2106,6 +4125,41 @@ public class IngestionClient extends ApiClient {
    *     default, the current time minus three hours is used. (optional)
    * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listEventsWithHTTPInfo(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listEventsWithHTTPInfoAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListEventsResponse listEvents(
@@ -2126,6 +4180,36 @@ public class IngestionClient extends ApiClient {
    * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listEventsWithHTTPInfo(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfo(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2138,10 +4222,32 @@ public class IngestionClient extends ApiClient {
    * Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listEventsWithHTTPInfo(@Nonnull String runID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfo(runID, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListEventsResponse listEvents(@Nonnull String runID) throws AlgoliaRuntimeException {
     return this.listEvents(runID, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listEventsWithHTTPInfo(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfo(runID, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2205,6 +4311,53 @@ public class IngestionClient extends ApiClient {
    *     default, the current time minus three hours is used. (optional)
    * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listEventsWithHTTPInfoAsync(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `listEvents`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/runs/{runID}/events", runID)
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("status", status)
+      .addQueryParameter("type", type)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListEventsResponse> listEventsAsync(
@@ -2225,6 +4378,36 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listEventsWithHTTPInfoAsync(
+    @Nonnull String runID,
+    Integer itemsPerPage,
+    Integer page,
+    List<EventStatus> status,
+    List<EventType> type,
+    EventSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfoAsync(runID, itemsPerPage, page, status, type, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2238,10 +4421,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listEventsWithHTTPInfoAsync(@Nonnull String runID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfoAsync(runID, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListEventsResponse> listEventsAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
     return this.listEventsAsync(runID, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of events for a task run, identified by its ID.
+   *
+   * @param runID Unique identifier of a task run. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listEventsWithHTTPInfoAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
+    return this.listEventsWithHTTPInfoAsync(runID, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2291,6 +4497,41 @@ public class IngestionClient extends ApiClient {
    *     current day minus seven days is used. (optional)
    * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listRunsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    List<RunType> type,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listRunsWithHTTPInfoAsync(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns(
@@ -2310,6 +4551,36 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieve a list of task runs.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listRunsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    List<RunType> type,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfo(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2321,10 +4592,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieve a list of task runs.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listRunsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfo(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns() throws AlgoliaRuntimeException {
     return this.listRuns(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieve a list of task runs.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listRunsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfo(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2387,6 +4678,52 @@ public class IngestionClient extends ApiClient {
    *     current day minus seven days is used. (optional)
    * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listRunsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    List<RunType> type,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/runs")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("status", status)
+      .addQueryParameter("type", type)
+      .addQueryParameter("taskID", taskID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync(
@@ -2406,6 +4743,36 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieve a list of task runs.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param type Run type for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listRunsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<RunStatus> status,
+    List<RunType> type,
+    String taskID,
+    RunSortKeys sort,
+    OrderKeys order,
+    String startDate,
+    String endDate
+  ) throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfoAsync(itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2417,10 +4784,30 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieve a list of task runs.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listRunsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync() throws AlgoliaRuntimeException {
     return this.listRunsAsync(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieve a list of task runs.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listRunsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listRunsWithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2459,6 +4846,32 @@ public class IngestionClient extends ApiClient {
    *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listSourcesWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listSourcesWithHTTPInfoAsync(itemsPerPage, page, type, authenticationID, sort, order, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListSourcesResponse listSources(
@@ -2475,6 +4888,29 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of sources.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listSourcesWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfo(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2486,10 +4922,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of sources.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listSourcesWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfo(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListSourcesResponse listSources() throws AlgoliaRuntimeException {
     return this.listSources(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of sources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listSourcesWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfo(null, null, null, null, null, null, null);
   }
 
   /**
@@ -2538,6 +4994,42 @@ public class IngestionClient extends ApiClient {
    *     that doesn't have an authentication. (optional)
    * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listSourcesWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("type", type)
+      .addQueryParameter("authenticationID", authenticationID)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListSourcesResponse> listSourcesAsync(
@@ -2554,6 +5046,29 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of sources.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listSourcesWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<SourceType> type,
+    List<String> authenticationID,
+    SourceSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfoAsync(itemsPerPage, page, type, authenticationID, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2565,10 +5080,30 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of sources.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listSourcesWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfoAsync(null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListSourcesResponse> listSourcesAsync() throws AlgoliaRuntimeException {
     return this.listSourcesAsync(null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of sources.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listSourcesWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listSourcesWithHTTPInfoAsync(null, null, null, null, null, null, null);
   }
 
   /**
@@ -2637,6 +5172,57 @@ public class IngestionClient extends ApiClient {
    *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<SourceType> sourceType,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
+    TaskSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listTasksWithHTTPInfoAsync(
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        withEmailNotifications,
+        sort,
+        order,
+        requestOptions
+      )
+    );
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks(
@@ -2671,6 +5257,52 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of tasks.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<SourceType> sourceType,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfo(
+      itemsPerPage,
+      page,
+      action,
+      enabled,
+      sourceID,
+      sourceType,
+      destinationID,
+      triggerType,
+      withEmailNotifications,
+      sort,
+      order,
+      null
+    );
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2682,10 +5314,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of tasks.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfo(null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse listTasks() throws AlgoliaRuntimeException {
     return this.listTasks(null, null, null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of tasks.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfo(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2754,6 +5406,57 @@ public class IngestionClient extends ApiClient {
    *     notifications.email.enabled set to this value. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<SourceType> sourceType,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
+    TaskSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("action", action)
+      .addQueryParameter("enabled", enabled)
+      .addQueryParameter("sourceID", sourceID)
+      .addQueryParameter("sourceType", sourceType)
+      .addQueryParameter("destinationID", destinationID)
+      .addQueryParameter("triggerType", triggerType)
+      .addQueryParameter("withEmailNotifications", withEmailNotifications)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync(
@@ -2788,6 +5491,52 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of tasks.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param sourceType Filters the tasks with the specified source type. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *     notifications.email.enabled set to this value. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<SourceType> sourceType,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    Boolean withEmailNotifications,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfoAsync(
+      itemsPerPage,
+      page,
+      action,
+      enabled,
+      sourceID,
+      sourceType,
+      destinationID,
+      triggerType,
+      withEmailNotifications,
+      sort,
+      order,
+      null
+    );
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2799,10 +5548,30 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of tasks.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> listTasksAsync() throws AlgoliaRuntimeException {
     return this.listTasksAsync(null, null, null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listTasksWithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2852,6 +5621,41 @@ public class IngestionClient extends ApiClient {
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response listTasksV1WithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      listTasksV1WithHTTPInfoAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
@@ -2873,6 +5677,36 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response listTasksV1WithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfo(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2884,10 +5718,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksV1WithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfo(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponseV1 listTasksV1() throws AlgoliaRuntimeException {
     return this.listTasksV1(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTasksV1WithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfo(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2950,6 +5804,53 @@ public class IngestionClient extends ApiClient {
    * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
    * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> listTasksV1WithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/tasks")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("action", action)
+      .addQueryParameter("enabled", enabled)
+      .addQueryParameter("sourceID", sourceID)
+      .addQueryParameter("destinationID", destinationID)
+      .addQueryParameter("triggerType", triggerType)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
@@ -2972,6 +5873,37 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
    * instead.
    *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> listTasksV1WithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    List<ActionType> action,
+    Boolean enabled,
+    List<String> sourceID,
+    List<String> destinationID,
+    List<TriggerType> triggerType,
+    TaskSortKeys sort,
+    OrderKeys order
+  ) throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfoAsync(itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2984,10 +5916,32 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
    * instead.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksV1WithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponseV1> listTasksV1Async() throws AlgoliaRuntimeException {
     return this.listTasksV1Async(null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
+   * instead.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTasksV1WithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listTasksV1WithHTTPInfoAsync(null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3025,6 +5979,31 @@ public class IngestionClient extends ApiClient {
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param type Whether to filter the list of transformations by the type of transformation.
    *     (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTransformationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    TransformationSortKeys sort,
+    OrderKeys order,
+    TransformationType type,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listTransformationsWithHTTPInfoAsync(itemsPerPage, page, sort, order, type, requestOptions));
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTransformationsResponse listTransformations(
@@ -3035,6 +6014,28 @@ public class IngestionClient extends ApiClient {
     TransformationType type
   ) throws AlgoliaRuntimeException {
     return this.listTransformations(itemsPerPage, page, sort, order, type, null);
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTransformationsWithHTTPInfo(
+    Integer itemsPerPage,
+    Integer page,
+    TransformationSortKeys sort,
+    OrderKeys order,
+    TransformationType type
+  ) throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfo(itemsPerPage, page, sort, order, type, null);
   }
 
   /**
@@ -3051,10 +6052,30 @@ public class IngestionClient extends ApiClient {
   /**
    * Retrieves a list of transformations.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTransformationsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfo(null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTransformationsResponse listTransformations() throws AlgoliaRuntimeException {
     return this.listTransformations(null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listTransformationsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfo(null, null, null, null, null, null);
   }
 
   /**
@@ -3101,6 +6122,40 @@ public class IngestionClient extends ApiClient {
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param type Whether to filter the list of transformations by the type of transformation.
    *     (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTransformationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    TransformationSortKeys sort,
+    OrderKeys order,
+    TransformationType type,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations")
+      .setMethod("GET")
+      .addQueryParameter("itemsPerPage", itemsPerPage)
+      .addQueryParameter("page", page)
+      .addQueryParameter("sort", sort)
+      .addQueryParameter("order", order)
+      .addQueryParameter("type", type)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of transformations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync(
@@ -3111,6 +6166,28 @@ public class IngestionClient extends ApiClient {
     TransformationType type
   ) throws AlgoliaRuntimeException {
     return this.listTransformationsAsync(itemsPerPage, page, sort, order, type, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of transformations.
+   *
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param sort Property by which to sort the list of transformations. (optional, default to
+   *     createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   *     (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTransformationsWithHTTPInfoAsync(
+    Integer itemsPerPage,
+    Integer page,
+    TransformationSortKeys sort,
+    OrderKeys order,
+    TransformationType type
+  ) throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfoAsync(itemsPerPage, page, sort, order, type, null);
   }
 
   /**
@@ -3128,10 +6205,31 @@ public class IngestionClient extends ApiClient {
   /**
    * (asynchronously) Retrieves a list of transformations.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTransformationsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfoAsync(null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of transformations.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTransformationsResponse> listTransformationsAsync() throws AlgoliaRuntimeException {
     return this.listTransformationsAsync(null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a list of transformations.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listTransformationsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listTransformationsWithHTTPInfoAsync(null, null, null, null, null, null);
   }
 
   /**
@@ -3182,11 +6280,70 @@ public class IngestionClient extends ApiClient {
    * @param referenceIndexName This is required when targeting an index that does not have a push
    *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
    *     to it (e.g. the source index name). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    String referenceIndexName,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushWithHTTPInfoAsync(indexName, pushTaskPayload, watch, referenceIndexName, requestOptions));
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch, String referenceIndexName)
     throws AlgoliaRuntimeException {
     return this.push(indexName, pushTaskPayload, watch, referenceIndexName, null);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    String referenceIndexName
+  ) throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfo(indexName, pushTaskPayload, watch, referenceIndexName, null);
   }
 
   /**
@@ -3222,10 +6379,52 @@ public class IngestionClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfo(indexName, pushTaskPayload, null, null, requestOptions);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse push(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
     return this.push(indexName, pushTaskPayload, null, null, null);
+  }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushWithHTTPInfo(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfo(indexName, pushTaskPayload, null, null, null);
   }
 
   /**
@@ -3295,6 +6494,56 @@ public class IngestionClient extends ApiClient {
    * @param referenceIndexName This is required when targeting an index that does not have a push
    *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
    *     to it (e.g. the source index name). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    String referenceIndexName,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `push`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `push`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/push/{indexName}", indexName)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .addQueryParameter("referenceIndexName", referenceIndexName)
+      .build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<Response>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> pushAsync(
@@ -3304,6 +6553,34 @@ public class IngestionClient extends ApiClient {
     String referenceIndexName
   ) throws AlgoliaRuntimeException {
     return this.pushAsync(indexName, pushTaskPayload, watch, referenceIndexName, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *     connector setup (e.g. a tmp index), but you wish to attach another index's transformation
+   *     to it (e.g. the source index name). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    String referenceIndexName
+  ) throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfoAsync(indexName, pushTaskPayload, watch, referenceIndexName, null);
   }
 
   /**
@@ -3342,11 +6619,54 @@ public class IngestionClient extends ApiClient {
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfoAsync(indexName, pushTaskPayload, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> pushAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
     return this.pushAsync(indexName, pushTaskPayload, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the Pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints and/or debugger dashboard to see the status of your task. If you want
+   * to leverage the [pre-indexing data
+   * transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushWithHTTPInfoAsync(@Nonnull String indexName, @Nonnull PushTaskPayload pushTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.pushWithHTTPInfoAsync(indexName, pushTaskPayload, null, null, null);
   }
 
   /**
@@ -3386,11 +6706,55 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushTaskWithHTTPInfo(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushTaskWithHTTPInfoAsync(taskID, pushTaskPayload, watch, requestOptions));
+  }
+
+  /**
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
     throws AlgoliaRuntimeException {
     return this.pushTask(taskID, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfo(taskID, pushTaskPayload, watch, null);
   }
 
   /**
@@ -3422,10 +6786,48 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushTaskWithHTTPInfo(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfo(taskID, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse pushTask(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
     return this.pushTask(taskID, pushTaskPayload, null, null);
+  }
+
+  /**
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload) throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfo(taskID, pushTaskPayload, null, null);
   }
 
   /**
@@ -3483,11 +6885,76 @@ public class IngestionClient extends ApiClient {
    * @param pushTaskPayload (required)
    * @param watch When provided, the push operation will be synchronous and the API will wait for
    *     the ingestion to be finished before responding. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `pushTask`.");
+
+    Parameters.requireNonNull(pushTaskPayload, "Parameter `pushTaskPayload` is required when calling `pushTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/push", taskID)
+      .setMethod("POST")
+      .setBody(pushTaskPayload)
+      .addQueryParameter("watch", watch)
+      .build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<Response>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload, Boolean watch)
     throws AlgoliaRuntimeException {
     return this.pushTaskAsync(taskID, pushTaskPayload, watch, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *     the ingestion to be finished before responding. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    Boolean watch
+  ) throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfoAsync(taskID, pushTaskPayload, watch, null);
   }
 
   /**
@@ -3522,11 +6989,50 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param pushTaskPayload (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull PushTaskPayload pushTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfoAsync(taskID, pushTaskPayload, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> pushTaskAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
     throws AlgoliaRuntimeException {
     return this.pushTaskAsync(taskID, pushTaskPayload, null, null);
+  }
+
+  /**
+   * (asynchronously) Pushes records through the pipeline, directly to an index. You can make the
+   * call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the
+   * observability endpoints or the debugger dashboard to see the status of your task. If you want
+   * to transform your data before indexing, this is the recommended way of ingesting your records.
+   * This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is
+   * useful when many `destinations` target the same `indexName`.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param pushTaskPayload (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nonnull PushTaskPayload pushTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.pushTaskWithHTTPInfoAsync(taskID, pushTaskPayload, null, null);
   }
 
   /**
@@ -3550,10 +7056,37 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskReplace (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response replaceTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull TaskReplace taskReplace, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(replaceTaskWithHTTPInfoAsync(taskID, taskReplace, requestOptions));
+  }
+
+  /**
+   * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
+   * fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse replaceTask(@Nonnull String taskID, @Nonnull TaskReplace taskReplace) throws AlgoliaRuntimeException {
     return this.replaceTask(taskID, taskReplace, null);
+  }
+
+  /**
+   * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
+   * fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response replaceTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull TaskReplace taskReplace) throws AlgoliaRuntimeException {
+    return this.replaceTaskWithHTTPInfo(taskID, taskReplace, null);
   }
 
   /**
@@ -3585,11 +7118,47 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskReplace (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> replaceTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull TaskReplace taskReplace,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `replaceTask`.");
+
+    Parameters.requireNonNull(taskReplace, "Parameter `taskReplace` is required when calling `replaceTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("PUT").setBody(taskReplace).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Fully updates a task by its ID, use partialUpdateTask if you only want to
+   * update a subset of fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> replaceTaskAsync(@Nonnull String taskID, @Nonnull TaskReplace taskReplace)
     throws AlgoliaRuntimeException {
     return this.replaceTaskAsync(taskID, taskReplace, null);
+  }
+
+  /**
+   * (asynchronously) Fully updates a task by its ID, use partialUpdateTask if you only want to
+   * update a subset of fields.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskReplace (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> replaceTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nonnull TaskReplace taskReplace)
+    throws AlgoliaRuntimeException {
+    return this.replaceTaskWithHTTPInfoAsync(taskID, taskReplace, null);
   }
 
   /**
@@ -3613,10 +7182,40 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runSourceWithHTTPInfo(
+    @Nonnull String sourceID,
+    RunSourcePayload runSourcePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runSourceWithHTTPInfoAsync(sourceID, runSourcePayload, requestOptions));
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunSourceResponse runSource(@Nonnull String sourceID, RunSourcePayload runSourcePayload) throws AlgoliaRuntimeException {
     return this.runSource(sourceID, runSourcePayload, null);
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runSourceWithHTTPInfo(@Nonnull String sourceID, RunSourcePayload runSourcePayload) throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfo(sourceID, runSourcePayload, null);
   }
 
   /**
@@ -3637,10 +7236,34 @@ public class IngestionClient extends ApiClient {
    * sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runSourceWithHTTPInfo(@Nonnull String sourceID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfo(sourceID, null, requestOptions);
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunSourceResponse runSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.runSource(sourceID, null, null);
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runSourceWithHTTPInfo(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfo(sourceID, null, null);
   }
 
   /**
@@ -3674,11 +7297,49 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param runSourcePayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runSourceWithHTTPInfoAsync(
+    @Nonnull String sourceID,
+    RunSourcePayload runSourcePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `runSource`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources/{sourceID}/run", sourceID)
+      .setMethod("POST")
+      .setBody(runSourcePayload)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunSourceResponse> runSourceAsync(@Nonnull String sourceID, RunSourcePayload runSourcePayload)
     throws AlgoliaRuntimeException {
     return this.runSourceAsync(sourceID, runSourcePayload, null);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param runSourcePayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runSourceWithHTTPInfoAsync(@Nonnull String sourceID, RunSourcePayload runSourcePayload)
+    throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfoAsync(sourceID, runSourcePayload, null);
   }
 
   /**
@@ -3700,10 +7361,35 @@ public class IngestionClient extends ApiClient {
    * commercetools sources. Creates one run per task.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfoAsync(sourceID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunSourceResponse> runSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.runSourceAsync(sourceID, null, null);
+  }
+
+  /**
+   * (asynchronously) Runs all tasks linked to a source, only available for Shopify, BigCommerce and
+   * commercetools sources. Creates one run per task.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runSourceWithHTTPInfoAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.runSourceWithHTTPInfoAsync(sourceID, null, null);
   }
 
   /**
@@ -3725,10 +7411,35 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskWithHTTPInfo(@Nonnull String taskID, RunTaskPayload runTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runTaskWithHTTPInfoAsync(taskID, runTaskPayload, requestOptions));
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTask(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
     return this.runTask(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskWithHTTPInfo(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfo(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3747,10 +7458,32 @@ public class IngestionClient extends ApiClient {
    * Runs a task. You can check the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskWithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfo(taskID, null, requestOptions);
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.runTask(taskID, null, null);
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskWithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfo(taskID, null, null);
   }
 
   /**
@@ -3780,10 +7513,44 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    RunTaskPayload runTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
     return this.runTaskAsync(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskWithHTTPInfoAsync(@Nonnull String taskID, RunTaskPayload runTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfoAsync(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3805,10 +7572,35 @@ public class IngestionClient extends ApiClient {
    * endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfoAsync(taskID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.runTaskAsync(taskID, null, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskWithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskWithHTTPInfoAsync(taskID, null, null);
   }
 
   /**
@@ -3834,12 +7626,43 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response runTaskV1WithHTTPInfo(@Nonnull String taskID, RunTaskPayload runTaskPayload, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(runTaskV1WithHTTPInfoAsync(taskID, runTaskPayload, requestOptions));
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public RunResponse runTaskV1(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
     return this.runTaskV1(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response runTaskV1WithHTTPInfo(@Nonnull String taskID, RunTaskPayload runTaskPayload) throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfo(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3860,10 +7683,34 @@ public class IngestionClient extends ApiClient {
    * task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskV1WithHTTPInfo(@Nonnull String taskID, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfo(taskID, null, requestOptions);
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTaskV1(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.runTaskV1(taskID, null, null);
+  }
+
+  /**
+   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
+   * task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response runTaskV1WithHTTPInfo(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfo(taskID, null, null);
   }
 
   /**
@@ -3895,6 +7742,29 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> runTaskV1WithHTTPInfoAsync(
+    @Nonnull String taskID,
+    RunTaskPayload runTaskPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
@@ -3902,6 +7772,21 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID, RunTaskPayload runTaskPayload)
     throws AlgoliaRuntimeException {
     return this.runTaskV1Async(taskID, runTaskPayload, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param runTaskPayload (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> runTaskV1WithHTTPInfoAsync(@Nonnull String taskID, RunTaskPayload runTaskPayload)
+    throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfoAsync(taskID, runTaskPayload, null);
   }
 
   /**
@@ -3923,10 +7808,35 @@ public class IngestionClient extends ApiClient {
    * the status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfoAsync(taskID, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunResponse> runTaskV1Async(@Nonnull String taskID) throws AlgoliaRuntimeException {
     return this.runTaskV1Async(taskID, null, null);
+  }
+
+  /**
+   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
+   * the status of task runs with the observability endpoints.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> runTaskV1WithHTTPInfoAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
+    return this.runTaskV1WithHTTPInfoAsync(taskID, null, null);
   }
 
   /**
@@ -3948,10 +7858,35 @@ public class IngestionClient extends ApiClient {
    * Searches for authentication resources.
    *
    * @param authenticationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchAuthenticationsWithHTTPInfo(
+    @Nonnull AuthenticationSearch authenticationSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchAuthenticationsWithHTTPInfoAsync(authenticationSearch, requestOptions));
+  }
+
+  /**
+   * Searches for authentication resources.
+   *
+   * @param authenticationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<Authentication> searchAuthentications(@Nonnull AuthenticationSearch authenticationSearch) throws AlgoliaRuntimeException {
     return this.searchAuthentications(authenticationSearch, null);
+  }
+
+  /**
+   * Searches for authentication resources.
+   *
+   * @param authenticationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchAuthenticationsWithHTTPInfo(@Nonnull AuthenticationSearch authenticationSearch) throws AlgoliaRuntimeException {
+    return this.searchAuthenticationsWithHTTPInfo(authenticationSearch, null);
   }
 
   /**
@@ -3980,11 +7915,44 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for authentication resources.
    *
    * @param authenticationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchAuthenticationsWithHTTPInfoAsync(
+    @Nonnull AuthenticationSearch authenticationSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(authenticationSearch, "Parameter `authenticationSearch` is required when calling `searchAuthentications`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/authentications/search")
+      .setMethod("POST")
+      .setBody(authenticationSearch)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for authentication resources.
+   *
+   * @param authenticationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<Authentication>> searchAuthenticationsAsync(@Nonnull AuthenticationSearch authenticationSearch)
     throws AlgoliaRuntimeException {
     return this.searchAuthenticationsAsync(authenticationSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for authentication resources.
+   *
+   * @param authenticationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchAuthenticationsWithHTTPInfoAsync(@Nonnull AuthenticationSearch authenticationSearch)
+    throws AlgoliaRuntimeException {
+    return this.searchAuthenticationsWithHTTPInfoAsync(authenticationSearch, null);
   }
 
   /**
@@ -4004,10 +7972,33 @@ public class IngestionClient extends ApiClient {
    * Searches for destinations.
    *
    * @param destinationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchDestinationsWithHTTPInfo(@Nonnull DestinationSearch destinationSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchDestinationsWithHTTPInfoAsync(destinationSearch, requestOptions));
+  }
+
+  /**
+   * Searches for destinations.
+   *
+   * @param destinationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<Destination> searchDestinations(@Nonnull DestinationSearch destinationSearch) throws AlgoliaRuntimeException {
     return this.searchDestinations(destinationSearch, null);
+  }
+
+  /**
+   * Searches for destinations.
+   *
+   * @param destinationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchDestinationsWithHTTPInfo(@Nonnull DestinationSearch destinationSearch) throws AlgoliaRuntimeException {
+    return this.searchDestinationsWithHTTPInfo(destinationSearch, null);
   }
 
   /**
@@ -4032,11 +8023,40 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for destinations.
    *
    * @param destinationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchDestinationsWithHTTPInfoAsync(
+    @Nonnull DestinationSearch destinationSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(destinationSearch, "Parameter `destinationSearch` is required when calling `searchDestinations`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/destinations/search").setMethod("POST").setBody(destinationSearch).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for destinations.
+   *
+   * @param destinationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<Destination>> searchDestinationsAsync(@Nonnull DestinationSearch destinationSearch)
     throws AlgoliaRuntimeException {
     return this.searchDestinationsAsync(destinationSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for destinations.
+   *
+   * @param destinationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchDestinationsWithHTTPInfoAsync(@Nonnull DestinationSearch destinationSearch)
+    throws AlgoliaRuntimeException {
+    return this.searchDestinationsWithHTTPInfoAsync(destinationSearch, null);
   }
 
   /**
@@ -4056,10 +8076,33 @@ public class IngestionClient extends ApiClient {
    * Searches for sources.
    *
    * @param sourceSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchSourcesWithHTTPInfo(@Nonnull SourceSearch sourceSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchSourcesWithHTTPInfoAsync(sourceSearch, requestOptions));
+  }
+
+  /**
+   * Searches for sources.
+   *
+   * @param sourceSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<Source> searchSources(@Nonnull SourceSearch sourceSearch) throws AlgoliaRuntimeException {
     return this.searchSources(sourceSearch, null);
+  }
+
+  /**
+   * Searches for sources.
+   *
+   * @param sourceSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchSourcesWithHTTPInfo(@Nonnull SourceSearch sourceSearch) throws AlgoliaRuntimeException {
+    return this.searchSourcesWithHTTPInfo(sourceSearch, null);
   }
 
   /**
@@ -4082,10 +8125,38 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for sources.
    *
    * @param sourceSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchSourcesWithHTTPInfoAsync(
+    @Nonnull SourceSearch sourceSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceSearch, "Parameter `sourceSearch` is required when calling `searchSources`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/search").setMethod("POST").setBody(sourceSearch).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for sources.
+   *
+   * @param sourceSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<Source>> searchSourcesAsync(@Nonnull SourceSearch sourceSearch) throws AlgoliaRuntimeException {
     return this.searchSourcesAsync(sourceSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for sources.
+   *
+   * @param sourceSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchSourcesWithHTTPInfoAsync(@Nonnull SourceSearch sourceSearch) throws AlgoliaRuntimeException {
+    return this.searchSourcesWithHTTPInfoAsync(sourceSearch, null);
   }
 
   /**
@@ -4104,10 +8175,33 @@ public class IngestionClient extends ApiClient {
    * Searches for tasks.
    *
    * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchTasksWithHTTPInfo(@Nonnull TaskSearch taskSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchTasksWithHTTPInfoAsync(taskSearch, requestOptions));
+  }
+
+  /**
+   * Searches for tasks.
+   *
+   * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<Task> searchTasks(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
     return this.searchTasks(taskSearch, null);
+  }
+
+  /**
+   * Searches for tasks.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchTasksWithHTTPInfo(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksWithHTTPInfo(taskSearch, null);
   }
 
   /**
@@ -4130,10 +8224,36 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for tasks.
    *
    * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchTasksWithHTTPInfoAsync(@Nonnull TaskSearch taskSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasks`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/search").setMethod("POST").setBody(taskSearch).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for tasks.
+   *
+   * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<Task>> searchTasksAsync(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
     return this.searchTasksAsync(taskSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for tasks.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchTasksWithHTTPInfoAsync(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksWithHTTPInfoAsync(taskSearch, null);
   }
 
   /**
@@ -4155,12 +8275,39 @@ public class IngestionClient extends ApiClient {
    * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
    *
    * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response searchTasksV1WithHTTPInfo(@Nonnull TaskSearch taskSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchTasksV1WithHTTPInfoAsync(taskSearch, requestOptions));
+  }
+
+  /**
+   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public List<TaskV1> searchTasksV1(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
     return this.searchTasksV1(taskSearch, null);
+  }
+
+  /**
+   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response searchTasksV1WithHTTPInfo(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksV1WithHTTPInfo(taskSearch, null);
   }
 
   /**
@@ -4185,12 +8332,42 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
    *
    * @param taskSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> searchTasksV1WithHTTPInfoAsync(@Nonnull TaskSearch taskSearch, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskSearch, "Parameter `taskSearch` is required when calling `searchTasksV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/search").setMethod("POST").setBody(taskSearch).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public CompletableFuture<List<TaskV1>> searchTasksV1Async(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
     return this.searchTasksV1Async(taskSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   *
+   * @param taskSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> searchTasksV1WithHTTPInfoAsync(@Nonnull TaskSearch taskSearch) throws AlgoliaRuntimeException {
+    return this.searchTasksV1WithHTTPInfoAsync(taskSearch, null);
   }
 
   /**
@@ -4212,10 +8389,35 @@ public class IngestionClient extends ApiClient {
    * Searches for transformations.
    *
    * @param transformationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchTransformationsWithHTTPInfo(
+    @Nonnull TransformationSearch transformationSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchTransformationsWithHTTPInfoAsync(transformationSearch, requestOptions));
+  }
+
+  /**
+   * Searches for transformations.
+   *
+   * @param transformationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<Transformation> searchTransformations(@Nonnull TransformationSearch transformationSearch) throws AlgoliaRuntimeException {
     return this.searchTransformations(transformationSearch, null);
+  }
+
+  /**
+   * Searches for transformations.
+   *
+   * @param transformationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchTransformationsWithHTTPInfo(@Nonnull TransformationSearch transformationSearch) throws AlgoliaRuntimeException {
+    return this.searchTransformationsWithHTTPInfo(transformationSearch, null);
   }
 
   /**
@@ -4244,11 +8446,44 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Searches for transformations.
    *
    * @param transformationSearch (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchTransformationsWithHTTPInfoAsync(
+    @Nonnull TransformationSearch transformationSearch,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationSearch, "Parameter `transformationSearch` is required when calling `searchTransformations`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations/search")
+      .setMethod("POST")
+      .setBody(transformationSearch)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for transformations.
+   *
+   * @param transformationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<Transformation>> searchTransformationsAsync(@Nonnull TransformationSearch transformationSearch)
     throws AlgoliaRuntimeException {
     return this.searchTransformationsAsync(transformationSearch, null);
+  }
+
+  /**
+   * (asynchronously) Searches for transformations.
+   *
+   * @param transformationSearch (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchTransformationsWithHTTPInfoAsync(@Nonnull TransformationSearch transformationSearch)
+    throws AlgoliaRuntimeException {
+    return this.searchTransformationsWithHTTPInfoAsync(transformationSearch, null);
   }
 
   /**
@@ -4270,10 +8505,35 @@ public class IngestionClient extends ApiClient {
    * with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response triggerDockerSourceDiscoverWithHTTPInfo(@Nonnull String sourceID, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(triggerDockerSourceDiscoverWithHTTPInfoAsync(sourceID, requestOptions));
+  }
+
+  /**
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
+   * with sources with `type: docker` and `imageType: airbyte`.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscover(sourceID, null);
+  }
+
+  /**
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
+   * with sources with `type: docker` and `imageType: airbyte`.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response triggerDockerSourceDiscoverWithHTTPInfo(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.triggerDockerSourceDiscoverWithHTTPInfo(sourceID, null);
   }
 
   /**
@@ -4308,10 +8568,48 @@ public class IngestionClient extends ApiClient {
    * requests only works with sources with `type: docker` and `imageType: airbyte`.
    *
    * @param sourceID Unique identifier of a source. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> triggerDockerSourceDiscoverWithHTTPInfoAsync(
+    @Nonnull String sourceID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<Response>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
+   *
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscoverAsync(sourceID, null);
+  }
+
+  /**
+   * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
+   * requests only works with sources with `type: docker` and `imageType: airbyte`.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> triggerDockerSourceDiscoverWithHTTPInfoAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+    return this.triggerDockerSourceDiscoverWithHTTPInfoAsync(sourceID, null);
   }
 
   /**
@@ -4331,10 +8629,33 @@ public class IngestionClient extends ApiClient {
    * Try a transformation before creating it.
    *
    * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response tryTransformationWithHTTPInfo(@Nonnull TransformationTry transformationTry, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(tryTransformationWithHTTPInfoAsync(transformationTry, requestOptions));
+  }
+
+  /**
+   * Try a transformation before creating it.
+   *
+   * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TransformationTryResponse tryTransformation(@Nonnull TransformationTry transformationTry) throws AlgoliaRuntimeException {
     return this.tryTransformation(transformationTry, null);
+  }
+
+  /**
+   * Try a transformation before creating it.
+   *
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response tryTransformationWithHTTPInfo(@Nonnull TransformationTry transformationTry) throws AlgoliaRuntimeException {
+    return this.tryTransformationWithHTTPInfo(transformationTry, null);
   }
 
   /**
@@ -4359,11 +8680,40 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Try a transformation before creating it.
    *
    * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> tryTransformationWithHTTPInfoAsync(
+    @Nonnull TransformationTry transformationTry,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformation`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/transformations/try").setMethod("POST").setBody(transformationTry).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Try a transformation before creating it.
+   *
+   * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TransformationTryResponse> tryTransformationAsync(@Nonnull TransformationTry transformationTry)
     throws AlgoliaRuntimeException {
     return this.tryTransformationAsync(transformationTry, null);
+  }
+
+  /**
+   * (asynchronously) Try a transformation before creating it.
+   *
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> tryTransformationWithHTTPInfoAsync(@Nonnull TransformationTry transformationTry)
+    throws AlgoliaRuntimeException {
+    return this.tryTransformationWithHTTPInfoAsync(transformationTry, null);
   }
 
   /**
@@ -4388,6 +8738,23 @@ public class IngestionClient extends ApiClient {
    *
    * @param transformationID Unique identifier of a transformation. (required)
    * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response tryTransformationBeforeUpdateWithHTTPInfo(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(tryTransformationBeforeUpdateWithHTTPInfoAsync(transformationID, transformationTry, requestOptions));
+  }
+
+  /**
+   * Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TransformationTryResponse tryTransformationBeforeUpdate(
@@ -4395,6 +8762,18 @@ public class IngestionClient extends ApiClient {
     @Nonnull TransformationTry transformationTry
   ) throws AlgoliaRuntimeException {
     return this.tryTransformationBeforeUpdate(transformationID, transformationTry, null);
+  }
+
+  /**
+   * Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response tryTransformationBeforeUpdateWithHTTPInfo(@Nonnull String transformationID, @Nonnull TransformationTry transformationTry)
+    throws AlgoliaRuntimeException {
+    return this.tryTransformationBeforeUpdateWithHTTPInfo(transformationID, transformationTry, null);
   }
 
   /**
@@ -4428,6 +8807,32 @@ public class IngestionClient extends ApiClient {
    *
    * @param transformationID Unique identifier of a transformation. (required)
    * @param transformationTry (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> tryTransformationBeforeUpdateWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.");
+
+    Parameters.requireNonNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations/{transformationID}/try", transformationID)
+      .setMethod("POST")
+      .setBody(transformationTry)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TransformationTryResponse> tryTransformationBeforeUpdateAsync(
@@ -4435,6 +8840,20 @@ public class IngestionClient extends ApiClient {
     @Nonnull TransformationTry transformationTry
   ) throws AlgoliaRuntimeException {
     return this.tryTransformationBeforeUpdateAsync(transformationID, transformationTry, null);
+  }
+
+  /**
+   * (asynchronously) Try a transformation before updating it.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationTry (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> tryTransformationBeforeUpdateWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationTry transformationTry
+  ) throws AlgoliaRuntimeException {
+    return this.tryTransformationBeforeUpdateWithHTTPInfoAsync(transformationID, transformationTry, null);
   }
 
   /**
@@ -4459,6 +8878,23 @@ public class IngestionClient extends ApiClient {
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateAuthenticationWithHTTPInfo(
+    @Nonnull String authenticationID,
+    @Nonnull AuthenticationUpdate authenticationUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateAuthenticationWithHTTPInfoAsync(authenticationID, authenticationUpdate, requestOptions));
+  }
+
+  /**
+   * Updates an authentication resource.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param authenticationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public AuthenticationUpdateResponse updateAuthentication(
@@ -4466,6 +8902,18 @@ public class IngestionClient extends ApiClient {
     @Nonnull AuthenticationUpdate authenticationUpdate
   ) throws AlgoliaRuntimeException {
     return this.updateAuthentication(authenticationID, authenticationUpdate, null);
+  }
+
+  /**
+   * Updates an authentication resource.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param authenticationUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateAuthenticationWithHTTPInfo(@Nonnull String authenticationID, @Nonnull AuthenticationUpdate authenticationUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateAuthenticationWithHTTPInfo(authenticationID, authenticationUpdate, null);
   }
 
   /**
@@ -4499,6 +8947,32 @@ public class IngestionClient extends ApiClient {
    *
    * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateAuthenticationWithHTTPInfoAsync(
+    @Nonnull String authenticationID,
+    @Nonnull AuthenticationUpdate authenticationUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `updateAuthentication`.");
+
+    Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/authentications/{authenticationID}", authenticationID)
+      .setMethod("PATCH")
+      .setBody(authenticationUpdate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates an authentication resource.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param authenticationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<AuthenticationUpdateResponse> updateAuthenticationAsync(
@@ -4506,6 +8980,20 @@ public class IngestionClient extends ApiClient {
     @Nonnull AuthenticationUpdate authenticationUpdate
   ) throws AlgoliaRuntimeException {
     return this.updateAuthenticationAsync(authenticationID, authenticationUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Updates an authentication resource.
+   *
+   * @param authenticationID Unique identifier of an authentication resource. (required)
+   * @param authenticationUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateAuthenticationWithHTTPInfoAsync(
+    @Nonnull String authenticationID,
+    @Nonnull AuthenticationUpdate authenticationUpdate
+  ) throws AlgoliaRuntimeException {
+    return this.updateAuthenticationWithHTTPInfoAsync(authenticationID, authenticationUpdate, null);
   }
 
   /**
@@ -4530,11 +9018,40 @@ public class IngestionClient extends ApiClient {
    *
    * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateDestinationWithHTTPInfo(
+    @Nonnull String destinationID,
+    @Nonnull DestinationUpdate destinationUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateDestinationWithHTTPInfoAsync(destinationID, destinationUpdate, requestOptions));
+  }
+
+  /**
+   * Updates the destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @param destinationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DestinationUpdateResponse updateDestination(@Nonnull String destinationID, @Nonnull DestinationUpdate destinationUpdate)
     throws AlgoliaRuntimeException {
     return this.updateDestination(destinationID, destinationUpdate, null);
+  }
+
+  /**
+   * Updates the destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @param destinationUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateDestinationWithHTTPInfo(@Nonnull String destinationID, @Nonnull DestinationUpdate destinationUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateDestinationWithHTTPInfo(destinationID, destinationUpdate, null);
   }
 
   /**
@@ -4568,6 +9085,32 @@ public class IngestionClient extends ApiClient {
    *
    * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateDestinationWithHTTPInfoAsync(
+    @Nonnull String destinationID,
+    @Nonnull DestinationUpdate destinationUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(destinationID, "Parameter `destinationID` is required when calling `updateDestination`.");
+
+    Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/destinations/{destinationID}", destinationID)
+      .setMethod("PATCH")
+      .setBody(destinationUpdate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates the destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @param destinationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DestinationUpdateResponse> updateDestinationAsync(
@@ -4575,6 +9118,20 @@ public class IngestionClient extends ApiClient {
     @Nonnull DestinationUpdate destinationUpdate
   ) throws AlgoliaRuntimeException {
     return this.updateDestinationAsync(destinationID, destinationUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Updates the destination by its ID.
+   *
+   * @param destinationID Unique identifier of a destination. (required)
+   * @param destinationUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateDestinationWithHTTPInfoAsync(
+    @Nonnull String destinationID,
+    @Nonnull DestinationUpdate destinationUpdate
+  ) throws AlgoliaRuntimeException {
+    return this.updateDestinationWithHTTPInfoAsync(destinationID, destinationUpdate, null);
   }
 
   /**
@@ -4599,10 +9156,38 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateSourceWithHTTPInfo(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateSourceWithHTTPInfoAsync(sourceID, sourceUpdate, requestOptions));
+  }
+
+  /**
+   * Updates a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SourceUpdateResponse updateSource(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate) throws AlgoliaRuntimeException {
     return this.updateSource(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * Updates a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateSourceWithHTTPInfo(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate) throws AlgoliaRuntimeException {
+    return this.updateSourceWithHTTPInfo(sourceID, sourceUpdate, null);
   }
 
   /**
@@ -4632,11 +9217,45 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateSourceWithHTTPInfoAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `updateSource`.");
+
+    Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `updateSource`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}", sourceID).setMethod("PATCH").setBody(sourceUpdate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SourceUpdateResponse> updateSourceAsync(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
     throws AlgoliaRuntimeException {
     return this.updateSourceAsync(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Updates a source by its ID.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateSourceWithHTTPInfoAsync(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateSourceWithHTTPInfoAsync(sourceID, sourceUpdate, null);
   }
 
   /**
@@ -4658,10 +9277,35 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateTaskWithHTTPInfoAsync(taskID, taskUpdate, requestOptions));
+  }
+
+  /**
+   * Partially updates a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse updateTask(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate) throws AlgoliaRuntimeException {
     return this.updateTask(taskID, taskUpdate, null);
+  }
+
+  /**
+   * Partially updates a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateTaskWithHTTPInfo(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate) throws AlgoliaRuntimeException {
+    return this.updateTaskWithHTTPInfo(taskID, taskUpdate, null);
   }
 
   /**
@@ -4691,11 +9335,45 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateTaskWithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull TaskUpdate taskUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTask`.");
+
+    Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}", taskID).setMethod("PATCH").setBody(taskUpdate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Partially updates a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> updateTaskAsync(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate)
     throws AlgoliaRuntimeException {
     return this.updateTaskAsync(taskID, taskUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Partially updates a task by its ID.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateTaskWithHTTPInfoAsync(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateTaskWithHTTPInfoAsync(taskID, taskUpdate, null);
   }
 
   /**
@@ -4719,12 +9397,44 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response updateTaskV1WithHTTPInfo(
+    @Nonnull String taskID,
+    @Nonnull TaskUpdateV1 taskUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateTaskV1WithHTTPInfoAsync(taskID, taskUpdate, requestOptions));
+  }
+
+  /**
+   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
   @Deprecated
   public TaskUpdateResponse updateTaskV1(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate) throws AlgoliaRuntimeException {
     return this.updateTaskV1(taskID, taskUpdate, null);
+  }
+
+  /**
+   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response updateTaskV1WithHTTPInfo(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate) throws AlgoliaRuntimeException {
+    return this.updateTaskV1WithHTTPInfo(taskID, taskUpdate, null);
   }
 
   /**
@@ -4758,6 +9468,31 @@ public class IngestionClient extends ApiClient {
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> updateTaskV1WithHTTPInfoAsync(
+    @Nonnull String taskID,
+    @Nonnull TaskUpdateV1 taskUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `updateTaskV1`.");
+
+    Parameters.requireNonNull(taskUpdate, "Parameter `taskUpdate` is required when calling `updateTaskV1`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}", taskID).setMethod("PATCH").setBody(taskUpdate).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    * @deprecated
    */
@@ -4765,6 +9500,21 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> updateTaskV1Async(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate)
     throws AlgoliaRuntimeException {
     return this.updateTaskV1Async(taskID, taskUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
+   * instead.
+   *
+   * @param taskID Unique identifier of a task. (required)
+   * @param taskUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public CompletableFuture<Response> updateTaskV1WithHTTPInfoAsync(@Nonnull String taskID, @Nonnull TaskUpdateV1 taskUpdate)
+    throws AlgoliaRuntimeException {
+    return this.updateTaskV1WithHTTPInfoAsync(taskID, taskUpdate, null);
   }
 
   /**
@@ -4789,6 +9539,23 @@ public class IngestionClient extends ApiClient {
    *
    * @param transformationID Unique identifier of a transformation. (required)
    * @param transformationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateTransformationWithHTTPInfo(
+    @Nonnull String transformationID,
+    @Nonnull TransformationCreate transformationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateTransformationWithHTTPInfoAsync(transformationID, transformationCreate, requestOptions));
+  }
+
+  /**
+   * Updates a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TransformationUpdateResponse updateTransformation(
@@ -4796,6 +9563,18 @@ public class IngestionClient extends ApiClient {
     @Nonnull TransformationCreate transformationCreate
   ) throws AlgoliaRuntimeException {
     return this.updateTransformation(transformationID, transformationCreate, null);
+  }
+
+  /**
+   * Updates a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateTransformationWithHTTPInfo(@Nonnull String transformationID, @Nonnull TransformationCreate transformationCreate)
+    throws AlgoliaRuntimeException {
+    return this.updateTransformationWithHTTPInfo(transformationID, transformationCreate, null);
   }
 
   /**
@@ -4829,6 +9608,32 @@ public class IngestionClient extends ApiClient {
    *
    * @param transformationID Unique identifier of a transformation. (required)
    * @param transformationCreate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateTransformationWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationCreate transformationCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.");
+
+    Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/transformations/{transformationID}", transformationID)
+      .setMethod("PUT")
+      .setBody(transformationCreate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Updates a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TransformationUpdateResponse> updateTransformationAsync(
@@ -4836,6 +9641,20 @@ public class IngestionClient extends ApiClient {
     @Nonnull TransformationCreate transformationCreate
   ) throws AlgoliaRuntimeException {
     return this.updateTransformationAsync(transformationID, transformationCreate, null);
+  }
+
+  /**
+   * (asynchronously) Updates a transformation by its ID.
+   *
+   * @param transformationID Unique identifier of a transformation. (required)
+   * @param transformationCreate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateTransformationWithHTTPInfoAsync(
+    @Nonnull String transformationID,
+    @Nonnull TransformationCreate transformationCreate
+  ) throws AlgoliaRuntimeException {
+    return this.updateTransformationWithHTTPInfoAsync(transformationID, transformationCreate, null);
   }
 
   /**
@@ -4856,10 +9675,35 @@ public class IngestionClient extends ApiClient {
    * by Algolia.
    *
    * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceWithHTTPInfo(SourceCreate sourceCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceWithHTTPInfoAsync(sourceCreate, requestOptions));
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse validateSource(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.validateSource(sourceCreate, null);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceWithHTTPInfo(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfo(sourceCreate, null);
   }
 
   /**
@@ -4878,10 +9722,32 @@ public class IngestionClient extends ApiClient {
    * Validates a source payload to ensure it can be created and that the data source can be reached
    * by Algolia.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfo(null, requestOptions);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse validateSource() throws AlgoliaRuntimeException {
     return this.validateSource(null, null);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfo(null, null);
   }
 
   /**
@@ -4912,10 +9778,44 @@ public class IngestionClient extends ApiClient {
    * source can be reached by Algolia.
    *
    * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceWithHTTPInfoAsync(SourceCreate sourceCreate, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<Response>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> validateSourceAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
     return this.validateSourceAsync(sourceCreate, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceWithHTTPInfoAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfoAsync(sourceCreate, null);
   }
 
   /**
@@ -4934,10 +9834,33 @@ public class IngestionClient extends ApiClient {
    * (asynchronously) Validates a source payload to ensure it can be created and that the data
    * source can be reached by Algolia.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfoAsync(null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> validateSourceAsync() throws AlgoliaRuntimeException {
     return this.validateSourceAsync(null, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.validateSourceWithHTTPInfoAsync(null, null);
   }
 
   /**
@@ -4964,11 +9887,42 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceBeforeUpdateWithHTTPInfo(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceBeforeUpdateWithHTTPInfoAsync(sourceID, sourceUpdate, requestOptions));
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public WatchResponse validateSourceBeforeUpdate(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
     throws AlgoliaRuntimeException {
     return this.validateSourceBeforeUpdate(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response validateSourceBeforeUpdateWithHTTPInfo(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+    throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdateWithHTTPInfo(sourceID, sourceUpdate, null);
   }
 
   /**
@@ -5012,11 +9966,61 @@ public class IngestionClient extends ApiClient {
    *
    * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceBeforeUpdateWithHTTPInfoAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+
+    Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources/{sourceID}/validate", sourceID)
+      .setMethod("POST")
+      .setBody(sourceUpdate)
+      .build();
+    return executeAsync(
+      request,
+      new RequestOptions()
+        .setReadTimeout(Duration.ofMillis(180000L))
+        .setWriteTimeout(Duration.ofMillis(180000L))
+        .setConnectTimeout(Duration.ofMillis(180000L))
+        .mergeRight(requestOptions),
+      new TypeReference<Response>() {}
+    );
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<WatchResponse> validateSourceBeforeUpdateAsync(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
     throws AlgoliaRuntimeException {
     return this.validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> validateSourceBeforeUpdateWithHTTPInfoAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate
+  ) throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdateWithHTTPInfoAsync(sourceID, sourceUpdate, null);
   }
 
   private <T> List<PushTaskRecords> objectsToPushTaskRecords(Iterable<T> objects) {

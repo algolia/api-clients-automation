@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import okhttp3.Response;
 
 public class AnalyticsClient extends ApiClient {
 
@@ -90,10 +91,35 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -112,10 +138,32 @@ public class AnalyticsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDelete(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -143,10 +191,42 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -166,10 +246,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -191,10 +294,35 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -213,10 +341,32 @@ public class AnalyticsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGet(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -244,10 +394,42 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -267,10 +449,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -294,10 +499,41 @@ public class AnalyticsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -316,10 +552,32 @@ public class AnalyticsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -355,11 +613,51 @@ public class AnalyticsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -379,10 +677,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -406,10 +727,41 @@ public class AnalyticsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -428,10 +780,32 @@ public class AnalyticsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -467,11 +841,51 @@ public class AnalyticsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -491,10 +905,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -547,11 +984,68 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAddToCartRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAddToCartRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. The rate is the number of add-to-cart conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
+   * there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getAddToCartRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. The rate is the number of add-to-cart conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
+   * there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAddToCartRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -589,10 +1083,51 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAddToCartRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. The rate is the number of add-to-cart conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
+   * there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getAddToCartRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. The rate is the number of add-to-cart conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean
+   * there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAddToCartRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -655,6 +1190,48 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getAddToCartRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/conversions/addToCartRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. The rate is the number of add-to-cart conversion
+   * events divided by the number of tracked searches. A search is tracked if it returns a queryID
+   * (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
+   * **0** mean there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(
@@ -664,6 +1241,31 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. The rate is the number of add-to-cart conversion
+   * events divided by the number of tracked searches. A search is tracked if it returns a queryID
+   * (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
+   * **0** mean there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -701,10 +1303,51 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. The rate is the number of add-to-cart conversion
+   * events divided by the number of tracked searches. A search is tracked if it returns a queryID
+   * (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
+   * **0** mean there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getAddToCartRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. The rate is the number of add-to-cart conversion
+   * events divided by the number of tracked searches. A search is tracked if it returns a queryID
+   * (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. -
+   * **0** mean there _were_ queries but no [add-to-cart
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAddToCartRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -751,11 +1394,62 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAverageClickPositionWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAverageClickPositionWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search result positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day. An average
+   * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getAverageClickPosition(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search result positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day. An average
+   * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAverageClickPositionWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -787,10 +1481,45 @@ public class AnalyticsClient extends ApiClient {
    * average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAverageClickPositionWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search result positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day. An average
+   * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getAverageClickPosition(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search result positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day. An average
+   * of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The
+   * average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getAverageClickPositionWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -847,6 +1576,45 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAverageClickPositionWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getAverageClickPosition`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/clicks/averageClickPosition")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search result positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. The average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
@@ -856,6 +1624,32 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getAverageClickPositionAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search result positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. The average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAverageClickPositionWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -889,11 +1683,48 @@ public class AnalyticsClient extends ApiClient {
    * queries. The average is `null` until Algolia receives at least one click event.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAverageClickPositionWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search result positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. The average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(@Nonnull String index)
     throws AlgoliaRuntimeException {
     return this.getAverageClickPositionAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search result positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day. An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive
+   * any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the
+   * queries. The average is `null` until Algolia receives at least one click event.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getAverageClickPositionWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAverageClickPositionWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -934,11 +1765,56 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickPositionsWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getClickPositionsWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive. An average of `0`
+   * when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickPositionsResponse getClickPositions(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getClickPositions(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive. An average of `0`
+   * when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickPositionsWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -964,10 +1840,39 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickPositionsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive. An average of `0`
+   * when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickPositionsResponse getClickPositions(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getClickPositions(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive. An average of `0`
+   * when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickPositionsWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1018,6 +1923,42 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getClickPositions`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/clicks/positions")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
+   * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
@@ -1027,6 +1968,29 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getClickPositionsAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
+   * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1052,10 +2016,39 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
+   * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getClickPositionsAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
+   * An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getClickPositionsWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1100,11 +2093,60 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickThroughRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getClickThroughRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the click-through rate (CTR) for all your searches with at least one click event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getClickThroughRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the click-through rate (CTR) for all your searches with at least one click event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickThroughRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1134,10 +2176,43 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickThroughRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the click-through rate (CTR) for all your searches with at least one click event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getClickThroughRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the click-through rate (CTR) for all your searches with at least one click event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClickThroughRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1192,6 +2267,44 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getClickThroughRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/clicks/clickThroughRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the click-through rate (CTR) for all your searches with at least one
+   * click event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
@@ -1201,6 +2314,31 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getClickThroughRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the click-through rate (CTR) for all your searches with at least one
+   * click event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1232,10 +2370,43 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the click-through rate (CTR) for all your searches with at least one
+   * click event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getClickThroughRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the click-through rate (CTR) for all your searches with at least one
+   * click event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day. **There's a difference between a 0 and null CTR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CTR is null. - **0** mean there _were_ queries but no [click
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getClickThroughRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1280,11 +2451,60 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getConversionRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getConversionRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the conversion rate (CR) for all your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
+   * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
+   * CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetConversionRateResponse getConversionRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getConversionRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the conversion rate (CR) for all your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
+   * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
+   * CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getConversionRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1314,10 +2534,43 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getConversionRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the conversion rate (CR) for all your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
+   * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
+   * CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetConversionRateResponse getConversionRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getConversionRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the conversion rate (CR) for all your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day. **There's a difference between a 0 and null CR when `clickAnalytics`
+   * is enabled:** - **Null** means there were no queries: since Algolia didn't receive any events,
+   * CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getConversionRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1372,6 +2625,44 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getConversionRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/conversions/conversionRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the conversion rate (CR) for all your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. **There's a difference between a 0 and null CR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
@@ -1381,6 +2672,31 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getConversionRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the conversion rate (CR) for all your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. **There's a difference between a 0 and null CR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1410,10 +2726,43 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the conversion rate (CR) for all your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. **There's a difference between a 0 and null CR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getConversionRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the conversion rate (CR) for all your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day. **There's a difference between a 0 and null CR when
+   * `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, CR is null. - **0** mean there _were_ queries but no [conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getConversionRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1452,11 +2801,54 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoClickRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getNoClickRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
+   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoClickRateResponse getNoClickRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getNoClickRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
+   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoClickRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1480,10 +2872,37 @@ public class AnalyticsClient extends ApiClient {
    * clicks. By default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoClickRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
+   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoClickRateResponse getNoClickRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getNoClickRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
+   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoClickRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1534,11 +2953,66 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getNoClickRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches/noClickRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
+   * searches without clicks. By default, the analyzed period includes the last eight days including
+   * the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getNoClickRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
+   * searches without clicks. By default, the analyzed period includes the last eight days including
+   * the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1564,10 +3038,39 @@ public class AnalyticsClient extends ApiClient {
    * the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
+   * searches without clicks. By default, the analyzed period includes the last eight days including
+   * the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getNoClickRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
+   * searches without clicks. By default, the analyzed period includes the last eight days including
+   * the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getNoClickRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1608,11 +3111,56 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoResultsRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getNoResultsRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. It also returns the count of searches and searches without results
+   * used to compute the rates. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getNoResultsRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. It also returns the count of searches and searches without results
+   * used to compute the rates. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoResultsRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1638,10 +3186,39 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoResultsRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. It also returns the count of searches and searches without results
+   * used to compute the rates. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getNoResultsRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. It also returns the count of searches and searches without results
+   * used to compute the rates. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getNoResultsRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1692,6 +3269,42 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getNoResultsRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches/noResultRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. It also returns the count of searches and searches
+   * without results used to compute the rates. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
@@ -1701,6 +3314,25 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. It also returns the count of searches and searches
+   * without results used to compute the rates. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1726,10 +3358,39 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. It also returns the count of searches and searches
+   * without results used to compute the rates. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getNoResultsRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. It also returns the count of searches and searches
+   * without results used to compute the rates. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getNoResultsRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1782,11 +3443,68 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPurchaseRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getPurchaseRateWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the purchase rate for all your searches with at least one purchase event, including a
+   * daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day. The rate is the number of purchase conversion events divided by the number of
+   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
+   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
+   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getPurchaseRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the purchase rate for all your searches with at least one purchase event, including a
+   * daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day. The rate is the number of purchase conversion events divided by the number of
+   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
+   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
+   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPurchaseRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1824,10 +3542,51 @@ public class AnalyticsClient extends ApiClient {
    * were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPurchaseRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the purchase rate for all your searches with at least one purchase event, including a
+   * daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day. The rate is the number of purchase conversion events divided by the number of
+   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
+   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
+   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getPurchaseRate(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the purchase rate for all your searches with at least one purchase event, including a
+   * daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day. The rate is the number of purchase conversion events divided by the number of
+   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
+   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
+   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
+   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
+   * were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getPurchaseRateWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -1890,6 +3649,48 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getPurchaseRate`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/conversions/purchaseRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
+   * event, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day. The rate is the number of purchase conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
+   * _were_ queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(
@@ -1899,6 +3700,31 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
+   * event, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day. The rate is the number of purchase conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
+   * _were_ queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -1936,10 +3762,51 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
+   * event, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day. The rate is the number of purchase conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
+   * _were_ queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getPurchaseRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
+   * event, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day. The rate is the number of purchase conversion events divided by
+   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
+   * is `true`). This differs from the response's `count`, which shows the overall number of
+   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
+   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
+   * _were_ queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getPurchaseRateWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -1984,10 +3851,59 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRevenueWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRevenueWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, send purchase events. By default, the analyzed period
+   * includes the last eight days including the current day. Revenue is based on purchase conversion
+   * events (a conversion event with an `eventSubtype` attribute of `purchase`). The revenue is the
+   * `price` attribute multiplied by the `quantity` attribute for each object in the event's
+   * `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRevenue getRevenue(@Nonnull String index, String startDate, String endDate, String tags) throws AlgoliaRuntimeException {
     return this.getRevenue(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, send purchase events. By default, the analyzed period
+   * includes the last eight days including the current day. Revenue is based on purchase conversion
+   * events (a conversion event with an `eventSubtype` attribute of `purchase`). The revenue is the
+   * `price` attribute multiplied by the `quantity` attribute for each object in the event's
+   * `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRevenueWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -2016,10 +3932,42 @@ public class AnalyticsClient extends ApiClient {
    * `objectData` array.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRevenueWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, send purchase events. By default, the analyzed period
+   * includes the last eight days including the current day. Revenue is based on purchase conversion
+   * events (a conversion event with an `eventSubtype` attribute of `purchase`). The revenue is the
+   * `price` attribute multiplied by the `quantity` attribute for each object in the event's
+   * `objectData` array.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRevenue getRevenue(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getRevenue(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, send purchase events. By default, the analyzed period
+   * includes the last eight days including the current day. Revenue is based on purchase conversion
+   * events (a conversion event with an `eventSubtype` attribute of `purchase`). The revenue is the
+   * `price` attribute multiplied by the `quantity` attribute for each object in the event's
+   * `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRevenueWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -2074,11 +4022,70 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getRevenue`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/conversions/revenue")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, send purchase events. By default, the
+   * analyzed period includes the last eight days including the current day. Revenue is based on
+   * purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+   * The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in
+   * the event's `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getRevenueAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, send purchase events. By default, the
+   * analyzed period includes the last eight days including the current day. Revenue is based on
+   * purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+   * The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in
+   * the event's `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -2108,10 +4115,43 @@ public class AnalyticsClient extends ApiClient {
    * the event's `objectData` array.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, send purchase events. By default, the
+   * analyzed period includes the last eight days including the current day. Revenue is based on
+   * purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+   * The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in
+   * the event's `objectData` array.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getRevenueAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, send purchase events. By default, the
+   * analyzed period includes the last eight days including the current day. Revenue is based on
+   * purchase conversion events (a conversion event with an `eventSubtype` attribute of `purchase`).
+   * The revenue is the `price` attribute multiplied by the `quantity` attribute for each object in
+   * the event's `objectData` array.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getRevenueWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -2148,11 +4188,52 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesCountWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSearchesCountWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesCountResponse getSearchesCount(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getSearchesCount(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesCountWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -2174,10 +4255,35 @@ public class AnalyticsClient extends ApiClient {
    * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesCountWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesCountResponse getSearchesCount(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesCount(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesCountWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -2226,6 +4332,41 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesCount`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches/count")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
@@ -2235,6 +4376,24 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getSearchesCountAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -2258,10 +4417,37 @@ public class AnalyticsClient extends ApiClient {
    * day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesCountAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesCountWithHTTPInfoAsync(index, null, null, null, null);
   }
 
   /**
@@ -2306,6 +4492,35 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoClicksWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSearchesNoClicksWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches. For each search, it also returns the number of displayed search results that
+   * remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoClicksResponse getSearchesNoClicks(
@@ -2317,6 +4532,32 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicks(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches. For each search, it also returns the number of displayed search results that
+   * remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoClicksWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfo(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2340,10 +4581,37 @@ public class AnalyticsClient extends ApiClient {
    * remained unclicked.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoClicksWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfo(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches. For each search, it also returns the number of displayed search results that
+   * remained unclicked.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoClicksResponse getSearchesNoClicks(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicks(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches. For each search, it also returns the number of displayed search results that
+   * remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoClicksWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfo(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2400,6 +4668,47 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesNoClicks`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches/noClicks")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches. For each search, it also returns the number of displayed search
+   * results that remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
@@ -2411,6 +4720,32 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicksAsync(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches. For each search, it also returns the number of displayed search
+   * results that remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2436,10 +4771,37 @@ public class AnalyticsClient extends ApiClient {
    * results that remained unclicked.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches. For each search, it also returns the number of displayed search
+   * results that remained unclicked.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicksAsync(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches. For each search, it also returns the number of displayed search
+   * results that remained unclicked.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesNoClicksWithHTTPInfoAsync(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2480,6 +4842,33 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getSearchesNoResultsWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoResultsResponse getSearchesNoResults(
@@ -2491,6 +4880,30 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getSearchesNoResults(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfo(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2510,10 +4923,33 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the 1,000 most frequent searches that produced zero results.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoResultsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfo(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoResultsResponse getSearchesNoResults(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesNoResults(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getSearchesNoResultsWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfo(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2566,6 +5002,45 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesNoResults`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches/noResults")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
@@ -2577,6 +5052,30 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getSearchesNoResultsAsync(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2598,10 +5097,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the 1,000 most frequent searches that produced zero results.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getSearchesNoResultsAsync(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent searches that produced zero results.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getSearchesNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2624,10 +5146,36 @@ public class AnalyticsClient extends ApiClient {
    * The Analytics data is updated every 5&nbsp;minutes.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getStatusWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getStatusWithHTTPInfoAsync(index, requestOptions));
+  }
+
+  /**
+   * Retrieves the time when the Analytics data for the specified index was last updated. If the
+   * index has been recently created or no search has been performed yet the updated time is `null`.
+   * The Analytics data is updated every 5&nbsp;minutes.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetStatusResponse getStatus(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getStatus(index, null);
+  }
+
+  /**
+   * Retrieves the time when the Analytics data for the specified index was last updated. If the
+   * index has been recently created or no search has been performed yet the updated time is `null`.
+   * The Analytics data is updated every 5&nbsp;minutes.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getStatusWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getStatusWithHTTPInfo(index, null);
   }
 
   /**
@@ -2654,10 +5202,40 @@ public class AnalyticsClient extends ApiClient {
    * time is `null`. The Analytics data is updated every 5&nbsp;minutes.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getStatusWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getStatus`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/2/status").setMethod("GET").addQueryParameter("index", index).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the time when the Analytics data for the specified index was last
+   * updated. If the index has been recently created or no search has been performed yet the updated
+   * time is `null`. The Analytics data is updated every 5&nbsp;minutes.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetStatusResponse> getStatusAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getStatusAsync(index, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the time when the Analytics data for the specified index was last
+   * updated. If the index has been recently created or no search has been performed yet the updated
+   * time is `null`. The Analytics data is updated every 5&nbsp;minutes.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getStatusWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getStatusWithHTTPInfoAsync(index, null);
   }
 
   /**
@@ -2698,6 +5276,33 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopCountriesWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getTopCountriesWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopCountriesResponse getTopCountries(
@@ -2709,6 +5314,30 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopCountries(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopCountriesWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfo(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2728,10 +5357,33 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the countries with the most searches in your index.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopCountriesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfo(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopCountriesResponse getTopCountries(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopCountries(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopCountriesWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfo(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2784,6 +5436,45 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopCountries`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/countries")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
@@ -2795,6 +5486,30 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopCountriesAsync(index, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfoAsync(index, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2814,10 +5529,33 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the countries with the most searches in your index.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopCountriesAsync(index, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the countries with the most searches in your index.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopCountriesWithHTTPInfoAsync(index, null, null, null, null, null, null);
   }
 
   /**
@@ -2863,6 +5601,38 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterAttributesWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFilterAttributesWithHTTPInfoAsync(index, search, startDate, endDate, limit, offset, tags, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filter attributes. These are attributes of your
+   * records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterAttributesResponse getTopFilterAttributes(
@@ -2875,6 +5645,33 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributes(index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filter attributes. These are attributes of your
+   * records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterAttributesWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfo(index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2896,10 +5693,35 @@ public class AnalyticsClient extends ApiClient {
    * records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterAttributesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfo(index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filter attributes. These are attributes of your
+   * records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterAttributesResponse getTopFilterAttributes(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributes(index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filter attributes. These are attributes of your
+   * records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterAttributesWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfo(index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -2958,6 +5780,49 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFilterAttributes`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/filters")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("search", search)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filter attributes. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
@@ -2970,6 +5835,33 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributesAsync(index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filter attributes. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfoAsync(index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -2993,11 +5885,36 @@ public class AnalyticsClient extends ApiClient {
    * attributes of your records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfoAsync(index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filter attributes. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(@Nonnull String index)
     throws AlgoliaRuntimeException {
     return this.getTopFilterAttributesAsync(index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filter attributes. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopFilterAttributesWithHTTPInfoAsync(index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3048,6 +5965,40 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterForAttributeWithHTTPInfo(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFilterForAttributeWithHTTPInfoAsync(attribute, index, search, startDate, endDate, limit, offset, tags, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(
@@ -3061,6 +6012,35 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFilterForAttribute(attribute, index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterForAttributeWithHTTPInfo(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfo(attribute, index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3087,11 +6067,41 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterForAttributeWithHTTPInfo(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfo(attribute, index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(@Nonnull String attribute, @Nonnull String index)
     throws AlgoliaRuntimeException {
     return this.getTopFilterForAttribute(attribute, index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequent filter (facet) values for a filter attribute. These are
+   * attributes of your records that you included in the `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFilterForAttributeWithHTTPInfo(@Nonnull String attribute, @Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfo(attribute, index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3157,6 +6167,54 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(attribute, "Parameter `attribute` is required when calling `getTopFilterForAttribute`.");
+
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/filters/{attribute}", attribute)
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("search", search)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent filter (facet) values for a filter
+   * attribute. These are attributes of your records that you included in the
+   * `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
@@ -3170,6 +6228,36 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFilterForAttributeAsync(attribute, index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent filter (facet) values for a filter
+   * attribute. These are attributes of your records that you included in the
+   * `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfoAsync(attribute, index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3198,11 +6286,44 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(
+    @Nonnull String attribute,
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfoAsync(attribute, index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent filter (facet) values for a filter
+   * attribute. These are attributes of your records that you included in the
+   * `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(@Nonnull String attribute, @Nonnull String index)
     throws AlgoliaRuntimeException {
     return this.getTopFilterForAttributeAsync(attribute, index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequent filter (facet) values for a filter
+   * attribute. These are attributes of your records that you included in the
+   * `attributesForFaceting` setting.
+   *
+   * @param attribute Attribute name. (required)
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(@Nonnull String attribute, @Nonnull String index)
+    throws AlgoliaRuntimeException {
+    return this.getTopFilterForAttributeWithHTTPInfoAsync(attribute, index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3250,6 +6371,39 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFiltersNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopFiltersNoResultsWithHTTPInfoAsync(index, search, startDate, endDate, limit, offset, tags, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
+   * To get the most frequent searches without results, use the [Retrieve searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
@@ -3262,6 +6416,34 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResults(index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
+   * To get the most frequent searches without results, use the [Retrieve searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFiltersNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfo(index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3285,10 +6467,37 @@ public class AnalyticsClient extends ApiClient {
    * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFiltersNoResultsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfo(index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
+   * To get the most frequent searches without results, use the [Retrieve searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResults(index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the 1,000 most frequently used filters for a search that didn't return any results.
+   * To get the most frequent searches without results, use the [Retrieve searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopFiltersNoResultsWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfo(index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3351,6 +6560,51 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/filters/noResults")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("search", search)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
+   * return any results. To get the most frequent searches without results, use the [Retrieve
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
@@ -3363,6 +6617,35 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResultsAsync(index, search, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
+   * return any results. To get the most frequent searches without results, use the [Retrieve
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfoAsync(index, search, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3390,11 +6673,40 @@ public class AnalyticsClient extends ApiClient {
    * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
+   * return any results. To get the most frequent searches without results, use the [Retrieve
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(@Nonnull String index)
     throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResultsAsync(index, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the 1,000 most frequently used filters for a search that didn't
+   * return any results. To get the most frequent searches without results, use the [Retrieve
+   * searches without
+   * results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopFiltersNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3472,6 +6784,54 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopHitsWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopHitsWithHTTPInfoAsync(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, requestOptions)
+    );
+  }
+
+  /**
+   * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
+   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
+   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
+   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
+   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
+   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
+   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
+   * there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(
@@ -3486,6 +6846,49 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopHits(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
+   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
+   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
+   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
+   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
+   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
+   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
+   * there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopHitsWithHTTPInfo(
+    @Nonnull String index,
+    String search,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfo(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3526,10 +6929,54 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopHitsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfo(index, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
+   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
+   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
+   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
+   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
+   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
+   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
+   * there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopHits(index, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
+   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
+   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
+   * This differs from the response's `count`, which shows the overall number of searches, including
+   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
+   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
+   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
+   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
+   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
+   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
+   * there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopHitsWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfo(index, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3620,6 +7067,67 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopHits`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/hits")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("search", search)
+      .addQueryParameter("clickAnalytics", clickAnalytics)
+      .addQueryParameter("revenueAnalytics", revenueAnalytics)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
+   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
+   * `true`. This differs from the response's `count`, which shows the overall number of searches,
+   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
+   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
@@ -3634,6 +7142,49 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopHitsAsync(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
+   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
+   * `true`. This differs from the response's `count`, which shows the overall number of searches,
+   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
+   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(
+    @Nonnull String index,
+    String search,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfoAsync(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
@@ -3675,10 +7226,55 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
+   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
+   * `true`. This differs from the response's `count`, which shows the overall number of searches,
+   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
+   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopHitsAsync(index, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
+   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
+   * `true`. This differs from the response's `count`, which shows the overall number of searches,
+   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
+   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopHitsWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3775,6 +7371,70 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopSearchesWithHTTPInfo(
+    @Nonnull String index,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(
+      getTopSearchesWithHTTPInfoAsync(
+        index,
+        clickAnalytics,
+        revenueAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
+    );
+  }
+
+  /**
+   * Returns the most popular searches. For each search, it also includes the average number of
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
+   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
+   * parameter set to `true`. This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
+   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
+   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
+   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
+   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
+   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
+   * @param direction Sorting direction of the results: ascending or descending. (optional, default
+   *     to asc)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(
@@ -3790,6 +7450,65 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopSearches(index, clickAnalytics, revenueAnalytics, startDate, endDate, orderBy, direction, limit, offset, tags, null);
+  }
+
+  /**
+   * Returns the most popular searches. For each search, it also includes the average number of
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
+   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
+   * parameter set to `true`. This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
+   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
+   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
+   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
+   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
+   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
+   * @param direction Sorting direction of the results: ascending or descending. (optional, default
+   *     to asc)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopSearchesWithHTTPInfo(
+    @Nonnull String index,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfo(
+      index,
+      clickAnalytics,
+      revenueAnalytics,
+      startDate,
+      endDate,
+      orderBy,
+      direction,
+      limit,
+      offset,
+      tags,
+      null
+    );
   }
 
   /**
@@ -3831,10 +7550,55 @@ public class AnalyticsClient extends ApiClient {
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopSearchesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfo(index, null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * Returns the most popular searches. For each search, it also includes the average number of
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
+   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
+   * parameter set to `true`. This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
+   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
+   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
+   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
+   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
+   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopSearches(index, null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * Returns the most popular searches. For each search, it also includes the average number of
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
+   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
+   * parameter set to `true`. This differs from the response's `count`, which shows the overall
+   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
+   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
+   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
+   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
+   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
+   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
+   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getTopSearchesWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfo(index, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -3935,6 +7699,73 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(
+    @Nonnull String index,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopSearches`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/searches")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("clickAnalytics", clickAnalytics)
+      .addQueryParameter("revenueAnalytics", revenueAnalytics)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("orderBy", orderBy)
+      .addQueryParameter("direction", direction)
+      .addQueryParameter("limit", limit)
+      .addQueryParameter("offset", offset)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Returns the most popular searches. For each search, it also includes the
+   * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
+   * also includes - Tracked searches count. Tracked searches are Search API requests with the
+   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
+   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
+   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
+   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
+   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received.
+   *
+   * @param index Index name. (required)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
+   * @param direction Sorting direction of the results: ascending or descending. (optional, default
+   *     to asc)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
@@ -3950,6 +7781,66 @@ public class AnalyticsClient extends ApiClient {
     String tags
   ) throws AlgoliaRuntimeException {
     return this.getTopSearchesAsync(
+      index,
+      clickAnalytics,
+      revenueAnalytics,
+      startDate,
+      endDate,
+      orderBy,
+      direction,
+      limit,
+      offset,
+      tags,
+      null
+    );
+  }
+
+  /**
+   * (asynchronously) Returns the most popular searches. For each search, it also includes the
+   * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
+   * also includes - Tracked searches count. Tracked searches are Search API requests with the
+   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
+   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
+   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
+   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
+   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received.
+   *
+   * @param index Index name. (required)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include metrics related to revenue events in the response.
+   *     (optional, default to false)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
+   * @param direction Sorting direction of the results: ascending or descending. (optional, default
+   *     to asc)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(
+    @Nonnull String index,
+    Boolean clickAnalytics,
+    Boolean revenueAnalytics,
+    String startDate,
+    String endDate,
+    OrderBy orderBy,
+    Direction direction,
+    Integer limit,
+    Integer offset,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfoAsync(
       index,
       clickAnalytics,
       revenueAnalytics,
@@ -4005,10 +7896,57 @@ public class AnalyticsClient extends ApiClient {
    * received.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Returns the most popular searches. For each search, it also includes the
+   * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
+   * also includes - Tracked searches count. Tracked searches are Search API requests with the
+   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
+   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
+   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
+   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
+   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Returns the most popular searches. For each search, it also includes the
+   * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
+   * also includes - Tracked searches count. Tracked searches are Search API requests with the
+   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
+   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
+   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
+   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
+   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
+   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
+   * received.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getTopSearchesWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -4053,11 +7991,60 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getUsersCountWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getUsersCountWithHTTPInfoAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since it
+   * returns the number of unique users, the sum of the daily values might be different from the
+   * total number. By default: - Algolia distinguishes search users by their IP address, _unless_
+   * you include a pseudonymous user identifier in your search requests with the `userToken` API
+   * parameter or `x-algolia-usertoken` request header. - The analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsersCountResponse getUsersCount(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getUsersCount(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since it
+   * returns the number of unique users, the sum of the daily values might be different from the
+   * total number. By default: - Algolia distinguishes search users by their IP address, _unless_
+   * you include a pseudonymous user identifier in your search requests with the `userToken` API
+   * parameter or `x-algolia-usertoken` request header. - The analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getUsersCountWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -4087,10 +8074,42 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getUsersCountWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfo(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since it
+   * returns the number of unique users, the sum of the daily values might be different from the
+   * total number. By default: - Algolia distinguishes search users by their IP address, _unless_
+   * you include a pseudonymous user identifier in your search requests with the `userToken` API
+   * parameter or `x-algolia-usertoken` request header. - The analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsersCountResponse getUsersCount(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getUsersCount(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since it
+   * returns the number of unique users, the sum of the daily values might be different from the
+   * total number. By default: - Algolia distinguishes search users by their IP address, _unless_
+   * you include a pseudonymous user identifier in your search requests with the `userToken` API
+   * parameter or `x-algolia-usertoken` request header. - The analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getUsersCountWithHTTPInfo(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfo(index, null, null, null, null);
   }
 
   /**
@@ -4145,11 +8164,70 @@ public class AnalyticsClient extends ApiClient {
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getUsersCount`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/users/count")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since it returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default: - Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. - The analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
     return this.getUsersCountAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since it returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default: - Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. - The analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
   /**
@@ -4179,9 +8257,42 @@ public class AnalyticsClient extends ApiClient {
    * includes the last eight days including the current day.
    *
    * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfoAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since it returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default: - Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. - The analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index) throws AlgoliaRuntimeException {
     return this.getUsersCountAsync(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since it returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default: - Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. - The analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getUsersCountWithHTTPInfoAsync(index, null, null, null, null);
   }
 }
