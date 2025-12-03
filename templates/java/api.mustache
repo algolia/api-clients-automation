@@ -34,10 +34,6 @@ import java.util.stream.Stream;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 
-{{#isCompositionClient}}
-import com.algolia.model.composition.RequestBody;
-{{/isCompositionClient}}
-
 {{#isSearchClient}}
 import com.algolia.internal.JsonSerializer;
 import java.time.Duration;
