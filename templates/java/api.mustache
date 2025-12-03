@@ -177,8 +177,7 @@ public class {{classname}} extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
   {{> api_javadoc}}
   public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}{{#hasParams}}, {{/hasParams}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-      {{#returnType}}return {{/returnType}}LaunderThrowable.await({{operationId}}WithHTTPInfoAsync({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions));
-      {{^returnType}}return ;{{/returnType}}
+      return LaunderThrowable.await({{operationId}}WithHTTPInfoAsync({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions));
   }
 
   {{! This case only sets `requestOptions` as optional }}
@@ -198,7 +197,7 @@ public class {{classname}} extends ApiClient {
     {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
     {{> api_javadoc}}
   public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+    return this.{{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
 
   {{! This case sets `requiredParams` + `requestOptions` }}
