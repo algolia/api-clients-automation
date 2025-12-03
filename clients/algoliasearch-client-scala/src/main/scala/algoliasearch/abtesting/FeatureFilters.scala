@@ -24,11 +24,17 @@
   */
 package algoliasearch.abtesting
 
-/** A/B test configuration for estimating the sample size and duration using minimum detectable effect.
+/** Configuration of feature-based filters applied to the A/B test population.
+  *
+  * @param dynamicReRanking
+  *   Whether to apply Dynamic Re-Ranking feature filters.
+  * @param aiPerso
+  *   Whether to apply AI Personalization feature filters.
+  * @param multiSignalRanking
+  *   Whether to apply Multi-Signal Re-Ranking feature filters.
   */
-case class EstimateConfiguration(
-    featureFilters: Option[FeatureFilters] = scala.None,
-    outliers: Option[Outliers] = scala.None,
-    emptySearch: Option[EmptySearch] = scala.None,
-    minimumDetectableEffect: MinimumDetectableEffect
+case class FeatureFilters(
+    dynamicReRanking: Option[Boolean] = scala.None,
+    aiPerso: Option[Boolean] = scala.None,
+    multiSignalRanking: Option[Boolean] = scala.None
 )

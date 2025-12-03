@@ -27,6 +27,7 @@ package algoliasearch.abtesting
 /** A/B test configuration.
   */
 case class ABTestConfiguration(
+    featureFilters: Option[FeatureFilters] = scala.None,
     outliers: Option[Outliers] = scala.None,
     emptySearch: Option[EmptySearch] = scala.None,
     minimumDetectableEffect: Option[MinimumDetectableEffect] = scala.None
