@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import okhttp3.Call;
 import okhttp3.Request;
+import okhttp3.Response;
 
 import {{invokerPackage}}.utils.*;
 import {{modelPackage}}.*;
@@ -32,7 +33,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
-import okhttp3.*;
 
 {{#isCompositionClient}}
 import com.algolia.model.composition.RequestBody;
