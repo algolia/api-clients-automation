@@ -97,6 +97,11 @@ public final class HttpRequester implements Requester {
         return null; // No need to deserialize, either no content or no type provided
       }
 
+      // Return response if the return type is Response provided. Is happening in WithHTTPInfo case.
+      if (returnType.hasRawClass(Response.class)) {
+        return (T) response; // required for WithHTTPInfo case
+      }
+
       // Deserialize and return the response.
       return serializer.deserialize(response.body().byteStream(), returnType);
     } catch (IOException exception) {
