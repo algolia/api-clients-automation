@@ -95,7 +95,7 @@ namespace Algolia.Search.Clients;
       {{#isDeprecated}}
       [Obsolete]
       {{/isDeprecated}}
-      Task<AlgoliaHttpResponse> {{operationId}}WithHTTPInfoAsync{{#returnType}}{{#vendorExtensions.x-is-generic}}{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+      Task<AlgoliaHttpResponse> {{operationId}}WithHTTPInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
 
       /// <summary>
       /// {{{notes}}} (Synchronous version)
@@ -118,7 +118,7 @@ namespace Algolia.Search.Clients;
       {{#isDeprecated}}
       [Obsolete]
       {{/isDeprecated}}
-      AlgoliaHttpResponse {{operationId}}WithHTTPInfo{{#returnType}}{{#vendorExtensions.x-is-generic}}{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
+      AlgoliaHttpResponse {{operationId}}WithHTTPInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default);
       {{/operation}}
   }
 
@@ -337,7 +337,7 @@ namespace Algolia.Search.Clients;
       {{#isDeprecated}}
       [Obsolete]
       {{/isDeprecated}}
-      public async Task<AlgoliaHttpResponse>{{operationId}}WithHTTPInfoAsync{{#returnType}}{{#vendorExtensions.x-is-generic}}{{/vendorExtensions.x-is-generic}}{{/returnType}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
+      public async Task<AlgoliaHttpResponse>{{operationId}}WithHTTPInfoAsync({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default)
       {
           {{#allParams}}
           {{#required}}
@@ -418,7 +418,7 @@ namespace Algolia.Search.Clients;
       {{#isDeprecated}}
       [Obsolete]
       {{/isDeprecated}}
-      public AlgoliaHttpResponse {{operationId}}WithHTTPInfo{{#vendorExtensions.x-is-generic}}{{/vendorExtensions.x-is-generic}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
+      public AlgoliaHttpResponse {{operationId}}WithHTTPInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default{{/optionalMethodArgument}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}}RequestOptions options = null, CancellationToken cancellationToken = default) =>
         AsyncHelper.RunSync(() => {{operationId}}WithHTTPInfoAsync{{#vendorExtensions.x-is-generic}}{{/vendorExtensions.x-is-generic}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{#allParams.0}}, {{/allParams.0}} options, cancellationToken));
 
       {{/supportsAsync}}
