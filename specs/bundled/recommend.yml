@@ -779,9 +779,11 @@ components:
         after records that don't match.
 
 
-        - Optional filters don't work on virtual replicas.
-
         - Optional filters are applied _after_ sort-by attributes.
+
+        - On virtual replicas, optional filters are applied _after_ the
+        replica's [relevant
+        sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
 
         - Optional filters are applied _before_ custom ranking attributes (in
         the default
