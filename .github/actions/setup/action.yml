@@ -193,11 +193,11 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.58.6" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.58.7" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: nicklockwood/SwiftFormat
         ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}
