@@ -1247,11 +1247,20 @@ components:
           $ref: '#/components/schemas/paymentRequired'
         message:
           $ref: '#/components/schemas/featureNotEnabled'
+    userType:
+      title: userType
+      type: string
+      enum:
+        - basic
+        - predictive
+        - realtime
     user:
       type: object
       properties:
         userID:
           type: string
+        type:
+          $ref: '#/components/schemas/userType'
         affinities:
           type: array
           items:
@@ -1283,6 +1292,7 @@ components:
           type: string
       required:
         - userID
+        - type
         - affinities
         - lastUpdatedAt
     unprocessableEntity:

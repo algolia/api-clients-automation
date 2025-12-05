@@ -1197,11 +1197,23 @@
           }
         }
       },
+      "userType": {
+        "title": "userType",
+        "type": "string",
+        "enum": [
+          "basic",
+          "predictive",
+          "realtime"
+        ]
+      },
       "user": {
         "type": "object",
         "properties": {
           "userID": {
             "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/userType"
           },
           "affinities": {
             "type": "array",
@@ -1246,6 +1258,7 @@
         },
         "required": [
           "userID",
+          "type",
           "affinities",
           "lastUpdatedAt"
         ]
