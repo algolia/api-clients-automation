@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import okhttp3.Call;
 import okhttp3.Request;
+import okhttp3.Response;
 
 import {{invokerPackage}}.utils.*;
 import {{modelPackage}}.*;
@@ -163,6 +164,17 @@ public class {{classname}} extends ApiClient {
         {{^returnType}}return ;{{/returnType}}
     }
 
+  {{! This case is used for `WithHTTPInfo` methods }}
+  /**
+   * {{{notes}}}{{#allParams}}
+   * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+   {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+  {{> api_javadoc}}
+  public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}{{#hasParams}}, {{/hasParams}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+      return LaunderThrowable.await({{operationId}}WithHTTPInfoAsync({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions));
+  }
+
   {{! This case only sets `requestOptions` as optional }}
   /**
     * {{{notes}}}{{#allParams}}
@@ -171,6 +183,16 @@ public class {{classname}} extends ApiClient {
     {{> api_javadoc}}
   public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  }
+
+  {{! This case sets `requestOptions` as optional and is used for`WithHTTPInfo`}}
+  /**
+    * {{{notes}}}{{#allParams}}
+    * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
+    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+    {{> api_javadoc}}
+  public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfo({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
 
   {{! This case sets `requiredParams` + `requestOptions` }}
@@ -186,6 +208,19 @@ public class {{classname}} extends ApiClient {
   }
   {{/optionalParams.0}}
 
+  {{! This case sets `requiredParams` + `requestOptions` and is used for`WithHTTPInfo`}}
+  {{#optionalParams.0}}
+  /**
+    * {{{notes}}}{{#requiredParams}}
+    * @param {{paramName}} {{{description}}} (required){{/requiredParams}}
+    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+    * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+    {{> api_javadoc}}
+  public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<Response> innerType, {{/x-is-generic}}{{/vendorExtensions}} @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
+  }
+  {{/optionalParams.0}}
+
   {{! This case only sets `requiredParams` }}
   {{#optionalParams.0}}
   /**
@@ -195,6 +230,18 @@ public class {{classname}} extends ApiClient {
    {{> api_javadoc}}
   public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  }
+  {{/optionalParams.0}}
+
+  {{! This case sets `requiredParams` and is used for`WithHTTPInfo`}}
+  {{#optionalParams.0}}
+  /**
+    * {{{notes}}}{{#requiredParams}}
+    * @param {{paramName}} {{{description}}} (required){{/requiredParams}}
+    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+    {{> api_javadoc}}
+  public Response {{operationId}}WithHTTPInfo({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfo({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
   {{/optionalParams.0}}
 
@@ -221,6 +268,29 @@ public class {{classname}} extends ApiClient {
     return executeAsync(request, {{#vendorExtensions.x-timeouts}}new RequestOptions().setReadTimeout(Duration.ofMillis({{{read}}}L)).setWriteTimeout(Duration.ofMillis({{{write}}}L)).setConnectTimeout(Duration.ofMillis({{{connect}}}L)).mergeRight({{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}}, {{#vendorExtensions}}{{#x-is-generic}}{{{returnType}}}.class, innerType{{/x-is-generic}}{{/vendorExtensions}}{{^vendorExtensions.x-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<{{{.}}}>(){}{{/returnType}}{{/vendorExtensions.x-is-generic}});
   }
 
+  /**
+  * (asynchronously)
+  * {{{notes}}}{{#allParams}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+  {{> api_javadoc}}
+  public CompletableFuture<Response> {{operationId}}WithHTTPInfoAsync({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}},{{/requiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}, {{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<Response> innerType, {{/x-is-generic}}{{/vendorExtensions}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    {{#allParams}}{{#required}}
+    Parameters.requireNonNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
+    {{/required}}{{/allParams}}
+
+    HttpRequest request = HttpRequest.builder()
+        {{#vendorExtensions}}{{#x-is-custom-request}}.setPathEncoded("{{{path}}}", path){{/x-is-custom-request}}{{^x-is-custom-request}}.setPath("{{{path}}}"{{#pathParams}}, {{{paramName}}}{{/pathParams}}){{/x-is-custom-request}}{{/vendorExtensions}}
+        .setMethod("{{httpMethod}}")
+        {{#bodyParam}}.setBody({{paramName}}){{/bodyParam}}
+        {{#vendorExtensions.x-use-read-transporter}}.setRead(true){{/vendorExtensions.x-use-read-transporter}}
+        {{#headerParams}}.addHeader("{{baseName}}", {{paramName}}){{/headerParams}}
+          {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.addQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.addQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
+        .build();
+    return executeAsync(request, {{#vendorExtensions.x-timeouts}}new RequestOptions().setReadTimeout(Duration.ofMillis({{{read}}}L)).setWriteTimeout(Duration.ofMillis({{{write}}}L)).setConnectTimeout(Duration.ofMillis({{{connect}}}L)).mergeRight({{/vendorExtensions.x-timeouts}}requestOptions{{#vendorExtensions.x-timeouts}}){{/vendorExtensions.x-timeouts}}, {{#vendorExtensions}}{{#x-is-generic}}{{{returnType}}}.class, innerType{{/x-is-generic}}{{/vendorExtensions}}{{^vendorExtensions.x-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<Response>(){}{{/returnType}}{{/vendorExtensions.x-is-generic}});
+    }
+
   {{! This case only sets `requestOptions` as optional }}
   /**
   * (asynchronously)
@@ -230,6 +300,17 @@ public class {{classname}} extends ApiClient {
   {{> api_javadoc}}
   public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
     return this.{{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  }
+
+  {{! This case sets `requestOptions` as optional and is used for`WithHTTPInfo`}}
+  /**
+  * (asynchronously)
+  * {{{notes}}}{{#allParams}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+  {{> api_javadoc}}
+  public CompletableFuture<Response> {{operationId}}WithHTTPInfoAsync({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfoAsync({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
 
   {{! This case sets `requiredParams` + `requestOptions` }}
@@ -246,6 +327,20 @@ public class {{classname}} extends ApiClient {
   }
   {{/optionalParams.0}}
 
+  {{! This case sets `requiredParams` + `requestOptions` and is used for`WithHTTPInfo`}}
+  {{#optionalParams.0}}
+  /**
+  * (asynchronously)
+  * {{{notes}}}{{#requiredParams}}
+  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+  {{> api_javadoc}}
+  public CompletableFuture<Response> {{operationId}}WithHTTPInfoAsync({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<Response> innerType, {{/x-is-generic}}{{/vendorExtensions}}@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfoAsync({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
+  }
+  {{/optionalParams.0}}
+
   {{! This case only sets `requiredParams` }}
   {{#optionalParams.0}}
   /**
@@ -258,7 +353,20 @@ public class {{classname}} extends ApiClient {
     return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
   }
   {{/optionalParams.0}}
-  {{/operation}}
+
+  {{! This case sets `requiredParams` and is used for`WithHTTPInfo`}}
+  {{#optionalParams.0}}
+  /**
+  * (asynchronously)
+  * {{{notes}}}{{#requiredParams}}
+  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
+  * @param innerType The class for an HTTP response.{{/x-is-generic}}{{/vendorExtensions}}
+  {{> api_javadoc}}
+  public CompletableFuture<Response> {{operationId}}WithHTTPInfoAsync({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<Response> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}WithHTTPInfoAsync({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  }
+  {{/optionalParams.0}}
+{{/operation}}
 
   {{> api_helpers}}
 }

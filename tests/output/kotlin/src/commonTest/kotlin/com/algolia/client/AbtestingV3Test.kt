@@ -44,7 +44,7 @@ class AbtestingV3Test {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.36.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.37.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),

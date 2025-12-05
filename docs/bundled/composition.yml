@@ -1134,37 +1134,7 @@ paths:
               "foo",
               new RequestBody
               {
-                Params = new Params
-                {
-                  Query = "batman",
-                  InjectedItems = new Dictionary<string, ExternalInjectedItem>
-                  {
-                    {
-                      "my-unique-external-group-key",
-                      new ExternalInjectedItem
-                      {
-                        Items = new List<ExternalInjection>
-                        {
-                          new ExternalInjection { ObjectID = "my-object-1" },
-                          new ExternalInjection
-                          {
-                            ObjectID = "my-object-2",
-                            Metadata = new Dictionary<string, object>
-                            {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
-                              {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                              },
-                            },
-                          },
-                        },
-                      }
-                    },
-                  },
-                },
+                Params = new Params { Query = "batman", SortBy = "Price (asc)" },
               }
             );
 
@@ -1183,26 +1153,7 @@ paths:
               requestBody: RequestBody(
                 params: Params(
                   query: "batman",
-                  injectedItems: {
-                    'my-unique-external-group-key': ExternalInjectedItem(
-                      items: [
-                        ExternalInjection(
-                          objectID: "my-object-1",
-                        ),
-                        ExternalInjection(
-                          objectID: "my-object-2",
-                          metadata: {
-                            'my-string': "string",
-                            'my-bool': true,
-                            'my-number': 42,
-                            'my-object': {
-                              'sub-key': 'sub-value',
-                            },
-                          },
-                        ),
-                      ],
-                    ),
-                  },
+                  sortBy: "Price (asc)",
                 ),
               ),
             );
@@ -1228,13 +1179,7 @@ paths:
             response, err := client.Search(client.NewApiSearchRequest(
               "foo",
               composition.NewEmptyRequestBody().SetParams(
-                composition.NewEmptyParams().
-                  SetQuery("batman").
-                  SetInjectedItems(map[string]composition.ExternalInjectedItem{"my-unique-external-group-key": *composition.NewEmptyExternalInjectedItem().SetItems(
-                    []composition.ExternalInjection{*composition.NewEmptyExternalInjection().SetObjectID("my-object-1"), *composition.NewEmptyExternalInjection().SetObjectID("my-object-2").SetMetadata(map[string]any{"my-string": "string", "my-bool": true, "my-number": 42, "my-object": map[string]any{"sub-key": "sub-value"}})})}),
-              ),
-            ))
-
+                composition.NewEmptyParams().SetQuery("batman").SetSortBy("Price (asc)"))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1258,43 +1203,7 @@ paths:
 
             SearchResponse response = client.search(
               "foo",
-              new RequestBody().setParams(
-                new Params()
-                  .setQuery("batman")
-                  .setInjectedItems(
-                    new HashMap() {
-                      {
-                        put(
-                          "my-unique-external-group-key",
-                          new ExternalInjectedItem().setItems(
-                            Arrays.asList(
-                              new ExternalInjection().setObjectID("my-object-1"),
-                              new ExternalInjection()
-                                .setObjectID("my-object-2")
-                                .setMetadata(
-                                  new HashMap() {
-                                    {
-                                      put("my-string", "string");
-                                      put("my-bool", true);
-                                      put("my-number", 42);
-                                      put(
-                                        "my-object",
-                                        new HashMap() {
-                                          {
-                                            put("sub-key", "sub-value");
-                                          }
-                                        }
-                                      );
-                                    }
-                                  }
-                                )
-                            )
-                          )
-                        );
-                      }
-                    }
-                  )
-              ),
+              new RequestBody().setParams(new Params().setQuery("batman").setSortBy("Price (asc)")),
               Hit.class
             );
 
@@ -1315,27 +1224,7 @@ paths:
 
             const response = await client.search({
               compositionID: 'foo',
-              requestBody: {
-                params: {
-                  query: 'batman',
-                  injectedItems: {
-                    'my-unique-external-group-key': {
-                      items: [
-                        { objectID: 'my-object-1' },
-                        {
-                          objectID: 'my-object-2',
-                          metadata: {
-                            'my-string': 'string',
-                            'my-bool': true,
-                            'my-number': 42,
-                            'my-object': { 'sub-key': 'sub-value' },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
+              requestBody: { params: { query: 'batman', sortBy: 'Price (asc)' } },
             });
 
 
@@ -1357,7 +1246,7 @@ paths:
             var response =
               client.search(
                 compositionID = "foo",
-                requestBody = RequestBody(params = Params(query = "batman")),
+                requestBody = RequestBody(params = Params(query = "batman", sortBy = "Price (asc)")),
               )
 
 
@@ -1378,20 +1267,7 @@ paths:
             $response = $client->search(
                 'foo',
                 ['params' => ['query' => 'batman',
-                    'injectedItems' => ['my-unique-external-group-key' => ['items' => [
-                        ['objectID' => 'my-object-1',
-                        ],
-
-                        ['objectID' => 'my-object-2',
-                            'metadata' => ['my-string' => 'string',
-                                'my-bool' => true,
-                                'my-number' => 42,
-                                'my-object' => ['sub-key' => 'sub-value'],
-                            ],
-                        ],
-                    ],
-                    ],
-                    ],
+                    'sortBy' => 'Price (asc)',
                 ],
                 ],
             );
@@ -1420,24 +1296,7 @@ paths:
                 request_body={
                     "params": {
                         "query": "batman",
-                        "injectedItems": {
-                            "my-unique-external-group-key": {
-                                "items": [
-                                    {
-                                        "objectID": "my-object-1",
-                                    },
-                                    {
-                                        "objectID": "my-object-2",
-                                        "metadata": {
-                                            "my-string": "string",
-                                            "my-bool": True,
-                                            "my-number": 42,
-                                            "my-object": {"sub-key": "sub-value"},
-                                        },
-                                    },
-                                ],
-                            },
-                        },
+                        "sortBy": "Price (asc)",
                     },
                 },
             )
@@ -1461,25 +1320,7 @@ paths:
             response = client.search(
               "foo",
               Algolia::Composition::RequestBody.new(
-                params: Algolia::Composition::Params.new(
-                  query: "batman",
-                  injected_items: {
-                    :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
-                      items: [
-                        Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
-                        Algolia::Composition::ExternalInjection.new(
-                          algolia_object_id: "my-object-2",
-                          metadata: {
-                            :"my-string" => "string",
-                            :"my-bool" => true,
-                            :"my-number" => 42,
-                            :"my-object" => {:"sub-key" => "sub-value"}
-                          }
-                        )
-                      ]
-                    )
-                  }
-                )
+                params: Algolia::Composition::Params.new(query: "batman", sort_by: "Price (asc)")
               )
             )
 
@@ -1506,32 +1347,7 @@ paths:
                   params = Some(
                     Params(
                       query = Some("batman"),
-                      injectedItems = Some(
-                        Map(
-                          "my-unique-external-group-key" -> ExternalInjectedItem(
-                            items = Seq(
-                              ExternalInjection(
-                                objectID = "my-object-1"
-                              ),
-                              ExternalInjection(
-                                objectID = "my-object-2",
-                                metadata = Some(
-                                  Map(
-                                    "my-string" -> "string",
-                                    "my-bool" -> true,
-                                    "my-number" -> 42,
-                                    "my-object" -> JObject(
-                                      List(
-                                        JField("sub-key", JString("sub-value"))
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      )
+                      sortBy = Some("Price (asc)")
                     )
                   )
                 )
@@ -1557,21 +1373,7 @@ paths:
             let response: CompositionSearchResponse<CompositionHit> = try await
             client.search(
                 compositionID: "foo",
-                requestBody: RequestBody(params: CompositionParams(
-                    injectedItems: ["my-unique-external-group-key": ExternalInjectedItem(items: [
-                        ExternalInjection(objectID: "my-object-1"),
-                        ExternalInjection(
-                            objectID: "my-object-2",
-                            metadata: [
-                                "my-string": AnyCodable("string"),
-                                "my-bool": true,
-                                "my-number": 42,
-                                "my-object": ["sub-key": "sub-value"],
-                            ]
-                        ),
-                    ])],
-                    query: "batman"
-                ))
+                requestBody: RequestBody(params: CompositionParams(query: "batman", sortBy: "Price (asc)"))
             )
 
 
@@ -1587,7 +1389,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}'
+              --data '{"params":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","queryLanguages":["es"],"relevancyStrictness":90,"ruleContexts":["mobile"],"sortBy":"Price (asc)","userToken":"test-user-123"}}'
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -1932,7 +1734,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","relevancyStrictness":90,"queryLanguages":["es"],"ruleContexts":["mobile"],"userToken":"test-user-123"}}}'
+              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","queryLanguages":["es"],"relevancyStrictness":90,"ruleContexts":["mobile"],"sortBy":"Price (asc)","userToken":"test-user-123"}}}'
   /1/compositions:
     get:
       tags:
@@ -2475,6 +2277,11 @@ paths:
               {
                 ObjectID = "my-compo",
                 Name = "my composition",
+                SortingStrategy = new Dictionary<string, string>
+                {
+                  { "Price-asc", "products-low-to-high" },
+                  { "Price-desc", "products-high-to-low" },
+                },
                 Behavior = new CompositionBehavior
                 {
                   Injection = new Injection
@@ -2483,31 +2290,8 @@ paths:
                     {
                       Source = new CompositionSource
                       {
-                        Search = new CompositionSourceSearch
-                        {
-                          Index = "foo",
-                          Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                        },
+                        Search = new CompositionSourceSearch { Index = "products" },
                       },
-                    },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
-                      {
-                        Key = "my-unique-injected-item-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
-                      },
-                    },
-                    Deduplication = new Deduplication
-                    {
-                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
                     },
                   },
                 },
@@ -2529,32 +2313,18 @@ paths:
               composition: Composition(
                 objectID: "my-compo",
                 name: "my composition",
+                sortingStrategy: {
+                  'Price-asc': "products-low-to-high",
+                  'Price-desc': "products-high-to-low",
+                },
                 behavior: CompositionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
                         search: CompositionSourceSearch(
-                          index: "foo",
-                          params: MainInjectionQueryParameters(
-                            filters: "brand:adidas",
-                          ),
+                          index: "products",
                         ),
                       ),
-                    ),
-                    injectedItems: [
-                      InjectedItem(
-                        key: "my-unique-injected-item-key",
-                        source: SearchSource(
-                          search: Search(
-                            index: "foo",
-                          ),
-                        ),
-                        position: 2,
-                        length: 1,
-                      ),
-                    ],
-                    deduplication: Deduplication(
-                      positioning: DedupPositioning.fromJson("highest"),
                     ),
                   ),
                 ),
@@ -2582,20 +2352,18 @@ paths:
             response, err :=
             client.PutComposition(client.NewApiPutCompositionRequest(
               "my-compo",
-              composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-                composition.NewEmptyCompositionBehavior().SetInjection(
-                  composition.NewEmptyInjection().SetMain(
-                    composition.NewEmptyMain().SetSource(
-                      composition.NewEmptyCompositionSource().SetSearch(
-                        composition.NewEmptyCompositionSourceSearch().SetIndex("foo").SetParams(
-                          composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas"))))).SetInjectedItems(
-                    []composition.InjectedItem{
-                      *composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
-                        composition.NewEmptySearchSource().SetSearch(
-                          composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1),
-                    }).
-                    SetDeduplication(
-                      composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))
+              composition.NewEmptyComposition().
+                SetObjectID("my-compo").
+                SetName("my composition").
+                SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
+                SetBehavior(
+                  composition.NewEmptyCompositionBehavior().SetInjection(
+                    composition.NewEmptyInjection().SetMain(
+                      composition.NewEmptyMain().SetSource(
+                        composition.NewEmptyCompositionSource().SetSearch(
+                          composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))),
+            ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2622,26 +2390,19 @@ paths:
               new Composition()
                 .setObjectID("my-compo")
                 .setName("my composition")
+                .setSortingStrategy(
+                  new HashMap() {
+                    {
+                      put("Price-asc", "products-low-to-high");
+                      put("Price-desc", "products-high-to-low");
+                    }
+                  }
+                )
                 .setBehavior(
                   new CompositionBehavior().setInjection(
-                    new Injection()
-                      .setMain(
-                        new Main().setSource(
-                          new CompositionSource().setSearch(
-                            new CompositionSourceSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
-                          )
-                        )
-                      )
-                      .setInjectedItems(
-                        Arrays.asList(
-                          new InjectedItem()
-                            .setKey("my-unique-injected-item-key")
-                            .setSource(new SearchSource().setSearch(new Search().setIndex("foo")))
-                            .setPosition(2)
-                            .setLength(1)
-                        )
-                      )
-                      .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST))
+                    new Injection().setMain(
+                      new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                    )
                   )
                 )
             );
@@ -2666,15 +2427,8 @@ paths:
               composition: {
                 objectID: 'my-compo',
                 name: 'my composition',
-                behavior: {
-                  injection: {
-                    main: { source: { search: { index: 'foo', params: { filters: 'brand:adidas' } } } },
-                    injectedItems: [
-                      { key: 'my-unique-injected-item-key', source: { search: { index: 'foo' } }, position: 2, length: 1 },
-                    ],
-                    deduplication: { positioning: 'highest' },
-                  },
-                },
+                sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+                behavior: { injection: { main: { source: { search: { index: 'products' } } } } },
               },
             });
 
@@ -2701,6 +2455,8 @@ paths:
                   Composition(
                     objectID = "my-compo",
                     name = "my composition",
+                    sortingStrategy =
+                      mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
                     behavior =
                       CompositionBehavior(
                         injection =
@@ -2708,27 +2464,8 @@ paths:
                             main =
                               Main(
                                 source =
-                                  CompositionSource(
-                                    search =
-                                      CompositionSourceSearch(
-                                        index = "foo",
-                                        params = MainInjectionQueryParameters(filters = "brand:adidas"),
-                                      )
-                                  )
-                              ),
-                            injectedItems =
-                              listOf(
-                                InjectedItem(
-                                  key = "my-unique-injected-item-key",
-                                  source = SearchSource(search = Search(index = "foo")),
-                                  position = 2,
-                                  length = 1,
-                                )
-                              ),
-                            deduplication =
-                              Deduplication(
-                                positioning = DedupPositioning.entries.first { it.value == "highest" }
-                              ),
+                                  CompositionSource(search = CompositionSourceSearch(index = "products"))
+                              )
                           )
                       ),
                   ),
@@ -2753,23 +2490,13 @@ paths:
                 'my-compo',
                 ['objectID' => 'my-compo',
                     'name' => 'my composition',
-                    'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'foo',
-                        'params' => ['filters' => 'brand:adidas',
-                        ],
+                    'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
+                        'Price-desc' => 'products-high-to-low',
+                    ],
+                    'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
                     ],
                     ],
                     ],
-                        'injectedItems' => [
-                            ['key' => 'my-unique-injected-item-key',
-                                'source' => ['search' => ['index' => 'foo',
-                                ],
-                                ],
-                                'position' => 2,
-                                'length' => 1,
-                            ],
-                        ],
-                        'deduplication' => ['positioning' => 'highest',
-                        ],
                     ],
                     ],
                 ],
@@ -2799,32 +2526,18 @@ paths:
                 composition={
                     "objectID": "my-compo",
                     "name": "my composition",
+                    "sortingStrategy": {
+                        "Price-asc": "products-low-to-high",
+                        "Price-desc": "products-high-to-low",
+                    },
                     "behavior": {
                         "injection": {
                             "main": {
                                 "source": {
                                     "search": {
-                                        "index": "foo",
-                                        "params": {
-                                            "filters": "brand:adidas",
-                                        },
+                                        "index": "products",
                                     },
                                 },
-                            },
-                            "injectedItems": [
-                                {
-                                    "key": "my-unique-injected-item-key",
-                                    "source": {
-                                        "search": {
-                                            "index": "foo",
-                                        },
-                                    },
-                                    "position": 2,
-                                    "length": 1,
-                                },
-                            ],
-                            "deduplication": {
-                                "positioning": "highest",
                             },
                         },
                     },
@@ -2852,25 +2565,14 @@ paths:
               Algolia::Composition::Composition.new(
                 algolia_object_id: "my-compo",
                 name: "my composition",
+                sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
                 behavior: Algolia::Composition::CompositionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(
-                          index: "foo",
-                          params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
-                        )
+                        search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
                       )
-                    ),
-                    injected_items: [
-                      Algolia::Composition::InjectedItem.new(
-                        key: "my-unique-injected-item-key",
-                        source: Algolia::Composition::SearchSource.new(search: Algolia::Composition::Search.new(index: "foo")),
-                        position: 2,
-                        length: 1
-                      )
-                    ],
-                    deduplication: Algolia::Composition::Deduplication.new(positioning: "highest")
+                    )
                   )
                 )
               )
@@ -2898,37 +2600,14 @@ paths:
                 composition = Composition(
                   objectID = "my-compo",
                   name = "my composition",
+                  sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
                   behavior = CompositionBehavior(
                     injection = Injection(
                       main = Main(
                         source = CompositionSource(
                           search = CompositionSourceSearch(
-                            index = "foo",
-                            params = Some(
-                              MainInjectionQueryParameters(
-                                filters = Some("brand:adidas")
-                              )
-                            )
+                            index = "products"
                           )
-                        )
-                      ),
-                      injectedItems = Some(
-                        Seq(
-                          InjectedItem(
-                            key = "my-unique-injected-item-key",
-                            source = SearchSource(
-                              search = Search(
-                                index = "foo"
-                              )
-                            ),
-                            position = 2,
-                            length = 1
-                          )
-                        )
-                      ),
-                      deduplication = Some(
-                        Deduplication(
-                          positioning = DedupPositioning.withName("highest")
                         )
                       )
                     )
@@ -2958,20 +2637,12 @@ paths:
                 composition: Composition(
                     objectID: "my-compo",
                     name: "my composition",
-                    behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "foo",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-injected-item-key",
-                            source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                            position: 2,
-                            length: 1
-                        )],
-                        deduplication: Deduplication(positioning: DedupPositioning.highest)
-                    ))
+                    behavior: CompositionBehavior(
+                        injection: Injection(main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                        ))
+                    ),
+                    sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
                 )
             )
 
@@ -2988,7 +2659,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}}'
+              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}'
     delete:
       tags:
         - Compositions
@@ -3850,7 +3521,324 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}}]}'
+  /1/compositions/{compositionID}/sortingStrategy:
+    post:
+      tags:
+        - Compositions
+      operationId: updateSortingStrategyComposition
+      x-acl:
+        - editSettings
+      summary: >-
+        Set or update the "sortingStrategy" configuration for an existing
+        composition
+      description: >
+        Updates the "sortingStrategy" field of an existing composition.
+
+        This endpoint allows you to create a new sorting strategy mapping or
+        replace the currently configured one.
+
+        The provided sorting indices MUST be associated indices or replicas of
+        the main targeted index.
+
+
+        WARNING: This endpoint cannot validate if the sort index is related to
+        the composition's main index.
+          Validation will fail at runtime if the index you updated is not related!
+
+        The update is applied to the specified composition within the current
+        Algolia application and returns a taskID that can be used to track the
+        operation’s completion.
+      parameters:
+        - $ref: '#/components/parameters/compositionID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sortingStrategy'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: taskIDResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  taskID:
+                    $ref: '#/components/schemas/taskID'
+                required:
+                  - taskID
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/CompositionNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |-
+            // Initialize the client
+            var client = new CompositionClient(
+              new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
+
+            // Call the API
+            var response = await client.UpdateSortingStrategyCompositionAsync(
+              "my-compo",
+              new Dictionary<string, string>
+              {
+                { "Price-asc", "products-low-to-high" },
+                { "Price-desc", "products-high-to-low" },
+              }
+            );
+
+            // print the response
+            Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = CompositionClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.updateSortingStrategyComposition(
+              compositionID: "my-compo",
+              requestBody: {
+                'Price-asc': "products-low-to-high",
+                'Price-desc': "products-high-to-low",
+              },
+            );
+
+            // print the response
+            print(response);
+        - lang: go
+          label: Go
+          source: >-
+            // Initialize the client
+
+            client, err := composition.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.UpdateSortingStrategyComposition(client.NewApiUpdateSortingStrategyCompositionRequest(
+              "my-compo", map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+
+            // print the response
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >-
+            // Initialize the client
+
+            CompositionClient client = new
+            CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            TaskIDResponse response = client.updateSortingStrategyComposition(
+              "my-compo",
+              new HashMap() {
+                {
+                  put("Price-asc", "products-low-to-high");
+                  put("Price-desc", "products-high-to-low");
+                }
+              }
+            );
+
+
+            // print the response
+
+            System.out.println(response);
+        - lang: javascript
+          label: JavaScript
+          source: >-
+            // Initialize the client
+
+            const client = compositionClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.updateSortingStrategyComposition({
+              compositionID: 'my-compo',
+              requestBody: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+            });
+
+
+
+            // print the response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >-
+            // Initialize the client
+
+            val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response =
+              client.updateSortingStrategyComposition(
+                compositionID = "my-compo",
+                requestBody =
+                  mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
+              )
+
+
+            // print the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >-
+            // Initialize the client
+
+            $client = CompositionClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->updateSortingStrategyComposition(
+                'my-compo',
+                ['Price-asc' => 'products-low-to-high',
+                    'Price-desc' => 'products-high-to-low',
+                ],
+            );
+
+
+
+            // print the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >-
+            # Initialize the client
+
+            # In an asynchronous context, you can use CompositionClient instead,
+            which exposes the exact same methods.
+
+            client = CompositionClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.update_sorting_strategy_composition(
+                composition_id="my-compo",
+                request_body={
+                    "Price-asc": "products-low-to-high",
+                    "Price-desc": "products-high-to-low",
+                },
+            )
+
+
+
+            # print the response
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >-
+            # Initialize the client
+
+            client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.update_sorting_strategy_composition(
+              "my-compo",
+              {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"}
+            )
+
+
+
+            # print the response
+
+            puts(response)
+        - lang: scala
+          label: Scala
+          source: >-
+            // Initialize the client
+
+            val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.updateSortingStrategyComposition(
+                compositionID = "my-compo",
+                requestBody = Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")
+              ),
+              Duration(100, "sec")
+            )
+
+
+            // print the response
+
+            println(response)
+        - lang: swift
+          label: Swift
+          source: >-
+            // Initialize the client
+
+            let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.updateSortingStrategyComposition(
+                compositionID: "my-compo",
+                requestBody: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+            )
+
+
+            // print the response
+
+            print(response)
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request POST \
+              --url https://algolia_application_id.algolia.net/1/compositions/my_composition_object_id/sortingStrategy \
+              --header 'accept: application/json' \
+              --header 'content-type: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
+              --data '{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}'
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -4733,7 +4721,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
+              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
     delete:
       tags:
         - Composition Rules
@@ -5091,6 +5079,7 @@ paths:
                             Anchoring = Enum.Parse<Anchoring>("Contains"),
                             Pattern = "harry",
                           },
+                          new Condition { SortBy = "price-low-to-high" },
                         },
                         Consequence = new CompositionRuleConsequence
                         {
@@ -5162,6 +5151,9 @@ paths:
                           anchoring: Anchoring.fromJson("contains"),
                           pattern: "harry",
                         ),
+                        Condition(
+                          sortBy: "price-low-to-high",
+                        ),
                       ],
                       consequence: CompositionRuleConsequence(
                         behavior: CompositionBehavior(
@@ -5221,7 +5213,7 @@ paths:
                 []composition.RulesMultipleBatchRequest{
                   *composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
                     composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-                      []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
+                      []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetSortBy("price-low-to-high")}).SetConsequence(
                       composition.NewEmptyCompositionRuleConsequence().SetBehavior(
                         composition.NewEmptyCompositionBehavior().SetInjection(
                           composition.NewEmptyInjection().SetMain(
@@ -5267,7 +5259,12 @@ paths:
                         .setObjectID("rule-with-deduplication")
                         .setDescription("my description")
                         .setEnabled(true)
-                        .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                        .setConditions(
+                          Arrays.asList(
+                            new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
+                            new Condition().setSortBy("price-low-to-high")
+                          )
+                        )
                         .setConsequence(
                           new CompositionRuleConsequence().setBehavior(
                             new CompositionBehavior().setInjection(
@@ -5318,7 +5315,7 @@ paths:
                       objectID: 'rule-with-deduplication',
                       description: 'my description',
                       enabled: true,
-                      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+                      conditions: [{ anchoring: 'contains', pattern: 'harry' }, { sortBy: 'price-low-to-high' }],
                       consequence: {
                         behavior: {
                           injection: {
@@ -5376,7 +5373,8 @@ paths:
                                   Condition(
                                     anchoring = Anchoring.entries.first { it.value == "contains" },
                                     pattern = "harry",
-                                  )
+                                  ),
+                                  Condition(sortBy = "price-low-to-high"),
                                 ),
                               consequence =
                                 CompositionRuleConsequence(
@@ -5442,6 +5440,9 @@ paths:
                                 ['anchoring' => 'contains',
                                     'pattern' => 'harry',
                                 ],
+
+                                ['sortBy' => 'price-low-to-high',
+                                ],
                             ],
                             'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
                             ],
@@ -5500,6 +5501,9 @@ paths:
                                     {
                                         "anchoring": "contains",
                                         "pattern": "harry",
+                                    },
+                                    {
+                                        "sortBy": "price-low-to-high",
                                     },
                                 ],
                                 "consequence": {
@@ -5562,7 +5566,10 @@ paths:
                       algolia_object_id: "rule-with-deduplication",
                       description: "my description",
                       enabled: true,
-                      conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+                      conditions: [
+                        Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry"),
+                        Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
+                      ],
                       consequence: Algolia::Composition::CompositionRuleConsequence.new(
                         behavior: Algolia::Composition::CompositionBehavior.new(
                           injection: Algolia::Composition::Injection.new(
@@ -5623,6 +5630,9 @@ paths:
                             Condition(
                               anchoring = Some(Anchoring.withName("contains")),
                               pattern = Some("harry")
+                            ),
+                            Condition(
+                              sortBy = Some("price-low-to-high")
                             )
                           ),
                           consequence = CompositionRuleConsequence(
@@ -5687,7 +5697,10 @@ paths:
                     action: CompositionAction.upsert,
                     body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                         objectID: "rule-with-deduplication",
-                        conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                        conditions: [
+                            CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
+                            CompositionCondition(sortBy: "price-low-to-high"),
+                        ],
                         consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                             main: CompositionMain(
                                 source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
@@ -5720,7 +5733,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":[["category","disjunctive(brand)","price"]]},"facetAll":{"summary":"Retrieve all facets","value":[["*"]]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -6725,6 +6738,12 @@ components:
       default: {}
       x-categories:
         - Retail Media Network
+      example:
+        my-group-key:
+          - objectID: my-object-1
+            metadata:
+              my-field: my-value
+          - objectID: my-object-2
     insideBoundingBoxArray:
       type: array
       items:
@@ -6979,21 +6998,6 @@ components:
       default: ''
       x-categories:
         - Search
-    relevancyStrictness:
-      type: integer
-      example: 90
-      description: >
-        Relevancy threshold below which less relevant results aren't included in
-        the results
-
-        You can only set `relevancyStrictness` on [virtual replica
-        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-
-        Use this setting to strike a balance between the relevance and number of
-        returned results.
-      default: 100
-      x-categories:
-        - Ranking
     queryLanguages:
       type: array
       items:
@@ -7030,6 +7034,21 @@ components:
       default: []
       x-categories:
         - Languages
+    relevancyStrictness:
+      type: integer
+      example: 90
+      description: >
+        Relevancy threshold below which less relevant results aren't included in
+        the results
+
+        You can only set `relevancyStrictness` on [virtual replica
+        indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+
+        Use this setting to strike a balance between the relevance and number of
+        returned results.
+      default: 100
+      x-categories:
+        - Ranking
     ruleContexts:
       type: array
       items:
@@ -7045,6 +7064,28 @@ components:
         - mobile
       x-categories:
         - Composition Rules
+    sortBy:
+      type: string
+      description: >
+        Indicates which sorting strategy to apply for the request.
+
+        The value must match one of the labels defined in the "sortingStrategy"
+        mapping. For example, "Price (asc)", see Upsert Composition.
+
+        At runtime, this label is used to look up the corresponding index or
+        replica configured in "sortingStrategy", and the query is executed using
+        that index instead of main's.
+
+
+        In addition to "sortingStrategy", this parameter is also used to apply a
+        matching Composition Rule that contains a condition defined to trigger
+        on "sortBy", see Composition Rules.
+
+
+        If no value is provided or an invalid value, no sorting strategy is
+        applied.
+      default: ''
+      example: Price (asc)
     userToken:
       type: string
       description: >
@@ -7113,12 +7154,14 @@ components:
           $ref: '#/components/schemas/page'
         query:
           $ref: '#/components/schemas/query'
-        relevancyStrictness:
-          $ref: '#/components/schemas/relevancyStrictness'
         queryLanguages:
           $ref: '#/components/schemas/queryLanguages'
+        relevancyStrictness:
+          $ref: '#/components/schemas/relevancyStrictness'
         ruleContexts:
           $ref: '#/components/schemas/ruleContexts'
+        sortBy:
+          $ref: '#/components/schemas/sortBy'
         userToken:
           $ref: '#/components/schemas/userToken'
     objectID:
@@ -9052,6 +9095,31 @@ components:
           $ref: '#/components/schemas/injection'
       required:
         - injection
+    sortingStrategy:
+      type: object
+      description: >
+        A mapping of sorting labels to the indices (or replicas) that implement
+        those sorting rules. The sorting indices MUST be related to the
+        associated main targeted index in the composition.
+
+        Each key is the label your frontend sends at runtime (for example,
+        "Price (asc)"), and each value is the name of the index that should be
+        queried when that label is selected.
+
+
+        When a request includes a "sortBy" parameter, the platform looks up the
+        corresponding index in this mapping and uses it to execute the query.
+        The main targeted index is replaced
+
+        with the sorting strategy index it is mapped to.
+
+
+        Up to 20 sorting strategies can be defined.
+      additionalProperties:
+        type: string
+      example:
+        Price (asc): products-low-to-high
+        Price (desc): products-high-to-low
     composition:
       type: object
       additionalProperties: false
@@ -9068,6 +9136,8 @@ components:
           example: my lovely crafted composition that is used for X purpose
         behavior:
           $ref: '#/components/schemas/compositionBehavior'
+        sortingStrategy:
+          $ref: '#/components/schemas/sortingStrategy'
       required:
         - objectID
         - behavior
@@ -9210,6 +9280,18 @@ components:
             You can use `filters` on its own or combine it with the `pattern`
             parameter.
           example: genre:comedy
+        sortBy:
+          type: string
+          description: >
+            Sort criteria that trigger the rule.
+
+
+            You can trigger composition rules based on the selected sorting
+            strategy set by the parameter `sortBy`.
+
+            The rule will trigger if the value passed to `sortBy` matches the
+            one defined in the condition.
+          example: price-low-to-high
     timeRange:
       type: object
       additionalProperties: false

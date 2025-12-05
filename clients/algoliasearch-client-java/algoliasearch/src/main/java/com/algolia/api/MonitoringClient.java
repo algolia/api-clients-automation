@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import okhttp3.Response;
 
 public class MonitoringClient extends ApiClient {
 
@@ -63,10 +64,35 @@ public class MonitoringClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -85,10 +111,32 @@ public class MonitoringClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDelete(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -116,10 +164,42 @@ public class MonitoringClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -139,10 +219,33 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -164,10 +267,35 @@ public class MonitoringClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -186,10 +314,32 @@ public class MonitoringClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGet(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -217,10 +367,42 @@ public class MonitoringClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -240,10 +422,33 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -267,10 +472,41 @@ public class MonitoringClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -289,10 +525,32 @@ public class MonitoringClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -328,11 +586,51 @@ public class MonitoringClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -352,10 +650,33 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -379,10 +700,41 @@ public class MonitoringClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -401,10 +753,32 @@ public class MonitoringClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -440,11 +814,51 @@ public class MonitoringClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -464,10 +878,33 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -487,10 +924,33 @@ public class MonitoringClient extends ApiClient {
    * Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClusterIncidentsWithHTTPInfo(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getClusterIncidentsWithHTTPInfoAsync(clusters, requestOptions));
+  }
+
+  /**
+   * Retrieves known incidents for the selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IncidentsResponse getClusterIncidents(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getClusterIncidents(clusters, null);
+  }
+
+  /**
+   * Retrieves known incidents for the selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClusterIncidentsWithHTTPInfo(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getClusterIncidentsWithHTTPInfo(clusters, null);
   }
 
   /**
@@ -514,10 +974,37 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClusterIncidentsWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/incidents/{clusters}", clusters).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves known incidents for the selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IncidentsResponse> getClusterIncidentsAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getClusterIncidentsAsync(clusters, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves known incidents for the selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClusterIncidentsWithHTTPInfoAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getClusterIncidentsWithHTTPInfoAsync(clusters, null);
   }
 
   /**
@@ -536,10 +1023,33 @@ public class MonitoringClient extends ApiClient {
    * Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClusterStatusWithHTTPInfo(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getClusterStatusWithHTTPInfoAsync(clusters, requestOptions));
+  }
+
+  /**
+   * Retrieves the status of selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public StatusResponse getClusterStatus(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getClusterStatus(clusters, null);
+  }
+
+  /**
+   * Retrieves the status of selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getClusterStatusWithHTTPInfo(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getClusterStatusWithHTTPInfo(clusters, null);
   }
 
   /**
@@ -563,10 +1073,37 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClusterStatusWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/status/{clusters}", clusters).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the status of selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<StatusResponse> getClusterStatusAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getClusterStatusAsync(clusters, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the status of selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getClusterStatusWithHTTPInfoAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getClusterStatusWithHTTPInfoAsync(clusters, null);
   }
 
   /**
@@ -583,10 +1120,30 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves known incidents for all clusters.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getIncidentsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getIncidentsWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * Retrieves known incidents for all clusters.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IncidentsResponse getIncidents() throws AlgoliaRuntimeException {
     return this.getIncidents(null);
+  }
+
+  /**
+   * Retrieves known incidents for all clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getIncidentsWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.getIncidentsWithHTTPInfo(null);
   }
 
   /**
@@ -605,10 +1162,32 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves known incidents for all clusters.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getIncidentsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/incidents").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves known incidents for all clusters.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IncidentsResponse> getIncidentsAsync() throws AlgoliaRuntimeException {
     return this.getIncidentsAsync(null);
+  }
+
+  /**
+   * (asynchronously) Retrieves known incidents for all clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getIncidentsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.getIncidentsWithHTTPInfoAsync(null);
   }
 
   /**
@@ -628,10 +1207,33 @@ public class MonitoringClient extends ApiClient {
    * Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getIndexingTimeWithHTTPInfo(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getIndexingTimeWithHTTPInfoAsync(clusters, requestOptions));
+  }
+
+  /**
+   * Retrieves average times for indexing operations for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IndexingTimeResponse getIndexingTime(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getIndexingTime(clusters, null);
+  }
+
+  /**
+   * Retrieves average times for indexing operations for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getIndexingTimeWithHTTPInfo(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getIndexingTimeWithHTTPInfo(clusters, null);
   }
 
   /**
@@ -655,10 +1257,37 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getIndexingTimeWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/indexing/{clusters}", clusters).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IndexingTimeResponse> getIndexingTimeAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getIndexingTimeAsync(clusters, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getIndexingTimeWithHTTPInfoAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getIndexingTimeWithHTTPInfoAsync(clusters, null);
   }
 
   /**
@@ -677,10 +1306,32 @@ public class MonitoringClient extends ApiClient {
    * Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getLatencyWithHTTPInfo(@Nonnull String clusters, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getLatencyWithHTTPInfoAsync(clusters, requestOptions));
+  }
+
+  /**
+   * Retrieves the average latency for search requests for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public LatencyResponse getLatency(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getLatency(clusters, null);
+  }
+
+  /**
+   * Retrieves the average latency for search requests for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getLatencyWithHTTPInfo(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getLatencyWithHTTPInfo(clusters, null);
   }
 
   /**
@@ -704,10 +1355,37 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getLatencyWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getLatency`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/latency/{clusters}", clusters).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the average latency for search requests for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<LatencyResponse> getLatencyAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getLatencyAsync(clusters, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the average latency for search requests for selected clusters.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getLatencyWithHTTPInfoAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getLatencyWithHTTPInfoAsync(clusters, null);
   }
 
   /**
@@ -745,10 +1423,51 @@ public class MonitoringClient extends ApiClient {
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
    *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
    *     day. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getMetricsWithHTTPInfo(@Nonnull Metric metric, @Nonnull Period period, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getMetricsWithHTTPInfoAsync(metric, period, requestOptions));
+  }
+
+  /**
+   * Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time
+   * window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
+   *
+   * @param metric Metric to report. For more information about the individual metrics, see the
+   *     description of the API response. To include all metrics, use `*`. (required)
+   * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
+   *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
+   *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
+   *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
+   *     day. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public InfrastructureResponse getMetrics(@Nonnull Metric metric, @Nonnull Period period) throws AlgoliaRuntimeException {
     return this.getMetrics(metric, period, null);
+  }
+
+  /**
+   * Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time
+   * window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
+   *
+   * @param metric Metric to report. For more information about the individual metrics, see the
+   *     description of the API response. To include all metrics, use `*`. (required)
+   * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
+   *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
+   *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
+   *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
+   *     day. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getMetricsWithHTTPInfo(@Nonnull Metric metric, @Nonnull Period period) throws AlgoliaRuntimeException {
+    return this.getMetricsWithHTTPInfo(metric, period, null);
   }
 
   /**
@@ -797,11 +1516,64 @@ public class MonitoringClient extends ApiClient {
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
    *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
    *     day. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getMetricsWithHTTPInfoAsync(
+    @Nonnull Metric metric,
+    @Nonnull Period period,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(metric, "Parameter `metric` is required when calling `getMetrics`.");
+
+    Parameters.requireNonNull(period, "Parameter `period` is required when calling `getMetrics`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/infrastructure/{metric}/period/{period}", metric, period)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves metrics related to your Algolia infrastructure, aggregated over a
+   * selected time window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
+   *
+   * @param metric Metric to report. For more information about the individual metrics, see the
+   *     description of the API response. To include all metrics, use `*`. (required)
+   * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
+   *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
+   *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
+   *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
+   *     day. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<InfrastructureResponse> getMetricsAsync(@Nonnull Metric metric, @Nonnull Period period)
     throws AlgoliaRuntimeException {
     return this.getMetricsAsync(metric, period, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves metrics related to your Algolia infrastructure, aggregated over a
+   * selected time window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
+   *
+   * @param metric Metric to report. For more information about the individual metrics, see the
+   *     description of the API response. To include all metrics, use `*`. (required)
+   * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
+   *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
+   *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
+   *     the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per
+   *     day. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getMetricsWithHTTPInfoAsync(@Nonnull Metric metric, @Nonnull Period period)
+    throws AlgoliaRuntimeException {
+    return this.getMetricsWithHTTPInfoAsync(metric, period, null);
   }
 
   /**
@@ -821,10 +1593,33 @@ public class MonitoringClient extends ApiClient {
    * Test whether clusters are reachable or not.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getReachabilityWithHTTPInfo(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getReachabilityWithHTTPInfoAsync(clusters, requestOptions));
+  }
+
+  /**
+   * Test whether clusters are reachable or not.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Map<String, Map<String, Boolean>> getReachability(@Nonnull String clusters) throws AlgoliaRuntimeException {
     return this.getReachability(clusters, null);
+  }
+
+  /**
+   * Test whether clusters are reachable or not.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getReachabilityWithHTTPInfo(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getReachabilityWithHTTPInfo(clusters, null);
   }
 
   /**
@@ -849,11 +1644,37 @@ public class MonitoringClient extends ApiClient {
    * (asynchronously) Test whether clusters are reachable or not.
    *
    * @param clusters Subset of clusters, separated by commas. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getReachabilityWithHTTPInfoAsync(@Nonnull String clusters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(clusters, "Parameter `clusters` is required when calling `getReachability`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/reachability/{clusters}/probes", clusters).setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Test whether clusters are reachable or not.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Map<String, Map<String, Boolean>>> getReachabilityAsync(@Nonnull String clusters)
     throws AlgoliaRuntimeException {
     return this.getReachabilityAsync(clusters, null);
+  }
+
+  /**
+   * (asynchronously) Test whether clusters are reachable or not.
+   *
+   * @param clusters Subset of clusters, separated by commas. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getReachabilityWithHTTPInfoAsync(@Nonnull String clusters) throws AlgoliaRuntimeException {
+    return this.getReachabilityWithHTTPInfoAsync(clusters, null);
   }
 
   /**
@@ -876,10 +1697,36 @@ public class MonitoringClient extends ApiClient {
    * Algolia application's cluster. - Without authentication, the response lists the servers for all
    * Algolia clusters.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getServersWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getServersWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * Retrieves the servers that belong to clusters. The response depends on whether you authenticate
+   * your API request: - With authentication, the response lists the servers assigned to your
+   * Algolia application's cluster. - Without authentication, the response lists the servers for all
+   * Algolia clusters.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public InventoryResponse getServers() throws AlgoliaRuntimeException {
     return this.getServers(null);
+  }
+
+  /**
+   * Retrieves the servers that belong to clusters. The response depends on whether you authenticate
+   * your API request: - With authentication, the response lists the servers assigned to your
+   * Algolia application's cluster. - Without authentication, the response lists the servers for all
+   * Algolia clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getServersWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.getServersWithHTTPInfo(null);
   }
 
   /**
@@ -904,10 +1751,38 @@ public class MonitoringClient extends ApiClient {
    * assigned to your Algolia application's cluster. - Without authentication, the response lists
    * the servers for all Algolia clusters.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getServersWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/inventory/servers").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the servers that belong to clusters. The response depends on whether
+   * you authenticate your API request: - With authentication, the response lists the servers
+   * assigned to your Algolia application's cluster. - Without authentication, the response lists
+   * the servers for all Algolia clusters.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<InventoryResponse> getServersAsync() throws AlgoliaRuntimeException {
     return this.getServersAsync(null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the servers that belong to clusters. The response depends on whether
+   * you authenticate your API request: - With authentication, the response lists the servers
+   * assigned to your Algolia application's cluster. - Without authentication, the response lists
+   * the servers for all Algolia clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getServersWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.getServersWithHTTPInfoAsync(null);
   }
 
   /**
@@ -924,10 +1799,30 @@ public class MonitoringClient extends ApiClient {
   /**
    * Retrieves the status of all Algolia clusters and instances.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getStatusWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getStatusWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * Retrieves the status of all Algolia clusters and instances.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public StatusResponse getStatus() throws AlgoliaRuntimeException {
     return this.getStatus(null);
+  }
+
+  /**
+   * Retrieves the status of all Algolia clusters and instances.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getStatusWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.getStatusWithHTTPInfo(null);
   }
 
   /**
@@ -946,9 +1841,31 @@ public class MonitoringClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the status of all Algolia clusters and instances.
    *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getStatusWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/status").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the status of all Algolia clusters and instances.
+   *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<StatusResponse> getStatusAsync() throws AlgoliaRuntimeException {
     return this.getStatusAsync(null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the status of all Algolia clusters and instances.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getStatusWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.getStatusWithHTTPInfoAsync(null);
   }
 }

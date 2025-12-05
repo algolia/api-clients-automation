@@ -670,6 +670,68 @@
         }
       }
     },
+    "/1/compositions/{compositionID}/sortingStrategy": {
+      "post": {
+        "tags": [
+          "Compositions"
+        ],
+        "operationId": "updateSortingStrategyComposition",
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Set or update the \"sortingStrategy\" configuration for an existing composition",
+        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint allows you to create a new sorting strategy mapping or replace the currently configured one.\nThe provided sorting indices MUST be associated indices or replicas of the main targeted index.\n\nWARNING: This endpoint cannot validate if the sort index is related to the composition's main index.\n  Validation will fail at runtime if the index you updated is not related!\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/compositionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sortingStrategy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "taskIDResponse",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "taskID": {
+                      "$ref": "#/components/schemas/taskID"
+                    }
+                  },
+                  "required": [
+                    "taskID"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/CompositionNotFound"
+          }
+        }
+      }
+    },
     "/1/compositions/{compositionID}/rules/{objectID}": {
       "get": {
         "tags": [
@@ -1540,7 +1602,20 @@
         "default": {},
         "x-categories": [
           "Retail Media Network"
-        ]
+        ],
+        "example": {
+          "my-group-key": [
+            {
+              "objectID": "my-object-1",
+              "metadata": {
+                "my-field": "my-value"
+              }
+            },
+            {
+              "objectID": "my-object-2"
+            }
+          ]
+        }
       },
       "insideBoundingBoxArray": {
         "type": "array",
@@ -1774,15 +1849,6 @@
           "Search"
         ]
       },
-      "relevancyStrictness": {
-        "type": "integer",
-        "example": 90,
-        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
-        "default": 100,
-        "x-categories": [
-          "Ranking"
-        ]
-      },
       "queryLanguages": {
         "type": "array",
         "items": {
@@ -1795,6 +1861,15 @@
         "default": [],
         "x-categories": [
           "Languages"
+        ]
+      },
+      "relevancyStrictness": {
+        "type": "integer",
+        "example": 90,
+        "description": "Relevancy threshold below which less relevant results aren't included in the results\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
+        "default": 100,
+        "x-categories": [
+          "Ranking"
         ]
       },
       "ruleContexts": {
@@ -1810,6 +1885,12 @@
         "x-categories": [
           "Composition Rules"
         ]
+      },
+      "sortBy": {
+        "type": "string",
+        "description": "Indicates which sorting strategy to apply for the request.\nThe value must match one of the labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition.\nAt runtime, this label is used to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using that index instead of main's.\n\nIn addition to \"sortingStrategy\", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules.\n\nIf no value is provided or an invalid value, no sorting strategy is applied.\n",
+        "default": "",
+        "example": "Price (asc)"
       },
       "userToken": {
         "type": "string",
@@ -1899,14 +1980,17 @@
           "query": {
             "$ref": "#/components/schemas/query"
           },
-          "relevancyStrictness": {
-            "$ref": "#/components/schemas/relevancyStrictness"
-          },
           "queryLanguages": {
             "$ref": "#/components/schemas/queryLanguages"
           },
+          "relevancyStrictness": {
+            "$ref": "#/components/schemas/relevancyStrictness"
+          },
           "ruleContexts": {
             "$ref": "#/components/schemas/ruleContexts"
+          },
+          "sortBy": {
+            "$ref": "#/components/schemas/sortBy"
           },
           "userToken": {
             "$ref": "#/components/schemas/userToken"
@@ -3884,6 +3968,17 @@
           "injection"
         ]
       },
+      "sortingStrategy": {
+        "type": "object",
+        "description": "A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The sorting indices MUST be related to the associated main targeted index in the composition.\nEach key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each value is the name of the index that should be queried when that label is selected.\n\nWhen a request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main targeted index is replaced\nwith the sorting strategy index it is mapped to.\n\nUp to 20 sorting strategies can be defined.\n",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "example": {
+          "Price (asc)": "products-low-to-high",
+          "Price (desc)": "products-high-to-low"
+        }
+      },
       "composition": {
         "type": "object",
         "additionalProperties": false,
@@ -3903,6 +3998,9 @@
           },
           "behavior": {
             "$ref": "#/components/schemas/compositionBehavior"
+          },
+          "sortingStrategy": {
+            "$ref": "#/components/schemas/sortingStrategy"
           }
         },
         "required": [
@@ -4035,6 +4133,11 @@
             "type": "string",
             "description": "Filters that trigger the rule.\n\nYou can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.\nYou can use `filters` on its own or combine it with the `pattern` parameter.\n",
             "example": "genre:comedy"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Sort criteria that trigger the rule.\n\nYou can trigger composition rules based on the selected sorting strategy set by the parameter `sortBy`.\nThe rule will trigger if the value passed to `sortBy` matches the one defined in the condition.\n",
+            "example": "price-low-to-high"
           }
         }
       },
