@@ -4,11 +4,7 @@ user:
     userID:
       type: string
     type:
-      type: string
-      enum:
-        - basic
-        - predictive
-        - realtime
+      $ref: '../enums.yml#/userType'
     affinities:
       type: array
       items:
