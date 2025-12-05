@@ -18531,7 +18531,6 @@ components:
         - discover
         - validate
         - push
-        - enrichment
     runSortKeys:
       type: string
       description: Property by which to sort the list of task runs.
