@@ -592,6 +592,33 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the browse method.
+    *
+    * browse with query string
+    */
+  def snippetForSearchClientBrowse3(): Unit = {
+    // >SEPARATOR browse browse with query string
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.browse(
+        indexName = "<YOUR_INDEX_NAME>",
+        browseParams = Some(
+          SearchParamsString(
+            params = Some("foo=bar&cursor=test")
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the clearObjects method.
     *
     * clearObjects

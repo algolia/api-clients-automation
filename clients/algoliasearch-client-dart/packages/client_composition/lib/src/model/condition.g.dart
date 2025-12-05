@@ -16,6 +16,7 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) => $checkedCreate(
               'anchoring', (v) => $enumDecodeNullable(_$AnchoringEnumMap, v)),
           context: $checkedConvert('context', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
+          sortBy: $checkedConvert('sortBy', (v) => v as String?),
         );
         return val;
       },
@@ -34,6 +35,7 @@ Map<String, dynamic> _$ConditionToJson(Condition instance) {
   writeNotNull('anchoring', instance.anchoring?.toJson());
   writeNotNull('context', instance.context);
   writeNotNull('filters', instance.filters);
+  writeNotNull('sortBy', instance.sortBy);
   return val;
 }
 

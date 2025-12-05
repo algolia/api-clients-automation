@@ -834,6 +834,34 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition4() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior(
+                    injection: Injection(main: CompositionMain(
+                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                    ))
+                ),
+                sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the putCompositionRule method.
     ///
     /// putCompositionRule
@@ -1140,7 +1168,10 @@ final class CompositionClientSnippet {
                 action: CompositionAction.upsert,
                 body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                     objectID: "rule-with-deduplication",
-                    conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                    conditions: [
+                        CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
+                        CompositionCondition(sortBy: "price-low-to-high"),
+                    ],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
                         main: CompositionMain(
                             source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
@@ -1217,6 +1248,25 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the search method.
+    ///
+    /// search
+    func snippetForSearch2() async throws {
+        // >SEPARATOR search search
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: CompositionSearchResponse<CompositionHit> = try await client.search(
+            compositionID: "foo",
+            requestBody: RequestBody(params: CompositionParams(query: "batman", sortBy: "Price (asc)"))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the searchCompositionRules method.
     ///
     /// searchCompositionRules
@@ -1269,6 +1319,25 @@ final class CompositionClientSnippet {
         // Call the API
         try client.setClientApiKey(apiKey: "updated-api-key")
         // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the updateSortingStrategyComposition method.
+    ///
+    /// updateSortingStrategyComposition
+    func snippetForUpdateSortingStrategyComposition() async throws {
+        // >SEPARATOR updateSortingStrategyComposition default
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.updateSortingStrategyComposition(
+            compositionID: "my-compo",
+            requestBody: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+        )
+        // >LOG
+        // print the response
+        print(response)
         // SEPARATOR<
     }
 }

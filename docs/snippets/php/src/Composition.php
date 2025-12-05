@@ -1066,6 +1066,40 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition4(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
+                    'Price-desc' => 'products-high-to-low',
+                ],
+                'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                ],
+                ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PutCompositionRule method.
      *
      * putCompositionRule
@@ -1478,6 +1512,9 @@ class SnippetCompositionClient
                             ['anchoring' => 'contains',
                                 'pattern' => 'harry',
                             ],
+
+                            ['sortBy' => 'price-low-to-high',
+                            ],
                         ],
                         'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
                         ],
@@ -1574,6 +1611,32 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch2(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+                'sortBy' => 'Price (asc)',
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchCompositionRules method.
      *
      * searchCompositionRules
@@ -1640,6 +1703,31 @@ class SnippetCompositionClient
         );
 
         // >LOG
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the UpdateSortingStrategyComposition method.
+     *
+     * updateSortingStrategyComposition
+     */
+    public function snippetForUpdateSortingStrategyComposition(): void
+    {
+        // >SEPARATOR updateSortingStrategyComposition default
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->updateSortingStrategyComposition(
+            'my-compo',
+            ['Price-asc' => 'products-low-to-high',
+                'Price-desc' => 'products-high-to-low',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
         // SEPARATOR<
     }
 }

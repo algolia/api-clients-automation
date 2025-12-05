@@ -22,6 +22,9 @@ public class Condition {
   @JsonProperty("filters")
   private String filters;
 
+  @JsonProperty("sortBy")
+  private String sortBy;
+
   public Condition setPattern(String pattern) {
     this.pattern = pattern;
     return this;
@@ -80,6 +83,21 @@ public class Condition {
     return filters;
   }
 
+  public Condition setSortBy(String sortBy) {
+    this.sortBy = sortBy;
+    return this;
+  }
+
+  /**
+   * Sort criteria that trigger the rule. You can trigger composition rules based on the selected
+   * sorting strategy set by the parameter `sortBy`. The rule will trigger if the value passed to
+   * `sortBy` matches the one defined in the condition.
+   */
+  @javax.annotation.Nullable
+  public String getSortBy() {
+    return sortBy;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -93,13 +111,14 @@ public class Condition {
       Objects.equals(this.pattern, condition.pattern) &&
       Objects.equals(this.anchoring, condition.anchoring) &&
       Objects.equals(this.context, condition.context) &&
-      Objects.equals(this.filters, condition.filters)
+      Objects.equals(this.filters, condition.filters) &&
+      Objects.equals(this.sortBy, condition.sortBy)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pattern, anchoring, context, filters);
+    return Objects.hash(pattern, anchoring, context, filters, sortBy);
   }
 
   @Override
@@ -110,6 +129,7 @@ public class Condition {
     sb.append("    anchoring: ").append(toIndentedString(anchoring)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
+    sb.append("    sortBy: ").append(toIndentedString(sortBy)).append("\n");
     sb.append("}");
     return sb.toString();
   }

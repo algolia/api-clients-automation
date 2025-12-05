@@ -492,6 +492,23 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"cursor":"test"}""")
 
+    async def test_browse_3(self):
+        """
+        browse with query string
+        """
+        _req = await self._client.browse_with_http_info(
+            index_name="indexName",
+            browse_params={
+                "params": "foo=bar&cursor=test",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/browse"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"params":"foo=bar&cursor=test"}""")
+
     async def test_clear_objects_(self):
         """
         clearObjects
@@ -9750,6 +9767,23 @@ class TestSearchClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"cursor":"test"}""")
+
+    def test_browse_3(self):
+        """
+        browse with query string
+        """
+        _req = self._client.browse_with_http_info(
+            index_name="indexName",
+            browse_params={
+                "params": "foo=bar&cursor=test",
+            },
+        )
+
+        assert _req.path == "/1/indexes/indexName/browse"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"params":"foo=bar&cursor=test"}""")
 
     def test_clear_objects_(self):
         """

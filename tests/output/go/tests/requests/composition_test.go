@@ -734,6 +734,28 @@ func TestComposition_PutComposition(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","behavior":{"injection":{"main":{"source":{"search":{"index":"foo","params":{"filters":"brand:adidas"}}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"foo"}},"position":2,"length":1}],"deduplication":{"positioning":"highest"}}}}`)
 	})
+	t.Run("putComposition", func(t *testing.T) {
+		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
+			"my-compo",
+			composition.NewEmptyComposition().
+				SetObjectID("my-compo").
+				SetName("my composition").
+				SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
+				SetBehavior(
+					composition.NewEmptyCompositionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyMain().SetSource(
+								composition.NewEmptyCompositionSource().SetSearch(
+									composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-compo", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}`)
+	})
 }
 
 func TestComposition_PutCompositionRule(t *testing.T) {
@@ -969,7 +991,7 @@ func TestComposition_SaveRules(t *testing.T) {
 				[]composition.RulesMultipleBatchRequest{
 					*composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
 						composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
-							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry")}).SetConsequence(
+							[]composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetSortBy("price-low-to-high")}).SetConsequence(
 							composition.NewEmptyCompositionRuleConsequence().SetBehavior(
 								composition.NewEmptyCompositionBehavior().SetInjection(
 									composition.NewEmptyInjection().SetMain(
@@ -988,7 +1010,7 @@ func TestComposition_SaveRules(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}`)
+			Assertf(*echo.Body, "%s", `{"requests":[{"action":"upsert","body":{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"},{"sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}}]}`)
 	})
 }
 
@@ -1028,6 +1050,18 @@ func TestComposition_Search(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"params":{"query":"batman","injectedItems":{"my-unique-external-group-key":{"items":[{"objectID":"my-object-1"},{"objectID":"my-object-2","metadata":{"my-string":"string","my-bool":true,"my-number":42,"my-object":{"sub-key":"sub-value"}}}]}}}}`)
 	})
+	t.Run("search", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+			"foo",
+			composition.NewEmptyRequestBody().SetParams(
+				composition.NewEmptyParams().SetQuery("batman").SetSortBy("Price (asc)"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/foo/run", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"query":"batman","sortBy":"Price (asc)"}}`)
+	})
 }
 
 func TestComposition_SearchCompositionRules(t *testing.T) {
@@ -1066,5 +1100,23 @@ func TestComposition_SearchForFacetValues(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":{"maxFacetHits":10}}`)
+	})
+}
+
+func TestComposition_UpdateSortingStrategyComposition(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createCompositionClient(t)
+	_ = echo
+
+	t.Run("updateSortingStrategyComposition", func(t *testing.T) {
+		_, err := client.UpdateSortingStrategyComposition(client.NewApiUpdateSortingStrategyCompositionRequest(
+			"my-compo", map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-compo/sortingStrategy", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"}`)
 	})
 }

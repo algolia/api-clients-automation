@@ -794,6 +794,28 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-compo',
+      composition: {
+        objectID: 'my-compo',
+        name: 'my composition',
+        sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+        behavior: { injection: { main: { source: { search: { index: 'products' } } } } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-compo',
+      name: 'my composition',
+      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+      behavior: { injection: { main: { source: { search: { index: 'products' } } } } },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {
@@ -1237,7 +1259,7 @@ describe('saveRules', () => {
               objectID: 'rule-with-deduplication',
               description: 'my description',
               enabled: true,
-              conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+              conditions: [{ anchoring: 'contains', pattern: 'harry' }, { sortBy: 'price-low-to-high' }],
               consequence: {
                 behavior: {
                   injection: {
@@ -1270,7 +1292,7 @@ describe('saveRules', () => {
             objectID: 'rule-with-deduplication',
             description: 'my description',
             enabled: true,
-            conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+            conditions: [{ anchoring: 'contains', pattern: 'harry' }, { sortBy: 'price-low-to-high' }],
             consequence: {
               behavior: {
                 injection: {
@@ -1359,6 +1381,18 @@ describe('search', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: { params: { query: 'batman', sortBy: 'Price (asc)' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ params: { query: 'batman', sortBy: 'Price (asc)' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchCompositionRules', () => {
@@ -1386,6 +1420,20 @@ describe('searchForFacetValues', () => {
     expect(req.path).toEqual('/1/compositions/foo/facets/brand/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ params: { maxFacetHits: 10 } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('updateSortingStrategyComposition', () => {
+  test('updateSortingStrategyComposition', async () => {
+    const req = (await client.updateSortingStrategyComposition({
+      compositionID: 'my-compo',
+      requestBody: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-compo/sortingStrategy');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

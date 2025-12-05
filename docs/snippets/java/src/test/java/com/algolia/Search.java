@@ -506,6 +506,22 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the browse method.
+  //
+  // browse with query string
+  void snippetForBrowse3() throws Exception {
+    // >SEPARATOR browse browse with query string
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    BrowseResponse response = client.browse("<YOUR_INDEX_NAME>", new SearchParamsString().setParams("foo=bar&cursor=test"), Hit.class);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the clearObjects method.
   //
   // clearObjects

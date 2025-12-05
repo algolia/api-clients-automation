@@ -13,6 +13,9 @@ import java.util.Objects;
  */
 public class EstimateConfiguration {
 
+  @JsonProperty("featureFilters")
+  private FeatureFilters featureFilters;
+
   @JsonProperty("outliers")
   private Outliers outliers;
 
@@ -21,6 +24,17 @@ public class EstimateConfiguration {
 
   @JsonProperty("minimumDetectableEffect")
   private MinimumDetectableEffect minimumDetectableEffect;
+
+  public EstimateConfiguration setFeatureFilters(FeatureFilters featureFilters) {
+    this.featureFilters = featureFilters;
+    return this;
+  }
+
+  /** Get featureFilters */
+  @javax.annotation.Nullable
+  public FeatureFilters getFeatureFilters() {
+    return featureFilters;
+  }
 
   public EstimateConfiguration setOutliers(Outliers outliers) {
     this.outliers = outliers;
@@ -65,6 +79,7 @@ public class EstimateConfiguration {
     }
     EstimateConfiguration estimateConfiguration = (EstimateConfiguration) o;
     return (
+      Objects.equals(this.featureFilters, estimateConfiguration.featureFilters) &&
       Objects.equals(this.outliers, estimateConfiguration.outliers) &&
       Objects.equals(this.emptySearch, estimateConfiguration.emptySearch) &&
       Objects.equals(this.minimumDetectableEffect, estimateConfiguration.minimumDetectableEffect)
@@ -73,13 +88,14 @@ public class EstimateConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(outliers, emptySearch, minimumDetectableEffect);
+    return Objects.hash(featureFilters, outliers, emptySearch, minimumDetectableEffect);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class EstimateConfiguration {\n");
+    sb.append("    featureFilters: ").append(toIndentedString(featureFilters)).append("\n");
     sb.append("    outliers: ").append(toIndentedString(outliers)).append("\n");
     sb.append("    emptySearch: ").append(toIndentedString(emptySearch)).append("\n");
     sb.append("    minimumDetectableEffect: ").append(toIndentedString(minimumDetectableEffect)).append("\n");

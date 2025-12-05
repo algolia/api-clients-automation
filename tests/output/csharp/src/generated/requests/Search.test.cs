@@ -540,6 +540,24 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault("{\"cursor\":\"test\"}", req.Body, new JsonDiffConfig(false));
   }
 
+  [Fact(DisplayName = "browse with query string")]
+  public async Task BrowseTest3()
+  {
+    await client.BrowseAsync<Hit>(
+      "indexName",
+      new BrowseParams(new SearchParamsString { Params = "foo=bar&cursor=test" })
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/browse", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"params\":\"foo=bar&cursor=test\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "clearObjects")]
   public async Task ClearObjectsTest()
   {

@@ -385,6 +385,17 @@ func TestSearch_Browse(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"cursor":"test"}`)
 	})
+	t.Run("browse with query string", func(t *testing.T) {
+		_, err := client.Browse(client.NewApiBrowseRequest(
+			"indexName").WithBrowseParams(search.SearchParamsStringAsBrowseParams(
+			search.NewEmptySearchParamsString().SetParams("foo=bar&cursor=test"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"params":"foo=bar&cursor=test"}`)
+	})
 }
 
 func TestSearch_ClearObjects(t *testing.T) {

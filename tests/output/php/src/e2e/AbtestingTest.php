@@ -5,10 +5,16 @@
 namespace Algolia\AlgoliaSearch\Test\RequestE2E;
 
 use Algolia\AlgoliaSearch\Api\AbtestingClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (getenv('ALGOLIA_APPLICATION_ID')) {
@@ -18,28 +24,9 @@ if (getenv('ALGOLIA_APPLICATION_ID')) {
     $dotenv->load();
 }
 
-/**
- * @internal
- */
 #[CoversClass(AbtestingClient::class)]
-class AbtestingTest extends TestCase
+class AbtestingTest extends TestCase 
 {
-    #[TestDox('listABTests with parameters')]
-    public function testListABTests1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->listABTests(
-            0,
-            21,
-            'cts_e2e ab',
-            't',
-        );
-
-        $expected = json_decode('{"abtests":[{"abTestID":85635,"createdAt":"2024-05-13T10:12:27.739233Z","endAt":"2124-05-13T00:00:00Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"this abtest is used for api client automation tests and will expire in 2124","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
@@ -51,12 +38,31 @@ class AbtestingTest extends TestCase
 
             return $res;
         }
-
+        
         return $received;
     }
 
     protected function getClient(): AbtestingClient
     {
-        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'], 'us');
+        return AbtestingClient::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['ALGOLIA_ADMIN_KEY'],'us' );
+    }
+
+    #[TestDox('listABTests with parameters')]
+    public function testListABTests1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->listABTests(
+  0,
+
+  21,
+
+  "cts_e2e ab",
+
+  "t",
+);
+
+        $expected = json_decode('{"abtests":[{"abTestID":85635,"createdAt":"2024-05-13T10:12:27.739233Z","endAt":"2124-05-13T00:00:00Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"this abtest is used for api client automation tests and will expire in 2124","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 }

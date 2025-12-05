@@ -9,15 +9,14 @@ use Algolia\AlgoliaSearch\Configuration\AnalyticsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Client tests for AnalyticsClient.
- *
- * @internal
+ * Client tests for AnalyticsClient
  */
 #[CoversClass(AnalyticsClient::class)]
 class AnalyticsTest extends TestCase implements HttpClientInterface
@@ -26,6 +25,18 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     public const API_KEY = 'test-api-key';
 
     private $recordedRequest;
+
+    /**
+     * @return AnalyticsClient
+     */
+    private function createClient($appId, $apiKey, $region = 'us'): AnalyticsClient
+    {
+        $config = AnalyticsConfig::create($appId, $apiKey, $region);
+        $clusterHosts = AnalyticsClient::getClusterHosts($config);
+        $api = new ApiWrapper($this, $config, $clusterHosts);
+
+        return new AnalyticsClient($api, $config);
+    }
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
@@ -41,139 +52,136 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
-    #[TestDox('the user agent contains the latest version')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
+#[TestDox('the user agent contains the latest version')]
     public function test1commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(4.35.0\).*/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(4.37.0\).*/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
     #[TestDox('fallbacks to the alias when region is not given')]
     public function test0parameters(): void
     {
-        $client = $this->createClient(
-            'my-app-id',
-            'my-api-key',
-            null
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "my-app-id",
+    "my-api-key",
+    null
+);
+$this->assertIsObject($client);
 
-        $client->getAverageClickPosition(
-            'my-index',
-        );
-        $this->assertEquals(
-            'analytics.algolia.com',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->getAverageClickPosition(
+  "my-index",
+);
+                    $this->assertEquals(
+                    
+  "analytics.algolia.com",
 
-    #[TestDox('uses the correct region')]
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
+#[TestDox('uses the correct region')]
     public function test1parameters(): void
     {
-        $client = $this->createClient(
-            'my-app-id',
-            'my-api-key',
-            'de'
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "my-app-id",
+    "my-api-key",
+    "de"
+);
+$this->assertIsObject($client);
 
-        $client->customPost(
-            'test',
-        );
-        $this->assertEquals(
-            'analytics.de.algolia.com',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->customPost(
+  "test",
+);
+                    $this->assertEquals(
+                    
+  "analytics.de.algolia.com",
 
-    #[TestDox('throws when incorrect region is given')]
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
+#[TestDox('throws when incorrect region is given')]
     public function test2parameters(): void
     {
-        try {
-            $client = $this->createClient(
-                'my-app-id',
-                'my-api-key',
-                'not_a_region'
-            );
+                          try {
+                  $client = $this->createClient(
+    "my-app-id",
+    "my-api-key",
+    "not_a_region"
+);
 
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
-        }
-    }
 
-    #[TestDox('getAverageClickPosition throws without index')]
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), '`region` must be one of the following: de, us');
+              }
+                }
+    
+#[TestDox('getAverageClickPosition throws without index')]
     public function test3parameters(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-
-        try {
-            $client->getClickPositions(
-                null,
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `index` is required when calling `getClickPositions`.');
-        }
-    }
-
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                          try {
+                  $client->getClickPositions(
+  null,
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Parameter `index` is required when calling `getClickPositions`.');
+              }
+                }
+    
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = AnalyticsClient::createWithConfig(AnalyticsConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
+                                    
+$client = AnalyticsClient::createWithConfig(AnalyticsConfig::create("test-app-id","test-api-key","us")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6683"]));
 
-        $res = $client->customGet(
-            'check-api-key/1',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"test-api-key"}',
-            json_encode($res)
-        );
 
-        $client->setClientApiKey(
-            'updated-api-key',
-        );
-
-        $res = $client->customGet(
-            'check-api-key/2',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"updated-api-key"}',
-            json_encode($res)
-        );
-    }
-
-    /**
-     * @param mixed $appId
-     * @param mixed $apiKey
-     * @param mixed $region
-     */
-    private function createClient($appId, $apiKey, $region = 'us'): AnalyticsClient
-    {
-        $config = AnalyticsConfig::create($appId, $apiKey, $region);
-        $clusterHosts = AnalyticsClient::getClusterHosts($config);
-        $api = new ApiWrapper($this, $config, $clusterHosts);
-
-        return new AnalyticsClient($api, $config);
-    }
+                                                            {
+                $res = $client->customGet(
+  "check-api-key/1",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"test-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                                            {
+                $client->setClientApiKey(
+  "updated-api-key",
+);
+                                }
+                                            {
+                $res = $client->customGet(
+  "check-api-key/2",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"updated-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
 }

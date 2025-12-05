@@ -646,6 +646,36 @@ func SnippetForBrowseOfSearch2() {
 	// SEPARATOR<
 }
 
+func SnippetForBrowseOfSearch3() {
+	/*
+	   Snippet for the browse method.
+
+	   browse with query string
+	*/
+
+	// >SEPARATOR browse browse with query string
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Browse(client.NewApiBrowseRequest(
+		"<YOUR_INDEX_NAME>").WithBrowseParams(search.SearchParamsStringAsBrowseParams(
+		search.NewEmptySearchParamsString().SetParams("foo=bar&cursor=test"))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForClearObjectsOfSearch() {
 	/*
 	   Snippet for the clearObjects method.

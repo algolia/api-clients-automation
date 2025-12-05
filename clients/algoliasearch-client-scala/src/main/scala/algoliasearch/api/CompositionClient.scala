@@ -522,4 +522,37 @@ class CompositionClient(
     execute[SearchForFacetValuesResponse](request, requestOptions)
   }
 
+  /** Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting
+    * strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices
+    * or replicas of the main targeted index. WARNING: This endpoint cannot validate if the sort index is related to the
+    * composition's main index. Validation will fail at runtime if the index you updated is not related! The update is
+    * applied to the specified composition within the current Algolia application and returns a taskID that can be used
+    * to track the operation’s completion.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param compositionID
+    *   Unique Composition ObjectID.
+    */
+  def updateSortingStrategyComposition(
+      compositionID: String,
+      requestBody: Map[String, String],
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TaskIDResponse] = Future {
+    requireNotNull(
+      compositionID,
+      "Parameter `compositionID` is required when calling `updateSortingStrategyComposition`."
+    )
+    requireNotNull(requestBody, "Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/compositions/${escape(compositionID)}/sortingStrategy")
+      .withBody(requestBody)
+      .build()
+    execute[TaskIDResponse](request, requestOptions)
+  }
+
 }

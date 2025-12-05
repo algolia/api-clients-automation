@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import okhttp3.Response;
 
 public class InsightsClient extends ApiClient {
 
@@ -90,10 +91,35 @@ public class InsightsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -112,10 +138,32 @@ public class InsightsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDelete(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -143,10 +191,42 @@ public class InsightsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -166,10 +246,33 @@ public class InsightsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -191,10 +294,35 @@ public class InsightsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -213,10 +341,32 @@ public class InsightsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGet(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -244,10 +394,42 @@ public class InsightsClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -267,10 +449,33 @@ public class InsightsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -294,10 +499,41 @@ public class InsightsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -316,10 +552,32 @@ public class InsightsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -355,11 +613,51 @@ public class InsightsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -379,10 +677,33 @@ public class InsightsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -406,10 +727,41 @@ public class InsightsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -428,10 +780,32 @@ public class InsightsClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -467,11 +841,51 @@ public class InsightsClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -491,10 +905,33 @@ public class InsightsClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -518,10 +955,37 @@ public class InsightsClient extends ApiClient {
    * profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteUserTokenWithHTTPInfo(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteUserTokenWithHTTPInfoAsync(userToken, requestOptions));
+  }
+
+  /**
+   * Deletes all events related to the specified user token from events metrics and analytics. The
+   * deletion is asynchronous, and processed within 48 hours. To delete a personalization user
+   * profile, see `Delete a user profile` in the Personalization API.
+   *
+   * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteUserToken(@Nonnull String userToken) throws AlgoliaRuntimeException {
     this.deleteUserToken(userToken, null);
+  }
+
+  /**
+   * Deletes all events related to the specified user token from events metrics and analytics. The
+   * deletion is asynchronous, and processed within 48 hours. To delete a personalization user
+   * profile, see `Delete a user profile` in the Personalization API.
+   *
+   * @param userToken User token for which to delete all associated events. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteUserTokenWithHTTPInfo(@Nonnull String userToken) throws AlgoliaRuntimeException {
+    return this.deleteUserTokenWithHTTPInfo(userToken, null);
   }
 
   /**
@@ -548,10 +1012,40 @@ public class InsightsClient extends ApiClient {
    * personalization user profile, see `Delete a user profile` in the Personalization API.
    *
    * @param userToken User token for which to delete all associated events. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteUserTokenWithHTTPInfoAsync(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `deleteUserToken`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/usertokens/{userToken}", userToken).setMethod("DELETE").build();
+    return executeAsync(request, requestOptions, null);
+  }
+
+  /**
+   * (asynchronously) Deletes all events related to the specified user token from events metrics and
+   * analytics. The deletion is asynchronous, and processed within 48 hours. To delete a
+   * personalization user profile, see `Delete a user profile` in the Personalization API.
+   *
+   * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Void> deleteUserTokenAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
     return this.deleteUserTokenAsync(userToken, null);
+  }
+
+  /**
+   * (asynchronously) Deletes all events related to the specified user token from events metrics and
+   * analytics. The deletion is asynchronous, and processed within 48 hours. To delete a
+   * personalization user profile, see `Delete a user profile` in the Personalization API.
+   *
+   * @param userToken User token for which to delete all associated events. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteUserTokenWithHTTPInfoAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
+    return this.deleteUserTokenWithHTTPInfoAsync(userToken, null);
   }
 
   /**
@@ -573,10 +1067,35 @@ public class InsightsClient extends ApiClient {
    * request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushEventsWithHTTPInfo(@Nonnull InsightsEvents insightsEvents, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(pushEventsWithHTTPInfoAsync(insightsEvents, requestOptions));
+  }
+
+  /**
+   * Sends a list of events to the Insights API. You can include up to 1,000 events in a single
+   * request, but the request body must be smaller than 2&nbsp;MB.
+   *
+   * @param insightsEvents (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public EventsResponse pushEvents(@Nonnull InsightsEvents insightsEvents) throws AlgoliaRuntimeException {
     return this.pushEvents(insightsEvents, null);
+  }
+
+  /**
+   * Sends a list of events to the Insights API. You can include up to 1,000 events in a single
+   * request, but the request body must be smaller than 2&nbsp;MB.
+   *
+   * @param insightsEvents (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response pushEventsWithHTTPInfo(@Nonnull InsightsEvents insightsEvents) throws AlgoliaRuntimeException {
+    return this.pushEventsWithHTTPInfo(insightsEvents, null);
   }
 
   /**
@@ -601,9 +1120,39 @@ public class InsightsClient extends ApiClient {
    * in a single request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushEventsWithHTTPInfoAsync(
+    @Nonnull InsightsEvents insightsEvents,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(insightsEvents, "Parameter `insightsEvents` is required when calling `pushEvents`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/events").setMethod("POST").setBody(insightsEvents).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Sends a list of events to the Insights API. You can include up to 1,000 events
+   * in a single request, but the request body must be smaller than 2&nbsp;MB.
+   *
+   * @param insightsEvents (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<EventsResponse> pushEventsAsync(@Nonnull InsightsEvents insightsEvents) throws AlgoliaRuntimeException {
     return this.pushEventsAsync(insightsEvents, null);
+  }
+
+  /**
+   * (asynchronously) Sends a list of events to the Insights API. You can include up to 1,000 events
+   * in a single request, but the request body must be smaller than 2&nbsp;MB.
+   *
+   * @param insightsEvents (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> pushEventsWithHTTPInfoAsync(@Nonnull InsightsEvents insightsEvents) throws AlgoliaRuntimeException {
+    return this.pushEventsWithHTTPInfoAsync(insightsEvents, null);
   }
 }

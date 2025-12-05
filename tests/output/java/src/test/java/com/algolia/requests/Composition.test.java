@@ -1235,6 +1235,45 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("putComposition")
+  void putCompositionTest4() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-compo",
+        new Composition()
+          .setObjectID("my-compo")
+          .setName("my composition")
+          .setSortingStrategy(
+            new HashMap() {
+              {
+                put("Price-asc", "products-low-to-high");
+                put("Price-desc", "products-high-to-low");
+              }
+            }
+          )
+          .setBehavior(
+            new CompositionBehavior().setInjection(
+              new Injection().setMain(
+                new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+              )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-compo\",\"name\":\"my" +
+          " composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putCompositionRule")
   void putCompositionRuleTest() {
     assertDoesNotThrow(() -> {
@@ -1659,7 +1698,12 @@ class CompositionClientRequestsTests {
                   .setObjectID("rule-with-deduplication")
                   .setDescription("my description")
                   .setEnabled(true)
-                  .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+                  .setConditions(
+                    Arrays.asList(
+                      new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry"),
+                      new Condition().setSortBy("price-low-to-high")
+                    )
+                  )
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
                       new CompositionBehavior().setInjection(
@@ -1691,7 +1735,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
-          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
+          " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"sortBy\":\"price-low-to-high\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1769,6 +1813,20 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("search")
+  void searchTest2() {
+    assertDoesNotThrow(() -> {
+      client.search("foo", new RequestBody().setParams(new Params().setQuery("batman").setSortBy("Price (asc)")), Hit.class);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/foo/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
   @DisplayName("searchCompositionRules")
   void searchCompositionRulesTest() {
     assertDoesNotThrow(() -> {
@@ -1794,5 +1852,31 @@ class CompositionClientRequestsTests {
     assertEquals("/1/compositions/foo/facets/brand/query", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"params\":{\"maxFacetHits\":10}}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("updateSortingStrategyComposition")
+  void updateSortingStrategyCompositionTest() {
+    assertDoesNotThrow(() -> {
+      client.updateSortingStrategyComposition(
+        "my-compo",
+        new HashMap() {
+          {
+            put("Price-asc", "products-low-to-high");
+            put("Price-desc", "products-high-to-low");
+          }
+        }
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo/sortingStrategy", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 }

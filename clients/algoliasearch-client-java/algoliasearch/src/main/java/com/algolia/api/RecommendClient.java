@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import okhttp3.Response;
 
 public class RecommendClient extends ApiClient {
 
@@ -106,6 +107,37 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param recommendRule (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response batchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(batchRecommendRulesWithHTTPInfoAsync(indexName, model, recommendRule, requestOptions));
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RecommendUpdatedAtResponse batchRecommendRules(
@@ -114,6 +146,34 @@ public class RecommendClient extends ApiClient {
     List<RecommendRule> recommendRule
   ) throws AlgoliaRuntimeException {
     return this.batchRecommendRules(indexName, model, recommendRule, null);
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response batchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfo(indexName, model, recommendRule, null);
   }
 
   /**
@@ -162,11 +222,64 @@ public class RecommendClient extends ApiClient {
    * @param model [Recommend
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response batchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfo(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RecommendUpdatedAtResponse batchRecommendRules(@Nonnull String indexName, @Nonnull RecommendModels model)
     throws AlgoliaRuntimeException {
     return this.batchRecommendRules(indexName, model, null, null);
+  }
+
+  /**
+   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
+   * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
+   * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response batchRecommendRulesWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfo(indexName, model, null, null);
   }
 
   /**
@@ -227,6 +340,46 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param recommendRule (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `batchRecommendRules`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `batchRecommendRules`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/recommend/rules/batch", indexName, model)
+      .setMethod("POST")
+      .setBody(recommendRule)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(
@@ -235,6 +388,34 @@ public class RecommendClient extends ApiClient {
     List<RecommendRule> recommendRule
   ) throws AlgoliaRuntimeException {
     return this.batchRecommendRulesAsync(indexName, model, recommendRule, null);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param recommendRule (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    List<RecommendRule> recommendRule
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfoAsync(indexName, model, recommendRule, null);
   }
 
   /**
@@ -283,11 +464,64 @@ public class RecommendClient extends ApiClient {
    * @param model [Recommend
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfoAsync(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
     throws AlgoliaRuntimeException {
     return this.batchRecommendRulesAsync(indexName, model, null, null);
+  }
+
+  /**
+   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
+   * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
+   * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
+   * conditions and consequences apply to a [source
+   * item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main
+   * differences are the following: - Conditions `pattern` and `anchoring` are unavailable. -
+   * Condition `filters` triggers if the source item matches the specified filters. - Condition
+   * `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. -
+   * Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to
+   * match the data source item's attributes instead).
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.batchRecommendRulesWithHTTPInfoAsync(indexName, model, null, null);
   }
 
   /**
@@ -309,10 +543,35 @@ public class RecommendClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDelete(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -331,10 +590,32 @@ public class RecommendClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customDelete(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDelete(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customDeleteWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -362,10 +643,42 @@ public class RecommendClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -385,10 +698,33 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customDeleteAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customDeleteWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -410,10 +746,35 @@ public class RecommendClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGet(path, parameters, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, parameters, null);
   }
 
   /**
@@ -432,10 +793,32 @@ public class RecommendClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customGet(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGet(path, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customGetWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfo(path, null, null);
   }
 
   /**
@@ -463,10 +846,42 @@ public class RecommendClient extends ApiClient {
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
+
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path, Map<String, Object> parameters) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, parameters, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
   /**
@@ -486,10 +901,33 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customGetAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customGetWithHTTPInfoAsync(path, null, null);
   }
 
   /**
@@ -513,10 +951,41 @@ public class RecommendClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPostWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPost(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -535,10 +1004,32 @@ public class RecommendClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPost(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPost(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPostWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -574,11 +1065,51 @@ public class RecommendClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("POST")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -598,10 +1129,33 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPostAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPostWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -625,10 +1179,41 @@ public class RecommendClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(customPutWithHTTPInfoAsync(path, parameters, body, requestOptions));
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
     return this.customPut(path, parameters, body, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, Object body) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, parameters, body, null);
   }
 
   /**
@@ -647,10 +1232,32 @@ public class RecommendClient extends ApiClient {
    * This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, requestOptions);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Object customPut(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPut(path, null, null, null);
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response customPutWithHTTPInfo(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfo(path, null, null, null);
   }
 
   /**
@@ -686,11 +1293,51 @@ public class RecommendClient extends ApiClient {
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @param parameters Query parameters to apply to the current query. (optional)
    * @param body Parameters to send with the custom request. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPathEncoded("/{path}", path)
+      .setMethod("PUT")
+      .setBody(body)
+      .addQueryParameters(parameters)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param parameters Query parameters to apply to the current query. (optional)
+   * @param body Parameters to send with the custom request. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
   /**
@@ -710,10 +1357,33 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) This method lets you send requests to the Algolia REST API.
    *
    * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Object> customPutAsync(@Nonnull String path) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, null);
+  }
+
+  /**
+   * (asynchronously) This method lets you send requests to the Algolia REST API.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path) throws AlgoliaRuntimeException {
+    return this.customPutWithHTTPInfoAsync(path, null, null, null);
   }
 
   /**
@@ -745,11 +1415,47 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteRecommendRuleWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(deleteRecommendRuleWithHTTPInfoAsync(indexName, model, objectID, requestOptions));
+  }
+
+  /**
+   * Deletes a Recommend rule from a recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeletedAtResponse deleteRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
     throws AlgoliaRuntimeException {
     return this.deleteRecommendRule(indexName, model, objectID, null);
+  }
+
+  /**
+   * Deletes a Recommend rule from a recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteRecommendRuleWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
+    throws AlgoliaRuntimeException {
+    return this.deleteRecommendRuleWithHTTPInfo(indexName, model, objectID, null);
   }
 
   /**
@@ -791,6 +1497,37 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteRecommendRuleWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `deleteRecommendRule`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `deleteRecommendRule`.");
+
+    Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
+      .setMethod("DELETE")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deletes a Recommend rule from a recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeletedAtResponse> deleteRecommendRuleAsync(
@@ -799,6 +1536,24 @@ public class RecommendClient extends ApiClient {
     @Nonnull String objectID
   ) throws AlgoliaRuntimeException {
     return this.deleteRecommendRuleAsync(indexName, model, objectID, null);
+  }
+
+  /**
+   * (asynchronously) Deletes a Recommend rule from a recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> deleteRecommendRuleWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
+    return this.deleteRecommendRuleWithHTTPInfoAsync(indexName, model, objectID, null);
   }
 
   /**
@@ -830,11 +1585,47 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendRuleWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRecommendRuleWithHTTPInfoAsync(indexName, model, objectID, requestOptions));
+  }
+
+  /**
+   * Retrieves a Recommend rule that you previously created in the Algolia dashboard.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RecommendRule getRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
     throws AlgoliaRuntimeException {
     return this.getRecommendRule(indexName, model, objectID, null);
+  }
+
+  /**
+   * Retrieves a Recommend rule that you previously created in the Algolia dashboard.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendRuleWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
+    throws AlgoliaRuntimeException {
+    return this.getRecommendRuleWithHTTPInfo(indexName, model, objectID, null);
   }
 
   /**
@@ -878,6 +1669,38 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendRuleWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendRule`.");
+
+    Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves a Recommend rule that you previously created in the Algolia
+   * dashboard.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RecommendRule> getRecommendRuleAsync(
@@ -886,6 +1709,25 @@ public class RecommendClient extends ApiClient {
     @Nonnull String objectID
   ) throws AlgoliaRuntimeException {
     return this.getRecommendRuleAsync(indexName, model, objectID, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves a Recommend rule that you previously created in the Algolia
+   * dashboard.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param objectID Unique record identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendRuleWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
+    return this.getRecommendRuleWithHTTPInfoAsync(indexName, model, objectID, null);
   }
 
   /**
@@ -921,11 +1763,51 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendStatusWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull Long taskID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRecommendStatusWithHTTPInfoAsync(indexName, model, taskID, requestOptions));
+  }
+
+  /**
+   * Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a
+   * rule, a task is created on a queue and completed depending on the load on the server. The API
+   * response includes a task ID that you can use to check the status.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRecommendTaskResponse getRecommendStatus(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull Long taskID)
     throws AlgoliaRuntimeException {
     return this.getRecommendStatus(indexName, model, taskID, null);
+  }
+
+  /**
+   * Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a
+   * rule, a task is created on a queue and completed depending on the load on the server. The API
+   * response includes a task ID that you can use to check the status.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendStatusWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull Long taskID)
+    throws AlgoliaRuntimeException {
+    return this.getRecommendStatusWithHTTPInfo(indexName, model, taskID, null);
   }
 
   /**
@@ -971,6 +1853,39 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendStatusWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull Long taskID,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getRecommendStatus`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `getRecommendStatus`.");
+
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getRecommendStatus`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/task/{taskID}", indexName, model, taskID)
+      .setMethod("GET")
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given task. Deleting a Recommend rule is asynchronous.
+   * When you delete a rule, a task is created on a queue and completed depending on the load on the
+   * server. The API response includes a task ID that you can use to check the status.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRecommendTaskResponse> getRecommendStatusAsync(
@@ -979,6 +1894,26 @@ public class RecommendClient extends ApiClient {
     @Nonnull Long taskID
   ) throws AlgoliaRuntimeException {
     return this.getRecommendStatusAsync(indexName, model, taskID, null);
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given task. Deleting a Recommend rule is asynchronous.
+   * When you delete a rule, a task is created on a queue and completed depending on the load on the
+   * server. The API response includes a task ID that you can use to check the status.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendStatusWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull Long taskID
+  ) throws AlgoliaRuntimeException {
+    return this.getRecommendStatusWithHTTPInfoAsync(indexName, model, taskID, null);
   }
 
   /**
@@ -1000,11 +1935,37 @@ public class RecommendClient extends ApiClient {
    * Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendationsWithHTTPInfo(
+    @Nonnull GetRecommendationsParams getRecommendationsParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRecommendationsWithHTTPInfoAsync(getRecommendationsParams, requestOptions));
+  }
+
+  /**
+   * Retrieves recommendations from selected AI models.
+   *
+   * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRecommendationsResponse getRecommendations(@Nonnull GetRecommendationsParams getRecommendationsParams)
     throws AlgoliaRuntimeException {
     return this.getRecommendations(getRecommendationsParams, null);
+  }
+
+  /**
+   * Retrieves recommendations from selected AI models.
+   *
+   * @param getRecommendationsParams (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getRecommendationsWithHTTPInfo(@Nonnull GetRecommendationsParams getRecommendationsParams)
+    throws AlgoliaRuntimeException {
+    return this.getRecommendationsWithHTTPInfo(getRecommendationsParams, null);
   }
 
   /**
@@ -1037,11 +1998,48 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendationsWithHTTPInfoAsync(
+    @Nonnull GetRecommendationsParams getRecommendationsParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(
+      getRecommendationsParams,
+      "Parameter `getRecommendationsParams` is required when calling `getRecommendations`."
+    );
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/*/recommendations")
+      .setMethod("POST")
+      .setBody(getRecommendationsParams)
+      .setRead(true)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves recommendations from selected AI models.
+   *
+   * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRecommendationsResponse> getRecommendationsAsync(@Nonnull GetRecommendationsParams getRecommendationsParams)
     throws AlgoliaRuntimeException {
     return this.getRecommendationsAsync(getRecommendationsParams, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves recommendations from selected AI models.
+   *
+   * @param getRecommendationsParams (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getRecommendationsWithHTTPInfoAsync(@Nonnull GetRecommendationsParams getRecommendationsParams)
+    throws AlgoliaRuntimeException {
+    return this.getRecommendationsWithHTTPInfoAsync(getRecommendationsParams, null);
   }
 
   /**
@@ -1075,6 +2073,28 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    SearchRecommendRulesParams searchRecommendRulesParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(searchRecommendRulesWithHTTPInfoAsync(indexName, model, searchRecommendRulesParams, requestOptions));
+  }
+
+  /**
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param searchRecommendRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchRecommendRulesResponse searchRecommendRules(
@@ -1083,6 +2103,25 @@ public class RecommendClient extends ApiClient {
     SearchRecommendRulesParams searchRecommendRulesParams
   ) throws AlgoliaRuntimeException {
     return this.searchRecommendRules(indexName, model, searchRecommendRulesParams, null);
+  }
+
+  /**
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param searchRecommendRulesParams (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    SearchRecommendRulesParams searchRecommendRulesParams
+  ) throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfo(indexName, model, searchRecommendRulesParams, null);
   }
 
   /**
@@ -1113,11 +2152,46 @@ public class RecommendClient extends ApiClient {
    * @param model [Recommend
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfo(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchRecommendRulesResponse searchRecommendRules(@Nonnull String indexName, @Nonnull RecommendModels model)
     throws AlgoliaRuntimeException {
     return this.searchRecommendRules(indexName, model, null, null);
+  }
+
+  /**
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response searchRecommendRulesWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfo(indexName, model, null, null);
   }
 
   /**
@@ -1161,6 +2235,38 @@ public class RecommendClient extends ApiClient {
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    SearchRecommendRulesParams searchRecommendRulesParams,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRecommendRules`.");
+
+    Parameters.requireNonNull(model, "Parameter `model` is required when calling `searchRecommendRules`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/indexes/{indexName}/{model}/recommend/rules/search", indexName, model)
+      .setMethod("POST")
+      .setBody(searchRecommendRulesParams)
+      .setRead(true)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param searchRecommendRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchRecommendRulesResponse> searchRecommendRulesAsync(
@@ -1169,6 +2275,25 @@ public class RecommendClient extends ApiClient {
     SearchRecommendRulesParams searchRecommendRulesParams
   ) throws AlgoliaRuntimeException {
     return this.searchRecommendRulesAsync(indexName, model, searchRecommendRulesParams, null);
+  }
+
+  /**
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @param searchRecommendRulesParams (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    SearchRecommendRulesParams searchRecommendRulesParams
+  ) throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfoAsync(indexName, model, searchRecommendRulesParams, null);
   }
 
   /**
@@ -1199,6 +2324,26 @@ public class RecommendClient extends ApiClient {
    * @param model [Recommend
    *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfoAsync(indexName, model, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchRecommendRulesResponse> searchRecommendRulesAsync(
@@ -1206,5 +2351,20 @@ public class RecommendClient extends ApiClient {
     @Nonnull RecommendModels model
   ) throws AlgoliaRuntimeException {
     return this.searchRecommendRulesAsync(indexName, model, null, null);
+  }
+
+  /**
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
+   *
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param model [Recommend
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
+    throws AlgoliaRuntimeException {
+    return this.searchRecommendRulesWithHTTPInfoAsync(indexName, model, null, null);
   }
 }

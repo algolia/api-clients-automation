@@ -89,14 +89,17 @@ public class Params {
   @JsonProperty("query")
   private String query;
 
-  @JsonProperty("relevancyStrictness")
-  private Integer relevancyStrictness;
-
   @JsonProperty("queryLanguages")
   private List<SupportedLanguage> queryLanguages;
 
+  @JsonProperty("relevancyStrictness")
+  private Integer relevancyStrictness;
+
   @JsonProperty("ruleContexts")
   private List<String> ruleContexts;
+
+  @JsonProperty("sortBy")
+  private String sortBy;
 
   @JsonProperty("userToken")
   private String userToken;
@@ -474,22 +477,6 @@ public class Params {
     return query;
   }
 
-  public Params setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-    return this;
-  }
-
-  /**
-   * Relevancy threshold below which less relevant results aren't included in the results You can
-   * only set `relevancyStrictness` on [virtual replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
-   * Use this setting to strike a balance between the relevance and number of returned results.
-   */
-  @javax.annotation.Nullable
-  public Integer getRelevancyStrictness() {
-    return relevancyStrictness;
-  }
-
   public Params setQueryLanguages(List<SupportedLanguage> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
@@ -522,6 +509,22 @@ public class Params {
     return queryLanguages;
   }
 
+  public Params setRelevancyStrictness(Integer relevancyStrictness) {
+    this.relevancyStrictness = relevancyStrictness;
+    return this;
+  }
+
+  /**
+   * Relevancy threshold below which less relevant results aren't included in the results You can
+   * only set `relevancyStrictness` on [virtual replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+   * Use this setting to strike a balance between the relevance and number of returned results.
+   */
+  @javax.annotation.Nullable
+  public Integer getRelevancyStrictness() {
+    return relevancyStrictness;
+  }
+
   public Params setRuleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
     return this;
@@ -543,6 +546,25 @@ public class Params {
   @javax.annotation.Nullable
   public List<String> getRuleContexts() {
     return ruleContexts;
+  }
+
+  public Params setSortBy(String sortBy) {
+    this.sortBy = sortBy;
+    return this;
+  }
+
+  /**
+   * Indicates which sorting strategy to apply for the request. The value must match one of the
+   * labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert
+   * Composition. At runtime, this label is used to look up the corresponding index or replica
+   * configured in \"sortingStrategy\", and the query is executed using that index instead of
+   * main's. In addition to \"sortingStrategy\", this parameter is also used to apply a matching
+   * Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition
+   * Rules. If no value is provided or an invalid value, no sorting strategy is applied.
+   */
+  @javax.annotation.Nullable
+  public String getSortBy() {
+    return sortBy;
   }
 
   public Params setUserToken(String userToken) {
@@ -595,9 +617,10 @@ public class Params {
       Objects.equals(this.optionalFilters, params.optionalFilters) &&
       Objects.equals(this.page, params.page) &&
       Objects.equals(this.query, params.query) &&
-      Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
       Objects.equals(this.queryLanguages, params.queryLanguages) &&
+      Objects.equals(this.relevancyStrictness, params.relevancyStrictness) &&
       Objects.equals(this.ruleContexts, params.ruleContexts) &&
+      Objects.equals(this.sortBy, params.sortBy) &&
       Objects.equals(this.userToken, params.userToken)
     );
   }
@@ -630,9 +653,10 @@ public class Params {
       optionalFilters,
       page,
       query,
-      relevancyStrictness,
       queryLanguages,
+      relevancyStrictness,
       ruleContexts,
+      sortBy,
       userToken
     );
   }
@@ -666,9 +690,10 @@ public class Params {
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    queryLanguages: ").append(toIndentedString(queryLanguages)).append("\n");
+    sb.append("    relevancyStrictness: ").append(toIndentedString(relevancyStrictness)).append("\n");
     sb.append("    ruleContexts: ").append(toIndentedString(ruleContexts)).append("\n");
+    sb.append("    sortBy: ").append(toIndentedString(sortBy)).append("\n");
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
     sb.append("}");
     return sb.toString();

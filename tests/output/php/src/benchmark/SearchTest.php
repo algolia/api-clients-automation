@@ -6,14 +6,17 @@ namespace Algolia\AlgoliaSearch\Test\Benchmark;
 
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Http\HttpClientInterface;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
- * Benchmark for SearchClient.
- *
- * @internal
+ * Benchmark for SearchClient
  */
 #[CoversClass(SearchClient::class)]
 class SearchTest extends TestCase
@@ -21,18 +24,25 @@ class SearchTest extends TestCase
     #[TestDox('benchmark the search method')]
     public function test0benchmark(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6682']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6682"]));
 
-        for ($i = 1; $i <= 2000; ++$i) {
-            $res = $client->search(
-                ['requests' => [
-                    ['indexName' => 'cts_e2e_benchmark_search_php',
-                        'query' => 'iphone 15 pro max 512gb',
-                        'hitsPerPage' => 50,
-                    ],
-                ],
-                ],
-            );
+
+                                          for ($i = 1; $i <= 2000; $i++) {
+                            $res = $client->search(
+  ["requests" => 
+  [
+  ["indexName" => 
+  "cts_e2e_benchmark_search_php",
+"query" => 
+  "iphone 15 pro max 512gb",
+"hitsPerPage" => 
+  50,
+],
+],
+],
+);
+                                  }
         }
-    }
+    
 }

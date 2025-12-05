@@ -5,10 +5,16 @@
 namespace Algolia\AlgoliaSearch\Test\RequestE2E;
 
 use Algolia\AlgoliaSearch\Api\CompositionClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\Configuration\CompositionConfig;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
 
 // we only read .env file if we run locally
 if (getenv('METIS_APPLICATION_ID')) {
@@ -18,23 +24,9 @@ if (getenv('METIS_APPLICATION_ID')) {
     $dotenv->load();
 }
 
-/**
- * @internal
- */
 #[CoversClass(CompositionClient::class)]
-class CompositionTest extends TestCase
+class CompositionTest extends TestCase 
 {
-    #[TestDox('listCompositions')]
-    public function testListCompositions1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->listCompositions();
-
-        $expected = json_decode('{"items":[{"objectID":"id1","name":"my first composition","description":"the first ever composition from the client","behavior":{"injection":{"main":{"source":{"search":{"index":"cts_e2e_small"}}}}}}],"nbPages":1}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     protected function union($expected, $received): mixed
     {
         if (is_array($expected)) {
@@ -46,12 +38,23 @@ class CompositionTest extends TestCase
 
             return $res;
         }
-
+        
         return $received;
     }
 
     protected function getClient(): CompositionClient
     {
         return CompositionClient::create($_ENV['METIS_APPLICATION_ID'], $_ENV['METIS_API_KEY']);
+    }
+
+    #[TestDox('listCompositions')]
+    public function testListCompositions1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->listCompositions();
+
+        $expected = json_decode('{"items":[{"objectID":"id1","name":"my first composition","description":"the first ever composition from the client","behavior":{"injection":{"main":{"source":{"search":{"index":"cts_e2e_small"}}}}}}],"nbPages":1}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
     }
 }

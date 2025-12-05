@@ -9,15 +9,14 @@ use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
-use PHPUnit\Framework\Attributes\CoversClass;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Client tests for SearchClient.
- *
- * @internal
+ * Client tests for SearchClient
  */
 #[CoversClass(SearchClient::class)]
 class SearchTest extends TestCase implements HttpClientInterface
@@ -26,6 +25,18 @@ class SearchTest extends TestCase implements HttpClientInterface
     public const API_KEY = 'test-api-key';
 
     private $recordedRequest;
+
+    /**
+     * @return SearchClient
+     */
+    private function createClient($appId, $apiKey): SearchClient
+    {
+        $config = SearchConfig::create($appId, $apiKey);
+        $clusterHosts = SearchClient::getClusterHosts($config);
+        $api = new ApiWrapper($this, $config, $clusterHosts);
+
+        return new SearchClient($api, $config);
+    }
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout): Response
     {
@@ -38,966 +49,1247 @@ class SearchTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    #[TestDox('calls api with correct read host')]
+        #[TestDox('calls api with correct read host')]
     public function test0api(): void
     {
-        $client = $this->createClient(
-            'test-app-id',
-            'test-api-key'
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "test-app-id",
+    "test-api-key"
+);
+$this->assertIsObject($client);
 
-        $client->customGet(
-            'test',
-        );
-        $this->assertEquals(
-            'test-app-id-dsn.algolia.net',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->customGet(
+  "test",
+);
+                    $this->assertEquals(
+                    
+  "test-app-id-dsn.algolia.net",
 
-    #[TestDox('read transporter with POST method')]
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
+#[TestDox('read transporter with POST method')]
     public function test1api(): void
     {
-        $client = $this->createClient(
-            'test-app-id',
-            'test-api-key'
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "test-app-id",
+    "test-api-key"
+);
+$this->assertIsObject($client);
 
-        $client->searchSingleIndex(
-            'indexName',
-        );
-        $this->assertEquals(
-            'test-app-id-dsn.algolia.net',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->searchSingleIndex(
+  "indexName",
+);
+                    $this->assertEquals(
+                    
+  "test-app-id-dsn.algolia.net",
 
-    #[TestDox('calls api with correct write host')]
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
+#[TestDox('calls api with correct write host')]
     public function test2api(): void
     {
-        $client = $this->createClient(
-            'test-app-id',
-            'test-api-key'
-        );
-        $this->assertIsObject($client);
+                                    $client = $this->createClient(
+    "test-app-id",
+    "test-api-key"
+);
+$this->assertIsObject($client);
 
-        $client->customPost(
-            'test',
-        );
-        $this->assertEquals(
-            'test-app-id.algolia.net',
-            $this->recordedRequest['request']->getUri()->getHost()
-        );
-    }
+                                                            $client->customPost(
+  "test",
+);
+                    $this->assertEquals(
+                    
+  "test-app-id.algolia.net",
 
-    #[TestDox('tests the retry strategy')]
+                    $this->recordedRequest['request']->getUri()->getHost()
+                );
+                            }
+    
+#[TestDox('tests the retry strategy')]
     public function test3api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6677', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6678']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6676","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6677","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6678"]));
 
-        $res = $client->customGet(
-            '1/test/retry/php',
-        );
-        $this->assertEquals(
-            '{"message":"ok test server response"}',
-            json_encode($res)
-        );
-    }
 
-    #[TestDox('tests the retry strategy on timeout')]
+                                                            $res = $client->customGet(
+  "1/test/retry/php",
+);
+                                    $this->assertEquals(
+                        '{"message":"ok test server response"}',
+                        json_encode($res)
+                    );
+                            }
+    
+#[TestDox('tests the retry strategy on timeout')]
     public function test4api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6676"]));
 
-        try {
-            $res = $client->customGet(
-                '1/test/hang/php',
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support');
-        }
-    }
 
-    #[TestDox('tests the retry strategy on 5xx')]
+                                                  try {
+                  $res = $client->customGet(
+  "1/test/hang/php",
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support');
+              }
+                }
+    
+#[TestDox('tests the retry strategy on 5xx')]
     public function test5api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6671', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6672', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6673']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6671","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6672","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6673"]));
 
-        $res = $client->customPost(
-            '1/test/error/php',
-        );
-        $this->assertEquals(
-            '{"status":"ok"}',
-            json_encode($res)
-        );
-    }
 
-    #[TestDox('calls api with default read timeouts')]
+                                                            $res = $client->customPost(
+  "1/test/error/php",
+);
+                                    $this->assertEquals(
+                        '{"status":"ok"}',
+                        json_encode($res)
+                    );
+                            }
+    
+#[TestDox('calls api with default read timeouts')]
     public function test7api(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customGet(
-            '1/test',
-        );
-        $this->assertEquals(
-            2000,
-            $this->recordedRequest['connectTimeout']
-        );
-
-        $this->assertEquals(
-            5000,
-            $this->recordedRequest['responseTimeout']
-        );
-    }
-
-    #[TestDox('calls api with default write timeouts')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customGet(
+  "1/test",
+);
+                        $this->assertEquals(
+                    2000,
+                    $this->recordedRequest['connectTimeout']
+                );
+            
+                $this->assertEquals(
+                    5000,
+                    $this->recordedRequest['responseTimeout']
+                );
+                        }
+    
+#[TestDox('calls api with default write timeouts')]
     public function test8api(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertEquals(
-            2000,
-            $this->recordedRequest['connectTimeout']
-        );
-
-        $this->assertEquals(
-            30000,
-            $this->recordedRequest['responseTimeout']
-        );
-    }
-
-    #[TestDox('can handle unknown response fields')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                        $this->assertEquals(
+                    2000,
+                    $this->recordedRequest['connectTimeout']
+                );
+            
+                $this->assertEquals(
+                    30000,
+                    $this->recordedRequest['responseTimeout']
+                );
+                        }
+    
+#[TestDox('can handle unknown response fields')]
     public function test9api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6686"]));
 
-        $res = $client->getSettings(
-            'cts_e2e_unknownField_php',
-        );
-        $this->assertEquals(
-            '{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}',
-            json_encode($res)
-        );
-    }
 
-    #[TestDox('can handle unknown response fields inside a nested oneOf')]
+                                                            $res = $client->getSettings(
+  "cts_e2e_unknownField_php",
+);
+                                    $this->assertEquals(
+                        '{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}',
+                        json_encode($res)
+                    );
+                            }
+    
+#[TestDox('can handle unknown response fields inside a nested oneOf')]
     public function test10api(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6686"]));
 
-        $res = $client->getRule(
-            'cts_e2e_unknownFieldNested_php',
-            'ruleObjectID',
-        );
-        $this->assertEquals(
-            '{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}',
-            json_encode($res)
-        );
-    }
 
+                                                            $res = $client->getRule(
+  "cts_e2e_unknownFieldNested_php",
+
+  "ruleObjectID",
+);
+                                    $this->assertEquals(
+                        '{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}',
+                        json_encode($res)
+                    );
+                            }
+    
+#[TestDox('does not retry on success')]
+    public function test11api(): void
+    {
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6675","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6674"]));
+
+
+                                                            {
+                $res = $client->customGet(
+  "1/test/calling/php",
+);
+                                    $this->assertEquals(
+                        '{"message":"success server response"}',
+                        json_encode($res)
+                    );
+                            }
+                                            {
+                $res = $client->customGet(
+  "1/test/calling/php",
+);
+                                    $this->assertEquals(
+                        '{"message":"success server response"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
-    #[TestDox('the user agent contains the latest version')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
+#[TestDox('the user agent contains the latest version')]
     public function test1commonApi(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-        $client->customPost(
-            '1/test',
-        );
-        $this->assertTrue(
-            (bool) preg_match(
-                '/^Algolia for PHP \(4.35.0\).*/',
-                $this->recordedRequest['request']->getHeader('User-Agent')[0]
-            )
-        );
-    }
-
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    $client->customPost(
+  "1/test",
+);
+                $this->assertTrue(
+                    (bool) preg_match(
+                        '/^Algolia for PHP \(4.37.0\).*/',
+                        $this->recordedRequest['request']->getHeader('User-Agent')[0]
+                    )
+                );
+                                }
+    
     #[TestDox('call deleteObjects without error')]
     public function test0deleteObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6680"]));
 
-        $res = $client->deleteObjects(
-            'cts_e2e_deleteObjects_php',
-            [
-                '1',
 
-                '2',
-            ],
-        );
-        $this->assertEquals(
-            '[{"taskID":666,"objectIDs":["1","2"]}]',
-            json_encode($res)
-        );
-    }
+                                                            {
+                $res = $client->deleteObjects(
+  "cts_e2e_deleteObjects_php",
 
+  [
+  "1",
+
+  "2",
+],
+);
+                                    $this->assertEquals(
+                        '[{"taskID":666,"objectIDs":["1","2"]}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('api key basic')]
     public function test0generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "2640659426d5107b6e47d75db9cbaef8",
 
-        $res = $client->generateSecuredApiKey(
-            '2640659426d5107b6e47d75db9cbaef8',
-            ['validUntil' => 2524604400,
-                'restrictIndices' => [
-                    'Movies',
-                ],
-            ],
-        );
-        $this->assertEquals(
-            'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
-            $res
-        );
-    }
+  ["validUntil" => 
+  2524604400,
+"restrictIndices" => 
+  [
+  "Movies",
+],
+],
+);
+                                        $this->assertEquals(
+                        
+  "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
 
-    #[TestDox('with searchParams')]
+                        $res
+                    );
+                        }
+                }
+    
+#[TestDox('with searchParams')]
     public function test1generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "2640659426d5107b6e47d75db9cbaef8",
 
-        $res = $client->generateSecuredApiKey(
-            '2640659426d5107b6e47d75db9cbaef8',
-            ['validUntil' => 2524604400,
-                'restrictIndices' => [
-                    'Movies',
+  ["validUntil" => 
+  2524604400,
+"restrictIndices" => 
+  [
+  "Movies",
 
-                    'cts_e2e_settings',
-                ],
-                'restrictSources' => '192.168.1.0/24',
-                'filters' => 'category:Book OR category:Ebook AND _tags:published',
-                'userToken' => 'user123',
-                'searchParams' => ['query' => 'batman',
-                    'typoTolerance' => 'strict',
-                    'aroundRadius' => 'all',
-                    'mode' => 'neuralSearch',
-                    'hitsPerPage' => 10,
-                    'optionalWords' => [
-                        'one',
+  "cts_e2e_settings",
+],
+"restrictSources" => 
+  "192.168.1.0/24",
+"filters" => 
+  "category:Book OR category:Ebook AND _tags:published",
+"userToken" => 
+  "user123",
+"searchParams" => 
+  ["query" => 
+  "batman",
+"typoTolerance" => 
+  "strict",
+"aroundRadius" => 
+  "all",
+"mode" => 
+  "neuralSearch",
+"hitsPerPage" => 
+  10,
+"optionalWords" => 
+  [
+  "one",
 
-                        'two',
-                    ],
-                ],
-            ],
-        );
-        $this->assertEquals(
-            'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw',
-            $res
-        );
-    }
+  "two",
+],
+],
+],
+);
+                                        $this->assertEquals(
+                        
+  "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
 
-    #[TestDox('with filters')]
+                        $res
+                    );
+                        }
+                }
+    
+#[TestDox('with filters')]
     public function test2generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "2640659426d5107b6e47d75db9cbaef8",
 
-        $res = $client->generateSecuredApiKey(
-            '2640659426d5107b6e47d75db9cbaef8',
-            ['filters' => 'user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)',
-            ],
-        );
-    }
-
-    #[TestDox('with visible_by filter')]
+  ["filters" => 
+  "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
+],
+);
+                                }
+                }
+    
+#[TestDox('with visible_by filter')]
     public function test3generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "2640659426d5107b6e47d75db9cbaef8",
 
-        $res = $client->generateSecuredApiKey(
-            '2640659426d5107b6e47d75db9cbaef8',
-            ['filters' => 'visible_by:group/Finance',
-            ],
-        );
-    }
-
-    #[TestDox('with userID')]
+  ["filters" => 
+  "visible_by:group/Finance",
+],
+);
+                                }
+                }
+    
+#[TestDox('with userID')]
     public function test4generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "2640659426d5107b6e47d75db9cbaef8",
 
-        $res = $client->generateSecuredApiKey(
-            '2640659426d5107b6e47d75db9cbaef8',
-            ['userToken' => 'user42',
-            ],
-        );
-    }
-
-    #[TestDox('mcm with filters')]
+  ["userToken" => 
+  "user42",
+],
+);
+                                }
+                }
+    
+#[TestDox('mcm with filters')]
     public function test5generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "YourSearchOnlyApiKey",
 
-        $res = $client->generateSecuredApiKey(
-            'YourSearchOnlyApiKey',
-            ['filters' => 'user:user42 AND user:public',
-            ],
-        );
-    }
-
-    #[TestDox('mcm with user token')]
+  ["filters" => 
+  "user:user42 AND user:public",
+],
+);
+                                }
+                }
+    
+#[TestDox('mcm with user token')]
     public function test6generateSecuredApiKey(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                                    {
+                $res = $client->generateSecuredApiKey(
+  "YourSearchOnlyApiKey",
 
-        $res = $client->generateSecuredApiKey(
-            'YourSearchOnlyApiKey',
-            ['userToken' => 'user42',
-            ],
-        );
-    }
-
+  ["userToken" => 
+  "user42",
+],
+);
+                                }
+                }
+    
     #[TestDox('indexExists')]
     public function test0indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->indexExists(
-            'indexExistsYES',
-        );
-        $this->assertEquals(
-            true,
-            $res
-        );
-    }
 
-    #[TestDox('indexNotExists')]
+                                                            {
+                $res = $client->indexExists(
+  "indexExistsYES",
+);
+                                        $this->assertEquals(
+                        
+  true,
+
+                        $res
+                    );
+                        }
+                }
+    
+#[TestDox('indexNotExists')]
     public function test1indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->indexExists(
-            'indexExistsNO',
-        );
-        $this->assertEquals(
-            false,
-            $res
-        );
-    }
 
-    #[TestDox('indexExistsWithError')]
+                                                            {
+                $res = $client->indexExists(
+  "indexExistsNO",
+);
+                                        $this->assertEquals(
+                        
+  false,
+
+                        $res
+                    );
+                        }
+                }
+    
+#[TestDox('indexExistsWithError')]
     public function test2indexExists(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        try {
-            $res = $client->indexExists(
-                'indexExistsERROR',
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid API key');
-        }
-    }
 
+                                                  try {
+                  $res = $client->indexExists(
+  "indexExistsERROR",
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Invalid API key');
+              }
+                }
+    
     #[TestDox('client throws with invalid parameters')]
     public function test0parameters(): void
     {
-        try {
-            $client = $this->createClient(
-                null,
-                null
-            );
+                          try {
+                  $client = $this->createClient(
+    null,
+    null
+);
 
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
-        }
 
-        try {
-            $client = $this->createClient(
-                null,
-                'my-api-key'
-            );
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), '`appId` is missing.');
+              }
+                                  try {
+                  $client = $this->createClient(
+    null,
+    "my-api-key"
+);
 
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
-        }
 
-        try {
-            $client = $this->createClient(
-                'my-app-id',
-                null
-            );
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), '`appId` is missing.');
+              }
+                                  try {
+                  $client = $this->createClient(
+    "my-app-id",
+    null
+);
 
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
-        }
-    }
 
-    #[TestDox('`addApiKey` throws with invalid parameters')]
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
+              }
+                }
+    
+#[TestDox('`addApiKey` throws with invalid parameters')]
     public function test1parameters(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
-
-        try {
-            $client->addApiKey(
-                null,
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
-        }
-    }
-
-    #[TestDox('`addOrUpdateObject` throws with invalid parameters')]
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                          try {
+                  $client->addApiKey(
+  null,
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
+              }
+                }
+    
+#[TestDox('`addOrUpdateObject` throws with invalid parameters')]
     public function test2parameters(): void
     {
-        $client = $this->createClient(self::APP_ID, self::API_KEY);
+            $client = $this->createClient(self::APP_ID, self::API_KEY);
+                          try {
+                  $client->addOrUpdateObject(
+  null,
 
-        try {
-            $client->addOrUpdateObject(
-                null,
-                'my-object-id',
-                [],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
-        }
+  "my-object-id",
 
-        try {
-            $client->addOrUpdateObject(
-                'my-index-name',
-                null,
-                [],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
-        }
+  [],
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
+              }
+                                  try {
+                  $client->addOrUpdateObject(
+  "my-index-name",
 
-        try {
-            $client->addOrUpdateObject(
-                'my-index-name',
-                'my-object-id',
-                null,
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
-        }
-    }
+  null,
 
+  [],
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
+              }
+                                  try {
+                  $client->addOrUpdateObject(
+  "my-index-name",
+
+  "my-object-id",
+
+  null,
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
+              }
+                }
+    
     #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
     public function test0partialUpdateObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6680"]));
 
-        $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-            true,
-        );
-        $this->assertEquals(
-            '[{"taskID":444,"objectIDs":["1","2"]}]',
-            json_encode($res)
-        );
-    }
+                                                            {
+                $res = $client->partialUpdateObjects(
+  "cts_e2e_partialUpdateObjects_php",
 
-    #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
+
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+
+  true,
+);
+                                    $this->assertEquals(
+                        '[{"taskID":444,"objectIDs":["1","2"]}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('call partialUpdateObjects with createIfNotExists=false')]
     public function test1partialUpdateObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6680"]));
 
-        $res = $client->partialUpdateObjects(
-            'cts_e2e_partialUpdateObjects_php',
-            [
-                ['objectID' => '3',
-                    'name' => 'Cyril',
-                ],
 
-                ['objectID' => '4',
-                    'name' => 'David',
-                ],
-            ],
-            false,
-        );
-        $this->assertEquals(
-            '[{"taskID":555,"objectIDs":["3","4"]}]',
-            json_encode($res)
-        );
-    }
+                                                            {
+                $res = $client->partialUpdateObjects(
+  "cts_e2e_partialUpdateObjects_php",
 
+  [
+  ["objectID" => 
+  "3",
+"name" => 
+  "Cyril",
+],
+
+  ["objectID" => 
+  "4",
+"name" => 
+  "David",
+],
+],
+
+  false,
+);
+                                    $this->assertEquals(
+                        '[{"taskID":555,"objectIDs":["3","4"]}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('call partialUpdateObjectsWithTransformation with createIfNotExists=true')]
     public function test0partialUpdateObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6688","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6689"])->setTransformationRegion("us"));
 
-        $res = $client->partialUpdateObjectsWithTransformation(
-            'cts_e2e_partialUpdateObjectsWithTransformation_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
+                                                            {
+                $res = $client->partialUpdateObjectsWithTransformation(
+  "cts_e2e_partialUpdateObjectsWithTransformation_php",
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-            true,
-            true,
-        );
-        $this->assertEquals(
-            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
-            json_encode($res)
-        );
-    }
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
 
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+
+  true,
+
+  true,
+);
+                                    $this->assertEquals(
+                        '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('call replaceAllObjects without error')]
     public function test0replaceAllObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6679']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6679"]));
 
-        $res = $client->replaceAllObjects(
-            'cts_e2e_replace_all_objects_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
+                                                            {
+                $res = $client->replaceAllObjects(
+  "cts_e2e_replace_all_objects_php",
 
-                ['objectID' => '3',
-                    'name' => 'Cyril',
-                ],
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
 
-                ['objectID' => '4',
-                    'name' => 'David',
-                ],
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
 
-                ['objectID' => '5',
-                    'name' => 'Eva',
-                ],
+  ["objectID" => 
+  "3",
+"name" => 
+  "Cyril",
+],
 
-                ['objectID' => '6',
-                    'name' => 'Fiona',
-                ],
+  ["objectID" => 
+  "4",
+"name" => 
+  "David",
+],
 
-                ['objectID' => '7',
-                    'name' => 'Gael',
-                ],
+  ["objectID" => 
+  "5",
+"name" => 
+  "Eva",
+],
 
-                ['objectID' => '8',
-                    'name' => 'Hugo',
-                ],
+  ["objectID" => 
+  "6",
+"name" => 
+  "Fiona",
+],
 
-                ['objectID' => '9',
-                    'name' => 'Igor',
-                ],
+  ["objectID" => 
+  "7",
+"name" => 
+  "Gael",
+],
 
-                ['objectID' => '10',
-                    'name' => 'Julia',
-                ],
-            ],
-            3,
-        );
-        $this->assertEquals(
-            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
-            json_encode($res)
-        );
-    }
+  ["objectID" => 
+  "8",
+"name" => 
+  "Hugo",
+],
 
-    #[TestDox('call replaceAllObjects with partial scopes')]
+  ["objectID" => 
+  "9",
+"name" => 
+  "Igor",
+],
+
+  ["objectID" => 
+  "10",
+"name" => 
+  "Julia",
+],
+],
+
+  3,
+);
+                                    $this->assertEquals(
+                        '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('call replaceAllObjects with partial scopes')]
     public function test1replaceAllObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6685']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6685"]));
 
-        $res = $client->replaceAllObjects(
-            'cts_e2e_replace_all_objects_scopes_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-            77,
-            [
-                'settings',
+                                                            {
+                $res = $client->replaceAllObjects(
+  "cts_e2e_replace_all_objects_scopes_php",
 
-                'synonyms',
-            ],
-        );
-        $this->assertEquals(
-            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
-            json_encode($res)
-        );
-    }
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
 
-    #[TestDox('replaceAllObjects should cleanup on failure')]
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+
+  77,
+
+  [
+  "settings",
+
+  "synonyms",
+],
+);
+                                    $this->assertEquals(
+                        '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":126,"objectIDs":["1","2"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('replaceAllObjects should cleanup on failure')]
     public function test2replaceAllObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6684']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6684"]));
 
-        try {
-            $res = $client->replaceAllObjects(
-                'cts_e2e_replace_all_objects_too_big_php',
-                [
-                    ['objectID' => 'fine',
-                        'body' => 'small obj',
-                    ],
 
-                    ['objectID' => 'toolarge',
-                        'body' => 'something bigger than 10KB',
-                    ],
-                ],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Record is too big');
-        }
-    }
+                                                  try {
+                  $res = $client->replaceAllObjects(
+  "cts_e2e_replace_all_objects_too_big_php",
 
+  [
+  ["objectID" => 
+  "fine",
+"body" => 
+  "small obj",
+],
+
+  ["objectID" => 
+  "toolarge",
+"body" => 
+  "something bigger than 10KB",
+],
+],
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Record is too big');
+              }
+                }
+    
     #[TestDox('call replaceAllObjectsWithTransformation without error')]
     public function test0replaceAllObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6690'])->setTransformationRegion('us'));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6690"])->setTransformationRegion("us"));
 
-        $res = $client->replaceAllObjectsWithTransformation(
-            'cts_e2e_replace_all_objects_with_transformation_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
+                                                            {
+                $res = $client->replaceAllObjectsWithTransformation(
+  "cts_e2e_replace_all_objects_with_transformation_php",
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
 
-                ['objectID' => '3',
-                    'name' => 'Cyril',
-                ],
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
 
-                ['objectID' => '4',
-                    'name' => 'David',
-                ],
+  ["objectID" => 
+  "3",
+"name" => 
+  "Cyril",
+],
 
-                ['objectID' => '5',
-                    'name' => 'Eva',
-                ],
+  ["objectID" => 
+  "4",
+"name" => 
+  "David",
+],
 
-                ['objectID' => '6',
-                    'name' => 'Fiona',
-                ],
+  ["objectID" => 
+  "5",
+"name" => 
+  "Eva",
+],
 
-                ['objectID' => '7',
-                    'name' => 'Gael',
-                ],
+  ["objectID" => 
+  "6",
+"name" => 
+  "Fiona",
+],
 
-                ['objectID' => '8',
-                    'name' => 'Hugo',
-                ],
+  ["objectID" => 
+  "7",
+"name" => 
+  "Gael",
+],
 
-                ['objectID' => '9',
-                    'name' => 'Igor',
-                ],
+  ["objectID" => 
+  "8",
+"name" => 
+  "Hugo",
+],
 
-                ['objectID' => '10',
-                    'name' => 'Julia',
-                ],
-            ],
-            3,
-        );
-        $this->assertEquals(
-            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
-            json_encode($res)
-        );
-    }
+  ["objectID" => 
+  "9",
+"name" => 
+  "Igor",
+],
 
+  ["objectID" => 
+  "10",
+"name" => 
+  "Julia",
+],
+],
+
+  3,
+);
+                                    $this->assertEquals(
+                        '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('call saveObjects without error')]
     public function test0saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6680"]));
 
-        $res = $client->saveObjects(
-            'cts_e2e_saveObjects_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-        );
-        $this->assertEquals(
-            '[{"taskID":333,"objectIDs":["1","2"]}]',
-            json_encode($res)
-        );
-    }
+                                                            {
+                $res = $client->saveObjects(
+  "cts_e2e_saveObjects_php",
 
-    #[TestDox('saveObjects should report errors')]
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
+
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+);
+                                    $this->assertEquals(
+                        '[{"taskID":333,"objectIDs":["1","2"]}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('saveObjects should report errors')]
     public function test1saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'wrong-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6680']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","wrong-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6680"]));
 
-        try {
-            $res = $client->saveObjects(
-                'cts_e2e_saveObjects_php',
-                [
-                    ['objectID' => '1',
-                        'name' => 'Adam',
-                    ],
 
-                    ['objectID' => '2',
-                        'name' => 'Benoit',
-                    ],
-                ],
-            );
-            $this->fail('Expected exception to be thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
-        }
-    }
+                                                  try {
+                  $res = $client->saveObjects(
+  "cts_e2e_saveObjects_php",
 
-    #[TestDox('saveObjectsPlaylist')]
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
+
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+);
+                  $this->fail('Expected exception to be thrown');
+              } catch (\Exception $e) {
+                  $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
+              }
+                }
+    
+#[TestDox('saveObjectsPlaylist')]
     public function test2saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6686"]));
 
-        $res = $client->saveObjects(
-            'playlists',
-            [
-                ['objectID' => '1',
-                    'visibility' => 'public',
-                    'name' => 'Hot 100 Billboard Charts',
-                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
-                    'createdAt' => '1500240452',
-                ],
-            ],
-        );
-    }
 
-    #[TestDox('saveObjectsPublicUser')]
+                                                            {
+                $res = $client->saveObjects(
+  "playlists",
+
+  [
+  ["objectID" => 
+  "1",
+"visibility" => 
+  "public",
+"name" => 
+  "Hot 100 Billboard Charts",
+"playlistId" => 
+  "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+"createdAt" => 
+  "1500240452",
+],
+],
+);
+                                }
+                }
+    
+#[TestDox('saveObjectsPublicUser')]
     public function test3saveObjects(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6686"]));
 
-        $res = $client->saveObjects(
-            'playlists',
-            [
-                ['objectID' => '1',
-                    'visibility' => 'public',
-                    'name' => 'Hot 100 Billboard Charts',
-                    'playlistId' => 'd3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f',
-                    'createdAt' => '1500240452',
-                ],
-            ],
-            false,
-            1000,
-            [
-                'headers' => [
-                    'X-Algolia-User-ID' => '*',
-                ],
-            ]
-        );
-    }
 
+                                                            {
+                $res = $client->saveObjects(
+  "playlists",
+
+  [
+  ["objectID" => 
+  "1",
+"visibility" => 
+  "public",
+"name" => 
+  "Hot 100 Billboard Charts",
+"playlistId" => 
+  "d3e8e8f3-0a4f-4b7d-9b6b-7e8f4e8e3a0f",
+"createdAt" => 
+  "1500240452",
+],
+],
+
+  false,
+
+  1000,
+ [
+
+    'headers' => [
+        'X-Algolia-User-ID' => '*',
+    ],
+  ]);
+                                }
+                }
+    
     #[TestDox('call saveObjectsWithTransformation without error')]
     public function test0saveObjectsWithTransformation(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6688', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6689'])->setTransformationRegion('us'));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6688","http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6689"])->setTransformationRegion("us"));
 
-        $res = $client->saveObjectsWithTransformation(
-            'cts_e2e_saveObjectsWithTransformation_php',
-            [
-                ['objectID' => '1',
-                    'name' => 'Adam',
-                ],
+                                                            {
+                $res = $client->saveObjectsWithTransformation(
+  "cts_e2e_saveObjectsWithTransformation_php",
 
-                ['objectID' => '2',
-                    'name' => 'Benoit',
-                ],
-            ],
-            true,
-        );
-        $this->assertEquals(
-            '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
-            json_encode($res)
-        );
-    }
+  [
+  ["objectID" => 
+  "1",
+"name" => 
+  "Adam",
+],
 
+  ["objectID" => 
+  "2",
+"name" => 
+  "Benoit",
+],
+],
+
+  true,
+);
+                                    $this->assertEquals(
+                        '[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_php","eventID":"113b2068-6337-4c85-b5c2-e7b213d82925","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}]',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('with algolia user id')]
     public function test0searchSingleIndex(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6686']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6686"]));
 
-        $res = $client->searchSingleIndex(
-            'playlists',
-            ['query' => 'foo',
-            ],
-            [
-                'headers' => [
-                    'X-Algolia-User-ID' => 'user1234',
-                ],
-            ]
-        );
-    }
 
+                                                            $res = $client->searchSingleIndex(
+  "playlists",
+
+  ["query" => 
+  "foo",
+],
+ [
+
+    'headers' => [
+        'X-Algolia-User-ID' => 'user1234',
+    ],
+  ]);
+                                }
+    
     #[TestDox('switch API key')]
     public function test0setClientApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6683']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6683"]));
 
-        $res = $client->customGet(
-            'check-api-key/1',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"test-api-key"}',
-            json_encode($res)
-        );
 
-        $client->setClientApiKey(
-            'updated-api-key',
-        );
-
-        $res = $client->customGet(
-            'check-api-key/2',
-        );
-        $this->assertEquals(
-            '{"headerAPIKeyValue":"updated-api-key"}',
-            json_encode($res)
-        );
-    }
-
+                                                            {
+                $res = $client->customGet(
+  "check-api-key/1",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"test-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                                            {
+                $client->setClientApiKey(
+  "updated-api-key",
+);
+                                }
+                                            {
+                $res = $client->customGet(
+  "check-api-key/2",
+);
+                                    $this->assertEquals(
+                        '{"headerAPIKeyValue":"updated-api-key"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('wait for api key helper - add')]
     public function test0waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->waitForApiKey(
-            'api-key-add-operation-test-php',
-            'add',
-        );
-        $this->assertEquals(
-            '{"value":"api-key-add-operation-test-php","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
-            json_encode($res)
-        );
-    }
 
-    #[TestDox('wait for api key - update')]
+                                                            {
+                $res = $client->waitForApiKey(
+  "api-key-add-operation-test-php",
+
+  "add",
+);
+                                    $this->assertEquals(
+                        '{"value":"api-key-add-operation-test-php","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('wait for api key - update')]
     public function test1waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->waitForApiKey(
-            'api-key-update-operation-test-php',
-            'update',
-            ['description' => 'my updated api key',
-                'acl' => [
-                    'search',
 
-                    'addObject',
+                                                            {
+                $res = $client->waitForApiKey(
+  "api-key-update-operation-test-php",
 
-                    'deleteObject',
-                ],
-                'indexes' => [
-                    'Movies',
+  "update",
 
-                    'Books',
-                ],
-                'referers' => [
-                    '*google.com',
+  ["description" => 
+  "my updated api key",
+"acl" => 
+  [
+  "search",
 
-                    '*algolia.com',
-                ],
-                'validity' => 305,
-                'maxQueriesPerIPPerHour' => 95,
-                'maxHitsPerQuery' => 20,
-            ],
-        );
-        $this->assertEquals(
-            '{"value":"api-key-update-operation-test-php","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
-            json_encode($res)
-        );
-    }
+  "addObject",
 
-    #[TestDox('wait for api key - delete')]
+  "deleteObject",
+],
+"indexes" => 
+  [
+  "Movies",
+
+  "Books",
+],
+"referers" => 
+  [
+  "*google.com",
+
+  "*algolia.com",
+],
+"validity" => 
+  305,
+"maxQueriesPerIPPerHour" => 
+  95,
+"maxHitsPerQuery" => 
+  20,
+],
+);
+                                    $this->assertEquals(
+                        '{"value":"api-key-update-operation-test-php","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
+#[TestDox('wait for api key - delete')]
     public function test2waitForApiKey(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->waitForApiKey(
-            'api-key-delete-operation-test-php',
-            'delete',
-        );
-        $this->assertEquals(
-            null,
-            $res
-        );
-    }
 
+                                                            {
+                $res = $client->waitForApiKey(
+  "api-key-delete-operation-test-php",
+
+  "delete",
+);
+                                        $this->assertEquals(
+                        
+  null,
+
+                        $res
+                    );
+                        }
+                }
+    
     #[TestDox('wait for an application-level task')]
     public function test0waitForAppTask(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->waitForAppTask(
-            123,
-        );
-        $this->assertEquals(
-            '{"status":"published"}',
-            json_encode($res)
-        );
-    }
 
+                                                            {
+                $res = $client->waitForAppTask(
+  123,
+);
+                                    $this->assertEquals(
+                        '{"status":"published"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
     #[TestDox('wait for task')]
     public function test0waitForTask(): void
     {
-        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6681']));
+                                    
+$client = SearchClient::createWithConfig(SearchConfig::create("test-app-id","test-api-key")->setFullHosts(["http://" . (getenv("CI") == "true" ? "localhost" : "host.docker.internal") . ":6681"]));
 
-        $res = $client->waitForTask(
-            'wait-task-php',
-            123,
-        );
-        $this->assertEquals(
-            '{"status":"published"}',
-            json_encode($res)
-        );
-    }
 
-    /**
-     * @param mixed $appId
-     * @param mixed $apiKey
-     */
-    private function createClient($appId, $apiKey): SearchClient
-    {
-        $config = SearchConfig::create($appId, $apiKey);
-        $clusterHosts = SearchClient::getClusterHosts($config);
-        $api = new ApiWrapper($this, $config, $clusterHosts);
+                                                            {
+                $res = $client->waitForTask(
+  "wait-task-php",
 
-        return new SearchClient($api, $config);
-    }
+  123,
+);
+                                    $this->assertEquals(
+                        '{"status":"published"}',
+                        json_encode($res)
+                    );
+                            }
+                }
+    
 }

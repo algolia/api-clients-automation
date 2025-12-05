@@ -5,6 +5,8 @@ package com.algolia.model.composition;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /** Composition */
@@ -22,6 +24,9 @@ public class Composition implements BatchCompositionAction {
 
   @JsonProperty("behavior")
   private CompositionBehavior behavior;
+
+  @JsonProperty("sortingStrategy")
+  private Map<String, String> sortingStrategy;
 
   public Composition setObjectID(String objectID) {
     this.objectID = objectID;
@@ -67,6 +72,33 @@ public class Composition implements BatchCompositionAction {
     return behavior;
   }
 
+  public Composition setSortingStrategy(Map<String, String> sortingStrategy) {
+    this.sortingStrategy = sortingStrategy;
+    return this;
+  }
+
+  public Composition putSortingStrategy(String key, String sortingStrategyItem) {
+    if (this.sortingStrategy == null) {
+      this.sortingStrategy = new HashMap<>();
+    }
+    this.sortingStrategy.put(key, sortingStrategyItem);
+    return this;
+  }
+
+  /**
+   * A mapping of sorting labels to the indices (or replicas) that implement those sorting rules.
+   * The sorting indices MUST be related to the associated main targeted index in the composition.
+   * Each key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each
+   * value is the name of the index that should be queried when that label is selected. When a
+   * request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this
+   * mapping and uses it to execute the query. The main targeted index is replaced with the sorting
+   * strategy index it is mapped to. Up to 20 sorting strategies can be defined.
+   */
+  @javax.annotation.Nullable
+  public Map<String, String> getSortingStrategy() {
+    return sortingStrategy;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -80,13 +112,14 @@ public class Composition implements BatchCompositionAction {
       Objects.equals(this.objectID, composition.objectID) &&
       Objects.equals(this.name, composition.name) &&
       Objects.equals(this.description, composition.description) &&
-      Objects.equals(this.behavior, composition.behavior)
+      Objects.equals(this.behavior, composition.behavior) &&
+      Objects.equals(this.sortingStrategy, composition.sortingStrategy)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objectID, name, description, behavior);
+    return Objects.hash(objectID, name, description, behavior, sortingStrategy);
   }
 
   @Override
@@ -97,6 +130,7 @@ public class Composition implements BatchCompositionAction {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    behavior: ").append(toIndentedString(behavior)).append("\n");
+    sb.append("    sortingStrategy: ").append(toIndentedString(sortingStrategy)).append("\n");
     sb.append("}");
     return sb.toString();
   }

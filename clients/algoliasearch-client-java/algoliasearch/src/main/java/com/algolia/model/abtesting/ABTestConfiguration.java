@@ -10,6 +10,9 @@ import java.util.Objects;
 /** A/B test configuration. */
 public class ABTestConfiguration {
 
+  @JsonProperty("featureFilters")
+  private FeatureFilters featureFilters;
+
   @JsonProperty("outliers")
   private Outliers outliers;
 
@@ -18,6 +21,17 @@ public class ABTestConfiguration {
 
   @JsonProperty("minimumDetectableEffect")
   private MinimumDetectableEffect minimumDetectableEffect;
+
+  public ABTestConfiguration setFeatureFilters(FeatureFilters featureFilters) {
+    this.featureFilters = featureFilters;
+    return this;
+  }
+
+  /** Get featureFilters */
+  @javax.annotation.Nullable
+  public FeatureFilters getFeatureFilters() {
+    return featureFilters;
+  }
 
   public ABTestConfiguration setOutliers(Outliers outliers) {
     this.outliers = outliers;
@@ -62,6 +76,7 @@ public class ABTestConfiguration {
     }
     ABTestConfiguration abTestConfiguration = (ABTestConfiguration) o;
     return (
+      Objects.equals(this.featureFilters, abTestConfiguration.featureFilters) &&
       Objects.equals(this.outliers, abTestConfiguration.outliers) &&
       Objects.equals(this.emptySearch, abTestConfiguration.emptySearch) &&
       Objects.equals(this.minimumDetectableEffect, abTestConfiguration.minimumDetectableEffect)
@@ -70,13 +85,14 @@ public class ABTestConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(outliers, emptySearch, minimumDetectableEffect);
+    return Objects.hash(featureFilters, outliers, emptySearch, minimumDetectableEffect);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ABTestConfiguration {\n");
+    sb.append("    featureFilters: ").append(toIndentedString(featureFilters)).append("\n");
     sb.append("    outliers: ").append(toIndentedString(outliers)).append("\n");
     sb.append("    emptySearch: ").append(toIndentedString(emptySearch)).append("\n");
     sb.append("    minimumDetectableEffect: ").append(toIndentedString(minimumDetectableEffect)).append("\n");

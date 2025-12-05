@@ -1172,6 +1172,46 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest4()
+  {
+    await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        SortingStrategy = new Dictionary<string, string>
+        {
+          { "Price-asc", "products-low-to-high" },
+          { "Price-desc", "products-high-to-low" },
+        },
+        Behavior = new CompositionBehavior
+        {
+          Injection = new Injection
+          {
+            Main = new Main
+            {
+              Source = new CompositionSource
+              {
+                Search = new CompositionSourceSearch { Index = "products" },
+              },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "putCompositionRule")]
   public async Task PutCompositionRuleTest()
   {
@@ -1707,6 +1747,7 @@ public class CompositionClientRequestTests
                     Anchoring = Enum.Parse<Anchoring>("Contains"),
                     Pattern = "harry",
                   },
+                  new Condition { SortBy = "price-low-to-high" },
                 },
                 Consequence = new CompositionRuleConsequence
                 {
@@ -1757,7 +1798,7 @@ public class CompositionClientRequestTests
     Assert.Equal("/1/compositions/my-compo/rules/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
+      "{\"requests\":[{\"action\":\"upsert\",\"body\":{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"},{\"sortBy\":\"price-low-to-high\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1832,6 +1873,27 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "search")]
+  public async Task SearchTest2()
+  {
+    await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "batman", SortBy = "Price (asc)" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/foo/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"params\":{\"query\":\"batman\",\"sortBy\":\"Price (asc)\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchCompositionRules")]
   public async Task SearchCompositionRulesTest()
   {
@@ -1863,6 +1925,28 @@ public class CompositionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"params\":{\"maxFacetHits\":10}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "updateSortingStrategyComposition")]
+  public async Task UpdateSortingStrategyCompositionTest()
+  {
+    await client.UpdateSortingStrategyCompositionAsync(
+      "my-compo",
+      new Dictionary<string, string>
+      {
+        { "Price-asc", "products-low-to-high" },
+        { "Price-desc", "products-high-to-low" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo/sortingStrategy", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

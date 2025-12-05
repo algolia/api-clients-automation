@@ -14,6 +14,7 @@ final class Condition {
     this.anchoring,
     this.context,
     this.filters,
+    this.sortBy,
   });
 
   /// Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".
@@ -31,6 +32,10 @@ final class Condition {
   @JsonKey(name: r'filters')
   final String? filters;
 
+  /// Sort criteria that trigger the rule.  You can trigger composition rules based on the selected sorting strategy set by the parameter `sortBy`. The rule will trigger if the value passed to `sortBy` matches the one defined in the condition.
+  @JsonKey(name: r'sortBy')
+  final String? sortBy;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -38,14 +43,16 @@ final class Condition {
           other.pattern == pattern &&
           other.anchoring == anchoring &&
           other.context == context &&
-          other.filters == filters;
+          other.filters == filters &&
+          other.sortBy == sortBy;
 
   @override
   int get hashCode =>
       pattern.hashCode +
       anchoring.hashCode +
       context.hashCode +
-      filters.hashCode;
+      filters.hashCode +
+      sortBy.hashCode;
 
   factory Condition.fromJson(Map<String, dynamic> json) =>
       _$ConditionFromJson(json);

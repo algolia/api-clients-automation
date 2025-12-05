@@ -27,6 +27,7 @@ package algoliasearch.abtesting
 /** A/B test configuration for estimating the sample size and duration using minimum detectable effect.
   */
 case class EstimateConfiguration(
+    featureFilters: Option[FeatureFilters] = scala.None,
     outliers: Option[Outliers] = scala.None,
     emptySearch: Option[EmptySearch] = scala.None,
     minimumDetectableEffect: MinimumDetectableEffect
