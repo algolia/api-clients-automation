@@ -3,6 +3,12 @@ user:
   properties:
     userID:
       type: string
+    type:
+      type: string
+      enum:
+        - basic
+        - predictive
+        - realtime
     affinities:
       type: array
       items:
@@ -27,4 +33,4 @@ user:
         required: [name, indices, value, score, lastUpdatedAt]
     lastUpdatedAt:
       type: string
-  required: [userID, affinities, lastUpdatedAt]
+  required: [userID, type, affinities, lastUpdatedAt]
