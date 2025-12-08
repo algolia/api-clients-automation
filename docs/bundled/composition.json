@@ -1504,26 +1504,26 @@
         },
         "description": "Facets for which to retrieve facet values that match the search criteria and the number of matching facet values\nTo retrieve all facets, use the wildcard character `*`.\nTo retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.\nFor more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).\n",
         "default": [],
-        "example": {
-          "facetSpecificList": {
-            "summary": "Specify which facet to retrieve with some marked as disjunctive",
-            "value": [
-              [
+        "examples": [
+          {
+            "facetSpecificList": {
+              "summary": "Specify which facet to retrieve with some marked as disjunctive",
+              "value": [
                 "category",
                 "disjunctive(brand)",
                 "price"
               ]
-            ]
+            }
           },
-          "facetAll": {
-            "summary": "Retrieve all facets",
-            "value": [
-              [
+          {
+            "facetAll": {
+              "summary": "Retrieve all facets",
+              "value": [
                 "*"
               ]
-            ]
+            }
           }
-        },
+        ],
         "x-categories": [
           "Faceting"
         ]
