@@ -1244,18 +1244,16 @@ components:
         and [disjunctive faceting for Smart
         Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
       default: []
-      example:
-        facetSpecificList:
-          summary: Specify which facet to retrieve with some marked as disjunctive
-          value:
-            -
+      examples:
+        - facetSpecificList:
+            summary: Specify which facet to retrieve with some marked as disjunctive
+            value:
               - category
               - disjunctive(brand)
               - price
-        facetAll:
-          summary: Retrieve all facets
-          value:
-            -
+        - facetAll:
+            summary: Retrieve all facets
+            value:
               - '*'
       x-categories:
         - Faceting
