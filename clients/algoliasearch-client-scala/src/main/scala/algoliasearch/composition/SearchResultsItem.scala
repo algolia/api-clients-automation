@@ -82,18 +82,18 @@ import org.json4s._
   * @param automaticInsights
   *   Whether automatic events collection is enabled for the application.
   * @param page
-  *   Page of search results to retrieve.
+  *   The current page of the results.
   * @param nbHits
   *   Number of results (hits).
   * @param nbPages
   *   Number of pages of results.
   * @param hitsPerPage
-  *   Number of hits per page.
+  *   Number of hits returned per page.
   * @param hits
   *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
   *   attributes, such as, for highlighting.
   * @param query
-  *   Search query.
+  *   The search query string.
   * @param params
   *   URL-encoded string of all search parameters.
   */

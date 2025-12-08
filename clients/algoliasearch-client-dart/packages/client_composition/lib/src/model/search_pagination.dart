@@ -15,8 +15,7 @@ final class SearchPagination {
     required this.hitsPerPage,
   });
 
-  /// Page of search results to retrieve.
-  // minimum: 0
+  /// The current page of the results.
   @JsonKey(name: r'page')
   final int page;
 
@@ -28,9 +27,7 @@ final class SearchPagination {
   @JsonKey(name: r'nbPages')
   final int nbPages;
 
-  /// Number of hits per page.
-  // minimum: 1
-  // maximum: 1000
+  /// Number of hits returned per page.
   @JsonKey(name: r'hitsPerPage')
   final int hitsPerPage;
 
