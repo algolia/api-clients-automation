@@ -41,11 +41,11 @@ __metadata:
   linkType: hard
 
 "@ai-sdk/react@npm:^2.0.30":
-  version: 2.0.106
-  resolution: "@ai-sdk/react@npm:2.0.106"
+  version: 2.0.109
+  resolution: "@ai-sdk/react@npm:2.0.109"
   dependencies:
     "@ai-sdk/provider-utils": "npm:3.0.18"
-    ai: "npm:5.0.106"
+    ai: "npm:5.0.108"
     swr: "npm:^2.2.5"
     throttleit: "npm:2.1.0"
   peerDependencies:
@@ -54,7 +54,7 @@ __metadata:
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10/c6601a9bd2d66f9a3797637393bb5ca14cbff7cfb2a96561d1952d4be8182ee7fa74f4f527fdb28c887d461e87df9d6e901422c7374bb830b3683f9818ecce9b
+  checksum: 10/2a16b11bde6573baef76dbd9a8555c92f47aebbffdde548ff8ef81c35c72c7d593993b7f0d2b645cf3ccdf095299fe1c09bb126ed2bd7fb3021adfee476a52ff
   languageName: node
   linkType: hard
 
@@ -5143,9 +5143,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:5.0.106, ai@npm:^5.0.30":
-  version: 5.0.106
-  resolution: "ai@npm:5.0.106"
+"ai@npm:5.0.108, ai@npm:^5.0.30":
+  version: 5.0.108
+  resolution: "ai@npm:5.0.108"
   dependencies:
     "@ai-sdk/gateway": "npm:2.0.18"
     "@ai-sdk/provider": "npm:2.0.0"
@@ -5153,7 +5153,7 @@ __metadata:
     "@opentelemetry/api": "npm:1.9.0"
   peerDependencies:
     zod: ^3.25.76 || ^4.1.8
-  checksum: 10/678e033e5c85827dd286a6c255913dba75ac29351b79896b80def8ba6036ed8bbb84f4baf204fe292986a3f7cce104ebcb11dfb160f94eaf3627e4d1a28015d6
+  checksum: 10/a6f7ca94e460b200b83736233ece60815f58d1bb2226e947667e786973c72d188ff643d3e1e19b0239cbe416956c32731f201b206ca6effed7d8227e66c38193
   languageName: node
   linkType: hard
 
@@ -5826,11 +5826,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.9.0":
-  version: 2.9.2
-  resolution: "baseline-browser-mapping@npm:2.9.2"
+  version: 2.9.4
+  resolution: "baseline-browser-mapping@npm:2.9.4"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10/6e42ae4aaaa0becd37a58b00aa4734063a59b752b5bb66776fc73858d8d7eecea007f4af67fba7c48a9022ec243ad6a77aee735d9e063b1220a7f39b8cd39f4b
+  checksum: 10/71cf80f822e74e0f0109a9ed69d87fdb128d01bf06670a2ef91166a3eb636034e0a013d76cd9915a9d38594f649848c8c1ef6cbe39ed417f38314ff5bd22e393
   languageName: node
   linkType: hard
 
@@ -17313,8 +17313,8 @@ __metadata:
   linkType: hard
 
 "terser-webpack-plugin@npm:^5.0.3, terser-webpack-plugin@npm:^5.3.11, terser-webpack-plugin@npm:^5.3.9":
-  version: 5.3.14
-  resolution: "terser-webpack-plugin@npm:5.3.14"
+  version: 5.3.15
+  resolution: "terser-webpack-plugin@npm:5.3.15"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.25"
     jest-worker: "npm:^27.4.5"
@@ -17330,7 +17330,7 @@ __metadata:
       optional: true
     uglify-js:
       optional: true
-  checksum: 10/5b7290f7edb179b83cefb8827c12371ddddc088cf251cf58a1c738d82628331ae6604273b61fe991d77411d4bb6b7178c3826aa47edf01b4ee21f973d6c8b8fb
+  checksum: 10/54059f0fe56c16a1e30032b33b1321051d562b5292adcf88d160c7d8e74779867014e98548ae59ba5283fe60f8725bea37c16b42f2c89ee430382cff74198b7a
   languageName: node
   linkType: hard
 
