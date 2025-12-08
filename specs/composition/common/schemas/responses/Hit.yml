@@ -50,8 +50,12 @@ compositionRankingInfo:
         properties:
           index:
             type: string
+            example: 'products'
           injectedItemKey:
             type: string
+            example: 'sponsored-products'
         required:
           - index
           - injectedItemKey
+      example:
+        'my-composition-to-sponsor-products': {index: 'products', injectedItemKey: 'sponsored-products'}
