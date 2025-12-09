@@ -40,7 +40,9 @@ async function handleSpecFiles(spec: SpecsToPush, tempGitDir: string): Promise<v
     await run(`cp ${toAbsolutePath('docs/versions-history-with-sla-and-support-policy.json')} ${output}`);
   }
 
-  for (const client of CLIENTS) {
+  const clients = CLIENTS.filter((client) => spec.clients?.includes(client) ?? true);
+
+  for (const client of clients) {
     const pathToBundledSpec = toAbsolutePath(`docs/bundled/${client}.${spec.ext}`);
 
     if (!(await exists(pathToBundledSpec))) {
