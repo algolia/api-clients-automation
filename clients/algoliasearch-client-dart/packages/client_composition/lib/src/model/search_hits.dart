@@ -21,7 +21,7 @@ final class SearchHits extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'hits')
   final List<Hit> hits;
 
-  /// Search query.
+  /// The search query string.
   @JsonKey(name: r'query')
   final String query;
 

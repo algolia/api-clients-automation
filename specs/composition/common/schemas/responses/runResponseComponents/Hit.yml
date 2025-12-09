@@ -10,15 +10,15 @@ hit:
     - objectID
   properties:
     objectID:
-      $ref: '../../../../common/parameters.yml#/objectID'
+      $ref: '../../../../../common/parameters.yml#/objectID'
     _highlightResult:
-      $ref: '../../../../common/schemas/HighlightResult.yml#/highlightResultMap'
+      $ref: '../../../../../common/schemas/HighlightResult.yml#/highlightResultMap'
     _snippetResult:
-      $ref: '../../../../common/schemas/SnippetResult.yml#/snippetResultMap'
+      $ref: '../../../../../common/schemas/SnippetResult.yml#/snippetResultMap'
     _rankingInfo:
       $ref: '#/rankingInfo'
     _distinctSeqID:
-      $ref: '../../../../common/schemas/Hit.yml#/distinctSeqID'
+      $ref: '../../../../../common/schemas/Hit.yml#/distinctSeqID'
     _extra:
       $ref: '#/hitMetadata'
 
@@ -33,7 +33,7 @@ hitMetadata:
 
 rankingInfo:
   allOf:
-    - $ref: '../../../../common/schemas/Hit.yml#/rankingInfo'
+    - $ref: '../../../../../common/schemas/Hit.yml#/rankingInfo'
     - $ref: '#/compositionRankingInfo'
 
 compositionRankingInfo:
@@ -50,8 +50,12 @@ compositionRankingInfo:
         properties:
           index:
             type: string
+            example: 'products'
           injectedItemKey:
             type: string
+            example: 'sponsored-products'
         required:
           - index
           - injectedItemKey
+      example:
+        'my-composition-to-sponsor-products': {index: 'products', injectedItemKey: 'sponsored-products'}
