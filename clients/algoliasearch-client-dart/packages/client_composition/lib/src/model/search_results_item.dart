@@ -156,8 +156,7 @@ final class SearchResultsItem {
   @JsonKey(name: r'_automaticInsights')
   final bool? automaticInsights;
 
-  /// Page of search results to retrieve.
-  // minimum: 0
+  /// The current page of the results.
   @JsonKey(name: r'page')
   final int page;
 
@@ -169,9 +168,7 @@ final class SearchResultsItem {
   @JsonKey(name: r'nbPages')
   final int nbPages;
 
-  /// Number of hits per page.
-  // minimum: 1
-  // maximum: 1000
+  /// Number of hits returned per page.
   @JsonKey(name: r'hitsPerPage')
   final int hitsPerPage;
 
@@ -179,7 +176,7 @@ final class SearchResultsItem {
   @JsonKey(name: r'hits')
   final List<Hit> hits;
 
-  /// Search query.
+  /// The search query string.
   @JsonKey(name: r'query')
   final String query;
 

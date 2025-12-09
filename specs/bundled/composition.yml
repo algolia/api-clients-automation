@@ -1244,18 +1244,16 @@ components:
         and [disjunctive faceting for Smart
         Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
       default: []
-      example:
-        facetSpecificList:
-          summary: Specify which facet to retrieve with some marked as disjunctive
-          value:
-            -
+      examples:
+        - facetSpecificList:
+            summary: Specify which facet to retrieve with some marked as disjunctive
+            value:
               - category
               - disjunctive(brand)
               - price
-        facetAll:
-          summary: Retrieve all facets
-          value:
-            -
+        - facetAll:
+            summary: Retrieve all facets
+            value:
               - '*'
       x-categories:
         - Faceting
@@ -2213,26 +2211,26 @@ components:
         _automaticInsights:
           type: boolean
           description: Whether automatic events collection is enabled for the application.
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
     SearchPagination:
       type: object
       additionalProperties: false
       properties:
         page:
-          $ref: '#/components/schemas/page'
+          type: integer
+          description: The current page of the results.
+          example: 0
         nbHits:
-          $ref: '#/components/schemas/nbHits'
+          type: integer
+          description: Number of results (hits).
+          example: 20
         nbPages:
-          $ref: '#/components/schemas/nbPages'
+          type: integer
+          description: Number of pages of results.
+          example: 1
         hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
+          type: integer
+          description: Number of hits returned per page.
+          example: 20
       required:
         - page
         - nbHits
@@ -2436,11 +2434,17 @@ components:
             properties:
               index:
                 type: string
+                example: products
               injectedItemKey:
                 type: string
+                example: sponsored-products
             required:
               - index
               - injectedItemKey
+          example:
+            my-composition-to-sponsor-products:
+              index: products
+              injectedItemKey: sponsored-products
     Hit_rankingInfo:
       allOf:
         - $ref: '#/components/schemas/rankingInfo'
@@ -2497,7 +2501,9 @@ components:
           items:
             $ref: '#/components/schemas/hit'
         query:
-          $ref: '#/components/schemas/query'
+          type: string
+          description: The search query string.
+          example: shoes
         params:
           type: string
           description: URL-encoded string of all search parameters.
