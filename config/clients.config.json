@@ -273,7 +273,12 @@
     "snippets": {
       "extension": ".php",
       "outputFolder": "src"
-    }
+    },
+    "supportedVersions": [
+      "8.1",
+      "8.2",
+      "8.4"
+    ]
   },
   "python": {
     "clients": [
