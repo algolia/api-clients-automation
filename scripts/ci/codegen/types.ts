@@ -30,6 +30,9 @@ export type SpecsToPush = {
 
   // a key-value of the fields to replace, with the name you'd like to use instead
   placeholderVariables?: Record<string, string>;
+
+  // the name of the clients to push in this pull request, when empty, every clients are pushed
+  clients?: string[];
 };
 
 type RepositoryTask = {
@@ -131,6 +134,7 @@ export const pushToRepositoryConfiguration: {
           type: 'specs',
           ext: 'json',
           output: 'nodes/Algolia/specs',
+          clients: ['search'],
           placeholderVariables: { appId: 'applicationId' },
         },
       },
