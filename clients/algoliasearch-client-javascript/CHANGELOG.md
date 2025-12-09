@@ -1,3 +1,8 @@
+## [5.46.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.0...5.46.1)
+
+- [0ad34c60c](https://github.com/algolia/api-clients-automation/commit/0ad34c60c) chore: setup release workflow for npm trusted publisher ([#5717](https://github.com/algolia/api-clients-automation/pull/5717)) by [@Fluf22](https://github.com/Fluf22/)
+- [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [5.46.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.45.0...5.46.0)
 
 - [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)

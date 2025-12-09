@@ -1,3 +1,7 @@
+## [4.37.1](https://github.com/algolia/algoliasearch-client-php/compare/4.37.0...4.37.1)
+
+- [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [4.37.0](https://github.com/algolia/algoliasearch-client-php/compare/4.36.0...4.37.0)
 
 - [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
