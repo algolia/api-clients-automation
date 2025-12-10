@@ -29,3 +29,8 @@ strategy:
     - historical
     - hybrid
   example: 'session'
+
+userType:
+  title: userType
+  type: string
+  enum: [basic, predictive, realtime]

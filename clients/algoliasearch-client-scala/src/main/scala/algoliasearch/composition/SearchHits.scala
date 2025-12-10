@@ -36,7 +36,7 @@ import org.json4s._
   *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
   *   attributes, such as, for highlighting.
   * @param query
-  *   Search query.
+  *   The search query string.
   * @param params
   *   URL-encoded string of all search parameters.
   */

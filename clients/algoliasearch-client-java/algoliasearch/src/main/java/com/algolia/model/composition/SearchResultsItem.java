@@ -466,7 +466,7 @@ public class SearchResultsItem<T> {
     return this;
   }
 
-  /** Page of search results to retrieve. minimum: 0 */
+  /** The current page of the results. */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -499,7 +499,7 @@ public class SearchResultsItem<T> {
     return this;
   }
 
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  /** Number of hits returned per page. */
   @javax.annotation.Nonnull
   public Integer getHitsPerPage() {
     return hitsPerPage;
@@ -529,7 +529,7 @@ public class SearchResultsItem<T> {
     return this;
   }
 
-  /** Search query. */
+  /** The search query string. */
   @javax.annotation.Nonnull
   public String getQuery() {
     return query;

@@ -31,13 +31,13 @@ package algoliasearch.composition
 /** SearchPagination
   *
   * @param page
-  *   Page of search results to retrieve.
+  *   The current page of the results.
   * @param nbHits
   *   Number of results (hits).
   * @param nbPages
   *   Number of pages of results.
   * @param hitsPerPage
-  *   Number of hits per page.
+  *   Number of hits returned per page.
   */
 case class SearchPagination(
     page: Int,
