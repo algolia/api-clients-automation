@@ -28,55 +28,30 @@
   */
 package algoliasearch.composition
 
-import org.json4s._
-
-/** SearchHits
+/** SearchFields
   *
   * @param hits
   *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
   *   attributes, such as, for highlighting.
-  * @param query
-  *   The search query string.
+  * @param hitsPerPage
+  *   Number of hits returned per page.
+  * @param nbHits
+  *   Number of results (hits).
+  * @param nbPages
+  *   Number of pages of results.
+  * @param page
+  *   The current page of the results.
   * @param params
   *   URL-encoded string of all search parameters.
+  * @param query
+  *   The search query string.
   */
-case class SearchHits(
+case class SearchFields(
     hits: Seq[Hit],
-    query: String,
+    hitsPerPage: Int,
+    nbHits: Int,
+    nbPages: Int,
+    page: Int,
     params: String,
-    additionalProperties: Option[List[JField]] = None
+    query: String
 )
-
-class SearchHitsSerializer extends Serializer[SearchHits] {
-
-  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), SearchHits] = {
-    case (TypeInfo(clazz, _), json) if clazz == classOf[SearchHits] =>
-      json match {
-        case jobject: JObject =>
-          val formats = format - this
-          val mf = manifest[SearchHits]
-          val obj = Extraction.extract[SearchHits](jobject)(formats, mf)
-
-          val fields = Set("hits", "query", "params")
-          val additionalProperties = jobject removeField {
-            case (name, _) if fields.contains(name) => true
-            case _                                  => false
-          }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
-            case _                   => obj
-          }
-        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as SearchHits")
-      }
-  }
-
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SearchHits =>
-    val formats = format - this // remove current serializer from formats to avoid stackoverflow
-    val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
-
-    value.additionalProperties match {
-      case Some(fields) => baseObj merge JObject(fields)
-      case None         => baseObj
-    }
-  }
-}

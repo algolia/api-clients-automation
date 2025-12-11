@@ -38,7 +38,7 @@ public class ResultsInjectedItemInfoResponse {
     return this;
   }
 
-  /** Get key */
+  /** The key of the injected group. */
   @javax.annotation.Nonnull
   public String getKey() {
     return key;

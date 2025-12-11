@@ -17,7 +17,7 @@ final class CompositionRunSearchResponse
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
-  /// Unique record identifier.
+  /// The objectID of the composition which generated this result set.
   @JsonKey(name: r'objectID')
   final String objectID;
 

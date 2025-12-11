@@ -17,6 +17,7 @@ final class ResultsInjectedItemInfoResponse
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
+  /// The key of the injected group.
   @JsonKey(name: r'key')
   final String key;
 

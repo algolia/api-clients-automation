@@ -92,8 +92,11 @@ public class SearchResultsItem<T> {
   @JsonProperty("_automaticInsights")
   private Boolean automaticInsights;
 
-  @JsonProperty("page")
-  private Integer page;
+  @JsonProperty("hits")
+  private List<T> hits = new ArrayList<>();
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
 
   @JsonProperty("nbHits")
   private Integer nbHits;
@@ -101,17 +104,14 @@ public class SearchResultsItem<T> {
   @JsonProperty("nbPages")
   private Integer nbPages;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
-  @JsonProperty("hits")
-  private List<T> hits = new ArrayList<>();
-
-  @JsonProperty("query")
-  private String query;
+  @JsonProperty("page")
+  private Integer page;
 
   @JsonProperty("params")
   private String params;
+
+  @JsonProperty("query")
+  private String query;
 
   @JsonProperty("compositions")
   private Map<String, ResultsCompositionInfoResponse> compositions = new HashMap<>();
@@ -461,15 +461,34 @@ public class SearchResultsItem<T> {
     return automaticInsights;
   }
 
-  public SearchResultsItem<T> setPage(Integer page) {
-    this.page = page;
+  public SearchResultsItem<T> setHits(List<T> hits) {
+    this.hits = hits;
     return this;
   }
 
-  /** The current page of the results. */
+  public SearchResultsItem<T> addHits(T hitsItem) {
+    this.hits.add(hitsItem);
+    return this;
+  }
+
+  /**
+   * Search results (hits). Hits are records from your index that match the search criteria,
+   * augmented with additional attributes, such as, for highlighting.
+   */
   @javax.annotation.Nonnull
-  public Integer getPage() {
-    return page;
+  public List<T> getHits() {
+    return hits;
+  }
+
+  public SearchResultsItem<T> setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits returned per page. */
+  @javax.annotation.Nonnull
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
   }
 
   public SearchResultsItem<T> setNbHits(Integer nbHits) {
@@ -494,45 +513,15 @@ public class SearchResultsItem<T> {
     return nbPages;
   }
 
-  public SearchResultsItem<T> setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
+  public SearchResultsItem<T> setPage(Integer page) {
+    this.page = page;
     return this;
   }
 
-  /** Number of hits returned per page. */
+  /** The current page of the results. */
   @javax.annotation.Nonnull
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
-  public SearchResultsItem<T> setHits(List<T> hits) {
-    this.hits = hits;
-    return this;
-  }
-
-  public SearchResultsItem<T> addHits(T hitsItem) {
-    this.hits.add(hitsItem);
-    return this;
-  }
-
-  /**
-   * Search results (hits). Hits are records from your index that match the search criteria,
-   * augmented with additional attributes, such as, for highlighting.
-   */
-  @javax.annotation.Nonnull
-  public List<T> getHits() {
-    return hits;
-  }
-
-  public SearchResultsItem<T> setQuery(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /** The search query string. */
-  @javax.annotation.Nonnull
-  public String getQuery() {
-    return query;
+  public Integer getPage() {
+    return page;
   }
 
   public SearchResultsItem<T> setParams(String params) {
@@ -544,6 +533,17 @@ public class SearchResultsItem<T> {
   @javax.annotation.Nonnull
   public String getParams() {
     return params;
+  }
+
+  public SearchResultsItem<T> setQuery(String query) {
+    this.query = query;
+    return this;
+  }
+
+  /** The search query string. */
+  @javax.annotation.Nonnull
+  public String getQuery() {
+    return query;
   }
 
   public SearchResultsItem<T> setCompositions(Map<String, ResultsCompositionInfoResponse> compositions) {
@@ -598,13 +598,13 @@ public class SearchResultsItem<T> {
       Objects.equals(this.userData, searchResultsItem.userData) &&
       Objects.equals(this.queryID, searchResultsItem.queryID) &&
       Objects.equals(this.automaticInsights, searchResultsItem.automaticInsights) &&
-      Objects.equals(this.page, searchResultsItem.page) &&
+      Objects.equals(this.hits, searchResultsItem.hits) &&
+      Objects.equals(this.hitsPerPage, searchResultsItem.hitsPerPage) &&
       Objects.equals(this.nbHits, searchResultsItem.nbHits) &&
       Objects.equals(this.nbPages, searchResultsItem.nbPages) &&
-      Objects.equals(this.hitsPerPage, searchResultsItem.hitsPerPage) &&
-      Objects.equals(this.hits, searchResultsItem.hits) &&
-      Objects.equals(this.query, searchResultsItem.query) &&
+      Objects.equals(this.page, searchResultsItem.page) &&
       Objects.equals(this.params, searchResultsItem.params) &&
+      Objects.equals(this.query, searchResultsItem.query) &&
       Objects.equals(this.compositions, searchResultsItem.compositions)
     );
   }
@@ -638,13 +638,13 @@ public class SearchResultsItem<T> {
       userData,
       queryID,
       automaticInsights,
-      page,
+      hits,
+      hitsPerPage,
       nbHits,
       nbPages,
-      hitsPerPage,
-      hits,
-      query,
+      page,
       params,
+      query,
       compositions
     );
   }
@@ -679,13 +679,13 @@ public class SearchResultsItem<T> {
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("    automaticInsights: ").append(toIndentedString(automaticInsights)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
     sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
-    sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    compositions: ").append(toIndentedString(compositions)).append("\n");
     sb.append("}");
     return sb.toString();

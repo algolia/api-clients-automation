@@ -69,18 +69,18 @@ SearchResultsItem _$SearchResultsItemFromJson(Map<String, dynamic> json) =>
           queryID: $checkedConvert('queryID', (v) => v as String?),
           automaticInsights:
               $checkedConvert('_automaticInsights', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => (v as num).toInt()),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
           hits: $checkedConvert(
               'hits',
               (v) => (v as List<dynamic>)
                   .map((e) => Hit.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          query: $checkedConvert('query', (v) => v as String),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
+          page: $checkedConvert('page', (v) => (v as num).toInt()),
           params: $checkedConvert('params', (v) => v as String),
+          query: $checkedConvert('query', (v) => v as String),
           compositions: $checkedConvert(
               'compositions',
               (v) => (v as Map<String, dynamic>).map(
@@ -134,13 +134,13 @@ Map<String, dynamic> _$SearchResultsItemToJson(SearchResultsItem instance) {
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
   writeNotNull('_automaticInsights', instance.automaticInsights);
-  val['page'] = instance.page;
+  val['hits'] = instance.hits.map((e) => e.toJson()).toList();
+  val['hitsPerPage'] = instance.hitsPerPage;
   val['nbHits'] = instance.nbHits;
   val['nbPages'] = instance.nbPages;
-  val['hitsPerPage'] = instance.hitsPerPage;
-  val['hits'] = instance.hits.map((e) => e.toJson()).toList();
-  val['query'] = instance.query;
+  val['page'] = instance.page;
   val['params'] = instance.params;
+  val['query'] = instance.query;
   val['compositions'] =
       instance.compositions.map((k, e) => MapEntry(k, e.toJson()));
   return val;

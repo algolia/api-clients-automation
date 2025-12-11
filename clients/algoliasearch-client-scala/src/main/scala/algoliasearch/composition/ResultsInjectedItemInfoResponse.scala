@@ -31,6 +31,9 @@ package algoliasearch.composition
 import org.json4s._
 
 /** ResultsInjectedItemInfoResponse
+  *
+  * @param key
+  *   The key of the injected group.
   */
 case class ResultsInjectedItemInfoResponse(
     key: String,

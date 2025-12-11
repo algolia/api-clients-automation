@@ -69,15 +69,12 @@ object JsonSupport {
 
   private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new BaseSearchResponseSerializer() :+
-    new CompositionBaseSearchResponseSerializer() :+
     new CompositionRunSearchResponseSerializer() :+
     new CompositionsSearchResponseSerializer() :+
     new ErrorBaseSerializer() :+
     new HitSerializer() :+
     new HitMetadataSerializer() :+
-    new ResultsCompositionsResponseSerializer() :+
     new ResultsInjectedItemInfoResponseSerializer() :+
-    new SearchHitsSerializer() :+
     new SearchResultsItemSerializer()
 
   implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers

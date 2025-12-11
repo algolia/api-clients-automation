@@ -1997,33 +1997,43 @@
           }
         }
       },
-      "objectID": {
-        "type": "string",
-        "description": "Unique record identifier.",
-        "example": "test-record-123"
+      "compositionRunAppliedRules": {
+        "type": "object",
+        "properties": {
+          "objectID": {
+            "type": "string",
+            "description": "The objectID of the applied composition rule on this query."
+          }
+        },
+        "example": {
+          "objectID": "cr-1765458959657"
+        },
+        "required": [
+          "objectID"
+        ]
       },
       "compositionRunSearchResponse": {
         "type": "object",
         "additionalProperties": true,
         "properties": {
           "objectID": {
-            "$ref": "#/components/schemas/objectID"
+            "type": "string",
+            "description": "The objectID of the composition which generated this result set."
           },
           "appliedRules": {
             "type": "array",
             "items": {
-              "title": "compositionRunAppliedRules",
-              "type": "object",
-              "properties": {
-                "objectID": {
-                  "$ref": "#/components/schemas/objectID"
-                }
-              },
-              "required": [
-                "objectID"
-              ]
+              "$ref": "#/components/schemas/compositionRunAppliedRules"
             }
           }
+        },
+        "example": {
+          "objectID": "comp1765458818347",
+          "appliedRules": [
+            {
+              "objectID": "cr-1765458959657"
+            }
+          ]
         },
         "required": [
           "objectID"
@@ -2046,10 +2056,6 @@
       },
       "compositionBaseSearchResponse": {
         "type": "object",
-        "additionalProperties": true,
-        "required": [
-          "processingTimeMS"
-        ],
         "properties": {
           "compositions": {
             "$ref": "#/components/schemas/compositionsSearchResponse"
@@ -2479,37 +2485,10 @@
           }
         }
       },
-      "SearchPagination": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "page": {
-            "type": "integer",
-            "description": "The current page of the results.",
-            "example": 0
-          },
-          "nbHits": {
-            "type": "integer",
-            "description": "Number of results (hits).",
-            "example": 20
-          },
-          "nbPages": {
-            "type": "integer",
-            "description": "Number of pages of results.",
-            "example": 1
-          },
-          "hitsPerPage": {
-            "type": "integer",
-            "description": "Number of hits returned per page.",
-            "example": 20
-          }
-        },
-        "required": [
-          "page",
-          "nbHits",
-          "nbPages",
-          "hitsPerPage"
-        ]
+      "objectID": {
+        "type": "string",
+        "description": "Unique record identifier.",
+        "example": "test-record-123"
       },
       "highlightedValue": {
         "type": "string",
@@ -2841,32 +2820,92 @@
           }
         }
       },
-      "searchHits": {
+      "hits": {
+        "type": "array",
+        "description": "Search results (hits).\n\nHits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.\n",
+        "items": {
+          "$ref": "#/components/schemas/hit"
+        }
+      },
+      "SingleResultSet_hitsPerPage": {
+        "type": "integer",
+        "description": "Number of hits returned per page.",
+        "example": 20
+      },
+      "nbHits": {
+        "type": "integer",
+        "description": "Number of results (hits).",
+        "example": 20
+      },
+      "nbPages": {
+        "type": "integer",
+        "description": "Number of pages of results.",
+        "example": 1
+      },
+      "SingleResultSet_page": {
+        "type": "integer",
+        "description": "The current page of the results.",
+        "example": 0
+      },
+      "SingleResultSet_params": {
+        "type": "string",
+        "description": "URL-encoded string of all search parameters.",
+        "example": "query=a&hitsPerPage=20"
+      },
+      "SingleResultSet_query": {
+        "type": "string",
+        "description": "The search query string.",
+        "example": "shoes"
+      },
+      "SearchFields": {
         "type": "object",
-        "additionalProperties": true,
+        "additionalProperties": false,
         "properties": {
           "hits": {
-            "type": "array",
-            "description": "Search results (hits).\n\nHits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.\n",
-            "items": {
-              "$ref": "#/components/schemas/hit"
-            }
+            "$ref": "#/components/schemas/hits"
           },
-          "query": {
-            "type": "string",
-            "description": "The search query string.",
-            "example": "shoes"
+          "hitsPerPage": {
+            "$ref": "#/components/schemas/SingleResultSet_hitsPerPage"
+          },
+          "nbHits": {
+            "$ref": "#/components/schemas/nbHits"
+          },
+          "nbPages": {
+            "$ref": "#/components/schemas/nbPages"
+          },
+          "page": {
+            "$ref": "#/components/schemas/SingleResultSet_page"
           },
           "params": {
-            "type": "string",
-            "description": "URL-encoded string of all search parameters.",
-            "example": "query=a&hitsPerPage=20"
+            "$ref": "#/components/schemas/SingleResultSet_params"
+          },
+          "query": {
+            "$ref": "#/components/schemas/SingleResultSet_query"
           }
         },
         "required": [
+          "page",
+          "nbHits",
+          "nbPages",
+          "hitsPerPage",
           "hits",
           "query",
           "params"
+        ]
+      },
+      "resultsInjectedItemAppliedRulesInfoResponse": {
+        "type": "object",
+        "properties": {
+          "objectID": {
+            "type": "string",
+            "description": "The objectID of the applied index level rule on this injected group."
+          }
+        },
+        "example": {
+          "objectID": "qr-1765458959657"
+        },
+        "required": [
+          "objectID"
         ]
       },
       "resultsInjectedItemInfoResponse": {
@@ -2874,21 +2913,14 @@
         "additionalProperties": true,
         "properties": {
           "key": {
-            "type": "string"
+            "type": "string",
+            "description": "The key of the injected group.",
+            "example": "men-sponsored-group"
           },
           "appliedRules": {
             "type": "array",
             "items": {
-              "title": "resultsInjectedItemAppliedRulesInfoResponse",
-              "type": "object",
-              "properties": {
-                "objectID": {
-                  "$ref": "#/components/schemas/objectID"
-                }
-              },
-              "required": [
-                "objectID"
-              ]
+              "$ref": "#/components/schemas/resultsInjectedItemAppliedRulesInfoResponse"
             }
           }
         },
@@ -2896,28 +2928,27 @@
           "key"
         ]
       },
+      "resultsCompositionInfoResponse": {
+        "type": "object",
+        "x-additionalPropertiesName": "composition-id",
+        "properties": {
+          "injectedItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/resultsInjectedItemInfoResponse"
+            }
+          }
+        },
+        "required": [
+          "injectedItems"
+        ]
+      },
       "resultsCompositionsResponse": {
         "type": "object",
-        "additionalProperties": true,
         "properties": {
           "compositions": {
-            "title": "resultsCompositionsInfoResponse",
-            "type": "object",
             "additionalProperties": {
-              "title": "resultsCompositionInfoResponse",
-              "x-additionalPropertiesName": "composition-id",
-              "type": "object",
-              "properties": {
-                "injectedItems": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/resultsInjectedItemInfoResponse"
-                  }
-                }
-              },
-              "required": [
-                "injectedItems"
-              ]
+              "$ref": "#/components/schemas/resultsCompositionInfoResponse"
             }
           }
         },
@@ -2931,10 +2962,7 @@
             "$ref": "#/components/schemas/baseSearchResponse"
           },
           {
-            "$ref": "#/components/schemas/SearchPagination"
-          },
-          {
-            "$ref": "#/components/schemas/searchHits"
+            "$ref": "#/components/schemas/SearchFields"
           },
           {
             "$ref": "#/components/schemas/resultsCompositionsResponse"

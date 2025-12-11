@@ -12,7 +12,7 @@ final class ResultsInjectedItemAppliedRulesInfoResponse {
     required this.objectID,
   });
 
-  /// Unique record identifier.
+  /// The objectID of the applied index level rule on this injected group.
   @JsonKey(name: r'objectID')
   final String objectID;
 

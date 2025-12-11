@@ -26,10 +26,6 @@ ResultsCompositionsResponse _$ResultsCompositionsResponseFromJson(
       },
     );
 
-const _$ResultsCompositionsResponseFieldMap = <String, String>{
-  'compositions': 'compositions',
-};
-
 Map<String, dynamic> _$ResultsCompositionsResponseToJson(
         ResultsCompositionsResponse instance) =>
     <String, dynamic>{

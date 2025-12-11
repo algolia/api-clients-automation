@@ -18,7 +18,7 @@ public class CompositionRunAppliedRules {
     return this;
   }
 
-  /** Unique record identifier. */
+  /** The objectID of the applied composition rule on this query. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

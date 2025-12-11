@@ -12,7 +12,7 @@ final class CompositionRunAppliedRules {
     required this.objectID,
   });
 
-  /// Unique record identifier.
+  /// The objectID of the applied composition rule on this query.
   @JsonKey(name: r'objectID')
   final String objectID;
 
