@@ -1,81 +1,134 @@
+# Schema for a single result set in a composition run response.
+# {
+#   "results": [
+#     {
+#       "hits": [
+#         { ... },
+#         { ... }
+#       ],
+#       "compositions": {
+#         "comp1765458818347": {
+#           "injectedItems": [
+#             {
+#               "key": "men-sponsored-group",
+#               "appliedRules": [
+#                 {
+#                   "objectID": "qr-1765459001234"
+#                 }
+#               ],
+#               "aiReRanking": {                               # Not described in the client
+#                 "reRankingActivated": true,                  # at the moment
+#                 "persoImpactInsideActivationWindow": false
+#               }
+#             }
+#           ]
+#         }
+#       }
+#     },
+#    ...
+#   ],
+#   ...
+# }
+
 searchResultsItem:
   allOf:
     - $ref: '../../../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
-    - $ref: '#/SearchPagination'
-    - $ref: '#/searchHits'
+    - $ref: '#/SearchFields'
     - $ref: '#/resultsCompositionsResponse'
 
-SearchPagination:
+SearchFields:
   type: object
   additionalProperties: false
   properties:
-    page:
-      type: integer
-      description: The current page of the results.
-      example: 0
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
+    hits:
+      $ref: '#/hits'
     hitsPerPage:
-      type: integer
-      description: Number of hits returned per page.
-      example: 20
+      $ref: '#/hitsPerPage'
+    nbHits:
+      $ref: '#/nbHits'
+    nbPages:
+      $ref: '#/nbPages'
+    page:
+      $ref: '#/page'
+    params:
+      $ref: '#/params'
+    query:
+      $ref: '#/query'
   required:
     - page
     - nbHits
     - nbPages
     - hitsPerPage
-
-searchHits:
-  type: object
-  additionalProperties: true
-  properties:
-    hits:
-      type: array
-      description: |
-        Search results (hits).
-
-        Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
-      items:
-        $ref: 'Hit.yml#/hit'
-    query:
-      type: string
-      description: The search query string.
-      example: shoes
-    params:
-      type: string
-      description: URL-encoded string of all search parameters.
-      example: query=a&hitsPerPage=20
-  required:
     - hits
     - query
     - params
 
+# ######################
+# # Search Properties ##
+# ######################
+
+page:
+  type: integer
+  description: The current page of the results.
+  example: 0
+
+nbHits:
+  type: integer
+  description: Number of results (hits).
+  example: 20
+
+nbPages:
+  type: integer
+  description: Number of pages of results.
+  example: 1
+
+hitsPerPage:
+  type: integer
+  description: Number of hits returned per page.
+  example: 20
+
+hits:
+  type: array
+  description: |
+    Search results (hits).
+
+    Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+  items:
+    $ref: 'Hit.yml#/hit'
+  
+query:
+  type: string
+  description: The search query string.
+  example: shoes
+
+params:
+  type: string
+  description: URL-encoded string of all search parameters.
+  example: query=a&hitsPerPage=20
+
+# ############################
+# # Composition Properties ##
+# ###########################
+
 resultsCompositionsResponse:
   type: object
-  additionalProperties: true
   properties:
     compositions:
-      title: resultsCompositionsInfoResponse
-      type: object
       additionalProperties:
-        title: resultsCompositionInfoResponse
-        x-additionalPropertiesName: composition-id
-        type: object
-        properties:
-          injectedItems:
-            type: array
-            items:
-              $ref: '#/resultsInjectedItemInfoResponse'
-        required:
-          - injectedItems
+        $ref: '#/resultsCompositionInfoResponse'        
   required:
     - compositions
+
+resultsCompositionInfoResponse:
+  type: object
+  x-additionalPropertiesName: composition-id
+  properties:
+    injectedItems:
+      type: array
+      items:
+        $ref: '#/resultsInjectedItemInfoResponse'
+  required:
+    - injectedItems
 
 resultsInjectedItemInfoResponse:
   type: object
@@ -83,15 +136,22 @@ resultsInjectedItemInfoResponse:
   properties:
     key:
       type: string
+      description: The key of the injected group.
+      example: 'men-sponsored-group'
     appliedRules:
       type: array
       items:
-        title: resultsInjectedItemAppliedRulesInfoResponse
-        type: object
-        properties:
-          objectID:
-            $ref: '../../../../../common/parameters.yml#/objectID'
-        required:
-          - objectID
+        $ref: '#/resultsInjectedItemAppliedRulesInfoResponse'
   required:
     - key
+
+resultsInjectedItemAppliedRulesInfoResponse:
+  type: object
+  properties:
+    objectID:
+      type: string
+      description: The objectID of the applied index level rule on this injected group.
+  example:
+    objectID: 'qr-1765458959657'
+  required:
+    - objectID
