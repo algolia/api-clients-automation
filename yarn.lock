@@ -37,7 +37,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/exec@npm:1.1.1, @actions/exec@npm:^1.1.1":
+"@actions/exec@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@actions/exec@npm:2.0.0"
+  dependencies:
+    "@actions/io": "npm:^2.0.0"
+  checksum: 10/61f84e3920eaa898edff3a4de97d353bb8f4379ced229128d7c945cd18c02e0d8d33a22629cec7bb7797a5f8879952ee9d291921ffd02bc849e6a7d4e2e3a52a
+  languageName: node
+  linkType: hard
+
+"@actions/exec@npm:^1.1.1":
   version: 1.1.1
   resolution: "@actions/exec@npm:1.1.1"
   dependencies:
@@ -71,7 +80,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/io@npm:2.0.0":
+"@actions/io@npm:2.0.0, @actions/io@npm:^2.0.0":
   version: 2.0.0
   resolution: "@actions/io@npm:2.0.0"
   checksum: 10/4f8f98b564fe8974d47f6d9b06721d5bd3034f181be20188554d2ccad530330c218891c4c6f7c3da69883d8e53da513ce335617c0673461d4e064abcc9a6eebb
@@ -8692,7 +8701,7 @@ __metadata:
   dependencies:
     "@actions/artifact": "npm:4.0.0"
     "@actions/core": "npm:1.11.1"
-    "@actions/exec": "npm:1.1.1"
+    "@actions/exec": "npm:2.0.0"
     "@actions/io": "npm:2.0.0"
     "@har-sdk/oas": "npm:2.12.2"
     "@octokit/rest": "npm:22.0.1"
