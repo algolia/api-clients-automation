@@ -137,7 +137,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
-    "@redocly/cli": "npm:2.12.3"
+    "@redocly/cli": "npm:2.12.6"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
@@ -2427,16 +2427,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.12.3":
-  version: 2.12.3
-  resolution: "@redocly/cli@npm:2.12.3"
+"@redocly/cli@npm:2.12.6":
+  version: 2.12.6
+  resolution: "@redocly/cli@npm:2.12.6"
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.202.0"
     "@opentelemetry/resources": "npm:2.0.1"
     "@opentelemetry/sdk-trace-node": "npm:2.0.1"
     "@opentelemetry/semantic-conventions": "npm:1.34.0"
-    "@redocly/openapi-core": "npm:2.12.3"
-    "@redocly/respect-core": "npm:2.12.3"
+    "@redocly/openapi-core": "npm:2.12.6"
+    "@redocly/respect-core": "npm:2.12.6"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -2448,8 +2448,8 @@ __metadata:
     https-proxy-agent: "npm:^7.0.5"
     mobx: "npm:^6.0.4"
     pluralize: "npm:^8.0.0"
-    react: "npm:^17.0.0 || ^18.2.0 || ^19.0.0"
-    react-dom: "npm:^17.0.0 || ^18.2.0 || ^19.0.0"
+    react: "npm:^17.0.0 || ^18.2.0 || ^19.2.1"
+    react-dom: "npm:^17.0.0 || ^18.2.0 || ^19.2.1"
     redoc: "npm:2.5.1"
     semver: "npm:^7.5.2"
     set-cookie-parser: "npm:^2.3.5"
@@ -2461,7 +2461,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/031f683e7d9f878e007f1f005977f5647396ad02c102e1499e5f6c2e1fb8011cf9fad89a0ab2397b7116331ac84514057e2e5ae24abc618bc8a3cbeb034215c4
+  checksum: 10/7da94e336859d8d4c0b7813141f16ee92eeb9489c2620a5881bb2e4998756006d634fce558eab0178c09408145a0dc96c5ef1777f950891925cd138ba9e25728
   languageName: node
   linkType: hard
 
@@ -2472,21 +2472,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/config@npm:^0.40.0":
-  version: 0.40.0
-  resolution: "@redocly/config@npm:0.40.0"
+"@redocly/config@npm:^0.41.0":
+  version: 0.41.0
+  resolution: "@redocly/config@npm:0.41.0"
   dependencies:
     json-schema-to-ts: "npm:2.7.2"
-  checksum: 10/ee9ec429b12becca7fa8726e8ca6619da71335329d6dc6b650d334ccb33c76cdb9a830118bc431376083796902624d97b369fc79735e54ec1306574d5ae06833
+  checksum: 10/ee0a9a551aad5fdfd8a956f538038841f581ec09d53d730ed8b0687bd5549ee5968e0e8e56f0490552d873f49049cb01579659b0950ee1d8b0709dcfa95cb344
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:2.12.3":
-  version: 2.12.3
-  resolution: "@redocly/openapi-core@npm:2.12.3"
+"@redocly/openapi-core@npm:2.12.6":
+  version: 2.12.6
+  resolution: "@redocly/openapi-core@npm:2.12.6"
   dependencies:
     "@redocly/ajv": "npm:^8.17.1"
-    "@redocly/config": "npm:^0.40.0"
+    "@redocly/config": "npm:^0.41.0"
     ajv-formats: "npm:^3.0.1"
     colorette: "npm:^1.2.0"
     js-levenshtein: "npm:^1.1.6"
@@ -2494,7 +2494,7 @@ __metadata:
     picomatch: "npm:^4.0.3"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/30f2860f186755dccd77237a1eb0897503c17f5babb034b92fb7050458eb9d47367d4faf70a8803568ec9495809e980d039c42f523bc504bd6fdce37ad7da197
+  checksum: 10/bf132cb567d73c293a435a0db256aec9b99c91713302137e704f700dfab778c32df11b94c97753f562ae3275e9c5c13bd8200409120603ec23d53b073ec6cde4
   languageName: node
   linkType: hard
 
@@ -2515,21 +2515,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/respect-core@npm:2.12.3":
-  version: 2.12.3
-  resolution: "@redocly/respect-core@npm:2.12.3"
+"@redocly/respect-core@npm:2.12.6":
+  version: 2.12.6
+  resolution: "@redocly/respect-core@npm:2.12.6"
   dependencies:
     "@faker-js/faker": "npm:^7.6.0"
     "@noble/hashes": "npm:^1.8.0"
     "@redocly/ajv": "npm:8.17.1"
-    "@redocly/openapi-core": "npm:2.12.3"
+    "@redocly/openapi-core": "npm:2.12.6"
     better-ajv-errors: "npm:^1.2.0"
     colorette: "npm:^2.0.20"
     json-pointer: "npm:^0.6.2"
     jsonpath-rfc9535: "npm:1.3.0"
     openapi-sampler: "npm:^1.6.1"
     outdent: "npm:^0.8.0"
-  checksum: 10/1a376804a6c1eadd2efeb79f302a229fa46aa3b10ebe108af06b3468e23f6b73a148b2beb3d2fc8e150275867480c252e5fa60c6fced61e98df0aca004a40afb
+  checksum: 10/0bf604eef63c8b9a86a3ce095a18ab80417eb47d56b78e5f9e61319dc9ca0c071c9bf3e8cd2f623e858962790dba326a3a108c26161c14ded04b8d3f7e1b7dea
   languageName: node
   linkType: hard
 
@@ -8244,7 +8244,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.0 || ^18.2.0 || ^19.0.0, react-dom@npm:^19.0.0":
+"react-dom@npm:^17.0.0 || ^18.2.0 || ^19.2.1":
+  version: 19.2.3
+  resolution: "react-dom@npm:19.2.3"
+  dependencies:
+    scheduler: "npm:^0.27.0"
+  peerDependencies:
+    react: ^19.2.3
+  checksum: 10/5780f6d4c8e8ece09f82c5500ba2d55e01c30b5273f9281734d7d3b65013cd1fa52ec4e4436e5248c0a9e5bc340836044051168bbad8d7eac4d33ee6c2a867a1
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^19.0.0":
   version: 19.2.0
   resolution: "react-dom@npm:19.2.0"
   dependencies:
@@ -8315,7 +8326,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.0 || ^18.2.0 || ^19.0.0, react@npm:^19.0.0":
+"react@npm:^17.0.0 || ^18.2.0 || ^19.2.1":
+  version: 19.2.3
+  resolution: "react@npm:19.2.3"
+  checksum: 10/d16b7f35c0d35a56f63d9d1693819762e4abc479c57dd6310298920bed3820fcec7e17a99d44983416d8f5049143ea45b8005d3ab8324bae8973224400502b08
+  languageName: node
+  linkType: hard
+
+"react@npm:^19.0.0":
   version: 19.2.0
   resolution: "react@npm:19.2.0"
   checksum: 10/e13bcdb8e994c3cfa922743cb75ca8deb60531bf02f584d2d8dab940a8132ce8a2e6ef16f8ed7f372b4072e7a7eeff589b2812dabbedfa73e6e46201dac8a9d0
