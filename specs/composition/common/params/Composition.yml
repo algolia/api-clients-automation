@@ -67,7 +67,7 @@ externalInjectedItem:
     items:
       type: array
       items:
-        title: externalInjection
+        title: externalGroupKey
         type: object
         additionalProperties: false
         properties:
