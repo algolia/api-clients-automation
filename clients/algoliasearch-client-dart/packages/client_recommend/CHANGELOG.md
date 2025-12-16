@@ -1,3 +1,8 @@
+## [1.43.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.0...1.43.1)
+
+- [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [3296a5033](https://github.com/algolia/api-clients-automation/commit/3296a5033) chore(deps): dependencies 2025-11-24 ([#5653](https://github.com/algolia/api-clients-automation/pull/5653)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.43.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.42.0...1.43.0)
 
 - [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
