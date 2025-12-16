@@ -659,6 +659,46 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+  /1/crawlers/{id}/delete_runs:
+    post:
+      operationId: deleteCrawlRun
+      summary: Crawler run record deletion
+      description: >
+        The Crawler Logs file allows you to monitor and debug your crawler’s
+        activity by recording
+
+        detailed logs for each crawl run. This delete the existing crawler log
+        record, not the actual crawler.
+      tags:
+        - crawler
+      x-acl:
+        - settings
+      parameters:
+        - $ref: '#/components/parameters/CrawlerIdParameter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: crawlerLogIds
+              type: array
+              items:
+                - $ref: '#/components/schemas/CrawlerLogID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: deletedCrawlerLogIds
+                type: array
+                items:
+                  - $ref: '#/components/schemas/CrawlerLogID'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/NoRightsOnCrawler'
   /1/crawlers/{id}/config:
     patch:
       operationId: patchConfig
