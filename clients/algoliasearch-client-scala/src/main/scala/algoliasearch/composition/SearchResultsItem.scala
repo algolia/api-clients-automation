@@ -81,21 +81,21 @@ import org.json4s._
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
   * @param automaticInsights
   *   Whether automatic events collection is enabled for the application.
-  * @param page
-  *   The current page of the results.
+  * @param hits
+  *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
+  *   attributes, such as, for highlighting.
+  * @param hitsPerPage
+  *   Number of hits returned per page.
   * @param nbHits
   *   Number of results (hits).
   * @param nbPages
   *   Number of pages of results.
-  * @param hitsPerPage
-  *   Number of hits returned per page.
-  * @param hits
-  *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
-  *   attributes, such as, for highlighting.
-  * @param query
-  *   The search query string.
+  * @param page
+  *   The current page of the results.
   * @param params
   *   URL-encoded string of all search parameters.
+  * @param query
+  *   The search query string.
   */
 case class SearchResultsItem(
     abTestID: Option[Int] = scala.None,
@@ -124,13 +124,13 @@ case class SearchResultsItem(
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
     automaticInsights /* _automaticInsights */: Option[Boolean] = scala.None,
-    page: Int,
+    hits: Seq[Hit],
+    hitsPerPage: Int,
     nbHits: Int,
     nbPages: Int,
-    hitsPerPage: Int,
-    hits: Seq[Hit],
-    query: String,
+    page: Int,
     params: String,
+    query: String,
     compositions: Map[String, ResultsCompositionInfoResponse]
 )
 

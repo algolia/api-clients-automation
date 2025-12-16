@@ -31,7 +31,7 @@ package algoliasearch.composition
 /** CompositionRunAppliedRules
   *
   * @param objectID
-  *   Unique record identifier.
+  *   The objectID of the applied composition rule on this query.
   */
 case class CompositionRunAppliedRules(
     objectID: String

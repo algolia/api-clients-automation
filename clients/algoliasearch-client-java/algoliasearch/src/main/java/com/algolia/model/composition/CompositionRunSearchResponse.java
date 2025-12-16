@@ -38,7 +38,7 @@ public class CompositionRunSearchResponse {
     return this;
   }
 
-  /** Unique record identifier. */
+  /** The objectID of the composition which generated this result set. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
