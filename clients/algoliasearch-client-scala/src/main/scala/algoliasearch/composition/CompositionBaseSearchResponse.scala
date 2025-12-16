@@ -28,48 +28,8 @@
   */
 package algoliasearch.composition
 
-import org.json4s._
-
 /** CompositionBaseSearchResponse
   */
 case class CompositionBaseSearchResponse(
-    compositions: Option[CompositionsSearchResponse] = scala.None,
-    additionalProperties: Option[List[JField]] = None
+    compositions: Option[CompositionsSearchResponse] = scala.None
 )
-
-class CompositionBaseSearchResponseSerializer extends Serializer[CompositionBaseSearchResponse] {
-
-  override def deserialize(implicit
-      format: Formats
-  ): PartialFunction[(TypeInfo, JValue), CompositionBaseSearchResponse] = {
-    case (TypeInfo(clazz, _), json) if clazz == classOf[CompositionBaseSearchResponse] =>
-      json match {
-        case jobject: JObject =>
-          val formats = format - this
-          val mf = manifest[CompositionBaseSearchResponse]
-          val obj = Extraction.extract[CompositionBaseSearchResponse](jobject)(formats, mf)
-
-          val fields = Set("compositions")
-          val additionalProperties = jobject removeField {
-            case (name, _) if fields.contains(name) => true
-            case _                                  => false
-          }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
-            case _                   => obj
-          }
-        case _ => throw new IllegalArgumentException(s"Can't deserialize $json as CompositionBaseSearchResponse")
-      }
-  }
-
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
-    case value: CompositionBaseSearchResponse =>
-      val formats = format - this // remove current serializer from formats to avoid stackoverflow
-      val baseObj = Extraction.decompose(value.copy(additionalProperties = None))(formats)
-
-      value.additionalProperties match {
-        case Some(fields) => baseObj merge JObject(fields)
-        case None         => baseObj
-      }
-  }
-}

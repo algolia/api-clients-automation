@@ -31,7 +31,7 @@ package algoliasearch.composition
 /** ResultsInjectedItemAppliedRulesInfoResponse
   *
   * @param objectID
-  *   Unique record identifier.
+  *   The objectID of the applied index level rule on this injected group.
   */
 case class ResultsInjectedItemAppliedRulesInfoResponse(
     objectID: String

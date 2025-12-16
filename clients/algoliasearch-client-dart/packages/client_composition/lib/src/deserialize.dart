@@ -78,12 +78,11 @@ import 'package:algolia_client_composition/src/model/rules_multiple_batch_respon
 import 'package:algolia_client_composition/src/model/search.dart';
 import 'package:algolia_client_composition/src/model/search_composition_rules_params.dart';
 import 'package:algolia_client_composition/src/model/search_composition_rules_response.dart';
+import 'package:algolia_client_composition/src/model/search_fields.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_params.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_request.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_response.dart';
 import 'package:algolia_client_composition/src/model/search_for_facet_values_results.dart';
-import 'package:algolia_client_composition/src/model/search_hits.dart';
-import 'package:algolia_client_composition/src/model/search_pagination.dart';
 import 'package:algolia_client_composition/src/model/search_response.dart';
 import 'package:algolia_client_composition/src/model/search_results.dart';
 import 'package:algolia_client_composition/src/model/search_results_item.dart';
@@ -322,6 +321,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchCompositionRulesResponse':
       return SearchCompositionRulesResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'SearchFields':
+      return SearchFields.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchForFacetValuesParams':
       return SearchForFacetValuesParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -333,11 +334,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'SearchForFacetValuesResults':
       return SearchForFacetValuesResults.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'SearchHits':
-      return SearchHits.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'SearchPagination':
-      return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchResponse':
       return SearchResponse.fromJson(value as Map<String, dynamic>)
