@@ -1,0 +1,36 @@
+post:
+  operationId: deleteCrawlRun
+  summary: Crawler run record deletion
+  description: |
+    The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording
+    detailed logs for each crawl run. This delete the existing crawler log record, not the actual crawler.
+  tags:
+    - crawlers
+  x-acl:
+    - settings
+  parameters:
+    - $ref: '../common/parameters.yml#/CrawlerIdParameter'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: crawlerLogIds
+          type: array
+          items:
+            - $ref: '../common/parameters.yml#/CrawlerLogID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: deletedCrawlerLogIds
+            type: array
+            items:
+              - $ref: '../common/parameters.yml#/CrawlerLogID'
+    '400':
+      $ref: '../../common/responses/InvalidRequest.yml'
+    '401':
+      $ref: '../common/schemas/responses.yml#/MissingAuthorization'
+    '403':
+      $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
