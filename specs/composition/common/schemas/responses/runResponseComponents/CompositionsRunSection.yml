@@ -1,0 +1,59 @@
+# Schema for the compositions section in a composition run response.
+# {
+#   ...
+#   "compositions": {
+#     "run": [
+#       {
+#         "objectID": "comp1765458818347",
+#         "appliedRules": [
+#           {
+#             "objectID": "cr-1765458959657"
+#           }
+#         ]
+#       }
+#     ]
+#   }
+# }
+
+compositionBaseSearchResponse:
+  type: object
+  properties:
+    compositions:
+      $ref: '#/compositionsSearchResponse'
+
+compositionsSearchResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    run:
+      type: array
+      items:
+        $ref: '#/compositionRunSearchResponse'
+  required:
+    - run
+
+compositionRunSearchResponse:
+  type: object
+  additionalProperties: true
+  properties:
+    objectID:
+      type: string
+      description: The objectID of the composition which generated this result set.
+    appliedRules:
+      type: array
+      items:
+        $ref: '#/compositionRunAppliedRules'
+  example: {objectID: 'comp1765458818347', appliedRules: [{objectID: 'cr-1765458959657'}]}
+  required:
+    - objectID
+
+compositionRunAppliedRules:
+  type: object
+  properties:
+    objectID:
+      type: string
+      description: The objectID of the applied composition rule on this query.
+  example:
+    objectID: 'cr-1765458959657'
+  required:
+    - objectID

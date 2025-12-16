@@ -24,10 +24,6 @@ CompositionBaseSearchResponse _$CompositionBaseSearchResponseFromJson(
       },
     );
 
-const _$CompositionBaseSearchResponseFieldMap = <String, String>{
-  'compositions': 'compositions',
-};
-
 Map<String, dynamic> _$CompositionBaseSearchResponseToJson(
     CompositionBaseSearchResponse instance) {
   final val = <String, dynamic>{};

@@ -33,7 +33,7 @@ import org.json4s._
 /** CompositionRunSearchResponse
   *
   * @param objectID
-  *   Unique record identifier.
+  *   The objectID of the composition which generated this result set.
   */
 case class CompositionRunSearchResponse(
     objectID: String,

@@ -1,7 +1,7 @@
 searchResponse:
   additionalProperties: true
   allOf:
-    - $ref: '#/compositionBaseSearchResponse'
+    - $ref: './runResponseComponents/CompositionsRunSection.yml#/compositionBaseSearchResponse'
     - $ref: '#/searchResults'
 
 searchResults:
@@ -15,43 +15,3 @@ searchResults:
         $ref: './runResponseComponents/SingleResultSet.yml#/searchResultsItem'
   required:
     - results
-
-# copy of specs/common/schemas/SearchResponse.yml/#baseSearchResponse without appliedRules
-compositionBaseSearchResponse:
-  type: object
-  additionalProperties: true
-  required:
-    - processingTimeMS
-  properties:
-    compositions:
-      $ref: '#/compositionsSearchResponse'
-
-compositionsSearchResponse:
-  type: object
-  additionalProperties: true
-  properties:
-    run:
-      type: array
-      items:
-        $ref: '#/compositionRunSearchResponse'
-  required:
-    - run
-
-compositionRunSearchResponse:
-  type: object
-  additionalProperties: true
-  properties:
-    objectID:
-      $ref: '../../../../common/parameters.yml#/objectID'
-    appliedRules:
-      type: array
-      items:
-        title: compositionRunAppliedRules
-        type: object
-        properties:
-          objectID:
-            $ref: '../../../../common/parameters.yml#/objectID'
-        required:
-          - objectID
-  required:
-    - objectID

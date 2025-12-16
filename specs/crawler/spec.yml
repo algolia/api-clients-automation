@@ -106,6 +106,8 @@ paths:
     $ref: 'paths/crawlerLogs.yml'
   /1/crawlers/{id}/{logId}/download:
     $ref: 'paths/crawlerLogsFile.yml'
+  /1/crawlers/{id}/delete_runs:
+    $ref: 'paths/crawlerLogsDelete.yml'
   /1/crawlers/{id}/config:
     $ref: 'paths/crawlerConfig.yml'
   /1/crawlers/{id}/config/versions:
