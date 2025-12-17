@@ -21,6 +21,29 @@
     }
   },
   {
+    "testName": "nlu test",
+    "parameters": {
+      "acl": [
+        "search",
+        "addObject",
+        "nluReadProject"
+      ],
+      "description": "my new api key"
+    },
+    "request": {
+      "path": "/1/keys",
+      "method": "POST",
+      "body": {
+        "acl": [
+          "search",
+          "addObject",
+          "nluReadProject"
+        ],
+        "description": "my new api key"
+      }
+    }
+  },
+  {
     "testName": "all",
     "parameters": {
       "acl": [
