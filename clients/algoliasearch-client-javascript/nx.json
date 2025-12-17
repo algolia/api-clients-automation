@@ -1,13 +1,3 @@
 {
-  "targetDefaults": {
-    "build:many": {
-      "cache": true
-    },
-    "build:all": {
-      "cache": true
-    },
-    "build": {
-      "cache": true
-    }
-  }
+  "targetDefaults": {}
 }
