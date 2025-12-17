@@ -67,7 +67,8 @@
             "acl": [
               "search",
               "addObject",
-              "deleteObject"
+              "deleteObject",
+              "nluReadProject"
             ],
             "indexes": [
               "Movies",
@@ -90,7 +91,8 @@
             "acl": [
               "search",
               "addObject",
-              "deleteObject"
+              "deleteObject",
+              "nluReadProject"
             ],
             "indexes": [
               "Movies",
