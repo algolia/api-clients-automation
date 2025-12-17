@@ -84,7 +84,7 @@ runs:
 
     - name: Cache golangci-lint analysis
       if: ${{ inputs.language == 'go' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ~/.cache/golangci-lint
         key: golangci-lint-${{ inputs.version }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
@@ -98,14 +98,14 @@ runs:
 
     - name: Restore Yarn js-client
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
         key: yarn-cache-clients-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
 
     - name: Cache js-client node modules
       if: ${{ inputs.language == 'javascript' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: clients/algoliasearch-client-javascript/node_modules
         key: node-modules-clients-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
@@ -183,7 +183,7 @@ runs:
     - name: Cache the build folder
       id: cache-swift-build
       if: ${{ inputs.language == 'swift' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           clients/algoliasearch-client-swift/.build
@@ -206,7 +206,7 @@ runs:
     - name: Cache the build folder for swiftformat
       id: cache-swiftformat
       if: ${{ inputs.language == 'swift' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: swiftformat/.build
         key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}-${{ runner.os }}

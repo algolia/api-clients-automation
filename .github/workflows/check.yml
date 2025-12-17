@@ -164,7 +164,7 @@ jobs:
         run: yarn cli build specs -s
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: specs
@@ -248,13 +248,13 @@ jobs:
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Cache js tests node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tests/output/javascript/node_modules
           key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
@@ -291,7 +291,7 @@ jobs:
         run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
 
       - name: Store javascript clients
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: clients-javascript
@@ -414,7 +414,7 @@ jobs:
 
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}

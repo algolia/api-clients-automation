@@ -12,6 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@acemir/cssom@npm:^0.9.28":
+  version: 0.9.29
+  resolution: "@acemir/cssom@npm:0.9.29"
+  checksum: 10/5f1b1035f18a16dd2a64018121c6caf93b147f1b5860b0a1662ce7f24cdf9574443df8fd880f488149149ea1bb4dfaf504d067e6aeb353fc32eabf9c88e25499
+  languageName: node
+  linkType: hard
+
 "@algolia/abtesting@npm:1.12.0, @algolia/abtesting@workspace:packages/abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/abtesting@workspace:packages/abtesting"
@@ -21,8 +28,8 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.46.0"
     "@algolia/requester-node-http": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    publint: "npm:0.3.16"
     rollup: "npm:4.53.3"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -38,8 +45,8 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.46.0"
     "@algolia/requester-node-http": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    publint: "npm:0.3.16"
     rollup: "npm:4.53.3"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -85,9 +92,9 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    jsdom: "npm:27.2.0"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    jsdom: "npm:27.3.0"
+    publint: "npm:0.3.16"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -172,8 +179,8 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.46.0"
     "@algolia/requester-node-http": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    publint: "npm:0.3.16"
     rollup: "npm:4.53.3"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -203,9 +210,9 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    jsdom: "npm:27.2.0"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    jsdom: "npm:27.3.0"
+    publint: "npm:0.3.16"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
@@ -253,9 +260,9 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    jsdom: "npm:27.2.0"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    jsdom: "npm:27.3.0"
+    publint: "npm:0.3.16"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
     vitest: "npm:4.0.15"
@@ -269,10 +276,10 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
+    "@types/node": "npm:24.10.4"
     cross-fetch: "npm:4.1.0"
     nock: "npm:14.0.10"
-    publint: "npm:0.3.15"
+    publint: "npm:0.3.16"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
     vitest: "npm:4.0.15"
@@ -285,9 +292,9 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
+    "@types/node": "npm:24.10.4"
     nock: "npm:14.0.10"
-    publint: "npm:0.3.15"
+    publint: "npm:0.3.16"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
     vitest: "npm:4.0.15"
@@ -303,8 +310,8 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.46.0"
     "@algolia/requester-node-http": "npm:5.46.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:24.10.1"
-    publint: "npm:0.3.15"
+    "@types/node": "npm:24.10.4"
+    publint: "npm:0.3.16"
     tsup: "npm:8.5.1"
     typescript: "npm:5.9.3"
   languageName: unknown
@@ -363,7 +370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asamuzakjp/dom-selector@npm:^6.7.4":
+"@asamuzakjp/dom-selector@npm:^6.7.4, @asamuzakjp/dom-selector@npm:^6.7.6":
   version: 6.7.6
   resolution: "@asamuzakjp/dom-selector@npm:6.7.6"
   dependencies:
@@ -2728,6 +2735,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:24.10.4":
+  version: 24.10.4
+  resolution: "@types/node@npm:24.10.4"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10/a0b318b99a97103d151589a10e20d7d3ce93188a0e6466040eb2ce5fae33ca6785306737b4006560fe3152073cbb2b14747b854fa303296275c22afc8a37da2a
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -2931,7 +2947,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
-    "@types/node": "npm:24.10.1"
+    "@types/node": "npm:24.10.4"
     bundlewatch: "npm:0.4.1"
     execa: "npm:9.6.1"
     lerna: "npm:9.0.3"
@@ -3914,7 +3930,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssstyle@npm:^5.3.3":
+"cssstyle@npm:^5.3.3, cssstyle@npm:^5.3.4":
   version: 5.3.4
   resolution: "cssstyle@npm:5.3.4"
   dependencies:
@@ -5725,6 +5741,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsdom@npm:27.3.0":
+  version: 27.3.0
+  resolution: "jsdom@npm:27.3.0"
+  dependencies:
+    "@acemir/cssom": "npm:^0.9.28"
+    "@asamuzakjp/dom-selector": "npm:^6.7.6"
+    cssstyle: "npm:^5.3.4"
+    data-urls: "npm:^6.0.0"
+    decimal.js: "npm:^10.6.0"
+    html-encoding-sniffer: "npm:^4.0.0"
+    http-proxy-agent: "npm:^7.0.2"
+    https-proxy-agent: "npm:^7.0.6"
+    is-potential-custom-element-name: "npm:^1.0.1"
+    parse5: "npm:^8.0.0"
+    saxes: "npm:^6.0.0"
+    symbol-tree: "npm:^3.2.4"
+    tough-cookie: "npm:^6.0.0"
+    w3c-xmlserializer: "npm:^5.0.0"
+    webidl-conversions: "npm:^8.0.0"
+    whatwg-encoding: "npm:^3.1.1"
+    whatwg-mimetype: "npm:^4.0.0"
+    whatwg-url: "npm:^15.1.0"
+    ws: "npm:^8.18.3"
+    xml-name-validator: "npm:^5.0.0"
+  peerDependencies:
+    canvas: ^3.0.0
+  peerDependenciesMeta:
+    canvas:
+      optional: true
+  checksum: 10/c650e954df04a80e7309984450ce764ae2a840810b9575b20204194dee3c5cff42e65526519cb58b946ffe66a058b7b763bad4814b3903a9c86a2c1651b8b74b
+  languageName: node
+  linkType: hard
+
 "json-parse-better-errors@npm:^1.0.1":
   version: 1.0.2
   resolution: "json-parse-better-errors@npm:1.0.2"
@@ -7191,7 +7240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"package-manager-detector@npm:^1.3.0":
+"package-manager-detector@npm:^1.3.0, package-manager-detector@npm:^1.6.0":
   version: 1.6.0
   resolution: "package-manager-detector@npm:1.6.0"
   checksum: 10/b38a9532198cefdb98a1b7131c42cbffa55d8b997d6117811cf83f00079fd57a572db2aa5e3db5e36bcd0af84d0bec5a7d6251142427314390ed99a3d76cd0a0
@@ -7669,6 +7718,20 @@ __metadata:
   bin:
     publint: src/cli.js
   checksum: 10/17136ccbbca0e46a16361633f233f3b94f16f0238036309f0e9ca8e2d0114b93fe3521e2fdab877d66c2b0184e754e334720384c92914bbd8d222e1c097ebf13
+  languageName: node
+  linkType: hard
+
+"publint@npm:0.3.16":
+  version: 0.3.16
+  resolution: "publint@npm:0.3.16"
+  dependencies:
+    "@publint/pack": "npm:^0.1.2"
+    package-manager-detector: "npm:^1.6.0"
+    picocolors: "npm:^1.1.1"
+    sade: "npm:^1.8.1"
+  bin:
+    publint: src/cli.js
+  checksum: 10/cc9fae55660b7f628e897157dccc025211b9ef66d55fa21d6ba215ec607d8d8116102c076a9405368470a4c167121d5edf38e0c7a987c277cdb41416965ba1e2
   languageName: node
   linkType: hard
 
