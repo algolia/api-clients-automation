@@ -14,7 +14,8 @@
       "body": {
         "acl": [
           "search",
-          "addObject"
+          "addObject",
+          "nluReadProject"
         ],
         "description": "my new api key"
       }
