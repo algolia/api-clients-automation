@@ -37,9 +37,39 @@ public class SnippetSearchClient
   /// <summary>
   /// Snippet for the AddApiKey method.
   ///
-  /// all
+  /// nlu test
   /// </summary>
   public async Task SnippetForSearchClientAddApiKey1()
+  {
+    // >SEPARATOR addApiKey nlu test
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.AddApiKeyAsync(
+      new ApiKey
+      {
+        Acl = new List<Acl>
+        {
+          Enum.Parse<Acl>("Search"),
+          Enum.Parse<Acl>("AddObject"),
+          Enum.Parse<Acl>("NluReadProject"),
+        },
+        Description = "my new api key",
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the AddApiKey method.
+  ///
+  /// all
+  /// </summary>
+  public async Task SnippetForSearchClientAddApiKey2()
   {
     // >SEPARATOR addApiKey all
     // Initialize the client

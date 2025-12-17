@@ -85,6 +85,30 @@ object Acl {
   case object Usage extends Acl {
     override def toString = "usage"
   }
+  case object NluWriteProject extends Acl {
+    override def toString = "nluWriteProject"
+  }
+  case object NluReadProject extends Acl {
+    override def toString = "nluReadProject"
+  }
+  case object NluWriteEntity extends Acl {
+    override def toString = "nluWriteEntity"
+  }
+  case object NluReadEntity extends Acl {
+    override def toString = "nluReadEntity"
+  }
+  case object NluWriteIntent extends Acl {
+    override def toString = "nluWriteIntent"
+  }
+  case object NluReadIntent extends Acl {
+    override def toString = "nluReadIntent"
+  }
+  case object NluPrediction extends Acl {
+    override def toString = "nluPrediction"
+  }
+  case object NluReadAnswers extends Acl {
+    override def toString = "nluReadAnswers"
+  }
   val values: Seq[Acl] = Seq(
     AddObject,
     Analytics,
@@ -100,7 +124,15 @@ object Acl {
     Search,
     SeeUnretrievableAttributes,
     Settings,
-    Usage
+    Usage,
+    NluWriteProject,
+    NluReadProject,
+    NluWriteEntity,
+    NluReadEntity,
+    NluWriteIntent,
+    NluReadIntent,
+    NluPrediction,
+    NluReadAnswers
   )
 
   def withName(name: String): Acl = Acl.values

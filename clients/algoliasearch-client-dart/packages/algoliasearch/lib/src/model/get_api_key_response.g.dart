@@ -75,4 +75,12 @@ const _$AclEnumMap = {
   Acl.seeUnretrievableAttributes: 'seeUnretrievableAttributes',
   Acl.settings: 'settings',
   Acl.usage: 'usage',
+  Acl.nluWriteProject: 'nluWriteProject',
+  Acl.nluReadProject: 'nluReadProject',
+  Acl.nluWriteEntity: 'nluWriteEntity',
+  Acl.nluReadEntity: 'nluReadEntity',
+  Acl.nluWriteIntent: 'nluWriteIntent',
+  Acl.nluReadIntent: 'nluReadIntent',
+  Acl.nluPrediction: 'nluPrediction',
+  Acl.nluReadAnswers: 'nluReadAnswers',
 };

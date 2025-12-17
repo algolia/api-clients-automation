@@ -36,7 +36,23 @@ public enum Acl {
 
   SETTINGS("settings"),
 
-  USAGE("usage");
+  USAGE("usage"),
+
+  NLU_WRITE_PROJECT("nluWriteProject"),
+
+  NLU_READ_PROJECT("nluReadProject"),
+
+  NLU_WRITE_ENTITY("nluWriteEntity"),
+
+  NLU_READ_ENTITY("nluReadEntity"),
+
+  NLU_WRITE_INTENT("nluWriteIntent"),
+
+  NLU_READ_INTENT("nluReadIntent"),
+
+  NLU_PREDICTION("nluPrediction"),
+
+  NLU_READ_ANSWERS("nluReadAnswers");
 
   private final String value;
 

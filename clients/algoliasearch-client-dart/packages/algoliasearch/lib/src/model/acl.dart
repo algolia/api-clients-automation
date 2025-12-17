@@ -19,7 +19,15 @@ enum Acl {
   search(r'search'),
   seeUnretrievableAttributes(r'seeUnretrievableAttributes'),
   settings(r'settings'),
-  usage(r'usage');
+  usage(r'usage'),
+  nluWriteProject(r'nluWriteProject'),
+  nluReadProject(r'nluReadProject'),
+  nluWriteEntity(r'nluWriteEntity'),
+  nluReadEntity(r'nluReadEntity'),
+  nluWriteIntent(r'nluWriteIntent'),
+  nluReadIntent(r'nluReadIntent'),
+  nluPrediction(r'nluPrediction'),
+  nluReadAnswers(r'nluReadAnswers');
 
   const Acl(this.raw);
   final dynamic raw;

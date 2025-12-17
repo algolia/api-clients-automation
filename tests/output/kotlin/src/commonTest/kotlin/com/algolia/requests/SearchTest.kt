@@ -43,7 +43,35 @@ class SearchTest {
   }
 
   @Test
-  fun `all1`() = runTest {
+  fun `nlu test1`() = runTest {
+    client.runTest(
+      call = {
+        addApiKey(
+          apiKey =
+            ApiKey(
+              acl =
+                listOf(
+                  Acl.entries.first { it.value == "search" },
+                  Acl.entries.first { it.value == "addObject" },
+                  Acl.entries.first { it.value == "nluReadProject" },
+                ),
+              description = "my new api key",
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/1/keys".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `all2`() = runTest {
     client.runTest(
       call = {
         addApiKey(

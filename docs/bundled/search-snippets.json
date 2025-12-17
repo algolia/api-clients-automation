@@ -5,6 +5,7 @@
     },
     "addApiKey": {
       "minimal": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n  }\n);",
+      "nlu test": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl>\n    {\n      Enum.Parse<Acl>(\"Search\"),\n      Enum.Parse<Acl>(\"AddObject\"),\n      Enum.Parse<Acl>(\"NluReadProject\"),\n    },\n    Description = \"my new api key\",\n  }\n);",
       "all": "var response = await client.AddApiKeyAsync(\n  new ApiKey\n  {\n    Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n    Description = \"my new api key\",\n    Validity = 300,\n    MaxQueriesPerIPPerHour = 100,\n    MaxHitsPerQuery = 20,\n  }\n);"
     },
     "addOrUpdateObject": {
@@ -596,6 +597,7 @@
     },
     "addApiKey": {
       "minimal": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    description: \"my new api key\",\n  ),\n);",
+      "nlu test": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n      Acl.fromJson(\"nluReadProject\"),\n    ],\n    description: \"my new api key\",\n  ),\n);",
       "all": "final response = await client.addApiKey(\n  apiKey: ApiKey(\n    acl: [\n      Acl.fromJson(\"search\"),\n      Acl.fromJson(\"addObject\"),\n    ],\n    description: \"my new api key\",\n    validity: 300,\n    maxQueriesPerIPPerHour: 100,\n    maxHitsPerQuery: 20,\n  ),\n);"
     },
     "addOrUpdateObject": {
@@ -1135,6 +1137,7 @@
     },
     "addApiKey": {
       "minimal": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetDescription(\"my new api key\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "nlu test": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\"), search.Acl(\"nluReadProject\")}).SetDescription(\"my new api key\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "all": "response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(\n\n  search.NewEmptyApiKey().SetAcl(\n    []search.Acl{\n      search.Acl(\"search\"),\n      search.Acl(\"addObject\"),\n    }).\n    SetDescription(\"my new api key\").SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "addOrUpdateObject": {
@@ -1726,6 +1729,7 @@
     },
     "addApiKey": {
       "minimal": "AddApiKeyResponse response = client.addApiKey(\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT)).setDescription(\"my new api key\")\n);",
+      "nlu test": "AddApiKeyResponse response = client.addApiKey(\n  new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.NLU_READ_PROJECT)).setDescription(\"my new api key\")\n);",
       "all": "AddApiKeyResponse response = client.addApiKey(\n  new ApiKey()\n    .setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT))\n    .setDescription(\"my new api key\")\n    .setValidity(300)\n    .setMaxQueriesPerIPPerHour(100)\n    .setMaxHitsPerQuery(20)\n);"
     },
     "addOrUpdateObject": {
@@ -2320,6 +2324,7 @@
     },
     "addApiKey": {
       "minimal": "const response = await client.addApiKey({ acl: ['search', 'addObject'], description: 'my new api key' });",
+      "nlu test": "const response = await client.addApiKey({\n  acl: ['search', 'addObject', 'nluReadProject'],\n  description: 'my new api key',\n});",
       "all": "const response = await client.addApiKey({\n  acl: ['search', 'addObject'],\n  description: 'my new api key',\n  validity: 300,\n  maxQueriesPerIPPerHour: 100,\n  maxHitsPerQuery: 20,\n});"
     },
     "addOrUpdateObject": {
@@ -2908,6 +2913,7 @@
   "kotlin": {
     "addApiKey": {
       "minimal": "var response =\n  client.addApiKey(\n    apiKey =\n      ApiKey(\n        acl =\n          listOf(\n            Acl.entries.first { it.value == \"search\" },\n            Acl.entries.first { it.value == \"addObject\" },\n          ),\n        description = \"my new api key\",\n      )\n  )",
+      "nlu test": "var response =\n  client.addApiKey(\n    apiKey =\n      ApiKey(\n        acl =\n          listOf(\n            Acl.entries.first { it.value == \"search\" },\n            Acl.entries.first { it.value == \"addObject\" },\n            Acl.entries.first { it.value == \"nluReadProject\" },\n          ),\n        description = \"my new api key\",\n      )\n  )",
       "all": "var response =\n  client.addApiKey(\n    apiKey =\n      ApiKey(\n        acl =\n          listOf(\n            Acl.entries.first { it.value == \"search\" },\n            Acl.entries.first { it.value == \"addObject\" },\n          ),\n        description = \"my new api key\",\n        validity = 300,\n        maxQueriesPerIPPerHour = 100,\n        maxHitsPerQuery = 20,\n      )\n  )"
     },
     "addOrUpdateObject": {
@@ -3490,6 +3496,7 @@
     },
     "addApiKey": {
       "minimal": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n    ],\n);",
+      "nlu test": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n\n        'nluReadProject',\n    ],\n        'description' => 'my new api key',\n    ],\n);",
       "all": "$response = $client->addApiKey(\n    ['acl' => [\n        'search',\n\n        'addObject',\n    ],\n        'description' => 'my new api key',\n        'validity' => 300,\n        'maxQueriesPerIPPerHour' => 100,\n        'maxHitsPerQuery' => 20,\n    ],\n);"
     },
     "addOrUpdateObject": {
@@ -4081,6 +4088,7 @@
     },
     "addApiKey": {
       "minimal": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n    },\n)",
+      "nlu test": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n            \"nluReadProject\",\n        ],\n        \"description\": \"my new api key\",\n    },\n)",
       "all": "response = client.add_api_key(\n    api_key={\n        \"acl\": [\n            \"search\",\n            \"addObject\",\n        ],\n        \"description\": \"my new api key\",\n        \"validity\": 300,\n        \"maxQueriesPerIPPerHour\": 100,\n        \"maxHitsPerQuery\": 20,\n    },\n)"
     },
     "addOrUpdateObject": {
@@ -4672,6 +4680,7 @@
     },
     "addApiKey": {
       "minimal": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(acl: [\"search\", \"addObject\"], description: \"my new api key\")\n)",
+      "nlu test": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(acl: [\"search\", \"addObject\", \"nluReadProject\"], description: \"my new api key\")\n)",
       "all": "response = client.add_api_key(\n  Algolia::Search::ApiKey.new(\n    acl: [\"search\", \"addObject\"],\n    description: \"my new api key\",\n    validity: 300,\n    max_queries_per_ip_per_hour: 100,\n    max_hits_per_query: 20\n  )\n)"
     },
     "addOrUpdateObject": {
@@ -5254,6 +5263,7 @@
     },
     "addApiKey": {
       "minimal": "val response = Await.result(\n  client.addApiKey(\n    apiKey = ApiKey(\n      acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n      description = Some(\"my new api key\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "nlu test": "val response = Await.result(\n  client.addApiKey(\n    apiKey = ApiKey(\n      acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\"), Acl.withName(\"nluReadProject\")),\n      description = Some(\"my new api key\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
       "all": "val response = Await.result(\n  client.addApiKey(\n    apiKey = ApiKey(\n      acl = Seq(Acl.withName(\"search\"), Acl.withName(\"addObject\")),\n      description = Some(\"my new api key\"),\n      validity = Some(300),\n      maxQueriesPerIPPerHour = Some(100),\n      maxHitsPerQuery = Some(20)\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "addOrUpdateObject": {
@@ -5836,6 +5846,7 @@
     },
     "addApiKey": {
       "minimal": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\"\n))",
+      "nlu test": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject, Acl.nluReadProject],\n    description: \"my new api key\"\n))",
       "all": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\",\n    maxHitsPerQuery: 20,\n    maxQueriesPerIPPerHour: 100,\n    validity: 300\n))"
     },
     "addOrUpdateObject": {

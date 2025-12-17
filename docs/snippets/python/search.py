@@ -37,6 +37,35 @@ def snippet_for_add_api_key1():
     """
     Snippet for the addApiKey method.
 
+    nlu test
+    """
+    # >SEPARATOR addApiKey nlu test
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.add_api_key(
+        api_key={
+            "acl": [
+                "search",
+                "addObject",
+                "nluReadProject",
+            ],
+            "description": "my new api key",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_add_api_key2():
+    """
+    Snippet for the addApiKey method.
+
     all
     """
     # >SEPARATOR addApiKey all

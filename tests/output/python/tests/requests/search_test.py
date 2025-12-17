@@ -37,6 +37,29 @@ class TestSearchClient:
 
     async def test_add_api_key_1(self):
         """
+        nlu test
+        """
+        _req = await self._client.add_api_key_with_http_info(
+            api_key={
+                "acl": [
+                    "search",
+                    "addObject",
+                    "nluReadProject",
+                ],
+                "description": "my new api key",
+            },
+        )
+
+        assert _req.path == "/1/keys"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}"""
+        )
+
+    async def test_add_api_key_2(self):
+        """
         all
         """
         _req = await self._client.add_api_key_with_http_info(
@@ -9312,6 +9335,29 @@ class TestSearchClientSync:
         )
 
     def test_add_api_key_1(self):
+        """
+        nlu test
+        """
+        _req = self._client.add_api_key_with_http_info(
+            api_key={
+                "acl": [
+                    "search",
+                    "addObject",
+                    "nluReadProject",
+                ],
+                "description": "my new api key",
+            },
+        )
+
+        assert _req.path == "/1/keys"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}"""
+        )
+
+    def test_add_api_key_2(self):
         """
         all
         """

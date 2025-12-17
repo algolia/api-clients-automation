@@ -25,8 +25,27 @@ end
 
 # Snippet for the addApiKey method.
 #
-# all
+# nlu test
 def snippet_for_add_api_key1
+  # >SEPARATOR addApiKey nlu test
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.add_api_key(
+    Algolia::Search::ApiKey.new(acl: ["search", "addObject", "nluReadProject"], description: "my new api key")
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the addApiKey method.
+#
+# all
+def snippet_for_add_api_key2
   # >SEPARATOR addApiKey all
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")

@@ -51,7 +51,26 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("all1") {
+  test("nlu test1") {
+    val (client, echo) = testClient()
+    val future = client.addApiKey(
+      apiKey = ApiKey(
+        acl = Seq(Acl.withName("search"), Acl.withName("addObject"), Acl.withName("nluReadProject")),
+        description = Some("my new api key")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/keys")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("all2") {
     val (client, echo) = testClient()
     val future = client.addApiKey(
       apiKey = ApiKey(

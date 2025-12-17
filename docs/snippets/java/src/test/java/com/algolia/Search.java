@@ -29,8 +29,26 @@ class SnippetSearchClient {
 
   // Snippet for the addApiKey method.
   //
-  // all
+  // nlu test
   void snippetForAddApiKey1() throws Exception {
+    // >SEPARATOR addApiKey nlu test
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    AddApiKeyResponse response = client.addApiKey(
+      new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.NLU_READ_PROJECT)).setDescription("my new api key")
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the addApiKey method.
+  //
+  // all
+  void snippetForAddApiKey2() throws Exception {
     // >SEPARATOR addApiKey all
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");

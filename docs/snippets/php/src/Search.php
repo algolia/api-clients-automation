@@ -42,9 +42,39 @@ class SnippetSearchClient
     /**
      * Snippet for the AddApiKey method.
      *
-     * all
+     * nlu test
      */
     public function snippetForAddApiKey1(): void
+    {
+        // >SEPARATOR addApiKey nlu test
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->addApiKey(
+            ['acl' => [
+                'search',
+
+                'addObject',
+
+                'nluReadProject',
+            ],
+                'description' => 'my new api key',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the AddApiKey method.
+     *
+     * all
+     */
+    public function snippetForAddApiKey2(): void
     {
         // >SEPARATOR addApiKey all
         // Initialize the client

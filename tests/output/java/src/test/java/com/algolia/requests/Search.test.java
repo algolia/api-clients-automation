@@ -57,8 +57,28 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("all")
+  @DisplayName("nlu test")
   void addApiKeyTest1() {
+    assertDoesNotThrow(() -> {
+      client.addApiKey(
+        new ApiKey().setAcl(Arrays.asList(Acl.SEARCH, Acl.ADD_OBJECT, Acl.NLU_READ_PROJECT)).setDescription("my new api key")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/keys", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new" + " api key\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("all")
+  void addApiKeyTest2() {
     assertDoesNotThrow(() -> {
       client.addApiKey(
         new ApiKey()

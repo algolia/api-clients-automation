@@ -31,8 +31,34 @@ void snippetForaddApiKey() async {
 
 // Snippet for the addApiKey method.
 //
-// all
+// nlu test
 void snippetForaddApiKey1() async {
+  // >SEPARATOR addApiKey nlu test
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.addApiKey(
+    apiKey: ApiKey(
+      acl: [
+        Acl.fromJson("search"),
+        Acl.fromJson("addObject"),
+        Acl.fromJson("nluReadProject"),
+      ],
+      description: "my new api key",
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the addApiKey method.
+//
+// all
+void snippetForaddApiKey2() async {
   // >SEPARATOR addApiKey all
   // Initialize the client
   final client =
