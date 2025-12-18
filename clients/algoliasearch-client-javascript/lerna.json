@@ -1,5 +1,12 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "packages": ["packages/*"],
-  "version": "independent"
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "command": {
+    "run": {
+      "npmClient": "yarn"
+    }
+  }
 }
