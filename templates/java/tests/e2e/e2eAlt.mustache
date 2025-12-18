@@ -1,0 +1,54 @@
+package com.algolia.e2eAlt;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import com.algolia.api.{{client}};
+import com.algolia.config.*;
+import com.algolia.model.{{import}}.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
+import java.util.*;
+import java.time.Duration;
+import org.junit.jupiter.api.*;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class {{client}}RequestsTestsE2EAlt {
+    private {{client}} client;
+    private ObjectMapper json;
+
+    @BeforeAll
+    void init() {
+        this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+
+        if ("true".equals(System.getenv("CI"))) {
+          this.client = new {{client}}(System.getenv("METIS_APPLICATION_ID"), System.getenv("METIS_API_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        } else {
+          Dotenv dotenv = Dotenv.configure().directory("../../").load();
+          this.client = new {{client}}(dotenv.get("METIS_APPLICATION_ID"), dotenv.get("METIS_API_KEY"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        }
+    }
+
+    @AfterAll
+    void tearUp() throws Exception {
+      client.close();
+    }
+
+    {{#blocksE2E}}
+    {{#tests}}
+    @Test
+    @DisplayName("{{{testName}}}")
+    void {{method}}Test{{testIndex}}() {
+        {{returnType}} res = {{> tests/method}};
+        {{#response}}
+        {{#body}}
+        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
+        {{/body}}
+        {{/response}}
+    }
+    {{/tests}}
+    {{/blocksE2E}}
+}
