@@ -35,11 +35,11 @@
     "chalk": "5.6.2",
     "commander": "14.0.2",
     "crc": "4.3.2",
-    "esbuild": "0.27.1",
+    "esbuild": "0.27.2",
     "execa": "9.6.1",
     "express": "5.2.1",
     "folder-hash": "4.1.1",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "httpsnippet": "3.0.9",
     "js-yaml": "4.1.1",
     "knip": "5.67.1",
@@ -47,6 +47,6 @@
     "semver": "7.7.3",
     "spinnies": "0.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.15"
+    "vitest": "4.0.16"
   }
 }
