@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/eslint": "9.6.1",
-    "esbuild": "0.27.1",
+    "esbuild": "0.27.2",
     "eslint": "8.57.1",
     "eslint-plugin-yml": "1.19.0",
     "eslint-vitest-rule-tester": "3.0.1",
