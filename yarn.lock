@@ -139,7 +139,7 @@ __metadata:
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
-    "@redocly/cli": "npm:2.14.0"
+    "@redocly/cli": "npm:2.14.1"
     eslint: "npm:8.57.1"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-json: "npm:4.0.1"
@@ -2388,16 +2388,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@redocly/cli@npm:2.14.0"
+"@redocly/cli@npm:2.14.1":
+  version: 2.14.1
+  resolution: "@redocly/cli@npm:2.14.1"
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.202.0"
     "@opentelemetry/resources": "npm:2.0.1"
     "@opentelemetry/sdk-trace-node": "npm:2.0.1"
     "@opentelemetry/semantic-conventions": "npm:1.34.0"
-    "@redocly/openapi-core": "npm:2.14.0"
-    "@redocly/respect-core": "npm:2.14.0"
+    "@redocly/openapi-core": "npm:2.14.1"
+    "@redocly/respect-core": "npm:2.14.1"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -2422,7 +2422,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/e12b5a41c6eb65409e3490cb6eafec59cc07a96a9cd0260cc7464c6f902f8a7657d029fa4869b3506a05b390fa6288ae60b8c4fec24ecc90f4a314b43f3e647a
+  checksum: 10/b5973051d73c1d4bf323f3888c7a02e48833a481adb333663478ef5ec0418b490a53c68a5588ee0de9cdc01ea9ef2e11a95ecb6286744af94db6c82ebc903639
   languageName: node
   linkType: hard
 
@@ -2442,9 +2442,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@redocly/openapi-core@npm:2.14.0"
+"@redocly/openapi-core@npm:2.14.1":
+  version: 2.14.1
+  resolution: "@redocly/openapi-core@npm:2.14.1"
   dependencies:
     "@redocly/ajv": "npm:^8.17.1"
     "@redocly/config": "npm:^0.41.1"
@@ -2455,7 +2455,7 @@ __metadata:
     picomatch: "npm:^4.0.3"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/a675d66c03b616fdea55cb4a4c86c02bc9a7429308f12e6efcf117d5862fcabf8a975373c6a8911bf17bfdd5272bd67337343572d709ad9d259e17496b1f071e
+  checksum: 10/ac240b0f1e51e32b89e0fa6bad8581bfafbde0fe8c279eb2b29dfb6f192cbf1ebd3d7583eeef492eb9c83d2e63a36dc9200e69d70b4c329c87395d5fe5c2074a
   languageName: node
   linkType: hard
 
@@ -2476,21 +2476,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/respect-core@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@redocly/respect-core@npm:2.14.0"
+"@redocly/respect-core@npm:2.14.1":
+  version: 2.14.1
+  resolution: "@redocly/respect-core@npm:2.14.1"
   dependencies:
     "@faker-js/faker": "npm:^7.6.0"
     "@noble/hashes": "npm:^1.8.0"
     "@redocly/ajv": "npm:8.17.1"
-    "@redocly/openapi-core": "npm:2.14.0"
+    "@redocly/openapi-core": "npm:2.14.1"
     better-ajv-errors: "npm:^1.2.0"
     colorette: "npm:^2.0.20"
     json-pointer: "npm:^0.6.2"
     jsonpath-rfc9535: "npm:1.3.0"
     openapi-sampler: "npm:^1.6.1"
     outdent: "npm:^0.8.0"
-  checksum: 10/827edf891199368d7c9e6511aef2b72cd30e12d7371417c0344303501e199f83ba2e4d1490d572fdddc308e65e36a58f92d5f6bae7177029b784ea27e6f0e847
+  checksum: 10/f383408c777c173558347b891f18aab671f6c84e2a060e07da02a2bb35faf38f62de8cad0153fe0a41b28ec7350084cde2cd8f9fc38b8053aed772d97afc62b9
   languageName: node
   linkType: hard
 
