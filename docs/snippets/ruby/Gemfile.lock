@@ -29,7 +29,7 @@ GEM
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
     rake (13.2.1)
-    uri (1.0.3)
+    uri (1.0.4)
 
 PLATFORMS
   ruby
