@@ -54,14 +54,6 @@ SearchFields:
       $ref: '#/params'
     query:
       $ref: '#/query'
-  required:
-    - page
-    - nbHits
-    - nbPages
-    - hitsPerPage
-    - hits
-    - query
-    - params
 
 # ######################
 # # Search Properties ##
