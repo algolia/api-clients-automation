@@ -1,3 +1,7 @@
+## [7.36.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.36.0...7.36.1)
+
+- [cd7a174b4d](https://github.com/algolia/api-clients-automation/commit/cd7a174b4d) fix(specs): remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [7.36.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.35.0...7.36.0)
 
 - [0e5f42bbd](https://github.com/algolia/api-clients-automation/commit/0e5f42bbd) feat(csharp): Add WithHTTPInfo method derivatives ([#5715](https://github.com/algolia/api-clients-automation/pull/5715)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

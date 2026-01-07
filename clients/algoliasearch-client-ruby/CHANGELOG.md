@@ -1,3 +1,7 @@
+## [3.34.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.34.2...3.34.3)
+
+- [cd7a174b4d](https://github.com/algolia/api-clients-automation/commit/cd7a174b4d) fix(specs): remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [3.34.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.34.1...3.34.2)
 
 - [005aa6524](https://github.com/algolia/api-clients-automation/commit/005aa6524) chore(deps): dependencies 2025-12-22 ([#5775](https://github.com/algolia/api-clients-automation/pull/5775)) by [@algolia-bot](https://github.com/algolia-bot/)

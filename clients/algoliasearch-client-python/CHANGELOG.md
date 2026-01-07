@@ -1,3 +1,7 @@
+## [4.35.3](https://github.com/algolia/algoliasearch-client-python/compare/4.35.2...4.35.3)
+
+- [cd7a174b4d](https://github.com/algolia/api-clients-automation/commit/cd7a174b4d) fix(specs): remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [4.35.2](https://github.com/algolia/algoliasearch-client-python/compare/4.35.1...4.35.2)
 
 - [762964fa3](https://github.com/algolia/api-clients-automation/commit/762964fa3) chore: update Python version in release workflow to 3.13.7 ([#5771](https://github.com/algolia/api-clients-automation/pull/5771)) by [@Fluf22](https://github.com/Fluf22/)
