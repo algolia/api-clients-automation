@@ -969,9 +969,9 @@
       "positions": {
         "type": "array",
         "items": {
-          "type": "integer"
+          "type": "integer",
+          "minimum": 1
         },
-        "minimum": 1,
         "minItems": 1,
         "maxItems": 20,
         "description": "Position of the clicked item the search results.\n\nYou must provide 1 `position` for each `objectID`.\n",
