@@ -14,7 +14,7 @@
     "instantsearch.css": "8.9.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-instantsearch": "7.21.0"
+    "react-instantsearch": "7.22.1"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
