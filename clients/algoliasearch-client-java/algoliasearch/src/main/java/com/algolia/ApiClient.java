@@ -50,9 +50,10 @@ public abstract class ApiClient implements Closeable {
     }
     clientOptions = options != null ? options : new ClientOptions();
     executor = clientOptions.getExecutor();
-    requester = clientOptions.getCustomRequester() != null
-      ? clientOptions.getCustomRequester()
-      : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts, connectTimeout, readTimeout, writeTimeout);
+    requester =
+      clientOptions.getCustomRequester() != null
+        ? clientOptions.getCustomRequester()
+        : defaultRequester(appId, apiKey, clientName, clientOptions, defaultHosts, connectTimeout, readTimeout, writeTimeout);
   }
 
   /** Creates a default {@link Requester} for executing API requests. */

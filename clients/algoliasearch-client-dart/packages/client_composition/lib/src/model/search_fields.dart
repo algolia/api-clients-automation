@@ -10,42 +10,42 @@ part 'search_fields.g.dart';
 final class SearchFields {
   /// Returns a new [SearchFields] instance.
   const SearchFields({
-    required this.hits,
-    required this.hitsPerPage,
-    required this.nbHits,
-    required this.nbPages,
-    required this.page,
-    required this.params,
-    required this.query,
+    this.hits,
+    this.hitsPerPage,
+    this.nbHits,
+    this.nbPages,
+    this.page,
+    this.params,
+    this.query,
   });
 
   /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   @JsonKey(name: r'hits')
-  final List<Hit> hits;
+  final List<Hit>? hits;
 
   /// Number of hits returned per page.
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
   /// Number of results (hits).
   @JsonKey(name: r'nbHits')
-  final int nbHits;
+  final int? nbHits;
 
   /// Number of pages of results.
   @JsonKey(name: r'nbPages')
-  final int nbPages;
+  final int? nbPages;
 
   /// The current page of the results.
   @JsonKey(name: r'page')
-  final int page;
+  final int? page;
 
   /// URL-encoded string of all search parameters.
   @JsonKey(name: r'params')
-  final String params;
+  final String? params;
 
   /// The search query string.
   @JsonKey(name: r'query')
-  final String query;
+  final String? query;
 
   @override
   bool operator ==(Object other) =>

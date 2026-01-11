@@ -47,11 +47,11 @@ package algoliasearch.composition
   *   The search query string.
   */
 case class SearchFields(
-    hits: Seq[Hit],
-    hitsPerPage: Int,
-    nbHits: Int,
-    nbPages: Int,
-    page: Int,
-    params: String,
-    query: String
+    hits: Option[Seq[Hit]] = scala.None,
+    hitsPerPage: Option[Int] = scala.None,
+    nbHits: Option[Int] = scala.None,
+    nbPages: Option[Int] = scala.None,
+    page: Option[Int] = scala.None,
+    params: Option[String] = scala.None,
+    query: Option[String] = scala.None
 )

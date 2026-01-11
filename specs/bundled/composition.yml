@@ -2519,14 +2519,6 @@ components:
           $ref: '#/components/schemas/SingleResultSet_params'
         query:
           $ref: '#/components/schemas/SingleResultSet_query'
-      required:
-        - page
-        - nbHits
-        - nbPages
-        - hitsPerPage
-        - hits
-        - query
-        - params
     resultsInjectedItemAppliedRulesInfoResponse:
       type: object
       properties:
