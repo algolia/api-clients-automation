@@ -93,7 +93,7 @@ public class SearchResultsItem<T> {
   private Boolean automaticInsights;
 
   @JsonProperty("hits")
-  private List<T> hits = new ArrayList<>();
+  private List<T> hits;
 
   @JsonProperty("hitsPerPage")
   private Integer hitsPerPage;
@@ -467,6 +467,9 @@ public class SearchResultsItem<T> {
   }
 
   public SearchResultsItem<T> addHits(T hitsItem) {
+    if (this.hits == null) {
+      this.hits = new ArrayList<>();
+    }
     this.hits.add(hitsItem);
     return this;
   }
@@ -475,7 +478,7 @@ public class SearchResultsItem<T> {
    * Search results (hits). Hits are records from your index that match the search criteria,
    * augmented with additional attributes, such as, for highlighting.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public List<T> getHits() {
     return hits;
   }
@@ -486,7 +489,7 @@ public class SearchResultsItem<T> {
   }
 
   /** Number of hits returned per page. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getHitsPerPage() {
     return hitsPerPage;
   }
@@ -497,7 +500,7 @@ public class SearchResultsItem<T> {
   }
 
   /** Number of results (hits). */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbHits() {
     return nbHits;
   }
@@ -508,7 +511,7 @@ public class SearchResultsItem<T> {
   }
 
   /** Number of pages of results. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getNbPages() {
     return nbPages;
   }
@@ -519,7 +522,7 @@ public class SearchResultsItem<T> {
   }
 
   /** The current page of the results. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getPage() {
     return page;
   }
@@ -530,7 +533,7 @@ public class SearchResultsItem<T> {
   }
 
   /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getParams() {
     return params;
   }
@@ -541,7 +544,7 @@ public class SearchResultsItem<T> {
   }
 
   /** The search query string. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getQuery() {
     return query;
   }

@@ -2882,16 +2882,7 @@
           "query": {
             "$ref": "#/components/schemas/SingleResultSet_query"
           }
-        },
-        "required": [
-          "page",
-          "nbHits",
-          "nbPages",
-          "hitsPerPage",
-          "hits",
-          "query",
-          "params"
-        ]
+        }
       },
       "resultsInjectedItemAppliedRulesInfoResponse": {
         "type": "object",
