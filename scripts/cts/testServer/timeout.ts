@@ -58,7 +58,7 @@ export function retryHandler(after: number, message: string): express.RequestHan
       res.json({ message });
     }, after);
 
-    const lang = req.params.lang;
+    const lang = req.params.lang as string;
     const startTime = Date.now();
     if (!timeoutState[lang]) {
       timeoutState[lang] = {
