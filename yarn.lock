@@ -5,13 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@actions/artifact@npm:5.0.1":
-  version: 5.0.1
-  resolution: "@actions/artifact@npm:5.0.1"
+"@actions/artifact@npm:5.0.2":
+  version: 5.0.2
+  resolution: "@actions/artifact@npm:5.0.2"
   dependencies:
     "@actions/core": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
-    "@actions/http-client": "npm:^3.0.0"
+    "@actions/http-client": "npm:^3.0.1"
     "@azure/storage-blob": "npm:^12.29.1"
     "@octokit/core": "npm:^5.2.1"
     "@octokit/plugin-request-log": "npm:^1.0.4"
@@ -22,7 +22,7 @@ __metadata:
     archiver: "npm:^7.0.1"
     jwt-decode: "npm:^3.1.2"
     unzip-stream: "npm:^0.3.1"
-  checksum: 10/621b374e203926452e357ad3d6fecad195c3f76c513b35761b779540fecde2689c2a7786edb4a04613e2afe502dcd0f7033c2f83ba960e0c255f9bdc564f6a20
+  checksum: 10/c712842af195b89a41ffc0445aa887ff671d95e8596598f82bedab2ee3b98f309b7c076bb5284187527aec667faf24ea2b909079d0fdc60d81f4e39947253343
   languageName: node
   linkType: hard
 
@@ -77,6 +77,16 @@ __metadata:
     tunnel: "npm:^0.0.6"
     undici: "npm:^5.28.5"
   checksum: 10/7ed597cf91953cb56f74ece13187914fee629cb81cd11357676425388dd239508be63d0eff7930e2b066034f2a86dd24b313c09717f878aaf8ed3f5a6853b816
+  languageName: node
+  linkType: hard
+
+"@actions/http-client@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@actions/http-client@npm:3.0.1"
+  dependencies:
+    tunnel: "npm:^0.0.6"
+    undici: "npm:^5.28.5"
+  checksum: 10/aac5a88023a44bd0ea658a31308a73ab6a3da9dd36ded5d7311adf5e41f4379d37091aa9390de654d8d5a81435c02c2b5316ff3166066cd14eec5e66f1e0c3d0
   languageName: node
   linkType: hard
 
@@ -8655,7 +8665,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "scripts@workspace:scripts"
   dependencies:
-    "@actions/artifact": "npm:5.0.1"
+    "@actions/artifact": "npm:5.0.2"
     "@actions/core": "npm:2.0.1"
     "@actions/exec": "npm:2.0.0"
     "@actions/io": "npm:2.0.0"
