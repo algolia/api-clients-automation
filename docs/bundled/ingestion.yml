@@ -2739,7 +2739,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"googleServiceAccount","name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
+              --data '{"name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
     delete:
       tags:
         - authentications
@@ -7639,7 +7639,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&triggerType=onDemand%2Cschedule%2Csubscription%2Cstreaming&withEmailNotifications=true&sort=createdAt&order=desc' \
+              --url 'https://data.us.algolia.com/2/tasks?itemsPerPage=10&page=1&action=save%2Creplace%2Cpartial%2Cappend&enabled=true&sourceID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&sourceType=json%2Ccommercetools%2Cdocker&destinationID=6c02aeb1-775e-418e-870b-1faccd4b2c0f&withEmailNotifications=true&sort=createdAt&order=desc' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
