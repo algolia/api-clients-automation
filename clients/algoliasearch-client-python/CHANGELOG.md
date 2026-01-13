@@ -1,6 +1,7 @@
 ## [4.35.3](https://github.com/algolia/algoliasearch-client-python/compare/4.35.2...4.35.3)
 
-- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
+Some fields from the Composition Run search response were marked as required while they were optional on the API side. This has been fixed, but might impact the client types.
 
 ## [4.35.2](https://github.com/algolia/algoliasearch-client-python/compare/4.35.1...4.35.2)
 
