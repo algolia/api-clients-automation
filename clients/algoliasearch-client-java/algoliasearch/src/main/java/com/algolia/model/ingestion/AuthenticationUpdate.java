@@ -10,25 +10,11 @@ import java.util.Objects;
 /** Request body for updating an authentication resource. */
 public class AuthenticationUpdate {
 
-  @JsonProperty("type")
-  private AuthenticationType type;
-
   @JsonProperty("name")
   private String name;
 
   @JsonProperty("input")
   private AuthInputPartial input;
-
-  public AuthenticationUpdate setType(AuthenticationType type) {
-    this.type = type;
-    return this;
-  }
-
-  /** Get type */
-  @javax.annotation.Nullable
-  public AuthenticationType getType() {
-    return type;
-  }
 
   public AuthenticationUpdate setName(String name) {
     this.name = name;
@@ -61,23 +47,18 @@ public class AuthenticationUpdate {
       return false;
     }
     AuthenticationUpdate authenticationUpdate = (AuthenticationUpdate) o;
-    return (
-      Objects.equals(this.type, authenticationUpdate.type) &&
-      Objects.equals(this.name, authenticationUpdate.name) &&
-      Objects.equals(this.input, authenticationUpdate.input)
-    );
+    return Objects.equals(this.name, authenticationUpdate.name) && Objects.equals(this.input, authenticationUpdate.input);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, input);
+    return Objects.hash(name, input);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AuthenticationUpdate {\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("}");

@@ -4078,9 +4078,6 @@
         "description": "Request body for updating an authentication resource.",
         "additionalProperties": false,
         "properties": {
-          "type": {
-            "$ref": "#/components/schemas/AuthenticationType"
-          },
           "name": {
             "$ref": "#/components/schemas/name"
           },
