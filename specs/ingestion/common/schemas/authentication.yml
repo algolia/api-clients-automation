@@ -66,8 +66,6 @@ AuthenticationUpdate:
   description: Request body for updating an authentication resource.
   additionalProperties: false
   properties:
-    type:
-      $ref: '#/AuthenticationType'
     name:
       $ref: './common.yml#/name'
     input:
