@@ -127,7 +127,7 @@ func TestRecommendcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.34.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.34.2\).*`, echo.Header.Get("User-Agent"))
 }
 
 // switch API key.

@@ -437,7 +437,7 @@ final class InsightsClientSnippet {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_768_003_200_000)
+                timestamp: Int64(1_768_262_400_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -446,7 +446,7 @@ final class InsightsClientSnippet {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_768_003_200_000)
+                timestamp: Int64(1_768_262_400_000)
             )),
         ]))
         // >LOG
