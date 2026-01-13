@@ -1,3 +1,8 @@
+## [2.36.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.1...2.36.2)
+
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [b08917039](https://github.com/algolia/api-clients-automation/commit/b08917039) chore(deps): dependencies 2025-12-29 ([#5792](https://github.com/algolia/api-clients-automation/pull/5792)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.36.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.0...2.36.1)
 
 - [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
