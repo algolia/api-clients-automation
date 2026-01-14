@@ -9,6 +9,7 @@ export const patterns = [
   'docs/**/.*/**',
   '!docs/README.md',
   '!clients/README.md',
+  '!clients/AGENTS.md',
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
   '!clients/**/.github/workflows/release.yml',
