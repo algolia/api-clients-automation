@@ -13,6 +13,7 @@ export const patterns = [
   '!clients/**/.openapi-generator-ignore',
   'clients/**/.github/**',
   '!clients/**/.github/workflows/release.yml',
+  '!clients/**/AGENTS.md',
 
   // C#
   'clients/algoliasearch-client-csharp/**',

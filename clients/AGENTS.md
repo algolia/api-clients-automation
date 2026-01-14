@@ -4,21 +4,23 @@
 
 Generated API clients for 11 languages. Most code is auto-generated - only edit hand-written directories.
 
+**Each client has its own AGENTS.md** with language-specific conventions, patterns, and gotchas. See the per-language file for detailed guidance.
+
 ## STRUCTURE
 
 ```
 clients/
-├── algoliasearch-client-javascript/   # TypeScript/JavaScript (monorepo)
-├── algoliasearch-client-python/       # Python (Poetry)
-├── algoliasearch-client-java/         # Java (Gradle)
-├── algoliasearch-client-go/           # Go (modules)
-├── algoliasearch-client-ruby/         # Ruby (Bundler)
-├── algoliasearch-client-php/          # PHP (Composer)
-├── algoliasearch-client-kotlin/       # Kotlin (Gradle, multiplatform)
-├── algoliasearch-client-scala/        # Scala (SBT)
-├── algoliasearch-client-swift/        # Swift (SPM)
-├── algoliasearch-client-dart/         # Dart (Pub/Melos)
-└── algoliasearch-client-csharp/       # C# (.NET)
+├── algoliasearch-client-javascript/   # TypeScript/JavaScript (monorepo) → See AGENTS.md
+├── algoliasearch-client-python/       # Python (Poetry) → See AGENTS.md
+├── algoliasearch-client-java/         # Java (Gradle) → See AGENTS.md
+├── algoliasearch-client-go/           # Go (modules) → See AGENTS.md
+├── algoliasearch-client-ruby/         # Ruby (Bundler) → See AGENTS.md
+├── algoliasearch-client-php/          # PHP (Composer) → See AGENTS.md
+├── algoliasearch-client-kotlin/       # Kotlin (Gradle, multiplatform) → See AGENTS.md
+├── algoliasearch-client-scala/        # Scala (SBT) → See AGENTS.md
+├── algoliasearch-client-swift/        # Swift (SPM) → See AGENTS.md
+├── algoliasearch-client-dart/         # Dart (Pub/Melos) → See AGENTS.md
+└── algoliasearch-client-csharp/       # C# (.NET) → See AGENTS.md
 ```
 
 ## GENERATED VS HAND-WRITTEN
