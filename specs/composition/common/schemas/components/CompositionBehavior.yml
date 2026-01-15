@@ -1,4 +1,9 @@
 compositionBehavior:
+  oneOf:
+    - $ref: '#/compositionInjectionBehavior'
+    - $ref: '#/compositionMultifeedBehavior'
+
+compositionInjectionBehavior:
   type: object
   additionalProperties: false
   properties:
@@ -6,3 +11,12 @@ compositionBehavior:
       $ref: './injection/Behaviour.yml#/injection'
   required:
     - injection
+
+compositionMultifeedBehavior:
+  type: object
+  additionalProperties: false
+  properties:
+    multifeed:
+      $ref: './multifeed/Behaviour.yml#/multifeed'
+  required:
+    - multifeed
