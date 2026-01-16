@@ -15,3 +15,27 @@ multifeed:
         type: string
   required:
     - feeds
+  example:
+    feeds:
+      products-feed:
+        main:
+          source:
+            search:
+              index: products
+        injectedItems:
+          - key: sponsored
+            position: 0
+            length: 4
+            source:
+              search:
+                index: products
+                params:
+                  filters: 'sponsored:true'
+      articles-feed:
+        main:
+          source:
+            search:
+              index: articles
+    feedsOrder:
+      - products-feed
+      - articles-feed
