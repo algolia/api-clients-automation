@@ -3983,17 +3983,83 @@
           "main"
         ]
       },
-      "compositionBehavior": {
+      "multifeed": {
+        "title": "multifeed",
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "injection": {
-            "$ref": "#/components/schemas/injection"
+          "feeds": {
+            "type": "object",
+            "description": "A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/injection"
+            }
+          },
+          "feedsOrder": {
+            "type": "array",
+            "description": "A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all Feeds are processed and returned with a default ordering.",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
-          "injection"
-        ]
+          "feeds"
+        ],
+        "example": {
+          "feeds": {
+            "products-feed": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "products"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "sponsored",
+                  "position": 0,
+                  "length": 4,
+                  "source": {
+                    "search": {
+                      "index": "products",
+                      "params": {
+                        "filters": "sponsored:true"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "articles-feed": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "articles"
+                  }
+                }
+              }
+            }
+          },
+          "feedsOrder": [
+            "products-feed",
+            "articles-feed"
+          ]
+        }
+      },
+      "compositionBehavior": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An object containing either an `injection` or `multifeed` behavior schema, but not both.",
+        "properties": {
+          "injection": {
+            "$ref": "#/components/schemas/injection"
+          },
+          "multifeed": {
+            "$ref": "#/components/schemas/multifeed"
+          }
+        }
       },
       "sortingStrategy": {
         "type": "object",

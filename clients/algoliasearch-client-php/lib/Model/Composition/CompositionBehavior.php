@@ -11,6 +11,8 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  * CompositionBehavior Class Doc Comment.
  *
  * @category Class
+ *
+ * @description An object containing either an `injection` or `multifeed` behavior schema, but not both.
  */
 class CompositionBehavior extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
@@ -21,6 +23,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     protected static $modelTypes = [
         'injection' => '\Algolia\AlgoliaSearch\Model\Composition\Injection',
+        'multifeed' => '\Algolia\AlgoliaSearch\Model\Composition\Multifeed',
     ];
 
     /**
@@ -30,6 +33,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     protected static $modelFormats = [
         'injection' => null,
+        'multifeed' => null,
     ];
 
     /**
@@ -40,6 +44,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     protected static $attributeMap = [
         'injection' => 'injection',
+        'multifeed' => 'multifeed',
     ];
 
     /**
@@ -49,6 +54,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     protected static $setters = [
         'injection' => 'setInjection',
+        'multifeed' => 'setMultifeed',
     ];
 
     /**
@@ -58,6 +64,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     protected static $getters = [
         'injection' => 'getInjection',
+        'multifeed' => 'getMultifeed',
     ];
 
     /**
@@ -76,6 +83,9 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     {
         if (isset($data['injection'])) {
             $this->container['injection'] = $data['injection'];
+        }
+        if (isset($data['multifeed'])) {
+            $this->container['multifeed'] = $data['multifeed'];
         }
     }
 
@@ -137,13 +147,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-
-        if (!isset($this->container['injection']) || null === $this->container['injection']) {
-            $invalidProperties[] = "'injection' can't be null";
-        }
-
-        return $invalidProperties;
+        return [];
     }
 
     /**
@@ -160,7 +164,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Gets injection.
      *
-     * @return Injection
+     * @return null|Injection
      */
     public function getInjection()
     {
@@ -170,13 +174,37 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Sets injection.
      *
-     * @param Injection $injection injection
+     * @param null|Injection $injection injection
      *
      * @return self
      */
     public function setInjection($injection)
     {
         $this->container['injection'] = $injection;
+
+        return $this;
+    }
+
+    /**
+     * Gets multifeed.
+     *
+     * @return null|Multifeed
+     */
+    public function getMultifeed()
+    {
+        return $this->container['multifeed'] ?? null;
+    }
+
+    /**
+     * Sets multifeed.
+     *
+     * @param null|Multifeed $multifeed multifeed
+     *
+     * @return self
+     */
+    public function setMultifeed($multifeed)
+    {
+        $this->container['multifeed'] = $multifeed;
 
         return $this;
     }

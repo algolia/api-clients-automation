@@ -19,9 +19,11 @@ else:
 
 
 from algoliasearch.composition.models.injection import Injection
+from algoliasearch.composition.models.multifeed import Multifeed
 
 _ALIASES = {
     "injection": "injection",
+    "multifeed": "multifeed",
 }
 
 
@@ -31,10 +33,11 @@ def _alias_generator(name: str) -> str:
 
 class CompositionBehavior(BaseModel):
     """
-    CompositionBehavior
+    An object containing either an `injection` or `multifeed` behavior schema, but not both.
     """
 
-    injection: Injection
+    injection: Optional[Injection] = None
+    multifeed: Optional[Multifeed] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -74,6 +77,11 @@ class CompositionBehavior(BaseModel):
         obj["injection"] = (
             Injection.from_dict(obj["injection"])
             if obj.get("injection") is not None
+            else None
+        )
+        obj["multifeed"] = (
+            Multifeed.from_dict(obj["multifeed"])
+            if obj.get("multifeed") is not None
             else None
         )
 
