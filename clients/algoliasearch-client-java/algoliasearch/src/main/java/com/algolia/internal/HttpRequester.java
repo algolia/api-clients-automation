@@ -163,8 +163,10 @@ public final class HttpRequester implements Requester {
     return builder.build();
   }
 
-
-  /** Returns a suitable OkHttpClient instance based on the provided request options and request type. */
+  /**
+   * Returns a suitable OkHttpClient instance based on the provided request options and request
+   * type.
+   */
   @Nonnull
   private OkHttpClient getOkHttpClient(RequestOptions requestOptions, HttpRequest httpRequest) {
     // Return the default client if no request options are provided.
