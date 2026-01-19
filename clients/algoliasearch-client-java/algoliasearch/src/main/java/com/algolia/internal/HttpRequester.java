@@ -81,8 +81,8 @@ public final class HttpRequester implements Requester {
 
     Request request = requestBuilder.build();
 
-    // Get or adjust the HTTP client according to request options and request type.
-    OkHttpClient client = getOkHttpClient(requestOptions, httpRequest);
+    // Get or adjust the HTTP client according to request options.
+    OkHttpClient client = getOkHttpClient(requestOptions);
 
     // Execute the request.
     Call call = client.newCall(request);
@@ -163,26 +163,16 @@ public final class HttpRequester implements Requester {
     return builder.build();
   }
 
-
-  /** Returns a suitable OkHttpClient instance based on the provided request options and request type. */
+  /** Returns a suitable OkHttpClient instance based on the provided request options. */
   @Nonnull
-  private OkHttpClient getOkHttpClient(RequestOptions requestOptions, HttpRequest httpRequest) {
+  private OkHttpClient getOkHttpClient(RequestOptions requestOptions) {
     // Return the default client if no request options are provided.
     if (requestOptions == null) return httpClient;
 
     // Create a new client builder from the default client and adjust timeouts if provided.
     OkHttpClient.Builder builder = httpClient.newBuilder();
-    // Determine if the request is a write operation
-    String method = httpRequest.getMethod();
-    boolean isWrite = !("GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method));
-
     if (requestOptions.getReadTimeout() != null) {
-      // If write operation, set readTimeout to writeTimeout
-      if (isWrite && requestOptions.getWriteTimeout() != null) {
-        builder.readTimeout(requestOptions.getWriteTimeout());
-      } else {
-        builder.readTimeout(requestOptions.getReadTimeout());
-      }
+      builder.readTimeout(requestOptions.getReadTimeout());
     }
     if (requestOptions.getWriteTimeout() != null) {
       builder.writeTimeout(requestOptions.getWriteTimeout());
