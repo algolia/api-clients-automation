@@ -15,7 +15,7 @@
     "@types/eslint": "9.6.1",
     "esbuild": "0.27.2",
     "eslint": "8.57.1",
-    "eslint-plugin-yml": "1.19.0",
+    "eslint-plugin-yml": "3.0.0",
     "eslint-vitest-rule-tester": "3.0.1",
     "typescript": "5.9.3",
     "vitest": "4.0.17",
