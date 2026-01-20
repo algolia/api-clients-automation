@@ -126,7 +126,7 @@
     ],
     "folder": "clients/algoliasearch-client-java",
     "gitRepoId": "algoliasearch-client-java",
-    "packageVersion": "4.34.3",
+    "packageVersion": "4.34.4",
     "modelFolder": "algoliasearch/src/main/java/com/algolia/model",
     "apiFolder": "algoliasearch/src/main/java/com/algolia/api",
     "dockerImage": "apic_base",

@@ -3831,7 +3831,7 @@ open class SearchClient {
         searchParams: SearchSearchParams? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws -> SearchResponse<T> {
-        let response: Response<SearchResponse<T>> = try await searchSingleIndexWithHTTPInfo(
+        let response: Response<SearchResponse<T>> = try await s(
             indexName: indexName,
             searchParams: searchParams,
             requestOptions: requestOptions

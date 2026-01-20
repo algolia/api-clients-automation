@@ -309,7 +309,7 @@ async function prepareGitEnvironment(dryRun: boolean): Promise<void> {
     await configureGitHubAuthor();
   }
 
-  if (!dryRun && (await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
+  if (!dryRun && !process.env.FORCE && (await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 

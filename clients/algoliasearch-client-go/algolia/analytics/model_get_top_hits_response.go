@@ -39,23 +39,17 @@ func (dst *GetTopHitsResponse) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal data into TopHitsResponse
 	err = json.Unmarshal(data, &dst.TopHitsResponse)
-	if err == nil {
-		return nil // found the correct type
-	} else {
+	if err != nil {
 		dst.TopHitsResponse = nil
 	}
 	// try to unmarshal data into TopHitsResponseWithAnalytics
 	err = json.Unmarshal(data, &dst.TopHitsResponseWithAnalytics)
-	if err == nil {
-		return nil // found the correct type
-	} else {
+	if err != nil {
 		dst.TopHitsResponseWithAnalytics = nil
 	}
 	// try to unmarshal data into TopHitsResponseWithRevenueAnalytics
 	err = json.Unmarshal(data, &dst.TopHitsResponseWithRevenueAnalytics)
-	if err == nil {
-		return nil // found the correct type
-	} else {
+	if err != nil {
 		dst.TopHitsResponseWithRevenueAnalytics = nil
 	}
 
