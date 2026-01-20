@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.25.0",
-    "@redocly/cli": "2.14.4",
+    "@redocly/cli": "2.14.5",
     "eslint": "8.57.1",
     "eslint-plugin-automation-custom": "1.0.0",
     "eslint-plugin-json": "4.0.1",
@@ -39,7 +39,7 @@
     "husky": "9.1.7",
     "lint-staged": "16.2.7",
     "oxlint": "1.39.0",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "prettier-plugin-java": "2.8.1",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",

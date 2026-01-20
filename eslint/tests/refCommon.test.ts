@@ -1,5 +1,5 @@
 import { runClassic } from 'eslint-vitest-rule-tester';
-import yamlParser from 'yaml-eslint-parser';
+import * as yamlParser from "yaml-eslint-parser"
 
 import { refCommon } from '../src/rules/refCommon.js';
 

@@ -360,7 +360,7 @@ class SearchTest {
     client.runTest(
       call = { customPost(path = "1/test") },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.37.3\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.37.4\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
