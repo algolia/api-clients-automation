@@ -184,7 +184,7 @@ public final class HttpRequester implements Requester {
         changed = true;
       }
       // For read operations, use the explicit readTimeout if provided
-      if(requestOptions.getReadTimeout() != null) {
+      if (requestOptions.getReadTimeout() != null) {
         builder.readTimeout(requestOptions.getReadTimeout());
         changed = true;
       }
@@ -199,15 +199,17 @@ public final class HttpRequester implements Requester {
         builder.connectTimeout(requestOptions.getConnectTimeout());
         changed = true;
       }
-      // For write operations, use the explicit writeTimeout for both readTimeout and writeTimeout if provided
-      if(requestOptions.getWriteTimeout() != null) {
+      // For write operations, use the explicit writeTimeout for both readTimeout and writeTimeout
+      // if provided
+      if (requestOptions.getWriteTimeout() != null) {
         builder.readTimeout(requestOptions.getWriteTimeout());
         builder.writeTimeout(requestOptions.getWriteTimeout());
         changed = true;
       }
     }
 
-    // Return a new OkHttpClient instance if any timeout was changed, otherwise reuse the default client
+    // Return a new OkHttpClient instance if any timeout was changed, otherwise reuse the default
+    // client
     return changed ? builder.build() : httpClient;
   }
 
