@@ -1,3 +1,7 @@
+## [4.34.3](https://github.com/algolia/algoliasearch-client-java/compare/4.34.2...4.34.3)
+
+- [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.34.2](https://github.com/algolia/algoliasearch-client-java/compare/4.34.1...4.34.2)
 
 - [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
