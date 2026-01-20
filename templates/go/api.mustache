@@ -31,6 +31,7 @@ type config struct {
 	context      context.Context
 	queryParams  url.Values
 	headerParams map[string]string
+	bodyParams   map[string]any
   timeouts transport.RequestConfiguration
 
   {{#isIngestionClient}}
@@ -109,6 +110,35 @@ func WithConnectTimeout(timeout time.Duration) requestOption {
   return requestOption(func(c *config) {
     c.timeouts.ConnectTimeout = &timeout
   })
+}
+
+// WithBodyParam adds a single custom parameter to the request body.
+// For write requests (POST, PUT, PATCH, DELETE), the param is merged into the body.
+// For read requests (GET), the param is converted to a query parameter.
+// Custom values override typed values when keys conflict.
+func WithBodyParam(key string, value any) requestOption {
+	return requestOption(func(c *config) {
+		if c.bodyParams == nil {
+			c.bodyParams = make(map[string]any)
+		}
+		c.bodyParams[key] = value
+	})
+}
+
+// WithBodyParams adds multiple custom parameters to the request body.
+// Parameters are deep-merged into the typed request body.
+// For write requests, params are merged into the body.
+// For read requests, params are converted to query parameters.
+// Custom values override typed values when keys conflict.
+func WithBodyParams(params map[string]any) requestOption {
+	return requestOption(func(c *config) {
+		if c.bodyParams == nil {
+			c.bodyParams = make(map[string]any)
+		}
+		for k, v := range params {
+			c.bodyParams[k] = v
+		}
+	})
 }
 
 {{#isSearchClient}}
@@ -480,7 +510,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{
     postBody = r.{{paramName}}{{^required}}
    } {{/required}}
 {{/bodyParams}}
-	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, postBody, conf.headerParams, conf.queryParams)
+	req, err := c.prepareRequest(conf.context, requestPath, http.Method{{httpMethod}}, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
 	if err != nil {
 		return nil, nil, err
 	}
