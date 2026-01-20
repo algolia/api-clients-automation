@@ -167,7 +167,8 @@ public final class HttpRequester implements Requester {
   @Nonnull
   private OkHttpClient getOkHttpClient(HttpRequest httpRequest, RequestOptions requestOptions) {
     OkHttpClient.Builder builder = httpClient.newBuilder();
-    boolean isRead = httpRequest.isRead();
+    // Determine if this is a read operation: either explicitly marked as read, or using GET/HEAD method
+    boolean isRead = httpRequest.isRead() || "GET".equalsIgnoreCase(httpRequest.getMethod());
     boolean changed = false;
 
     // If this is a write operation, set readTimeout to the default writeTimeout value
