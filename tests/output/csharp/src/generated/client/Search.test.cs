@@ -403,7 +403,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.36.1\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.36.2\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
