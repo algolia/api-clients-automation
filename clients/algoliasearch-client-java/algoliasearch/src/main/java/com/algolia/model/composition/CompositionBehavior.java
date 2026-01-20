@@ -7,11 +7,14 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** CompositionBehavior */
+/** An object containing either an `injection` or `multifeed` behavior schema, but not both. */
 public class CompositionBehavior {
 
   @JsonProperty("injection")
   private Injection injection;
+
+  @JsonProperty("multifeed")
+  private Multifeed multifeed;
 
   public CompositionBehavior setInjection(Injection injection) {
     this.injection = injection;
@@ -19,9 +22,20 @@ public class CompositionBehavior {
   }
 
   /** Get injection */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Injection getInjection() {
     return injection;
+  }
+
+  public CompositionBehavior setMultifeed(Multifeed multifeed) {
+    this.multifeed = multifeed;
+    return this;
+  }
+
+  /** Get multifeed */
+  @javax.annotation.Nullable
+  public Multifeed getMultifeed() {
+    return multifeed;
   }
 
   @Override
@@ -33,12 +47,12 @@ public class CompositionBehavior {
       return false;
     }
     CompositionBehavior compositionBehavior = (CompositionBehavior) o;
-    return Objects.equals(this.injection, compositionBehavior.injection);
+    return Objects.equals(this.injection, compositionBehavior.injection) && Objects.equals(this.multifeed, compositionBehavior.multifeed);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(injection);
+    return Objects.hash(injection, multifeed);
   }
 
   @Override
@@ -46,6 +60,7 @@ public class CompositionBehavior {
     StringBuilder sb = new StringBuilder();
     sb.append("class CompositionBehavior {\n");
     sb.append("    injection: ").append(toIndentedString(injection)).append("\n");
+    sb.append("    multifeed: ").append(toIndentedString(multifeed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
