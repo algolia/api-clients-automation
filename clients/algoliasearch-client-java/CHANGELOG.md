@@ -1,3 +1,7 @@
+## [4.34.4](https://github.com/algolia/algoliasearch-client-java/compare/4.34.3...4.34.4)
+
+- [3572843bd](https://github.com/algolia/api-clients-automation/commit/3572843bd) fix(java): Java API client writeTimeout configuration not working ([#5829](https://github.com/algolia/api-clients-automation/pull/5829)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [4.34.3](https://github.com/algolia/algoliasearch-client-java/compare/4.34.2...4.34.3)
 
 - [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
