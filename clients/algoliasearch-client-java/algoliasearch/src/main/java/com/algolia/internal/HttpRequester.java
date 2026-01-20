@@ -176,23 +176,32 @@ public final class HttpRequester implements Requester {
       changed = true;
     }
 
-    if (isRead && requestOptions != null) {
-      // For read operations, use the explicit readTimeout if provided
-      if(requestOptions.getReadTimeout() != null) {
-        builder.readTimeout(requestOptions.getReadTimeout());
+    // If requestOptions are provided, check for custom timeout overrides
+    if(requestOptions != null) {
+      // Use the explicit connectTimeout if provided
+      if (requestOptions.getConnectTimeout() != null) {
+        builder.connectTimeout(requestOptions.getConnectTimeout());
         changed = true;
       }
-      // For read operations, set writeTimeout if provided
-      if (requestOptions.getWriteTimeout() != null) {
-        builder.writeTimeout(requestOptions.getWriteTimeout());
-        changed = true;
-      }
-    } else if (!isRead && requestOptions != null) {
-      // For write operations, use the explicit writeTimeout for both readTimeout and writeTimeout if provided
-      if(requestOptions.getWriteTimeout() != null) {
-        builder.readTimeout(requestOptions.getWriteTimeout());
-        builder.writeTimeout(requestOptions.getWriteTimeout());
-        changed = true;
+
+      if(isRead) {
+        // For read operations, use the explicit readTimeout if provided
+        if(requestOptions.getReadTimeout() != null) {
+          builder.readTimeout(requestOptions.getReadTimeout());
+          changed = true;
+        }
+        // For read operations, set writeTimeout if provided
+        if (requestOptions.getWriteTimeout() != null) {
+          builder.writeTimeout(requestOptions.getWriteTimeout());
+          changed = true;
+        }
+      } else {
+        // For write operations, use the explicit writeTimeout for both readTimeout and writeTimeout if provided
+        if(requestOptions.getWriteTimeout() != null) {
+          builder.readTimeout(requestOptions.getWriteTimeout());
+          builder.writeTimeout(requestOptions.getWriteTimeout());
+          changed = true;
+        }
       }
     }
 
