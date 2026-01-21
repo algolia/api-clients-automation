@@ -42,7 +42,6 @@ compositionRule:
       example: ['conditional']
   required:
     - objectID
-    - conditions
     - consequence
 
 condition:
