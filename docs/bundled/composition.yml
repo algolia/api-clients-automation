@@ -4630,10 +4630,12 @@ paths:
                   objectID = "rule-with-deduplication",
                   description = Some("my description"),
                   enabled = Some(true),
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("harry")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("harry")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
@@ -5632,13 +5634,15 @@ paths:
                           objectID = "rule-with-deduplication",
                           description = Some("my description"),
                           enabled = Some(true),
-                          conditions = Seq(
-                            Condition(
-                              anchoring = Some(Anchoring.withName("contains")),
-                              pattern = Some("harry")
-                            ),
-                            Condition(
-                              sortBy = Some("price-low-to-high")
+                          conditions = Some(
+                            Seq(
+                              Condition(
+                                anchoring = Some(Anchoring.withName("contains")),
+                                pattern = Some("harry")
+                              ),
+                              Condition(
+                                sortBy = Some("price-low-to-high")
+                              )
                             )
                           ),
                           consequence = CompositionRuleConsequence(
@@ -9426,7 +9430,6 @@ components:
             - conditional
       required:
         - objectID
-        - conditions
         - consequence
     deleteCompositionRuleAction:
       type: object

@@ -45,7 +45,7 @@ package algoliasearch.composition
   */
 case class CompositionRule(
     objectID: String,
-    conditions: Seq[Condition],
+    conditions: Option[Seq[Condition]] = scala.None,
     consequence: CompositionRuleConsequence,
     description: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,

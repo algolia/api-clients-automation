@@ -1312,10 +1312,12 @@ class SnippetCompositionClient {
         objectID = "ruleID",
         compositionRule = CompositionRule(
           objectID = "ruleID",
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("is")),
-              pattern = Some("test")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("is")),
+                pattern = Some("test")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
@@ -1373,10 +1375,12 @@ class SnippetCompositionClient {
         objectID = "rule-with-metadata",
         compositionRule = CompositionRule(
           objectID = "rule-with-metadata",
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("is")),
-              pattern = Some("test")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("is")),
+                pattern = Some("test")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
@@ -1471,14 +1475,16 @@ class SnippetCompositionClient {
               )
             )
           ),
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("harry")
-            ),
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("potter")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("harry")
+              ),
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("potter")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
@@ -1549,10 +1555,12 @@ class SnippetCompositionClient {
           objectID = "rule-with-deduplication",
           description = Some("my description"),
           enabled = Some(true),
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("harry")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("harry")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
@@ -1619,9 +1627,11 @@ class SnippetCompositionClient {
                 action = Action.withName("upsert"),
                 body = CompositionRule(
                   objectID = "123",
-                  conditions = Seq(
-                    Condition(
-                      pattern = Some("a")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        pattern = Some("a")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
@@ -1673,10 +1683,12 @@ class SnippetCompositionClient {
                 action = Action.withName("upsert"),
                 body = CompositionRule(
                   objectID = "rule-with-metadata",
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("is")),
-                      pattern = Some("test")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("is")),
+                        pattern = Some("test")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
@@ -1779,14 +1791,16 @@ class SnippetCompositionClient {
                       )
                     )
                   ),
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("harry")
-                    ),
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("potter")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("harry")
+                      ),
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("potter")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
@@ -1865,13 +1879,15 @@ class SnippetCompositionClient {
                   objectID = "rule-with-deduplication",
                   description = Some("my description"),
                   enabled = Some(true),
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("harry")
-                    ),
-                    Condition(
-                      sortBy = Some("price-low-to-high")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("harry")
+                      ),
+                      Condition(
+                        sortBy = Some("price-low-to-high")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(

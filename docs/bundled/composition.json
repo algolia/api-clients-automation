@@ -4310,7 +4310,6 @@
         },
         "required": [
           "objectID",
-          "conditions",
           "consequence"
         ]
       },
