@@ -4044,7 +4044,6 @@ components:
             - conditional
       required:
         - objectID
-        - conditions
         - consequence
     deleteCompositionRuleAction:
       type: object
