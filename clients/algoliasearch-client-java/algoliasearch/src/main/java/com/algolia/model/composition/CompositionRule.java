@@ -17,7 +17,7 @@ public class CompositionRule implements RulesBatchCompositionAction {
   private String objectID;
 
   @JsonProperty("conditions")
-  private List<Condition> conditions = new ArrayList<>();
+  private List<Condition> conditions;
 
   @JsonProperty("consequence")
   private CompositionRuleConsequence consequence;
@@ -51,12 +51,15 @@ public class CompositionRule implements RulesBatchCompositionAction {
   }
 
   public CompositionRule addConditions(Condition conditionsItem) {
+    if (this.conditions == null) {
+      this.conditions = new ArrayList<>();
+    }
     this.conditions.add(conditionsItem);
     return this;
   }
 
   /** Conditions that trigger a composition rule. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public List<Condition> getConditions() {
     return conditions;
   }
