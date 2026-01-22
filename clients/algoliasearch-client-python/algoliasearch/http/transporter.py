@@ -59,8 +59,8 @@ class Transporter(BaseTransporter):
                 connect_timeout = (
                     request_options.timeouts["connect"] * (host.retry_count + 1)
                 ) / 1000
-                read_timeout = self._timeout / 1000
-                total_timeout = connect_timeout + read_timeout
+                request_timeout = self._timeout / 1000
+                total_timeout = connect_timeout + request_timeout
 
                 async with timeout(total_timeout):
                     timeout_config = ClientTimeout(connect=connect_timeout)
