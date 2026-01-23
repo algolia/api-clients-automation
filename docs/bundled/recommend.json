@@ -2629,19 +2629,36 @@
       },
       "trendingFacets": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "indexName": {
+            "$ref": "#/components/schemas/indexName"
+          },
+          "threshold": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Minimum score a recommendation must have to be included in the response."
+          },
+          "maxRecommendations": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30,
+            "default": 30,
+            "description": "Maximum number of recommendations to retrieve.\nBy default, all recommendations are returned and no fallback request is made.\nDepending on the available recommendations and the other request parameters,\nthe actual number of recommendations may be lower than this value.\n"
+          },
           "facetName": {
             "type": "string",
             "description": "Facet attribute for which to retrieve trending facet values."
           },
           "model": {
             "$ref": "#/components/schemas/trendingFacetsModel"
-          },
-          "fallbackParameters": {
-            "$ref": "#/components/schemas/fallbackParams"
           }
         },
         "required": [
+          "indexName",
+          "threshold",
           "facetName",
           "model"
         ]
@@ -2649,9 +2666,6 @@
       "trendingFacetsQuery": {
         "title": "Trending facet values",
         "allOf": [
-          {
-            "$ref": "#/components/schemas/baseRecommendRequest"
-          },
           {
             "$ref": "#/components/schemas/trendingFacets"
           }
