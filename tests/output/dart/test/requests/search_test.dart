@@ -33,6 +33,34 @@ void main() {
 
   // addApiKey
   test(
+    'nlu test',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.addApiKey(
+        apiKey: ApiKey(
+          acl: [
+            Acl.fromJson("search"),
+            Acl.fromJson("addObject"),
+            Acl.fromJson("nluReadProject"),
+          ],
+          description: "my new api key",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/keys');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}""");
+      },
+    ),
+  );
+
+  // addApiKey
+  test(
     'all',
     () => runTest(
       builder: (requester) => SearchClient(

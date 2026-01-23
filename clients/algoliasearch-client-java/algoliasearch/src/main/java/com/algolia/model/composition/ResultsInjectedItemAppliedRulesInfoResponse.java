@@ -18,7 +18,7 @@ public class ResultsInjectedItemAppliedRulesInfoResponse {
     return this;
   }
 
-  /** Unique record identifier. */
+  /** The objectID of the applied index level rule on this injected group. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

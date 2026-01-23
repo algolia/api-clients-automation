@@ -18,9 +18,9 @@
     "waitForAllReleases": "yarn runScript ci/codegen/waitForAllReleases.ts"
   },
   "devDependencies": {
-    "@actions/artifact": "4.0.0",
-    "@actions/core": "1.11.1",
-    "@actions/exec": "1.1.1",
+    "@actions/artifact": "5.0.2",
+    "@actions/core": "2.0.2",
+    "@actions/exec": "2.0.0",
     "@actions/io": "2.0.0",
     "@har-sdk/oas": "2.12.2",
     "@octokit/rest": "22.0.1",
@@ -28,18 +28,18 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "24.10.1",
+    "@types/node": "24.10.9",
     "@types/semver": "7.7.1",
     "@types/spinnies": "0.5.3",
-    "chai": "6.2.1",
+    "chai": "6.2.2",
     "chalk": "5.6.2",
     "commander": "14.0.2",
     "crc": "4.3.2",
-    "esbuild": "0.27.1",
+    "esbuild": "0.27.2",
     "execa": "9.6.1",
     "express": "5.2.1",
     "folder-hash": "4.1.1",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "httpsnippet": "3.0.9",
     "js-yaml": "4.1.1",
     "knip": "5.67.1",
@@ -47,6 +47,6 @@
     "semver": "7.7.3",
     "spinnies": "0.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.15"
+    "vitest": "4.0.17"
   }
 }

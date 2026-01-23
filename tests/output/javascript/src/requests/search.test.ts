@@ -24,6 +24,18 @@ describe('addApiKey', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('nlu test', async () => {
+    const req = (await client.addApiKey({
+      acl: ['search', 'addObject', 'nluReadProject'],
+      description: 'my new api key',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/keys');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ acl: ['search', 'addObject', 'nluReadProject'], description: 'my new api key' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('all', async () => {
     const req = (await client.addApiKey({
       acl: ['search', 'addObject'],

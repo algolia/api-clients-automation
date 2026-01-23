@@ -22358,6 +22358,14 @@ components:
         - seeUnretrievableAttributes
         - settings
         - usage
+        - nluWriteProject
+        - nluReadProject
+        - nluWriteEntity
+        - nluReadEntity
+        - nluWriteIntent
+        - nluReadIntent
+        - nluPrediction
+        - nluReadAnswers
     apiKey:
       type: object
       description: API key object.

@@ -55,13 +55,13 @@ _ALIASES = {
     "user_data": "userData",
     "query_id": "queryID",
     "automatic_insights": "_automaticInsights",
-    "page": "page",
+    "hits": "hits",
+    "hits_per_page": "hitsPerPage",
     "nb_hits": "nbHits",
     "nb_pages": "nbPages",
-    "hits_per_page": "hitsPerPage",
-    "hits": "hits",
-    "query": "query",
+    "page": "page",
     "params": "params",
+    "query": "query",
     "compositions": "compositions",
 }
 
@@ -124,20 +124,20 @@ class SearchResultsItem(BaseModel):
     """ Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics). """
     automatic_insights: Optional[bool] = None
     """ Whether automatic events collection is enabled for the application. """
-    page: int
-    """ The current page of the results. """
-    nb_hits: int
-    """ Number of results (hits). """
-    nb_pages: int
-    """ Number of pages of results. """
-    hits_per_page: int
-    """ Number of hits returned per page. """
-    hits: List[Hit]
+    hits: Optional[List[Hit]] = None
     """ Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  """
-    query: str
-    """ The search query string. """
-    params: str
+    hits_per_page: Optional[int] = None
+    """ Number of hits returned per page. """
+    nb_hits: Optional[int] = None
+    """ Number of results (hits). """
+    nb_pages: Optional[int] = None
+    """ Number of pages of results. """
+    page: Optional[int] = None
+    """ The current page of the results. """
+    params: Optional[str] = None
     """ URL-encoded string of all search parameters. """
+    query: Optional[str] = None
+    """ The search query string. """
     compositions: Dict[str, ResultsCompositionInfoResponse]
 
     @field_validator("around_lat_lng")

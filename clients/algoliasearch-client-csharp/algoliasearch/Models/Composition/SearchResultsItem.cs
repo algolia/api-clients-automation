@@ -25,32 +25,9 @@ public partial class SearchResultsItem<T>
   /// <summary>
   /// Initializes a new instance of the SearchResultsItem class.
   /// </summary>
-  /// <param name="page">The current page of the results. (required).</param>
-  /// <param name="nbHits">Number of results (hits). (required).</param>
-  /// <param name="nbPages">Number of pages of results. (required).</param>
-  /// <param name="hitsPerPage">Number of hits returned per page. (required).</param>
-  /// <param name="hits">Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.  (required).</param>
-  /// <param name="query">The search query string. (required).</param>
-  /// <param name="varParams">URL-encoded string of all search parameters. (required).</param>
   /// <param name="compositions">compositions (required).</param>
-  public SearchResultsItem(
-    int page,
-    int nbHits,
-    int nbPages,
-    int hitsPerPage,
-    List<T> hits,
-    string query,
-    string varParams,
-    Dictionary<string, ResultsCompositionInfoResponse> compositions
-  )
+  public SearchResultsItem(Dictionary<string, ResultsCompositionInfoResponse> compositions)
   {
-    Page = page;
-    NbHits = nbHits;
-    NbPages = nbPages;
-    HitsPerPage = hitsPerPage;
-    Hits = hits ?? throw new ArgumentNullException(nameof(hits));
-    Query = query ?? throw new ArgumentNullException(nameof(query));
-    Params = varParams ?? throw new ArgumentNullException(nameof(varParams));
     Compositions = compositions ?? throw new ArgumentNullException(nameof(compositions));
   }
 
@@ -237,34 +214,6 @@ public partial class SearchResultsItem<T>
   public bool? AutomaticInsights { get; set; }
 
   /// <summary>
-  /// The current page of the results.
-  /// </summary>
-  /// <value>The current page of the results.</value>
-  [JsonPropertyName("page")]
-  public int Page { get; set; }
-
-  /// <summary>
-  /// Number of results (hits).
-  /// </summary>
-  /// <value>Number of results (hits).</value>
-  [JsonPropertyName("nbHits")]
-  public int NbHits { get; set; }
-
-  /// <summary>
-  /// Number of pages of results.
-  /// </summary>
-  /// <value>Number of pages of results.</value>
-  [JsonPropertyName("nbPages")]
-  public int NbPages { get; set; }
-
-  /// <summary>
-  /// Number of hits returned per page.
-  /// </summary>
-  /// <value>Number of hits returned per page.</value>
-  [JsonPropertyName("hitsPerPage")]
-  public int HitsPerPage { get; set; }
-
-  /// <summary>
   /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   /// </summary>
   /// <value>Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting. </value>
@@ -272,11 +221,32 @@ public partial class SearchResultsItem<T>
   public List<T> Hits { get; set; }
 
   /// <summary>
-  /// The search query string.
+  /// Number of hits returned per page.
   /// </summary>
-  /// <value>The search query string.</value>
-  [JsonPropertyName("query")]
-  public string Query { get; set; }
+  /// <value>Number of hits returned per page.</value>
+  [JsonPropertyName("hitsPerPage")]
+  public int? HitsPerPage { get; set; }
+
+  /// <summary>
+  /// Number of results (hits).
+  /// </summary>
+  /// <value>Number of results (hits).</value>
+  [JsonPropertyName("nbHits")]
+  public int? NbHits { get; set; }
+
+  /// <summary>
+  /// Number of pages of results.
+  /// </summary>
+  /// <value>Number of pages of results.</value>
+  [JsonPropertyName("nbPages")]
+  public int? NbPages { get; set; }
+
+  /// <summary>
+  /// The current page of the results.
+  /// </summary>
+  /// <value>The current page of the results.</value>
+  [JsonPropertyName("page")]
+  public int? Page { get; set; }
 
   /// <summary>
   /// URL-encoded string of all search parameters.
@@ -284,6 +254,13 @@ public partial class SearchResultsItem<T>
   /// <value>URL-encoded string of all search parameters.</value>
   [JsonPropertyName("params")]
   public string Params { get; set; }
+
+  /// <summary>
+  /// The search query string.
+  /// </summary>
+  /// <value>The search query string.</value>
+  [JsonPropertyName("query")]
+  public string Query { get; set; }
 
   /// <summary>
   /// Gets or Sets Compositions
@@ -325,13 +302,13 @@ public partial class SearchResultsItem<T>
     sb.Append("  UserData: ").Append(UserData).Append("\n");
     sb.Append("  QueryID: ").Append(QueryID).Append("\n");
     sb.Append("  AutomaticInsights: ").Append(AutomaticInsights).Append("\n");
-    sb.Append("  Page: ").Append(Page).Append("\n");
+    sb.Append("  Hits: ").Append(Hits).Append("\n");
+    sb.Append("  HitsPerPage: ").Append(HitsPerPage).Append("\n");
     sb.Append("  NbHits: ").Append(NbHits).Append("\n");
     sb.Append("  NbPages: ").Append(NbPages).Append("\n");
-    sb.Append("  HitsPerPage: ").Append(HitsPerPage).Append("\n");
-    sb.Append("  Hits: ").Append(Hits).Append("\n");
-    sb.Append("  Query: ").Append(Query).Append("\n");
+    sb.Append("  Page: ").Append(Page).Append("\n");
     sb.Append("  Params: ").Append(Params).Append("\n");
+    sb.Append("  Query: ").Append(Query).Append("\n");
     sb.Append("  Compositions: ").Append(Compositions).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
@@ -433,15 +410,15 @@ public partial class SearchResultsItem<T>
         AutomaticInsights == input.AutomaticInsights
         || AutomaticInsights.Equals(input.AutomaticInsights)
       )
-      && (Page == input.Page || Page.Equals(input.Page))
-      && (NbHits == input.NbHits || NbHits.Equals(input.NbHits))
-      && (NbPages == input.NbPages || NbPages.Equals(input.NbPages))
-      && (HitsPerPage == input.HitsPerPage || HitsPerPage.Equals(input.HitsPerPage))
       && (
         Hits == input.Hits || Hits != null && input.Hits != null && Hits.SequenceEqual(input.Hits)
       )
-      && (Query == input.Query || (Query != null && Query.Equals(input.Query)))
+      && (HitsPerPage == input.HitsPerPage || HitsPerPage.Equals(input.HitsPerPage))
+      && (NbHits == input.NbHits || NbHits.Equals(input.NbHits))
+      && (NbPages == input.NbPages || NbPages.Equals(input.NbPages))
+      && (Page == input.Page || Page.Equals(input.Page))
       && (Params == input.Params || (Params != null && Params.Equals(input.Params)))
+      && (Query == input.Query || (Query != null && Query.Equals(input.Query)))
       && (
         Compositions == input.Compositions
         || Compositions != null
@@ -536,21 +513,21 @@ public partial class SearchResultsItem<T>
         hashCode = (hashCode * 59) + QueryID.GetHashCode();
       }
       hashCode = (hashCode * 59) + AutomaticInsights.GetHashCode();
-      hashCode = (hashCode * 59) + Page.GetHashCode();
-      hashCode = (hashCode * 59) + NbHits.GetHashCode();
-      hashCode = (hashCode * 59) + NbPages.GetHashCode();
-      hashCode = (hashCode * 59) + HitsPerPage.GetHashCode();
       if (Hits != null)
       {
         hashCode = (hashCode * 59) + Hits.GetHashCode();
       }
-      if (Query != null)
-      {
-        hashCode = (hashCode * 59) + Query.GetHashCode();
-      }
+      hashCode = (hashCode * 59) + HitsPerPage.GetHashCode();
+      hashCode = (hashCode * 59) + NbHits.GetHashCode();
+      hashCode = (hashCode * 59) + NbPages.GetHashCode();
+      hashCode = (hashCode * 59) + Page.GetHashCode();
       if (Params != null)
       {
         hashCode = (hashCode * 59) + Params.GetHashCode();
+      }
+      if (Query != null)
+      {
+        hashCode = (hashCode * 59) + Query.GetHashCode();
       }
       if (Compositions != null)
       {

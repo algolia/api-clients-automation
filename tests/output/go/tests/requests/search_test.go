@@ -49,6 +49,18 @@ func TestSearch_AddApiKey(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"acl":["search","addObject"],"description":"my new api key"}`)
 	})
+	t.Run("nlu test", func(t *testing.T) {
+		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
+
+			search.NewEmptyApiKey().SetAcl(
+				[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("nluReadProject")}).SetDescription("my new api key")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/keys", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}`)
+	})
 	t.Run("all", func(t *testing.T) {
 		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 

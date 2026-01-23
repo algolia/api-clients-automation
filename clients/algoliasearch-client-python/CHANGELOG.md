@@ -1,3 +1,23 @@
+## [4.35.4](https://github.com/algolia/algoliasearch-client-python/compare/4.35.3...4.35.4)
+
+- [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.35.3](https://github.com/algolia/algoliasearch-client-python/compare/4.35.2...4.35.3)
+
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
+Some fields from the Composition Run search response were marked as required while they were optional on the API side. This has been fixed, but might impact the client types.
+
+## [4.35.2](https://github.com/algolia/algoliasearch-client-python/compare/4.35.1...4.35.2)
+
+- [762964fa3](https://github.com/algolia/api-clients-automation/commit/762964fa3) chore: update Python version in release workflow to 3.13.7 ([#5771](https://github.com/algolia/api-clients-automation/pull/5771)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.35.1](https://github.com/algolia/algoliasearch-client-python/compare/4.35.0...4.35.1)
+
+- [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [3296a5033](https://github.com/algolia/api-clients-automation/commit/3296a5033) chore(deps): dependencies 2025-11-24 ([#5653](https://github.com/algolia/api-clients-automation/pull/5653)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [5dabdc540](https://github.com/algolia/api-clients-automation/commit/5dabdc540) refactor(specs): re-organise response for Composition API ([#5744](https://github.com/algolia/api-clients-automation/pull/5744)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [3d86676b0](https://github.com/algolia/api-clients-automation/commit/3d86676b0) fix(specs): update list with NLU permissions ([#5769](https://github.com/algolia/api-clients-automation/pull/5769)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [4.35.0](https://github.com/algolia/algoliasearch-client-python/compare/4.34.0...4.35.0)
 
 - [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)

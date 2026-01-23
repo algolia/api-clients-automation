@@ -46,8 +46,28 @@ export async function snippetForAddApiKey(): Promise<void> {
 
 // Snippet for the addApiKey method.
 //
-// all
+// nlu test
 export async function snippetForAddApiKey1(): Promise<void> {
+  // >SEPARATOR addApiKey nlu test
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.addApiKey({
+    acl: ['search', 'addObject', 'nluReadProject'],
+    description: 'my new api key',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the addApiKey method.
+//
+// all
+export async function snippetForAddApiKey2(): Promise<void> {
   // >SEPARATOR addApiKey all
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');

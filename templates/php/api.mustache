@@ -15,6 +15,7 @@ use {{invokerPackage}}\Iterators\SynonymIterator;
 use {{invokerPackage}}\ObjectSerializer;
 use {{invokerPackage}}\RetryStrategy\ApiWrapper;
 use {{invokerPackage}}\RetryStrategy\ApiWrapperInterface;
+use {{invokerPackage}}\RetryStrategy\AlgoliaResponse;
 use {{invokerPackage}}\RetryStrategy\ClusterHosts;
 use {{invokerPackage}}\Support\Helpers;
 
@@ -86,7 +87,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         return static::createWithConfig({{configClassname}}::create($appId, $apiKey));
     }
     {{/hasRegionalHost}}
-    
+
     /**
      * Instantiate the client with configuration
      *
@@ -225,22 +226,52 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
      */
     public function {{operationId}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = null{{/required}}, {{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}} $requestOptions = [])
     {
-        {{#vendorExtensions.x-group-parameters}}
-        // unbox the parameters from the associative array
+        $response = $this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}} $requestOptions);
+        return $response->getData();
+    }
+
+    {{/operation}}
+
+    {{#operation}}
+        /**
+        * {{summary}} (with HTTP info)
+        *
+        * Returns the response with HTTP metadata (status code, headers, body)
+        {{#notes}}
+            * {{{.}}}
+        {{/notes}}
+        {{#vendorExtensions}}
+            {{#x-acl.0}}
+                * Required API Key ACLs:{{/x-acl.0}}
+            {{#x-acl}}
+                *  - {{.}}
+            {{/x-acl}}
+        {{/vendorExtensions}}
         {{#allParams}}
-        ${{paramName}} = array_key_exists('{{paramName}}', $associative_array) ? $associative_array['{{paramName}}'] : {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}};
+            * @param {{#isModel}}{{{dataType}}}|{{/isModel}}{{#isString}}string{{/isString}}{{#isLong}}int{{/isLong}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isLong}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isLong}}{{/isString}} ${{paramName}}{{#description}} {{{.}}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional){{/required}}
         {{/allParams}}
+        * @param array $requestOptions Request options
+        *
+        * @return AlgoliaResponse
+        */
+        public function {{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = null{{/required}}, {{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}} $requestOptions = [])
+        {
+        {{#vendorExtensions.x-group-parameters}}
+            // unbox the parameters from the associative array
+            {{#allParams}}
+                ${{paramName}} = array_key_exists('{{paramName}}', $associative_array) ? $associative_array['{{paramName}}'] : {{{defaultValue}}}{{^defaultValue}}null{{/defaultValue}};
+            {{/allParams}}
 
         {{/vendorExtensions.x-group-parameters}}
         {{#allParams}}
-        {{#required}}
-        // verify the required parameter '{{paramName}}' is set
-        if (!isset(${{paramName}})) {
-            throw new \InvalidArgumentException(
+            {{#required}}
+                // verify the required parameter '{{paramName}}' is set
+                if (!isset(${{paramName}})) {
+                throw new \InvalidArgumentException(
                 'Parameter `{{paramName}}` is required when calling `{{operationId}}`.'
-            );
-        }
-        {{/required}}
+                );
+                }
+            {{/required}}
         {{/allParams}}
 
         $resourcePath = '{{{path}}}';
@@ -249,67 +280,67 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $httpBody = {{#bodyParam}}{{#required}}${{paramName}}{{/required}}{{^required}} isset(${{paramName}}) ? ${{paramName}} : []{{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
         {{#vendorExtensions}}{{#queryParams}}
 
-        {{#isExplode}}
-        if (${{paramName}} !== null) {
-        {{#style}}
-            $queryParameters{{^x-is-custom-request}}['{{baseName}}']{{/x-is-custom-request}} = ${{paramName}};
-        {{/style}}
-        {{^style}}
-            $queryParameters['{{baseName}}'] = ${{paramName}};
-        {{/style}}
-        }
-        {{/isExplode}}
-        {{^isExplode}}
-        if (is_array(${{paramName}})) {
-            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{style}}{{^style}}{{collectionFormat}}{{/style}}', true);
-        }
-        if (${{paramName}} !== null) {
-            $queryParameters['{{baseName}}'] = ${{paramName}};
-        }
-        {{/isExplode}}
+            {{#isExplode}}
+                if (${{paramName}} !== null) {
+                {{#style}}
+                    $queryParameters{{^x-is-custom-request}}['{{baseName}}']{{/x-is-custom-request}} = ${{paramName}};
+                {{/style}}
+                {{^style}}
+                    $queryParameters['{{baseName}}'] = ${{paramName}};
+                {{/style}}
+                }
+            {{/isExplode}}
+            {{^isExplode}}
+                if (is_array(${{paramName}})) {
+                ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{style}}{{^style}}{{collectionFormat}}{{/style}}', true);
+                }
+                if (${{paramName}} !== null) {
+                $queryParameters['{{baseName}}'] = ${{paramName}};
+                }
+            {{/isExplode}}
         {{/queryParams}}{{/vendorExtensions}}
         {{#vendorExtensions}}{{#pathParams}}
-        // path params
-        {{#collectionFormat}}
-        if (is_array(${{paramName}})) {
-            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
-        }
-        {{/collectionFormat}}
-        if (${{paramName}} !== null) {
+            // path params
+            {{#collectionFormat}}
+                if (is_array(${{paramName}})) {
+                ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
+                }
+            {{/collectionFormat}}
+            if (${{paramName}} !== null) {
             $resourcePath = str_replace(
-                {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
-                {{#x-is-custom-request}}${{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
-                $resourcePath
+            {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
+            {{#x-is-custom-request}}${{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
+            $resourcePath
             );
-        }
+            }
         {{/pathParams}}{{/vendorExtensions}}
 
         {{#headerParams}}
             $headers['{{baseName}}'] = ${{paramName}};
         {{/headerParams}}
         {{#servers.0}}
-        $operationHosts = [{{#servers}}"{{{url}}}"{{^-last}}, {{/-last}}{{/servers}}];
-        if ($this->hostIndex < 0 || $this->hostIndex >= sizeof($operationHosts)) {
+            $operationHosts = [{{#servers}}"{{{url}}}"{{^-last}}, {{/-last}}{{/servers}}];
+            if ($this->hostIndex < 0 || $this->hostIndex >= sizeof($operationHosts)) {
             throw new \InvalidArgumentException("Invalid index {$this->hostIndex} when selecting the host. Must be less than ".sizeof($operationHosts));
-        }
-        $operationHost = $operationHosts[$this->hostIndex];
+            }
+            $operationHost = $operationHosts[$this->hostIndex];
 
         {{/servers.0}}
 
         {{#vendorExtensions.x-timeouts}}
-        if (!isset($requestOptions['readTimeout'])) {
-          $requestOptions['readTimeout'] = {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}};
-        }
-        if (!isset($requestOptions['writeTimeout'])) {
+            if (!isset($requestOptions['readTimeout'])) {
+            $requestOptions['readTimeout'] = {{#lambda.toSeconds}}{{{read}}}{{/lambda.toSeconds}};
+            }
+            if (!isset($requestOptions['writeTimeout'])) {
             $requestOptions['writeTimeout'] = {{#lambda.toSeconds}}{{{write}}}{{/lambda.toSeconds}};
-        }
-        if (!isset($requestOptions['connectTimeout'])) {
+            }
+            if (!isset($requestOptions['connectTimeout'])) {
             $requestOptions['connectTimeout'] = {{#lambda.toSeconds}}{{{connect}}}{{/lambda.toSeconds}};
-        }
+            }
         {{/vendorExtensions.x-timeouts}}
 
-        return $this->sendRequest('{{httpMethod}}', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, {{#vendorExtensions.x-use-read-transporter}}true{{/vendorExtensions.x-use-read-transporter}});
-    }
+        return $this->sendRequestWithHttpInfo('{{httpMethod}}', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, {{#vendorExtensions.x-use-read-transporter}}true{{/vendorExtensions.x-use-read-transporter}});
+        }
 
     {{/operation}}
 
@@ -856,7 +887,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         return $validUntil - time();
     }
-    
+
     public function indexExists($indexName)
     {
         try {
@@ -871,7 +902,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
     }
     {{/isSearchClient}}
 
-    private function sendRequest($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
+    private function sendRequestWithHttpInfo($method, $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions, $useReadTransporter = false)
     {
         if (!isset($requestOptions['headers'])) {
             $requestOptions['headers'] = [];
@@ -889,7 +920,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $resourcePath . ($query ? "?{$query}" : ''),
             $httpBody,
             $requestOptions,
-            $useReadTransporter
+            $useReadTransporter,
+            true
         );
     }
 }

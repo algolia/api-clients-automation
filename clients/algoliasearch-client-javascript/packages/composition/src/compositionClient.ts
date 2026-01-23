@@ -47,7 +47,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.22.0';
+export const apiClientVersion = '1.22.4-beta.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -639,9 +639,6 @@ export function createCompositionClient({
 
       if (!compositionRule.objectID) {
         throw new Error('Parameter `compositionRule.objectID` is required when calling `putCompositionRule`.');
-      }
-      if (!compositionRule.conditions) {
-        throw new Error('Parameter `compositionRule.conditions` is required when calling `putCompositionRule`.');
       }
       if (!compositionRule.consequence) {
         throw new Error('Parameter `compositionRule.consequence` is required when calling `putCompositionRule`.');

@@ -28,8 +28,27 @@ final class SearchClientSnippet {
 
     /// Snippet for the addApiKey method.
     ///
-    /// all
+    /// nlu test
     func snippetForAddApiKey1() async throws {
+        // >SEPARATOR addApiKey nlu test
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.addApiKey(apiKey: ApiKey(
+            acl: [Acl.search, Acl.addObject, Acl.nluReadProject],
+            description: "my new api key"
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the addApiKey method.
+    ///
+    /// all
+    func snippetForAddApiKey2() async throws {
         // >SEPARATOR addApiKey all
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")

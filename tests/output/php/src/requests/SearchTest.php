@@ -54,8 +54,33 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('all')]
+    #[TestDox('nlu test')]
     public function testAddApiKey1(): void
+    {
+        $client = $this->getClient();
+        $client->addApiKey(
+            ['acl' => [
+                'search',
+
+                'addObject',
+
+                'nluReadProject',
+            ],
+                'description' => 'my new api key',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/keys',
+                'method' => 'POST',
+                'body' => json_decode('{"acl":["search","addObject","nluReadProject"],"description":"my new api key"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('all')]
+    public function testAddApiKey2(): void
     {
         $client = $this->getClient();
         $client->addApiKey(

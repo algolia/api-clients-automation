@@ -45,9 +45,34 @@ class SnippetSearchClient {
 
   /** Snippet for the addApiKey method.
     *
-    * all
+    * nlu test
     */
   def snippetForSearchClientAddApiKey1(): Unit = {
+    // >SEPARATOR addApiKey nlu test
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.addApiKey(
+        apiKey = ApiKey(
+          acl = Seq(Acl.withName("search"), Acl.withName("addObject"), Acl.withName("nluReadProject")),
+          description = Some("my new api key")
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the addApiKey method.
+    *
+    * all
+    */
+  def snippetForSearchClientAddApiKey2(): Unit = {
     // >SEPARATOR addApiKey all
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")

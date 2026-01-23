@@ -41,13 +41,13 @@ final class SearchResultsItem {
     this.userData,
     this.queryID,
     this.automaticInsights,
-    required this.page,
-    required this.nbHits,
-    required this.nbPages,
-    required this.hitsPerPage,
-    required this.hits,
-    required this.query,
-    required this.params,
+    this.hits,
+    this.hitsPerPage,
+    this.nbHits,
+    this.nbPages,
+    this.page,
+    this.params,
+    this.query,
     required this.compositions,
   });
 
@@ -156,33 +156,33 @@ final class SearchResultsItem {
   @JsonKey(name: r'_automaticInsights')
   final bool? automaticInsights;
 
-  /// The current page of the results.
-  @JsonKey(name: r'page')
-  final int page;
-
-  /// Number of results (hits).
-  @JsonKey(name: r'nbHits')
-  final int nbHits;
-
-  /// Number of pages of results.
-  @JsonKey(name: r'nbPages')
-  final int nbPages;
+  /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+  @JsonKey(name: r'hits')
+  final List<Hit>? hits;
 
   /// Number of hits returned per page.
   @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
+  final int? hitsPerPage;
 
-  /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
-  @JsonKey(name: r'hits')
-  final List<Hit> hits;
+  /// Number of results (hits).
+  @JsonKey(name: r'nbHits')
+  final int? nbHits;
 
-  /// The search query string.
-  @JsonKey(name: r'query')
-  final String query;
+  /// Number of pages of results.
+  @JsonKey(name: r'nbPages')
+  final int? nbPages;
+
+  /// The current page of the results.
+  @JsonKey(name: r'page')
+  final int? page;
 
   /// URL-encoded string of all search parameters.
   @JsonKey(name: r'params')
-  final String params;
+  final String? params;
+
+  /// The search query string.
+  @JsonKey(name: r'query')
+  final String? query;
 
   @JsonKey(name: r'compositions')
   final Map<String, ResultsCompositionInfoResponse> compositions;
@@ -214,13 +214,13 @@ final class SearchResultsItem {
           other.userData == userData &&
           other.queryID == queryID &&
           other.automaticInsights == automaticInsights &&
-          other.page == page &&
+          other.hits == hits &&
+          other.hitsPerPage == hitsPerPage &&
           other.nbHits == nbHits &&
           other.nbPages == nbPages &&
-          other.hitsPerPage == hitsPerPage &&
-          other.hits == hits &&
-          other.query == query &&
+          other.page == page &&
           other.params == params &&
+          other.query == query &&
           other.compositions == compositions;
 
   @override
@@ -248,13 +248,13 @@ final class SearchResultsItem {
       (userData == null ? 0 : userData.hashCode) +
       queryID.hashCode +
       automaticInsights.hashCode +
-      page.hashCode +
+      hits.hashCode +
+      hitsPerPage.hashCode +
       nbHits.hashCode +
       nbPages.hashCode +
-      hitsPerPage.hashCode +
-      hits.hashCode +
-      query.hashCode +
+      page.hashCode +
       params.hashCode +
+      query.hashCode +
       compositions.hashCode;
 
   factory SearchResultsItem.fromJson(Map<String, dynamic> json) =>

@@ -28,20 +28,30 @@
   */
 package algoliasearch.composition
 
-/** SearchPagination
+/** SearchFields
   *
-  * @param page
-  *   The current page of the results.
+  * @param hits
+  *   Search results (hits). Hits are records from your index that match the search criteria, augmented with additional
+  *   attributes, such as, for highlighting.
+  * @param hitsPerPage
+  *   Number of hits returned per page.
   * @param nbHits
   *   Number of results (hits).
   * @param nbPages
   *   Number of pages of results.
-  * @param hitsPerPage
-  *   Number of hits returned per page.
+  * @param page
+  *   The current page of the results.
+  * @param params
+  *   URL-encoded string of all search parameters.
+  * @param query
+  *   The search query string.
   */
-case class SearchPagination(
-    page: Int,
-    nbHits: Int,
-    nbPages: Int,
-    hitsPerPage: Int
+case class SearchFields(
+    hits: Option[Seq[Hit]] = scala.None,
+    hitsPerPage: Option[Int] = scala.None,
+    nbHits: Option[Int] = scala.None,
+    nbPages: Option[Int] = scala.None,
+    page: Option[Int] = scala.None,
+    params: Option[String] = scala.None,
+    query: Option[String] = scala.None
 )

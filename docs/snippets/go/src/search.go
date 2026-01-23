@@ -41,6 +41,37 @@ func SnippetForAddApiKeyOfSearch1() {
 	/*
 	   Snippet for the addApiKey method.
 
+	   nlu test
+	*/
+
+	// >SEPARATOR addApiKey nlu test
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
+
+		search.NewEmptyApiKey().SetAcl(
+			[]search.Acl{search.Acl("search"), search.Acl("addObject"), search.Acl("nluReadProject")}).SetDescription("my new api key")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForAddApiKeyOfSearch2() {
+	/*
+	   Snippet for the addApiKey method.
+
 	   all
 	*/
 

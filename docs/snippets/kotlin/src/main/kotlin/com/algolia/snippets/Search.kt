@@ -41,6 +41,34 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForAddApiKey1() {
+    // >SEPARATOR addApiKey nlu test
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.addApiKey(
+        apiKey =
+          ApiKey(
+            acl =
+              listOf(
+                Acl.entries.first { it.value == "search" },
+                Acl.entries.first { it.value == "addObject" },
+                Acl.entries.first { it.value == "nluReadProject" },
+              ),
+            description = "my new api key",
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForAddApiKey2() {
     // >SEPARATOR addApiKey all
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")

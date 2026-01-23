@@ -28,8 +28,24 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # all
+  # nlu test
   def test_add_api_key1
+    req = @client.add_api_key_with_http_info(
+      Algolia::Search::ApiKey.new(acl: ["search", "addObject", "nluReadProject"], description: "my new api key")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/keys", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new api key\"}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # all
+  def test_add_api_key2
     req = @client.add_api_key_with_http_info(
       Algolia::Search::ApiKey.new(
         acl: ["search", "addObject"],

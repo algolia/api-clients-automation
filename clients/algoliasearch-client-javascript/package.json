@@ -9,17 +9,18 @@
   "scripts": {
     "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --include-dependencies",
     "clean": "lerna run clean",
-    "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
+    "release:publish": "lerna publish from-package --yes",
+    "release:publish:old": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlewatch",
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "24.10.1",
+    "@types/node": "24.10.9",
     "bundlewatch": "0.4.1",
     "execa": "9.6.1",
     "lerna": "9.0.3",
-    "rollup": "4.53.3",
+    "rollup": "4.55.1",
     "typescript": "5.9.3"
   },
   "bundlewatch": {

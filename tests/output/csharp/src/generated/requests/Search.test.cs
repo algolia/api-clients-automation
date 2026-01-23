@@ -48,8 +48,34 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "all")]
+  [Fact(DisplayName = "nlu test")]
   public async Task AddApiKeyTest1()
+  {
+    await client.AddApiKeyAsync(
+      new ApiKey
+      {
+        Acl = new List<Acl>
+        {
+          Enum.Parse<Acl>("Search"),
+          Enum.Parse<Acl>("AddObject"),
+          Enum.Parse<Acl>("NluReadProject"),
+        },
+        Description = "my new api key",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/keys", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new api key\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "all")]
+  public async Task AddApiKeyTest2()
   {
     await client.AddApiKeyAsync(
       new ApiKey

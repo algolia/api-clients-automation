@@ -59,12 +59,10 @@ class saveImageClassificationsAndSettings {
 
       var currentSettings = client.getSettings("<YOUR_INDEX_NAME>");
 
-      var attributesForFaceting = currentSettings.getAttributesForFaceting() != null
-        ? currentSettings.getAttributesForFaceting()
-        : new ArrayList<String>();
-      var searchableAttributes = currentSettings.getSearchableAttributes() != null
-        ? currentSettings.getSearchableAttributes()
-        : new ArrayList<String>();
+      var attributesForFaceting =
+        currentSettings.getAttributesForFaceting() != null ? currentSettings.getAttributesForFaceting() : new ArrayList<String>();
+      var searchableAttributes =
+        currentSettings.getSearchableAttributes() != null ? currentSettings.getSearchableAttributes() : new ArrayList<String>();
 
       attributesForFaceting.addAll(facets);
       searchableAttributes.addAll(attributes);

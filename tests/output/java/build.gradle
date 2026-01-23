@@ -14,8 +14,8 @@ java {
 }
 
 dependencies {
-    testImplementation 'com.algolia:algoliasearch:4.34.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.1'
+    testImplementation 'com.algolia:algoliasearch:4.34.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.skyscreamer:jsonassert:1.5.3'
     testImplementation 'com.fasterxml.jackson.core:jackson-core:2.20.1'

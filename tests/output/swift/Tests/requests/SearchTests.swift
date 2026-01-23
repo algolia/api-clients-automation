@@ -42,8 +42,39 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// all
+    /// nlu test
     func testAddApiKeyTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.addApiKeyWithHTTPInfo(apiKey: ApiKey(
+            acl: [Acl.search, Acl.addObject, Acl.nluReadProject],
+            description: "my new api key"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new api key\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/keys")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// all
+    func testAddApiKeyTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY

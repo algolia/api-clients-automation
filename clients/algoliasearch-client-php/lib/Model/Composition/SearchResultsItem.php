@@ -46,13 +46,13 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         'userData' => 'mixed',
         'queryID' => 'string',
         'automaticInsights' => 'bool',
-        'page' => 'int',
+        'hits' => '\Algolia\AlgoliaSearch\Model\Composition\Hit[]',
+        'hitsPerPage' => 'int',
         'nbHits' => 'int',
         'nbPages' => 'int',
-        'hitsPerPage' => 'int',
-        'hits' => '\Algolia\AlgoliaSearch\Model\Composition\Hit[]',
-        'query' => 'string',
+        'page' => 'int',
         'params' => 'string',
+        'query' => 'string',
         'compositions' => 'array<string,\Algolia\AlgoliaSearch\Model\Composition\ResultsCompositionInfoResponse>',
     ];
 
@@ -88,13 +88,13 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         'userData' => null,
         'queryID' => null,
         'automaticInsights' => null,
-        'page' => null,
+        'hits' => null,
+        'hitsPerPage' => null,
         'nbHits' => null,
         'nbPages' => null,
-        'hitsPerPage' => null,
-        'hits' => null,
-        'query' => null,
+        'page' => null,
         'params' => null,
+        'query' => null,
         'compositions' => null,
     ];
 
@@ -131,13 +131,13 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         'userData' => 'userData',
         'queryID' => 'queryID',
         'automaticInsights' => '_automaticInsights',
-        'page' => 'page',
+        'hits' => 'hits',
+        'hitsPerPage' => 'hitsPerPage',
         'nbHits' => 'nbHits',
         'nbPages' => 'nbPages',
-        'hitsPerPage' => 'hitsPerPage',
-        'hits' => 'hits',
-        'query' => 'query',
+        'page' => 'page',
         'params' => 'params',
+        'query' => 'query',
         'compositions' => 'compositions',
     ];
 
@@ -173,13 +173,13 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         'userData' => 'setUserData',
         'queryID' => 'setQueryID',
         'automaticInsights' => 'setAutomaticInsights',
-        'page' => 'setPage',
+        'hits' => 'setHits',
+        'hitsPerPage' => 'setHitsPerPage',
         'nbHits' => 'setNbHits',
         'nbPages' => 'setNbPages',
-        'hitsPerPage' => 'setHitsPerPage',
-        'hits' => 'setHits',
-        'query' => 'setQuery',
+        'page' => 'setPage',
         'params' => 'setParams',
+        'query' => 'setQuery',
         'compositions' => 'setCompositions',
     ];
 
@@ -215,13 +215,13 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         'userData' => 'getUserData',
         'queryID' => 'getQueryID',
         'automaticInsights' => 'getAutomaticInsights',
-        'page' => 'getPage',
+        'hits' => 'getHits',
+        'hitsPerPage' => 'getHitsPerPage',
         'nbHits' => 'getNbHits',
         'nbPages' => 'getNbPages',
-        'hitsPerPage' => 'getHitsPerPage',
-        'hits' => 'getHits',
-        'query' => 'getQuery',
+        'page' => 'getPage',
         'params' => 'getParams',
+        'query' => 'getQuery',
         'compositions' => 'getCompositions',
     ];
 
@@ -317,8 +317,11 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         if (isset($data['automaticInsights'])) {
             $this->container['automaticInsights'] = $data['automaticInsights'];
         }
-        if (isset($data['page'])) {
-            $this->container['page'] = $data['page'];
+        if (isset($data['hits'])) {
+            $this->container['hits'] = $data['hits'];
+        }
+        if (isset($data['hitsPerPage'])) {
+            $this->container['hitsPerPage'] = $data['hitsPerPage'];
         }
         if (isset($data['nbHits'])) {
             $this->container['nbHits'] = $data['nbHits'];
@@ -326,17 +329,14 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
         if (isset($data['nbPages'])) {
             $this->container['nbPages'] = $data['nbPages'];
         }
-        if (isset($data['hitsPerPage'])) {
-            $this->container['hitsPerPage'] = $data['hitsPerPage'];
-        }
-        if (isset($data['hits'])) {
-            $this->container['hits'] = $data['hits'];
-        }
-        if (isset($data['query'])) {
-            $this->container['query'] = $data['query'];
+        if (isset($data['page'])) {
+            $this->container['page'] = $data['page'];
         }
         if (isset($data['params'])) {
             $this->container['params'] = $data['params'];
+        }
+        if (isset($data['query'])) {
+            $this->container['query'] = $data['query'];
         }
         if (isset($data['compositions'])) {
             $this->container['compositions'] = $data['compositions'];
@@ -403,27 +403,6 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     {
         $invalidProperties = [];
 
-        if (!isset($this->container['page']) || null === $this->container['page']) {
-            $invalidProperties[] = "'page' can't be null";
-        }
-        if (!isset($this->container['nbHits']) || null === $this->container['nbHits']) {
-            $invalidProperties[] = "'nbHits' can't be null";
-        }
-        if (!isset($this->container['nbPages']) || null === $this->container['nbPages']) {
-            $invalidProperties[] = "'nbPages' can't be null";
-        }
-        if (!isset($this->container['hitsPerPage']) || null === $this->container['hitsPerPage']) {
-            $invalidProperties[] = "'hitsPerPage' can't be null";
-        }
-        if (!isset($this->container['hits']) || null === $this->container['hits']) {
-            $invalidProperties[] = "'hits' can't be null";
-        }
-        if (!isset($this->container['query']) || null === $this->container['query']) {
-            $invalidProperties[] = "'query' can't be null";
-        }
-        if (!isset($this->container['params']) || null === $this->container['params']) {
-            $invalidProperties[] = "'params' can't be null";
-        }
         if (!isset($this->container['compositions']) || null === $this->container['compositions']) {
             $invalidProperties[] = "'compositions' can't be null";
         }
@@ -1079,25 +1058,49 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     }
 
     /**
-     * Gets page.
+     * Gets hits.
      *
-     * @return int
+     * @return null|Hit[]
      */
-    public function getPage()
+    public function getHits()
     {
-        return $this->container['page'] ?? null;
+        return $this->container['hits'] ?? null;
     }
 
     /**
-     * Sets page.
+     * Sets hits.
      *
-     * @param int $page the current page of the results
+     * @param null|Hit[] $hits Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
      *
      * @return self
      */
-    public function setPage($page)
+    public function setHits($hits)
     {
-        $this->container['page'] = $page;
+        $this->container['hits'] = $hits;
+
+        return $this;
+    }
+
+    /**
+     * Gets hitsPerPage.
+     *
+     * @return null|int
+     */
+    public function getHitsPerPage()
+    {
+        return $this->container['hitsPerPage'] ?? null;
+    }
+
+    /**
+     * Sets hitsPerPage.
+     *
+     * @param null|int $hitsPerPage number of hits returned per page
+     *
+     * @return self
+     */
+    public function setHitsPerPage($hitsPerPage)
+    {
+        $this->container['hitsPerPage'] = $hitsPerPage;
 
         return $this;
     }
@@ -1105,7 +1108,7 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets nbHits.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbHits()
     {
@@ -1115,7 +1118,7 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets nbHits.
      *
-     * @param int $nbHits number of results (hits)
+     * @param null|int $nbHits number of results (hits)
      *
      * @return self
      */
@@ -1129,7 +1132,7 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets nbPages.
      *
-     * @return int
+     * @return null|int
      */
     public function getNbPages()
     {
@@ -1139,7 +1142,7 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets nbPages.
      *
-     * @param int $nbPages number of pages of results
+     * @param null|int $nbPages number of pages of results
      *
      * @return self
      */
@@ -1151,73 +1154,25 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     }
 
     /**
-     * Gets hitsPerPage.
+     * Gets page.
      *
-     * @return int
+     * @return null|int
      */
-    public function getHitsPerPage()
+    public function getPage()
     {
-        return $this->container['hitsPerPage'] ?? null;
+        return $this->container['page'] ?? null;
     }
 
     /**
-     * Sets hitsPerPage.
+     * Sets page.
      *
-     * @param int $hitsPerPage number of hits returned per page
+     * @param null|int $page the current page of the results
      *
      * @return self
      */
-    public function setHitsPerPage($hitsPerPage)
+    public function setPage($page)
     {
-        $this->container['hitsPerPage'] = $hitsPerPage;
-
-        return $this;
-    }
-
-    /**
-     * Gets hits.
-     *
-     * @return Hit[]
-     */
-    public function getHits()
-    {
-        return $this->container['hits'] ?? null;
-    }
-
-    /**
-     * Sets hits.
-     *
-     * @param Hit[] $hits Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
-     *
-     * @return self
-     */
-    public function setHits($hits)
-    {
-        $this->container['hits'] = $hits;
-
-        return $this;
-    }
-
-    /**
-     * Gets query.
-     *
-     * @return string
-     */
-    public function getQuery()
-    {
-        return $this->container['query'] ?? null;
-    }
-
-    /**
-     * Sets query.
-     *
-     * @param string $query the search query string
-     *
-     * @return self
-     */
-    public function setQuery($query)
-    {
-        $this->container['query'] = $query;
+        $this->container['page'] = $page;
 
         return $this;
     }
@@ -1225,7 +1180,7 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets params.
      *
-     * @return string
+     * @return null|string
      */
     public function getParams()
     {
@@ -1235,13 +1190,37 @@ class SearchResultsItem extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets params.
      *
-     * @param string $params URL-encoded string of all search parameters
+     * @param null|string $params URL-encoded string of all search parameters
      *
      * @return self
      */
     public function setParams($params)
     {
         $this->container['params'] = $params;
+
+        return $this;
+    }
+
+    /**
+     * Gets query.
+     *
+     * @return null|string
+     */
+    public function getQuery()
+    {
+        return $this->container['query'] ?? null;
+    }
+
+    /**
+     * Sets query.
+     *
+     * @param null|string $query the search query string
+     *
+     * @return self
+     */
+    public function setQuery($query)
+    {
+        $this->container['query'] = $query;
 
         return $this;
     }
