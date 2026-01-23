@@ -1,0 +1,6 @@
+AlternativesAsExactUnion:
+  oneOf:
+    - items:
+        $ref: 'AlternativesAsExact.yml#/AlternativesAsExact'
+      type: array
+    - type: 'null'

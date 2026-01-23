@@ -1,0 +1,6 @@
+NumericFiltersUnion:
+  oneOf:
+    - type: string
+    - items: {}
+      type: array
+    - type: 'null'

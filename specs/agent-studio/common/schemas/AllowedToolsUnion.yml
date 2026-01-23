@@ -1,0 +1,6 @@
+AllowedToolsUnion:
+  oneOf:
+    - additionalProperties:
+        $ref: 'ToolConfig.yml#/ToolConfig'
+      type: object
+    - type: 'null'

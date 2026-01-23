@@ -1,0 +1,19 @@
+UserMessageV5:
+  properties:
+    id:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: id
+    role:
+      type: string
+      const: user
+      title: role
+      default: user
+    parts:
+      items:
+        $ref: 'TextPartV5.yml#/TextPartV5'
+      type: array
+      title: parts
+  type: object
+  title: userMessageV5

@@ -1,0 +1,33 @@
+get:
+  tags:
+    - Providers
+  operationId: listProviderModels
+  x-acl:
+    - settings
+  summary: Get Provider Models By Id
+  description: Get available models for a specific provider.
+  parameters:
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: providerId
+      description: The providerId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+            title: responseGetProviderModelsById1ProvidersProviderIdModelsGet
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

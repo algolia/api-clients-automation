@@ -1,0 +1,92 @@
+get:
+  tags:
+    - Providers
+  operationId: getProvider
+  x-acl:
+    - settings
+  summary: Get Provider
+  description: Get Provider.
+  parameters:
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: providerId
+      description: The providerId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+patch:
+  tags:
+    - Providers
+  operationId: updateProvider
+  x-acl:
+    - editSettings
+  summary: Update Provider
+  description: Update Provider.
+  parameters:
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: providerId
+      description: The providerId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/ProviderAuthenticationPatch.yml#/ProviderAuthenticationPatch'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Providers
+  operationId: deleteProvider
+  x-acl:
+    - editSettings
+  summary: Delete Provider
+  description: Delete Provider.
+  parameters:
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: providerId
+      description: The providerId.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
