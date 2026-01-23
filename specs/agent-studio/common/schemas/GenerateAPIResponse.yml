@@ -1,0 +1,57 @@
+GenerateAPIResponse:
+  properties:
+    objectID:
+      type: string
+      title: objectid
+    response:
+      type: string
+      title: response
+    query:
+      type: string
+      title: query
+    dataSourceID:
+      type: string
+      title: datasourceid
+    promptID:
+      type: string
+      title: promptid
+    conversationID:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: conversationid
+    createdAt:
+      type: string
+      title: createdat
+    additionalFilters:
+      type: string
+      title: additionalfilters
+    context:
+      items:
+        additionalProperties: true
+        type: object
+      type: array
+      title: context
+    reasoning:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: reasoning
+      default: ''
+    metadata:
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
+      title: metadata
+  type: object
+  required:
+    - objectID
+    - response
+    - query
+    - dataSourceID
+    - promptID
+    - createdAt
+    - additionalFilters
+    - context
+  title: generateAPIResponse

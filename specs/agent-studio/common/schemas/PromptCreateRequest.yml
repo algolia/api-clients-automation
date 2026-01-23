@@ -1,0 +1,20 @@
+PromptCreateRequest:
+  properties:
+    name:
+      type: string
+      title: name
+    instructions:
+      type: string
+      title: instructions
+    tone:
+      $ref: 'Tone.yml#/Tone'
+    objectID:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: objectid
+  type: object
+  required:
+    - name
+    - instructions
+  title: promptCreateRequest

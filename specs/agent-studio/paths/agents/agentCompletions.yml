@@ -1,0 +1,68 @@
+post:
+  tags:
+    - Completions
+  operationId: createAgentCompletion
+  x-acl:
+    - search
+  summary: Create Completion
+  description: Create a completion for the specified agent.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        $ref: '../../common/schemas/AgentIdUnion.yml#/AgentIdUnion'
+      description: The agentId.
+    - name: compatibilityMode
+      in: query
+      required: true
+      schema:
+        $ref: '../../common/schemas/CompatibilityMode.yml#/CompatibilityMode'
+      description: Compatibility mode for the completion API.
+    - name: stream
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: Whether to stream the response or not.
+        default: true
+        title: stream
+      description: Whether to stream the response or not.
+    - name: cache
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: Use cached responses if available.
+        default: true
+        title: cache
+      description: Use cached responses if available.
+    - name: memory
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - const: false
+            type: boolean
+          - type: 'null'
+        description: Whether to use memory or not.
+        title: memory
+      description: Whether to use memory or not.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/AgentCompletionRequest.yml#/AgentCompletionRequest'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema: {}
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

@@ -1,0 +1,21 @@
+PromptUpdateRequest:
+  properties:
+    name:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: name
+    instructions:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: instructions
+    tone:
+      $ref: 'ToneUnion.yml#/ToneUnion'
+    objectID:
+      type: string
+      title: objectid
+  type: object
+  required:
+    - objectID
+  title: promptUpdateRequest

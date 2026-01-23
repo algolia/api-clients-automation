@@ -1,0 +1,14 @@
+TextPart:
+  properties:
+    type:
+      type: string
+      const: text
+      title: type
+      default: text
+    text:
+      type: string
+      title: text
+  type: object
+  required:
+    - text
+  title: textPart

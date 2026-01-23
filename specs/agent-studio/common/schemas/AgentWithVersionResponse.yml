@@ -1,0 +1,68 @@
+AgentWithVersionResponse:
+  properties:
+    id:
+      type: string
+      format: uuid
+      title: id
+    name:
+      type: string
+      title: name
+    description:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: description
+    status:
+      $ref: 'AgentStatus.yml#/AgentStatus'
+    providerId:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: providerid
+    model:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: model
+    instructions:
+      type: string
+      title: instructions
+    config:
+      additionalProperties: true
+      type: object
+      title: config
+    tools:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: tools
+    createdAt:
+      type: string
+      format: date-time
+      title: createdat
+    updatedAt:
+      oneOf:
+        - type: string
+          format: date-time
+        - type: 'null'
+      title: updatedat
+    lastUsedAt:
+      oneOf:
+        - type: string
+          format: date-time
+        - type: 'null'
+      title: lastusedat
+  type: object
+  required:
+    - id
+    - name
+    - description
+    - status
+    - providerId
+    - instructions
+    - config
+    - createdAt
+    - updatedAt
+    - lastUsedAt
+  title: agentWithVersionResponse

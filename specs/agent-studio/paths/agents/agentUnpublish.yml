@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Agents
+  operationId: unpublishAgent
+  x-acl:
+    - editSettings
+  summary: Unpublish Agent
+  description: Unpublish the specified agent.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/AgentWithVersionResponse.yml#/AgentWithVersionResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

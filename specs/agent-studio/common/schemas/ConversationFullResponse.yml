@@ -1,0 +1,63 @@
+ConversationFullResponse:
+  properties:
+    id:
+      type: string
+      title: id
+    agentId:
+      type: string
+      format: uuid
+      title: agentid
+    title:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: title
+    createdAt:
+      type: string
+      format: date-time
+      title: createdat
+    updatedAt:
+      type: string
+      format: date-time
+      title: updatedat
+    lastActivityAt:
+      oneOf:
+        - type: string
+          format: date-time
+        - type: 'null'
+      title: lastactivityat
+    userToken:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: usertoken
+    messageCount:
+      type: integer
+      title: messagecount
+      default: 0
+    totalInputTokens:
+      type: integer
+      title: totalinputtokens
+      default: 0
+    totalOutputTokens:
+      type: integer
+      title: totaloutputtokens
+      default: 0
+    totalTokens:
+      type: integer
+      title: totaltokens
+      default: 0
+    messages:
+      items:
+        $ref: 'MessageResponse-Output.yml#/MessageResponse-Output'
+      type: array
+      title: messages
+  type: object
+  required:
+    - id
+    - agentId
+    - createdAt
+    - updatedAt
+    - messages
+  title: conversationFullResponse
+  description: Response model for a conversation with all its messages.

@@ -1,0 +1,4 @@
+QueryTypeUnion:
+  oneOf:
+    - $ref: 'QueryType.yml#/QueryType'
+    - type: 'null'

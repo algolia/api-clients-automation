@@ -1,0 +1,23 @@
+AlgoliaSearchToolIndexConfig-Output:
+  properties:
+    index:
+      type: string
+      maxLength: 100
+      minLength: 1
+      title: index
+    description:
+      type: string
+      maxLength: 200
+      minLength: 1
+      title: description
+    enhancedDescription:
+      type: string
+      title: enhanceddescription
+      default: ''
+    searchParameters:
+      $ref: 'SearchParametersUnion.yml#/SearchParametersUnion'
+  type: object
+  required:
+    - index
+    - description
+  title: algoliaSearchToolIndexConfig

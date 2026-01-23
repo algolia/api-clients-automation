@@ -1,0 +1,9 @@
+MemoryType:
+  type: string
+  enum:
+    - semantic
+    - episodic
+  title: memoryType
+  description: |-
+    Memory types implemented so far.
+    Follows LangMem's ontology: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types.

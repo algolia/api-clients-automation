@@ -1,0 +1,17 @@
+DeleteRequest:
+  properties:
+    objectIDs:
+      items:
+        type: string
+      type: array
+      title: objectids
+    deleteLinkedResponses:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: deletelinkedresponses
+      default: false
+  type: object
+  required:
+    - objectIDs
+  title: deleteRequest

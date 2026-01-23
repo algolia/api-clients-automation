@@ -1,0 +1,97 @@
+GenerateRequest:
+  properties:
+    query:
+      type: string
+      title: query
+    dataSourceId:
+      type: string
+      title: datasourceid
+    promptId:
+      type: string
+      title: promptid
+    additionalFilters:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: additionalfilters
+      default: ''
+    save:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: save
+      default: true
+    useCache:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: usecache
+      default: false
+    stream:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: stream
+      default: false
+    origin:
+      type: string
+      title: origin
+      default: api
+    objectID:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: objectid
+    nbHits:
+      oneOf:
+        - type: integer
+          maximum: 100.0
+          minimum: 1.0
+        - type: 'null'
+      title: nbhits
+      default: 10
+    attributesToRetrieve:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: attributestoretrieve
+    highlighting:
+      type: boolean
+      title: highlighting
+      default: false
+    attributesToHighlight:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: attributestohighlight
+    withObjectIds:
+      oneOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+      title: withobjectids
+    conversationId:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: conversationid
+    logRegion:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: logregion
+      description: 'Deprecated: please set the region at URL-level now, targeting
+        either generative-us.algolia.com for US, or generative-eu.algolia.com for
+        Europe.'
+      deprecated: true
+  type: object
+  required:
+    - query
+    - dataSourceId
+    - promptId
+  title: generateRequest
