@@ -1,0 +1,14 @@
+PaginatedAgentsResponse:
+  properties:
+    data:
+      items:
+        $ref: 'AgentWithVersionResponse.yml#/AgentWithVersionResponse'
+      type: array
+      title: data
+    pagination:
+      $ref: 'PaginationMetadata.yml#/PaginationMetadata'
+  type: object
+  required:
+    - data
+    - pagination
+  title: paginatedAgentsResponse

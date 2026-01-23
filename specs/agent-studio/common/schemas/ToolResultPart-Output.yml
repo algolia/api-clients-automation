@@ -1,0 +1,27 @@
+ToolResultPart-Output:
+  properties:
+    type:
+      type: string
+      const: tool-result
+      title: type
+      default: tool-result
+    toolCallId:
+      type: string
+      title: toolcallid
+    toolName:
+      type: string
+      title: toolname
+    output:
+      $ref: 'ToolResultOutput.yml#/ToolResultOutput'
+    providerOptions:
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
+      title: provideroptions
+  type: object
+  required:
+    - toolCallId
+    - toolName
+    - output
+  title: toolResultPart

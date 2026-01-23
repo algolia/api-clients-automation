@@ -1,0 +1,14 @@
+ReasoningPartV5:
+  properties:
+    type:
+      type: string
+      const: reasoning
+      title: type
+      default: reasoning
+    text:
+      type: string
+      title: text
+  type: object
+  required:
+    - text
+  title: reasoningPartV5

@@ -1,0 +1,11 @@
+Tone:
+  type: string
+  enum:
+    - natural
+    - friendly
+    - professional
+    - pirate
+    - pirate
+    - enthusiastic
+  title: tone
+  description: A tone of voice supported by our generation pipeline.
