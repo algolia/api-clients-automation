@@ -1,0 +1,14 @@
+ProviderAuthenticationPatch:
+  properties:
+    name:
+      oneOf:
+        - type: string
+          maxLength: 128
+          minLength: 1
+        - type: 'null'
+      title: name
+    input:
+      $ref: 'ProviderInput.yml#/ProviderInput'
+  additionalProperties: false
+  type: object
+  title: providerPatch

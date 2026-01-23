@@ -1,0 +1,27 @@
+AlgoliaSearchToolConfig-Output:
+  properties:
+    name:
+      type: string
+      maxLength: 32
+      minLength: 3
+      title: name
+    type:
+      type: string
+      const: algolia_search_index
+      title: type
+      default: algolia_search_index
+    indices:
+      items:
+        $ref: 'AlgoliaSearchToolIndexConfig-Output.yml#/AlgoliaSearchToolIndexConfig-Output'
+      type: array
+      title: indices
+    description:
+      type: string
+      title: description
+      readOnly: true
+  type: object
+  required:
+    - name
+    - indices
+    - description
+  title: algoliaSearchToolConfig

@@ -274,6 +274,7 @@
   "ignorePaths": [
     "**/algoliasearch/**",
     "**/client-abtesting/**",
+    "**/client-agent-studio/**",
     "**/client-analytics/**",
     "**/client-insights/**",
     "**/client_insights/**",

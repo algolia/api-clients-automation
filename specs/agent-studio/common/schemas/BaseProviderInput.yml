@@ -1,0 +1,10 @@
+BaseProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+  type: object
+  required:
+    - apiKey
+  title: baseProviderInput
+  description: Base input that all providers must have.

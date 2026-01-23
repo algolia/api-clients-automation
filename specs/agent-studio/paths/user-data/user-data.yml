@@ -1,0 +1,56 @@
+get:
+  tags:
+    - User Data
+  operationId: getUserData
+  x-acl:
+    - logs
+  summary: Get Data By User Token
+  description: Retrieves all memories, conversations and their messages for the given
+    user token.
+  parameters:
+    - name: userToken
+      in: path
+      required: true
+      schema:
+        type: string
+        title: userToken
+      description: The userToken.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/UserDataResponse.yml#/UserDataResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - User Data
+  operationId: deleteUserData
+  x-acl:
+    - logs
+  summary: Delete Data By User Token
+  description: Permanently deletes all messages for the given user token. Does not
+    delete conversations.
+  parameters:
+    - name: userToken
+      in: path
+      required: true
+      schema:
+        type: string
+        title: userToken
+      description: The userToken.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

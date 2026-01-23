@@ -1,0 +1,34 @@
+ToolInvocationV4:
+  properties:
+    toolCallId:
+      type: string
+      title: toolcallid
+    toolName:
+      type: string
+      title: toolname
+    args:
+      additionalProperties: true
+      type: object
+      title: args
+    result:
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
+      title: result
+    step:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: step
+    state:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: state
+  type: object
+  required:
+    - toolCallId
+    - toolName
+  title: toolInvocationV4
+  description: Model for tool invocation in a Message.

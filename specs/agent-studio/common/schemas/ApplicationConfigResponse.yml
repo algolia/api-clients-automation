@@ -1,0 +1,9 @@
+ApplicationConfigResponse:
+  properties:
+    maxRetentionDays:
+      type: integer
+      title: maxretentiondays
+  type: object
+  required:
+    - maxRetentionDays
+  title: applicationConfigResponse
