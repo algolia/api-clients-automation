@@ -1,0 +1,17 @@
+AgentCompletionAlgoliaParams:
+  properties:
+    mcpServers:
+      oneOf:
+        - additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                type: string
+              type: object
+            type: object
+          type: object
+        - type: 'null'
+      title: mcpservers
+    searchParameters:
+      $ref: 'SearchParametersUnion.yml#/SearchParametersUnion'
+  type: object
+  title: agentCompletionAlgoliaParams

@@ -1,0 +1,7 @@
+FacetsUnion:
+  oneOf:
+    - items:
+        type: string
+      type: array
+    - $ref: 'Facets.yml#/Facets'
+    - type: 'null'

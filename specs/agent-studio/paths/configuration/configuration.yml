@@ -1,0 +1,48 @@
+get:
+  tags:
+    - Configurations
+  operationId: getConfiguration
+  x-acl:
+    - logs
+  summary: Get Configuration
+  description: Get Configuration.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ApplicationConfigResponse.yml#/ApplicationConfigResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+patch:
+  tags:
+    - Configurations
+  operationId: updateConfiguration
+  x-acl:
+    - logs
+  summary: Patch Configuration
+  description: Patch Configuration.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/ApplicationConfigPatch.yml#/ApplicationConfigPatch'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ApplicationConfigResponse.yml#/ApplicationConfigResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

@@ -1,0 +1,4 @@
+LocationItemUnion:
+  oneOf:
+    - type: string
+    - type: integer

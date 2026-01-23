@@ -1,0 +1,4 @@
+RemoveWordsIfNoResultsUnion:
+  oneOf:
+    - $ref: 'RemoveWordsIfNoResults.yml#/RemoveWordsIfNoResults'
+    - type: 'null'

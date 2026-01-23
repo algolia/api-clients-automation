@@ -1,0 +1,8 @@
+MessagesUnion:
+  oneOf:
+    - items:
+        $ref: 'MessageV4.yml#/MessageV4'
+      type: array
+    - items:
+        $ref: 'MessageV5.yml#/MessageV5'
+      type: array

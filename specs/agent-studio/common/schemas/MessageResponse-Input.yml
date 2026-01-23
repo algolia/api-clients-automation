@@ -1,0 +1,48 @@
+MessageResponse-Input:
+  properties:
+    id:
+      type: string
+      title: id
+    conversationId:
+      type: string
+      title: conversationid
+    role:
+      $ref: 'MessageRole.yml#/MessageRole'
+    parts:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: parts
+    createdAt:
+      type: string
+      format: date-time
+      title: createdat
+    updatedAt:
+      type: string
+      format: date-time
+      title: updatedat
+    model:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: model
+    inputTokens:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: inputtokens
+    outputTokens:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: outputtokens
+  type: object
+  required:
+    - id
+    - conversationId
+    - role
+    - parts
+    - createdAt
+    - updatedAt
+  title: messageResponse
+  description: Response model for a message.

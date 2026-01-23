@@ -1,0 +1,4 @@
+ExactOnSingleWordQueryUnion:
+  oneOf:
+    - $ref: 'ExactOnSingleWordQuery.yml#/ExactOnSingleWordQuery'
+    - type: 'null'

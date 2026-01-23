@@ -1,0 +1,6 @@
+AssistantPartV4:
+  oneOf:
+    - $ref: 'StepStartPartV4.yml#/StepStartPartV4'
+    - $ref: 'ReasoningPartV4.yml#/ReasoningPartV4'
+    - $ref: 'TextPartV4.yml#/TextPartV4'
+    - $ref: 'ToolInvocationPartV4.yml#/ToolInvocationPartV4'

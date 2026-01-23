@@ -1,0 +1,8 @@
+ItemsUnion:
+  oneOf:
+    - $ref: 'TextPart.yml#/TextPart'
+    - $ref: 'ToolCallPart.yml#/ToolCallPart'
+    - $ref: 'ToolResultPart-Output.yml#/ToolResultPart-Output'
+    - $ref: 'StartPart.yml#/StartPart'
+    - $ref: 'StartStepPart.yml#/StartStepPart'
+    - $ref: 'ReasoningPart.yml#/ReasoningPart'

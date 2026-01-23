@@ -1,0 +1,51 @@
+get:
+  tags:
+    - Conversations
+  operationId: exportConversations
+  x-acl:
+    - logs
+  summary: Export Conversations
+  description: Exports all conversations based on the passed filters.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+    - name: startDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+        title: startdate
+      description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+    - name: endDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        title: enddate
+      description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema: {}
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

@@ -1,0 +1,19 @@
+UnknownToolConfig:
+  properties:
+    name:
+      type: string
+      maxLength: 32
+      minLength: 3
+      title: name
+    type:
+      type: string
+      const: unknown
+      title: type
+      default: unknown
+  additionalProperties: true
+  type: object
+  required:
+    - name
+  title: unknownToolConfig
+  description: Exists only to ensure that when you change branch from toolX to feat/toolY,
+    your config stays valid.

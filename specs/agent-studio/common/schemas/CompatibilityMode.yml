@@ -1,0 +1,7 @@
+CompatibilityMode:
+  type: string
+  enum:
+    - ai-sdk-4
+    - ai-sdk-5
+  title: compatibilityMode
+  description: Support Compatibility modes for the completion API.

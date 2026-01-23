@@ -1,0 +1,14 @@
+PaginatedProviderAuthenticationsResponse:
+  properties:
+    data:
+      items:
+        $ref: 'ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
+      type: array
+      title: data
+    pagination:
+      $ref: 'PaginationMetadata.yml#/PaginationMetadata'
+  type: object
+  required:
+    - data
+    - pagination
+  title: paginatedProviders

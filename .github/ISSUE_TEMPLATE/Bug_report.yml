@@ -47,6 +47,7 @@ body:
       options:
         - All
         - AB testing
+        - Agent Studio
         - Analytics
         - Ingestion
         - Insights
