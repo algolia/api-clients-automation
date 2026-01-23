@@ -62,6 +62,7 @@ export 'src/model/main.dart';
 export 'src/model/main_injection_query_parameters.dart';
 export 'src/model/match_level.dart';
 export 'src/model/matched_geo_location.dart';
+export 'src/model/multifeed.dart';
 export 'src/model/multiple_batch_request.dart';
 export 'src/model/multiple_batch_response.dart';
 export 'src/model/params.dart';

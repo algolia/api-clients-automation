@@ -799,7 +799,7 @@
         ]
       },
       "optionalFilters": {
-        "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n\n- Optional filters don't work on virtual replicas.\n- Optional filters are applied _after_ sort-by attributes.\n- Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).\n- Optional filters don't work with numeric attributes.\n",
+        "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n\n- Optional filters are applied _after_ sort-by attributes.\n- Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).\n- Optional filters don't work with numeric attributes.\n- On virtual replicas, optional filters are applied _after_ the replica's [relevant sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).\n",
         "example": [
           "category:Book",
           "author:John Doe"
@@ -2629,19 +2629,36 @@
       },
       "trendingFacets": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
+          "indexName": {
+            "$ref": "#/components/schemas/indexName"
+          },
+          "threshold": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Minimum score a recommendation must have to be included in the response."
+          },
+          "maxRecommendations": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30,
+            "default": 30,
+            "description": "Maximum number of recommendations to retrieve.\nBy default, all recommendations are returned and no fallback request is made.\nDepending on the available recommendations and the other request parameters,\nthe actual number of recommendations may be lower than this value.\n"
+          },
           "facetName": {
             "type": "string",
             "description": "Facet attribute for which to retrieve trending facet values."
           },
           "model": {
             "$ref": "#/components/schemas/trendingFacetsModel"
-          },
-          "fallbackParameters": {
-            "$ref": "#/components/schemas/fallbackParams"
           }
         },
         "required": [
+          "indexName",
+          "threshold",
           "facetName",
           "model"
         ]
@@ -2649,9 +2666,6 @@
       "trendingFacetsQuery": {
         "title": "Trending facet values",
         "allOf": [
-          {
-            "$ref": "#/components/schemas/baseRecommendRequest"
-          },
           {
             "$ref": "#/components/schemas/trendingFacets"
           }

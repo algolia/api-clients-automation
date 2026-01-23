@@ -15,8 +15,8 @@ CompositionRule _$CompositionRuleFromJson(Map<String, dynamic> json) =>
           objectID: $checkedConvert('objectID', (v) => v as String),
           conditions: $checkedConvert(
               'conditions',
-              (v) => (v as List<dynamic>)
-                  .map((e) => Condition.fromJson(e as Map<String, dynamic>))
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Condition.fromJson(e as Map<String, dynamic>))
                   .toList()),
           consequence: $checkedConvert(
               'consequence',
@@ -39,8 +39,6 @@ CompositionRule _$CompositionRuleFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CompositionRuleToJson(CompositionRule instance) {
   final val = <String, dynamic>{
     'objectID': instance.objectID,
-    'conditions': instance.conditions.map((e) => e.toJson()).toList(),
-    'consequence': instance.consequence.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -49,6 +47,9 @@ Map<String, dynamic> _$CompositionRuleToJson(CompositionRule instance) {
     }
   }
 
+  writeNotNull(
+      'conditions', instance.conditions?.map((e) => e.toJson()).toList());
+  val['consequence'] = instance.consequence.toJson();
   writeNotNull('description', instance.description);
   writeNotNull('enabled', instance.enabled);
   writeNotNull('validity', instance.validity?.map((e) => e.toJson()).toList());

@@ -7,20 +7,25 @@ require "time"
 
 module Algolia
   module Composition
+    # An object containing either an `injection` or `multifeed` behavior schema, but not both.
     class CompositionBehavior
       attr_accessor :injection
+
+      attr_accessor :multifeed
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :injection => :injection
+          :injection => :injection,
+          :multifeed => :multifeed
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :injection => :"Injection"
+          :injection => :"Injection",
+          :multifeed => :"Multifeed"
         }
       end
 
@@ -56,8 +61,10 @@ module Algolia
 
         if attributes.key?(:injection)
           self.injection = attributes[:injection]
-        else
-          self.injection = nil
+        end
+
+        if attributes.key?(:multifeed)
+          self.multifeed = attributes[:multifeed]
         end
       end
 
@@ -66,7 +73,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          injection == other.injection
+          injection == other.injection &&
+          multifeed == other.multifeed
       end
 
       # @see the `==` method
@@ -78,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [injection].hash
+        [injection, multifeed].hash
       end
 
       # Builds the object from hash

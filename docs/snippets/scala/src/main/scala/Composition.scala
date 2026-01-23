@@ -675,11 +675,13 @@ class SnippetCompositionClient {
                 objectID = "foo",
                 name = "my first composition",
                 behavior = CompositionBehavior(
-                  injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "bar"
+                  injection = Some(
+                    Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "bar"
+                          )
                         )
                       )
                     )
@@ -724,31 +726,33 @@ class SnippetCompositionClient {
                 objectID = "my-external-injection-compo",
                 name = "my first composition",
                 behavior = CompositionBehavior(
-                  injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
+                  injection = Some(
+                    Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "foo"
+                          )
                         )
-                      )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-external-group-key",
-                          source = ExternalSource(
-                            external = External(
-                              index = "foo",
-                              ordering = Some(ExternalOrdering.withName("userDefined")),
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-external-group-key",
+                            source = ExternalSource(
+                              external = External(
+                                index = "foo",
+                                ordering = Some(ExternalOrdering.withName("userDefined")),
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
                                 )
                               )
-                            )
-                          ),
-                          position = 2,
-                          length = 1
+                            ),
+                            position = 2,
+                            length = 1
+                          )
                         )
                       )
                     )
@@ -787,48 +791,50 @@ class SnippetCompositionClient {
                 objectID = "my-metadata-compo",
                 name = "my composition",
                 behavior = CompositionBehavior(
-                  injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              filters = Some("brand:adidas")
+                  injection = Some(
+                    Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "foo",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
                             )
                           )
                         )
-                      )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo",
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-group-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "foo",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
                                 )
                               )
-                            )
-                          ),
-                          position = 2,
-                          length = 1,
-                          metadata = Some(
-                            InjectedItemMetadata(
-                              hits = Some(
-                                InjectedItemHitsMetadata(
-                                  addItemKey = Some(true),
-                                  extra = Some(
-                                    Map(
-                                      "my-string" -> "string",
-                                      "my-bool" -> true,
-                                      "my-number" -> 42,
-                                      "my-object" -> JObject(
-                                        List(
-                                          JField("sub-key", JString("sub-value"))
+                            ),
+                            position = 2,
+                            length = 1,
+                            metadata = Some(
+                              InjectedItemMetadata(
+                                hits = Some(
+                                  InjectedItemHitsMetadata(
+                                    addItemKey = Some(true),
+                                    extra = Some(
+                                      Map(
+                                        "my-string" -> "string",
+                                        "my-bool" -> true,
+                                        "my-number" -> 42,
+                                        "my-object" -> JObject(
+                                          List(
+                                            JField("sub-key", JString("sub-value"))
+                                          )
                                         )
                                       )
                                     )
@@ -836,35 +842,35 @@ class SnippetCompositionClient {
                                 )
                               )
                             )
-                          )
-                        ),
-                        InjectedItem(
-                          key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo",
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:puma")
+                          ),
+                          InjectedItem(
+                            key = "my-unique-group-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "foo",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:puma")
+                                  )
                                 )
                               )
-                            )
-                          ),
-                          position = 5,
-                          length = 5,
-                          metadata = Some(
-                            InjectedItemMetadata(
-                              hits = Some(
-                                InjectedItemHitsMetadata(
-                                  addItemKey = Some(true),
-                                  extra = Some(
-                                    Map(
-                                      "my-string" -> "string",
-                                      "my-bool" -> true,
-                                      "my-number" -> 42,
-                                      "my-object" -> JObject(
-                                        List(
-                                          JField("sub-key", JString("sub-value"))
+                            ),
+                            position = 5,
+                            length = 5,
+                            metadata = Some(
+                              InjectedItemMetadata(
+                                hits = Some(
+                                  InjectedItemHitsMetadata(
+                                    addItemKey = Some(true),
+                                    extra = Some(
+                                      Map(
+                                        "my-string" -> "string",
+                                        "my-bool" -> true,
+                                        "my-number" -> 42,
+                                        "my-object" -> JObject(
+                                          List(
+                                            JField("sub-key", JString("sub-value"))
+                                          )
                                         )
                                       )
                                     )
@@ -911,31 +917,33 @@ class SnippetCompositionClient {
                 objectID = "my-compo",
                 name = "my composition",
                 behavior = CompositionBehavior(
-                  injection = Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
+                  injection = Some(
+                    Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "foo"
+                          )
                         )
-                      )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-injected-item-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo"
-                            )
-                          ),
-                          position = 2,
-                          length = 1
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-injected-item-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "foo"
+                              )
+                            ),
+                            position = 2,
+                            length = 1
+                          )
                         )
-                      )
-                    ),
-                    deduplication = Some(
-                      Deduplication(
-                        positioning = DedupPositioning.withName("highest")
+                      ),
+                      deduplication = Some(
+                        Deduplication(
+                          positioning = DedupPositioning.withName("highest")
+                        )
                       )
                     )
                   )
@@ -970,25 +978,27 @@ class SnippetCompositionClient {
           objectID = "1234",
           name = "my first composition",
           behavior = CompositionBehavior(
-            injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+            injection = Some(
+              Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo"
+                    )
                   )
-                )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo"
-                      )
-                    ),
-                    position = 2,
-                    length = 1
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "my-unique-group-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo"
+                        )
+                      ),
+                      position = 2,
+                      length = 1
+                    )
                   )
                 )
               )
@@ -1021,31 +1031,33 @@ class SnippetCompositionClient {
           objectID = "my-external-injection-compo",
           name = "my first composition",
           behavior = CompositionBehavior(
-            injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
+            injection = Some(
+              Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo"
+                    )
                   )
-                )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-external-group-key",
-                    source = ExternalSource(
-                      external = External(
-                        index = "foo",
-                        ordering = Some(ExternalOrdering.withName("userDefined")),
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:adidas")
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "my-unique-external-group-key",
+                      source = ExternalSource(
+                        external = External(
+                          index = "foo",
+                          ordering = Some(ExternalOrdering.withName("userDefined")),
+                          params = Some(
+                            BaseInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
                           )
                         )
-                      )
-                    ),
-                    position = 2,
-                    length = 1
+                      ),
+                      position = 2,
+                      length = 1
+                    )
                   )
                 )
               )
@@ -1078,48 +1090,50 @@ class SnippetCompositionClient {
           objectID = "my-metadata-compo",
           name = "my composition",
           behavior = CompositionBehavior(
-            injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
+            injection = Some(
+              Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
                       )
                     )
                   )
-                )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo",
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:adidas")
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "my-unique-group-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo",
+                          params = Some(
+                            BaseInjectionQueryParameters(
+                              filters = Some("brand:adidas")
+                            )
                           )
                         )
-                      )
-                    ),
-                    position = 2,
-                    length = 1,
-                    metadata = Some(
-                      InjectedItemMetadata(
-                        hits = Some(
-                          InjectedItemHitsMetadata(
-                            addItemKey = Some(true),
-                            extra = Some(
-                              Map(
-                                "my-string" -> "string",
-                                "my-bool" -> true,
-                                "my-number" -> 42,
-                                "my-object" -> JObject(
-                                  List(
-                                    JField("sub-key", JString("sub-value"))
+                      ),
+                      position = 2,
+                      length = 1,
+                      metadata = Some(
+                        InjectedItemMetadata(
+                          hits = Some(
+                            InjectedItemHitsMetadata(
+                              addItemKey = Some(true),
+                              extra = Some(
+                                Map(
+                                  "my-string" -> "string",
+                                  "my-bool" -> true,
+                                  "my-number" -> 42,
+                                  "my-object" -> JObject(
+                                    List(
+                                      JField("sub-key", JString("sub-value"))
+                                    )
                                   )
                                 )
                               )
@@ -1127,35 +1141,35 @@ class SnippetCompositionClient {
                           )
                         )
                       )
-                    )
-                  ),
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo",
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:puma")
+                    ),
+                    InjectedItem(
+                      key = "my-unique-group-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo",
+                          params = Some(
+                            BaseInjectionQueryParameters(
+                              filters = Some("brand:puma")
+                            )
                           )
                         )
-                      )
-                    ),
-                    position = 5,
-                    length = 5,
-                    metadata = Some(
-                      InjectedItemMetadata(
-                        hits = Some(
-                          InjectedItemHitsMetadata(
-                            addItemKey = Some(true),
-                            extra = Some(
-                              Map(
-                                "my-string" -> "string",
-                                "my-bool" -> true,
-                                "my-number" -> 42,
-                                "my-object" -> JObject(
-                                  List(
-                                    JField("sub-key", JString("sub-value"))
+                      ),
+                      position = 5,
+                      length = 5,
+                      metadata = Some(
+                        InjectedItemMetadata(
+                          hits = Some(
+                            InjectedItemHitsMetadata(
+                              addItemKey = Some(true),
+                              extra = Some(
+                                Map(
+                                  "my-string" -> "string",
+                                  "my-bool" -> true,
+                                  "my-number" -> 42,
+                                  "my-object" -> JObject(
+                                    List(
+                                      JField("sub-key", JString("sub-value"))
+                                    )
                                   )
                                 )
                               )
@@ -1196,36 +1210,38 @@ class SnippetCompositionClient {
           objectID = "my-compo",
           name = "my composition",
           behavior = CompositionBehavior(
-            injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
+            injection = Some(
+              Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "foo",
+                      params = Some(
+                        MainInjectionQueryParameters(
+                          filters = Some("brand:adidas")
+                        )
                       )
                     )
                   )
-                )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-injected-item-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo"
-                      )
-                    ),
-                    position = 2,
-                    length = 1
+                ),
+                injectedItems = Some(
+                  Seq(
+                    InjectedItem(
+                      key = "my-unique-injected-item-key",
+                      source = SearchSource(
+                        search = Search(
+                          index = "foo"
+                        )
+                      ),
+                      position = 2,
+                      length = 1
+                    )
                   )
-                )
-              ),
-              deduplication = Some(
-                Deduplication(
-                  positioning = DedupPositioning.withName("highest")
+                ),
+                deduplication = Some(
+                  Deduplication(
+                    positioning = DedupPositioning.withName("highest")
+                  )
                 )
               )
             )
@@ -1258,11 +1274,13 @@ class SnippetCompositionClient {
           name = "my composition",
           sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
           behavior = CompositionBehavior(
-            injection = Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "products"
+            injection = Some(
+              Injection(
+                main = Main(
+                  source = CompositionSource(
+                    search = CompositionSourceSearch(
+                      index = "products"
+                    )
                   )
                 )
               )
@@ -1294,33 +1312,37 @@ class SnippetCompositionClient {
         objectID = "ruleID",
         compositionRule = CompositionRule(
           objectID = "ruleID",
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("is")),
-              pattern = Some("test")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("is")),
+                pattern = Some("test")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
             behavior = CompositionBehavior(
-              injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
+              injection = Some(
+                Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
+                      )
                     )
-                  )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "foo"
-                        )
-                      ),
-                      position = 2,
-                      length = 1
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-group-from-rule-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo"
+                          )
+                        ),
+                        position = 2,
+                        length = 1
+                      )
                     )
                   )
                 )
@@ -1353,51 +1375,55 @@ class SnippetCompositionClient {
         objectID = "rule-with-metadata",
         compositionRule = CompositionRule(
           objectID = "rule-with-metadata",
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("is")),
-              pattern = Some("test")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("is")),
+                pattern = Some("test")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
             behavior = CompositionBehavior(
-              injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
+              injection = Some(
+                Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
+                      )
                     )
-                  )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "foo",
-                          params = Some(
-                            BaseInjectionQueryParameters(
-                              filters = Some("brand:adidas")
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-group-from-rule-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
                             )
                           )
-                        )
-                      ),
-                      position = 2,
-                      length = 1,
-                      metadata = Some(
-                        InjectedItemMetadata(
-                          hits = Some(
-                            InjectedItemHitsMetadata(
-                              addItemKey = Some(true),
-                              extra = Some(
-                                Map(
-                                  "my-string" -> "string",
-                                  "my-bool" -> true,
-                                  "my-number" -> 42,
-                                  "my-object" -> JObject(
-                                    List(
-                                      JField("sub-key", JString("sub-value"))
+                        ),
+                        position = 2,
+                        length = 1,
+                        metadata = Some(
+                          InjectedItemMetadata(
+                            hits = Some(
+                              InjectedItemHitsMetadata(
+                                addItemKey = Some(true),
+                                extra = Some(
+                                  Map(
+                                    "my-string" -> "string",
+                                    "my-bool" -> true,
+                                    "my-number" -> 42,
+                                    "my-object" -> JObject(
+                                      List(
+                                        JField("sub-key", JString("sub-value"))
+                                      )
                                     )
                                   )
                                 )
@@ -1449,48 +1475,52 @@ class SnippetCompositionClient {
               )
             )
           ),
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("harry")
-            ),
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("potter")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("harry")
+              ),
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("potter")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
             behavior = CompositionBehavior(
-              injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index",
-                      params = Some(
-                        MainInjectionQueryParameters(
-                          filters = Some("brand:adidas")
+              injection = Some(
+                Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "my-index",
+                        params = Some(
+                          MainInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
                         )
                       )
                     )
-                  )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-external-group-from-rule-key",
-                      source = ExternalSource(
-                        external = External(
-                          index = "my-index",
-                          params = Some(
-                            BaseInjectionQueryParameters(
-                              filters = Some("brand:adidas")
-                            )
-                          ),
-                          ordering = Some(ExternalOrdering.withName("userDefined"))
-                        )
-                      ),
-                      position = 0,
-                      length = 3
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-external-group-from-rule-key",
+                        source = ExternalSource(
+                          external = External(
+                            index = "my-index",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
+                              )
+                            ),
+                            ordering = Some(ExternalOrdering.withName("userDefined"))
+                          )
+                        ),
+                        position = 0,
+                        length = 3
+                      )
                     )
                   )
                 )
@@ -1525,39 +1555,43 @@ class SnippetCompositionClient {
           objectID = "rule-with-deduplication",
           description = Some("my description"),
           enabled = Some(true),
-          conditions = Seq(
-            Condition(
-              anchoring = Some(Anchoring.withName("contains")),
-              pattern = Some("harry")
+          conditions = Some(
+            Seq(
+              Condition(
+                anchoring = Some(Anchoring.withName("contains")),
+                pattern = Some("harry")
+              )
             )
           ),
           consequence = CompositionRuleConsequence(
             behavior = CompositionBehavior(
-              injection = Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index"
+              injection = Some(
+                Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "my-index"
+                      )
                     )
-                  )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-injected-item-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "my-index"
-                        )
-                      ),
-                      position = 0,
-                      length = 3
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-injected-item-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "my-index"
+                          )
+                        ),
+                        position = 0,
+                        length = 3
+                      )
                     )
-                  )
-                ),
-                deduplication = Some(
-                  Deduplication(
-                    positioning = DedupPositioning.withName("highestInjected")
+                  ),
+                  deduplication = Some(
+                    Deduplication(
+                      positioning = DedupPositioning.withName("highestInjected")
+                    )
                   )
                 )
               )
@@ -1593,18 +1627,22 @@ class SnippetCompositionClient {
                 action = Action.withName("upsert"),
                 body = CompositionRule(
                   objectID = "123",
-                  conditions = Seq(
-                    Condition(
-                      pattern = Some("a")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        pattern = Some("a")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionBehavior(
-                      injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "<YOUR_INDEX_NAME>"
+                      injection = Some(
+                        Injection(
+                          main = Main(
+                            source = CompositionSource(
+                              search = CompositionSourceSearch(
+                                index = "<YOUR_INDEX_NAME>"
+                              )
                             )
                           )
                         )
@@ -1645,51 +1683,55 @@ class SnippetCompositionClient {
                 action = Action.withName("upsert"),
                 body = CompositionRule(
                   objectID = "rule-with-metadata",
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("is")),
-                      pattern = Some("test")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("is")),
+                        pattern = Some("test")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionBehavior(
-                      injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "foo"
+                      injection = Some(
+                        Injection(
+                          main = Main(
+                            source = CompositionSource(
+                              search = CompositionSourceSearch(
+                                index = "foo"
+                              )
                             )
-                          )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-group-from-rule-key",
-                              source = SearchSource(
-                                search = Search(
-                                  index = "foo",
-                                  params = Some(
-                                    BaseInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
+                          ),
+                          injectedItems = Some(
+                            Seq(
+                              InjectedItem(
+                                key = "my-unique-group-from-rule-key",
+                                source = SearchSource(
+                                  search = Search(
+                                    index = "foo",
+                                    params = Some(
+                                      BaseInjectionQueryParameters(
+                                        filters = Some("brand:adidas")
+                                      )
                                     )
                                   )
-                                )
-                              ),
-                              position = 2,
-                              length = 1,
-                              metadata = Some(
-                                InjectedItemMetadata(
-                                  hits = Some(
-                                    InjectedItemHitsMetadata(
-                                      addItemKey = Some(true),
-                                      extra = Some(
-                                        Map(
-                                          "my-string" -> "string",
-                                          "my-bool" -> true,
-                                          "my-number" -> 42,
-                                          "my-object" -> JObject(
-                                            List(
-                                              JField("sub-key", JString("sub-value"))
+                                ),
+                                position = 2,
+                                length = 1,
+                                metadata = Some(
+                                  InjectedItemMetadata(
+                                    hits = Some(
+                                      InjectedItemHitsMetadata(
+                                        addItemKey = Some(true),
+                                        extra = Some(
+                                          Map(
+                                            "my-string" -> "string",
+                                            "my-bool" -> true,
+                                            "my-number" -> 42,
+                                            "my-object" -> JObject(
+                                              List(
+                                                JField("sub-key", JString("sub-value"))
+                                              )
                                             )
                                           )
                                         )
@@ -1749,48 +1791,52 @@ class SnippetCompositionClient {
                       )
                     )
                   ),
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("harry")
-                    ),
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("potter")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("harry")
+                      ),
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("potter")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionBehavior(
-                      injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index",
-                              params = Some(
-                                MainInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
+                      injection = Some(
+                        Injection(
+                          main = Main(
+                            source = CompositionSource(
+                              search = CompositionSourceSearch(
+                                index = "my-index",
+                                params = Some(
+                                  MainInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
                                 )
                               )
                             )
-                          )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-external-group-from-rule-key",
-                              source = ExternalSource(
-                                external = External(
-                                  index = "my-index",
-                                  params = Some(
-                                    BaseInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
-                                    )
-                                  ),
-                                  ordering = Some(ExternalOrdering.withName("userDefined"))
-                                )
-                              ),
-                              position = 0,
-                              length = 3
+                          ),
+                          injectedItems = Some(
+                            Seq(
+                              InjectedItem(
+                                key = "my-unique-external-group-from-rule-key",
+                                source = ExternalSource(
+                                  external = External(
+                                    index = "my-index",
+                                    params = Some(
+                                      BaseInjectionQueryParameters(
+                                        filters = Some("brand:adidas")
+                                      )
+                                    ),
+                                    ordering = Some(ExternalOrdering.withName("userDefined"))
+                                  )
+                                ),
+                                position = 0,
+                                length = 3
+                              )
                             )
                           )
                         )
@@ -1833,42 +1879,46 @@ class SnippetCompositionClient {
                   objectID = "rule-with-deduplication",
                   description = Some("my description"),
                   enabled = Some(true),
-                  conditions = Seq(
-                    Condition(
-                      anchoring = Some(Anchoring.withName("contains")),
-                      pattern = Some("harry")
-                    ),
-                    Condition(
-                      sortBy = Some("price-low-to-high")
+                  conditions = Some(
+                    Seq(
+                      Condition(
+                        anchoring = Some(Anchoring.withName("contains")),
+                        pattern = Some("harry")
+                      ),
+                      Condition(
+                        sortBy = Some("price-low-to-high")
+                      )
                     )
                   ),
                   consequence = CompositionRuleConsequence(
                     behavior = CompositionBehavior(
-                      injection = Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index"
+                      injection = Some(
+                        Injection(
+                          main = Main(
+                            source = CompositionSource(
+                              search = CompositionSourceSearch(
+                                index = "my-index"
+                              )
                             )
-                          )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-injected-item-key",
-                              source = SearchSource(
-                                search = Search(
-                                  index = "my-index"
-                                )
-                              ),
-                              position = 0,
-                              length = 3
+                          ),
+                          injectedItems = Some(
+                            Seq(
+                              InjectedItem(
+                                key = "my-unique-injected-item-key",
+                                source = SearchSource(
+                                  search = Search(
+                                    index = "my-index"
+                                  )
+                                ),
+                                position = 0,
+                                length = 3
+                              )
                             )
-                          )
-                        ),
-                        deduplication = Some(
-                          Deduplication(
-                            positioning = DedupPositioning.withName("highestInjected")
+                          ),
+                          deduplication = Some(
+                            Deduplication(
+                              positioning = DedupPositioning.withName("highestInjected")
+                            )
                           )
                         )
                       )

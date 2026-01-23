@@ -3112,8 +3112,6 @@ components:
         after records that don't match.
 
 
-        - Optional filters don't work on virtual replicas.
-
         - Optional filters are applied _after_ sort-by attributes.
 
         - Optional filters are applied _before_ custom ranking attributes (in
@@ -3121,6 +3119,10 @@ components:
         [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).
 
         - Optional filters don't work with numeric attributes.
+
+        - On virtual replicas, optional filters are applied _after_ the
+        replica's [relevant
+        sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
       example:
         - category:Book
         - author:John Doe
@@ -5371,21 +5373,46 @@ components:
         - trending-facets
     trendingFacets:
       type: object
+      additionalProperties: false
       properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
         facetName:
           type: string
           description: Facet attribute for which to retrieve trending facet values.
         model:
           $ref: '#/components/schemas/trendingFacetsModel'
-        fallbackParameters:
-          $ref: '#/components/schemas/fallbackParams'
       required:
+        - indexName
+        - threshold
         - facetName
         - model
     trendingFacetsQuery:
       title: Trending facet values
       allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
         - $ref: '#/components/schemas/trendingFacets'
     lookingSimilarModel:
       type: string
