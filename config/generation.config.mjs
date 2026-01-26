@@ -103,6 +103,7 @@ export const patterns = [
   // Python
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
+  '!clients/algoliasearch-client-python/algoliasearch/tests/**',
   '!clients/algoliasearch-client-python/algoliasearch/py.typed',
   'clients/algoliasearch-client-python/algoliasearch/http/__init__.py',
   '!clients/algoliasearch-client-python/*',
