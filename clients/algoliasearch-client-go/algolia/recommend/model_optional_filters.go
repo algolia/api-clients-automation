@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-// OptionalFilters - Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don't exclude records from the search results. Records that match the optional filter rank before records that don't match. If you're using a negative filter `facet:-value`, matching records rank after records that don't match.  - Optional filters don't work on virtual replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)). - Optional filters don't work with numeric attributes.
+// OptionalFilters - Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don't exclude records from the search results. Records that match the optional filter rank before records that don't match. If you're using a negative filter `facet:-value`, matching records rank after records that don't match.  - Optional filters are applied _after_ sort-by attributes. - Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)). - Optional filters don't work with numeric attributes. - On virtual replicas, optional filters are applied _after_ the replica's [relevant sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
 type OptionalFilters struct {
 	ArrayOfOptionalFilters *[]OptionalFilters
 	String                 *string
@@ -26,22 +26,27 @@ func StringAsOptionalFilters(v string) *OptionalFilters {
 	}
 }
 
-// Unmarshal JSON data into one of the pointers in the struct.
+// Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *OptionalFilters) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal data into ArrayOfOptionalFilters
 	err = json.Unmarshal(data, &dst.ArrayOfOptionalFilters)
-	if err == nil {
-		return nil // found the correct type
-	} else {
+	if err != nil {
 		dst.ArrayOfOptionalFilters = nil
 	}
 	// try to unmarshal data into String
 	err = json.Unmarshal(data, &dst.String)
-	if err == nil {
-		return nil // found the correct type
-	} else {
+	if err != nil {
 		dst.String = nil
+	}
+
+	// check if at least one type was successfully unmarshaled
+	if dst.ArrayOfOptionalFilters != nil {
+		return nil
+	}
+
+	if dst.String != nil {
+		return nil
 	}
 
 	return fmt.Errorf("data failed to match schemas in oneOf(OptionalFilters)")

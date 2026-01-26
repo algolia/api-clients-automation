@@ -18,15 +18,12 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.AuthenticationType._
-
 /** Request body for updating an authentication resource.
   *
   * @param name
   *   Descriptive name for the resource.
   */
 case class AuthenticationUpdate(
-    `type`: Option[AuthenticationType] = scala.None,
     name: Option[String] = scala.None,
     input: Option[AuthInputPartial] = scala.None
 )

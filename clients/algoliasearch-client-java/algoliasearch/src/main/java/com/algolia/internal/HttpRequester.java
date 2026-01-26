@@ -81,8 +81,8 @@ public final class HttpRequester implements Requester {
 
     Request request = requestBuilder.build();
 
-    // Get or adjust the HTTP client according to request options.
-    OkHttpClient client = getOkHttpClient(requestOptions);
+    // Get or adjust the HTTP client according to request.
+    OkHttpClient client = getOkHttpClient(httpRequest, requestOptions);
 
     // Execute the request.
     Call call = client.newCall(request);
@@ -165,22 +165,52 @@ public final class HttpRequester implements Requester {
 
   /** Returns a suitable OkHttpClient instance based on the provided request options. */
   @Nonnull
-  private OkHttpClient getOkHttpClient(RequestOptions requestOptions) {
-    // Return the default client if no request options are provided.
-    if (requestOptions == null) return httpClient;
-
-    // Create a new client builder from the default client and adjust timeouts if provided.
+  private OkHttpClient getOkHttpClient(HttpRequest httpRequest, RequestOptions requestOptions) {
     OkHttpClient.Builder builder = httpClient.newBuilder();
-    if (requestOptions.getReadTimeout() != null) {
-      builder.readTimeout(requestOptions.getReadTimeout());
+    // Determine if this is a read operation: either explicitly marked as read, or using GET method
+    boolean isRead = httpRequest.isRead() || "GET".equalsIgnoreCase(httpRequest.getMethod());
+    boolean changed = false;
+
+    // If this is a write operation, set readTimeout to the default writeTimeout value
+    if (!isRead) {
+      builder.readTimeout(Duration.ofMillis(httpClient.writeTimeoutMillis()));
+      changed = true;
     }
-    if (requestOptions.getWriteTimeout() != null) {
-      builder.writeTimeout(requestOptions.getWriteTimeout());
+
+    if (isRead && requestOptions != null) {
+      // For read operations, apply connectTimeout if provided
+      if (requestOptions.getConnectTimeout() != null) {
+        builder.connectTimeout(requestOptions.getConnectTimeout());
+        changed = true;
+      }
+      // For read operations, use the explicit readTimeout if provided
+      if (requestOptions.getReadTimeout() != null) {
+        builder.readTimeout(requestOptions.getReadTimeout());
+        changed = true;
+      }
+      // For read operations, set writeTimeout if provided
+      if (requestOptions.getWriteTimeout() != null) {
+        builder.writeTimeout(requestOptions.getWriteTimeout());
+        changed = true;
+      }
+    } else if (!isRead && requestOptions != null) {
+      // For write operations, apply connectTimeout if provided
+      if (requestOptions.getConnectTimeout() != null) {
+        builder.connectTimeout(requestOptions.getConnectTimeout());
+        changed = true;
+      }
+      // For write operations, use the explicit writeTimeout for both readTimeout and writeTimeout
+      // if provided
+      if (requestOptions.getWriteTimeout() != null) {
+        builder.readTimeout(requestOptions.getWriteTimeout());
+        builder.writeTimeout(requestOptions.getWriteTimeout());
+        changed = true;
+      }
     }
-    if (requestOptions.getConnectTimeout() != null) {
-      builder.connectTimeout(requestOptions.getConnectTimeout());
-    }
-    return builder.build();
+
+    // Return a new OkHttpClient instance if any timeout was changed, otherwise reuse the default
+    // client
+    return changed ? builder.build() : httpClient;
   }
 
   @Override

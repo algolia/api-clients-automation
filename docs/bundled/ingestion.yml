@@ -2739,7 +2739,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"googleServiceAccount","name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
+              --data '{"name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
     delete:
       tags:
         - authentications
@@ -16945,8 +16945,6 @@ components:
       description: Request body for updating an authentication resource.
       additionalProperties: false
       properties:
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
         name:
           $ref: '#/components/schemas/name'
         input:

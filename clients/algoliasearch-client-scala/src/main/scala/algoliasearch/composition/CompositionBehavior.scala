@@ -28,8 +28,9 @@
   */
 package algoliasearch.composition
 
-/** CompositionBehavior
+/** An object containing either an `injection` or `multifeed` behavior schema, but not both.
   */
 case class CompositionBehavior(
-    injection: Injection
+    injection: Option[Injection] = scala.None,
+    multifeed: Option[Multifeed] = scala.None
 )

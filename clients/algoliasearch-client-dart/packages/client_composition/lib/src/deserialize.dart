@@ -55,6 +55,7 @@ import 'package:algolia_client_composition/src/model/main.dart';
 import 'package:algolia_client_composition/src/model/main_injection_query_parameters.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
+import 'package:algolia_client_composition/src/model/multifeed.dart';
 import 'package:algolia_client_composition/src/model/multiple_batch_request.dart';
 import 'package:algolia_client_composition/src/model/multiple_batch_response.dart';
 import 'package:algolia_client_composition/src/model/params.dart';
@@ -261,6 +262,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MatchedGeoLocation':
       return MatchedGeoLocation.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Multifeed':
+      return Multifeed.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MultipleBatchRequest':
       return MultipleBatchRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;

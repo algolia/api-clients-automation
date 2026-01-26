@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.46.2",
+  "version": "5.47.0",
   "description": "Promise-based request library using Fetch.",
   "repository": {
     "type": "git",
@@ -48,17 +48,17 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.46.2"
+    "@algolia/client-common": "5.47.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "24.10.4",
+    "@types/node": "24.10.9",
     "cross-fetch": "4.1.0",
     "nock": "14.0.10",
     "publint": "0.3.16",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.16"
+    "vitest": "4.0.17"
   },
   "engines": {
     "node": ">= 14.0.0"

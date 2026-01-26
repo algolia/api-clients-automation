@@ -1,3 +1,17 @@
+## [4.34.4](https://github.com/algolia/algoliasearch-client-java/compare/4.34.3...4.34.4)
+
+- [3572843bd](https://github.com/algolia/api-clients-automation/commit/3572843bd) fix(java): Java API client writeTimeout configuration not working ([#5829](https://github.com/algolia/api-clients-automation/pull/5829)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
+## [4.34.3](https://github.com/algolia/algoliasearch-client-java/compare/4.34.2...4.34.3)
+
+- [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [4.34.2](https://github.com/algolia/algoliasearch-client-java/compare/4.34.1...4.34.2)
+
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
+Some fields from the Composition Run search response were marked as required while they were optional on the API side. This has been fixed, but might impact the client types.
+- [b08917039](https://github.com/algolia/api-clients-automation/commit/b08917039) chore(deps): dependencies 2025-12-29 ([#5792](https://github.com/algolia/api-clients-automation/pull/5792)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.34.1](https://github.com/algolia/algoliasearch-client-java/compare/4.34.0...4.34.1)
 
 - [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)

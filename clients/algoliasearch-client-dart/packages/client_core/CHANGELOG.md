@@ -1,3 +1,12 @@
+## [1.43.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.2...1.43.3)
+
+- [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [1.43.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.1...1.43.2)
+
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
+Some fields from the Composition Run search response were marked as required while they were optional on the API side. This has been fixed, but might impact the client types.
+
 ## [1.43.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.0...1.43.1)
 
 - [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)

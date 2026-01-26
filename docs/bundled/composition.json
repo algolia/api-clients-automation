@@ -1812,7 +1812,7 @@
         ]
       },
       "optionalFilters": {
-        "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n\n- Optional filters don't work on virtual replicas.\n- Optional filters are applied _after_ sort-by attributes.\n- Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).\n- Optional filters don't work with numeric attributes.\n",
+        "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n\n- Optional filters are applied _after_ sort-by attributes.\n- Optional filters are applied _before_ custom ranking attributes (in the default [ranking](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria)).\n- Optional filters don't work with numeric attributes.\n- On virtual replicas, optional filters are applied _after_ the replica's [relevant sort](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).\n",
         "example": [
           "category:Book",
           "author:John Doe"
@@ -2882,16 +2882,7 @@
           "query": {
             "$ref": "#/components/schemas/SingleResultSet_query"
           }
-        },
-        "required": [
-          "page",
-          "nbHits",
-          "nbPages",
-          "hitsPerPage",
-          "hits",
-          "query",
-          "params"
-        ]
+        }
       },
       "resultsInjectedItemAppliedRulesInfoResponse": {
         "type": "object",
@@ -3992,17 +3983,83 @@
           "main"
         ]
       },
-      "compositionBehavior": {
+      "multifeed": {
+        "title": "multifeed",
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "injection": {
-            "$ref": "#/components/schemas/injection"
+          "feeds": {
+            "type": "object",
+            "description": "A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/injection"
+            }
+          },
+          "feedsOrder": {
+            "type": "array",
+            "description": "A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all Feeds are processed and returned with a default ordering.",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
-          "injection"
-        ]
+          "feeds"
+        ],
+        "example": {
+          "feeds": {
+            "products-feed": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "products"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "sponsored",
+                  "position": 0,
+                  "length": 4,
+                  "source": {
+                    "search": {
+                      "index": "products",
+                      "params": {
+                        "filters": "sponsored:true"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "articles-feed": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "articles"
+                  }
+                }
+              }
+            }
+          },
+          "feedsOrder": [
+            "products-feed",
+            "articles-feed"
+          ]
+        }
+      },
+      "compositionBehavior": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "An object containing either an `injection` or `multifeed` behavior schema, but not both.",
+        "properties": {
+          "injection": {
+            "$ref": "#/components/schemas/injection"
+          },
+          "multifeed": {
+            "$ref": "#/components/schemas/multifeed"
+          }
+        }
       },
       "sortingStrategy": {
         "type": "object",
@@ -4253,7 +4310,6 @@
         },
         "required": [
           "objectID",
-          "conditions",
           "consequence"
         ]
       },

@@ -1,3 +1,17 @@
+## [5.47.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.4...5.47.0)
+
+- [f9ac3a711](https://github.com/algolia/api-clients-automation/commit/f9ac3a711) feat(specs): introduce multifeed composition behavior for beta release ([#5828](https://github.com/algolia/api-clients-automation/pull/5828)) by [@gavinwade12](https://github.com/gavinwade12/)
+
+## [5.46.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.3...5.46.4)
+
+- [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [5.46.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.2...5.46.3)
+
+- [cd7a174b4](https://github.com/algolia/api-clients-automation/commit/cd7a174b4) fix(specs): BREAKING CHANGE — remove fields requirement from run response in CompAPI client ([#5809](https://github.com/algolia/api-clients-automation/pull/5809)) by [@ClaraMuller](https://github.com/ClaraMuller/)\
+  Some fields from the Composition Run search response were marked as required while they were optional on the API side. This has been fixed, but might impact the client types.
+- [b08917039](https://github.com/algolia/api-clients-automation/commit/b08917039) chore(deps): dependencies 2025-12-29 ([#5792](https://github.com/algolia/api-clients-automation/pull/5792)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.46.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.1...5.46.2)
 
 - [c88b505d6](https://github.com/algolia/api-clients-automation/commit/c88b505d6) chore: migrate lerna config ([#5772](https://github.com/algolia/api-clients-automation/pull/5772)) by [@shortcuts](https://github.com/shortcuts/)

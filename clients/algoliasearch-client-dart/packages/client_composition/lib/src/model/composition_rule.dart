@@ -13,7 +13,7 @@ final class CompositionRule {
   /// Returns a new [CompositionRule] instance.
   const CompositionRule({
     required this.objectID,
-    required this.conditions,
+    this.conditions,
     required this.consequence,
     this.description,
     this.enabled,
@@ -27,7 +27,7 @@ final class CompositionRule {
 
   /// Conditions that trigger a composition rule.
   @JsonKey(name: r'conditions')
-  final List<Condition> conditions;
+  final List<Condition>? conditions;
 
   @JsonKey(name: r'consequence')
   final CompositionRuleConsequence consequence;

@@ -20,17 +20,11 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
   @JsonProperty("maxRecommendations")
   private Integer maxRecommendations;
 
-  @JsonProperty("queryParameters")
-  private RecommendSearchParams queryParameters;
-
   @JsonProperty("facetName")
   private String facetName;
 
   @JsonProperty("model")
   private TrendingFacetsModel model;
-
-  @JsonProperty("fallbackParameters")
-  private FallbackParams fallbackParameters;
 
   public TrendingFacetsQuery setIndexName(String indexName) {
     this.indexName = indexName;
@@ -73,17 +67,6 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     return maxRecommendations;
   }
 
-  public TrendingFacetsQuery setQueryParameters(RecommendSearchParams queryParameters) {
-    this.queryParameters = queryParameters;
-    return this;
-  }
-
-  /** Get queryParameters */
-  @javax.annotation.Nullable
-  public RecommendSearchParams getQueryParameters() {
-    return queryParameters;
-  }
-
   public TrendingFacetsQuery setFacetName(String facetName) {
     this.facetName = facetName;
     return this;
@@ -106,17 +89,6 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     return model;
   }
 
-  public TrendingFacetsQuery setFallbackParameters(FallbackParams fallbackParameters) {
-    this.fallbackParameters = fallbackParameters;
-    return this;
-  }
-
-  /** Get fallbackParameters */
-  @javax.annotation.Nullable
-  public FallbackParams getFallbackParameters() {
-    return fallbackParameters;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -130,16 +102,14 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
       Objects.equals(this.indexName, trendingFacetsQuery.indexName) &&
       Objects.equals(this.threshold, trendingFacetsQuery.threshold) &&
       Objects.equals(this.maxRecommendations, trendingFacetsQuery.maxRecommendations) &&
-      Objects.equals(this.queryParameters, trendingFacetsQuery.queryParameters) &&
       Objects.equals(this.facetName, trendingFacetsQuery.facetName) &&
-      Objects.equals(this.model, trendingFacetsQuery.model) &&
-      Objects.equals(this.fallbackParameters, trendingFacetsQuery.fallbackParameters)
+      Objects.equals(this.model, trendingFacetsQuery.model)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters, facetName, model, fallbackParameters);
+    return Objects.hash(indexName, threshold, maxRecommendations, facetName, model);
   }
 
   @Override
@@ -149,10 +119,8 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("    maxRecommendations: ").append(toIndentedString(maxRecommendations)).append("\n");
-    sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
     sb.append("    facetName: ").append(toIndentedString(facetName)).append("\n");
     sb.append("    model: ").append(toIndentedString(model)).append("\n");
-    sb.append("    fallbackParameters: ").append(toIndentedString(fallbackParameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

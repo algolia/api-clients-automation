@@ -1,5 +1,5 @@
 {
-  "version": "5.46.2",
+  "version": "5.47.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -74,33 +74,33 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/abtesting": "1.12.2",
-    "@algolia/client-abtesting": "5.46.2",
-    "@algolia/client-analytics": "5.46.2",
-    "@algolia/client-common": "5.46.2",
-    "@algolia/client-insights": "5.46.2",
-    "@algolia/client-personalization": "5.46.2",
-    "@algolia/client-query-suggestions": "5.46.2",
-    "@algolia/client-search": "5.46.2",
-    "@algolia/ingestion": "1.46.2",
-    "@algolia/monitoring": "1.46.2",
-    "@algolia/recommend": "5.46.2",
-    "@algolia/requester-browser-xhr": "5.46.2",
-    "@algolia/requester-fetch": "5.46.2",
-    "@algolia/requester-node-http": "5.46.2"
+    "@algolia/abtesting": "1.13.0",
+    "@algolia/client-abtesting": "5.47.0",
+    "@algolia/client-analytics": "5.47.0",
+    "@algolia/client-common": "5.47.0",
+    "@algolia/client-insights": "5.47.0",
+    "@algolia/client-personalization": "5.47.0",
+    "@algolia/client-query-suggestions": "5.47.0",
+    "@algolia/client-search": "5.47.0",
+    "@algolia/ingestion": "1.47.0",
+    "@algolia/monitoring": "1.47.0",
+    "@algolia/recommend": "5.47.0",
+    "@algolia/requester-browser-xhr": "5.47.0",
+    "@algolia/requester-fetch": "5.47.0",
+    "@algolia/requester-node-http": "5.47.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.46.2",
+    "@algolia/requester-testing": "5.47.0",
     "@arethetypeswrong/cli": "0.18.2",
-    "@cloudflare/vitest-pool-workers": "0.11.1",
+    "@cloudflare/vitest-pool-workers": "0.12.4",
     "@cloudflare/workers-types": "4.20251115.0",
-    "@types/node": "25.0.3",
-    "jsdom": "27.3.0",
+    "@types/node": "25.0.9",
+    "jsdom": "27.4.0",
     "publint": "0.3.16",
-    "rollup": "4.54.0",
+    "rollup": "4.55.1",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.16"
+    "vitest": "4.0.17"
   },
   "engines": {
     "node": ">= 14.0.0"

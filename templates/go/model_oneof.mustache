@@ -15,7 +15,7 @@ func {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}As{{c
 
 {{/composedSchemas.oneOf}}
 
-// Unmarshal JSON data into one of the pointers in the struct.
+// Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
 	var err error
 	{{#isNullable}}
@@ -36,15 +36,20 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
   {{/vendorExtensions.x-discriminator-fields.size}}
     // try to unmarshal data into {{#lambda.type-to-name}}{{{dataType}}}{{/lambda.type-to-name}}
     err = json.Unmarshal(data, &dst.{{#lambda.type-to-name}}{{{dataType}}}{{/lambda.type-to-name}})
-    if err == nil {
-      return nil // found the correct type
-    } else {
+    if err != nil {
       dst.{{#lambda.type-to-name}}{{{dataType}}}{{/lambda.type-to-name}} = nil
     }
   {{#vendorExtensions.x-discriminator-fields.size}}
   }
   {{/vendorExtensions.x-discriminator-fields.size}}
   {{/composedSchemas.oneOf}}
+
+  // check if at least one type was successfully unmarshaled
+  {{#oneOf}}
+  if dst.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} != nil {
+    return nil
+  }
+  {{/oneOf}}
 
   return fmt.Errorf("data failed to match schemas in oneOf({{classname}})")
 }
