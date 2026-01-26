@@ -26,12 +26,6 @@ def create_server_host() -> Host:
     return Host(TEST_SERVER, scheme="http", accept=CallType.READ | CallType.WRITE)
 
 
-def assert_timeout_progression(times: List[float]):
-    assert 1.5 < times[0] < 2.5, f"Request 1 should be ~2s, got {times[0]:.2f}s"
-    assert 3.5 < times[1] < 4.5, f"Request 2 should be ~4s, got {times[1]:.2f}s"
-    assert 5.5 < times[2] < 7.0, f"Request 3 should be ~6s, got {times[2]:.2f}s"
-
-
 def test_sync_retry_count_stateful():
     """connect timeout increases across failed requests: 2s -> 4s -> 6s."""
     config, _ = create_config_with_host("10.255.255.1")
@@ -51,7 +45,9 @@ def test_sync_retry_count_stateful():
         except Exception:
             times.append(time.time() - start)
 
-    assert_timeout_progression(times)
+    assert 1.5 < times[0] < 2.5, f"Request 1 should be ~2s, got {times[0]:.2f}s"
+    assert 3.5 < times[1] < 4.5, f"Request 2 should be ~4s, got {times[1]:.2f}s"
+    assert 5.5 < times[2] < 7.0, f"Request 3 should be ~6s, got {times[2]:.2f}s"
 
 
 def test_sync_retry_count_resets():
@@ -128,7 +124,10 @@ async def test_async_retry_count_stateful():
             times.append(time.time() - start)
 
     await transporter.close()
-    assert_timeout_progression(times)
+
+    assert 1.5 < times[0] < 2.5, f"Request 1 should be ~2s, got {times[0]:.2f}s"
+    assert 3.5 < times[1] < 4.5, f"Request 2 should be ~4s, got {times[1]:.2f}s"
+    assert 5.5 < times[2] < 7.0, f"Request 3 should be ~6s, got {times[2]:.2f}s"
 
 
 async def test_async_retry_count_resets():
