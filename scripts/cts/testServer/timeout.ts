@@ -110,6 +110,10 @@ function addRoutes(app: express.Express): void {
       res.json({ message: 'OK' });
     }, 8000);
   });
+
+  app.get('/1/test/instant', (req, res) => {
+    res.json({ success: true });
+  });
 }
 
 export function timeoutServer(): Promise<Server> {

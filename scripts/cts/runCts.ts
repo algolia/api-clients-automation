@@ -102,6 +102,16 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         cwd,
         language,
       });
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'poetry run pytest -vv ../../../clients/algoliasearch-client-python/algoliasearch/tests/test_timeout_integration.py',
+          {
+            cwd,
+            language,
+          },
+        );
+      }
       break;
     case 'ruby':
       await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
