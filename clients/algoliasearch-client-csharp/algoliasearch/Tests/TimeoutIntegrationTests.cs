@@ -50,7 +50,7 @@ public class TimeoutIntegrationTests
     var (config, _) = CreateConfigWithHost("10.255.255.1");
     var transport = new HttpTransport(
       config,
-      new AlgoliaHttpRequester(),
+      new AlgoliaHttpRequester(NullLoggerFactory.Instance),
       NullLoggerFactory.Instance
     );
 
@@ -95,7 +95,7 @@ public class TimeoutIntegrationTests
     var goodHost = CreateServerHost();
     var transport = new HttpTransport(
       config,
-      new AlgoliaHttpRequester(),
+      new AlgoliaHttpRequester(NullLoggerFactory.Instance),
       NullLoggerFactory.Instance
     );
 
@@ -121,7 +121,7 @@ public class TimeoutIntegrationTests
     goodHost.RetryCount = badHost.RetryCount;
     transport = new HttpTransport(
       config,
-      new AlgoliaHttpRequester(),
+      new AlgoliaHttpRequester(NullLoggerFactory.Instance),
       NullLoggerFactory.Instance
     );
 
