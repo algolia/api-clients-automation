@@ -1,7 +1,7 @@
 import asyncio
 import time
 from os import environ
-from typing import List, Tuple
+from typing import Tuple
 
 from algoliasearch.http.base_config import BaseConfig
 from algoliasearch.http.hosts import CallType, Host, HostsCollection
