@@ -7,7 +7,6 @@ description: |
 
   If you're building your category pages with Algolia,
   you'll also use this event.
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'

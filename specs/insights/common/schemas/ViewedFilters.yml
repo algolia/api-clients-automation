@@ -4,7 +4,6 @@ description: |
   Use this method to capture active filters.
   For example, when browsing a category page,
   users see content filtered on that specific category.
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
