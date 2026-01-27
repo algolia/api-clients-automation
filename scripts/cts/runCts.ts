@@ -56,6 +56,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         `dotnet test /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
         { cwd, language },
       );
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch.Tests/Algolia.Search.IntegrationTests.csproj',
+          { cwd, language },
+        );
+      }
       break;
     case 'dart':
       await run(`dart test ${filter((f) => `test/${f}`)}`, {
