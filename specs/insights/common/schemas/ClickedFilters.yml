@@ -1,7 +1,6 @@
 type: object
 title: Clicked filters
 description: Use this event to track when users click facet filters in your user interface.
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
