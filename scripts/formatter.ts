@@ -32,13 +32,13 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'java':
       await run(
-        'find . -path ./.gradle -prune -o -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED -jar /tmp/java-formatter.jar -r && yarn exec prettier --no-error-on-unmatched-pattern --write **/*.java',
+        'find . -path ./.gradle -prune -o -type f -name "*.java" | xargs java --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED -jar /tmp/java-formatter.jar -r && yarn prettier --no-error-on-unmatched-pattern --write **/*.java',
         { cwd, language },
       );
       break;
     case 'javascript':
       await run(
-        `yarn exec oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --promise-plugin --node-plugin --import-plugin ${cwd} && yarn exec prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')} && yarn exec eslint --ext=json ${cwd} --fix --no-error-on-unmatched-pattern`,
+        `yarn oxlint -c ${toAbsolutePath('oxlintrc.json')} --fix --fix-suggestions --fix-dangerously --promise-plugin --node-plugin --import-plugin ${cwd} && yarn prettier --write ${cwd} --ignore-path=${toAbsolutePath('.prettierignore')} && yarn eslint --ext=json ${cwd} --fix --no-error-on-unmatched-pattern`,
         { language },
       );
       break;

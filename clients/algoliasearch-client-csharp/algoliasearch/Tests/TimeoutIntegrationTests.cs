@@ -132,9 +132,8 @@ public class TimeoutIntegrationTests
     );
 
     Assert.Equal(200, response.HttpStatusCode);
-    Assert.Equal(
-      0,
-      goodHost.RetryCount,
+    Assert.True(
+      goodHost.RetryCount == 0,
       $"retry_count should reset to 0, got {goodHost.RetryCount}"
     );
 
