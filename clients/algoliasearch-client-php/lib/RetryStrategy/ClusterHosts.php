@@ -90,11 +90,36 @@ final class ClusterHosts
         return $this->getUrls('write');
     }
 
+    public function getRetryCount($hostUrl, $isRead)
+    {
+        $collection = $isRead ? $this->read : $this->write;
+
+        return $collection->getRetryCountForUrl($hostUrl);
+    }
+
     public function failed($host)
     {
         $this->read->markAsDown($host);
         $this->write->markAsDown($host);
 
+        $this->updateCache();
+
+        return $this;
+    }
+
+    public function timedOut($host)
+    {
+        $this->read->timedOut($host);
+        $this->write->timedOut($host);
+        $this->updateCache();
+
+        return $this;
+    }
+
+    public function resetHost($host)
+    {
+        $this->read->resetHost($host);
+        $this->write->resetHost($host);
         $this->updateCache();
 
         return $this;

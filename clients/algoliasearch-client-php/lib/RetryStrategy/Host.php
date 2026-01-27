@@ -16,6 +16,8 @@ final class Host
 
     private $lastCheck;
 
+    private $retryCount = 0;
+
     public function __construct($url, $priority = 0)
     {
         $this->url = $url;
@@ -51,6 +53,17 @@ final class Host
     {
         $this->up = true;
         $this->lastCheck = null;
+        $this->retryCount = 0;
+    }
+
+    public function getRetryCount(): int
+    {
+        return $this->retryCount;
+    }
+
+    public function incrementRetryCount(): void
+    {
+        ++$this->retryCount;
     }
 
     private function resetIfExpired()

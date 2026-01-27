@@ -155,7 +155,6 @@ final class ApiWrapper implements ApiWrapperInterface
             'query' => $requestOptions->getQueryParameters(),
         ];
 
-        $retry = 1;
         foreach ($hosts as $host) {
             if ($this->config->getHasFullHosts()) {
                 $host = explode(':', $host);
@@ -168,7 +167,6 @@ final class ApiWrapper implements ApiWrapperInterface
             }
 
             $request = null;
-            $logParams['retryNumber'] = $retry;
             $logParams['host'] = (string) $uri;
 
             try {
@@ -181,13 +179,31 @@ final class ApiWrapper implements ApiWrapperInterface
 
                 $this->log(LogLevel::DEBUG, 'Sending request.', $logParams);
 
+                $isRead = ($hosts === $this->clusterHosts->read());
+                $retryCount = $this->clusterHosts->getRetryCount($host, $isRead);
+
                 $response = $this->http->sendRequest(
                     $request,
-                    $timeout * $retry,
-                    $requestOptions->getConnectTimeout() * $retry
+                    $timeout,
+                    $requestOptions->getConnectTimeout() * ($retryCount + 1)
                 );
 
+                if ('true' === $response->getHeaderLine('X-Timeout')) {
+                    $this->log(
+                        LogLevel::DEBUG,
+                        'Request timed out.',
+                        array_merge($logParams, [
+                            'description' => 'Timeout',
+                        ])
+                    );
+
+                    $this->clusterHosts->timedOut($host);
+
+                    continue;
+                }
+
                 $responseBody = $this->handleResponse($response, $request, $returnHttpInfo);
+                $this->clusterHosts->resetHost($host);
 
                 $logParams['response'] = $responseBody;
                 $this->log(LogLevel::DEBUG, 'Response received.', $logParams);
@@ -216,8 +232,6 @@ final class ApiWrapper implements ApiWrapperInterface
 
                 throw $e;
             }
-
-            ++$retry;
         }
 
         throw new UnreachableException();

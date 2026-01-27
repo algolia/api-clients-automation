@@ -116,12 +116,26 @@ final class CurlHttpClient implements HttpClientInterface
         $statusCode = (int) curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
         $responseBody = curl_multi_getcontent($curlHandle);
         $error = curl_error($curlHandle);
+        $errorCode = curl_errno($curlHandle);
         $contentType = curl_getinfo($curlHandle, CURLINFO_CONTENT_TYPE);
 
         $this->releaseMHandle($curlHandle);
         curl_close($curlHandle);
 
-        return new Response($statusCode, ['Content-Type' => $contentType], $responseBody, '1.1', $error);
+        $headers = ['Content-Type' => $contentType];
+        if (CURLE_OPERATION_TIMEDOUT === $errorCode) {
+            $headers['X-Timeout'] = 'true';
+        } else {
+            $headers['X-Timeout'] = 'false';
+        }
+
+        return new Response(
+            $statusCode,
+            $headers,
+            $responseBody,
+            '1.1',
+            $error
+        );
     }
 
     private function getMHandle($curlHandle)
