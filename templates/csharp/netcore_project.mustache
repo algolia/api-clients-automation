@@ -44,8 +44,8 @@
     <PackageReference Include="System.Text.Json" Version="[8.0.5, 11.0)" />
   </ItemGroup>
 
-  <!-- Test dependencies only for net10.0 target -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+  <!-- Test dependencies only for net9.0 target -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
@@ -59,7 +59,7 @@
   </ItemGroup>
 
   <!-- Exclude Tests directory from netstandard builds -->
-  <ItemGroup Condition="'$(TargetFramework)' != 'net10.0'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net9.0'">
     <Compile Remove="Tests/**/*.cs" />
   </ItemGroup>
 

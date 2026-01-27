@@ -59,7 +59,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       // run manual timeout tests
       if (suites.client) {
         await run(
-          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --filter "FullyQualifiedName~TimeoutIntegration"',
+          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --framework net9.0 --filter "FullyQualifiedName~TimeoutIntegration"',
           { cwd, language },
         );
       }
