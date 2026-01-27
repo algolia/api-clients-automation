@@ -1,3 +1,11 @@
+## [4.38.0](https://github.com/algolia/algoliasearch-client-php/compare/4.37.3...4.38.0)
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [1bf767381](https://github.com/algolia/api-clients-automation/commit/1bf767381) feat(php): added withHttpInfo methods to PHP ([#5852](https://github.com/algolia/api-clients-automation/pull/5852)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+- [f9453e693](https://github.com/algolia/api-clients-automation/commit/f9453e693) docs: authentication type can't be updated ([#5824](https://github.com/algolia/api-clients-automation/pull/5824)) by [@sbellone](https://github.com/sbellone/)
+
 ## [4.37.3](https://github.com/algolia/algoliasearch-client-php/compare/4.37.2...4.37.3)
 
 - [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)

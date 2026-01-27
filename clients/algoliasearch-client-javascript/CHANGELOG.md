@@ -1,3 +1,11 @@
+## [5.48.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.47.0...5.48.0)
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+- [f9453e693](https://github.com/algolia/api-clients-automation/commit/f9453e693) docs: authentication type can't be updated ([#5824](https://github.com/algolia/api-clients-automation/pull/5824)) by [@sbellone](https://github.com/sbellone/)
+- [2d1c05654](https://github.com/algolia/api-clients-automation/commit/2d1c05654) chore(deps): dependencies 2026-01-26 ([#5859](https://github.com/algolia/api-clients-automation/pull/5859)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.47.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.4...5.47.0)
 
 - [f9ac3a711](https://github.com/algolia/api-clients-automation/commit/f9ac3a711) feat(specs): introduce multifeed composition behavior for beta release ([#5828](https://github.com/algolia/api-clients-automation/pull/5828)) by [@gavinwade12](https://github.com/gavinwade12/)
