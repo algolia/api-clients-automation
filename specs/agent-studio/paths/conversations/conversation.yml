@@ -1,0 +1,79 @@
+get:
+  tags:
+    - Conversations
+  operationId: getConversation
+  x-acl:
+    - logs
+  summary: Get Conversation
+  description: Retrieves the conversation and its messages for the given ID.
+  parameters:
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+    - name: X-Algolia-Secure-User-Token
+      in: header
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        title: x-Algolia-Secure-User-Token
+      description: The X-Algolia-Secure-User-Token.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ConversationFullResponse.yml#/ConversationFullResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Conversations
+  operationId: deleteConversation
+  x-acl:
+    - logs
+  summary: Delete Conversation
+  description: Deletes the conversation with the given ID.
+  parameters:
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

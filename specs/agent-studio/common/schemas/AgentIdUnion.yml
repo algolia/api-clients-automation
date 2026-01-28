@@ -1,0 +1,6 @@
+AgentIdUnion:
+  oneOf:
+    - type: string
+      format: uuid
+    - const: test
+      type: string

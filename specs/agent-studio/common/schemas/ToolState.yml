@@ -1,0 +1,7 @@
+ToolState:
+  type: string
+  enum:
+    - input-streaming
+    - input-available
+    - output-available
+    - output-error

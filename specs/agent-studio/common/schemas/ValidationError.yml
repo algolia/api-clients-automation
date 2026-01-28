@@ -1,0 +1,19 @@
+ValidationError:
+  properties:
+    loc:
+      items:
+        $ref: 'LocationItemUnion.yml#/LocationItemUnion'
+      type: array
+      title: location
+    msg:
+      type: string
+      title: message
+    type:
+      type: string
+      title: errorType
+  type: object
+  required:
+    - loc
+    - msg
+    - type
+  title: validationError

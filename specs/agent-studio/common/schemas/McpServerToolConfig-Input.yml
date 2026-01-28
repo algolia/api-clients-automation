@@ -1,0 +1,42 @@
+McpServerToolConfig-Input:
+  properties:
+    url:
+      type: string
+      maxLength: 512
+      minLength: 1
+      title: url
+    transport:
+      type: string
+      const: streamable_http
+      title: transport
+      default: streamable_http
+    headers:
+      additionalProperties:
+        type: string
+      type: object
+      title: headers
+    name:
+      type: string
+      maxLength: 32
+      minLength: 3
+      title: name
+    type:
+      type: string
+      const: mcp_tools
+      title: type
+      default: mcp_tools
+    id:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: id
+      description: Stable unique identifier for this MCP tool.
+    allowedTools:
+      $ref: 'AllowedToolsUnion.yml#/AllowedToolsUnion'
+  type: object
+  required:
+    - url
+    - headers
+    - name
+  title: mcpServerToolConfig

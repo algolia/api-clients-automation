@@ -1,0 +1,9 @@
+StartStepPart:
+  properties:
+    type:
+      type: string
+      const: start-step
+      title: type
+      default: start-step
+  type: object
+  title: startStepPart

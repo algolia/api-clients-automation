@@ -1,0 +1,29 @@
+AzureOpenAIProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    azureEndpoint:
+      type: string
+      maxLength: 2083
+      minLength: 1
+      format: uri
+      title: azureendpoint
+    azureDeployment:
+      type: string
+      minLength: 1
+      title: azuredeployment
+      description: Azure model deployment name is required.
+    apiVersion:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: apiversion
+      default: 2024-12-01-preview
+  type: object
+  required:
+    - apiKey
+    - azureEndpoint
+    - azureDeployment
+  title: azureOpenAIProviderInput
+  description: Azure OpenAI-specific provider input.
