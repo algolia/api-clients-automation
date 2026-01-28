@@ -30,7 +30,9 @@ import kotlinx.serialization.json.*
  *   identify users across sessions. Don't use personally identifiable information in user tokens.
  *   For more information, see
  *   [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
- * @param currency Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+ * @param currency Three-letter
+ *   [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO
+ *   4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
  * @param objectData Extra information about the records involved in a purchase or add-to-cart
  *   event. If specified, it must have the same length as `objectIDs`.
  * @param timestamp Timestamp of the event, measured in milliseconds since the Unix epoch. By
@@ -72,7 +74,10 @@ public data class AddedToCartObjectIDs(
    */
   @SerialName(value = "authenticatedUserToken") val authenticatedUserToken: String? = null,
 
-  /** Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html). */
+  /**
+   * Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must
+   * be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
+   */
   @SerialName(value = "currency") val currency: String? = null,
 
   /**

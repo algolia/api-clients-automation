@@ -64,7 +64,7 @@ class AddedToCartObjectIDsAfterSearch(BaseModel):
     authenticated_user_token: Optional[str] = None
     """ Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).  """
     currency: Optional[str] = None
-    """ Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html). """
+    """ Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.  """
     object_data: Optional[List[ObjectDataAfterSearch]] = None
     """ Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.  """
     timestamp: Optional[int] = None
@@ -106,6 +106,16 @@ class AddedToCartObjectIDsAfterSearch(BaseModel):
             raise ValueError(
                 r"must validate the regular expression /[a-zA-Z0-9_=\/+-]{1,129}/"
             )
+        return value
+
+    @field_validator("currency")
+    def currency_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not match(r"^[A-Z]{3}$", value):
+            raise ValueError(r"must validate the regular expression /^[A-Z]{3}$/")
         return value
 
     model_config = ConfigDict(

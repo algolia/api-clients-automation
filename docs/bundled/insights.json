@@ -1073,7 +1073,10 @@
       },
       "currency": {
         "type": "string",
-        "description": "Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).",
+        "minLength": 3,
+        "maxLength": 3,
+        "pattern": "^[A-Z]{3}$",
+        "description": "Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html).\nMust be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.\n",
         "example": "EUR"
       },
       "price": {

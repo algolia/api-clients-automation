@@ -96,9 +96,9 @@ public partial class PurchasedObjectIDs
   public string AuthenticatedUserToken { get; set; }
 
   /// <summary>
-  /// Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+  /// Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
   /// </summary>
-  /// <value>Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).</value>
+  /// <value>Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input. </value>
   [JsonPropertyName("currency")]
   public string Currency { get; set; }
 

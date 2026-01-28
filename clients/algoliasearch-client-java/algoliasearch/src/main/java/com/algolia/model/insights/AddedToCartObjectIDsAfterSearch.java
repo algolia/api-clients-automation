@@ -169,7 +169,10 @@ public class AddedToCartObjectIDsAfterSearch implements EventsItems {
     return this;
   }
 
-  /** Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html). */
+  /**
+   * Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must
+   * be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
+   */
   @javax.annotation.Nullable
   public String getCurrency() {
     return currency;

@@ -51,7 +51,7 @@ final class PurchasedObjectIDsAfterSearch {
   @JsonKey(name: r'authenticatedUserToken')
   final String? authenticatedUserToken;
 
-  /// Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+  /// Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
   @JsonKey(name: r'currency')
   final String? currency;
 

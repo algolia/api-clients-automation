@@ -28,7 +28,8 @@ public struct PurchasedObjectIDs: Codable, JSONEncodable {
     /// user tokens. For more information, see [User
     /// token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
     public var authenticatedUserToken: String?
-    /// Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+    /// Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html). Must be a valid ISO
+    /// 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
     public var currency: String?
     /// Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the
     /// same length as `objectIDs`.
