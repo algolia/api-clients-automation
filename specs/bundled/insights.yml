@@ -1015,6 +1015,7 @@ components:
           format: double
           example: 1000
         - type: string
+          maxLength: 16
           example: '1000.00'
     AddedToCartObjectIDsAfterSearch:
       type: object
