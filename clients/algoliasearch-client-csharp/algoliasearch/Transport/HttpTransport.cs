@@ -132,8 +132,12 @@ internal class HttpTransport
         requestOptions?.PathParameters,
         requestOptions?.QueryParameters
       );
-      var requestTimeout = TimeSpan.FromTicks(
-        (GetTimeOut(callType, requestOptions)).Ticks * (host.RetryCount + 1)
+      var requestTimeout = GetTimeOut(callType, requestOptions);
+      var baseConnectTimeout = requestOptions?.ConnectTimeout
+        ?? _algoliaConfig.ConnectTimeout
+        ?? Defaults.ConnectTimeout;
+      var connectTimeout = TimeSpan.FromTicks(
+        baseConnectTimeout.Ticks * (host.RetryCount + 1)
       );
 
       if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
@@ -145,6 +149,7 @@ internal class HttpTransport
       {
         _logger.LogTrace("Sending request to {Method} {Uri}", request.Method, request.Uri);
         _logger.LogTrace("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
+        _logger.LogTrace("Connect timeout: {ConnectTimeout} (s)", connectTimeout.TotalSeconds);
         foreach (var header in request.Headers)
         {
           _logger.LogTrace("Header: {HeaderName} : {HeaderValue}", header.Key, header.Value);
@@ -155,9 +160,7 @@ internal class HttpTransport
         .SendRequestAsync(
           request,
           requestTimeout,
-          requestOptions?.ConnectTimeout
-            ?? _algoliaConfig.ConnectTimeout
-            ?? Defaults.ConnectTimeout,
+          connectTimeout,
           ct
         )
         .ConfigureAwait(false);
