@@ -16,14 +16,14 @@ namespace Algolia.Search.Tests;
 
 public class TimeoutIntegrationTests
 {
-  private static string TestServer =>
-    Environment.GetEnvironmentVariable("CI") == "true"
-      ? "localhost:6676"
-      : "host.docker.internal:6676";
-
   private static (AlgoliaConfig, StatefulHost) CreateConfigWithHost(string hostUrl)
   {
-    var config = new SearchConfig("test-app", "test-key");
+    var config = new SearchConfig("test-app", "test-key")
+    {
+      // Set read timeout to 0 so only connect timeout matters for these tests
+      ReadTimeout = TimeSpan.Zero,
+      ConnectTimeout = TimeSpan.FromSeconds(2)
+    };
     var host = new StatefulHost
     {
       Url = hostUrl,
@@ -35,9 +35,14 @@ public class TimeoutIntegrationTests
 
   private static StatefulHost CreateServerHost()
   {
+    var serverHost = Environment.GetEnvironmentVariable("CI") == "true"
+      ? "localhost"
+      : "host.docker.internal";
+
     return new StatefulHost
     {
-      Url = TestServer,
+      Url = serverHost,
+      Port = 6676,
       Scheme = HttpScheme.Http,
       Accept = CallType.Read | CallType.Write,
     };
@@ -139,6 +144,7 @@ public class TimeoutIntegrationTests
 
     // point to bad host again, should timeout at 2s (not 6s)
     goodHost.Url = "10.255.255.1";
+    goodHost.Port = null;
     goodHost.Scheme = HttpScheme.Https;
 
     var sw = Stopwatch.StartNew();
