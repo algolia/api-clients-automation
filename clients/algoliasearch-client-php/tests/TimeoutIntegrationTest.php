@@ -16,6 +16,11 @@ function getTestServerHost(): string
     return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':6676';
 }
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class TimeoutIntegrationTest extends TestCase
 {
     private const NON_ROUTABLE_IP = '10.255.255.1';
