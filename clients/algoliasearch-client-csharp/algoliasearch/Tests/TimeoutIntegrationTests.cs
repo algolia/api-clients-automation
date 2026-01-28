@@ -18,12 +18,7 @@ public class TimeoutIntegrationTests
 {
   private static (AlgoliaConfig, StatefulHost) CreateConfigWithHost(string hostUrl)
   {
-    var config = new SearchConfig("test-app", "test-key")
-    {
-      // Set read timeout to 0 so only connect timeout matters for these tests
-      ReadTimeout = TimeSpan.Zero,
-      ConnectTimeout = TimeSpan.FromSeconds(2)
-    };
+    var config = new SearchConfig("test-app", "test-key");
     var host = new StatefulHost
     {
       Url = hostUrl,
@@ -78,17 +73,21 @@ public class TimeoutIntegrationTests
       }
     }
 
+    // C# scales ReadTimeout (5s default) by (RetryCount+1) and adds ConnectTimeout (2s default)
+    // Request 1: (5s * 1) + 2s = 7s
+    // Request 2: (5s * 2) + 2s = 12s
+    // Request 3: (5s * 3) + 2s = 17s
     Assert.True(
-      times[0] > 1.5 && times[0] < 2.5,
-      $"Request 1 should be ~2s, got {times[0]:F2}s"
+      times[0] > 6.5 && times[0] < 7.5,
+      $"Request 1 should be ~7s, got {times[0]:F2}s"
     );
     Assert.True(
-      times[1] > 3.5 && times[1] < 4.5,
-      $"Request 2 should be ~4s, got {times[1]:F2}s"
+      times[1] > 11.5 && times[1] < 12.5,
+      $"Request 2 should be ~12s, got {times[1]:F2}s"
     );
     Assert.True(
-      times[2] > 5.5 && times[2] < 7.0,
-      $"Request 3 should be ~6s, got {times[2]:F2}s"
+      times[2] > 16.5 && times[2] < 17.5,
+      $"Request 3 should be ~17s, got {times[2]:F2}s"
     );
   }
 
@@ -162,8 +161,8 @@ public class TimeoutIntegrationTests
       sw.Stop();
       var elapsed = sw.Elapsed.TotalSeconds;
       Assert.True(
-        elapsed > 1.5 && elapsed < 2.5,
-        $"After reset should be ~2s, got {elapsed:F2}s"
+        elapsed > 6.5 && elapsed < 7.5,
+        $"After reset should be ~7s, got {elapsed:F2}s"
       );
     }
   }
