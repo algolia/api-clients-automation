@@ -1,6 +1,5 @@
 type: object
 title: Converted filters
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'

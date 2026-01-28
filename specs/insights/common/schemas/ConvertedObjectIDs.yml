@@ -5,7 +5,6 @@ description: |
   For example, if you don't use Algolia to build your category pages, use this event.
 
   To track conversion events related to Algolia requests, use the "Converted object IDs after search" event.
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'

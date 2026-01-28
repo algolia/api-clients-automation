@@ -1014,8 +1014,7 @@
       "ClickedObjectIDsAfterSearch": {
         "type": "object",
         "title": "Clicked object IDs after search",
-        "description": "Click event after an Algolia request.\n\nUse this event to track when users click items in the search results.\nIf you're building your category pages with Algolia,\nyou'll also use this event.\n",
-        "additionalProperties": false,
+        "description": "Click event after an Algolia request.\nUse this event to track when users click items in the search results.\nIf you're building your category pages with Algolia,\nyou'll also use this event.\n",
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1161,7 +1160,6 @@
         "type": "object",
         "title": "Added to cart object IDs after search",
         "description": "Use this event to track when users add items to their shopping cart after a previous Algolia request.\nIf you're building your category pages with Algolia, you'll also use this event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1226,7 +1224,6 @@
         "type": "object",
         "title": "Purchased object IDs after search",
         "description": "Use this event to track when users make a purchase after a previous Algolia request.\nIf you're building your category pages with Algolia, you'll also use this event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1282,7 +1279,6 @@
         "type": "object",
         "title": "Converted object IDs after search",
         "description": "Use this event to track when users convert after a previous Algolia request.\nFor example, a user clicks on an item in the search results to view the product detail page.\nThen, the user adds the item to their shopping cart.\n\nIf you're building your category pages with Algolia,\nyou'll also use this event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1326,7 +1322,6 @@
         "type": "object",
         "title": "Clicked object IDs",
         "description": "Use this event to track when users click items unrelated to a previous Algolia request.\nFor example, if you don't use Algolia to build your category pages, use this event.\n\nTo track click events related to Algolia requests, use the \"Clicked object IDs after search\" event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1390,7 +1385,6 @@
         "type": "object",
         "title": "Purchased object IDs",
         "description": "Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.\n\nTo track purchase events related to Algolia requests, use the \"Purchased object IDs after search\" event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1444,7 +1438,6 @@
         "type": "object",
         "title": "Added to cart object IDs",
         "description": "Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.\n\nTo track add-to-cart events related to Algolia requests, use the \"Added to cart object IDs after search\" event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1498,7 +1491,6 @@
         "type": "object",
         "title": "Converted object IDs",
         "description": "Use this event to track when users convert on items unrelated to a previous Algolia request.\nFor example, if you don't use Algolia to build your category pages, use this event.\n\nTo track conversion events related to Algolia requests, use the \"Converted object IDs after search\" event.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1550,7 +1542,6 @@
         "type": "object",
         "title": "Clicked filters",
         "description": "Use this event to track when users click facet filters in your user interface.",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1589,7 +1580,6 @@
       "ConvertedFilters": {
         "type": "object",
         "title": "Converted filters",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1635,7 +1625,6 @@
         "type": "object",
         "title": "Viewed object IDs",
         "description": "Use this event to track when users viewed items in the search results.",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"
@@ -1675,7 +1664,6 @@
         "type": "object",
         "title": "Viewed filters",
         "description": "Use this method to capture active filters.\nFor example, when browsing a category page,\nusers see content filtered on that specific category.\n",
-        "additionalProperties": false,
         "properties": {
           "eventName": {
             "$ref": "#/components/schemas/eventName"

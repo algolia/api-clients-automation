@@ -121,7 +121,6 @@ final class CurlHttpClient implements HttpClientInterface
         $contentType = curl_getinfo($curlHandle, CURLINFO_CONTENT_TYPE);
 
         $this->releaseMHandle($curlHandle);
-        curl_close($curlHandle);
 
         // detect timeout: explicit timeout error OR no response with no error (curl_multi behavior)
         $isTimeout = (CURLE_OPERATION_TIMEDOUT === $errorCode)

@@ -1,7 +1,6 @@
 type: object
 title: Viewed object IDs
 description: Use this event to track when users viewed items in the search results.
-additionalProperties: false
 properties:
   eventName:
     $ref: './EventAttributes.yml#/eventName'
