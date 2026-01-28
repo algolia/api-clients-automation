@@ -626,14 +626,12 @@ class CompositionTest extends AnyFunSuite {
             body = Composition(
               objectID = "foo",
               name = "my first composition",
-              behavior = CompositionBehavior(
-                injection = Some(
-                  Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "bar"
-                        )
+              behavior = CompositionInjectionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "bar"
                       )
                     )
                   )
@@ -673,34 +671,32 @@ class CompositionTest extends AnyFunSuite {
             body = Composition(
               objectID = "my-external-injection-compo",
               name = "my first composition",
-              behavior = CompositionBehavior(
-                injection = Some(
-                  Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
-                        )
+              behavior = CompositionInjectionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
                       )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-external-group-key",
-                          source = ExternalSource(
-                            external = External(
-                              index = "foo",
-                              ordering = Some(ExternalOrdering.withName("userDefined")),
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
-                                )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-external-group-key",
+                        source = ExternalSource(
+                          external = External(
+                            index = "foo",
+                            ordering = Some(ExternalOrdering.withName("userDefined")),
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
                               )
                             )
-                          ),
-                          position = 2,
-                          length = 1
-                        )
+                          )
+                        ),
+                        position = 2,
+                        length = 1
                       )
                     )
                   )
@@ -734,51 +730,49 @@ class CompositionTest extends AnyFunSuite {
             body = Composition(
               objectID = "my-metadata-compo",
               name = "my composition",
-              behavior = CompositionBehavior(
-                injection = Some(
-                  Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo",
-                          params = Some(
-                            MainInjectionQueryParameters(
-                              filters = Some("brand:adidas")
-                            )
+              behavior = CompositionInjectionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo",
+                        params = Some(
+                          MainInjectionQueryParameters(
+                            filters = Some("brand:adidas")
                           )
                         )
                       )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo",
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
-                                )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-group-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:adidas")
                               )
                             )
-                          ),
-                          position = 2,
-                          length = 1,
-                          metadata = Some(
-                            InjectedItemMetadata(
-                              hits = Some(
-                                InjectedItemHitsMetadata(
-                                  addItemKey = Some(true),
-                                  extra = Some(
-                                    Map(
-                                      "my-string" -> "string",
-                                      "my-bool" -> true,
-                                      "my-number" -> 42,
-                                      "my-object" -> JObject(
-                                        List(
-                                          JField("sub-key", JString("sub-value"))
-                                        )
+                          )
+                        ),
+                        position = 2,
+                        length = 1,
+                        metadata = Some(
+                          InjectedItemMetadata(
+                            hits = Some(
+                              InjectedItemHitsMetadata(
+                                addItemKey = Some(true),
+                                extra = Some(
+                                  Map(
+                                    "my-string" -> "string",
+                                    "my-bool" -> true,
+                                    "my-number" -> 42,
+                                    "my-object" -> JObject(
+                                      List(
+                                        JField("sub-key", JString("sub-value"))
                                       )
                                     )
                                   )
@@ -786,35 +780,35 @@ class CompositionTest extends AnyFunSuite {
                               )
                             )
                           )
-                        ),
-                        InjectedItem(
-                          key = "my-unique-group-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo",
-                              params = Some(
-                                BaseInjectionQueryParameters(
-                                  filters = Some("brand:puma")
-                                )
+                        )
+                      ),
+                      InjectedItem(
+                        key = "my-unique-group-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo",
+                            params = Some(
+                              BaseInjectionQueryParameters(
+                                filters = Some("brand:puma")
                               )
                             )
-                          ),
-                          position = 5,
-                          length = 5,
-                          metadata = Some(
-                            InjectedItemMetadata(
-                              hits = Some(
-                                InjectedItemHitsMetadata(
-                                  addItemKey = Some(true),
-                                  extra = Some(
-                                    Map(
-                                      "my-string" -> "string",
-                                      "my-bool" -> true,
-                                      "my-number" -> 42,
-                                      "my-object" -> JObject(
-                                        List(
-                                          JField("sub-key", JString("sub-value"))
-                                        )
+                          )
+                        ),
+                        position = 5,
+                        length = 5,
+                        metadata = Some(
+                          InjectedItemMetadata(
+                            hits = Some(
+                              InjectedItemHitsMetadata(
+                                addItemKey = Some(true),
+                                extra = Some(
+                                  Map(
+                                    "my-string" -> "string",
+                                    "my-bool" -> true,
+                                    "my-number" -> 42,
+                                    "my-object" -> JObject(
+                                      List(
+                                        JField("sub-key", JString("sub-value"))
                                       )
                                     )
                                   )
@@ -856,34 +850,32 @@ class CompositionTest extends AnyFunSuite {
             body = Composition(
               objectID = "my-compo",
               name = "my composition",
-              behavior = CompositionBehavior(
-                injection = Some(
-                  Injection(
-                    main = Main(
-                      source = CompositionSource(
-                        search = CompositionSourceSearch(
-                          index = "foo"
-                        )
+              behavior = CompositionInjectionBehavior(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "foo"
                       )
-                    ),
-                    injectedItems = Some(
-                      Seq(
-                        InjectedItem(
-                          key = "my-unique-injected-item-key",
-                          source = SearchSource(
-                            search = Search(
-                              index = "foo"
-                            )
-                          ),
-                          position = 2,
-                          length = 1
-                        )
+                    )
+                  ),
+                  injectedItems = Some(
+                    Seq(
+                      InjectedItem(
+                        key = "my-unique-injected-item-key",
+                        source = SearchSource(
+                          search = Search(
+                            index = "foo"
+                          )
+                        ),
+                        position = 2,
+                        length = 1
                       )
-                    ),
-                    deduplication = Some(
-                      Deduplication(
-                        positioning = DedupPositioning.withName("highest")
-                      )
+                    )
+                  ),
+                  deduplication = Some(
+                    Deduplication(
+                      positioning = DedupPositioning.withName("highest")
                     )
                   )
                 )
@@ -913,28 +905,26 @@ class CompositionTest extends AnyFunSuite {
       composition = Composition(
         objectID = "1234",
         name = "my first composition",
-        behavior = CompositionBehavior(
-          injection = Some(
-            Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
-                  )
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo"
                 )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo"
-                      )
-                    ),
-                    position = 2,
-                    length = 1
-                  )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "my-unique-group-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo"
+                    )
+                  ),
+                  position = 2,
+                  length = 1
                 )
               )
             )
@@ -962,34 +952,32 @@ class CompositionTest extends AnyFunSuite {
       composition = Composition(
         objectID = "my-external-injection-compo",
         name = "my first composition",
-        behavior = CompositionBehavior(
-          injection = Some(
-            Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo"
-                  )
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo"
                 )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-external-group-key",
-                    source = ExternalSource(
-                      external = External(
-                        index = "foo",
-                        ordering = Some(ExternalOrdering.withName("userDefined")),
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:adidas")
-                          )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "my-unique-external-group-key",
+                  source = ExternalSource(
+                    external = External(
+                      index = "foo",
+                      ordering = Some(ExternalOrdering.withName("userDefined")),
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:adidas")
                         )
                       )
-                    ),
-                    position = 2,
-                    length = 1
-                  )
+                    )
+                  ),
+                  position = 2,
+                  length = 1
                 )
               )
             )
@@ -1017,51 +1005,49 @@ class CompositionTest extends AnyFunSuite {
       composition = Composition(
         objectID = "my-metadata-compo",
         name = "my composition",
-        behavior = CompositionBehavior(
-          injection = Some(
-            Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
-                      )
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo",
+                  params = Some(
+                    MainInjectionQueryParameters(
+                      filters = Some("brand:adidas")
                     )
                   )
                 )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo",
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:adidas")
-                          )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "my-unique-group-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo",
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:adidas")
                         )
                       )
-                    ),
-                    position = 2,
-                    length = 1,
-                    metadata = Some(
-                      InjectedItemMetadata(
-                        hits = Some(
-                          InjectedItemHitsMetadata(
-                            addItemKey = Some(true),
-                            extra = Some(
-                              Map(
-                                "my-string" -> "string",
-                                "my-bool" -> true,
-                                "my-number" -> 42,
-                                "my-object" -> JObject(
-                                  List(
-                                    JField("sub-key", JString("sub-value"))
-                                  )
+                    )
+                  ),
+                  position = 2,
+                  length = 1,
+                  metadata = Some(
+                    InjectedItemMetadata(
+                      hits = Some(
+                        InjectedItemHitsMetadata(
+                          addItemKey = Some(true),
+                          extra = Some(
+                            Map(
+                              "my-string" -> "string",
+                              "my-bool" -> true,
+                              "my-number" -> 42,
+                              "my-object" -> JObject(
+                                List(
+                                  JField("sub-key", JString("sub-value"))
                                 )
                               )
                             )
@@ -1069,35 +1055,35 @@ class CompositionTest extends AnyFunSuite {
                         )
                       )
                     )
-                  ),
-                  InjectedItem(
-                    key = "my-unique-group-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo",
-                        params = Some(
-                          BaseInjectionQueryParameters(
-                            filters = Some("brand:puma")
-                          )
+                  )
+                ),
+                InjectedItem(
+                  key = "my-unique-group-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo",
+                      params = Some(
+                        BaseInjectionQueryParameters(
+                          filters = Some("brand:puma")
                         )
                       )
-                    ),
-                    position = 5,
-                    length = 5,
-                    metadata = Some(
-                      InjectedItemMetadata(
-                        hits = Some(
-                          InjectedItemHitsMetadata(
-                            addItemKey = Some(true),
-                            extra = Some(
-                              Map(
-                                "my-string" -> "string",
-                                "my-bool" -> true,
-                                "my-number" -> 42,
-                                "my-object" -> JObject(
-                                  List(
-                                    JField("sub-key", JString("sub-value"))
-                                  )
+                    )
+                  ),
+                  position = 5,
+                  length = 5,
+                  metadata = Some(
+                    InjectedItemMetadata(
+                      hits = Some(
+                        InjectedItemHitsMetadata(
+                          addItemKey = Some(true),
+                          extra = Some(
+                            Map(
+                              "my-string" -> "string",
+                              "my-bool" -> true,
+                              "my-number" -> 42,
+                              "my-object" -> JObject(
+                                List(
+                                  JField("sub-key", JString("sub-value"))
                                 )
                               )
                             )
@@ -1133,39 +1119,37 @@ class CompositionTest extends AnyFunSuite {
       composition = Composition(
         objectID = "my-compo",
         name = "my composition",
-        behavior = CompositionBehavior(
-          injection = Some(
-            Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "foo",
-                    params = Some(
-                      MainInjectionQueryParameters(
-                        filters = Some("brand:adidas")
-                      )
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "foo",
+                  params = Some(
+                    MainInjectionQueryParameters(
+                      filters = Some("brand:adidas")
                     )
                   )
                 )
-              ),
-              injectedItems = Some(
-                Seq(
-                  InjectedItem(
-                    key = "my-unique-injected-item-key",
-                    source = SearchSource(
-                      search = Search(
-                        index = "foo"
-                      )
-                    ),
-                    position = 2,
-                    length = 1
-                  )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectedItem(
+                  key = "my-unique-injected-item-key",
+                  source = SearchSource(
+                    search = Search(
+                      index = "foo"
+                    )
+                  ),
+                  position = 2,
+                  length = 1
                 )
-              ),
-              deduplication = Some(
-                Deduplication(
-                  positioning = DedupPositioning.withName("highest")
-                )
+              )
+            ),
+            deduplication = Some(
+              Deduplication(
+                positioning = DedupPositioning.withName("highest")
               )
             )
           )
@@ -1193,14 +1177,12 @@ class CompositionTest extends AnyFunSuite {
         objectID = "my-compo",
         name = "my composition",
         sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
-        behavior = CompositionBehavior(
-          injection = Some(
-            Injection(
-              main = Main(
-                source = CompositionSource(
-                  search = CompositionSourceSearch(
-                    index = "products"
-                  )
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = Main(
+              source = CompositionSource(
+                search = CompositionSourceSearch(
+                  index = "products"
                 )
               )
             )
@@ -1237,28 +1219,26 @@ class CompositionTest extends AnyFunSuite {
           )
         ),
         consequence = CompositionRuleConsequence(
-          behavior = CompositionBehavior(
-            injection = Some(
-              Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
-                    )
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
                   )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "foo"
-                        )
-                      ),
-                      position = 2,
-                      length = 1
-                    )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-group-from-rule-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo"
+                      )
+                    ),
+                    position = 2,
+                    length = 1
                   )
                 )
               )
@@ -1296,46 +1276,44 @@ class CompositionTest extends AnyFunSuite {
           )
         ),
         consequence = CompositionRuleConsequence(
-          behavior = CompositionBehavior(
-            injection = Some(
-              Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "foo"
-                    )
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "foo"
                   )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-group-from-rule-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "foo",
-                          params = Some(
-                            BaseInjectionQueryParameters(
-                              filters = Some("brand:adidas")
-                            )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-group-from-rule-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "foo",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
                           )
                         )
-                      ),
-                      position = 2,
-                      length = 1,
-                      metadata = Some(
-                        InjectedItemMetadata(
-                          hits = Some(
-                            InjectedItemHitsMetadata(
-                              addItemKey = Some(true),
-                              extra = Some(
-                                Map(
-                                  "my-string" -> "string",
-                                  "my-bool" -> true,
-                                  "my-number" -> 42,
-                                  "my-object" -> JObject(
-                                    List(
-                                      JField("sub-key", JString("sub-value"))
-                                    )
+                      )
+                    ),
+                    position = 2,
+                    length = 1,
+                    metadata = Some(
+                      InjectedItemMetadata(
+                        hits = Some(
+                          InjectedItemHitsMetadata(
+                            addItemKey = Some(true),
+                            extra = Some(
+                              Map(
+                                "my-string" -> "string",
+                                "my-bool" -> true,
+                                "my-number" -> 42,
+                                "my-object" -> JObject(
+                                  List(
+                                    JField("sub-key", JString("sub-value"))
                                   )
                                 )
                               )
@@ -1396,39 +1374,37 @@ class CompositionTest extends AnyFunSuite {
           )
         ),
         consequence = CompositionRuleConsequence(
-          behavior = CompositionBehavior(
-            injection = Some(
-              Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index",
-                      params = Some(
-                        MainInjectionQueryParameters(
-                          filters = Some("brand:adidas")
-                        )
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "my-index",
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("brand:adidas")
                       )
                     )
                   )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-external-group-from-rule-key",
-                      source = ExternalSource(
-                        external = External(
-                          index = "my-index",
-                          params = Some(
-                            BaseInjectionQueryParameters(
-                              filters = Some("brand:adidas")
-                            )
-                          ),
-                          ordering = Some(ExternalOrdering.withName("userDefined"))
-                        )
-                      ),
-                      position = 0,
-                      length = 3
-                    )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-external-group-from-rule-key",
+                    source = ExternalSource(
+                      external = External(
+                        index = "my-index",
+                        params = Some(
+                          BaseInjectionQueryParameters(
+                            filters = Some("brand:adidas")
+                          )
+                        ),
+                        ordering = Some(ExternalOrdering.withName("userDefined"))
+                      )
+                    ),
+                    position = 0,
+                    length = 3
                   )
                 )
               )
@@ -1468,34 +1444,32 @@ class CompositionTest extends AnyFunSuite {
           )
         ),
         consequence = CompositionRuleConsequence(
-          behavior = CompositionBehavior(
-            injection = Some(
-              Injection(
-                main = Main(
-                  source = CompositionSource(
-                    search = CompositionSourceSearch(
-                      index = "my-index"
-                    )
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = Main(
+                source = CompositionSource(
+                  search = CompositionSourceSearch(
+                    index = "my-index"
                   )
-                ),
-                injectedItems = Some(
-                  Seq(
-                    InjectedItem(
-                      key = "my-unique-injected-item-key",
-                      source = SearchSource(
-                        search = Search(
-                          index = "my-index"
-                        )
-                      ),
-                      position = 0,
-                      length = 3
-                    )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectedItem(
+                    key = "my-unique-injected-item-key",
+                    source = SearchSource(
+                      search = Search(
+                        index = "my-index"
+                      )
+                    ),
+                    position = 0,
+                    length = 3
                   )
-                ),
-                deduplication = Some(
-                  Deduplication(
-                    positioning = DedupPositioning.withName("highestInjected")
-                  )
+                )
+              ),
+              deduplication = Some(
+                Deduplication(
+                  positioning = DedupPositioning.withName("highestInjected")
                 )
               )
             )
@@ -1535,14 +1509,12 @@ class CompositionTest extends AnyFunSuite {
                   )
                 ),
                 consequence = CompositionRuleConsequence(
-                  behavior = CompositionBehavior(
-                    injection = Some(
-                      Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "<YOUR_INDEX_NAME>"
-                            )
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "<YOUR_INDEX_NAME>"
                           )
                         )
                       )
@@ -1588,46 +1560,44 @@ class CompositionTest extends AnyFunSuite {
                   )
                 ),
                 consequence = CompositionRuleConsequence(
-                  behavior = CompositionBehavior(
-                    injection = Some(
-                      Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "foo"
-                            )
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "foo"
                           )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-group-from-rule-key",
-                              source = SearchSource(
-                                search = Search(
-                                  index = "foo",
-                                  params = Some(
-                                    BaseInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
-                                    )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-group-from-rule-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "foo",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
                                   )
                                 )
-                              ),
-                              position = 2,
-                              length = 1,
-                              metadata = Some(
-                                InjectedItemMetadata(
-                                  hits = Some(
-                                    InjectedItemHitsMetadata(
-                                      addItemKey = Some(true),
-                                      extra = Some(
-                                        Map(
-                                          "my-string" -> "string",
-                                          "my-bool" -> true,
-                                          "my-number" -> 42,
-                                          "my-object" -> JObject(
-                                            List(
-                                              JField("sub-key", JString("sub-value"))
-                                            )
+                              )
+                            ),
+                            position = 2,
+                            length = 1,
+                            metadata = Some(
+                              InjectedItemMetadata(
+                                hits = Some(
+                                  InjectedItemHitsMetadata(
+                                    addItemKey = Some(true),
+                                    extra = Some(
+                                      Map(
+                                        "my-string" -> "string",
+                                        "my-bool" -> true,
+                                        "my-number" -> 42,
+                                        "my-object" -> JObject(
+                                          List(
+                                            JField("sub-key", JString("sub-value"))
                                           )
                                         )
                                       )
@@ -1696,39 +1666,37 @@ class CompositionTest extends AnyFunSuite {
                   )
                 ),
                 consequence = CompositionRuleConsequence(
-                  behavior = CompositionBehavior(
-                    injection = Some(
-                      Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index",
-                              params = Some(
-                                MainInjectionQueryParameters(
-                                  filters = Some("brand:adidas")
-                                )
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "my-index",
+                            params = Some(
+                              MainInjectionQueryParameters(
+                                filters = Some("brand:adidas")
                               )
                             )
                           )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-external-group-from-rule-key",
-                              source = ExternalSource(
-                                external = External(
-                                  index = "my-index",
-                                  params = Some(
-                                    BaseInjectionQueryParameters(
-                                      filters = Some("brand:adidas")
-                                    )
-                                  ),
-                                  ordering = Some(ExternalOrdering.withName("userDefined"))
-                                )
-                              ),
-                              position = 0,
-                              length = 3
-                            )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-external-group-from-rule-key",
+                            source = ExternalSource(
+                              external = External(
+                                index = "my-index",
+                                params = Some(
+                                  BaseInjectionQueryParameters(
+                                    filters = Some("brand:adidas")
+                                  )
+                                ),
+                                ordering = Some(ExternalOrdering.withName("userDefined"))
+                              )
+                            ),
+                            position = 0,
+                            length = 3
                           )
                         )
                       )
@@ -1779,34 +1747,32 @@ class CompositionTest extends AnyFunSuite {
                   )
                 ),
                 consequence = CompositionRuleConsequence(
-                  behavior = CompositionBehavior(
-                    injection = Some(
-                      Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "my-index"
-                            )
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "my-index"
                           )
-                        ),
-                        injectedItems = Some(
-                          Seq(
-                            InjectedItem(
-                              key = "my-unique-injected-item-key",
-                              source = SearchSource(
-                                search = Search(
-                                  index = "my-index"
-                                )
-                              ),
-                              position = 0,
-                              length = 3
-                            )
+                        )
+                      ),
+                      injectedItems = Some(
+                        Seq(
+                          InjectedItem(
+                            key = "my-unique-injected-item-key",
+                            source = SearchSource(
+                              search = Search(
+                                index = "my-index"
+                              )
+                            ),
+                            position = 0,
+                            length = 3
                           )
-                        ),
-                        deduplication = Some(
-                          Deduplication(
-                            positioning = DedupPositioning.withName("highestInjected")
-                          )
+                        )
+                      ),
+                      deduplication = Some(
+                        Deduplication(
+                          positioning = DedupPositioning.withName("highestInjected")
                         )
                       )
                     )

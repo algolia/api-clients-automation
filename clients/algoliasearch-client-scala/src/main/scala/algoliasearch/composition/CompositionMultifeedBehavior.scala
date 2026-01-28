@@ -28,56 +28,8 @@
   */
 package algoliasearch.composition
 
-import org.json4s._
-
-object JsonSupport {
-  private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    new ActionSerializer() :+
-    new AdvancedSyntaxFeaturesSerializer() :+
-    new AlternativesAsExactSerializer() :+
-    new AnchoringSerializer() :+
-    new AroundRadiusAllSerializer() :+
-    new BooleanStringSerializer() :+
-    new DedupPositioningSerializer() :+
-    new ExactOnSingleWordQuerySerializer() :+
-    new ExternalOrderingSerializer() :+
-    new MatchLevelSerializer() :+
-    new QueryTypeSerializer() :+
-    new RemoveWordsIfNoResultsSerializer() :+
-    new SortRemainingBySerializer() :+
-    new SupportedLanguageSerializer() :+
-    new TaskStatusSerializer() :+
-    new TypoToleranceEnumSerializer()
-
-  private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    AroundPrecisionSerializer :+
-    AroundRadiusSerializer :+
-    BatchCompositionActionSerializer :+
-    CompositionBehaviorSerializer :+
-    DistinctSerializer :+
-    FacetFiltersSerializer :+
-    HighlightResultSerializer :+
-    IgnorePluralsSerializer :+
-    InjectedItemSourceSerializer :+
-    InsideBoundingBoxSerializer :+
-    NumericFiltersSerializer :+
-    OptionalFiltersSerializer :+
-    OptionalWordsSerializer :+
-    RemoveStopWordsSerializer :+
-    RulesBatchCompositionActionSerializer :+
-    SnippetResultSerializer :+
-    TypoToleranceSerializer
-
-  private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
-    new BaseSearchResponseSerializer() :+
-    new CompositionRunSearchResponseSerializer() :+
-    new CompositionsSearchResponseSerializer() :+
-    new ErrorBaseSerializer() :+
-    new HitSerializer() :+
-    new HitMetadataSerializer() :+
-    new ResultsInjectedItemInfoResponseSerializer() :+
-    new SearchResultsItemSerializer()
-
-  implicit val format: Formats = DefaultFormats ++ enumSerializers ++ oneOfsSerializers ++ classMapSerializers
-  implicit val serialization: org.json4s.Serialization = org.json4s.native.Serialization
-}
+/** An object containing a `multifeed` behavior.
+  */
+case class CompositionMultifeedBehavior(
+    multifeed: Multifeed
+) extends CompositionBehaviorTrait

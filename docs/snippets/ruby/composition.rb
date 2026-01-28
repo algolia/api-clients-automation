@@ -501,7 +501,7 @@ def snippet_for_multiple_batch
           body: Algolia::Composition::Composition.new(
             algolia_object_id: "foo",
             name: "my first composition",
-            behavior: Algolia::Composition::CompositionBehavior.new(
+            behavior: Algolia::Composition::CompositionInjectionBehavior.new(
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::Main.new(
                   source: Algolia::Composition::CompositionSource.new(
@@ -543,7 +543,7 @@ def snippet_for_multiple_batch1
           body: Algolia::Composition::Composition.new(
             algolia_object_id: "my-external-injection-compo",
             name: "my first composition",
-            behavior: Algolia::Composition::CompositionBehavior.new(
+            behavior: Algolia::Composition::CompositionInjectionBehavior.new(
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::Main.new(
                   source: Algolia::Composition::CompositionSource.new(
@@ -595,7 +595,7 @@ def snippet_for_multiple_batch2
           body: Algolia::Composition::Composition.new(
             algolia_object_id: "my-metadata-compo",
             name: "my composition",
-            behavior: Algolia::Composition::CompositionBehavior.new(
+            behavior: Algolia::Composition::CompositionInjectionBehavior.new(
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::Main.new(
                   source: Algolia::Composition::CompositionSource.new(
@@ -682,7 +682,7 @@ def snippet_for_multiple_batch3
           body: Algolia::Composition::Composition.new(
             algolia_object_id: "my-compo",
             name: "my composition",
-            behavior: Algolia::Composition::CompositionBehavior.new(
+            behavior: Algolia::Composition::CompositionInjectionBehavior.new(
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::Main.new(
                   source: Algolia::Composition::CompositionSource.new(
@@ -728,7 +728,7 @@ def snippet_for_put_composition
     Algolia::Composition::Composition.new(
       algolia_object_id: "1234",
       name: "my first composition",
-      behavior: Algolia::Composition::CompositionBehavior.new(
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::Main.new(
             source: Algolia::Composition::CompositionSource.new(
@@ -768,7 +768,7 @@ def snippet_for_put_composition1
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-external-injection-compo",
       name: "my first composition",
-      behavior: Algolia::Composition::CompositionBehavior.new(
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::Main.new(
             source: Algolia::Composition::CompositionSource.new(
@@ -814,7 +814,7 @@ def snippet_for_put_composition2
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-metadata-compo",
       name: "my composition",
-      behavior: Algolia::Composition::CompositionBehavior.new(
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::Main.new(
             source: Algolia::Composition::CompositionSource.new(
@@ -895,7 +895,7 @@ def snippet_for_put_composition3
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-compo",
       name: "my composition",
-      behavior: Algolia::Composition::CompositionBehavior.new(
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::Main.new(
             source: Algolia::Composition::CompositionSource.new(
@@ -940,7 +940,7 @@ def snippet_for_put_composition4
       algolia_object_id: "my-compo",
       name: "my composition",
       sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
-      behavior: Algolia::Composition::CompositionBehavior.new(
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::Main.new(
             source: Algolia::Composition::CompositionSource.new(
@@ -974,7 +974,7 @@ def snippet_for_put_composition_rule
       algolia_object_id: "ruleID",
       conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
       consequence: Algolia::Composition::CompositionRuleConsequence.new(
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -1017,7 +1017,7 @@ def snippet_for_put_composition_rule1
       algolia_object_id: "rule-with-metadata",
       conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
       consequence: Algolia::Composition::CompositionRuleConsequence.new(
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -1083,7 +1083,7 @@ def snippet_for_put_composition_rule2
         Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
       ],
       consequence: Algolia::Composition::CompositionRuleConsequence.new(
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -1137,7 +1137,7 @@ def snippet_for_put_composition_rule3
       enabled: true,
       conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
       consequence: Algolia::Composition::CompositionRuleConsequence.new(
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -1186,7 +1186,7 @@ def snippet_for_save_rules
             algolia_object_id: "123",
             conditions: [Algolia::Composition::Condition.new(pattern: "a")],
             consequence: Algolia::Composition::CompositionRuleConsequence.new(
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -1227,7 +1227,7 @@ def snippet_for_save_rules1
             algolia_object_id: "rule-with-metadata",
             conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
             consequence: Algolia::Composition::CompositionRuleConsequence.new(
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -1299,7 +1299,7 @@ def snippet_for_save_rules2
               Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
             ],
             consequence: Algolia::Composition::CompositionRuleConsequence.new(
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -1362,7 +1362,7 @@ def snippet_for_save_rules3
               Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
             ],
             consequence: Algolia::Composition::CompositionRuleConsequence.new(
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(

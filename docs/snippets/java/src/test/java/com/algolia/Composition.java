@@ -594,7 +594,7 @@ class SnippetCompositionClient {
                 .setObjectID("foo")
                 .setName("my first composition")
                 .setBehavior(
-                  new CompositionBehavior().setInjection(
+                  new CompositionInjectionBehavior().setInjection(
                     new Injection().setMain(
                       new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("bar")))
                     )
@@ -630,7 +630,7 @@ class SnippetCompositionClient {
                 .setObjectID("my-external-injection-compo")
                 .setName("my first composition")
                 .setBehavior(
-                  new CompositionBehavior().setInjection(
+                  new CompositionInjectionBehavior().setInjection(
                     new Injection()
                       .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                       .setInjectedItems(
@@ -680,7 +680,7 @@ class SnippetCompositionClient {
                 .setObjectID("my-metadata-compo")
                 .setName("my composition")
                 .setBehavior(
-                  new CompositionBehavior().setInjection(
+                  new CompositionInjectionBehavior().setInjection(
                     new Injection()
                       .setMain(
                         new Main().setSource(
@@ -790,7 +790,7 @@ class SnippetCompositionClient {
                 .setObjectID("my-compo")
                 .setName("my composition")
                 .setBehavior(
-                  new CompositionBehavior().setInjection(
+                  new CompositionInjectionBehavior().setInjection(
                     new Injection()
                       .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                       .setInjectedItems(
@@ -830,7 +830,7 @@ class SnippetCompositionClient {
         .setObjectID("1234")
         .setName("my first composition")
         .setBehavior(
-          new CompositionBehavior().setInjection(
+          new CompositionInjectionBehavior().setInjection(
             new Injection()
               .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
               .setInjectedItems(
@@ -866,7 +866,7 @@ class SnippetCompositionClient {
         .setObjectID("my-external-injection-compo")
         .setName("my first composition")
         .setBehavior(
-          new CompositionBehavior().setInjection(
+          new CompositionInjectionBehavior().setInjection(
             new Injection()
               .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
               .setInjectedItems(
@@ -909,7 +909,7 @@ class SnippetCompositionClient {
         .setObjectID("my-metadata-compo")
         .setName("my composition")
         .setBehavior(
-          new CompositionBehavior().setInjection(
+          new CompositionInjectionBehavior().setInjection(
             new Injection()
               .setMain(
                 new Main().setSource(
@@ -1010,7 +1010,7 @@ class SnippetCompositionClient {
         .setObjectID("my-compo")
         .setName("my composition")
         .setBehavior(
-          new CompositionBehavior().setInjection(
+          new CompositionInjectionBehavior().setInjection(
             new Injection()
               .setMain(
                 new Main().setSource(
@@ -1061,7 +1061,7 @@ class SnippetCompositionClient {
           }
         )
         .setBehavior(
-          new CompositionBehavior().setInjection(
+          new CompositionInjectionBehavior().setInjection(
             new Injection().setMain(
               new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
             )
@@ -1091,7 +1091,7 @@ class SnippetCompositionClient {
         .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
         .setConsequence(
           new CompositionRuleConsequence().setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                 .setInjectedItems(
@@ -1130,7 +1130,7 @@ class SnippetCompositionClient {
         .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
         .setConsequence(
           new CompositionRuleConsequence().setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                 .setInjectedItems(
@@ -1205,7 +1205,7 @@ class SnippetCompositionClient {
         )
         .setConsequence(
           new CompositionRuleConsequence().setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(
                   new Main().setSource(
@@ -1261,7 +1261,7 @@ class SnippetCompositionClient {
         .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
         .setConsequence(
           new CompositionRuleConsequence().setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
                 .setInjectedItems(
@@ -1305,7 +1305,7 @@ class SnippetCompositionClient {
                 .setConditions(Arrays.asList(new Condition().setPattern("a")))
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection().setMain(
                         new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("<YOUR_INDEX_NAME>")))
                       )
@@ -1343,7 +1343,7 @@ class SnippetCompositionClient {
                 .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                         .setInjectedItems(
@@ -1425,7 +1425,7 @@ class SnippetCompositionClient {
                 )
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(
                           new Main().setSource(
@@ -1493,7 +1493,7 @@ class SnippetCompositionClient {
                 )
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(
                           new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))

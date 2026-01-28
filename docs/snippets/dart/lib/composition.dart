@@ -638,7 +638,7 @@ void snippetFormultipleBatch() async {
           body: Composition(
             objectID: "foo",
             name: "my first composition",
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -684,7 +684,7 @@ void snippetFormultipleBatch1() async {
           body: Composition(
             objectID: "my-external-injection-compo",
             name: "my first composition",
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -740,7 +740,7 @@ void snippetFormultipleBatch2() async {
           body: Composition(
             objectID: "my-metadata-compo",
             name: "my composition",
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -837,7 +837,7 @@ void snippetFormultipleBatch3() async {
           body: Composition(
             objectID: "my-compo",
             name: "my composition",
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -889,7 +889,7 @@ void snippetForputComposition() async {
     composition: Composition(
       objectID: "1234",
       name: "my first composition",
-      behavior: CompositionBehavior(
+      behavior: CompositionInjectionBehavior(
         injection: Injection(
           main: Main(
             source: CompositionSource(
@@ -935,7 +935,7 @@ void snippetForputComposition1() async {
     composition: Composition(
       objectID: "my-external-injection-compo",
       name: "my first composition",
-      behavior: CompositionBehavior(
+      behavior: CompositionInjectionBehavior(
         injection: Injection(
           main: Main(
             source: CompositionSource(
@@ -985,7 +985,7 @@ void snippetForputComposition2() async {
     composition: Composition(
       objectID: "my-metadata-compo",
       name: "my composition",
-      behavior: CompositionBehavior(
+      behavior: CompositionInjectionBehavior(
         injection: Injection(
           main: Main(
             source: CompositionSource(
@@ -1076,7 +1076,7 @@ void snippetForputComposition3() async {
     composition: Composition(
       objectID: "my-compo",
       name: "my composition",
-      behavior: CompositionBehavior(
+      behavior: CompositionInjectionBehavior(
         injection: Injection(
           main: Main(
             source: CompositionSource(
@@ -1132,7 +1132,7 @@ void snippetForputComposition4() async {
         'Price-asc': "products-low-to-high",
         'Price-desc': "products-high-to-low",
       },
-      behavior: CompositionBehavior(
+      behavior: CompositionInjectionBehavior(
         injection: Injection(
           main: Main(
             source: CompositionSource(
@@ -1173,7 +1173,7 @@ void snippetForputCompositionRule() async {
         ),
       ],
       consequence: CompositionRuleConsequence(
-        behavior: CompositionBehavior(
+        behavior: CompositionInjectionBehavior(
           injection: Injection(
             main: Main(
               source: CompositionSource(
@@ -1227,7 +1227,7 @@ void snippetForputCompositionRule1() async {
         ),
       ],
       consequence: CompositionRuleConsequence(
-        behavior: CompositionBehavior(
+        behavior: CompositionInjectionBehavior(
           injection: Injection(
             main: Main(
               source: CompositionSource(
@@ -1313,7 +1313,7 @@ void snippetForputCompositionRule2() async {
         ),
       ],
       consequence: CompositionRuleConsequence(
-        behavior: CompositionBehavior(
+        behavior: CompositionInjectionBehavior(
           injection: Injection(
             main: Main(
               source: CompositionSource(
@@ -1376,7 +1376,7 @@ void snippetForputCompositionRule3() async {
         ),
       ],
       consequence: CompositionRuleConsequence(
-        behavior: CompositionBehavior(
+        behavior: CompositionInjectionBehavior(
           injection: Injection(
             main: Main(
               source: CompositionSource(
@@ -1435,7 +1435,7 @@ void snippetForsaveRules() async {
               ),
             ],
             consequence: CompositionRuleConsequence(
-              behavior: CompositionBehavior(
+              behavior: CompositionInjectionBehavior(
                 injection: Injection(
                   main: Main(
                     source: CompositionSource(
@@ -1483,7 +1483,7 @@ void snippetForsaveRules1() async {
               ),
             ],
             consequence: CompositionRuleConsequence(
-              behavior: CompositionBehavior(
+              behavior: CompositionInjectionBehavior(
                 injection: Injection(
                   main: Main(
                     source: CompositionSource(
@@ -1575,7 +1575,7 @@ void snippetForsaveRules2() async {
               ),
             ],
             consequence: CompositionRuleConsequence(
-              behavior: CompositionBehavior(
+              behavior: CompositionInjectionBehavior(
                 injection: Injection(
                   main: Main(
                     source: CompositionSource(
@@ -1647,7 +1647,7 @@ void snippetForsaveRules3() async {
               ),
             ],
             consequence: CompositionRuleConsequence(
-              behavior: CompositionBehavior(
+              behavior: CompositionInjectionBehavior(
                 injection: Injection(
                   main: Main(
                     source: CompositionSource(

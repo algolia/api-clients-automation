@@ -610,19 +610,21 @@ public class CompositionClientRequestTests
               {
                 ObjectID = "foo",
                 Name = "my first composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "bar" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "bar" },
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -661,42 +663,44 @@ public class CompositionClientRequestTests
               {
                 ObjectID = "my-external-injection-compo",
                 Name = "my first composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "foo" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "foo" },
+                        },
                       },
-                    },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
+                      InjectedItems = new List<InjectedItem>
                       {
-                        Key = "my-unique-external-group-key",
-                        Source = new InjectedItemSource(
-                          new ExternalSource
-                          {
-                            External = new External
+                        new InjectedItem
+                        {
+                          Key = "my-unique-external-group-key",
+                          Source = new InjectedItemSource(
+                            new ExternalSource
                             {
-                              Index = "foo",
-                              Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                              Params = new BaseInjectionQueryParameters
+                              External = new External
                               {
-                                Filters = "brand:adidas",
+                                Index = "foo",
+                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
                               },
-                            },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -730,95 +734,100 @@ public class CompositionClientRequestTests
               {
                 ObjectID = "my-metadata-compo",
                 Name = "my composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch
+                        Source = new CompositionSource
                         {
-                          Index = "foo",
-                          Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "foo",
+                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                          },
                         },
                       },
-                    },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
+                      InjectedItems = new List<InjectedItem>
                       {
-                        Key = "my-unique-group-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search
+                        new InjectedItem
+                        {
+                          Key = "my-unique-group-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
                             {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters
+                              Search = new Algolia.Search.Models.Composition.Search
                               {
-                                Filters = "brand:adidas",
+                                Index = "foo",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                          Metadata = new InjectedItemMetadata
+                          {
+                            Hits = new InjectedItemHitsMetadata
+                            {
+                              AddItemKey = true,
+                              Extra = new Dictionary<string, object>
+                              {
+                                { "my-string", "string" },
+                                { "my-bool", true },
+                                { "my-number", 42 },
+                                {
+                                  "my-object",
+                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                },
                               },
                             },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
-                        Metadata = new InjectedItemMetadata
+                          },
+                        },
+                        new InjectedItem
                         {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
+                          Key = "my-unique-group-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
                             {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
+                              Search = new Algolia.Search.Models.Composition.Search
                               {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                Index = "foo",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:puma",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 5,
+                          Length = 5,
+                          Metadata = new InjectedItemMetadata
+                          {
+                            Hits = new InjectedItemHitsMetadata
+                            {
+                              AddItemKey = true,
+                              Extra = new Dictionary<string, object>
+                              {
+                                { "my-string", "string" },
+                                { "my-bool", true },
+                                { "my-number", 42 },
+                                {
+                                  "my-object",
+                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                },
                               },
                             },
                           },
                         },
                       },
-                      new InjectedItem
-                      {
-                        Key = "my-unique-group-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search
-                            {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                            },
-                          }
-                        ),
-                        Position = 5,
-                        Length = 5,
-                        Metadata = new InjectedItemMetadata
-                        {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
-                            {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
-                              {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                              },
-                            },
-                          },
-                        },
-                      },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -852,38 +861,43 @@ public class CompositionClientRequestTests
               {
                 ObjectID = "my-compo",
                 Name = "my composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "foo" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "foo" },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "my-unique-injected-item-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "foo",
+                              },
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                        },
+                      },
+                      Deduplication = new Deduplication
+                      {
+                        Positioning = Enum.Parse<DedupPositioning>("Highest"),
                       },
                     },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
-                      {
-                        Key = "my-unique-injected-item-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
-                      },
-                    },
-                    Deduplication = new Deduplication
-                    {
-                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
-                    },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -910,34 +924,36 @@ public class CompositionClientRequestTests
       {
         ObjectID = "1234",
         Name = "my first composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch { Index = "foo" },
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "my-unique-group-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
               },
             },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
-              {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
-              },
-            },
-          },
-        },
+          }
+        ),
       }
     );
 
@@ -960,39 +976,41 @@ public class CompositionClientRequestTests
       {
         ObjectID = "my-external-injection-compo",
         Name = "my first composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch { Index = "foo" },
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
               },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
+              InjectedItems = new List<InjectedItem>
               {
-                Key = "my-unique-external-group-key",
-                Source = new InjectedItemSource(
-                  new ExternalSource
-                  {
-                    External = new External
+                new InjectedItem
+                {
+                  Key = "my-unique-external-group-key",
+                  Source = new InjectedItemSource(
+                    new ExternalSource
                     {
-                      Index = "foo",
-                      Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                    },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
+                      External = new External
+                      {
+                        Index = "foo",
+                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                      },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
               },
             },
-          },
-        },
+          }
+        ),
       }
     );
 
@@ -1015,219 +1033,8 @@ public class CompositionClientRequestTests
       {
         ObjectID = "my-metadata-compo",
         Name = "my composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
-          {
-            Main = new Main
-            {
-              Source = new CompositionSource
-              {
-                Search = new CompositionSourceSearch
-                {
-                  Index = "foo",
-                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                },
-              },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
-              {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search
-                    {
-                      Index = "foo",
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                    },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
-                Metadata = new InjectedItemMetadata
-                {
-                  Hits = new InjectedItemHitsMetadata
-                  {
-                    AddItemKey = true,
-                    Extra = new Dictionary<string, object>
-                    {
-                      { "my-string", "string" },
-                      { "my-bool", true },
-                      { "my-number", 42 },
-                      {
-                        "my-object",
-                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                      },
-                    },
-                  },
-                },
-              },
-              new InjectedItem
-              {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search
-                    {
-                      Index = "foo",
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                    },
-                  }
-                ),
-                Position = 5,
-                Length = 5,
-                Metadata = new InjectedItemMetadata
-                {
-                  Hits = new InjectedItemHitsMetadata
-                  {
-                    AddItemKey = true,
-                    Extra = new Dictionary<string, object>
-                    {
-                      { "my-string", "string" },
-                      { "my-bool", true },
-                      { "my-number", 42 },
-                      {
-                        "my-object",
-                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/compositions/my-metadata-compo", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "putComposition")]
-  public async Task PutCompositionTest3()
-  {
-    await client.PutCompositionAsync(
-      "my-compo",
-      new Composition
-      {
-        ObjectID = "my-compo",
-        Name = "my composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
-          {
-            Main = new Main
-            {
-              Source = new CompositionSource
-              {
-                Search = new CompositionSourceSearch
-                {
-                  Index = "foo",
-                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
-                },
-              },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
-              {
-                Key = "my-unique-injected-item-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
-              },
-            },
-            Deduplication = new Deduplication
-            {
-              Positioning = Enum.Parse<DedupPositioning>("Highest"),
-            },
-          },
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/compositions/my-compo", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "putComposition")]
-  public async Task PutCompositionTest4()
-  {
-    await client.PutCompositionAsync(
-      "my-compo",
-      new Composition
-      {
-        ObjectID = "my-compo",
-        Name = "my composition",
-        SortingStrategy = new Dictionary<string, string>
-        {
-          { "Price-asc", "products-low-to-high" },
-          { "Price-desc", "products-high-to-low" },
-        },
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
-          {
-            Main = new Main
-            {
-              Source = new CompositionSource
-              {
-                Search = new CompositionSourceSearch { Index = "products" },
-              },
-            },
-          },
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/compositions/my-compo", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "putCompositionRule")]
-  public async Task PutCompositionRuleTest()
-  {
-    await client.PutCompositionRuleAsync(
-      "compositionID",
-      "ruleID",
-      new CompositionRule
-      {
-        ObjectID = "ruleID",
-        Conditions = new List<Condition>
-        {
-          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
-        },
-        Consequence = new CompositionRuleConsequence
-        {
-          Behavior = new CompositionBehavior
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
             Injection = new Injection
             {
@@ -1235,71 +1042,18 @@ public class CompositionClientRequestTests
               {
                 Source = new CompositionSource
                 {
-                  Search = new CompositionSourceSearch { Index = "foo" },
+                  Search = new CompositionSourceSearch
+                  {
+                    Index = "foo",
+                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  },
                 },
               },
               InjectedItems = new List<InjectedItem>
               {
                 new InjectedItem
                 {
-                  Key = "my-unique-group-from-rule-key",
-                  Source = new InjectedItemSource(
-                    new SearchSource
-                    {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                    }
-                  ),
-                  Position = 2,
-                  Length = 1,
-                },
-              },
-            },
-          },
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/compositions/compositionID/rules/ruleID", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "putCompositionRule")]
-  public async Task PutCompositionRuleTest1()
-  {
-    await client.PutCompositionRuleAsync(
-      "compositionID",
-      "rule-with-metadata",
-      new CompositionRule
-      {
-        ObjectID = "rule-with-metadata",
-        Conditions = new List<Condition>
-        {
-          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
-        },
-        Consequence = new CompositionRuleConsequence
-        {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
-            {
-              Main = new Main
-              {
-                Source = new CompositionSource
-                {
-                  Search = new CompositionSourceSearch { Index = "foo" },
-                },
-              },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-group-from-rule-key",
+                  Key = "my-unique-group-key",
                   Source = new InjectedItemSource(
                     new SearchSource
                     {
@@ -1330,9 +1084,283 @@ public class CompositionClientRequestTests
                     },
                   },
                 },
+                new InjectedItem
+                {
+                  Key = "my-unique-group-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search
+                      {
+                        Index = "foo",
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
+                      },
+                    }
+                  ),
+                  Position = 5,
+                  Length = 5,
+                  Metadata = new InjectedItemMetadata
+                  {
+                    Hits = new InjectedItemHitsMetadata
+                    {
+                      AddItemKey = true,
+                      Extra = new Dictionary<string, object>
+                      {
+                        { "my-string", "string" },
+                        { "my-bool", true },
+                        { "my-number", 42 },
+                        {
+                          "my-object",
+                          new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                        },
+                      },
+                    },
+                  },
+                },
               },
             },
-          },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-metadata-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-metadata-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}},\"position\":2,\"length\":1,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}},{\"key\":\"my-unique-group-key\",\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:puma\"}}},\"position\":5,\"length\":5,\"metadata\":{\"hits\":{\"addItemKey\":true,\"extra\":{\"my-string\":\"string\",\"my-bool\":true,\"my-number\":42,\"my-object\":{\"sub-key\":\"sub-value\"}}}}}]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest3()
+  {
+    await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch
+                  {
+                    Index = "foo",
+                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "my-unique-injected-item-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
+              },
+              Deduplication = new Deduplication
+              {
+                Positioning = Enum.Parse<DedupPositioning>("Highest"),
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\",\"params\":{\"filters\":\"brand:adidas\"}}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}],\"deduplication\":{\"positioning\":\"highest\"}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest4()
+  {
+    await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        SortingStrategy = new Dictionary<string, string>
+        {
+          { "Price-asc", "products-low-to-high" },
+          { "Price-desc", "products-high-to-low" },
+        },
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new Main
+              {
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "products" },
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putCompositionRule")]
+  public async Task PutCompositionRuleTest()
+  {
+    await client.PutCompositionRuleAsync(
+      "compositionID",
+      "ruleID",
+      new CompositionRule
+      {
+        ObjectID = "ruleID",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
+            {
+              Injection = new Injection
+              {
+                Main = new Main
+                {
+                  Source = new CompositionSource
+                  {
+                    Search = new CompositionSourceSearch { Index = "foo" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
+                      {
+                        Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                      }
+                    ),
+                    Position = 2,
+                    Length = 1,
+                  },
+                },
+              },
+            }
+          ),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/compositionID/rules/ruleID", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"ruleID\",\"conditions\":[{\"anchoring\":\"is\",\"pattern\":\"test\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"foo\"}}},\"injectedItems\":[{\"key\":\"my-unique-group-from-rule-key\",\"source\":{\"search\":{\"index\":\"foo\"}},\"position\":2,\"length\":1}]}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "putCompositionRule")]
+  public async Task PutCompositionRuleTest1()
+  {
+    await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-metadata",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-metadata",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Is"), Pattern = "test" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
+            {
+              Injection = new Injection
+              {
+                Main = new Main
+                {
+                  Source = new CompositionSource
+                  {
+                    Search = new CompositionSourceSearch { Index = "foo" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
+                      {
+                        Search = new Algolia.Search.Models.Composition.Search
+                        {
+                          Index = "foo",
+                          Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                        },
+                      }
+                    ),
+                    Position = 2,
+                    Length = 1,
+                    Metadata = new InjectedItemMetadata
+                    {
+                      Hits = new InjectedItemHitsMetadata
+                      {
+                        AddItemKey = true,
+                        Extra = new Dictionary<string, object>
+                        {
+                          { "my-string", "string" },
+                          { "my-bool", true },
+                          { "my-number", 42 },
+                          {
+                            "my-object",
+                            new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            }
+          ),
         },
       }
     );
@@ -1370,43 +1398,45 @@ public class CompositionClientRequestTests
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch
+                  Source = new CompositionSource
                   {
-                    Index = "my-index",
-                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    Search = new CompositionSourceSearch
+                    {
+                      Index = "my-index",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-external-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new ExternalSource
+                      {
+                        External = new External
+                        {
+                          Index = "my-index",
+                          Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                          Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
                   },
                 },
               },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-external-group-from-rule-key",
-                  Source = new InjectedItemSource(
-                    new ExternalSource
-                    {
-                      External = new External
-                      {
-                        Index = "my-index",
-                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                      },
-                    }
-                  ),
-                  Position = 0,
-                  Length = 3,
-                },
-              },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1438,38 +1468,43 @@ public class CompositionClientRequestTests
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch { Index = "my-index" },
+                  Source = new CompositionSource
+                  {
+                    Search = new CompositionSourceSearch { Index = "my-index" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-injected-item-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
+                      {
+                        Search = new Algolia.Search.Models.Composition.Search
+                        {
+                          Index = "my-index",
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
+                  },
+                },
+                Deduplication = new Deduplication
+                {
+                  Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                 },
               },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-injected-item-key",
-                  Source = new InjectedItemSource(
-                    new SearchSource
-                    {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
-                    }
-                  ),
-                  Position = 0,
-                  Length = 3,
-                },
-              },
-              Deduplication = new Deduplication
-              {
-                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-              },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1503,19 +1538,21 @@ public class CompositionClientRequestTests
                 Conditions = new List<Condition> { new Condition { Pattern = "a" } },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
+                          Source = new CompositionSource
+                          {
+                            Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
+                          },
                         },
                       },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1556,58 +1593,60 @@ public class CompositionClientRequestTests
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "foo" },
-                        },
-                      },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
-                        {
-                          Key = "my-unique-group-from-rule-key",
-                          Source = new InjectedItemSource(
-                            new SearchSource
-                            {
-                              Search = new Algolia.Search.Models.Composition.Search
-                              {
-                                Index = "foo",
-                                Params = new BaseInjectionQueryParameters
-                                {
-                                  Filters = "brand:adidas",
-                                },
-                              },
-                            }
-                          ),
-                          Position = 2,
-                          Length = 1,
-                          Metadata = new InjectedItemMetadata
+                          Source = new CompositionSource
                           {
-                            Hits = new InjectedItemHitsMetadata
-                            {
-                              AddItemKey = true,
-                              Extra = new Dictionary<string, object>
+                            Search = new CompositionSourceSearch { Index = "foo" },
+                          },
+                        },
+                        InjectedItems = new List<InjectedItem>
+                        {
+                          new InjectedItem
+                          {
+                            Key = "my-unique-group-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new SearchSource
                               {
-                                { "my-string", "string" },
-                                { "my-bool", true },
-                                { "my-number", 42 },
+                                Search = new Algolia.Search.Models.Composition.Search
                                 {
-                                  "my-object",
-                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                  Index = "foo",
+                                  Params = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "brand:adidas",
+                                  },
+                                },
+                              }
+                            ),
+                            Position = 2,
+                            Length = 1,
+                            Metadata = new InjectedItemMetadata
+                            {
+                              Hits = new InjectedItemHitsMetadata
+                              {
+                                AddItemKey = true,
+                                Extra = new Dictionary<string, object>
+                                {
+                                  { "my-string", "string" },
+                                  { "my-bool", true },
+                                  { "my-number", 42 },
+                                  {
+                                    "my-object",
+                                    new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                  },
                                 },
                               },
                             },
                           },
                         },
                       },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1664,46 +1703,51 @@ public class CompositionClientRequestTests
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch
+                          Source = new CompositionSource
                           {
-                            Index = "my-index",
-                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                            Search = new CompositionSourceSearch
+                            {
+                              Index = "my-index",
+                              Params = new MainInjectionQueryParameters
+                              {
+                                Filters = "brand:adidas",
+                              },
+                            },
+                          },
+                        },
+                        InjectedItems = new List<InjectedItem>
+                        {
+                          new InjectedItem
+                          {
+                            Key = "my-unique-external-group-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new ExternalSource
+                              {
+                                External = new External
+                                {
+                                  Index = "my-index",
+                                  Params = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "brand:adidas",
+                                  },
+                                  Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                                },
+                              }
+                            ),
+                            Position = 0,
+                            Length = 3,
                           },
                         },
                       },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
-                        {
-                          Key = "my-unique-external-group-from-rule-key",
-                          Source = new InjectedItemSource(
-                            new ExternalSource
-                            {
-                              External = new External
-                              {
-                                Index = "my-index",
-                                Params = new BaseInjectionQueryParameters
-                                {
-                                  Filters = "brand:adidas",
-                                },
-                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                              },
-                            }
-                          ),
-                          Position = 0,
-                          Length = 3,
-                        },
-                      },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1751,41 +1795,43 @@ public class CompositionClientRequestTests
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "my-index" },
+                          Source = new CompositionSource
+                          {
+                            Search = new CompositionSourceSearch { Index = "my-index" },
+                          },
                         },
-                      },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
+                        InjectedItems = new List<InjectedItem>
                         {
-                          Key = "my-unique-injected-item-key",
-                          Source = new InjectedItemSource(
-                            new SearchSource
-                            {
-                              Search = new Algolia.Search.Models.Composition.Search
+                          new InjectedItem
+                          {
+                            Key = "my-unique-injected-item-key",
+                            Source = new InjectedItemSource(
+                              new SearchSource
                               {
-                                Index = "my-index",
-                              },
-                            }
-                          ),
-                          Position = 0,
-                          Length = 3,
+                                Search = new Algolia.Search.Models.Composition.Search
+                                {
+                                  Index = "my-index",
+                                },
+                              }
+                            ),
+                            Position = 0,
+                            Length = 3,
+                          },
+                        },
+                        Deduplication = new Deduplication
+                        {
+                          Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                         },
                       },
-                      Deduplication = new Deduplication
-                      {
-                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-                      },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),

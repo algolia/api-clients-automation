@@ -633,19 +633,21 @@ public class SnippetCompositionClient
               {
                 ObjectID = "foo",
                 Name = "my first composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "bar" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "bar" },
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -690,42 +692,44 @@ public class SnippetCompositionClient
               {
                 ObjectID = "my-external-injection-compo",
                 Name = "my first composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "foo" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "foo" },
+                        },
                       },
-                    },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
+                      InjectedItems = new List<InjectedItem>
                       {
-                        Key = "my-unique-external-group-key",
-                        Source = new InjectedItemSource(
-                          new ExternalSource
-                          {
-                            External = new External
+                        new InjectedItem
+                        {
+                          Key = "my-unique-external-group-key",
+                          Source = new InjectedItemSource(
+                            new ExternalSource
                             {
-                              Index = "foo",
-                              Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                              Params = new BaseInjectionQueryParameters
+                              External = new External
                               {
-                                Filters = "brand:adidas",
+                                Index = "foo",
+                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
                               },
-                            },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -765,95 +769,100 @@ public class SnippetCompositionClient
               {
                 ObjectID = "my-metadata-compo",
                 Name = "my composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch
+                        Source = new CompositionSource
                         {
-                          Index = "foo",
-                          Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "foo",
+                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                          },
                         },
                       },
-                    },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
+                      InjectedItems = new List<InjectedItem>
                       {
-                        Key = "my-unique-group-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search
+                        new InjectedItem
+                        {
+                          Key = "my-unique-group-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
                             {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters
+                              Search = new Algolia.Search.Models.Composition.Search
                               {
-                                Filters = "brand:adidas",
+                                Index = "foo",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:adidas",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                          Metadata = new InjectedItemMetadata
+                          {
+                            Hits = new InjectedItemHitsMetadata
+                            {
+                              AddItemKey = true,
+                              Extra = new Dictionary<string, object>
+                              {
+                                { "my-string", "string" },
+                                { "my-bool", true },
+                                { "my-number", 42 },
+                                {
+                                  "my-object",
+                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                },
                               },
                             },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
-                        Metadata = new InjectedItemMetadata
+                          },
+                        },
+                        new InjectedItem
                         {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
+                          Key = "my-unique-group-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
                             {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
+                              Search = new Algolia.Search.Models.Composition.Search
                               {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                Index = "foo",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "brand:puma",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 5,
+                          Length = 5,
+                          Metadata = new InjectedItemMetadata
+                          {
+                            Hits = new InjectedItemHitsMetadata
+                            {
+                              AddItemKey = true,
+                              Extra = new Dictionary<string, object>
+                              {
+                                { "my-string", "string" },
+                                { "my-bool", true },
+                                { "my-number", 42 },
+                                {
+                                  "my-object",
+                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                },
                               },
                             },
                           },
                         },
                       },
-                      new InjectedItem
-                      {
-                        Key = "my-unique-group-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search
-                            {
-                              Index = "foo",
-                              Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                            },
-                          }
-                        ),
-                        Position = 5,
-                        Length = 5,
-                        Metadata = new InjectedItemMetadata
-                        {
-                          Hits = new InjectedItemHitsMetadata
-                          {
-                            AddItemKey = true,
-                            Extra = new Dictionary<string, object>
-                            {
-                              { "my-string", "string" },
-                              { "my-bool", true },
-                              { "my-number", 42 },
-                              {
-                                "my-object",
-                                new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                              },
-                            },
-                          },
-                        },
-                      },
                     },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -893,38 +902,43 @@ public class SnippetCompositionClient
               {
                 ObjectID = "my-compo",
                 Name = "my composition",
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "foo" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "foo" },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "my-unique-injected-item-key",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "foo",
+                              },
+                            }
+                          ),
+                          Position = 2,
+                          Length = 1,
+                        },
+                      },
+                      Deduplication = new Deduplication
+                      {
+                        Positioning = Enum.Parse<DedupPositioning>("Highest"),
                       },
                     },
-                    InjectedItems = new List<InjectedItem>
-                    {
-                      new InjectedItem
-                      {
-                        Key = "my-unique-injected-item-key",
-                        Source = new InjectedItemSource(
-                          new SearchSource
-                          {
-                            Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                          }
-                        ),
-                        Position = 2,
-                        Length = 1,
-                      },
-                    },
-                    Deduplication = new Deduplication
-                    {
-                      Positioning = Enum.Parse<DedupPositioning>("Highest"),
-                    },
-                  },
-                },
+                  }
+                ),
               }
             ),
           },
@@ -957,34 +971,36 @@ public class SnippetCompositionClient
       {
         ObjectID = "1234",
         Name = "my first composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch { Index = "foo" },
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
+              },
+              InjectedItems = new List<InjectedItem>
+              {
+                new InjectedItem
+                {
+                  Key = "my-unique-group-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
               },
             },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
-              {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
-              },
-            },
-          },
-        },
+          }
+        ),
       }
     );
     // >LOG
@@ -1013,39 +1029,41 @@ public class SnippetCompositionClient
       {
         ObjectID = "my-external-injection-compo",
         Name = "my first composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch { Index = "foo" },
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "foo" },
+                },
               },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
+              InjectedItems = new List<InjectedItem>
               {
-                Key = "my-unique-external-group-key",
-                Source = new InjectedItemSource(
-                  new ExternalSource
-                  {
-                    External = new External
+                new InjectedItem
+                {
+                  Key = "my-unique-external-group-key",
+                  Source = new InjectedItemSource(
+                    new ExternalSource
                     {
-                      Index = "foo",
-                      Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                    },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
+                      External = new External
+                      {
+                        Index = "foo",
+                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                      },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
               },
             },
-          },
-        },
+          }
+        ),
       }
     );
     // >LOG
@@ -1074,92 +1092,94 @@ public class SnippetCompositionClient
       {
         ObjectID = "my-metadata-compo",
         Name = "my composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch
+                Source = new CompositionSource
                 {
-                  Index = "foo",
-                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  Search = new CompositionSourceSearch
+                  {
+                    Index = "foo",
+                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  },
                 },
               },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
+              InjectedItems = new List<InjectedItem>
               {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search
-                    {
-                      Index = "foo",
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                    },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
-                Metadata = new InjectedItemMetadata
+                new InjectedItem
                 {
-                  Hits = new InjectedItemHitsMetadata
-                  {
-                    AddItemKey = true,
-                    Extra = new Dictionary<string, object>
+                  Key = "my-unique-group-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
                     {
-                      { "my-string", "string" },
-                      { "my-bool", true },
-                      { "my-number", 42 },
+                      Search = new Algolia.Search.Models.Composition.Search
                       {
-                        "my-object",
-                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                        Index = "foo",
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                      },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                  Metadata = new InjectedItemMetadata
+                  {
+                    Hits = new InjectedItemHitsMetadata
+                    {
+                      AddItemKey = true,
+                      Extra = new Dictionary<string, object>
+                      {
+                        { "my-string", "string" },
+                        { "my-bool", true },
+                        { "my-number", 42 },
+                        {
+                          "my-object",
+                          new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                        },
+                      },
+                    },
+                  },
+                },
+                new InjectedItem
+                {
+                  Key = "my-unique-group-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search
+                      {
+                        Index = "foo",
+                        Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
+                      },
+                    }
+                  ),
+                  Position = 5,
+                  Length = 5,
+                  Metadata = new InjectedItemMetadata
+                  {
+                    Hits = new InjectedItemHitsMetadata
+                    {
+                      AddItemKey = true,
+                      Extra = new Dictionary<string, object>
+                      {
+                        { "my-string", "string" },
+                        { "my-bool", true },
+                        { "my-number", 42 },
+                        {
+                          "my-object",
+                          new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                        },
                       },
                     },
                   },
                 },
               },
-              new InjectedItem
-              {
-                Key = "my-unique-group-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search
-                    {
-                      Index = "foo",
-                      Params = new BaseInjectionQueryParameters { Filters = "brand:puma" },
-                    },
-                  }
-                ),
-                Position = 5,
-                Length = 5,
-                Metadata = new InjectedItemMetadata
-                {
-                  Hits = new InjectedItemHitsMetadata
-                  {
-                    AddItemKey = true,
-                    Extra = new Dictionary<string, object>
-                    {
-                      { "my-string", "string" },
-                      { "my-bool", true },
-                      { "my-number", 42 },
-                      {
-                        "my-object",
-                        new Dictionary<string, object> { { "sub-key", "sub-value" } }
-                      },
-                    },
-                  },
-                },
-              },
             },
-          },
-        },
+          }
+        ),
       }
     );
     // >LOG
@@ -1188,42 +1208,44 @@ public class SnippetCompositionClient
       {
         ObjectID = "my-compo",
         Name = "my composition",
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch
+                Source = new CompositionSource
                 {
-                  Index = "foo",
-                  Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  Search = new CompositionSourceSearch
+                  {
+                    Index = "foo",
+                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                  },
                 },
               },
-            },
-            InjectedItems = new List<InjectedItem>
-            {
-              new InjectedItem
+              InjectedItems = new List<InjectedItem>
               {
-                Key = "my-unique-injected-item-key",
-                Source = new InjectedItemSource(
-                  new SearchSource
-                  {
-                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                  }
-                ),
-                Position = 2,
-                Length = 1,
+                new InjectedItem
+                {
+                  Key = "my-unique-injected-item-key",
+                  Source = new InjectedItemSource(
+                    new SearchSource
+                    {
+                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                    }
+                  ),
+                  Position = 2,
+                  Length = 1,
+                },
+              },
+              Deduplication = new Deduplication
+              {
+                Positioning = Enum.Parse<DedupPositioning>("Highest"),
               },
             },
-            Deduplication = new Deduplication
-            {
-              Positioning = Enum.Parse<DedupPositioning>("Highest"),
-            },
-          },
-        },
+          }
+        ),
       }
     );
     // >LOG
@@ -1257,19 +1279,21 @@ public class SnippetCompositionClient
           { "Price-asc", "products-low-to-high" },
           { "Price-desc", "products-high-to-low" },
         },
-        Behavior = new CompositionBehavior
-        {
-          Injection = new Injection
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
           {
-            Main = new Main
+            Injection = new Injection
             {
-              Source = new CompositionSource
+              Main = new Main
               {
-                Search = new CompositionSourceSearch { Index = "products" },
+                Source = new CompositionSource
+                {
+                  Search = new CompositionSourceSearch { Index = "products" },
+                },
               },
             },
-          },
-        },
+          }
+        ),
       }
     );
     // >LOG
@@ -1304,34 +1328,36 @@ public class SnippetCompositionClient
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch { Index = "foo" },
+                  Source = new CompositionSource
+                  {
+                    Search = new CompositionSourceSearch { Index = "foo" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
+                      {
+                        Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
+                      }
+                    ),
+                    Position = 2,
+                    Length = 1,
+                  },
                 },
               },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-group-from-rule-key",
-                  Source = new InjectedItemSource(
-                    new SearchSource
-                    {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                    }
-                  ),
-                  Position = 2,
-                  Length = 1,
-                },
-              },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1367,55 +1393,57 @@ public class SnippetCompositionClient
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch { Index = "foo" },
-                },
-              },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-group-from-rule-key",
-                  Source = new InjectedItemSource(
-                    new SearchSource
-                    {
-                      Search = new Algolia.Search.Models.Composition.Search
-                      {
-                        Index = "foo",
-                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                      },
-                    }
-                  ),
-                  Position = 2,
-                  Length = 1,
-                  Metadata = new InjectedItemMetadata
+                  Source = new CompositionSource
                   {
-                    Hits = new InjectedItemHitsMetadata
-                    {
-                      AddItemKey = true,
-                      Extra = new Dictionary<string, object>
+                    Search = new CompositionSourceSearch { Index = "foo" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
                       {
-                        { "my-string", "string" },
-                        { "my-bool", true },
-                        { "my-number", 42 },
+                        Search = new Algolia.Search.Models.Composition.Search
                         {
-                          "my-object",
-                          new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                          Index = "foo",
+                          Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                        },
+                      }
+                    ),
+                    Position = 2,
+                    Length = 1,
+                    Metadata = new InjectedItemMetadata
+                    {
+                      Hits = new InjectedItemHitsMetadata
+                      {
+                        AddItemKey = true,
+                        Extra = new Dictionary<string, object>
+                        {
+                          { "my-string", "string" },
+                          { "my-bool", true },
+                          { "my-number", 42 },
+                          {
+                            "my-object",
+                            new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                          },
                         },
                       },
                     },
                   },
                 },
               },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1459,43 +1487,45 @@ public class SnippetCompositionClient
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch
+                  Source = new CompositionSource
                   {
-                    Index = "my-index",
-                    Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    Search = new CompositionSourceSearch
+                    {
+                      Index = "my-index",
+                      Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                    },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-external-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new ExternalSource
+                      {
+                        External = new External
+                        {
+                          Index = "my-index",
+                          Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
+                          Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
                   },
                 },
               },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-external-group-from-rule-key",
-                  Source = new InjectedItemSource(
-                    new ExternalSource
-                    {
-                      External = new External
-                      {
-                        Index = "my-index",
-                        Params = new BaseInjectionQueryParameters { Filters = "brand:adidas" },
-                        Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                      },
-                    }
-                  ),
-                  Position = 0,
-                  Length = 3,
-                },
-              },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1533,38 +1563,43 @@ public class SnippetCompositionClient
         },
         Consequence = new CompositionRuleConsequence
         {
-          Behavior = new CompositionBehavior
-          {
-            Injection = new Injection
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
             {
-              Main = new Main
+              Injection = new Injection
               {
-                Source = new CompositionSource
+                Main = new Main
                 {
-                  Search = new CompositionSourceSearch { Index = "my-index" },
+                  Source = new CompositionSource
+                  {
+                    Search = new CompositionSourceSearch { Index = "my-index" },
+                  },
+                },
+                InjectedItems = new List<InjectedItem>
+                {
+                  new InjectedItem
+                  {
+                    Key = "my-unique-injected-item-key",
+                    Source = new InjectedItemSource(
+                      new SearchSource
+                      {
+                        Search = new Algolia.Search.Models.Composition.Search
+                        {
+                          Index = "my-index",
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
+                  },
+                },
+                Deduplication = new Deduplication
+                {
+                  Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                 },
               },
-              InjectedItems = new List<InjectedItem>
-              {
-                new InjectedItem
-                {
-                  Key = "my-unique-injected-item-key",
-                  Source = new InjectedItemSource(
-                    new SearchSource
-                    {
-                      Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
-                    }
-                  ),
-                  Position = 0,
-                  Length = 3,
-                },
-              },
-              Deduplication = new Deduplication
-              {
-                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-              },
-            },
-          },
+            }
+          ),
         },
       }
     );
@@ -1604,19 +1639,21 @@ public class SnippetCompositionClient
                 Conditions = new List<Condition> { new Condition { Pattern = "a" } },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
+                          Source = new CompositionSource
+                          {
+                            Search = new CompositionSourceSearch { Index = "<YOUR_INDEX_NAME>" },
+                          },
                         },
                       },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1663,58 +1700,60 @@ public class SnippetCompositionClient
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "foo" },
-                        },
-                      },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
-                        {
-                          Key = "my-unique-group-from-rule-key",
-                          Source = new InjectedItemSource(
-                            new SearchSource
-                            {
-                              Search = new Algolia.Search.Models.Composition.Search
-                              {
-                                Index = "foo",
-                                Params = new BaseInjectionQueryParameters
-                                {
-                                  Filters = "brand:adidas",
-                                },
-                              },
-                            }
-                          ),
-                          Position = 2,
-                          Length = 1,
-                          Metadata = new InjectedItemMetadata
+                          Source = new CompositionSource
                           {
-                            Hits = new InjectedItemHitsMetadata
-                            {
-                              AddItemKey = true,
-                              Extra = new Dictionary<string, object>
+                            Search = new CompositionSourceSearch { Index = "foo" },
+                          },
+                        },
+                        InjectedItems = new List<InjectedItem>
+                        {
+                          new InjectedItem
+                          {
+                            Key = "my-unique-group-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new SearchSource
                               {
-                                { "my-string", "string" },
-                                { "my-bool", true },
-                                { "my-number", 42 },
+                                Search = new Algolia.Search.Models.Composition.Search
                                 {
-                                  "my-object",
-                                  new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                  Index = "foo",
+                                  Params = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "brand:adidas",
+                                  },
+                                },
+                              }
+                            ),
+                            Position = 2,
+                            Length = 1,
+                            Metadata = new InjectedItemMetadata
+                            {
+                              Hits = new InjectedItemHitsMetadata
+                              {
+                                AddItemKey = true,
+                                Extra = new Dictionary<string, object>
+                                {
+                                  { "my-string", "string" },
+                                  { "my-bool", true },
+                                  { "my-number", 42 },
+                                  {
+                                    "my-object",
+                                    new Dictionary<string, object> { { "sub-key", "sub-value" } }
+                                  },
                                 },
                               },
                             },
                           },
                         },
                       },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1777,46 +1816,51 @@ public class SnippetCompositionClient
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch
+                          Source = new CompositionSource
                           {
-                            Index = "my-index",
-                            Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
+                            Search = new CompositionSourceSearch
+                            {
+                              Index = "my-index",
+                              Params = new MainInjectionQueryParameters
+                              {
+                                Filters = "brand:adidas",
+                              },
+                            },
+                          },
+                        },
+                        InjectedItems = new List<InjectedItem>
+                        {
+                          new InjectedItem
+                          {
+                            Key = "my-unique-external-group-from-rule-key",
+                            Source = new InjectedItemSource(
+                              new ExternalSource
+                              {
+                                External = new External
+                                {
+                                  Index = "my-index",
+                                  Params = new BaseInjectionQueryParameters
+                                  {
+                                    Filters = "brand:adidas",
+                                  },
+                                  Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
+                                },
+                              }
+                            ),
+                            Position = 0,
+                            Length = 3,
                           },
                         },
                       },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
-                        {
-                          Key = "my-unique-external-group-from-rule-key",
-                          Source = new InjectedItemSource(
-                            new ExternalSource
-                            {
-                              External = new External
-                              {
-                                Index = "my-index",
-                                Params = new BaseInjectionQueryParameters
-                                {
-                                  Filters = "brand:adidas",
-                                },
-                                Ordering = Enum.Parse<ExternalOrdering>("UserDefined"),
-                              },
-                            }
-                          ),
-                          Position = 0,
-                          Length = 3,
-                        },
-                      },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),
@@ -1870,41 +1914,43 @@ public class SnippetCompositionClient
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "my-index" },
+                          Source = new CompositionSource
+                          {
+                            Search = new CompositionSourceSearch { Index = "my-index" },
+                          },
                         },
-                      },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
+                        InjectedItems = new List<InjectedItem>
                         {
-                          Key = "my-unique-injected-item-key",
-                          Source = new InjectedItemSource(
-                            new SearchSource
-                            {
-                              Search = new Algolia.Search.Models.Composition.Search
+                          new InjectedItem
+                          {
+                            Key = "my-unique-injected-item-key",
+                            Source = new InjectedItemSource(
+                              new SearchSource
                               {
-                                Index = "my-index",
-                              },
-                            }
-                          ),
-                          Position = 0,
-                          Length = 3,
+                                Search = new Algolia.Search.Models.Composition.Search
+                                {
+                                  Index = "my-index",
+                                },
+                              }
+                            ),
+                            Position = 0,
+                            Length = 3,
+                          },
+                        },
+                        Deduplication = new Deduplication
+                        {
+                          Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                         },
                       },
-                      Deduplication = new Deduplication
-                      {
-                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-                      },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             ),

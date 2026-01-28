@@ -376,7 +376,7 @@ class TestCompositionClient < Test::Unit::TestCase
             body: Algolia::Composition::Composition.new(
               algolia_object_id: "foo",
               name: "my first composition",
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -417,7 +417,7 @@ class TestCompositionClient < Test::Unit::TestCase
             body: Algolia::Composition::Composition.new(
               algolia_object_id: "my-external-injection-compo",
               name: "my first composition",
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -468,7 +468,7 @@ class TestCompositionClient < Test::Unit::TestCase
             body: Algolia::Composition::Composition.new(
               algolia_object_id: "my-metadata-compo",
               name: "my composition",
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -554,7 +554,7 @@ class TestCompositionClient < Test::Unit::TestCase
             body: Algolia::Composition::Composition.new(
               algolia_object_id: "my-compo",
               name: "my composition",
-              behavior: Algolia::Composition::CompositionBehavior.new(
+              behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
@@ -599,7 +599,7 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "1234",
         name: "my first composition",
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -638,7 +638,7 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-external-injection-compo",
         name: "my first composition",
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -683,7 +683,7 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-metadata-compo",
         name: "my composition",
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -763,7 +763,7 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-compo",
         name: "my composition",
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -807,7 +807,7 @@ class TestCompositionClient < Test::Unit::TestCase
         algolia_object_id: "my-compo",
         name: "my composition",
         sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
-        behavior: Algolia::Composition::CompositionBehavior.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::Main.new(
               source: Algolia::Composition::CompositionSource.new(
@@ -840,7 +840,7 @@ class TestCompositionClient < Test::Unit::TestCase
         algolia_object_id: "ruleID",
         conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
-          behavior: Algolia::Composition::CompositionBehavior.new(
+          behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::Main.new(
                 source: Algolia::Composition::CompositionSource.new(
@@ -882,7 +882,7 @@ class TestCompositionClient < Test::Unit::TestCase
         algolia_object_id: "rule-with-metadata",
         conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
-          behavior: Algolia::Composition::CompositionBehavior.new(
+          behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::Main.new(
                 source: Algolia::Composition::CompositionSource.new(
@@ -947,7 +947,7 @@ class TestCompositionClient < Test::Unit::TestCase
           Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
         ],
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
-          behavior: Algolia::Composition::CompositionBehavior.new(
+          behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::Main.new(
                 source: Algolia::Composition::CompositionSource.new(
@@ -1000,7 +1000,7 @@ class TestCompositionClient < Test::Unit::TestCase
         enabled: true,
         conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
         consequence: Algolia::Composition::CompositionRuleConsequence.new(
-          behavior: Algolia::Composition::CompositionBehavior.new(
+          behavior: Algolia::Composition::CompositionInjectionBehavior.new(
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::Main.new(
                 source: Algolia::Composition::CompositionSource.new(
@@ -1048,7 +1048,7 @@ class TestCompositionClient < Test::Unit::TestCase
               algolia_object_id: "123",
               conditions: [Algolia::Composition::Condition.new(pattern: "a")],
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                behavior: Algolia::Composition::CompositionBehavior.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(
@@ -1088,7 +1088,7 @@ class TestCompositionClient < Test::Unit::TestCase
               algolia_object_id: "rule-with-metadata",
               conditions: [Algolia::Composition::Condition.new(anchoring: "is", pattern: "test")],
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                behavior: Algolia::Composition::CompositionBehavior.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(
@@ -1159,7 +1159,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 Algolia::Composition::Condition.new(anchoring: "contains", pattern: "potter")
               ],
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                behavior: Algolia::Composition::CompositionBehavior.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(
@@ -1221,7 +1221,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
               ],
               consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                behavior: Algolia::Composition::CompositionBehavior.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(

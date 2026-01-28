@@ -3,75 +3,53 @@
 
 package com.algolia.model.composition;
 
+import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /** An object containing either an `injection` or `multifeed` behavior schema, but not both. */
-public class CompositionBehavior {
+@JsonDeserialize(using = CompositionBehavior.Deserializer.class)
+public interface CompositionBehavior {
+  class Deserializer extends JsonDeserializer<CompositionBehavior> {
 
-  @JsonProperty("injection")
-  private Injection injection;
+    private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
-  @JsonProperty("multifeed")
-  private Multifeed multifeed;
-
-  public CompositionBehavior setInjection(Injection injection) {
-    this.injection = injection;
-    return this;
-  }
-
-  /** Get injection */
-  @javax.annotation.Nullable
-  public Injection getInjection() {
-    return injection;
-  }
-
-  public CompositionBehavior setMultifeed(Multifeed multifeed) {
-    this.multifeed = multifeed;
-    return this;
-  }
-
-  /** Get multifeed */
-  @javax.annotation.Nullable
-  public Multifeed getMultifeed() {
-    return multifeed;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    @Override
+    public CompositionBehavior deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+      JsonNode tree = jp.readValueAsTree();
+      // deserialize CompositionInjectionBehavior
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(CompositionInjectionBehavior.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf CompositionInjectionBehavior (error: " + e.getMessage() + ") (type: CompositionInjectionBehavior)"
+          );
+        }
+      }
+      // deserialize CompositionMultifeedBehavior
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(CompositionMultifeedBehavior.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf CompositionMultifeedBehavior (error: " + e.getMessage() + ") (type: CompositionMultifeedBehavior)"
+          );
+        }
+      }
+      throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    /** Handle deserialization of the 'null' value. */
+    @Override
+    public CompositionBehavior getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+      throw new JsonMappingException(ctxt.getParser(), "CompositionBehavior cannot be null");
     }
-    CompositionBehavior compositionBehavior = (CompositionBehavior) o;
-    return Objects.equals(this.injection, compositionBehavior.injection) && Objects.equals(this.multifeed, compositionBehavior.multifeed);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(injection, multifeed);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CompositionBehavior {\n");
-    sb.append("    injection: ").append(toIndentedString(injection)).append("\n");
-    sb.append("    multifeed: ").append(toIndentedString(multifeed)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
   }
 }

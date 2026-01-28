@@ -14,8 +14,7 @@ Composition _$CompositionFromJson(Map<String, dynamic> json) => $checkedCreate(
           objectID: $checkedConvert('objectID', (v) => v as String),
           name: $checkedConvert('name', (v) => v as String),
           description: $checkedConvert('description', (v) => v as String?),
-          behavior: $checkedConvert('behavior',
-              (v) => CompositionBehavior.fromJson(v as Map<String, dynamic>)),
+          behavior: $checkedConvert('behavior', (v) => v),
           sortingStrategy: $checkedConvert(
               'sortingStrategy',
               (v) => (v as Map<String, dynamic>?)?.map(
@@ -39,7 +38,7 @@ Map<String, dynamic> _$CompositionToJson(Composition instance) {
   }
 
   writeNotNull('description', instance.description);
-  val['behavior'] = instance.behavior.toJson();
+  writeNotNull('behavior', instance.behavior);
   writeNotNull('sortingStrategy', instance.sortingStrategy);
   return val;
 }
