@@ -133,12 +133,9 @@ internal class HttpTransport
         requestOptions?.QueryParameters
       );
       var requestTimeout = GetTimeOut(callType, requestOptions);
-      var baseConnectTimeout = requestOptions?.ConnectTimeout
-        ?? _algoliaConfig.ConnectTimeout
-        ?? Defaults.ConnectTimeout;
-      var connectTimeout = TimeSpan.FromTicks(
-        baseConnectTimeout.Ticks * (host.RetryCount + 1)
-      );
+      var baseConnectTimeout =
+        requestOptions?.ConnectTimeout ?? _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout;
+      var connectTimeout = TimeSpan.FromTicks(baseConnectTimeout.Ticks * (host.RetryCount + 1));
 
       if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
       {
@@ -157,12 +154,7 @@ internal class HttpTransport
       }
 
       var response = await _httpClient
-        .SendRequestAsync(
-          request,
-          requestTimeout,
-          connectTimeout,
-          ct
-        )
+        .SendRequestAsync(request, requestTimeout, connectTimeout, ct)
         .ConfigureAwait(false);
 
       _errorMessage = response.Error;

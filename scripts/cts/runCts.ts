@@ -53,13 +53,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
   switch (language) {
     case 'csharp':
       await run(
-        `dotnet test /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
+        `dotnet test src/Algolia.Search.Tests.csproj /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
         { cwd, language },
       );
       // run manual timeout tests
       if (suites.client) {
         await run(
-          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --framework net9.0 --filter "FullyQualifiedName~TimeoutIntegration"',
+          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --filter "FullyQualifiedName~TimeoutIntegration"',
           { cwd, language },
         );
       }
