@@ -2,6 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Http;
 
+use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ConnectException;
@@ -36,24 +37,8 @@ final class GuzzleHttpClient implements HttpClientInterface
 
             return new Response(0, [], null, '1.1', $e->getMessage());
         } catch (ConnectException $e) {
-            $context = $e->getHandlerContext();
-            $curlError = $context['errno'] ?? null;
-
-            if (null !== $curlError) {
-                $isTimeout = (CURLE_OPERATION_TIMEDOUT === $curlError);
-            } else {
-                // fallback to message checking (if not cURL)
-                $isTimeout = str_contains(strtolower($e->getMessage()), 'timeout')
-                  || str_contains(strtolower($e->getMessage()), 'timed out');
-            }
-
-            return new Response(
-                0,
-                ['X-Timeout' => $isTimeout ? 'true' : 'false'],
-                null,
-                '1.1',
-                $e->getMessage()
-            );
+            // ConnectException is thrown for connection timeouts
+            throw new TimeoutException($e->getMessage(), 0, $e);
         }
 
         return $response;

@@ -125,6 +125,14 @@ final class ClusterHosts
         return $this;
     }
 
+    public function setRetryCount($hostUrl, int $count, $isRead = true)
+    {
+        $collection = $isRead ? $this->read : $this->write;
+        $collection->setRetryCount($hostUrl, $count);
+
+        return $this;
+    }
+
     public function reset()
     {
         $this->read->reset();

@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 use Algolia\AlgoliaSearch\Exceptions\RetriableException;
+use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
 use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Request;
@@ -155,15 +156,15 @@ final class ApiWrapper implements ApiWrapperInterface
             'query' => $requestOptions->getQueryParameters(),
         ];
 
-        foreach ($hosts as $host) {
+        foreach ($hosts as $hostUrl) {
             if ($this->config->getHasFullHosts()) {
-                $host = explode(':', $host);
-                $uri = $uri->withHost(trim($host[1], '/'))
-                    ->withScheme($host[0])
-                    ->withPort($host[2])
+                $hostParts = explode(':', $hostUrl);
+                $uri = $uri->withHost(trim($hostParts[1], '/'))
+                    ->withScheme($hostParts[0])
+                    ->withPort($hostParts[2])
                 ;
             } else {
-                $uri = $uri->withHost($host);
+                $uri = $uri->withHost($hostUrl);
             }
 
             $request = null;
@@ -180,7 +181,7 @@ final class ApiWrapper implements ApiWrapperInterface
                 $this->log(LogLevel::DEBUG, 'Sending request.', $logParams);
 
                 $isRead = ($hosts === $this->clusterHosts->read());
-                $retryCount = $this->clusterHosts->getRetryCount($host, $isRead);
+                $retryCount = $this->clusterHosts->getRetryCount($hostUrl, $isRead);
 
                 $response = $this->http->sendRequest(
                     $request,
@@ -188,27 +189,23 @@ final class ApiWrapper implements ApiWrapperInterface
                     $requestOptions->getConnectTimeout() * ($retryCount + 1)
                 );
 
-                if ('true' === $response->getHeaderLine('X-Timeout')) {
-                    $this->log(
-                        LogLevel::DEBUG,
-                        'Request timed out.',
-                        array_merge($logParams, [
-                            'description' => 'Timeout',
-                        ])
-                    );
-
-                    $this->clusterHosts->timedOut($host);
-
-                    continue;
-                }
-
                 $responseBody = $this->handleResponse($response, $request, $returnHttpInfo);
-                $this->clusterHosts->resetHost($host);
+                $this->clusterHosts->resetHost($hostUrl);
 
                 $logParams['response'] = $responseBody;
                 $this->log(LogLevel::DEBUG, 'Response received.', $logParams);
 
                 return $responseBody;
+            } catch (TimeoutException $e) {
+                $this->log(
+                    LogLevel::DEBUG,
+                    'Request timed out.',
+                    array_merge($logParams, [
+                        'description' => $e->getMessage(),
+                    ])
+                );
+
+                $this->clusterHosts->timedOut($hostUrl);
             } catch (RetriableException $e) {
                 $this->log(
                     LogLevel::DEBUG,
@@ -218,7 +215,7 @@ final class ApiWrapper implements ApiWrapperInterface
                     ])
                 );
 
-                $this->clusterHosts->failed($host);
+                $this->clusterHosts->failed($hostUrl);
             } catch (BadRequestException $e) {
                 unset($logParams['body'], $logParams['headers']);
                 $logParams['description'] = $e->getMessage();

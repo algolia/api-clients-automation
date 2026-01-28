@@ -99,6 +99,15 @@ final class HostCollection
         }, $this->hosts);
     }
 
+    public function setRetryCount($hostKey, int $count)
+    {
+        array_map(function (Host $host) use ($hostKey, $count) {
+            if ($host->getUrl() === $hostKey) {
+                $host->setRetryCount($count);
+            }
+        }, $this->hosts);
+    }
+
     private function sort()
     {
         usort($this->hosts, function (Host $a, Host $b) {

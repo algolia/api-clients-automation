@@ -2,6 +2,7 @@
 
 namespace Algolia\AlgoliaSearch\Http;
 
+use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 
@@ -122,16 +123,17 @@ final class CurlHttpClient implements HttpClientInterface
         $this->releaseMHandle($curlHandle);
         curl_close($curlHandle);
 
-        $headers = ['Content-Type' => $contentType];
-        if (CURLE_OPERATION_TIMEDOUT === $errorCode) {
-            $headers['X-Timeout'] = 'true';
-        } else {
-            $headers['X-Timeout'] = 'false';
+        // detect timeout: explicit timeout error OR no response with no error (curl_multi behavior)
+        $isTimeout = (CURLE_OPERATION_TIMEDOUT === $errorCode)
+            || (0 === $statusCode && 0 === $errorCode);
+
+        if ($isTimeout) {
+            throw new TimeoutException('Connection timed out');
         }
 
         return new Response(
             $statusCode,
-            $headers,
+            ['Content-Type' => $contentType],
             $responseBody,
             '1.1',
             $error

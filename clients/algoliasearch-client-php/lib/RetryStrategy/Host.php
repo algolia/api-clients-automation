@@ -61,6 +61,11 @@ final class Host
         return $this->retryCount;
     }
 
+    public function setRetryCount(int $count): void
+    {
+        $this->retryCount = $count;
+    }
+
     public function incrementRetryCount(): void
     {
         ++$this->retryCount;
