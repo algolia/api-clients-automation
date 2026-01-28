@@ -900,11 +900,9 @@ components:
       title: Clicked object IDs after search
       description: |
         Click event after an Algolia request.
-
         Use this event to track when users click items in the search results.
         If you're building your category pages with Algolia,
         you'll also use this event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1027,7 +1025,6 @@ components:
 
         If you're building your category pages with Algolia, you'll also use
         this event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1079,7 +1076,6 @@ components:
 
         If you're building your category pages with Algolia, you'll also use
         this event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1132,7 +1128,6 @@ components:
         If you're building your category pages with Algolia,
 
         you'll also use this event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1173,7 +1168,6 @@ components:
 
         To track click events related to Algolia requests, use the "Clicked
         object IDs after search" event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1231,7 +1225,6 @@ components:
 
         To track purchase events related to Algolia requests, use the "Purchased
         object IDs after search" event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1277,7 +1270,6 @@ components:
 
         To track add-to-cart events related to Algolia requests, use the "Added
         to cart object IDs after search" event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1325,7 +1317,6 @@ components:
 
         To track conversion events related to Algolia requests, use the
         "Converted object IDs after search" event.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1369,7 +1360,6 @@ components:
       description: >-
         Use this event to track when users click facet filters in your user
         interface.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1397,7 +1387,6 @@ components:
     ConvertedFilters:
       type: object
       title: Converted filters
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1430,7 +1419,6 @@ components:
       type: object
       title: Viewed object IDs
       description: Use this event to track when users viewed items in the search results.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1462,7 +1450,6 @@ components:
         Use this method to capture active filters.
         For example, when browsing a category page,
         users see content filtered on that specific category.
-      additionalProperties: false
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
