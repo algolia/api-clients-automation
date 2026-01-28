@@ -1152,6 +1152,7 @@
           },
           {
             "type": "string",
+            "maxLength": 16,
             "example": "1000.00"
           }
         ]
