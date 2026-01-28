@@ -1,2 +1,3 @@
 exclude_paths:
   - '**/tests/**'
+  - 'clients/algoliasearch-client-php/lib/Http/CurlHttpClient.php'

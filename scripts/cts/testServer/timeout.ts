@@ -40,9 +40,6 @@ export function assertValidTimeouts(expectedCount: number): void {
         case 'javascript':
           expect(state.duration[3 * i] * 4).to.be.closeTo(state.duration[3 * i + 1], 300);
           break;
-        case 'php':
-          expect(state.duration[3 * i] * 2).to.be.closeTo(state.duration[3 * i + 1], 300);
-          break;
         default:
           // the delay should be the same, because the `retryCount` is per host instead of global
           expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 300);
