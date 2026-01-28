@@ -101,11 +101,11 @@ final class HostCollection
 
     public function setRetryCount($hostKey, int $count)
     {
-        array_map(function (Host $host) use ($hostKey, $count) {
+        foreach ($this->hosts as $host) {
             if ($host->getUrl() === $hostKey) {
-                $host->setRetryCount($count);
+              $host->setRetryCount($count);
             }
-        }, $this->hosts);
+        }
     }
 
     private function sort()
