@@ -13,15 +13,22 @@ CompositionRuleConsequence _$CompositionRuleConsequenceFromJson(
       json,
       ($checkedConvert) {
         final val = CompositionRuleConsequence(
-          behavior: $checkedConvert('behavior',
-              (v) => CompositionBehavior.fromJson(v as Map<String, dynamic>)),
+          behavior: $checkedConvert('behavior', (v) => v),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$CompositionRuleConsequenceToJson(
-        CompositionRuleConsequence instance) =>
-    <String, dynamic>{
-      'behavior': instance.behavior.toJson(),
-    };
+    CompositionRuleConsequence instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('behavior', instance.behavior);
+  return val;
+}

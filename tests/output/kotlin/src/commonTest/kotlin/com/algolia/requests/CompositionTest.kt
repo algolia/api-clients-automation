@@ -484,7 +484,7 @@ class CompositionTest {
                         objectID = "foo",
                         name = "my first composition",
                         behavior =
-                          CompositionBehavior(
+                          CompositionInjectionBehavior(
                             injection =
                               Injection(
                                 main =
@@ -530,7 +530,7 @@ class CompositionTest {
               objectID = "1234",
               name = "my first composition",
               behavior =
-                CompositionBehavior(
+                CompositionInjectionBehavior(
                   injection =
                     Injection(
                       main =
@@ -574,7 +574,7 @@ class CompositionTest {
               objectID = "my-external-injection-compo",
               name = "my first composition",
               behavior =
-                CompositionBehavior(
+                CompositionInjectionBehavior(
                   injection =
                     Injection(
                       main =
@@ -630,7 +630,7 @@ class CompositionTest {
               objectID = "my-compo",
               name = "my composition",
               behavior =
-                CompositionBehavior(
+                CompositionInjectionBehavior(
                   injection =
                     Injection(
                       main =
@@ -689,7 +689,7 @@ class CompositionTest {
                   "Price-desc" to "products-high-to-low",
                 ),
               behavior =
-                CompositionBehavior(
+                CompositionInjectionBehavior(
                   injection =
                     Injection(
                       main =
@@ -735,7 +735,7 @@ class CompositionTest {
               consequence =
                 CompositionRuleConsequence(
                   behavior =
-                    CompositionBehavior(
+                    CompositionInjectionBehavior(
                       injection =
                         Injection(
                           main =
@@ -800,7 +800,7 @@ class CompositionTest {
               consequence =
                 CompositionRuleConsequence(
                   behavior =
-                    CompositionBehavior(
+                    CompositionInjectionBehavior(
                       injection =
                         Injection(
                           main =
@@ -878,7 +878,7 @@ class CompositionTest {
               consequence =
                 CompositionRuleConsequence(
                   behavior =
-                    CompositionBehavior(
+                    CompositionInjectionBehavior(
                       injection =
                         Injection(
                           main =
@@ -943,7 +943,7 @@ class CompositionTest {
                         consequence =
                           CompositionRuleConsequence(
                             behavior =
-                              CompositionBehavior(
+                              CompositionInjectionBehavior(
                                 injection =
                                   Injection(
                                     main =
@@ -1007,7 +1007,7 @@ class CompositionTest {
                         consequence =
                           CompositionRuleConsequence(
                             behavior =
-                              CompositionBehavior(
+                              CompositionInjectionBehavior(
                                 injection =
                                   Injection(
                                     main =
@@ -1098,7 +1098,7 @@ class CompositionTest {
                         consequence =
                           CompositionRuleConsequence(
                             behavior =
-                              CompositionBehavior(
+                              CompositionInjectionBehavior(
                                 injection =
                                   Injection(
                                     main =

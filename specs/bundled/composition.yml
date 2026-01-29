@@ -3731,6 +3731,15 @@ components:
             - positioning
       required:
         - main
+    compositionInjectionBehavior:
+      type: object
+      additionalProperties: false
+      description: An object containing an `injection` behavior.
+      properties:
+        injection:
+          $ref: '#/components/schemas/injection'
+      required:
+        - injection
     multifeed:
       title: multifeed
       type: object
@@ -3779,17 +3788,24 @@ components:
         feedsOrder:
           - products-feed
           - articles-feed
+    compositionMultifeedBehavior:
+      type: object
+      additionalProperties: false
+      description: An object containing a `multifeed` behavior.
+      properties:
+        multifeed:
+          $ref: '#/components/schemas/multifeed'
+      required:
+        - multifeed
     compositionBehavior:
       type: object
       additionalProperties: false
       description: >-
         An object containing either an `injection` or `multifeed` behavior
         schema, but not both.
-      properties:
-        injection:
-          $ref: '#/components/schemas/injection'
-        multifeed:
-          $ref: '#/components/schemas/multifeed'
+      oneOf:
+        - $ref: '#/components/schemas/compositionInjectionBehavior'
+        - $ref: '#/components/schemas/compositionMultifeedBehavior'
     sortingStrategy:
       type: object
       description: >
