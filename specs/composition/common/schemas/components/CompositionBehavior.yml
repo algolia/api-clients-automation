@@ -2,8 +2,26 @@ compositionBehavior:
   type: object
   additionalProperties: false
   description: An object containing either an `injection` or `multifeed` behavior schema, but not both.
+  oneOf:
+    - $ref: '#/compositionInjectionBehavior'
+    - $ref: '#/compositionMultifeedBehavior'
+
+compositionInjectionBehavior:
+  type: object
+  additionalProperties: false
+  description: An object containing an `injection` behavior.
   properties:
     injection:
       $ref: './injection/Behaviour.yml#/injection'
+  required:
+    - injection
+
+compositionMultifeedBehavior:
+  type: object
+  additionalProperties: false
+  description: An object containing a `multifeed` behavior.
+  properties:
     multifeed:
       $ref: './multifeed/Behaviour.yml#/multifeed'
+  required:
+    - multifeed
