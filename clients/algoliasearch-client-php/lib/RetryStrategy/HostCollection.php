@@ -103,7 +103,7 @@ final class HostCollection
     {
         foreach ($this->hosts as $host) {
             if ($host->getUrl() === $hostKey) {
-              $host->setRetryCount($count);
+                $host->setRetryCount($count);
             }
         }
     }
