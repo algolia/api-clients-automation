@@ -944,6 +944,9 @@ components:
         - addToCart
     currency:
       type: string
+      minLength: 3
+      maxLength: 3
+      pattern: ^[A-Za-z]{3}$
       description: >-
         Three-letter [currency
         code](https://www.iso.org/iso-4217-currency-codes.html).
