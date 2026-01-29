@@ -177,10 +177,12 @@ currency:
   type: string
   minLength: 3
   maxLength: 3
-  pattern: '^[A-Z]{3}$'
+  pattern: '^[A-Za-z]{3}$'
   description: |
     Three-letter [ISO 4217 currency code](https://www.iso.org/iso-4217-currency-codes.html).
-    Must be a valid ISO 4217 code (e.g., USD, EUR, GBP). Case-insensitive on input.
+    Must be a valid ISO 4217 currency code (e.g., USD, EUR, GBP, JPY, CHF).
+    Input is case-insensitive and will be normalized to uppercase.
+    Invalid or unrecognized ISO 4217 codes will be rejected.
   example: EUR
 
 value:
