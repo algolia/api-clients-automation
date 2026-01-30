@@ -517,7 +517,7 @@ class SnippetCompositionClient {
                       objectID = "foo",
                       name = "my first composition",
                       behavior =
-                        CompositionBehavior(
+                        CompositionInjectionBehavior(
                           injection =
                             Injection(
                               main =
@@ -561,7 +561,7 @@ class SnippetCompositionClient {
             objectID = "1234",
             name = "my first composition",
             behavior =
-              CompositionBehavior(
+              CompositionInjectionBehavior(
                 injection =
                   Injection(
                     main =
@@ -604,7 +604,7 @@ class SnippetCompositionClient {
             objectID = "my-external-injection-compo",
             name = "my first composition",
             behavior =
-              CompositionBehavior(
+              CompositionInjectionBehavior(
                 injection =
                   Injection(
                     main =
@@ -656,7 +656,7 @@ class SnippetCompositionClient {
             objectID = "my-compo",
             name = "my composition",
             behavior =
-              CompositionBehavior(
+              CompositionInjectionBehavior(
                 injection =
                   Injection(
                     main =
@@ -712,7 +712,7 @@ class SnippetCompositionClient {
             sortingStrategy =
               mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
             behavior =
-              CompositionBehavior(
+              CompositionInjectionBehavior(
                 injection =
                   Injection(
                     main =
@@ -756,7 +756,7 @@ class SnippetCompositionClient {
             consequence =
               CompositionRuleConsequence(
                 behavior =
-                  CompositionBehavior(
+                  CompositionInjectionBehavior(
                     injection =
                       Injection(
                         main =
@@ -818,7 +818,7 @@ class SnippetCompositionClient {
             consequence =
               CompositionRuleConsequence(
                 behavior =
-                  CompositionBehavior(
+                  CompositionInjectionBehavior(
                     injection =
                       Injection(
                         main =
@@ -890,7 +890,7 @@ class SnippetCompositionClient {
             consequence =
               CompositionRuleConsequence(
                 behavior =
-                  CompositionBehavior(
+                  CompositionInjectionBehavior(
                     injection =
                       Injection(
                         main =
@@ -950,7 +950,7 @@ class SnippetCompositionClient {
                       consequence =
                         CompositionRuleConsequence(
                           behavior =
-                            CompositionBehavior(
+                            CompositionInjectionBehavior(
                               injection =
                                 Injection(
                                   main =
@@ -1014,7 +1014,7 @@ class SnippetCompositionClient {
                       consequence =
                         CompositionRuleConsequence(
                           behavior =
-                            CompositionBehavior(
+                            CompositionInjectionBehavior(
                               injection =
                                 Injection(
                                   main =
@@ -1102,7 +1102,7 @@ class SnippetCompositionClient {
                       consequence =
                         CompositionRuleConsequence(
                           behavior =
-                            CompositionBehavior(
+                            CompositionInjectionBehavior(
                               injection =
                                 Injection(
                                   main =

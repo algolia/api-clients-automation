@@ -2282,19 +2282,21 @@ paths:
                   { "Price-asc", "products-low-to-high" },
                   { "Price-desc", "products-high-to-low" },
                 },
-                Behavior = new CompositionBehavior
-                {
-                  Injection = new Injection
+                Behavior = new CompositionBehavior(
+                  new CompositionInjectionBehavior
                   {
-                    Main = new Main
+                    Injection = new Injection
                     {
-                      Source = new CompositionSource
+                      Main = new Main
                       {
-                        Search = new CompositionSourceSearch { Index = "products" },
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "products" },
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                ),
               }
             );
 
@@ -2317,7 +2319,7 @@ paths:
                   'Price-asc': "products-low-to-high",
                   'Price-desc': "products-high-to-low",
                 },
-                behavior: CompositionBehavior(
+                behavior: CompositionInjectionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
@@ -2356,12 +2358,12 @@ paths:
                 SetObjectID("my-compo").
                 SetName("my composition").
                 SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
-                SetBehavior(
-                  composition.NewEmptyCompositionBehavior().SetInjection(
+                SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+                  composition.NewEmptyCompositionInjectionBehavior().SetInjection(
                     composition.NewEmptyInjection().SetMain(
                       composition.NewEmptyMain().SetSource(
                         composition.NewEmptyCompositionSource().SetSearch(
-                          composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))),
+                          composition.NewEmptyCompositionSourceSearch().SetIndex("products"))))))),
             ))
 
             if err != nil {
@@ -2399,7 +2401,7 @@ paths:
                   }
                 )
                 .setBehavior(
-                  new CompositionBehavior().setInjection(
+                  new CompositionInjectionBehavior().setInjection(
                     new Injection().setMain(
                       new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
                     )
@@ -2458,7 +2460,7 @@ paths:
                     sortingStrategy =
                       mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
                     behavior =
-                      CompositionBehavior(
+                      CompositionInjectionBehavior(
                         injection =
                           Injection(
                             main =
@@ -2566,7 +2568,7 @@ paths:
                 algolia_object_id: "my-compo",
                 name: "my composition",
                 sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
-                behavior: Algolia::Composition::CompositionBehavior.new(
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::Main.new(
                       source: Algolia::Composition::CompositionSource.new(
@@ -2601,14 +2603,12 @@ paths:
                   objectID = "my-compo",
                   name = "my composition",
                   sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
-                  behavior = CompositionBehavior(
-                    injection = Some(
-                      Injection(
-                        main = Main(
-                          source = CompositionSource(
-                            search = CompositionSourceSearch(
-                              index = "products"
-                            )
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = Main(
+                        source = CompositionSource(
+                          search = CompositionSourceSearch(
+                            index = "products"
                           )
                         )
                       )
@@ -2639,11 +2639,14 @@ paths:
                 composition: Composition(
                     objectID: "my-compo",
                     name: "my composition",
-                    behavior: CompositionBehavior(
-                        injection: Injection(main: CompositionMain(
-                            source: CompositionSource(search: CompositionSourceSearch(index: "products"))
-                        ))
-                    ),
+                    behavior: CompositionBehavior
+                        .compositionInjectionBehavior(
+                            CompositionInjectionBehavior(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(
+                                    search: CompositionSourceSearch(index: "products")
+                                ))
+                            ))
+                        ),
                     sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
                 )
             )
@@ -2661,7 +2664,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}},"multifeed":{"feeds":{"products-feed":{"main":{"source":{"search":{"index":"products"}}},"injectedItems":[{"key":"sponsored","position":0,"length":4,"source":{"search":{"index":"products","params":{"filters":"sponsored:true"}}}}]},"articles-feed":{"main":{"source":{"search":{"index":"articles"}}}}},"feedsOrder":["products-feed","articles-feed"]}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}'
+              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}'
     delete:
       tags:
         - Compositions
@@ -2997,38 +3000,43 @@ paths:
                       {
                         ObjectID = "my-compo",
                         Name = "my composition",
-                        Behavior = new CompositionBehavior
-                        {
-                          Injection = new Injection
+                        Behavior = new CompositionBehavior(
+                          new CompositionInjectionBehavior
                           {
-                            Main = new Main
+                            Injection = new Injection
                             {
-                              Source = new CompositionSource
+                              Main = new Main
                               {
-                                Search = new CompositionSourceSearch { Index = "foo" },
+                                Source = new CompositionSource
+                                {
+                                  Search = new CompositionSourceSearch { Index = "foo" },
+                                },
+                              },
+                              InjectedItems = new List<InjectedItem>
+                              {
+                                new InjectedItem
+                                {
+                                  Key = "my-unique-injected-item-key",
+                                  Source = new InjectedItemSource(
+                                    new SearchSource
+                                    {
+                                      Search = new Algolia.Search.Models.Composition.Search
+                                      {
+                                        Index = "foo",
+                                      },
+                                    }
+                                  ),
+                                  Position = 2,
+                                  Length = 1,
+                                },
+                              },
+                              Deduplication = new Deduplication
+                              {
+                                Positioning = Enum.Parse<DedupPositioning>("Highest"),
                               },
                             },
-                            InjectedItems = new List<InjectedItem>
-                            {
-                              new InjectedItem
-                              {
-                                Key = "my-unique-injected-item-key",
-                                Source = new InjectedItemSource(
-                                  new SearchSource
-                                  {
-                                    Search = new Algolia.Search.Models.Composition.Search { Index = "foo" },
-                                  }
-                                ),
-                                Position = 2,
-                                Length = 1,
-                              },
-                            },
-                            Deduplication = new Deduplication
-                            {
-                              Positioning = Enum.Parse<DedupPositioning>("Highest"),
-                            },
-                          },
-                        },
+                          }
+                        ),
                       }
                     ),
                   },
@@ -3054,7 +3062,7 @@ paths:
                     body: Composition(
                       objectID: "my-compo",
                       name: "my composition",
-                      behavior: CompositionBehavior(
+                      behavior: CompositionInjectionBehavior(
                         injection: Injection(
                           main: Main(
                             source: CompositionSource(
@@ -3110,8 +3118,8 @@ paths:
               composition.NewEmptyBatchParams().SetRequests(
                 []composition.MultipleBatchRequest{
                   *composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionAsBatchCompositionAction(
-                    composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(
-                      composition.NewEmptyCompositionBehavior().SetInjection(
+                    composition.NewEmptyComposition().SetObjectID("my-compo").SetName("my composition").SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+                      composition.NewEmptyCompositionInjectionBehavior().SetInjection(
                         composition.NewEmptyInjection().SetMain(
                           composition.NewEmptyMain().SetSource(
                             composition.NewEmptyCompositionSource().SetSearch(
@@ -3119,7 +3127,7 @@ paths:
                           []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
                             composition.NewEmptySearchSource().SetSearch(
                               composition.NewEmptySearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
-                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest"))))))),
+                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highest")))))))),
                 }),
             ))
 
@@ -3154,7 +3162,7 @@ paths:
                         .setObjectID("my-compo")
                         .setName("my composition")
                         .setBehavior(
-                          new CompositionBehavior().setInjection(
+                          new CompositionInjectionBehavior().setInjection(
                             new Injection()
                               .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                               .setInjectedItems(
@@ -3239,7 +3247,7 @@ paths:
                               objectID = "foo",
                               name = "my first composition",
                               behavior =
-                                CompositionBehavior(
+                                CompositionInjectionBehavior(
                                   injection =
                                     Injection(
                                       main =
@@ -3387,7 +3395,7 @@ paths:
                     body: Algolia::Composition::Composition.new(
                       algolia_object_id: "my-compo",
                       name: "my composition",
-                      behavior: Algolia::Composition::CompositionBehavior.new(
+                      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                         injection: Algolia::Composition::Injection.new(
                           main: Algolia::Composition::Main.new(
                             source: Algolia::Composition::CompositionSource.new(
@@ -3438,34 +3446,32 @@ paths:
                       body = Composition(
                         objectID = "my-compo",
                         name = "my composition",
-                        behavior = CompositionBehavior(
-                          injection = Some(
-                            Injection(
-                              main = Main(
-                                source = CompositionSource(
-                                  search = CompositionSourceSearch(
-                                    index = "foo"
-                                  )
+                        behavior = CompositionInjectionBehavior(
+                          injection = Injection(
+                            main = Main(
+                              source = CompositionSource(
+                                search = CompositionSourceSearch(
+                                  index = "foo"
                                 )
-                              ),
-                              injectedItems = Some(
-                                Seq(
-                                  InjectedItem(
-                                    key = "my-unique-injected-item-key",
-                                    source = SearchSource(
-                                      search = Search(
-                                        index = "foo"
-                                      )
-                                    ),
-                                    position = 2,
-                                    length = 1
-                                  )
+                              )
+                            ),
+                            injectedItems = Some(
+                              Seq(
+                                InjectedItem(
+                                  key = "my-unique-injected-item-key",
+                                  source = SearchSource(
+                                    search = Search(
+                                      index = "foo"
+                                    )
+                                  ),
+                                  position = 2,
+                                  length = 1
                                 )
-                              ),
-                              deduplication = Some(
-                                Deduplication(
-                                  positioning = DedupPositioning.withName("highest")
-                                )
+                              )
+                            ),
+                            deduplication = Some(
+                              Deduplication(
+                                positioning = DedupPositioning.withName("highest")
                               )
                             )
                           )
@@ -3499,17 +3505,20 @@ paths:
                     body: BatchCompositionAction.composition(Composition(
                         objectID: "my-compo",
                         name: "my composition",
-                        behavior: CompositionBehavior(injection: Injection(
-                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                            injectedItems: [InjectedItem(
-                                key: "my-unique-injected-item-key",
-                                source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                                position: 2,
-                                length: 1
-                            )],
-                            deduplication: Deduplication(positioning: DedupPositioning.highest)
-                        ))
+                        behavior: CompositionBehavior
+                            .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                                main: CompositionMain(
+                                    source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
+                                ),
+                                injectedItems: [InjectedItem(
+                                    key: "my-unique-injected-item-key",
+                                    source: InjectedItemSource
+                                        .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                    position: 2,
+                                    length: 1
+                                )],
+                                deduplication: Deduplication(positioning: DedupPositioning.highest)
+                            )))
                     ))
                 )]))
 
@@ -3525,7 +3534,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}},"multifeed":{"feeds":{"products-feed":{"main":{"source":{"search":{"index":"products"}}},"injectedItems":[{"key":"sponsored","position":0,"length":4,"source":{"search":{"index":"products","params":{"filters":"sponsored:true"}}}}]},"articles-feed":{"main":{"source":{"search":{"index":"articles"}}}}},"feedsOrder":["products-feed","articles-feed"]}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}}]}'
   /1/compositions/{compositionID}/sortingStrategy:
     post:
       tags:
@@ -4167,38 +4176,43 @@ paths:
                 },
                 Consequence = new CompositionRuleConsequence
                 {
-                  Behavior = new CompositionBehavior
-                  {
-                    Injection = new Injection
+                  Behavior = new CompositionBehavior(
+                    new CompositionInjectionBehavior
                     {
-                      Main = new Main
+                      Injection = new Injection
                       {
-                        Source = new CompositionSource
+                        Main = new Main
                         {
-                          Search = new CompositionSourceSearch { Index = "my-index" },
+                          Source = new CompositionSource
+                          {
+                            Search = new CompositionSourceSearch { Index = "my-index" },
+                          },
+                        },
+                        InjectedItems = new List<InjectedItem>
+                        {
+                          new InjectedItem
+                          {
+                            Key = "my-unique-injected-item-key",
+                            Source = new InjectedItemSource(
+                              new SearchSource
+                              {
+                                Search = new Algolia.Search.Models.Composition.Search
+                                {
+                                  Index = "my-index",
+                                },
+                              }
+                            ),
+                            Position = 0,
+                            Length = 3,
+                          },
+                        },
+                        Deduplication = new Deduplication
+                        {
+                          Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                         },
                       },
-                      InjectedItems = new List<InjectedItem>
-                      {
-                        new InjectedItem
-                        {
-                          Key = "my-unique-injected-item-key",
-                          Source = new InjectedItemSource(
-                            new SearchSource
-                            {
-                              Search = new Algolia.Search.Models.Composition.Search { Index = "my-index" },
-                            }
-                          ),
-                          Position = 0,
-                          Length = 3,
-                        },
-                      },
-                      Deduplication = new Deduplication
-                      {
-                        Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-                      },
-                    },
-                  },
+                    }
+                  ),
                 },
               }
             );
@@ -4227,7 +4241,7 @@ paths:
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
-                  behavior: CompositionBehavior(
+                  behavior: CompositionInjectionBehavior(
                     injection: Injection(
                       main: Main(
                         source: CompositionSource(
@@ -4283,8 +4297,8 @@ paths:
                   *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
                 }).
                 SetConsequence(
-                  composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-                    composition.NewEmptyCompositionBehavior().SetInjection(
+                  composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+                    composition.NewEmptyCompositionInjectionBehavior().SetInjection(
                       composition.NewEmptyInjection().SetMain(
                         composition.NewEmptyMain().SetSource(
                           composition.NewEmptyCompositionSource().SetSearch(
@@ -4295,7 +4309,7 @@ paths:
                               composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3),
                         }).
                         SetDeduplication(
-                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected"))))))))
+                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -4327,7 +4341,7 @@ paths:
                 .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
                         .setInjectedItems(
@@ -4417,7 +4431,7 @@ paths:
                     consequence =
                       CompositionRuleConsequence(
                         behavior =
-                          CompositionBehavior(
+                          CompositionInjectionBehavior(
                             injection =
                               Injection(
                                 main =
@@ -4582,7 +4596,7 @@ paths:
                 enabled: true,
                 conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
                 consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                  behavior: Algolia::Composition::CompositionBehavior.new(
+                  behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                     injection: Algolia::Composition::Injection.new(
                       main: Algolia::Composition::Main.new(
                         source: Algolia::Composition::CompositionSource.new(
@@ -4639,34 +4653,32 @@ paths:
                     )
                   ),
                   consequence = CompositionRuleConsequence(
-                    behavior = CompositionBehavior(
-                      injection = Some(
-                        Injection(
-                          main = Main(
-                            source = CompositionSource(
-                              search = CompositionSourceSearch(
-                                index = "my-index"
-                              )
+                    behavior = CompositionInjectionBehavior(
+                      injection = Injection(
+                        main = Main(
+                          source = CompositionSource(
+                            search = CompositionSourceSearch(
+                              index = "my-index"
                             )
-                          ),
-                          injectedItems = Some(
-                            Seq(
-                              InjectedItem(
-                                key = "my-unique-injected-item-key",
-                                source = SearchSource(
-                                  search = Search(
-                                    index = "my-index"
-                                  )
-                                ),
-                                position = 0,
-                                length = 3
-                              )
+                          )
+                        ),
+                        injectedItems = Some(
+                          Seq(
+                            InjectedItem(
+                              key = "my-unique-injected-item-key",
+                              source = SearchSource(
+                                search = Search(
+                                  index = "my-index"
+                                )
+                              ),
+                              position = 0,
+                              length = 3
                             )
-                          ),
-                          deduplication = Some(
-                            Deduplication(
-                              positioning = DedupPositioning.withName("highestInjected")
-                            )
+                          )
+                        ),
+                        deduplication = Some(
+                          Deduplication(
+                            positioning = DedupPositioning.withName("highestInjected")
                           )
                         )
                       )
@@ -4698,19 +4710,20 @@ paths:
                 compositionRule: CompositionRule(
                     objectID: "rule-with-deduplication",
                     conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
-                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(
-                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                        ),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-injected-item-key",
-                            source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
-                            position: 0,
-                            length: 3
-                        )],
-                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
-                    ))),
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                            ),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-injected-item-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                                position: 0,
+                                length: 3
+                            )],
+                            deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                        )))),
                     description: "my description",
                     enabled: true
                 )
@@ -4729,7 +4742,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}},"multifeed":{"feeds":{"products-feed":{"main":{"source":{"search":{"index":"products"}}},"injectedItems":[{"key":"sponsored","position":0,"length":4,"source":{"search":{"index":"products","params":{"filters":"sponsored:true"}}}}]},"articles-feed":{"main":{"source":{"search":{"index":"articles"}}}}},"feedsOrder":["products-feed","articles-feed"]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
+              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
     delete:
       tags:
         - Composition Rules
@@ -5091,41 +5104,43 @@ paths:
                         },
                         Consequence = new CompositionRuleConsequence
                         {
-                          Behavior = new CompositionBehavior
-                          {
-                            Injection = new Injection
+                          Behavior = new CompositionBehavior(
+                            new CompositionInjectionBehavior
                             {
-                              Main = new Main
+                              Injection = new Injection
                               {
-                                Source = new CompositionSource
+                                Main = new Main
                                 {
-                                  Search = new CompositionSourceSearch { Index = "my-index" },
+                                  Source = new CompositionSource
+                                  {
+                                    Search = new CompositionSourceSearch { Index = "my-index" },
+                                  },
                                 },
-                              },
-                              InjectedItems = new List<InjectedItem>
-                              {
-                                new InjectedItem
+                                InjectedItems = new List<InjectedItem>
                                 {
-                                  Key = "my-unique-injected-item-key",
-                                  Source = new InjectedItemSource(
-                                    new SearchSource
-                                    {
-                                      Search = new Algolia.Search.Models.Composition.Search
+                                  new InjectedItem
+                                  {
+                                    Key = "my-unique-injected-item-key",
+                                    Source = new InjectedItemSource(
+                                      new SearchSource
                                       {
-                                        Index = "my-index",
-                                      },
-                                    }
-                                  ),
-                                  Position = 0,
-                                  Length = 3,
+                                        Search = new Algolia.Search.Models.Composition.Search
+                                        {
+                                          Index = "my-index",
+                                        },
+                                      }
+                                    ),
+                                    Position = 0,
+                                    Length = 3,
+                                  },
+                                },
+                                Deduplication = new Deduplication
+                                {
+                                  Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                                 },
                               },
-                              Deduplication = new Deduplication
-                              {
-                                Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
-                              },
-                            },
-                          },
+                            }
+                          ),
                         },
                       }
                     ),
@@ -5164,7 +5179,7 @@ paths:
                         ),
                       ],
                       consequence: CompositionRuleConsequence(
-                        behavior: CompositionBehavior(
+                        behavior: CompositionInjectionBehavior(
                           injection: Injection(
                             main: Main(
                               source: CompositionSource(
@@ -5222,8 +5237,8 @@ paths:
                   *composition.NewEmptyRulesMultipleBatchRequest().SetAction(composition.Action("upsert")).SetBody(composition.CompositionRuleAsRulesBatchCompositionAction(
                     composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
                       []composition.Condition{*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"), *composition.NewEmptyCondition().SetSortBy("price-low-to-high")}).SetConsequence(
-                      composition.NewEmptyCompositionRuleConsequence().SetBehavior(
-                        composition.NewEmptyCompositionBehavior().SetInjection(
+                      composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+                        composition.NewEmptyCompositionInjectionBehavior().SetInjection(
                           composition.NewEmptyInjection().SetMain(
                             composition.NewEmptyMain().SetSource(
                               composition.NewEmptyCompositionSource().SetSearch(
@@ -5231,7 +5246,7 @@ paths:
                             []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.SearchSourceAsInjectedItemSource(
                               composition.NewEmptySearchSource().SetSearch(
                                 composition.NewEmptySearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
-                            composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))),
+                            composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected"))))))))),
                 }),
             ))
 
@@ -5275,7 +5290,7 @@ paths:
                         )
                         .setConsequence(
                           new CompositionRuleConsequence().setBehavior(
-                            new CompositionBehavior().setInjection(
+                            new CompositionInjectionBehavior().setInjection(
                               new Injection()
                                 .setMain(
                                   new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))
@@ -5387,7 +5402,7 @@ paths:
                               consequence =
                                 CompositionRuleConsequence(
                                   behavior =
-                                    CompositionBehavior(
+                                    CompositionInjectionBehavior(
                                       injection =
                                         Injection(
                                           main =
@@ -5579,7 +5594,7 @@ paths:
                         Algolia::Composition::Condition.new(sort_by: "price-low-to-high")
                       ],
                       consequence: Algolia::Composition::CompositionRuleConsequence.new(
-                        behavior: Algolia::Composition::CompositionBehavior.new(
+                        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                           injection: Algolia::Composition::Injection.new(
                             main: Algolia::Composition::Main.new(
                               source: Algolia::Composition::CompositionSource.new(
@@ -5646,34 +5661,32 @@ paths:
                             )
                           ),
                           consequence = CompositionRuleConsequence(
-                            behavior = CompositionBehavior(
-                              injection = Some(
-                                Injection(
-                                  main = Main(
-                                    source = CompositionSource(
-                                      search = CompositionSourceSearch(
-                                        index = "my-index"
-                                      )
+                            behavior = CompositionInjectionBehavior(
+                              injection = Injection(
+                                main = Main(
+                                  source = CompositionSource(
+                                    search = CompositionSourceSearch(
+                                      index = "my-index"
                                     )
-                                  ),
-                                  injectedItems = Some(
-                                    Seq(
-                                      InjectedItem(
-                                        key = "my-unique-injected-item-key",
-                                        source = SearchSource(
-                                          search = Search(
-                                            index = "my-index"
-                                          )
-                                        ),
-                                        position = 0,
-                                        length = 3
-                                      )
+                                  )
+                                ),
+                                injectedItems = Some(
+                                  Seq(
+                                    InjectedItem(
+                                      key = "my-unique-injected-item-key",
+                                      source = SearchSource(
+                                        search = Search(
+                                          index = "my-index"
+                                        )
+                                      ),
+                                      position = 0,
+                                      length = 3
                                     )
-                                  ),
-                                  deduplication = Some(
-                                    Deduplication(
-                                      positioning = DedupPositioning.withName("highestInjected")
-                                    )
+                                  )
+                                ),
+                                deduplication = Some(
+                                  Deduplication(
+                                    positioning = DedupPositioning.withName("highestInjected")
                                   )
                                 )
                               )
@@ -5713,19 +5726,22 @@ paths:
                             CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
                             CompositionCondition(sortBy: "price-low-to-high"),
                         ],
-                        consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                            ),
-                            injectedItems: [InjectedItem(
-                                key: "my-unique-injected-item-key",
-                                source: InjectedItemSource
-                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
-                                position: 0,
-                                length: 3
-                            )],
-                            deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
-                        ))),
+                        consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                            .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                                main: CompositionMain(
+                                    source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                                ),
+                                injectedItems: [InjectedItem(
+                                    key: "my-unique-injected-item-key",
+                                    source: InjectedItemSource
+                                        .compositionSearchSource(
+                                            CompositionSearchSource(search: Search(index: "my-index"))
+                                        ),
+                                    position: 0,
+                                    length: 3
+                                )],
+                                deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                            )))),
                         description: "my description",
                         enabled: true
                     ))
@@ -5745,7 +5761,7 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}},"multifeed":{"feeds":{"products-feed":{"main":{"source":{"search":{"index":"products"}}},"injectedItems":[{"key":"sponsored","position":0,"length":4,"source":{"search":{"index":"products","params":{"filters":"sponsored:true"}}}}]},"articles-feed":{"main":{"source":{"search":{"index":"articles"}}}}},"feedsOrder":["products-feed","articles-feed"]}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
+              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -9117,6 +9133,15 @@ components:
             - positioning
       required:
         - main
+    compositionInjectionBehavior:
+      type: object
+      additionalProperties: false
+      description: An object containing an `injection` behavior.
+      properties:
+        injection:
+          $ref: '#/components/schemas/injection'
+      required:
+        - injection
     multifeed:
       title: multifeed
       type: object
@@ -9165,17 +9190,24 @@ components:
         feedsOrder:
           - products-feed
           - articles-feed
+    compositionMultifeedBehavior:
+      type: object
+      additionalProperties: false
+      description: An object containing a `multifeed` behavior.
+      properties:
+        multifeed:
+          $ref: '#/components/schemas/multifeed'
+      required:
+        - multifeed
     compositionBehavior:
       type: object
       additionalProperties: false
       description: >-
         An object containing either an `injection` or `multifeed` behavior
         schema, but not both.
-      properties:
-        injection:
-          $ref: '#/components/schemas/injection'
-        multifeed:
-          $ref: '#/components/schemas/multifeed'
+      oneOf:
+        - $ref: '#/components/schemas/compositionInjectionBehavior'
+        - $ref: '#/components/schemas/compositionMultifeedBehavior'
     sortingStrategy:
       type: object
       description: >

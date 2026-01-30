@@ -759,7 +759,7 @@ class CompositionClientRequestsTests {
                   .setObjectID("foo")
                   .setName("my first composition")
                   .setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection().setMain(
                         new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("bar")))
                       )
@@ -799,7 +799,7 @@ class CompositionClientRequestsTests {
                   .setObjectID("my-external-injection-compo")
                   .setName("my first composition")
                   .setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                         .setInjectedItems(
@@ -853,7 +853,7 @@ class CompositionClientRequestsTests {
                   .setObjectID("my-metadata-compo")
                   .setName("my composition")
                   .setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(
                           new Main().setSource(
@@ -966,7 +966,7 @@ class CompositionClientRequestsTests {
                   .setObjectID("my-compo")
                   .setName("my composition")
                   .setBehavior(
-                    new CompositionBehavior().setInjection(
+                    new CompositionInjectionBehavior().setInjection(
                       new Injection()
                         .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                         .setInjectedItems(
@@ -1009,7 +1009,7 @@ class CompositionClientRequestsTests {
           .setObjectID("1234")
           .setName("my first composition")
           .setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                 .setInjectedItems(
@@ -1048,7 +1048,7 @@ class CompositionClientRequestsTests {
           .setObjectID("my-external-injection-compo")
           .setName("my first composition")
           .setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                 .setInjectedItems(
@@ -1094,7 +1094,7 @@ class CompositionClientRequestsTests {
           .setObjectID("my-metadata-compo")
           .setName("my composition")
           .setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(
                   new Main().setSource(
@@ -1198,7 +1198,7 @@ class CompositionClientRequestsTests {
           .setObjectID("my-compo")
           .setName("my composition")
           .setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection()
                 .setMain(
                   new Main().setSource(
@@ -1252,7 +1252,7 @@ class CompositionClientRequestsTests {
             }
           )
           .setBehavior(
-            new CompositionBehavior().setInjection(
+            new CompositionInjectionBehavior().setInjection(
               new Injection().setMain(
                 new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
               )
@@ -1285,7 +1285,7 @@ class CompositionClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
           .setConsequence(
             new CompositionRuleConsequence().setBehavior(
-              new CompositionBehavior().setInjection(
+              new CompositionInjectionBehavior().setInjection(
                 new Injection()
                   .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                   .setInjectedItems(
@@ -1326,7 +1326,7 @@ class CompositionClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
           .setConsequence(
             new CompositionRuleConsequence().setBehavior(
-              new CompositionBehavior().setInjection(
+              new CompositionInjectionBehavior().setInjection(
                 new Injection()
                   .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                   .setInjectedItems(
@@ -1403,7 +1403,7 @@ class CompositionClientRequestsTests {
           )
           .setConsequence(
             new CompositionRuleConsequence().setBehavior(
-              new CompositionBehavior().setInjection(
+              new CompositionInjectionBehavior().setInjection(
                 new Injection()
                   .setMain(
                     new Main().setSource(
@@ -1462,7 +1462,7 @@ class CompositionClientRequestsTests {
           .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
           .setConsequence(
             new CompositionRuleConsequence().setBehavior(
-              new CompositionBehavior().setInjection(
+              new CompositionInjectionBehavior().setInjection(
                 new Injection()
                   .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index"))))
                   .setInjectedItems(
@@ -1509,7 +1509,7 @@ class CompositionClientRequestsTests {
                   .setConditions(Arrays.asList(new Condition().setPattern("a")))
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
-                      new CompositionBehavior().setInjection(
+                      new CompositionInjectionBehavior().setInjection(
                         new Injection().setMain(
                           new Main().setSource(
                             new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("<YOUR_INDEX_NAME>"))
@@ -1551,7 +1551,7 @@ class CompositionClientRequestsTests {
                   .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.IS).setPattern("test")))
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
-                      new CompositionBehavior().setInjection(
+                      new CompositionInjectionBehavior().setInjection(
                         new Injection()
                           .setMain(new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("foo"))))
                           .setInjectedItems(
@@ -1635,7 +1635,7 @@ class CompositionClientRequestsTests {
                   )
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
-                      new CompositionBehavior().setInjection(
+                      new CompositionInjectionBehavior().setInjection(
                         new Injection()
                           .setMain(
                             new Main().setSource(
@@ -1706,7 +1706,7 @@ class CompositionClientRequestsTests {
                   )
                   .setConsequence(
                     new CompositionRuleConsequence().setBehavior(
-                      new CompositionBehavior().setInjection(
+                      new CompositionInjectionBehavior().setInjection(
                         new Injection()
                           .setMain(
                             new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("my-index")))

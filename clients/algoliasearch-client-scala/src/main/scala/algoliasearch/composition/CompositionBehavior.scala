@@ -28,9 +28,31 @@
   */
 package algoliasearch.composition
 
+import org.json4s._
+
 /** An object containing either an `injection` or `multifeed` behavior schema, but not both.
   */
-case class CompositionBehavior(
-    injection: Option[Injection] = scala.None,
-    multifeed: Option[Multifeed] = scala.None
-)
+sealed trait CompositionBehavior
+
+trait CompositionBehaviorTrait extends CompositionBehavior
+
+object CompositionBehavior {}
+
+object CompositionBehaviorSerializer extends Serializer[CompositionBehavior] {
+  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), CompositionBehavior] = {
+
+    case (TypeInfo(clazz, _), json) if clazz == classOf[CompositionBehavior] =>
+      json match {
+        case value: JObject => Extraction.extract[CompositionInjectionBehavior](value)
+        case value: JObject => Extraction.extract[CompositionMultifeedBehavior](value)
+        case _              => throw new MappingException("Can't convert " + json + " to CompositionBehavior")
+      }
+  }
+
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: CompositionBehavior =>
+    value match {
+      case value: CompositionInjectionBehavior => Extraction.decompose(value)(format - this)
+      case value: CompositionMultifeedBehavior => Extraction.decompose(value)(format - this)
+    }
+  }
+}

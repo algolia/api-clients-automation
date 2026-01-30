@@ -504,13 +504,16 @@ final class CompositionClientSnippet {
                 body: BatchCompositionAction.composition(Composition(
                     objectID: "foo",
                     name: "my first composition",
-                    behavior: CompositionBehavior(
-                        injection: Injection(
-                            main: CompositionMain(
-                                source: CompositionSource(search: CompositionSourceSearch(index: "bar"))
+                    behavior: CompositionBehavior
+                        .compositionInjectionBehavior(
+                            CompositionInjectionBehavior(
+                                injection: Injection(
+                                    main: CompositionMain(
+                                        source: CompositionSource(search: CompositionSourceSearch(index: "bar"))
+                                    )
+                                )
                             )
                         )
-                    )
                 ))
             ),
             CompositionMultipleBatchRequest(
@@ -539,19 +542,22 @@ final class CompositionClientSnippet {
                 body: BatchCompositionAction.composition(Composition(
                     objectID: "my-external-injection-compo",
                     name: "my first composition",
-                    behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-external-group-key",
-                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                ordering: ExternalOrdering.userDefined
-                            ))),
-                            position: 2,
-                            length: 1
-                        )]
-                    ))
+                    behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
+                            ),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-external-group-key",
+                                source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                                    index: "foo",
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                    ordering: ExternalOrdering.userDefined
+                                ))),
+                                position: 2,
+                                length: 1
+                            )]
+                        )))
                 ))
             )]))
         // >LOG
@@ -575,54 +581,53 @@ final class CompositionClientSnippet {
                 body: BatchCompositionAction.composition(Composition(
                     objectID: "my-metadata-compo",
                     name: "my composition",
-                    behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "foo",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        injectedItems: [
-                            InjectedItem(
-                                key: "my-unique-group-key",
-                                source: InjectedItemSource.compositionSearchSource(
-                                    CompositionSearchSource(search: Search(
-                                        index: "foo",
-                                        params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                    behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                index: "foo",
+                                params: MainInjectionQueryParameters(filters: "brand:adidas")
+                            ))),
+                            injectedItems: [
+                                InjectedItem(
+                                    key: "my-unique-group-key",
+                                    source: InjectedItemSource
+                                        .compositionSearchSource(CompositionSearchSource(search: Search(
+                                            index: "foo",
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                                        ))),
+                                    position: 2,
+                                    length: 1,
+                                    metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                        addItemKey: true,
+                                        extra: [
+                                            "my-string": AnyCodable("string"),
+                                            "my-bool": true,
+                                            "my-number": 42,
+                                            "my-object": ["sub-key": "sub-value"],
+                                        ]
                                     ))
                                 ),
-                                position: 2,
-                                length: 1,
-                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                    addItemKey: true,
-                                    extra: [
-                                        "my-string": AnyCodable("string"),
-                                        "my-bool": true,
-                                        "my-number": 42,
-                                        "my-object": ["sub-key": "sub-value"],
-                                    ]
-                                ))
-                            ),
-                            InjectedItem(
-                                key: "my-unique-group-key",
-                                source: InjectedItemSource.compositionSearchSource(
-                                    CompositionSearchSource(search: Search(
-                                        index: "foo",
-                                        params: BaseInjectionQueryParameters(filters: "brand:puma")
+                                InjectedItem(
+                                    key: "my-unique-group-key",
+                                    source: InjectedItemSource
+                                        .compositionSearchSource(CompositionSearchSource(search: Search(
+                                            index: "foo",
+                                            params: BaseInjectionQueryParameters(filters: "brand:puma")
+                                        ))),
+                                    position: 5,
+                                    length: 5,
+                                    metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                        addItemKey: true,
+                                        extra: [
+                                            "my-string": AnyCodable("string"),
+                                            "my-bool": true,
+                                            "my-number": 42,
+                                            "my-object": ["sub-key": "sub-value"],
+                                        ]
                                     ))
                                 ),
-                                position: 5,
-                                length: 5,
-                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                    addItemKey: true,
-                                    extra: [
-                                        "my-string": AnyCodable("string"),
-                                        "my-bool": true,
-                                        "my-number": 42,
-                                        "my-object": ["sub-key": "sub-value"],
-                                    ]
-                                ))
-                            ),
-                        ]
-                    ))
+                            ]
+                        )))
                 ))
             )]))
         // >LOG
@@ -646,17 +651,20 @@ final class CompositionClientSnippet {
                 body: BatchCompositionAction.composition(Composition(
                     objectID: "my-compo",
                     name: "my composition",
-                    behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-injected-item-key",
-                            source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                            position: 2,
-                            length: 1
-                        )],
-                        deduplication: Deduplication(positioning: DedupPositioning.highest)
-                    ))
+                    behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
+                            ),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-injected-item-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                                position: 2,
+                                length: 1
+                            )],
+                            deduplication: Deduplication(positioning: DedupPositioning.highest)
+                        )))
                 ))
             )]))
         // >LOG
@@ -679,16 +687,17 @@ final class CompositionClientSnippet {
             composition: Composition(
                 objectID: "1234",
                 name: "my first composition",
-                behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-group-key",
-                        source: InjectedItemSource
-                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                        position: 2,
-                        length: 1
-                    )]
-                ))
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-group-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )]
+                    )))
             )
         )
         // >LOG
@@ -711,19 +720,20 @@ final class CompositionClientSnippet {
             composition: Composition(
                 objectID: "my-external-injection-compo",
                 name: "my first composition",
-                behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-external-group-key",
-                        source: InjectedItemSource.externalSource(ExternalSource(external: External(
-                            index: "foo",
-                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                            ordering: ExternalOrdering.userDefined
-                        ))),
-                        position: 2,
-                        length: 1
-                    )]
-                ))
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-external-group-key",
+                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                                index: "foo",
+                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                ordering: ExternalOrdering.userDefined
+                            ))),
+                            position: 2,
+                            length: 1
+                        )]
+                    )))
             )
         )
         // >LOG
@@ -746,50 +756,53 @@ final class CompositionClientSnippet {
             composition: Composition(
                 objectID: "my-metadata-compo",
                 name: "my composition",
-                behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                        index: "foo",
-                        params: MainInjectionQueryParameters(filters: "brand:adidas")
-                    ))),
-                    injectedItems: [
-                        InjectedItem(
-                            key: "my-unique-group-key",
-                            source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
-                            position: 2,
-                            length: 1,
-                            metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                addItemKey: true,
-                                extra: [
-                                    "my-string": AnyCodable("string"),
-                                    "my-bool": true,
-                                    "my-number": 42,
-                                    "my-object": ["sub-key": "sub-value"],
-                                ]
-                            ))
-                        ),
-                        InjectedItem(
-                            key: "my-unique-group-key",
-                            source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:puma")
-                            ))),
-                            position: 5,
-                            length: 5,
-                            metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                addItemKey: true,
-                                extra: [
-                                    "my-string": AnyCodable("string"),
-                                    "my-bool": true,
-                                    "my-number": 42,
-                                    "my-object": ["sub-key": "sub-value"],
-                                ]
-                            ))
-                        ),
-                    ]
-                ))
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                            index: "foo",
+                            params: MainInjectionQueryParameters(filters: "brand:adidas")
+                        ))),
+                        injectedItems: [
+                            InjectedItem(
+                                key: "my-unique-group-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                        index: "foo",
+                                        params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                                    ))),
+                                position: 2,
+                                length: 1,
+                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                    addItemKey: true,
+                                    extra: [
+                                        "my-string": AnyCodable("string"),
+                                        "my-bool": true,
+                                        "my-number": 42,
+                                        "my-object": ["sub-key": "sub-value"],
+                                    ]
+                                ))
+                            ),
+                            InjectedItem(
+                                key: "my-unique-group-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                        index: "foo",
+                                        params: BaseInjectionQueryParameters(filters: "brand:puma")
+                                    ))),
+                                position: 5,
+                                length: 5,
+                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                    addItemKey: true,
+                                    extra: [
+                                        "my-string": AnyCodable("string"),
+                                        "my-bool": true,
+                                        "my-number": 42,
+                                        "my-object": ["sub-key": "sub-value"],
+                                    ]
+                                ))
+                            ),
+                        ]
+                    )))
             )
         )
         // >LOG
@@ -812,20 +825,21 @@ final class CompositionClientSnippet {
             composition: Composition(
                 objectID: "my-compo",
                 name: "my composition",
-                behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                        index: "foo",
-                        params: MainInjectionQueryParameters(filters: "brand:adidas")
-                    ))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-injected-item-key",
-                        source: InjectedItemSource
-                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                        position: 2,
-                        length: 1
-                    )],
-                    deduplication: Deduplication(positioning: DedupPositioning.highest)
-                ))
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                            index: "foo",
+                            params: MainInjectionQueryParameters(filters: "brand:adidas")
+                        ))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highest)
+                    )))
             )
         )
         // >LOG
@@ -848,11 +862,14 @@ final class CompositionClientSnippet {
             composition: Composition(
                 objectID: "my-compo",
                 name: "my composition",
-                behavior: CompositionBehavior(
-                    injection: Injection(main: CompositionMain(
-                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
-                    ))
-                ),
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(
+                        CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(source: CompositionSource(
+                                search: CompositionSourceSearch(index: "products")
+                            ))
+                        ))
+                    ),
                 sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
             )
         )
@@ -877,16 +894,17 @@ final class CompositionClientSnippet {
             compositionRule: CompositionRule(
                 objectID: "ruleID",
                 conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
-                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-group-from-rule-key",
-                        source: InjectedItemSource
-                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
-                        position: 2,
-                        length: 1
-                    )]
-                )))
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-group-from-rule-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "foo"))),
+                            position: 2,
+                            length: 1
+                        )]
+                    ))))
             )
         )
         // >LOG
@@ -910,27 +928,28 @@ final class CompositionClientSnippet {
             compositionRule: CompositionRule(
                 objectID: "rule-with-metadata",
                 conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
-                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-group-from-rule-key",
-                        source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                            index: "foo",
-                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        position: 2,
-                        length: 1,
-                        metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                            addItemKey: true,
-                            extra: [
-                                "my-string": AnyCodable("string"),
-                                "my-bool": true,
-                                "my-number": 42,
-                                "my-object": ["sub-key": "sub-value"],
-                            ]
-                        ))
-                    )]
-                )))
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-group-from-rule-key",
+                            source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
+                                index: "foo",
+                                params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                            ))),
+                            position: 2,
+                            length: 1,
+                            metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                addItemKey: true,
+                                extra: [
+                                    "my-string": AnyCodable("string"),
+                                    "my-bool": true,
+                                    "my-number": 42,
+                                    "my-object": ["sub-key": "sub-value"],
+                                ]
+                            ))
+                        )]
+                    ))))
             )
         )
         // >LOG
@@ -957,22 +976,23 @@ final class CompositionClientSnippet {
                     CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
                     CompositionCondition(pattern: "potter", anchoring: CompositionAnchoring.contains),
                 ],
-                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                        index: "my-index",
-                        params: MainInjectionQueryParameters(filters: "brand:adidas")
-                    ))),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-external-group-from-rule-key",
-                        source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
                             index: "my-index",
-                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                            ordering: ExternalOrdering.userDefined
+                            params: MainInjectionQueryParameters(filters: "brand:adidas")
                         ))),
-                        position: 0,
-                        length: 3
-                    )]
-                ))),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-external-group-from-rule-key",
+                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                                index: "my-index",
+                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                ordering: ExternalOrdering.userDefined
+                            ))),
+                            position: 0,
+                            length: 3
+                        )]
+                    )))),
                 description: "my description",
                 enabled: true,
                 validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
@@ -1000,19 +1020,20 @@ final class CompositionClientSnippet {
             compositionRule: CompositionRule(
                 objectID: "rule-with-deduplication",
                 conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
-                consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                    main: CompositionMain(
-                        source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                    ),
-                    injectedItems: [InjectedItem(
-                        key: "my-unique-injected-item-key",
-                        source: InjectedItemSource
-                            .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
-                        position: 0,
-                        length: 3
-                    )],
-                    deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
-                ))),
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: CompositionMain(
+                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                        ),
+                        injectedItems: [InjectedItem(
+                            key: "my-unique-injected-item-key",
+                            source: InjectedItemSource
+                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
+                            position: 0,
+                            length: 3
+                        )],
+                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                    )))),
                 description: "my description",
                 enabled: true
             )
@@ -1039,17 +1060,14 @@ final class CompositionClientSnippet {
                 body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                     objectID: "123",
                     conditions: [CompositionCondition(pattern: "a")],
-                    consequence: CompositionRuleConsequence(
-                        behavior: CompositionBehavior(
-                            injection: Injection(
-                                main: CompositionMain(
-                                    source: CompositionSource(
-                                        search: CompositionSourceSearch(index: "<YOUR_INDEX_NAME>")
-                                    )
-                                )
-                            )
-                        )
-                    )
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(
+                            CompositionInjectionBehavior(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(
+                                    search: CompositionSourceSearch(index: "<YOUR_INDEX_NAME>")
+                                ))
+                            ))
+                        ))
                 ))
             )])
         )
@@ -1075,27 +1093,31 @@ final class CompositionClientSnippet {
                 body: RulesBatchCompositionAction.compositionRule(CompositionRule(
                     objectID: "rule-with-metadata",
                     conditions: [CompositionCondition(pattern: "test", anchoring: CompositionAnchoring.`is`)],
-                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(index: "foo"))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-group-from-rule-key",
-                            source: InjectedItemSource.compositionSearchSource(CompositionSearchSource(search: Search(
-                                index: "foo",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas")
-                            ))),
-                            position: 2,
-                            length: 1,
-                            metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
-                                addItemKey: true,
-                                extra: [
-                                    "my-string": AnyCodable("string"),
-                                    "my-bool": true,
-                                    "my-number": 42,
-                                    "my-object": ["sub-key": "sub-value"],
-                                ]
-                            ))
-                        )]
-                    )))
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "foo"))
+                            ),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-group-from-rule-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(CompositionSearchSource(search: Search(
+                                        index: "foo",
+                                        params: BaseInjectionQueryParameters(filters: "brand:adidas")
+                                    ))),
+                                position: 2,
+                                length: 1,
+                                metadata: InjectedItemMetadata(hits: InjectedItemHitsMetadata(
+                                    addItemKey: true,
+                                    extra: [
+                                        "my-string": AnyCodable("string"),
+                                        "my-bool": true,
+                                        "my-number": 42,
+                                        "my-object": ["sub-key": "sub-value"],
+                                    ]
+                                ))
+                            )]
+                        ))))
                 ))
             )])
         )
@@ -1124,22 +1146,23 @@ final class CompositionClientSnippet {
                         CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
                         CompositionCondition(pattern: "potter", anchoring: CompositionAnchoring.contains),
                     ],
-                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
-                            index: "my-index",
-                            params: MainInjectionQueryParameters(filters: "brand:adidas")
-                        ))),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-external-group-from-rule-key",
-                            source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
                                 index: "my-index",
-                                params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                ordering: ExternalOrdering.userDefined
+                                params: MainInjectionQueryParameters(filters: "brand:adidas")
                             ))),
-                            position: 0,
-                            length: 3
-                        )]
-                    ))),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-external-group-from-rule-key",
+                                source: InjectedItemSource.externalSource(ExternalSource(external: External(
+                                    index: "my-index",
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
+                                    ordering: ExternalOrdering.userDefined
+                                ))),
+                                position: 0,
+                                length: 3
+                            )]
+                        )))),
                     description: "my description",
                     enabled: true,
                     validity: [CompositionTimeRange(from: Int64(1_704_063_600), until: Int64(1_704_083_600))],
@@ -1172,19 +1195,22 @@ final class CompositionClientSnippet {
                         CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains),
                         CompositionCondition(sortBy: "price-low-to-high"),
                     ],
-                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior(injection: Injection(
-                        main: CompositionMain(
-                            source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
-                        ),
-                        injectedItems: [InjectedItem(
-                            key: "my-unique-injected-item-key",
-                            source: InjectedItemSource
-                                .compositionSearchSource(CompositionSearchSource(search: Search(index: "my-index"))),
-                            position: 0,
-                            length: 3
-                        )],
-                        deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
-                    ))),
+                    consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: CompositionMain(
+                                source: CompositionSource(search: CompositionSourceSearch(index: "my-index"))
+                            ),
+                            injectedItems: [InjectedItem(
+                                key: "my-unique-injected-item-key",
+                                source: InjectedItemSource
+                                    .compositionSearchSource(
+                                        CompositionSearchSource(search: Search(index: "my-index"))
+                                    ),
+                                position: 0,
+                                length: 3
+                            )],
+                            deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
+                        )))),
                     description: "my description",
                     enabled: true
                 ))
