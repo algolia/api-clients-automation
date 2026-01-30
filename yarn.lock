@@ -80,7 +80,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/io@npm:2.0.0, @actions/io@npm:^2.0.0":
+"@actions/io@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@actions/io@npm:3.0.2"
+  checksum: 10/ef17cb4ec0a2b640d5f4851446ad1c12bf4b2b1cf83741c5eecee4e8f50b3ca3ac9ae4084027dcaa1bf0c016d653dbc0e5fe20daedd39ee5fb6edb671f6e45b5
+  languageName: node
+  linkType: hard
+
+"@actions/io@npm:^2.0.0":
   version: 2.0.0
   resolution: "@actions/io@npm:2.0.0"
   checksum: 10/4f8f98b564fe8974d47f6d9b06721d5bd3034f181be20188554d2ccad530330c218891c4c6f7c3da69883d8e53da513ce335617c0673461d4e064abcc9a6eebb
@@ -8655,7 +8662,7 @@ __metadata:
     "@actions/artifact": "npm:5.0.2"
     "@actions/core": "npm:2.0.2"
     "@actions/exec": "npm:2.0.0"
-    "@actions/io": "npm:2.0.0"
+    "@actions/io": "npm:3.0.2"
     "@har-sdk/oas": "npm:2.12.2"
     "@octokit/rest": "npm:22.0.1"
     "@types/express": "npm:5.0.6"
