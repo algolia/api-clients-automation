@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@actions/artifact": "5.0.2",
-    "@actions/core": "2.0.2",
+    "@actions/core": "3.0.0",
     "@actions/exec": "2.0.0",
     "@actions/io": "2.0.0",
     "@har-sdk/oas": "2.12.2",
