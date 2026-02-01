@@ -21,7 +21,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.47.0"
     "@algolia/requester-node-http": "npm:5.47.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.0.10"
+    "@types/node": "npm:25.1.0"
     publint: "npm:0.3.17"
     rollup: "npm:4.56.0"
     tsup: "npm:8.5.1"
@@ -38,7 +38,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.47.0"
     "@algolia/requester-node-http": "npm:5.47.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.0.10"
+    "@types/node": "npm:25.1.0"
     publint: "npm:0.3.17"
     rollup: "npm:4.56.0"
     tsup: "npm:8.5.1"
@@ -172,7 +172,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.47.0"
     "@algolia/requester-node-http": "npm:5.47.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:25.0.10"
+    "@types/node": "npm:25.1.0"
     publint: "npm:0.3.17"
     rollup: "npm:4.56.0"
     tsup: "npm:8.5.1"
@@ -2806,6 +2806,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~7.16.0"
   checksum: 10/e5fc1fe0e585957f91ff3ad8ee01b051ce0c9da9658c5ba68d11d557522450783ab61ac2778355e8f566b83bc3bd18e78576569162e9729ed52af36999f81c9a
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:25.1.0":
+  version: 25.1.0
+  resolution: "@types/node@npm:25.1.0"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10/ad15db75cfaec9e6311a1db7f3a91799be4c2698e1cfb0f74cc4d6e4398361550d00a4070921e1de7d9a10db83e41fd29f3a640dfacdabbd1c74ae16d8ce943a
   languageName: node
   linkType: hard
 
