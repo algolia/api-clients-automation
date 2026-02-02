@@ -26,7 +26,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/core@npm:2.0.2, @actions/core@npm:^2.0.0":
+"@actions/core@npm:2.0.3":
+  version: 2.0.3
+  resolution: "@actions/core@npm:2.0.3"
+  dependencies:
+    "@actions/exec": "npm:^2.0.0"
+    "@actions/http-client": "npm:^3.0.2"
+  checksum: 10/d7660656fda81f379faf004d4a8e9f06e4ca8e7401d9f9cda492a2e2394d2804d3582b86c912f1dd681030a80b3a9fdffb13f8244ccca3bd3b8ebc9a154b97e4
+  languageName: node
+  linkType: hard
+
+"@actions/core@npm:^2.0.0":
   version: 2.0.2
   resolution: "@actions/core@npm:2.0.2"
   dependencies:
@@ -77,6 +87,16 @@ __metadata:
     tunnel: "npm:^0.0.6"
     undici: "npm:^5.28.5"
   checksum: 10/aac5a88023a44bd0ea658a31308a73ab6a3da9dd36ded5d7311adf5e41f4379d37091aa9390de654d8d5a81435c02c2b5316ff3166066cd14eec5e66f1e0c3d0
+  languageName: node
+  linkType: hard
+
+"@actions/http-client@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@actions/http-client@npm:3.0.2"
+  dependencies:
+    tunnel: "npm:^0.0.6"
+    undici: "npm:^6.23.0"
+  checksum: 10/36431245545cd54e2e2b25b333732801a904170a426cdcb6611423b9da70daeba2742d7258e7fb5a370e216082d3a416d04f47ea810d5e9d6cda8e6928466079
   languageName: node
   linkType: hard
 
@@ -8598,7 +8618,7 @@ __metadata:
   resolution: "scripts@workspace:scripts"
   dependencies:
     "@actions/artifact": "npm:5.0.2"
-    "@actions/core": "npm:2.0.2"
+    "@actions/core": "npm:2.0.3"
     "@actions/exec": "npm:2.0.0"
     "@actions/io": "npm:2.0.0"
     "@har-sdk/oas": "npm:2.12.2"
