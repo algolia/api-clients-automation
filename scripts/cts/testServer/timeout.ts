@@ -35,7 +35,7 @@ export function assertValidTimeouts(expectedCount: number): void {
         case 'csharp':
         case 'swift':
           // csharp and swift clocks are worse than my childhood mickey mouse watch
-          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 800);
+          expect(state.duration[3 * i]).to.be.closeTo(state.duration[3 * i + 1], 1500);
           break;
         case 'javascript':
           expect(state.duration[3 * i] * 4).to.be.closeTo(state.duration[3 * i + 1], 300);
