@@ -103,6 +103,15 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
           language,
         },
       );
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/TimeoutIntegrationTest.php',
+          {
+            language,
+          },
+        );
+      }
       break;
     case 'python':
       await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {
