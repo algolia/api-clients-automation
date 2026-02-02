@@ -681,7 +681,7 @@ void main() {
               body: Composition(
                 objectID: "foo",
                 name: "my first composition",
-                behavior: CompositionBehavior(
+                behavior: CompositionInjectionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
@@ -729,7 +729,7 @@ void main() {
               body: Composition(
                 objectID: "my-external-injection-compo",
                 name: "my first composition",
-                behavior: CompositionBehavior(
+                behavior: CompositionInjectionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
@@ -787,7 +787,7 @@ void main() {
               body: Composition(
                 objectID: "my-metadata-compo",
                 name: "my composition",
-                behavior: CompositionBehavior(
+                behavior: CompositionInjectionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
@@ -886,7 +886,7 @@ void main() {
               body: Composition(
                 objectID: "my-compo",
                 name: "my composition",
-                behavior: CompositionBehavior(
+                behavior: CompositionInjectionBehavior(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
@@ -940,7 +940,7 @@ void main() {
         composition: Composition(
           objectID: "1234",
           name: "my first composition",
-          behavior: CompositionBehavior(
+          behavior: CompositionInjectionBehavior(
             injection: Injection(
               main: Main(
                 source: CompositionSource(
@@ -988,7 +988,7 @@ void main() {
         composition: Composition(
           objectID: "my-external-injection-compo",
           name: "my first composition",
-          behavior: CompositionBehavior(
+          behavior: CompositionInjectionBehavior(
             injection: Injection(
               main: Main(
                 source: CompositionSource(
@@ -1040,7 +1040,7 @@ void main() {
         composition: Composition(
           objectID: "my-metadata-compo",
           name: "my composition",
-          behavior: CompositionBehavior(
+          behavior: CompositionInjectionBehavior(
             injection: Injection(
               main: Main(
                 source: CompositionSource(
@@ -1133,7 +1133,7 @@ void main() {
         composition: Composition(
           objectID: "my-compo",
           name: "my composition",
-          behavior: CompositionBehavior(
+          behavior: CompositionInjectionBehavior(
             injection: Injection(
               main: Main(
                 source: CompositionSource(
@@ -1191,7 +1191,7 @@ void main() {
             'Price-asc': "products-low-to-high",
             'Price-desc': "products-high-to-low",
           },
-          behavior: CompositionBehavior(
+          behavior: CompositionInjectionBehavior(
             injection: Injection(
               main: Main(
                 source: CompositionSource(
@@ -1234,7 +1234,7 @@ void main() {
             ),
           ],
           consequence: CompositionRuleConsequence(
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -1290,7 +1290,7 @@ void main() {
             ),
           ],
           consequence: CompositionRuleConsequence(
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -1379,7 +1379,7 @@ void main() {
             ),
           ],
           consequence: CompositionRuleConsequence(
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -1445,7 +1445,7 @@ void main() {
             ),
           ],
           consequence: CompositionRuleConsequence(
-            behavior: CompositionBehavior(
+            behavior: CompositionInjectionBehavior(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
@@ -1507,7 +1507,7 @@ void main() {
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
-                  behavior: CompositionBehavior(
+                  behavior: CompositionInjectionBehavior(
                     injection: Injection(
                       main: Main(
                         source: CompositionSource(
@@ -1557,7 +1557,7 @@ void main() {
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
-                  behavior: CompositionBehavior(
+                  behavior: CompositionInjectionBehavior(
                     injection: Injection(
                       main: Main(
                         source: CompositionSource(
@@ -1652,7 +1652,7 @@ void main() {
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
-                  behavior: CompositionBehavior(
+                  behavior: CompositionInjectionBehavior(
                     injection: Injection(
                       main: Main(
                         source: CompositionSource(
@@ -1728,7 +1728,7 @@ void main() {
                   ),
                 ],
                 consequence: CompositionRuleConsequence(
-                  behavior: CompositionBehavior(
+                  behavior: CompositionInjectionBehavior(
                     injection: Injection(
                       main: Main(
                         source: CompositionSource(
