@@ -623,9 +623,9 @@ func SnippetForPushEventsOfInsights1() {
 
 		insights.NewEmptyInsightsEvents().SetEvents(
 			[]insights.EventsItems{*insights.ConvertedObjectIDsAfterSearchAsEventsItems(
-				insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1769558400000).SetObjectIDs(
+				insights.NewEmptyConvertedObjectIDsAfterSearch().SetEventType(insights.ConversionEvent("conversion")).SetEventName("Product Purchased").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1769817600000).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7")), *insights.ViewedObjectIDsAsEventsItems(
-				insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1769558400000).SetObjectIDs(
+				insights.NewEmptyViewedObjectIDs().SetEventType(insights.ViewEvent("view")).SetEventName("Product Detail Page Viewed").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1769817600000).SetObjectIDs(
 					[]string{"9780545139700", "9780439784542"}))})))
 	if err != nil {
 		// handle the eventual error

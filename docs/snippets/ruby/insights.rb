@@ -430,7 +430,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1769558400000,
+          timestamp: 1769817600000,
           object_ids: ["9780545139700", "9780439784542"],
           query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
         ),
@@ -440,7 +440,7 @@ def snippet_for_push_events1
           index: "products",
           user_token: "user-123456",
           authenticated_user_token: "user-123456",
-          timestamp: 1769558400000,
+          timestamp: 1769817600000,
           object_ids: ["9780545139700", "9780439784542"]
         )
       ]
