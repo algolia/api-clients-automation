@@ -25,6 +25,7 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Tests/**',
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
 
