@@ -84,18 +84,25 @@ class DioRequester implements Requester {
 
   /// Executes the [request] and returns the response as an [HttpResponse].
   Future<HttpResponse> execute(HttpRequest request) async {
-    final response = await _client.requestUri<Map<String, dynamic>>(
-      requestUri(request),
-      data: request.body,
-      options: Options(
-        method: request.method,
-        headers: request.headers,
-        contentType: request.body != null ? Headers.jsonContentType : null,
-        sendTimeout: request.timeout,
-        receiveTimeout: request.timeout,
-      ),
-    );
-    return HttpResponse(response.statusCode, response.data);
+    final previousConnectTimeout = _client.options.connectTimeout;
+    _client.options.connectTimeout = request.connectTimeout;
+
+    try {
+      final response = await _client.requestUri<Map<String, dynamic>>(
+        requestUri(request),
+        data: request.body,
+        options: Options(
+          method: request.method,
+          headers: request.headers,
+          contentType: request.body != null ? Headers.jsonContentType : null,
+          sendTimeout: request.timeout,
+          receiveTimeout: request.timeout,
+        ),
+      );
+      return HttpResponse(response.statusCode, response.data);
+    } finally {
+      _client.options.connectTimeout = previousConnectTimeout;
+    }
   }
 
   /// Constructs the request URI from the [request] details.

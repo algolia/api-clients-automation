@@ -62,6 +62,16 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         cwd,
         language,
       });
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'dart test ../../../clients/algoliasearch-client-dart/packages/client_core/test/timeout_integration_test.dart',
+          {
+            cwd,
+            language,
+          },
+        );
+      }
       break;
     case 'go':
       await run(

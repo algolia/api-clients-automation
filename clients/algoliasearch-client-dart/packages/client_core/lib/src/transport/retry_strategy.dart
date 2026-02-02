@@ -9,7 +9,10 @@ final class RetryStrategy {
   final Requester requester;
   final Duration readTimeout;
   final Duration writeTimeout;
-  final Iterable<RetryableHost> _hosts;
+  final List<RetryableHost> _hosts;
+
+  /// Provides access to hosts for testing purposes.
+  List<RetryableHost> get hosts => _hosts;
 
   /// Constructs a [RetryStrategy].
   RetryStrategy({
@@ -17,7 +20,7 @@ final class RetryStrategy {
     required this.readTimeout,
     required this.writeTimeout,
     required Iterable<Host> hosts,
-  }) : _hosts = hosts.map((host) => RetryableHost(host));
+  }) : _hosts = hosts.map((host) => RetryableHost(host)).toList();
 
   /// Creates [RetryStrategy], defaults to [DioRequester].
   RetryStrategy.create({
@@ -60,6 +63,7 @@ final class RetryStrategy {
       }
       try {
         final response = await requester.perform(httpRequest);
+        host.reset();
         requester.setConnectTimeout(requesterConnectTimeout);
         return response.body ?? const {};
       } on AlgoliaTimeoutException catch (e) {
@@ -106,12 +110,16 @@ final class RetryStrategy {
     RequestOptions? options,
   ) {
     final baseTimeout = _timeoutOf(callType, options);
-    final timeout = baseTimeout * (host.retryCount + 1);
+    final baseConnectTimeout = options?.connectTimeout ??
+        requester.connectTimeout ??
+        Duration(seconds: 2);
+    final connectTimeout = baseConnectTimeout * (host.retryCount + 1);
     return HttpRequest(
         method: request.method.name,
         host: host.host,
         path: request.path,
-        timeout: timeout,
+        timeout: baseTimeout,
+        connectTimeout: connectTimeout,
         headers: {...?options?.headers, ...?request.headers},
         body: options?.body ?? request.body != null
             ? request.body
