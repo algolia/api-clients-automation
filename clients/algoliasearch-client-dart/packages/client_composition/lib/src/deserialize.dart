@@ -13,8 +13,9 @@ import 'package:algolia_client_composition/src/model/batch_params.dart';
 import 'package:algolia_client_composition/src/model/boolean_string.dart';
 import 'package:algolia_client_composition/src/model/composition.dart';
 import 'package:algolia_client_composition/src/model/composition_base_search_response.dart';
-import 'package:algolia_client_composition/src/model/composition_behavior.dart';
 import 'package:algolia_client_composition/src/model/composition_id_ranking_info.dart';
+import 'package:algolia_client_composition/src/model/composition_injection_behavior.dart';
+import 'package:algolia_client_composition/src/model/composition_multifeed_behavior.dart';
 import 'package:algolia_client_composition/src/model/composition_ranking_info.dart';
 import 'package:algolia_client_composition/src/model/composition_rule.dart';
 import 'package:algolia_client_composition/src/model/composition_rule_consequence.dart';
@@ -151,12 +152,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CompositionBaseSearchResponse':
       return CompositionBaseSearchResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'CompositionBehavior':
-      return CompositionBehavior.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'CompositionIdRankingInfo':
       return CompositionIdRankingInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'CompositionInjectionBehavior':
+      return CompositionInjectionBehavior.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'CompositionMultifeedBehavior':
+      return CompositionMultifeedBehavior.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'CompositionRankingInfo':
       return CompositionRankingInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
