@@ -16,6 +16,11 @@ function getTestServerHost(): string
     return ('true' === getenv('CI') ? 'localhost' : 'host.docker.internal').':6676';
 }
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class TimeoutIntegrationTest extends TestCase
 {
     private const NON_ROUTABLE_IP = '10.255.255.1';
@@ -272,7 +277,7 @@ class TimeoutIntegrationTest extends TestCase
         $this->assertEquals(2, $clusterHosts->getRetryCount($badHost2, false), 'Host 2 should have retry count 2');
     }
 
-     //guzzle test that multiple hosts maintain independent retry counts.
+    // guzzle test that multiple hosts maintain independent retry counts.
     public function testGuzzleMultipleHostsIndependentRetryCount(): void
     {
         if (!class_exists('\GuzzleHttp\Client')) {
@@ -321,25 +326,26 @@ class TimeoutIntegrationTest extends TestCase
     // curl 1 good host and 1 bad host
     public function testCurlMultipleHostsMixedIndependentRetryCount(): void
     {
-        $badHostFull = 'https://' . self::NON_ROUTABLE_IP . ':443';
-        $goodHostFull = 'http://' . getTestServerHost();
+        $badHostFull = 'https://'.self::NON_ROUTABLE_IP.':443';
+        $goodHostFull = 'http://'.getTestServerHost();
 
         $config = SearchConfig::create('test-app-id', 'test-api-key')
-          ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
-          ->setFullHosts([$badHostFull, $goodHostFull]);
+            ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
+            ->setFullHosts([$badHostFull, $goodHostFull])
+        ;
 
         $clusterHosts = ClusterHosts::create([
-          $badHostFull => 10,   // Try first
-          $goodHostFull => 0    // Try second
+            $badHostFull => 10,   // Try first
+            $goodHostFull => 0,    // Try second
         ]);
 
         $requestOptionsFactory = new RequestOptionsFactory($config);
 
         $wrapper = new ApiWrapper(
-          new CurlHttpClient(),
-          $config,
-          $clusterHosts,
-          $requestOptionsFactory
+            new CurlHttpClient(),
+            $config,
+            $clusterHosts,
+            $requestOptionsFactory
         );
 
         // First request
@@ -371,28 +377,29 @@ class TimeoutIntegrationTest extends TestCase
     public function testGuzzleMultipleHostsMixedIndependentRetryCount(): void
     {
         if (!class_exists('\GuzzleHttp\Client')) {
-          $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
+            $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
         }
 
-        $badHostFull = 'https://' . self::NON_ROUTABLE_IP . ':443';
-        $goodHostFull = 'http://' . getTestServerHost();
+        $badHostFull = 'https://'.self::NON_ROUTABLE_IP.':443';
+        $goodHostFull = 'http://'.getTestServerHost();
 
         $config = SearchConfig::create('test-app-id', 'test-api-key')
-          ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
-          ->setFullHosts([$badHostFull, $goodHostFull]);
+            ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
+            ->setFullHosts([$badHostFull, $goodHostFull])
+        ;
 
         $clusterHosts = ClusterHosts::create([
-          $badHostFull => 10,
-          $goodHostFull => 0
+            $badHostFull => 10,
+            $goodHostFull => 0,
         ]);
 
         $requestOptionsFactory = new RequestOptionsFactory($config);
 
         $wrapper = new ApiWrapper(
-          new GuzzleHttpClient(),
-          $config,
-          $clusterHosts,
-          $requestOptionsFactory
+            new GuzzleHttpClient(),
+            $config,
+            $clusterHosts,
+            $requestOptionsFactory
         );
 
         // First request
