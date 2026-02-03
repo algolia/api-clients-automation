@@ -16,7 +16,7 @@ import {
   toAbsolutePath,
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
-import type { GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import type { GuidesToPush, RepositoryConfiguration, SnippetsToPush, SpecsToPush } from './types.ts';
 import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
@@ -115,6 +115,16 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
   await fsp.writeFile(outputPath, JSON.stringify(guides, null, 2));
 }
 
+async function handleSnippetFiles(snippets: SnippetsToPush, tempGitDir: string): Promise<void> {
+  const output = toAbsolutePath(`${tempGitDir}/${snippets.output}`);
+
+  if (!(await exists(output))) {
+    await fsp.mkdir(output, { recursive: true });
+  }
+
+  await run(`cp ${toAbsolutePath('docs/bundled/*-snippets.json')} ${output}`);
+}
+
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
   const token = ensureGitHubToken();
 
@@ -156,8 +166,10 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
-    } else {
+    } else if (task.files.type === 'guides') {
       await handleGuideFiles(task.files, tempGitDir);
+    } else if (task.files.type === 'snippets') {
+      await handleSnippetFiles(task.files, tempGitDir);
     }
 
     if (process.env.DRY_RUN) {

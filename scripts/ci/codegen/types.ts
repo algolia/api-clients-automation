@@ -35,6 +35,11 @@ export type SpecsToPush = {
   clients?: string[];
 };
 
+export type SnippetsToPush = {
+  type: 'snippets';
+  output: string;
+};
+
 type RepositoryTask = {
   // the name of the pull request branch
   prBranch: string;
@@ -42,7 +47,7 @@ type RepositoryTask = {
   // the commit message of the pull request (will also be used as the title)
   commitMessage: string;
 
-  files: GuidesToPush | SpecsToPush;
+  files: GuidesToPush | SpecsToPush | SnippetsToPush;
 };
 
 export type RepositoryConfiguration = {
@@ -54,7 +59,7 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
+  [k in 'AlgoliaWeb' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia' | 'api-clients-mcp']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -136,6 +141,19 @@ export const pushToRepositoryConfiguration: {
           output: 'nodes/Algolia/specs',
           clients: ['search'],
           placeholderVariables: { appId: 'applicationId' },
+        },
+      },
+    ],
+  },
+  'api-clients-mcp': {
+    baseBranch: 'main',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-snippets',
+        commitMessage: 'feat: update snippets',
+        files: {
+          type: 'snippets',
+          output: 'snippets',
         },
       },
     ],
