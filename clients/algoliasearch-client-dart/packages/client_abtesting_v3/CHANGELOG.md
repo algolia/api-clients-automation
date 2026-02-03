@@ -1,3 +1,9 @@
+## [1.44.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.3...1.44.0)
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+- [2925f56d1](https://github.com/algolia/api-clients-automation/commit/2925f56d1) fix(specs): more accurate composition behavior typing ([#5892](https://github.com/algolia/api-clients-automation/pull/5892)) by [@gavinwade12](https://github.com/gavinwade12/)
+
 ## [1.43.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.2...1.43.3)
 
 - [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)

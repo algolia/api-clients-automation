@@ -1,3 +1,13 @@
+## [4.36.0](https://github.com/algolia/algoliasearch-client-go/compare/4.35.0...4.36.0)
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [67e601458](https://github.com/algolia/api-clients-automation/commit/67e601458) fix(go): Missing analytics when using GetTopHits with Go API client ([#5854](https://github.com/algolia/api-clients-automation/pull/5854)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+- [f9453e693](https://github.com/algolia/api-clients-automation/commit/f9453e693) docs: authentication type can't be updated ([#5824](https://github.com/algolia/api-clients-automation/pull/5824)) by [@sbellone](https://github.com/sbellone/)
+- [52aed5b35](https://github.com/algolia/api-clients-automation/commit/52aed5b35) fix(specs): allow additionalProperties on insights-api events ([#5885](https://github.com/algolia/api-clients-automation/pull/5885)) by [@sirockin](https://github.com/sirockin/)
+- [2925f56d1](https://github.com/algolia/api-clients-automation/commit/2925f56d1) fix(specs): more accurate composition behavior typing ([#5892](https://github.com/algolia/api-clients-automation/pull/5892)) by [@gavinwade12](https://github.com/gavinwade12/)
+
 ## [4.35.0](https://github.com/algolia/algoliasearch-client-go/compare/4.34.2...4.35.0)
 
 - [f02ab6fa0](https://github.com/algolia/api-clients-automation/commit/f02ab6fa0) chore: agentic config prep ([#5825](https://github.com/algolia/api-clients-automation/pull/5825)) by [@Fluf22](https://github.com/Fluf22/)
