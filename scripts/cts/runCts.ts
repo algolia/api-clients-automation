@@ -134,6 +134,16 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         cwd,
         language,
       });
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'bundle exec ruby -Ilib ../../../clients/algoliasearch-client-ruby/lib/algolia/tests/timeout_integration_test.rb',
+          {
+            cwd,
+            language,
+          },
+        );
+      }
       break;
     case 'scala':
       await run(`sbt 'testOnly ${filter((f) => `algoliasearch.${f}.*`)}'`, {
