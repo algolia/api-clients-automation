@@ -289,12 +289,6 @@ AuthOAuth:
       description: OAuth scope.
   required:
     - url
-  oneOf:
-    - required:
-        - client_id
-        - client_secret
-    - required:
-        - code
   x-discriminator-fields:
     - url
     - client_id
