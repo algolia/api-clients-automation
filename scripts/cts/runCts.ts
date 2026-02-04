@@ -53,9 +53,16 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
   switch (language) {
     case 'csharp':
       await run(
-        `dotnet test /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
+        `dotnet test src/Algolia.Search.Tests.csproj /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
         { cwd, language },
       );
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'dotnet test /clp:ErrorsOnly ../../../clients/algoliasearch-client-csharp/algoliasearch/Algolia.Search.csproj --filter "FullyQualifiedName~TimeoutIntegration"',
+          { cwd, language },
+        );
+      }
       break;
     case 'dart':
       await run(`dart test ${filter((f) => `test/${f}`)}`, {
@@ -96,6 +103,15 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
           language,
         },
       );
+      // run manual timeout tests
+      if (suites.client) {
+        await run(
+          'php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ./clients/algoliasearch-client-php/tests/TimeoutIntegrationTest.php',
+          {
+            language,
+          },
+        );
+      }
       break;
     case 'python':
       await run(`poetry lock && poetry sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`, {

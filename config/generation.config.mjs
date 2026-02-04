@@ -25,6 +25,7 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Http/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Transport/**',
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
+  '!clients/algoliasearch-client-csharp/algoliasearch/Tests/**',
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
 
@@ -91,6 +92,7 @@ export const patterns = [
 
   // PHP
   '!clients/algoliasearch-client-php/**',
+  '!clients/algoliasearch-client-php/tests/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
   '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
