@@ -252,7 +252,6 @@ paths:
             schema:
               title: insightsEvents
               type: object
-              additionalProperties: false
               required:
                 - events
               properties:
