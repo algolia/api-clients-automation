@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
-namespace Algolia.Search.Tests;
+namespace Algolia.Search.client;
 
 public class TimeoutIntegrationTests
 {
