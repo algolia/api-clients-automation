@@ -11,22 +11,22 @@ get:
 
     If you set the `clickAnalytics` query parameter to `true`, the response also includes:
 
-    - Tracked searches count.
+    - Tracked searches count
       Tracked searches are Search API requests with `clickAnalytics` set to `true`.
       This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
-    - Click count.
-    - Click-through rate (CTR).
-    - Conversion count.
-    - Conversion rate (CR).
-    - Average click position.
+    - Click count
+    - Click-through rate (CTR)
+    - Conversion count
+    - Conversion rate (CR)
+    - Average click position
 
     If you set the `revenueAnalytics` query parameter to `true`, the response also includes:
 
-    - Add-to-cart count.
-    - Add-to-cart rate (ATCR).
-    - Purchase count.
-    - Purchase rate.
-    - Revenue details for each currency.
+    - Add-to-cart count
+    - Add-to-cart rate (ATCR)
+    - Purchase count
+    - Purchase rate
+    - Revenue details for each currency
 
     **There's a difference between 0% rates and null rates:**
 
