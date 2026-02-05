@@ -831,6 +831,11 @@
       "releaseDate": "2026-01-20"
     },
     "7.37.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
+    },
+    "7.37.1": {
       "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
@@ -1263,9 +1268,9 @@
       "releaseDate": "2026-01-20"
     },
     "1.44.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "go": {
@@ -2229,9 +2234,9 @@
       "releaseDate": "2026-01-20"
     },
     "4.36.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "java": {
@@ -3125,9 +3130,9 @@
       "releaseDate": "2026-01-20"
     },
     "4.35.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "javascript": {
@@ -4687,9 +4692,9 @@
       "releaseDate": "2026-01-20"
     },
     "5.48.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "kotlin": {
@@ -5310,9 +5315,9 @@
       "releaseDate": "2026-01-20"
     },
     "3.38.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "php": {
@@ -6216,9 +6221,9 @@
       "releaseDate": "2026-01-20"
     },
     "4.38.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "python": {
@@ -7015,9 +7020,9 @@
       "releaseDate": "2026-01-20"
     },
     "4.36.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "ruby": {
@@ -7870,9 +7875,9 @@
       "releaseDate": "2026-01-20"
     },
     "3.35.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "scala": {
@@ -8644,9 +8649,9 @@
       "releaseDate": "2026-01-20"
     },
     "2.37.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   },
   "swift": {
@@ -9489,9 +9494,9 @@
       "releaseDate": "2026-01-20"
     },
     "9.38.0": {
-      "releaseDate": "2026-02-05",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-05"
     }
   }
 }
