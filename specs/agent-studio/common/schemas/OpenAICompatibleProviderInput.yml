@@ -1,0 +1,28 @@
+OpenAICompatibleProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    baseUrl:
+      type: string
+      maxLength: 2083
+      minLength: 1
+      format: uri
+      title: baseurl
+    defaultModel:
+      type: string
+      minLength: 1
+      title: defaultmodel
+      description: Default model for this provider. Used for validation and as fallback
+        when no model is specified at agent level.
+  type: object
+  required:
+    - apiKey
+    - baseUrl
+    - defaultModel
+  title: openAICompatibleProviderInput
+  description: |-
+    OpenAI-compatible provider input.
+    Contrary to the OpenAIProviderInput, the base_url is required.
+    A model is required to verify connectivity and get saved as the default model.
+    This can later be changed at the Agent level.

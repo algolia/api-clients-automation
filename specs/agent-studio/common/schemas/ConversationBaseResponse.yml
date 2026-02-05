@@ -1,0 +1,57 @@
+ConversationBaseResponse:
+  properties:
+    id:
+      type: string
+      title: id
+    agentId:
+      type: string
+      format: uuid
+      title: agentid
+    title:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: title
+    createdAt:
+      type: string
+      format: date-time
+      title: createdat
+    updatedAt:
+      type: string
+      format: date-time
+      title: updatedat
+    lastActivityAt:
+      oneOf:
+        - type: string
+          format: date-time
+        - type: 'null'
+      title: lastactivityat
+    userToken:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: usertoken
+    messageCount:
+      type: integer
+      title: messagecount
+      default: 0
+    totalInputTokens:
+      type: integer
+      title: totalinputtokens
+      default: 0
+    totalOutputTokens:
+      type: integer
+      title: totaloutputtokens
+      default: 0
+    totalTokens:
+      type: integer
+      title: totaltokens
+      default: 0
+  type: object
+  required:
+    - id
+    - agentId
+    - createdAt
+    - updatedAt
+  title: conversationBaseResponse
+  description: Lightweight response model without its messages.
