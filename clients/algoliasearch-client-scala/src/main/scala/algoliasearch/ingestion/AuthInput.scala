@@ -42,8 +42,9 @@ object AuthInputSerializer extends Serializer[AuthInput] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[AuthInput] =>
       json match {
         case value: JObject
-            if value.obj.exists(_._1 == "url") && value.obj
-              .exists(_._1 == "client_id") && value.obj.exists(_._1 == "client_secret") =>
+            if value.obj.exists(_._1 == "url") && value.obj.exists(_._1 == "client_id") && value.obj.exists(
+              _._1 == "client_secret"
+            ) && value.obj.exists(_._1 == "code") =>
           Extraction.extract[AuthOAuth](value)
         case value: JObject if value.obj.exists(_._1 == "clientEmail") && value.obj.exists(_._1 == "privateKey") =>
           Extraction.extract[AuthGoogleServiceAccount](value)

@@ -28,13 +28,17 @@ import org.json4s._
   *   Client ID.
   * @param clientSecret
   *   Client secret. This field is `null` in the API response.
+  * @param code
+  *   Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when
+  *   creating/updating the authentication. This field is not returned in the API response.
   * @param scope
   *   OAuth scope.
   */
 case class AuthOAuth(
     url: String,
-    clientId /* client_id */: String,
-    clientSecret /* client_secret */: String,
+    clientId /* client_id */: Option[String] = scala.None,
+    clientSecret /* client_secret */: Option[String] = scala.None,
+    code: Option[String] = scala.None,
     scope: Option[String] = scala.None
 ) extends AuthInputTrait
 

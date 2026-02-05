@@ -1915,8 +1915,8 @@ paths:
                   name = "authName",
                   input = AuthOAuth(
                     url = "http://test.oauth",
-                    clientId = "myID",
-                    clientSecret = "mySecret"
+                    clientId = Some("myID"),
+                    clientSecret = Some("mySecret")
                   )
                 )
               ),
@@ -16659,6 +16659,15 @@ components:
         client_secret:
           type: string
           description: Client secret. This field is `null` in the API response.
+        code:
+          type: string
+          description: >
+            Authorization code.
+
+            Used during an `authorization_code` grant type flow, to request an
+            access_token when creating/updating the authentication.
+
+            This field is not returned in the API response.
         scope:
           type: string
           default: ''
@@ -16832,18 +16841,26 @@ components:
         client_secret:
           type: string
           description: Client secret. This field is `null` in the API response.
+        code:
+          type: string
+          description: >
+            Authorization code.
+
+            Used during an `authorization_code` grant type flow, to request an
+            access_token when creating/updating the authentication.
+
+            This field is not returned in the API response.
         scope:
           type: string
           default: ''
           description: OAuth scope.
       required:
         - url
-        - client_id
-        - client_secret
       x-discriminator-fields:
         - url
         - client_id
         - client_secret
+        - code
     AuthAlgolia:
       title: Algolia
       type: object

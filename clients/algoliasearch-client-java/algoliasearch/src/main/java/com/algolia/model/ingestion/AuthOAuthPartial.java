@@ -20,6 +20,9 @@ public class AuthOAuthPartial implements AuthInputPartial {
   @JsonProperty("client_secret")
   private String clientSecret;
 
+  @JsonProperty("code")
+  private String code;
+
   @JsonProperty("scope")
   private String scope;
 
@@ -56,6 +59,21 @@ public class AuthOAuthPartial implements AuthInputPartial {
     return clientSecret;
   }
 
+  public AuthOAuthPartial setCode(String code) {
+    this.code = code;
+    return this;
+  }
+
+  /**
+   * Authorization code. Used during an `authorization_code` grant type flow, to request an
+   * access_token when creating/updating the authentication. This field is not returned in the API
+   * response.
+   */
+  @javax.annotation.Nullable
+  public String getCode() {
+    return code;
+  }
+
   public AuthOAuthPartial setScope(String scope) {
     this.scope = scope;
     return this;
@@ -80,13 +98,14 @@ public class AuthOAuthPartial implements AuthInputPartial {
       Objects.equals(this.url, authOAuthPartial.url) &&
       Objects.equals(this.clientId, authOAuthPartial.clientId) &&
       Objects.equals(this.clientSecret, authOAuthPartial.clientSecret) &&
+      Objects.equals(this.code, authOAuthPartial.code) &&
       Objects.equals(this.scope, authOAuthPartial.scope)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, clientId, clientSecret, scope);
+    return Objects.hash(url, clientId, clientSecret, code, scope);
   }
 
   @Override
@@ -96,6 +115,7 @@ public class AuthOAuthPartial implements AuthInputPartial {
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();

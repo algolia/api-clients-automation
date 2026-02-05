@@ -3688,6 +3688,10 @@
             "type": "string",
             "description": "Client secret. This field is `null` in the API response."
           },
+          "code": {
+            "type": "string",
+            "description": "Authorization code.\nUsed during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication.\nThis field is not returned in the API response.\n"
+          },
           "scope": {
             "type": "string",
             "default": "",
@@ -3918,6 +3922,10 @@
             "type": "string",
             "description": "Client secret. This field is `null` in the API response."
           },
+          "code": {
+            "type": "string",
+            "description": "Authorization code.\nUsed during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication.\nThis field is not returned in the API response.\n"
+          },
           "scope": {
             "type": "string",
             "default": "",
@@ -3925,14 +3933,13 @@
           }
         },
         "required": [
-          "url",
-          "client_id",
-          "client_secret"
+          "url"
         ],
         "x-discriminator-fields": [
           "url",
           "client_id",
-          "client_secret"
+          "client_secret",
+          "code"
         ]
       },
       "AuthAlgolia": {
