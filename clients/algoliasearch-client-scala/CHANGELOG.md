@@ -1,5 +1,10 @@
 ## [2.37.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.3...2.37.0)
 
+[BREAKING CHANGES]: this minor version includes multiple breaking changes related to fixes on different APIs.\
+The Recommend API `TrendingFacets` model has been updated to reflect the API response.\
+The Composition API `CompositionBehavior` model is now a union type for better accuracy.\
+The Ingestion API `AuthenticationUpdate` model has been updated to reflect that the `type` field can't be updated.
+
 - [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
 - [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
 - [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
