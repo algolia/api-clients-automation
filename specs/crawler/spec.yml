@@ -48,7 +48,7 @@ info:
 
     ## Version
 
-    The current version of the Crawler API is version 1, as indicated by the `/1/` in each endpoint's URL.
+    The current version of the Crawler API is version 1, indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 components:
   securitySchemes:

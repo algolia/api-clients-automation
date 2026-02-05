@@ -23,7 +23,7 @@ BaseResponse:
     blocked:
       type: boolean
       description: |
-        Whether this crawler is currently blocked.
+        Whether this crawler is blocked.
 
         If `true`, you can unblock it from the [Crawler page](https://dashboard.algolia.com/crawler) in the Algolia dashboard
         or by [cancelling the blocking task](https://www.algolia.com/doc/rest-api/crawler/cancel-blocking-action).

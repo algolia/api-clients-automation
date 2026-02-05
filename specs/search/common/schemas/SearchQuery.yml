@@ -42,7 +42,7 @@ facetQuery:
   default: ''
 
 searchForHitsOptions:
-  # We provide this option because TypeScript can't distinguish union with optional keys
+  # This option exists because TypeScript can't distinguish union with optional keys
   # if they are not completely the same, see usage in `templates/javascript/model.mustache`
   x-is-SearchForHitsOptions: true
   type: object

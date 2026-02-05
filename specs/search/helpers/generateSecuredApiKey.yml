@@ -22,13 +22,12 @@ method:
       Generates a secured API key without any requests to Algolia's servers.
 
       Secured API keys are API keys that you generate on your server without any API request to Algolia.
-      Secured API keys help in environments where you can't easily update the client-side code, such as mobile apps,
-      or when you need to restrict access to a part of your index for every user.
+      Use secured API keys when you can't update client-side code, such as in mobile apps,
+      or when you need to restrict access to part of an index for each user.
 
-      When your users start searching, instead of using the Search API key, they request a short-lived secured API key from your server.
-      On your server, you use this method to create a secured API key, with any restrictions you'd like, such as filters, index access restrictions,
-      or expiration times. The API key gets longer the more restrictions you add.
-      Your users then use the secured API key to search with Algolia.
+      When users start searching, your app requests a short-lived secured API key from your server instead of using the Search API key.
+      Your server uses this method to generate the secured API key with restrictions such as filters, index access restrictions,
+      or expiration times, and returns it to your app. The API key gets longer as you add restrictions.
 
       You can't create secured API keys from other secured API keys or from your Admin API key.
       The generated API key can have the same restrictions as the parent API key, or be more restrictive.

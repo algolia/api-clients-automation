@@ -2,7 +2,7 @@ get:
   operationId: getCrawlRunFile
   summary: Crawler run file
   description: |
-    The Crawler Logs file allows you to monitor and debug your crawler’s activity by recording
+    The Crawler Logs file lets you monitor and debug your crawler’s activity by recording
     detailed logs for each crawl run. Logs are useful for troubleshooting crawl issues,
     verifying site coverage, and monitoring crawler performance over time.
   tags:
