@@ -62,7 +62,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.37.3\).*/',
+                '/^Algolia for PHP \(4.38.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
