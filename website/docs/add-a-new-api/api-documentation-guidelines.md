@@ -51,6 +51,16 @@ The first sentence can be used as a _short description_ in environments that don
 such as the [Algolia CLI](https://github.com/algolia/cli/).
 After an empty line, you can provide more context.
 
+Use these extra guidelines to keep API specs consistent and easy to review.
+
+- For instructions, prefer **To do X, use Y**.
+- Avoid **You should**.
+- Avoid words like **please**, **currently**, **quick**, or **under the hood**.
+- Use thousands separators in prose (`1,000`).
+- Use code font for operation names, parameter keys, and literal values.
+
+If a description is longer than three or four sentences, split it into short paragraphs or a short list.
+
 ## Capitalization
 
 In general, follow the capitalization of the API.
