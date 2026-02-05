@@ -139,7 +139,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.34.4\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.35.0\).*/))
   end
 
   # uses the correct region
