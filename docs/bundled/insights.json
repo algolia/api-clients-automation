@@ -776,7 +776,7 @@
                     "summary": "Timestamp too old",
                     "value": {
                       "status": 422,
-                      "message": "The timestamp must be at most 4 days in the past"
+                      "message": "The timestamp is too far in the past"
                     }
                   },
                   "TooManyEvents": {
@@ -1007,7 +1007,7 @@
       "timestamp": {
         "type": "integer",
         "format": "int64",
-        "description": "Timestamp of the event, measured in milliseconds since the Unix epoch.\nBy default, the Insights API uses the time it receives an event as its timestamp.\n",
+        "description": "Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days.\nIf not provided, we use the time at which the request was received.\n",
         "example": 1687193127
       },
       "ClickedObjectIDsAfterSearch": {
