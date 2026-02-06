@@ -38,8 +38,8 @@ class SnippetIngestionClient {
           name = "authName",
           input = AuthOAuth(
             url = "http://test.oauth",
-            clientId = "myID",
-            clientSecret = "mySecret"
+            clientId = Some("myID"),
+            clientSecret = Some("mySecret")
           )
         )
       ),
@@ -2445,8 +2445,8 @@ class SnippetIngestionClient {
                 name = "authName",
                 input = AuthOAuth(
                   url = "http://test.oauth",
-                  clientId = "myID",
-                  clientSecret = "mySecret"
+                  clientId = Some("myID"),
+                  clientSecret = Some("mySecret")
                 )
               )
             )
@@ -2528,8 +2528,8 @@ class SnippetIngestionClient {
                 name = "authName",
                 input = AuthOAuth(
                   url = "http://test.oauth",
-                  clientId = "myID",
-                  clientSecret = "mySecret"
+                  clientId = Some("myID"),
+                  clientSecret = Some("mySecret")
                 )
               )
             )

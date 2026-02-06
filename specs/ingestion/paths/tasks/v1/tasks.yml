@@ -2,7 +2,7 @@ get:
   tags:
     - tasks
   summary: List tasks V1
-  description: Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+  description: Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
   operationId: listTasksV1
   deprecated: true
   x-acl:
@@ -46,7 +46,7 @@ post:
   tags:
     - tasks
   summary: Create a task V1
-  description: Creates a new task using the v1 endpoint, please use `createTask` instead.
+  description: Creates a new task using the v1 endpoint. Use `createTask` instead.
   operationId: createTaskV1
   x-acl:
     - addObject

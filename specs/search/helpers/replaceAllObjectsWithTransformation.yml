@@ -17,19 +17,21 @@ method:
     operationId: replaceAllObjectsWithTransformation
     summary: Replace all records in an index
     description: |
-      Replace all records from your index with a new set of records by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).
+      Replace all records in your index with a new set of records by using the Transformation pipeline in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).
 
-      This method lets you replace all records in your index without downtime. It performs these operations:
+      This method replaces all records without downtime. It performs these operations:
         1. Copy settings, synonyms, and rules from your original index to a temporary index.
         2. Add your new records to the temporary index.
         3. Replace your original index with the temporary index.
 
-      Use the safe parameter to ensure that these (asynchronous) operations are performed in sequence.
-      If there's an error duing one of these steps, the temporary index won't be deleted.
-      This operation is rate-limited.
-      This method creates a temporary index: your record count is temporarily doubled. Algolia doesn't count the three days with the highest number of records towards your monthly usage.
-      If you're on a legacy plan (before July 2020), this method counts two operations towards your usage (in addition to the number of records): copySettings and moveIndex.
-      The API key you use for this operation must have access to the index YourIndex and the temporary index YourIndex_tmp.
+      Notes:
+      - Use the `safe` parameter to run these (asynchronous) operations in sequence.
+      - If there's an error during one of these steps, the temporary index isn't deleted.
+      - This operation is rate-limited.
+      - This method creates a temporary index, which temporarily doubles your record count.
+      - Algolia doesn't count the three days with the highest number of records toward your monthly usage.
+      - If you're on a legacy plan (before July 2020), this method counts two operations toward your usage (in addition to the number of records): `copySettings` and `moveIndex`.
+      - The API key you use for this operation must have access to the index `YourIndex` and the temporary index `YourIndex_tmp`.
     parameters:
       - in: query
         name: indexName
@@ -47,14 +49,14 @@ method:
             type: object
       - in: query
         name: batchSize
-        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1,000.
         required: false
         schema:
           type: integer
           default: 1000
       - in: query
         name: scopes
-        description: List of scopes to kepp in the index. Defaults to `settings`, `synonyms`, and `rules`.
+        description: List of scopes to keep in the index. Defaults to `settings`, `synonyms`, and `rules`.
         required: false
         schema:
           type: array

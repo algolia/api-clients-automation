@@ -19,7 +19,7 @@ info:
     Use Algolia's API clients, libraries, and integrations to collect events
     from your UI and send them to the Insights API.
 
-    See: [Algolia's
+    For more information, see [Algolia's
     ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
@@ -43,7 +43,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -71,8 +71,8 @@ info:
     information as headers.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -93,8 +93,8 @@ info:
     ## Version
 
 
-    The current version of the Insights API is version 1, as indicated by the
-    `/1/` in each endpoint's URL.
+    The current version of the Insights API is version 1, indicated by the `/1/`
+    in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://insights.{region}.algolia.io
@@ -2924,7 +2924,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

@@ -20,6 +20,9 @@ public class AuthOAuth implements AuthInput {
   @JsonProperty("client_secret")
   private String clientSecret;
 
+  @JsonProperty("code")
+  private String code;
+
   @JsonProperty("scope")
   private String scope;
 
@@ -40,7 +43,7 @@ public class AuthOAuth implements AuthInput {
   }
 
   /** Client ID. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getClientId() {
     return clientId;
   }
@@ -51,9 +54,24 @@ public class AuthOAuth implements AuthInput {
   }
 
   /** Client secret. This field is `null` in the API response. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getClientSecret() {
     return clientSecret;
+  }
+
+  public AuthOAuth setCode(String code) {
+    this.code = code;
+    return this;
+  }
+
+  /**
+   * Authorization code. Used during an `authorization_code` grant type flow, to request an
+   * access_token when creating/updating the authentication. This field is not returned in the API
+   * response.
+   */
+  @javax.annotation.Nullable
+  public String getCode() {
+    return code;
   }
 
   public AuthOAuth setScope(String scope) {
@@ -80,13 +98,14 @@ public class AuthOAuth implements AuthInput {
       Objects.equals(this.url, authOAuth.url) &&
       Objects.equals(this.clientId, authOAuth.clientId) &&
       Objects.equals(this.clientSecret, authOAuth.clientSecret) &&
+      Objects.equals(this.code, authOAuth.code) &&
       Objects.equals(this.scope, authOAuth.scope)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, clientId, clientSecret, scope);
+    return Objects.hash(url, clientId, clientSecret, code, scope);
   }
 
   @Override
@@ -96,6 +115,7 @@ public class AuthOAuth implements AuthInput {
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();

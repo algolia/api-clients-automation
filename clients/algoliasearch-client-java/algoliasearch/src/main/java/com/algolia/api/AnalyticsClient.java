@@ -3395,15 +3395,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3427,15 +3426,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3459,15 +3457,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3484,15 +3481,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3509,15 +3505,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3531,15 +3526,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3553,15 +3547,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3572,15 +3565,14 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the purchase rate for all your searches with at least one purchase event, including a
-   * daily breakdown. By default, the analyzed period includes the last eight days including the
-   * current day. The rate is the number of purchase conversion events divided by the number of
-   * tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. **There's a difference between a 0 and null purchase
-   * rate when `clickAnalytics` is enabled:** - **Null** means there were no queries: since Algolia
-   * didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no
-   * [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started)
-   * were received.
+   * daily breakdown. By default, the analyzed period includes the last eight days, including the
+   * current day. The rate is purchase conversion events divided by tracked searches. A search is
+   * tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's
+   * `count`, which includes searches where `clickAnalytics` is `false`. **There's a difference
+   * between a 0 and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there
+   * were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means
+   * there were queries but no [purchase conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3592,13 +3584,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3634,13 +3625,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3676,13 +3666,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3705,13 +3694,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3730,13 +3718,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3752,13 +3739,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3774,13 +3760,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -3793,13 +3778,12 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Retrieves the purchase rate for all your searches with at least one purchase
    * event, including a daily breakdown. By default, the analyzed period includes the last eight
-   * days including the current day. The rate is the number of purchase conversion events divided by
-   * the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics`
-   * is `true`). This differs from the response's `count`, which shows the overall number of
-   * searches, including those where `clickAnalytics` is `false`. **There's a difference between a 0
-   * and null purchase rate when `clickAnalytics` is enabled:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there
-   * _were_ queries but no [purchase conversion
+   * days, including the current day. The rate is purchase conversion events divided by tracked
+   * searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate
+   * is null. - **0** means there were queries but no [purchase conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6711,16 +6695,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6759,16 +6742,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6807,16 +6789,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6850,16 +6831,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6893,16 +6873,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6916,16 +6895,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6939,16 +6917,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6960,16 +6937,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Retrieves the object IDs of the 1,000 most frequent search results. If you set the
-   * `clickAnalytics` query parameter to true, the response also includes: - Tracked searches count.
-   * Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`.
-   * This differs from the response's `count`, which shows the overall number of searches, including
-   * those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion
-   * count - Conversion rate (CR) - Average click position If you set the `revenueAnalytics`
-   * parameter to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR)
-   * - Purchase count - Purchase rate - Revenue details for each currency **There's a difference
-   * between 0% rates and null rates:** - **Null** means there were no queries: since Algolia didn't
-   * receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean
-   * there _were_ queries but no [click or conversion
+   * `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -6981,16 +6957,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7042,16 +7017,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7103,16 +7077,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7146,16 +7119,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7189,16 +7161,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7213,16 +7184,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7237,16 +7207,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7258,16 +7227,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * (asynchronously) Retrieves the object IDs of the 1,000 most frequent search results. If you set
-   * the `clickAnalytics` query parameter to true, the response also includes: - Tracked searches
-   * count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to
-   * `true`. This differs from the response's `count`, which shows the overall number of searches,
-   * including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
-   * Conversion count - Conversion rate (CR) - Average click position If you set the
-   * `revenueAnalytics` parameter to `true`, the response also includes: - Add-to-cart count -
-   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
-   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
-   * queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are
-   * null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * the `clickAnalytics` query parameter to `true`, the response also includes: - Tracked searches
+   * count. Tracked searches are Search API requests with `clickAnalytics` set to `true`. This
+   * differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
+   * - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average
+   * click position If you set the `revenueAnalytics` parameter to `true`, the response also
+   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
+   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
+   * **Null** means there were no queries. Algolia didn't receive any events, so rates are null. -
+   * **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7279,16 +7247,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7343,16 +7310,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7407,16 +7373,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7454,16 +7419,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7513,16 +7477,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7537,16 +7500,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7561,16 +7523,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7582,16 +7543,15 @@ public class AnalyticsClient extends ApiClient {
 
   /**
    * Returns the most popular searches. For each search, it also includes the average number of
-   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes -
-   * Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics`
-   * parameter set to `true`. This differs from the response's `count`, which shows the overall
-   * number of searches, including those where `clickAnalytics` is `false`. - Click count -
-   * Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position If
-   * you set the `revenueAnalytics` query parameter to `true`, the response also includes: -
-   * Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details
-   * for each currency **There's a difference between 0% rates and null rates:** - **Null** means
-   * there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR,
-   * purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion
+   * hits. If you set the `clickAnalytics` query parameter to `true`, the response also includes: -
+   * Tracked searches count Tracked searches are Search API requests with `clickAnalytics` set to
+   * `true`. This differs from the response's `count`, which includes searches where
+   * `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count -
+   * Conversion rate (CR) - Average click position If you set the `revenueAnalytics` query parameter
+   * to `true`, the response also includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase
+   * count - Purchase rate - Revenue details for each currency **There's a difference between 0%
+   * rates and null rates:** - **Null** means there were no queries. Algolia didn't receive any
+   * events, so rates are null. - **0% rates** mean there were queries but no [click or conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
@@ -7604,17 +7564,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -7671,17 +7630,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -7738,17 +7696,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -7798,17 +7755,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param clickAnalytics Whether to include metrics related to click and conversion events in the
@@ -7858,17 +7814,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7883,17 +7838,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7908,17 +7862,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7930,17 +7883,16 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the most popular searches. For each search, it also includes the
    * average number of hits. If you set the `clickAnalytics` query parameter to `true`, the response
-   * also includes - Tracked searches count. Tracked searches are Search API requests with the
-   * `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows
-   * the overall number of searches, including those where `clickAnalytics` is `false`. - Click
-   * count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click
-   * position If you set the `revenueAnalytics` query parameter to `true`, the response also
-   * includes: - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate -
-   * Revenue details for each currency **There's a difference between 0% rates and null rates:** -
-   * **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR,
-   * CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or
-   * conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were
-   * received.
+   * also includes: - Tracked searches count Tracked searches are Search API requests with
+   * `clickAnalytics` set to `true`. This differs from the response's `count`, which includes
+   * searches where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) -
+   * Conversion count - Conversion rate (CR) - Average click position If you set the
+   * `revenueAnalytics` query parameter to `true`, the response also includes: - Add-to-cart count -
+   * Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency
+   * **There's a difference between 0% rates and null rates:** - **Null** means there were no
+   * queries. Algolia didn't receive any events, so rates are null. - **0% rates** mean there were
+   * queries but no [click or conversion
+   * events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

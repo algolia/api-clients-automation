@@ -8,7 +8,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the Analytics API are:
+    Base URLs for the Analytics API:
 
 
     - `https://analytics.us.algolia.com`
@@ -32,7 +32,7 @@ info:
     plans](https://www.algolia.com/pricing).
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -86,7 +86,7 @@ info:
     ## Version
 
 
-    The current version of the Analytics API is version 2, as indicated by the
+    The current version of the Analytics API is version 2, indicated by the
     `/2/` in each endpoint's URL.
 
 
@@ -1056,14 +1056,12 @@ paths:
 
 
         If you set the `clickAnalytics` query parameter to `true`, the response
-        also includes
+        also includes:
 
 
-        - Tracked searches count. Tracked searches are Search API requests with
-        the `clickAnalytics` parameter set to `true`. This differs from the
-        response's `count`, which shows the overall number of searches,
-        including those where `clickAnalytics` is `false`.
-
+        - Tracked searches count
+          Tracked searches are Search API requests with `clickAnalytics` set to `true`.
+          This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
         - Click count
 
         - Click-through rate (CTR)
@@ -1093,10 +1091,10 @@ paths:
         **There's a difference between 0% rates and null rates:**
 
 
-        - **Null** means there were no queries: since Algolia didn't receive any
-        events, the rates (CTR, CR, ATCR, purchase rate) are null.
+        - **Null** means there were no queries. Algolia didn't receive any
+        events, so rates are null.
 
-        - **0% rates** mean there _were_ queries but no [click or conversion
+        - **0% rates** mean there were queries but no [click or conversion
         events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
@@ -2744,15 +2742,13 @@ paths:
         Retrieves the object IDs of the 1,000 most frequent search results.
 
 
-        If you set the `clickAnalytics` query parameter to true, the response
+        If you set the `clickAnalytics` query parameter to `true`, the response
         also includes:
 
 
-        - Tracked searches count. Tracked searches are Search API requests with
-        the `clickAnalytics` parameter set to `true`. This differs from the
-        response's `count`, which shows the overall number of searches,
-        including those where `clickAnalytics` is `false`.
-
+        - Tracked searches count.
+          Tracked searches are Search API requests with `clickAnalytics` set to `true`.
+          This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
         - Click count
 
         - Click-through rate (CTR)
@@ -2782,10 +2778,10 @@ paths:
         **There's a difference between 0% rates and null rates:**
 
 
-        - **Null** means there were no queries: since Algolia didn't receive any
-        events, the rates (CTR, CR, ATCR, purchase rate) are null.
+        - **Null** means there were no queries. Algolia didn't receive any
+        events, so rates are null.
 
-        - **0% rates** mean there _were_ queries but no [click or conversion
+        - **0% rates** mean there were queries but no [click or conversion
         events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
@@ -5825,28 +5821,27 @@ paths:
         purchase event, including a daily breakdown.
 
 
-        By default, the analyzed period includes the last eight days including
+        By default, the analyzed period includes the last eight days, including
         the current day.
 
 
-        The rate is the number of purchase conversion events divided by the
-        number of tracked searches.
+        The rate is purchase conversion events divided by tracked searches.
 
         A search is tracked if it returns a query ID (`clickAnalytics` is
         `true`).
 
-        This differs from the response's `count`, which shows the overall number
-        of searches, including those where `clickAnalytics` is `false`.
+        This differs from the response's `count`, which includes searches where
+        `clickAnalytics` is `false`.
 
 
         **There's a difference between a 0 and null purchase rate when
         `clickAnalytics` is enabled:**
 
 
-        - **Null** means there were no queries: since Algolia didn't receive any
-        events, the purchase rate is null.
+        - **Null** means there were no queries. Algolia didn't receive any
+        events, so the purchase rate is null.
 
-        - **0** mean there _were_ queries but no [purchase conversion
+        - **0** means there were queries but no [purchase conversion
         events](https://www.algolia.com/doc/guides/sending-events/getting-started)
         were received.
       parameters:
@@ -7451,7 +7446,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

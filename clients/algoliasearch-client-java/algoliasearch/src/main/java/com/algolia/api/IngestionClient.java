@@ -484,7 +484,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -499,7 +499,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -514,7 +514,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -526,7 +526,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -538,7 +538,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -557,7 +557,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -578,7 +578,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -590,7 +590,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new task using the v1 endpoint, please use `createTask` instead.
+   * (asynchronously) Creates a new task using the v1 endpoint. Use `createTask` instead.
    *
    * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1993,7 +1993,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2007,7 +2007,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2021,7 +2021,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2033,7 +2033,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2045,8 +2045,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2065,8 +2064,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2085,8 +2083,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2098,8 +2095,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
-   * instead.
+   * (asynchronously) Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2318,7 +2314,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2332,7 +2328,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2347,7 +2343,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2359,7 +2355,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2371,7 +2367,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2390,7 +2386,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2409,7 +2405,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2421,7 +2417,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disables a task using the v1 endpoint, please use `disableTask` instead.
+   * (asynchronously) Disables a task using the v1 endpoint. Use `disableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2531,7 +2527,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2545,7 +2541,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2559,7 +2555,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2571,7 +2567,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2583,7 +2579,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2602,7 +2598,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2621,7 +2617,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2633,7 +2629,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enables a task using the v1 endpoint, please use `enableTask` instead.
+   * (asynchronously) Enables a task using the v1 endpoint. Use `enableTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3249,7 +3245,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3263,7 +3259,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3277,7 +3273,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3289,7 +3285,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3301,8 +3297,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3321,8 +3316,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3341,8 +3335,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3354,8 +3347,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-   * instead.
+   * (asynchronously) Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4460,10 +4452,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4493,10 +4485,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4528,10 +4520,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse listRuns(
@@ -4558,10 +4550,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listRunsWithHTTPInfo(
@@ -4628,10 +4620,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4674,10 +4666,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4720,10 +4712,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> listRunsAsync(
@@ -4750,10 +4742,10 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
-   *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
-   *     day is used. (optional)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *     default, the current day minus seven days is used. (optional)
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *     the current day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listRunsWithHTTPInfoAsync(
@@ -5575,7 +5567,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5610,7 +5602,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5645,7 +5637,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5675,7 +5667,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5705,7 +5697,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5716,7 +5708,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5727,7 +5719,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5736,7 +5728,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5745,8 +5737,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5792,8 +5783,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5839,8 +5829,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5870,8 +5859,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param itemsPerPage Number of items per page. (optional, default to 10)
    * @param page Page number of the paginated API response. (optional)
@@ -5901,8 +5889,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5913,8 +5900,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5925,8 +5911,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5935,8 +5920,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-   * instead.
+   * (asynchronously) Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -7604,8 +7588,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7621,8 +7605,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7638,8 +7622,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7652,8 +7636,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7666,8 +7650,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7679,8 +7663,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7692,8 +7676,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7703,8 +7687,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of
-   * task runs with the observability endpoints.
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7714,8 +7698,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7737,8 +7721,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7760,8 +7744,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7775,8 +7759,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param runTaskPayload (optional)
@@ -7790,8 +7774,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7804,8 +7788,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -7818,8 +7802,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -7829,8 +7813,8 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Runs a task using the v1 endpoint, please use `runTask` instead. You can check
-   * the status of task runs with the observability endpoints.
+   * (asynchronously) Runs a task using the v1 endpoint. Use `runTask` instead. You can check the
+   * status of task runs with the observability endpoints.
    *
    * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8257,7 +8241,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8272,7 +8256,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8287,7 +8271,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8299,7 +8283,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8311,7 +8295,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8329,7 +8313,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8347,7 +8331,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8359,7 +8343,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+   * (asynchronously) Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9377,7 +9361,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9393,7 +9377,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9412,7 +9396,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9425,7 +9409,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9438,8 +9422,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9463,8 +9446,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9488,8 +9470,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
@@ -9503,8 +9484,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Updates a task by its ID using the v1 endpoint, please use `updateTask`
-   * instead.
+   * (asynchronously) Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
    *
    * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)

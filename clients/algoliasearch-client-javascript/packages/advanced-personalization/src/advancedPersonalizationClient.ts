@@ -31,7 +31,7 @@ import type {
   GetUsersProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.26';
+export const apiClientVersion = '0.0.1-alpha.27';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -392,8 +392,8 @@ export function createAdvancedPersonalizationClient({
      *  - browse
      *  - recommendation
      * @param getUsers - The getUsers object.
-     * @param getUsers.startDate - Filter users by start date (in RFC3339 format). Only users that were updated after the passed date will be returned.
-     * @param getUsers.endDate - Filter users by end date (in RFC3339 format). Only users that were updated before the passed date will be returned.
+     * @param getUsers.startDate - Filter users by start date and time, in RFC 3339 format. Only users that were updated after the passed date will be returned.
+     * @param getUsers.endDate - Filter users by end date and time, in RFC 3339 format. Only users that were updated before the passed date will be returned.
      * @param getUsers.indices - Filter users by matching indices. If multiple indices are passed, returned users will match all indices.
      * @param getUsers.affinity - Filter users by affinity name and value. If multiple values are passed, returned users will match all values.
      * @param getUsers.limit - Limit the number of users in the response. The value of this parameter ranges from 1 to 1000.

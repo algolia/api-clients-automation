@@ -3,7 +3,7 @@
   "info": {
     "title": "Composition API",
     "summary": "The Algolia Composition API lets you run composed search requests on your Compositions",
-    "description": "## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)\n\n## Base URLs\n\nThe base URLs for requests to the Composition API are:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nYou should randomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nFor more information, see [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).\n\n## Base URLs\n\nBase URLs for the Composition API:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nRandomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nDepending on the endpoint, request bodies are either JSON objects or arrays of JSON objects.\n\n## Parameters\n\nParameters are passed in the request body for POST and PUT requests.\n\n## Response status and errors\n\nThe Composition API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Composition API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -680,7 +680,7 @@
           "editSettings"
         ],
         "summary": "Set or update the \"sortingStrategy\" configuration for an existing composition",
-        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint allows you to create a new sorting strategy mapping or replace the currently configured one.\nThe provided sorting indices MUST be associated indices or replicas of the main targeted index.\n\nWARNING: This endpoint cannot validate if the sort index is related to the composition's main index.\n  Validation will fail at runtime if the index you updated is not related!\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
+        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint lets you create a new sorting strategy mapping or replace the configured one.\nThe provided sorting indices must be associated indices or replicas of the main targeted index.\n\nThis endpoint can't validate whether the sort index is related to the composition's main index.\nValidation fails at runtime if the index you updated isn't related.\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/compositionID"
@@ -1171,7 +1171,7 @@
           {
             "in": "query",
             "name": "apiKey",
-            "description": "API key to be used from now on.",
+            "description": "API key to use for subsequent requests.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1530,7 +1530,7 @@
       },
       "filters": {
         "type": "string",
-        "description": "Filter expression to only include items that match the filter criteria in the response.\n\nYou can use these filter expressions:\n\n- **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.\n- **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).\n- **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value.\n- **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).\n- **Boolean filters.** `<facet>: true | false`.\n\nYou can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:\n\n- You can only combine filters of the same type with `OR`.\n  **Not supported:** `facet:value OR num > 3`.\n- You can't use `NOT` with combinations of filters.\n  **Not supported:** `NOT(facet:value OR facet:value)`\n- You can't combine conjunctions (`AND`) with `OR`.\n  **Not supported:** `facet:value OR (facet:value AND facet:value)`\n\nUse quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.\nIf a facet attribute is an array, the filter matches if it matches at least one element of the array.\n\nFor more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).\n",
+        "description": "Filter expression to only include items that match the filter criteria in the response.\n\nYou can use these filter expressions:\n\n- **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.\n- **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).\n- **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value.\n- **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).\n- **Boolean filters.** `<facet>: true | false`.\n\nYou can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:\n\n- You can only combine filters of the same type with `OR`.\n  **Not supported:** `facet:value OR num > 3`.\n- You can't use `NOT` with combinations of filters.\n  **Not supported:** `NOT(facet:value OR facet:value)`\n- You can't combine conjunctions (`AND`) with `OR`.\n  **Not supported:** `facet:value OR (facet:value AND facet:value)`\n\nUse quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes.\nIf a facet attribute is an array, the filter matches if it matches at least one element of the array.\n\nFor more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).\n",
         "example": "(category:Book OR category:Ebook) AND _tags:published",
         "x-categories": [
           "Filtering"
@@ -1857,7 +1857,7 @@
         "example": [
           "es"
         ],
-        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries \nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, you must place the CJK language **first** \n**You should always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
+        "description": "Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.\nThis setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.\nThis setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.\nTo support this, place the CJK language **first**.\n**Always specify a query language.**\nIf you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages),\nor the languages you specified with the `ignorePlurals` or `removeStopWords` parameters.\nThis can lead to unexpected search results.\nFor more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).\n",
         "default": [],
         "x-categories": [
           "Languages"
@@ -3301,7 +3301,7 @@
         ]
       },
       "ignorePlurals": {
-        "description": "Treat singular, plurals, and other forms of declensions as equivalent.\nYou should only use this feature for the languages used in your index.\n",
+        "description": "Treat singular, plurals, and other forms of declensions as equivalent.\nOnly use this feature for the languages used in your index.\n",
         "example": [
           "ca",
           "es"
@@ -3369,7 +3369,7 @@
         ]
       },
       "optionalWords": {
-        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is an optional word,\nthe search engine runs two queries. One for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has less than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).\n  For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is optional,\nthe search engine runs two queries: one for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has fewer than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words divided by 5 (rounded down).\n  Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
         "oneOf": [
           {
             "type": "string"
@@ -3414,7 +3414,7 @@
         ]
       },
       "removeStopWords": {
-        "description": "Removes stop words from the search query.\n\nStop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.\nIn English, \"the\", \"a\", or \"and\" are stop words.\n\nYou should only use this feature for the languages used in your index.\n",
+        "description": "Removes stop words from the search query.\n\nStop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own.\nIn English, \"the\", \"a\", or \"and\" are stop words.\n\nOnly use this feature for the languages used in your index.\n",
         "example": [
           "ca",
           "es"
@@ -4267,12 +4267,12 @@
           "from": {
             "type": "integer",
             "format": "int64",
-            "description": "When the rule should start to be active, in Unix epoch time."
+            "description": "Timestamp when the rule should start to be active, measured in seconds since the Unix epoch."
           },
           "until": {
             "type": "integer",
             "format": "int64",
-            "description": "When the rule should stop to be active, in Unix epoch time."
+            "description": "Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch."
           }
         }
       },

@@ -18,7 +18,7 @@ public class DeleteResponse {
     return this;
   }
 
-  /** Date of deletion in RFC 3339 format. */
+  /** Date and time when the resource was deleted, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;

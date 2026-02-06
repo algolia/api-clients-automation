@@ -2,7 +2,7 @@ post:
   tags:
     - tasks
   summary: Run a task V1
-  description: Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+  description: Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
   operationId: runTaskV1
   deprecated: true
   x-acl:

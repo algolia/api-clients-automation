@@ -3,7 +3,7 @@
   "info": {
     "title": "Algolia Monitoring API",
     "summary": "The Monitoring API lets you check the status of your Algolia infrastructure",
-    "description": "## Base URLs\n\nThe base URL for requests to the Monitoring API is:\n\n- `https://status.algolia.com`\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the Infrastructure endpoints\nis available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nTo authenticate requests to the Infrastructure endpoints, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. Your Monitoring API key.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\nOther endpoints don't require authentication.\n\n## Response status and errors\n\nThe Monitoring API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Monitoring API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "## Base URLs\n\nBase URL for the Monitoring API:\n\n- `https://status.algolia.com`\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the Infrastructure endpoints\nis available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nTo authenticate requests to the Infrastructure endpoints, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. Your Monitoring API key.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\nOther endpoints don't require authentication.\n\n## Response status and errors\n\nThe Monitoring API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Monitoring API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -437,7 +437,7 @@
           {
             "in": "query",
             "name": "apiKey",
-            "description": "API key to be used from now on.",
+            "description": "API key to use for subsequent requests.",
             "required": true,
             "schema": {
               "type": "string"

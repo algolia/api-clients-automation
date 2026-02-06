@@ -252,7 +252,7 @@ class IngestionClient(
     execute[TaskCreateResponse](request, requestOptions)
   }
 
-  /** Creates a new task using the v1 endpoint, please use `createTask` instead.
+  /** Creates a new task using the v1 endpoint. Use `createTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -498,7 +498,7 @@ class IngestionClient(
     execute[DeleteResponse](request, requestOptions)
   }
 
-  /** Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+  /** Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -569,7 +569,7 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Disables a task using the v1 endpoint, please use `disableTask` instead.
+  /** Disables a task using the v1 endpoint. Use `disableTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -617,7 +617,7 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Enables a task using the v1 endpoint, please use `enableTask` instead.
+  /** Enables a task using the v1 endpoint. Use `enableTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -782,7 +782,7 @@ class IngestionClient(
     execute[Task](request, requestOptions)
   }
 
-  /** Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+  /** Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1001,9 +1001,10 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     * @param startDate
-    *   Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    *   Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days
+    *   is used.
     * @param endDate
-    *   Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+    *   Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
     */
   def listRuns(
       itemsPerPage: Option[Int] = None,
@@ -1143,7 +1144,7 @@ class IngestionClient(
     execute[ListTasksResponse](request, requestOptions)
   }
 
-  /** Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+  /** Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1417,7 +1418,7 @@ class IngestionClient(
     execute[RunResponse](request, requestOptions)
   }
 
-  /** Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the
+  /** Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the
     * observability endpoints.
     *
     * Required API Key ACLs:
@@ -1534,7 +1535,7 @@ class IngestionClient(
     execute[Seq[Task]](request, requestOptions)
   }
 
-  /** Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+  /** Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1775,7 +1776,7 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+  /** Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
     *
     * Required API Key ACLs:
     *   - addObject
