@@ -139,7 +139,7 @@ public class TaskCreate {
     return this;
   }
 
-  /** Date of the last cursor in RFC 3339 format. */
+  /** Date and time when the last cursor was created, in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getCursor() {
     return cursor;

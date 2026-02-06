@@ -3,7 +3,7 @@
   "info": {
     "title": "Insights API",
     "summary": "The Insights API lets you collect events related to your search and discovery experience",
-    "description": "Events represent user interactions with your app or website.\nThey unlock powerful features, such as recommendations, personalization, smarter search results,\nand analytics that help you optimize your user experience.\n\n## Client libraries\n\nUse Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the Insights API.\nSee: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).\n\n## Base URLs\n\nThe base URLs for making requests to the Insights API are:\n\n- `https://insights.us.algolia.io`\n- `https://insights.de.algolia.io`\n- `https//insights.algolia.io` (routes requests to the closest of the above servers, based on your geographical location)\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nResponse bodies are JSON objects.\nDeleting a user token returns an empty response body with rate-limiting information as headers.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\nThe Insights API doesn't validate if the event parameters such as `indexName`, `objectIDs`, or `userToken`,\ncorrespond to anything in the Search API. It just checks if they're formatted correctly.\nCheck the [Events](https://dashboard.algolia.com/events/health) health section,\nwhether your events can be used for Algolia features such as Analytics, or Dynamic Re-Ranking.\n\n## Version\n\nThe current version of the Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "Events represent user interactions with your app or website.\nThey unlock powerful features, such as recommendations, personalization, smarter search results,\nand analytics that help you optimize your user experience.\n\n## Client libraries\n\nUse Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the Insights API.\nFor more information, see [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).\n\n## Base URLs\n\nThe base URLs for making requests to the Insights API are:\n\n- `https://insights.us.algolia.io`\n- `https://insights.de.algolia.io`\n- `https//insights.algolia.io` (routes requests to the closest of the above servers, based on your geographical location)\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nResponse bodies are JSON objects.\nDeleting a user token returns an empty response body with rate-limiting information as headers.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\nThe Insights API doesn't validate if the event parameters such as `indexName`, `objectIDs`, or `userToken`,\ncorrespond to anything in the Search API. It just checks if they're formatted correctly.\nCheck the [Events](https://dashboard.algolia.com/events/health) health section,\nwhether your events can be used for Algolia features such as Analytics, or Dynamic Re-Ranking.\n\n## Version\n\nThe current version of the Insights API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -869,7 +869,7 @@
           {
             "in": "query",
             "name": "apiKey",
-            "description": "API key to be used from now on.",
+            "description": "API key to use for subsequent requests.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1816,7 +1816,7 @@
         }
       },
       "x-ratelimit-reset": {
-        "description": "Timstamp when the rate limit will reset, measured in seconds since the Unix epoch.",
+        "description": "Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.",
         "example": 1710682486,
         "schema": {
           "type": "integer"

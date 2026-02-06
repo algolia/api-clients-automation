@@ -21,7 +21,9 @@ public class TimeRange {
     return this;
   }
 
-  /** When the rule should start to be active, in Unix epoch time. */
+  /**
+   * Timestamp when the rule should start to be active, measured in seconds since the Unix epoch.
+   */
   @javax.annotation.Nullable
   public Long getFrom() {
     return from;
@@ -32,7 +34,7 @@ public class TimeRange {
     return this;
   }
 
-  /** When the rule should stop to be active, in Unix epoch time. */
+  /** Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch. */
   @javax.annotation.Nullable
   public Long getUntil() {
     return until;

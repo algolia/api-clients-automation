@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * API request body for creating a task using the V1 shape, please use methods and types that don't
- * contain the V1 suffix.
+ * API request body for creating a task using the V1 shape. Use methods and types that don't contain
+ * the V1 suffix.
  *
  * @deprecated
  */
@@ -125,7 +125,7 @@ public class TaskCreateV1 {
     return this;
   }
 
-  /** Date of the last cursor in RFC 3339 format. */
+  /** Date and time when the last cursor was created, in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getCursor() {
     return cursor;

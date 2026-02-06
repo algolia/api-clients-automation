@@ -3,7 +3,7 @@
   "info": {
     "title": "Ingestion API",
     "summary": "The Ingestion API lets you connect third-party services and platforms with Algolia and schedule tasks to ingest your data",
-    "description": "The Ingestion API powers the no-code [data connectors](https://dashboard.algolia.com/connectors).\n\n## Base URLs\n\nThe base URLs for requests to the Ingestion API are:\n\n- `https://data.us.algolia.com`\n- `https://data.eu.algolia.com`\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nTo authenticate your API requests, add these headers:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nResponse bodies are JSON objects.\n\nSuccessful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Ingestion API is version 1, as indicated by the `/1/` in each endpoint's URL.\n",
+    "description": "The Ingestion API powers the no-code [data connectors](https://dashboard.algolia.com/connectors).\n\n## Base URLs\n\nBase URLs for the Ingestion API:\n\n- `https://data.us.algolia.com`\n- `https://data.eu.algolia.com`\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nResponse bodies are JSON objects.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Ingestion API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -56,7 +56,7 @@
     {
       "name": "transformations",
       "x-displayName": "Transformations",
-      "description": "Transformations allows you to transform a record before it gets indexed in Algolia.\n"
+      "description": "Transformations let you transform a record before it gets indexed in Algolia.\n"
     }
   ],
   "paths": {
@@ -1776,7 +1776,7 @@
           "tasks"
         ],
         "summary": "List tasks V1",
-        "description": "Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.",
+        "description": "Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.",
         "operationId": "listTasksV1",
         "deprecated": true,
         "x-acl": [
@@ -1852,7 +1852,7 @@
           "tasks"
         ],
         "summary": "Create a task V1",
-        "description": "Creates a new task using the v1 endpoint, please use `createTask` instead.",
+        "description": "Creates a new task using the v1 endpoint. Use `createTask` instead.",
         "operationId": "createTaskV1",
         "x-acl": [
           "addObject",
@@ -1895,7 +1895,7 @@
           "tasks"
         ],
         "summary": "Search for tasks V1",
-        "description": "Searches for tasks using the v1 endpoint, please use `searchTasks` instead.",
+        "description": "Searches for tasks using the v1 endpoint. Use `searchTasks` instead.",
         "operationId": "searchTasksV1",
         "deprecated": true,
         "x-acl": [
@@ -1940,7 +1940,7 @@
           "tasks"
         ],
         "summary": "Retrieve a task V1",
-        "description": "Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.",
+        "description": "Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.",
         "operationId": "getTaskV1",
         "deprecated": true,
         "x-acl": [
@@ -1974,7 +1974,7 @@
           "tasks"
         ],
         "summary": "Update a task V1",
-        "description": "Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.",
+        "description": "Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.",
         "operationId": "updateTaskV1",
         "x-acl": [
           "addObject",
@@ -2019,7 +2019,7 @@
           "tasks"
         ],
         "summary": "Delete a task",
-        "description": "Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.",
+        "description": "Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.",
         "operationId": "deleteTaskV1",
         "x-acl": [
           "addObject",
@@ -2055,7 +2055,7 @@
           "tasks"
         ],
         "summary": "Run a task V1",
-        "description": "Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.",
+        "description": "Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.",
         "operationId": "runTaskV1",
         "deprecated": true,
         "x-acl": [
@@ -2101,7 +2101,7 @@
           "tasks"
         ],
         "summary": "Enable a task V1",
-        "description": "Enables a task using the v1 endpoint, please use `enableTask` instead.",
+        "description": "Enables a task using the v1 endpoint. Use `enableTask` instead.",
         "operationId": "enableTaskV1",
         "deprecated": true,
         "x-acl": [
@@ -2137,7 +2137,7 @@
           "tasks"
         ],
         "summary": "Disable a task V1",
-        "description": "Disables a task using the v1 endpoint, please use `disableTask` instead.",
+        "description": "Disables a task using the v1 endpoint. Use `disableTask` instead.",
         "operationId": "disableTaskV1",
         "deprecated": true,
         "x-acl": [
@@ -2550,7 +2550,7 @@
           {
             "name": "startDate",
             "in": "query",
-            "description": "Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.",
+            "description": "Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.",
             "schema": {
               "type": "string"
             }
@@ -2558,7 +2558,7 @@
           {
             "name": "endDate",
             "in": "query",
-            "description": "Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.",
+            "description": "Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.",
             "schema": {
               "type": "string"
             }
@@ -2759,7 +2759,7 @@
           {
             "in": "query",
             "name": "apiKey",
-            "description": "API key to be used from now on.",
+            "description": "API key to use for subsequent requests.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2829,7 +2829,7 @@
           {
             "in": "query",
             "name": "waitForTasks",
-            "description": "Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.",
+            "description": "Whether to wait until every `batch` task has been processed. This may take longer but is more reliable.",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -2838,7 +2838,7 @@
           {
             "in": "query",
             "name": "batchSize",
-            "description": "The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.",
+            "description": "The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1,000.",
             "required": false,
             "schema": {
               "type": "integer"
@@ -3430,7 +3430,7 @@
       },
       "PublishedAt": {
         "type": "string",
-        "description": "Date of publish RFC 3339 format."
+        "description": "Date and time when the resource was published, in RFC 3339 format."
       },
       "Event": {
         "type": "object",
@@ -3482,7 +3482,7 @@
       },
       "CreatedAt": {
         "type": "string",
-        "description": "Date of creation in RFC 3339 format."
+        "description": "Date and time when the resource was created, in RFC 3339 format."
       },
       "WatchResponse": {
         "type": "object",
@@ -3767,7 +3767,7 @@
       },
       "updatedAt": {
         "type": "string",
-        "description": "Date of last update in RFC 3339 format."
+        "description": "Date and time when the resource was last updated, in RFC 3339 format."
       },
       "Authentication": {
         "type": "object",
@@ -4073,7 +4073,7 @@
         "properties": {
           "deletedAt": {
             "type": "string",
-            "description": "Date of deletion in RFC 3339 format."
+            "description": "Date and time when the resource was deleted, in RFC 3339 format."
           }
         },
         "required": [
@@ -5344,7 +5344,7 @@
       },
       "cursor": {
         "type": "string",
-        "description": "Date of the last cursor in RFC 3339 format."
+        "description": "Date and time when the last cursor was created, in RFC 3339 format."
       },
       "Notifications": {
         "type": "object",
@@ -5759,7 +5759,7 @@
         "type": "object",
         "additionalProperties": false,
         "deprecated": true,
-        "description": "The V1 task object, please use methods and types that don't contain the V1 suffix.",
+        "description": "The V1 task object. Use methods and types that don't contain the V1 suffix.",
         "properties": {
           "taskID": {
             "$ref": "#/components/schemas/taskID"
@@ -5866,7 +5866,7 @@
         "type": "object",
         "additionalProperties": false,
         "deprecated": true,
-        "description": "API request body for creating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.",
+        "description": "API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.",
         "properties": {
           "sourceID": {
             "$ref": "#/components/schemas/sourceID"
@@ -5922,7 +5922,7 @@
         "type": "object",
         "additionalProperties": false,
         "deprecated": true,
-        "description": "API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.",
+        "description": "API request body for updating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.",
         "properties": {
           "destinationID": {
             "$ref": "#/components/schemas/destinationID"
@@ -6261,11 +6261,11 @@
       },
       "startedAt": {
         "type": "string",
-        "description": "Date of start in RFC 3339 format."
+        "description": "Date and time when the task started, in RFC 3339 format."
       },
       "finishedAt": {
         "type": "string",
-        "description": "Date of finish in RFC 3339 format."
+        "description": "Date and time when the task finished, in RFC 3339 format."
       },
       "Run": {
         "type": "object",
@@ -6342,11 +6342,11 @@
         "properties": {
           "startDate": {
             "type": "string",
-            "description": "Date in RFC 3339 format representing the oldest data in the time window."
+            "description": "Date and time representing the oldest data in the time window, in RFC 3339 format."
           },
           "endDate": {
             "type": "string",
-            "description": "Date in RFC 3339 format representing the newest data in the time window."
+            "description": "Date and time representing the newest data in the time window, in RFC 3339 format."
           }
         },
         "required": [

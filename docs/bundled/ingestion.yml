@@ -12,7 +12,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the Ingestion API are:
+    Base URLs for the Ingestion API:
 
 
     - `https://data.us.algolia.com`
@@ -30,7 +30,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -55,8 +55,8 @@ info:
     Response bodies are JSON objects.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -64,7 +64,7 @@ info:
     ## Version
 
 
-    The current version of the Ingestion API is version 1, as indicated by the
+    The current version of the Ingestion API is version 1, indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -117,7 +117,7 @@ tags:
   - name: transformations
     x-displayName: Transformations
     description: >
-      Transformations allows you to transform a record before it gets indexed in
+      Transformations let you transform a record before it gets indexed in
       Algolia.
 paths:
   /{path}:
@@ -10374,9 +10374,7 @@ paths:
       tags:
         - tasks
       summary: List tasks V1
-      description: >-
-        Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
-        instead.
+      description: Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
       operationId: listTasksV1
       deprecated: true
       x-acl:
@@ -10620,9 +10618,7 @@ paths:
       tags:
         - tasks
       summary: Create a task V1
-      description: >-
-        Creates a new task using the v1 endpoint, please use `createTask`
-        instead.
+      description: Creates a new task using the v1 endpoint. Use `createTask` instead.
       operationId: createTaskV1
       x-acl:
         - addObject
@@ -10931,9 +10927,7 @@ paths:
       tags:
         - tasks
       summary: Search for tasks V1
-      description: >-
-        Searches for tasks using the v1 endpoint, please use `searchTasks`
-        instead.
+      description: Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
       operationId: searchTasksV1
       deprecated: true
       x-acl:
@@ -11240,9 +11234,7 @@ paths:
       tags:
         - tasks
       summary: Retrieve a task V1
-      description: >-
-        Retrieves a task by its ID using the v1 endpoint, please use `getTask`
-        instead.
+      description: Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
       operationId: getTaskV1
       deprecated: true
       x-acl:
@@ -11485,7 +11477,7 @@ paths:
         - tasks
       summary: Update a task V1
       description: >-
-        Updates a task by its ID using the v1 endpoint, please use `updateTask`
+        Updates a task by its ID using the v1 endpoint. Use `updateTask`
         instead.
       operationId: updateTaskV1
       x-acl:
@@ -11751,7 +11743,7 @@ paths:
         - tasks
       summary: Delete a task
       description: >-
-        Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
+        Deletes a task by its ID using the v1 endpoint. Use `deleteTask`
         instead.
       operationId: deleteTaskV1
       x-acl:
@@ -11997,8 +11989,8 @@ paths:
         - tasks
       summary: Run a task V1
       description: >-
-        Runs a task using the v1 endpoint, please use `runTask` instead. You can
-        check the status of task runs with the observability endpoints.
+        Runs a task using the v1 endpoint. Use `runTask` instead. You can check
+        the status of task runs with the observability endpoints.
       operationId: runTaskV1
       deprecated: true
       x-acl:
@@ -12249,7 +12241,7 @@ paths:
       tags:
         - tasks
       summary: Enable a task V1
-      description: Enables a task using the v1 endpoint, please use `enableTask` instead.
+      description: Enables a task using the v1 endpoint. Use `enableTask` instead.
       operationId: enableTaskV1
       deprecated: true
       x-acl:
@@ -12493,7 +12485,7 @@ paths:
       tags:
         - tasks
       summary: Disable a task V1
-      description: Disables a task using the v1 endpoint, please use `disableTask` instead.
+      description: Disables a task using the v1 endpoint. Use `disableTask` instead.
       operationId: disableTaskV1
       deprecated: true
       x-acl:
@@ -15003,15 +14995,15 @@ paths:
         - name: startDate
           in: query
           description: >-
-            Date in RFC 3339 format for the earliest run to retrieve. By
-            default, the current day minus seven days is used.
+            Date and time for the earliest run to retrieve, in RFC 3339 format.
+            By default, the current day minus seven days is used.
           schema:
             type: string
         - name: endDate
           in: query
           description: >-
-            Date in RFC 3339 format for the latest run to retrieve. By default,
-            the current day is used.
+            Date and time for the latest run to retrieve, in RFC 3339 format. By
+            default, the current day is used.
           schema:
             type: string
       responses:
@@ -16459,7 +16451,7 @@ components:
         - transform
     PublishedAt:
       type: string
-      description: Date of publish RFC 3339 format.
+      description: Date and time when the resource was published, in RFC 3339 format.
     Event:
       type: object
       description: An event describe a step of the task execution flow.
@@ -16495,7 +16487,7 @@ components:
         - publishedAt
     CreatedAt:
       type: string
-      description: Date of creation in RFC 3339 format.
+      description: Date and time when the resource was created, in RFC 3339 format.
     WatchResponse:
       type: object
       additionalProperties: false
@@ -16719,7 +16711,7 @@ components:
         - $ref: '#/components/schemas/AuthSecrets'
     updatedAt:
       type: string
-      description: Date of last update in RFC 3339 format.
+      description: Date and time when the resource was last updated, in RFC 3339 format.
     Authentication:
       type: object
       description: >-
@@ -16954,7 +16946,7 @@ components:
       properties:
         deletedAt:
           type: string
-          description: Date of deletion in RFC 3339 format.
+          description: Date and time when the resource was deleted, in RFC 3339 format.
       required:
         - deletedAt
     AuthenticationUpdate:
@@ -17917,7 +17909,7 @@ components:
         successfully.
     cursor:
       type: string
-      description: Date of the last cursor in RFC 3339 format.
+      description: Date and time when the last cursor was created, in RFC 3339 format.
     Notifications:
       type: object
       additionalProperties: false
@@ -18209,8 +18201,8 @@ components:
       additionalProperties: false
       deprecated: true
       description: >-
-        The V1 task object, please use methods and types that don't contain the
-        V1 suffix.
+        The V1 task object. Use methods and types that don't contain the V1
+        suffix.
       properties:
         taskID:
           $ref: '#/components/schemas/taskID'
@@ -18282,8 +18274,8 @@ components:
       additionalProperties: false
       deprecated: true
       description: >-
-        API request body for creating a task using the V1 shape, please use
-        methods and types that don't contain the V1 suffix.
+        API request body for creating a task using the V1 shape. Use methods and
+        types that don't contain the V1 suffix.
       properties:
         sourceID:
           $ref: '#/components/schemas/sourceID'
@@ -18324,8 +18316,8 @@ components:
       additionalProperties: false
       deprecated: true
       description: >-
-        API request body for updating a task using the V1 shape, please use
-        methods and types that don't contain the V1 suffix.
+        API request body for updating a task using the V1 shape. Use methods and
+        types that don't contain the V1 suffix.
       properties:
         destinationID:
           $ref: '#/components/schemas/destinationID'
@@ -18577,10 +18569,10 @@ components:
         - idle
     startedAt:
       type: string
-      description: Date of start in RFC 3339 format.
+      description: Date and time when the task started, in RFC 3339 format.
     finishedAt:
       type: string
-      description: Date of finish in RFC 3339 format.
+      description: Date and time when the task finished, in RFC 3339 format.
     Run:
       type: object
       additionalProperties: false
@@ -18637,13 +18629,13 @@ components:
         startDate:
           type: string
           description: >-
-            Date in RFC 3339 format representing the oldest data in the time
-            window.
+            Date and time representing the oldest data in the time window, in
+            RFC 3339 format.
         endDate:
           type: string
           description: >-
-            Date in RFC 3339 format representing the newest data in the time
-            window.
+            Date and time representing the newest data in the time window, in
+            RFC 3339 format.
       required:
         - startDate
         - endDate
