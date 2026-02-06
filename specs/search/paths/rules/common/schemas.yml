@@ -129,6 +129,20 @@ consequence:
             $ref: '../../../../common/parameters.yml#/objectID'
         required:
           - objectID
+    redirect:
+      title: consequenceRedirect
+      type: object
+      description: |
+        Redirect to a virtual replica index.
+
+        This consequence is only valid for rules with `scope: redirect`.
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Name of the virtual replica index to redirect searches to.
+      required:
+        - indexName
     userData:
       type: object
       description: |
