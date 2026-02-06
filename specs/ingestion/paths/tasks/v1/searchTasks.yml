@@ -2,7 +2,7 @@ post:
   tags:
     - tasks
   summary: Search for tasks V1
-  description: Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+  description: Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
   operationId: searchTasksV1
   deprecated: true
   x-acl:

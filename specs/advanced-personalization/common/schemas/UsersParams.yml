@@ -2,7 +2,7 @@
 startDate:
   name: startDate
   description: |
-    Filter users by start date (in RFC3339 format).
+    Filter users by start date and time, in RFC 3339 format.
     Only users that were updated after the passed date will be returned.
   in: query
   schema:
@@ -12,7 +12,7 @@ startDate:
 endDate:
   name: endDate
   description: |
-    Filter users by end date (in RFC3339 format).
+    Filter users by end date and time, in RFC 3339 format.
     Only users that were updated before the passed date will be returned.
   in: query
   schema:

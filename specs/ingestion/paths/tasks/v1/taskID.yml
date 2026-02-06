@@ -2,7 +2,7 @@ get:
   tags:
     - tasks
   summary: Retrieve a task V1
-  description: Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+  description: Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
   operationId: getTaskV1
   deprecated: true
   x-acl:
@@ -25,7 +25,7 @@ patch:
   tags:
     - tasks
   summary: Update a task V1
-  description: Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+  description: Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
   operationId: updateTaskV1
   x-acl:
     - addObject
@@ -55,7 +55,7 @@ delete:
   tags:
     - tasks
   summary: Delete a task
-  description: Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+  description: Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
   operationId: deleteTaskV1
   x-acl:
     - addObject
