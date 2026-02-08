@@ -44,7 +44,7 @@
     "js-yaml": "4.1.1",
     "knip": "5.67.1",
     "micromatch": "4.0.8",
-    "semver": "7.7.3",
+    "semver": "7.7.4",
     "spinnies": "0.5.1",
     "typescript": "5.9.3",
     "vitest": "4.0.18"
