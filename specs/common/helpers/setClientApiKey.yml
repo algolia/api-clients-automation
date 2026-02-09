@@ -12,7 +12,7 @@ method:
     parameters:
       - in: query
         name: apiKey
-        description: API key to be used from now on.
+        description: API key to use for subsequent requests.
         required: true
         schema:
           type: string

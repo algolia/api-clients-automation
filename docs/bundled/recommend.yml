@@ -15,14 +15,14 @@ info:
     Agreement](https://www.algolia.com/policies/sla).
 
 
-    See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
+    For more information, see [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
     ## Base URLs
 
 
-    The base URLs for requests to the Recommend API are:
+    Base URLs for the Recommend API:
 
 
     - `https://{APPLICATION_ID}.algolia.net`
@@ -54,8 +54,7 @@ info:
 
     These URLs use a different DNS provider than the primary URLs.
 
-    You should randomize this list to ensure an even load across the three
-    servers.
+    Randomize this list to ensure an even load across the three servers.
 
 
     All Algolia API clients implement this retry strategy.
@@ -64,7 +63,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -92,8 +91,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -101,7 +100,7 @@ info:
     ## Version
 
 
-    The current version of the Recommend API is version 1, as indicated by the
+    The current version of the Recommend API is version 1, indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
@@ -3029,10 +3028,10 @@ components:
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
         `<`, `<=`, `=`, `!=`, `>`, `>=`.
 
-        - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>`
-        are the lower and upper limits of the range (inclusive).
+        - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and
+        `<upper>` are the lower and upper limits of the range (inclusive).
 
-        - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+        - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
         attribute (case-sensitive) and `<value>` a facet value.
 
         - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
@@ -3051,8 +3050,8 @@ components:
         - You can't combine conjunctions (`AND`) with `OR`.
           **Not supported:** `facet:value OR (facet:value AND facet:value)`
 
-        Use quotes around your filters, if the facet attribute name or facet
-        value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
+        Use quotes if the facet attribute name or facet value contains spaces,
+        keywords (`OR`, `AND`, `NOT`), or quotes.
 
         If a facet attribute is an array, the filter matches if it matches at
         least one element of the array.
@@ -3926,7 +3925,7 @@ components:
             detection and dictionary settings.
 
 
-            **You should always specify an indexing language.**
+            **Always specify an indexing language.**
 
             If you don't specify an indexing language, the search engine uses
             all [supported
@@ -4226,7 +4225,7 @@ components:
 
         Before you modify the default setting,
 
-        you should test your changes in the dashboard,
+        test your changes in the dashboard,
 
         and by [A/B
         testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
@@ -4436,7 +4435,7 @@ components:
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -4470,7 +4469,7 @@ components:
         In English, "the", "a", or "and" are stop words.
 
 
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -4499,7 +4498,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries 
+        stop-word removal, and word-detection dictionaries.
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -4509,9 +4508,9 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first** 
+        To support this, place the CJK language **first**.
 
-        **You should always specify a query language.**
+        **Always specify a query language.**
 
         If you don't specify an indexing language, the search engine uses all
         [supported
@@ -4650,14 +4649,14 @@ components:
         By default, records must match all words in the search query to be
         included in the search results.
 
-        Adding optional words can help to increase the number of search results
-        by running an additional search query that doesn't include the optional
+        Adding optional words can increase the number of search results by
+        running an additional search query that doesn't include the optional
         words.
 
-        For example, if the search query is "action video" and "video" is an
-        optional word,
+        For example, if the search query is "action video" and "video" is
+        optional,
 
-        the search engine runs two queries. One for "action video" and one for
+        the search engine runs two queries: one for "action video" and one for
         "action".
 
         Records that match all words are ranked higher.
@@ -4670,13 +4669,13 @@ components:
         search results increases for every 1,000 records:
 
 
-        - If `optionalWords` has less than 10 words, the required number of
+        - If `optionalWords` has fewer than 10 words, the required number of
         matched words increases by 1:
-          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-        - If `optionalWords` has 10 or more words, the number of required
+          results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the required number of
         matched words increases by the number of optional words divided by 5
         (rounded down).
-          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+          Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -6101,11 +6100,15 @@ components:
         from:
           type: integer
           format: int64
-          description: When the rule should start to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should start to be active, measured in
+            seconds since the Unix epoch.
         until:
           type: integer
           format: int64
-          description: When the rule should stop to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should stop to be active, measured in
+            seconds since the Unix epoch.
     RecommendRule:
       type: object
       description: Recommend rule.

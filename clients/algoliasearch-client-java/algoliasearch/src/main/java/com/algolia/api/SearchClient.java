@@ -1143,17 +1143,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1172,17 +1171,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1201,17 +1199,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1224,17 +1221,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1247,17 +1243,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -1271,17 +1266,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class for an HTTP response.
@@ -1295,17 +1289,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -1316,17 +1309,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
-   * (records augmented with attributes for highlighting and ranking details), browsing _just_
-   * returns matching records. This can be useful if you want to export your indices. - The
-   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
-   * custom ranking. - There's no ranking for: typo-tolerance, number of matched words, proximity,
-   * geo distance. Browse requests automatically apply these settings: - `advancedSyntax`: `false` -
-   * `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` - `distinct`: `false` -
-   * `enablePersonalization`: `false` - `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`:
-   * `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` - `typoTolerance`: `true` or
-   * `false` (`min` and `strict` evaluate to `true`) If you send these parameters with your browse
-   * requests, they'll be ignored.
+   * Retrieves records from an index, up to 1,000 per request. Searching returns _hits_ (records
+   * augmented with highlighting and ranking details). Browsing returns matching records only. Use
+   * browse to export your indices. - The Analytics API doesn't collect data when using `browse`. -
+   * Records are ranked by attributes and custom ranking. - There's no ranking for typo tolerance,
+   * number of matched words, proximity, or geo distance. Browse requests automatically apply these
+   * settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`:
+   * `[]` - `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` -
+   * `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]`
+   * - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
+   * parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class for an HTTP response.
@@ -1337,17 +1329,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1374,17 +1365,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1411,17 +1401,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1434,17 +1423,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
@@ -1460,17 +1448,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -1487,17 +1474,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class for an HTTP response.
@@ -1514,17 +1500,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -1536,17 +1521,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
-   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
-   * browsing _just_ returns matching records. This can be useful if you want to export your
-   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
-   * attributes and custom ranking. - There's no ranking for: typo-tolerance, number of matched
-   * words, proximity, geo distance. Browse requests automatically apply these settings: -
-   * `advancedSyntax`: `false` - `attributesToHighlight`: `[]` - `attributesToSnippet`: `[]` -
-   * `distinct`: `false` - `enablePersonalization`: `false` - `enableRules`: `false` - `facets`:
-   * `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false` - `optionalFilters`: `[]` -
-   * `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to `true`) If you send these
-   * parameters with your browse requests, they'll be ignored.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. Searching returns
+   * _hits_ (records augmented with highlighting and ranking details). Browsing returns matching
+   * records only. Use browse to export your indices. - The Analytics API doesn't collect data when
+   * using `browse`. - Records are ranked by attributes and custom ranking. - There's no ranking for
+   * typo tolerance, number of matched words, proximity, or geo distance. Browse requests
+   * automatically apply these settings: - `advancedSyntax`: `false` - `attributesToHighlight`: `[]`
+   * - `attributesToSnippet`: `[]` - `distinct`: `false` - `enablePersonalization`: `false` -
+   * `enableRules`: `false` - `facets`: `[]` - `getRankingInfo`: `false` - `ignorePlurals`: `false`
+   * - `optionalFilters`: `[]` - `typoTolerance`: `true` or `false` (`min` and `strict` evaluate to
+   * `true`) If you send these parameters with your browse requests, they're ignored.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class for an HTTP response.
@@ -3058,9 +3042,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
-   * only use it if you can't get the object IDs of the records you want to delete. It's more
-   * efficient to get a list of object IDs with the [`browse`
+   * This operation doesn't accept empty filters. This operation is resource-intensive. Use it only
+   * if you can't get the object IDs of the records you want to delete. It's more efficient to get a
+   * list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3081,9 +3065,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
-   * only use it if you can't get the object IDs of the records you want to delete. It's more
-   * efficient to get a list of object IDs with the [`browse`
+   * This operation doesn't accept empty filters. This operation is resource-intensive. Use it only
+   * if you can't get the object IDs of the records you want to delete. It's more efficient to get a
+   * list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3104,9 +3088,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
-   * only use it if you can't get the object IDs of the records you want to delete. It's more
-   * efficient to get a list of object IDs with the [`browse`
+   * This operation doesn't accept empty filters. This operation is resource-intensive. Use it only
+   * if you can't get the object IDs of the records you want to delete. It's more efficient to get a
+   * list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3121,9 +3105,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't accept empty filters. This operation is resource-intensive. You should
-   * only use it if you can't get the object IDs of the records you want to delete. It's more
-   * efficient to get a list of object IDs with the [`browse`
+   * This operation doesn't accept empty filters. This operation is resource-intensive. Use it only
+   * if you can't get the object IDs of the records you want to delete. It's more efficient to get a
+   * list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3139,8 +3123,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) This operation doesn't accept empty filters. This operation is
-   * resource-intensive. You should only use it if you can't get the object IDs of the records you
-   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * resource-intensive. Use it only if you can't get the object IDs of the records you want to
+   * delete. It's more efficient to get a list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3171,8 +3155,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) This operation doesn't accept empty filters. This operation is
-   * resource-intensive. You should only use it if you can't get the object IDs of the records you
-   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * resource-intensive. Use it only if you can't get the object IDs of the records you want to
+   * delete. It's more efficient to get a list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3203,8 +3187,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) This operation doesn't accept empty filters. This operation is
-   * resource-intensive. You should only use it if you can't get the object IDs of the records you
-   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * resource-intensive. Use it only if you can't get the object IDs of the records you want to
+   * delete. It's more efficient to get a list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -3221,8 +3205,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) This operation doesn't accept empty filters. This operation is
-   * resource-intensive. You should only use it if you can't get the object IDs of the records you
-   * want to delete. It's more efficient to get a list of object IDs with the [`browse`
+   * resource-intensive. Use it only if you can't get the object IDs of the records you want to
+   * delete. It's more efficient to get a list of object IDs with the [`browse`
    * operation](https://www.algolia.com/doc/rest-api/search/browse), and then delete the records
    * using the [`batch` operation](https://www.algolia.com/doc/rest-api/search/batch). This
    * operation is subject to [indexing rate
@@ -7283,21 +7267,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Copies or moves (renames) an index within the same Algolia application. Notes: - Existing
+   * destination indices are overwritten, except for their analytics data. - If the destination
+   * index doesn't exist yet, it's created. - This operation is resource-intensive. **Copy** - If
+   * the source index doesn't exist, copying creates a new index with 0 records and default
+   * settings. - API keys from the source index are merged with the existing keys in the destination
+   * index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't
+   * copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7317,21 +7301,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Copies or moves (renames) an index within the same Algolia application. Notes: - Existing
+   * destination indices are overwritten, except for their analytics data. - If the destination
+   * index doesn't exist yet, it's created. - This operation is resource-intensive. **Copy** - If
+   * the source index doesn't exist, copying creates a new index with 0 records and default
+   * settings. - API keys from the source index are merged with the existing keys in the destination
+   * index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't
+   * copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7351,21 +7335,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Copies or moves (renames) an index within the same Algolia application. Notes: - Existing
+   * destination indices are overwritten, except for their analytics data. - If the destination
+   * index doesn't exist yet, it's created. - This operation is resource-intensive. **Copy** - If
+   * the source index doesn't exist, copying creates a new index with 0 records and default
+   * settings. - API keys from the source index are merged with the existing keys in the destination
+   * index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't
+   * copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7380,21 +7364,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for their analytics data. - If the destination index doesn't
-   * exist yet, it'll be created. - This operation is resource-intensive. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Copies or moves (renames) an index within the same Algolia application. Notes: - Existing
+   * destination indices are overwritten, except for their analytics data. - If the destination
+   * index doesn't exist yet, it's created. - This operation is resource-intensive. **Copy** - If
+   * the source index doesn't exist, copying creates a new index with 0 records and default
+   * settings. - API keys from the source index are merged with the existing keys in the destination
+   * index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't
+   * copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7409,21 +7393,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
-   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
-   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. Notes:
+   * - Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it's created. - This operation is resource-intensive.
+   * **Copy** - If the source index doesn't exist, copying creates a new index with 0 records and
+   * default settings. - API keys from the source index are merged with the existing keys in the
    * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7452,21 +7436,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
-   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
-   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. Notes:
+   * - Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it's created. - This operation is resource-intensive.
+   * **Copy** - If the source index doesn't exist, copying creates a new index with 0 records and
+   * default settings. - API keys from the source index are merged with the existing keys in the
    * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7495,21 +7479,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
-   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
-   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. Notes:
+   * - Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it's created. - This operation is resource-intensive.
+   * **Copy** - If the source index doesn't exist, copying creates a new index with 0 records and
+   * default settings. - API keys from the source index are merged with the existing keys in the
    * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7526,21 +7510,21 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for their analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. - This operation is resource-intensive.
-   * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
-   * default settings. - The API keys of the source index are merged with the existing keys in the
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. Notes:
+   * - Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it's created. - This operation is resource-intensive.
+   * **Copy** - If the source index doesn't exist, copying creates a new index with 0 records and
+   * default settings. - API keys from the source index are merged with the existing keys in the
    * destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. -
    * You can't copy to a destination index that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
-   * - Related guide: [Copy
-   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
-   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * - For more information, see [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
+   * **Move** - If the source index doesn't exist, moving is ignored without returning an error. -
    * When moving an index, the analytics data keeps its original name, and a new set of analytics
    * data is started for the new name. To access the original analytics in the dashboard, create an
    * index with the original name. - If the destination index has replicas, moving will overwrite
-   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * the existing index and copy the data to the replica indices. - For more information, see [Move
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
    * This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
@@ -7559,28 +7543,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7606,28 +7589,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7655,28 +7637,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7699,28 +7680,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7743,28 +7723,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7787,28 +7766,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7831,28 +7809,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7872,28 +7849,27 @@ public class SearchClient extends ApiClient {
   /**
    * Adds new attributes to a record, or updates existing ones. - If a record with the specified
    * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
-   * - If the index doesn't exist yet, this method creates a new index. - You can use any
-   * first-level attribute but not nested attributes. If you specify a nested attribute, this
-   * operation replaces its first-level ancestor. To update an attribute without pushing the entire
-   * record, you can use these built-in operations. These operations can be helpful if you don't
-   * have access to your initial data. - Increment: increment a numeric attribute - Decrement:
-   * decrement a numeric attribute - Add: append a number or string element to an array attribute -
-   * Remove: remove all matching number or string elements from an array attribute made of numbers
-   * or strings - AddUnique: add a number or string element to an array attribute made of numbers or
-   * strings only if it's not already present - IncrementFrom: increment a numeric integer attribute
-   * only if the provided value matches the current value, and otherwise ignore the whole object
-   * update. For example, if you pass an IncrementFrom value of 2 for the version attribute, but the
-   * current value of the attribute is 1, the engine ignores the update. If the object doesn't
-   * exist, the engine only creates it if you pass an IncrementFrom value of 0. - IncrementSet:
-   * increment a numeric integer attribute only if the provided value is greater than the current
-   * value, and otherwise ignore the whole object update. For example, if you pass an IncrementSet
-   * value of 2 for the version attribute, and the current value of the attribute is 1, the engine
-   * updates the object. If the object doesn't exist yet, the engine only creates it if you pass an
-   * IncrementSet value greater than 0. You can specify an operation by providing an object with the
-   * attribute to update as the key and its value being an object with the following properties: -
-   * _operation: the operation to apply on the attribute - value: the right-hand side argument to
-   * the operation, for example, increment or decrement step, value to add or remove. When updating
-   * multiple attributes or using multiple operations targeting the same record, you should use a
+   * - If the index doesn't exist yet, this method creates a new index. - Use first-level attributes
+   * only. Nested attributes aren't supported. If you specify a nested attribute, this operation
+   * replaces its first-level ancestor. To update attributes without replacing the full record, use
+   * these built-in operations. These operations are useful when the initial data isn't available. -
+   * `Increment`: increment a numeric attribute. - `Decrement`: decrement a numeric attribute. -
+   * `Add`: append a number or string element to an array attribute. - `Remove`: remove all matching
+   * number or string elements from an array attribute made of numbers or strings. - `AddUnique`:
+   * add a number or string element to an array attribute made of numbers or strings only if it's
+   * not already present. - `IncrementFrom`: increment a numeric integer attribute only if the
+   * provided value matches the current value. Otherwise, the update is ignored. Example: If you
+   * pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the
+   * API ignores the update. If the object doesn't exist, the API only creates it if you pass an
+   * `IncrementFrom` value of 0. - `IncrementSet`: increment a numeric integer attribute only if the
+   * provided value is greater than the current value. Otherwise, the update is ignored. Example: If
+   * you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1,
+   * the API updates the object. If the object doesn't exist yet, the API only creates it if you
+   * pass an `IncrementSet` value greater than 0. Specify an operation by providing an object with
+   * the attribute to update as the key and its value as an object with these properties: -
+   * `_operation`: the operation to apply on the attribute. - `value`: the right-hand side argument
+   * to the operation, for example, increment or decrement step, or a value to add or remove. When
+   * updating multiple attributes or using multiple operations targeting the same record, use a
    * single partial update for faster processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
@@ -7911,29 +7887,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -7971,29 +7946,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8031,29 +8005,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8076,29 +8049,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8121,29 +8093,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8166,29 +8137,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8211,29 +8181,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)
@@ -8253,29 +8222,28 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Adds new attributes to a record, or updates existing ones. - If a record with
    * the specified object ID doesn't exist, a new record is added to the index **if**
    * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
-   * - You can use any first-level attribute but not nested attributes. If you specify a nested
-   * attribute, this operation replaces its first-level ancestor. To update an attribute without
-   * pushing the entire record, you can use these built-in operations. These operations can be
-   * helpful if you don't have access to your initial data. - Increment: increment a numeric
-   * attribute - Decrement: decrement a numeric attribute - Add: append a number or string element
-   * to an array attribute - Remove: remove all matching number or string elements from an array
-   * attribute made of numbers or strings - AddUnique: add a number or string element to an array
-   * attribute made of numbers or strings only if it's not already present - IncrementFrom:
-   * increment a numeric integer attribute only if the provided value matches the current value, and
-   * otherwise ignore the whole object update. For example, if you pass an IncrementFrom value of 2
-   * for the version attribute, but the current value of the attribute is 1, the engine ignores the
-   * update. If the object doesn't exist, the engine only creates it if you pass an IncrementFrom
-   * value of 0. - IncrementSet: increment a numeric integer attribute only if the provided value is
-   * greater than the current value, and otherwise ignore the whole object update. For example, if
-   * you pass an IncrementSet value of 2 for the version attribute, and the current value of the
-   * attribute is 1, the engine updates the object. If the object doesn't exist yet, the engine only
-   * creates it if you pass an IncrementSet value greater than 0. You can specify an operation by
-   * providing an object with the attribute to update as the key and its value being an object with
-   * the following properties: - _operation: the operation to apply on the attribute - value: the
-   * right-hand side argument to the operation, for example, increment or decrement step, value to
-   * add or remove. When updating multiple attributes or using multiple operations targeting the
-   * same record, you should use a single partial update for faster processing. This operation is
-   * subject to [indexing rate
+   * - Use first-level attributes only. Nested attributes aren't supported. If you specify a nested
+   * attribute, this operation replaces its first-level ancestor. To update attributes without
+   * replacing the full record, use these built-in operations. These operations are useful when the
+   * initial data isn't available. - `Increment`: increment a numeric attribute. - `Decrement`:
+   * decrement a numeric attribute. - `Add`: append a number or string element to an array
+   * attribute. - `Remove`: remove all matching number or string elements from an array attribute
+   * made of numbers or strings. - `AddUnique`: add a number or string element to an array attribute
+   * made of numbers or strings only if it's not already present. - `IncrementFrom`: increment a
+   * numeric integer attribute only if the provided value matches the current value. Otherwise, the
+   * update is ignored. Example: If you pass an `IncrementFrom` value of 2 for the `version`
+   * attribute but the current value is 1, the API ignores the update. If the object doesn't exist,
+   * the API only creates it if you pass an `IncrementFrom` value of 0. - `IncrementSet`: increment
+   * a numeric integer attribute only if the provided value is greater than the current value.
+   * Otherwise, the update is ignored. Example: If you pass an `IncrementSet` value of 2 for the
+   * `version` attribute and the current value is 1, the API updates the object. If the object
+   * doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+   * Specify an operation by providing an object with the attribute to update as the key and its
+   * value as an object with these properties: - `_operation`: the operation to apply on the
+   * attribute. - `value`: the right-hand side argument to the operation, for example, increment or
+   * decrement step, or a value to add or remove. When updating multiple attributes or using
+   * multiple operations targeting the same record, use a single partial update for faster
+   * processing. This operation is subject to [indexing rate
    * limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
    *
    * @param indexName Name of the index on which to perform the operation. (required)

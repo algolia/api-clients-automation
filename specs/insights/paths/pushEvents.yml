@@ -17,7 +17,6 @@ post:
         schema:
           title: insightsEvents
           type: object
-          additionalProperties: false
           required:
             - events
           properties:
@@ -381,7 +380,7 @@ post:
               summary: Timestamp too old
               value:
                 status: 422
-                message: The timestamp must be at most 4 days in the past
+                message: The timestamp is too far in the past
             TooManyEvents:
               summary: Too many events
               description: You can include up to 1,000 events in a single API request.

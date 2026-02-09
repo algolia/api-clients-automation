@@ -147,7 +147,16 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
      */
     public function listInvalidProperties()
     {
-        return [];
+        $invalidProperties = [];
+
+        if (!isset($this->container['injection']) || null === $this->container['injection']) {
+            $invalidProperties[] = "'injection' can't be null";
+        }
+        if (!isset($this->container['multifeed']) || null === $this->container['multifeed']) {
+            $invalidProperties[] = "'multifeed' can't be null";
+        }
+
+        return $invalidProperties;
     }
 
     /**
@@ -164,7 +173,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Gets injection.
      *
-     * @return null|Injection
+     * @return Injection
      */
     public function getInjection()
     {
@@ -174,7 +183,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Sets injection.
      *
-     * @param null|Injection $injection injection
+     * @param Injection $injection injection
      *
      * @return self
      */
@@ -188,7 +197,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Gets multifeed.
      *
-     * @return null|Multifeed
+     * @return Multifeed
      */
     public function getMultifeed()
     {
@@ -198,7 +207,7 @@ class CompositionBehavior extends AbstractModel implements ModelInterface, \Arra
     /**
      * Sets multifeed.
      *
-     * @param null|Multifeed $multifeed multifeed
+     * @param Multifeed $multifeed multifeed
      *
      * @return self
      */

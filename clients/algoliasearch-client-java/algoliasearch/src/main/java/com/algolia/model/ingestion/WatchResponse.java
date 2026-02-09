@@ -112,7 +112,7 @@ public class WatchResponse {
     return this;
   }
 
-  /** Date of creation in RFC 3339 format. */
+  /** Date and time when the resource was created, in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getCreatedAt() {
     return createdAt;

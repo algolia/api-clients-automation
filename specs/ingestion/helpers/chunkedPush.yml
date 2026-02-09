@@ -41,13 +41,13 @@ method:
           $ref: '../../common/schemas/Batch.yml#/action'
       - in: query
         name: waitForTasks
-        description: Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+        description: Whether to wait until every `batch` task has been processed. This may take longer but is more reliable.
         required: false
         schema:
           type: boolean
       - in: query
         name: batchSize
-        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1,000.
         required: false
         schema:
           type: integer

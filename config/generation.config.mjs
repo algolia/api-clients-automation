@@ -27,6 +27,7 @@ export const patterns = [
   '!clients/algoliasearch-client-csharp/algoliasearch/Models/Common/**',
 
   'tests/output/csharp/src/Algolia.Search.Tests.csproj',
+  '!tests/output/csharp/src/TimeoutIntegrationTests.cs',
 
   // Dart
   '!clients/algoliasearch-client-dart/**',
@@ -91,6 +92,7 @@ export const patterns = [
 
   // PHP
   '!clients/algoliasearch-client-php/**',
+  '!clients/algoliasearch-client-php/tests/**',
   'clients/algoliasearch-client-php/lib/Api/*',
   'clients/algoliasearch-client-php/lib/Model/**',
   '!clients/algoliasearch-client-php/lib/Model/AbstractModel.php',
@@ -115,7 +117,6 @@ export const patterns = [
   'tests/output/python/poetry.lock',
   '!tests/output/python/**/__init__.py',
   'tests/output/python/requirements.txt',
-
 
   // Ruby
   '!clients/algoliasearch-client-ruby/**',

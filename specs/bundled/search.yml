@@ -15,14 +15,14 @@ info:
     Agreement](https://www.algolia.com/policies/sla).
 
 
-    See: [Algolia's
-    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem)
+    For more information, see [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem).
 
 
     ## Base URLs
 
 
-    The base URLs for requests to the Search API are:
+    Base URLs for the Search API:
 
 
     - `https://{APPLICATION_ID}.algolia.net`
@@ -54,8 +54,7 @@ info:
 
     These URLs use a different DNS provider than the primary URLs.
 
-    You should randomize this list to ensure an even load across the three
-    servers.
+    Randomize this list to ensure an even load across the three servers.
 
 
     All Algolia API clients implement this retry strategy.
@@ -64,7 +63,7 @@ info:
     ## Authentication
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -81,7 +80,7 @@ info:
 
 
     Depending on the endpoint, request bodies are either JSON objects or arrays
-    of JSON objects,
+    of JSON objects.
 
 
     ## Parameters
@@ -117,8 +116,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -126,8 +125,8 @@ info:
     ## Version
 
 
-    The current version of the Search API is version 1, as indicated by the
-    `/1/` in each endpoint's URL.
+    The current version of the Search API is version 1, indicated by the `/1/`
+    in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://{appId}.algolia.net
@@ -556,20 +555,20 @@ paths:
         Retrieves records from an index, up to 1,000 per request.
 
 
-        While searching retrieves _hits_ (records augmented with attributes for
-        highlighting and ranking details),
+        Searching returns _hits_ (records augmented with highlighting and
+        ranking details).
 
-        browsing _just_ returns matching records.
+        Browsing returns matching records only.
 
-        This can be useful if you want to export your indices.
+        Use browse to export your indices.
 
 
         - The Analytics API doesn't collect data when using `browse`.
 
         - Records are ranked by attributes and custom ranking.
 
-        - There's no ranking for: typo-tolerance, number of matched words,
-        proximity, geo distance.
+        - There's no ranking for typo tolerance, number of matched words,
+        proximity, or geo distance.
 
 
         Browse requests automatically apply these settings:
@@ -599,8 +598,7 @@ paths:
         `true`)
 
 
-        If you send these parameters with your browse requests, they'll be
-        ignored.
+        If you send these parameters with your browse requests, they're ignored.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -891,8 +889,8 @@ paths:
 
         This operation is resource-intensive.
 
-        You should only use it if you can't get the object IDs of the records
-        you want to delete.
+        Use it only if you can't get the object IDs of the records you want to
+        delete.
 
         It's more efficient to get a list of object IDs with the [`browse`
         operation](https://www.algolia.com/doc/rest-api/search/browse),
@@ -971,58 +969,50 @@ paths:
           a new record is added to the index **if** `createIfNotExists` is true.
         - If the index doesn't exist yet, this method creates a new index.
 
-        - You can use any first-level attribute but not nested attributes.
+        - Use first-level attributes only. Nested attributes aren't supported.
           If you specify a nested attribute, this operation replaces its first-level ancestor.
 
-        To update an attribute without pushing the entire record, you can use
-        these built-in operations.
+        To update attributes without replacing the full record, use these
+        built-in operations.
 
-        These operations can be helpful if you don't have access to your initial
-        data.
-
-
-        - Increment: increment a numeric attribute
-
-        - Decrement: decrement a numeric attribute
-
-        - Add: append a number or string element to an array attribute
-
-        - Remove: remove all matching number or string elements from an array
-        attribute made of numbers or strings
-
-        - AddUnique: add a number or string element to an array attribute made
-        of numbers or strings only if it's not already present
-
-        - IncrementFrom: increment a numeric integer attribute only if the
-        provided value matches the current value, and otherwise ignore the whole
-        object update. For example, if you pass an IncrementFrom value of 2 for
-        the version attribute, but the current value of the attribute is 1, the
-        engine ignores the update. If the object doesn't exist, the engine only
-        creates it if you pass an IncrementFrom value of 0.
-
-        - IncrementSet: increment a numeric integer attribute only if the
-        provided value is greater than the current value, and otherwise ignore
-        the whole object update. For example, if you pass an IncrementSet value
-        of 2 for the version attribute, and the current value of the attribute
-        is 1, the engine updates the object. If the object doesn't exist yet,
-        the engine only creates it if you pass an IncrementSet value greater
-        than 0.
+        These operations are useful when the initial data isn't available.
 
 
-        You can specify an operation by providing an object with the attribute
-        to update as the key and its value being an object with the following
-        properties:
+        - `Increment`: increment a numeric attribute.
+
+        - `Decrement`: decrement a numeric attribute.
+
+        - `Add`: append a number or string element to an array attribute.
+
+        - `Remove`: remove all matching number or string elements from an array
+        attribute made of numbers or strings.
+
+        - `AddUnique`: add a number or string element to an array attribute made
+        of numbers or strings only if it's not already present.
+
+        - `IncrementFrom`: increment a numeric integer attribute only if the
+        provided value matches the current value. Otherwise, the update is
+        ignored.
+          Example: If you pass an `IncrementFrom` value of 2 for the `version` attribute but the current value is 1, the API ignores the update.
+          If the object doesn't exist, the API only creates it if you pass an `IncrementFrom` value of 0.
+        - `IncrementSet`: increment a numeric integer attribute only if the
+        provided value is greater than the current value. Otherwise, the update
+        is ignored.
+          Example: If you pass an `IncrementSet` value of 2 for the `version` attribute and the current value is 1, the API updates the object.
+          If the object doesn't exist yet, the API only creates it if you pass an `IncrementSet` value greater than 0.
+
+        Specify an operation by providing an object with the attribute to update
+        as the key and its value as an object with these properties:
 
 
-        - _operation: the operation to apply on the attribute
+        - `_operation`: the operation to apply on the attribute.
 
-        - value: the right-hand side argument to the operation, for example,
-        increment or decrement step, value to add or remove.
+        - `value`: the right-hand side argument to the operation, for example,
+        increment or decrement step, or a value to add or remove.
 
 
         When updating multiple attributes or using multiple operations targeting
-        the same record, you should use a single partial update for faster
-        processing.
+        the same record, use a single partial update for faster processing.
 
 
         This operation is subject to [indexing rate
@@ -3116,10 +3106,12 @@ paths:
         Copies or moves (renames) an index within the same Algolia application.
 
 
+        Notes:
+
         - Existing destination indices are overwritten, except for their
         analytics data.
 
-        - If the destination index doesn't exist yet, it'll be created.
+        - If the destination index doesn't exist yet, it's created.
 
         - This operation is resource-intensive.
 
@@ -3127,10 +3119,10 @@ paths:
         **Copy**
 
 
-        - Copying a source index that doesn't exist creates a new index with 0
+        - If the source index doesn't exist, copying creates a new index with 0
         records and default settings.
 
-        - The API keys of the source index are merged with the existing keys in
+        - API keys from the source index are merged with the existing keys in
         the destination index.
 
         - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
@@ -3140,14 +3132,14 @@ paths:
         - Be aware of the [size
         limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
 
-        - Related guide: [Copy
-        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices)
+        - For more information, see [Copy
+        indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).
 
 
         **Move**
 
 
-        - Moving a source index that doesn't exist is ignored without returning
+        - If the source index doesn't exist, moving is ignored without returning
         an error.
 
         - When moving an index, the analytics data keeps its original name, and
@@ -3156,7 +3148,7 @@ paths:
         - If the destination index has replicas, moving will overwrite the
         existing index and copy the data to the replica indices.
 
-        - Related guide: [Move
+        - For more information, see [Move
         indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).
 
 
@@ -3443,23 +3435,20 @@ paths:
         Secured API keys are API keys that you generate on your server without
         any API request to Algolia.
 
-        Secured API keys help in environments where you can't easily update the
-        client-side code, such as mobile apps,
+        Use secured API keys when you can't update client-side code, such as in
+        mobile apps,
 
-        or when you need to restrict access to a part of your index for every
-        user.
+        or when you need to restrict access to part of an index for each user.
 
 
-        When your users start searching, instead of using the Search API key,
-        they request a short-lived secured API key from your server.
+        When users start searching, your app requests a short-lived secured API
+        key from your server instead of using the Search API key.
 
-        On your server, you use this method to create a secured API key, with
-        any restrictions you'd like, such as filters, index access restrictions,
+        Your server uses this method to generate the secured API key with
+        restrictions such as filters, index access restrictions,
 
-        or expiration times. The API key gets longer the more restrictions you
-        add.
-
-        Your users then use the secured API key to search with Algolia.
+        or expiration times, and returns it to your app. The API key gets longer
+        as you add restrictions.
 
 
         You can't create secured API keys from other secured API keys or from
@@ -3540,7 +3529,7 @@ paths:
             type: string
         - in: query
           name: batchSize
-          description: The size of the chunk of `objects`. Defaults to 1000.
+          description: The size of the chunk of `objects`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3589,25 +3578,25 @@ paths:
         3. Replace the original index with the temporary one.
 
 
-        If there's an error during one of these steps, the temporary index is
+        Notes:
+
+        - If there's an error during one of these steps, the temporary index is
         deleted if your API key has the `deleteIndex` ACL.
 
+        - If your API key restricts access to specific indices, make sure it
+        also grants access to the temporary index `INDEX_NAME_tmp_*` (replace
+        `INDEX_NAME` with the name of your original index).
 
-        If your API key restricts access to specific indices, make sure it also
-        grants access to the temporary index INDEX_NAME_tmp_* (replace
-        INDEX_NAME with the name of your original index).
-
-
-        This method is subject to [indexing rate
+        - This method is subject to [indexing rate
         limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
 
+        - The response includes the results of the individual API requests.
 
-        The response includes the results of the individual API requests.
+        - This method creates a temporary index, which temporarily doubles your
+        record count.
 
-
-        This method creates a temporary index: your record count is temporarily
-        doubled. Algolia doesn't count the three days with the highest number of
-        records towards your monthly usage.
+        - Algolia doesn't count the three days with the highest number of
+        records toward your monthly usage.
       parameters:
         - in: query
           name: indexName
@@ -3627,7 +3616,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3670,35 +3659,39 @@ paths:
       operationId: replaceAllObjectsWithTransformation
       summary: Replace all records in an index
       description: >
-        Replace all records from your index with a new set of records by
-        leveraging the Transformation pipeline setup in the Push connector
+        Replace all records in your index with a new set of records by using the
+        Transformation pipeline in the Push connector
         (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).
 
 
-        This method lets you replace all records in your index without downtime.
-        It performs these operations:
+        This method replaces all records without downtime. It performs these
+        operations:
           1. Copy settings, synonyms, and rules from your original index to a temporary index.
           2. Add your new records to the temporary index.
           3. Replace your original index with the temporary index.
 
-        Use the safe parameter to ensure that these (asynchronous) operations
-        are performed in sequence.
+        Notes:
 
-        If there's an error duing one of these steps, the temporary index won't
-        be deleted.
+        - Use the `safe` parameter to run these (asynchronous) operations in
+        sequence.
 
-        This operation is rate-limited.
+        - If there's an error during one of these steps, the temporary index
+        isn't deleted.
 
-        This method creates a temporary index: your record count is temporarily
-        doubled. Algolia doesn't count the three days with the highest number of
-        records towards your monthly usage.
+        - This operation is rate-limited.
 
-        If you're on a legacy plan (before July 2020), this method counts two
-        operations towards your usage (in addition to the number of records):
-        copySettings and moveIndex.
+        - This method creates a temporary index, which temporarily doubles your
+        record count.
 
-        The API key you use for this operation must have access to the index
-        YourIndex and the temporary index YourIndex_tmp.
+        - Algolia doesn't count the three days with the highest number of
+        records toward your monthly usage.
+
+        - If you're on a legacy plan (before July 2020), this method counts two
+        operations toward your usage (in addition to the number of records):
+        `copySettings` and `moveIndex`.
+
+        - The API key you use for this operation must have access to the index
+        `YourIndex` and the temporary index `YourIndex_tmp`.
       parameters:
         - in: query
           name: indexName
@@ -3718,7 +3711,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3726,7 +3719,7 @@ paths:
         - in: query
           name: scopes
           description: >-
-            List of scopes to kepp in the index. Defaults to `settings`,
+            List of scopes to keep in the index. Defaults to `settings`,
             `synonyms`, and `rules`.
           required: false
           schema:
@@ -3781,9 +3774,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -3791,7 +3783,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3828,8 +3820,8 @@ paths:
       summary: Saves the given array of objects in the given index
       description: >
         Helper: Saves the given array of objects in the given index. The
-        `chunkedBatch` helper is used under the hood, which creates a `batch`
-        requests with at most 1000 objects in it.
+        `chunkedBatch` helper splits this into `batch` requests with at most
+        1,000 objects each.
       parameters:
         - in: query
           name: indexName
@@ -3848,9 +3840,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -3859,7 +3850,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3927,9 +3918,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -3938,7 +3928,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -3982,8 +3972,8 @@ paths:
       summary: Deletes every records for the given objectIDs
       description: >
         Helper: Deletes every records for the given objectIDs. The
-        `chunkedBatch` helper is used under the hood, which creates a `batch`
-        requests with at most 1000 objectIDs in it.
+        `chunkedBatch` helper splits this into `batch` requests with at most
+        1,000 objectIDs each.
       parameters:
         - in: query
           name: indexName
@@ -4002,9 +3992,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -4012,7 +4001,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -4057,9 +4046,8 @@ paths:
         respective `objectID` field
       description: >
         Helper: Replaces object content of all the given objects according to
-        their respective `objectID` field. The `chunkedBatch` helper is used
-        under the hood, which creates a `batch` requests with at most 1000
-        objects in it.
+        their respective `objectID` field. The `chunkedBatch` helper splits this
+        into `batch` requests with at most 1,000 objects each.
       parameters:
         - in: query
           name: indexName
@@ -4087,9 +4075,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -4098,7 +4085,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -4175,9 +4162,8 @@ paths:
         - in: query
           name: waitForTasks
           description: >-
-            Whether or not we should wait until every `batch` tasks has been
-            processed, this operation may slow the total execution time of this
-            method but is more reliable.
+            Whether to wait until every `batch` task has been processed. This
+            may take longer but is more reliable.
           required: false
           schema:
             type: boolean
@@ -4186,7 +4172,7 @@ paths:
           name: batchSize
           description: >-
             The size of the chunk of `objects`. The number of `batch` calls will
-            be equal to `length(objects) / batchSize`. Defaults to 1000.
+            be equal to `length(objects) / batchSize`. Defaults to 1,000.
           required: false
           schema:
             type: integer
@@ -4262,7 +4248,7 @@ paths:
       parameters:
         - in: query
           name: apiKey
-          description: API key to be used from now on.
+          description: API key to use for subsequent requests.
           required: true
           schema:
             type: string
@@ -4368,10 +4354,10 @@ components:
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
         `<`, `<=`, `=`, `!=`, `>`, `>=`.
 
-        - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>`
-        are the lower and upper limits of the range (inclusive).
+        - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and
+        `<upper>` are the lower and upper limits of the range (inclusive).
 
-        - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+        - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet
         attribute (case-sensitive) and `<value>` a facet value.
 
         - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
@@ -4390,8 +4376,8 @@ components:
         - You can't combine conjunctions (`AND`) with `OR`.
           **Not supported:** `facet:value OR (facet:value AND facet:value)`
 
-        Use quotes around your filters, if the facet attribute name or facet
-        value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes.
+        Use quotes if the facet attribute name or facet value contains spaces,
+        keywords (`OR`, `AND`, `NOT`), or quotes.
 
         If a facet attribute is an array, the filter matches if it matches at
         least one element of the array.
@@ -5274,7 +5260,7 @@ components:
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -5308,7 +5294,7 @@ components:
         In English, "the", "a", or "and" are stop words.
 
 
-        You should only use this feature for the languages used in your index.
+        Only use this feature for the languages used in your index.
       example:
         - ca
         - es
@@ -5337,7 +5323,7 @@ components:
         - es
       description: >
         Languages for language-specific query processing steps such as plurals,
-        stop-word removal, and word-detection dictionaries 
+        stop-word removal, and word-detection dictionaries.
 
         This setting sets a default list of languages used by the
         `removeStopWords` and `ignorePlurals` settings.
@@ -5347,9 +5333,9 @@ components:
         [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
         languages.
 
-        To support this, you must place the CJK language **first** 
+        To support this, place the CJK language **first**.
 
-        **You should always specify a query language.**
+        **Always specify a query language.**
 
         If you don't specify an indexing language, the search engine uses all
         [supported
@@ -5518,14 +5504,14 @@ components:
         By default, records must match all words in the search query to be
         included in the search results.
 
-        Adding optional words can help to increase the number of search results
-        by running an additional search query that doesn't include the optional
+        Adding optional words can increase the number of search results by
+        running an additional search query that doesn't include the optional
         words.
 
-        For example, if the search query is "action video" and "video" is an
-        optional word,
+        For example, if the search query is "action video" and "video" is
+        optional,
 
-        the search engine runs two queries. One for "action video" and one for
+        the search engine runs two queries: one for "action video" and one for
         "action".
 
         Records that match all words are ranked higher.
@@ -5538,13 +5524,13 @@ components:
         search results increases for every 1,000 records:
 
 
-        - If `optionalWords` has less than 10 words, the required number of
+        - If `optionalWords` has fewer than 10 words, the required number of
         matched words increases by 1:
-          results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words.
-        - If `optionalWords` has 10 or more words, the number of required
+          results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.
+        - If `optionalWords` has 10 or more words, the required number of
         matched words increases by the number of optional words divided by 5
         (rounded down).
-          For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.
+          Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.
 
         For more information, see [Optional
         words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
@@ -6025,7 +6011,7 @@ components:
 
             Before you modify the default setting,
 
-            you should test your changes in the dashboard,
+            test your changes in the dashboard,
 
             and by [A/B
             testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
@@ -7184,7 +7170,7 @@ components:
             detection and dictionary settings.
 
 
-            **You should always specify an indexing language.**
+            **Always specify an indexing language.**
 
             If you don't specify an indexing language, the search engine uses
             all [supported
@@ -7624,9 +7610,9 @@ components:
             You can use leading and trailing wildcard characters (`*`):
 
 
-            - `dev_*` matches all indices starting with "dev_".
+            - `dev_*` matches all indices starting with "dev_"
 
-            - `*_dev` matches all indices ending with "_dev".
+            - `*_dev` matches all indices ending with "_dev"
 
             - `*_products_*` matches all indices containing "_products_".
           example:
@@ -8045,11 +8031,15 @@ components:
         from:
           type: integer
           format: int64
-          description: When the rule should start to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should start to be active, measured in
+            seconds since the Unix epoch.
         until:
           type: integer
           format: int64
-          description: When the rule should stop to be active, in Unix epoch time.
+          description: >-
+            Timestamp when the rule should stop to be active, measured in
+            seconds since the Unix epoch.
     rule:
       type: object
       description: Rule object.
@@ -8524,9 +8514,9 @@ components:
             You can use leading and trailing wildcard characters (`*`):
 
 
-            - `dev_*` matches all indices starting with "dev_".
+            - `dev_*` matches all indices starting with "dev_"
 
-            - `*_dev` matches all indices ending with "_dev".
+            - `*_dev` matches all indices ending with "_dev"
 
             - `*_products_*` matches all indices containing "_products_".
         restrictSources:
@@ -8602,7 +8592,7 @@ components:
         - transform
     PublishedAt:
       type: string
-      description: Date of publish RFC 3339 format.
+      description: Date and time when the resource was published, in RFC 3339 format.
     Event:
       type: object
       description: An event describe a step of the task execution flow.
@@ -8638,7 +8628,7 @@ components:
         - publishedAt
     CreatedAt:
       type: string
-      description: Date of creation in RFC 3339 format.
+      description: Date and time when the resource was created, in RFC 3339 format.
     WatchResponse:
       type: object
       additionalProperties: false

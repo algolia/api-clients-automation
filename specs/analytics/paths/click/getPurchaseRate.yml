@@ -8,16 +8,16 @@ get:
   description: |
     Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.
 
-    By default, the analyzed period includes the last eight days including the current day.
+    By default, the analyzed period includes the last eight days, including the current day.
 
-    The rate is the number of purchase conversion events divided by the number of tracked searches.
+    The rate is purchase conversion events divided by tracked searches.
     A search is tracked if it returns a query ID (`clickAnalytics` is `true`).
-    This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.
+    This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.
 
     **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**
 
-    - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null.
-    - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
+    - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null.
+    - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'

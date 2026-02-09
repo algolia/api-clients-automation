@@ -65,7 +65,7 @@ class PurchasedObjectIDs(BaseModel):
     object_data: Optional[List[ObjectData]] = None
     """ Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the same length as `objectIDs`.  """
     timestamp: Optional[int] = None
-    """ Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp.  """
+    """ Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.  """
     value: Optional[Value] = None
 
     @field_validator("event_name")
@@ -96,6 +96,16 @@ class PurchasedObjectIDs(BaseModel):
             raise ValueError(
                 r"must validate the regular expression /[a-zA-Z0-9_=\/+-]{1,129}/"
             )
+        return value
+
+    @field_validator("currency")
+    def currency_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not match(r"^[A-Za-z]{3}$", value):
+            raise ValueError(r"must validate the regular expression /^[A-Za-z]{3}$/")
         return value
 
     model_config = ConfigDict(

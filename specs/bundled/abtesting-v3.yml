@@ -8,7 +8,7 @@ info:
     ## Base URLs
 
 
-    The base URLs for requests to the A/B testing API are:
+    Base URLs for the A/B testing API:
 
 
     - `https://analytics.us.algolia.com`
@@ -33,7 +33,7 @@ info:
     Elevate plans](https://www.algolia.com/pricing).
 
 
-    To authenticate your API requests, add these headers:
+    Add these headers to authenticate requests:
 
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -75,8 +75,8 @@ info:
     of attributes in the API response.
 
 
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
+    Successful responses return `2xx` statuses. Client errors return `4xx`
+    statuses. Server errors return `5xx` statuses.
 
     Error responses have a `message` property with more information.
 
@@ -84,7 +84,7 @@ info:
     ## Version
 
 
-    The current version of the A/B Testing API is version 3, as indicated by the
+    The current version of the A/B Testing API is version 3, indicated by the
     `/3/` in each endpoint's URL.
   version: 3.0.0
 servers:
@@ -600,7 +600,7 @@ paths:
       parameters:
         - in: query
           name: apiKey
-          description: API key to be used from now on.
+          description: API key to use for subsequent requests.
           required: true
           schema:
             type: string
@@ -1312,7 +1312,7 @@ components:
         type: integer
     x-ratelimit-reset:
       description: >-
-        Timstamp when the rate limit will reset, measured in seconds since the
+        Timestamp when the rate limit will reset, measured in seconds since the
         Unix epoch.
       example: 1710682486
       schema:

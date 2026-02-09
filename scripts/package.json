@@ -18,10 +18,10 @@
     "waitForAllReleases": "yarn runScript ci/codegen/waitForAllReleases.ts"
   },
   "devDependencies": {
-    "@actions/artifact": "5.0.2",
-    "@actions/core": "2.0.2",
-    "@actions/exec": "2.0.0",
-    "@actions/io": "2.0.0",
+    "@actions/artifact": "6.1.0",
+    "@actions/core": "3.0.0",
+    "@actions/exec": "3.0.0",
+    "@actions/io": "3.0.2",
     "@har-sdk/oas": "2.12.2",
     "@octokit/rest": "22.0.1",
     "@types/express": "5.0.6",

@@ -42,7 +42,7 @@ final class Event {
   @JsonKey(name: r'data')
   final Map<String, Object>? data;
 
-  /// Date of publish RFC 3339 format.
+  /// Date and time when the resource was published, in RFC 3339 format.
   @JsonKey(name: r'publishedAt')
   final String publishedAt;
 
