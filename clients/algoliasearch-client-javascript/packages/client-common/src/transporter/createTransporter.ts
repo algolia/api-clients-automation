@@ -32,6 +32,9 @@ export function createTransporter({
   requestsCache,
   responsesCache,
 }: TransporterOptions): Transporter {
+
+  const requestsMap = new Map<string, Promise<any>>();
+
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
@@ -266,20 +269,20 @@ export function createTransporter({
          * If the request has never resolved before, we actually ask if there
          * is a current request with the same key on progress.
          */
-        return requestsCache.get(key, () =>
-          /**
-           * Finally, if there is no request in progress with the same key,
-           * this `createRetryableRequest()` will actually trigger the
-           * retryable request.
-           */
-          requestsCache
-            .set(key, createRetryableRequest())
-            .then(
-              (response) => Promise.all([requestsCache.delete(key), response]),
-              (err) => Promise.all([requestsCache.delete(key), Promise.reject(err)]),
-            )
-            .then(([_, response]) => response),
-        );
+        const cacheKey = JSON.stringify(key);
+        if (requestsMap.has(cacheKey)) {
+          return requestsMap.get(cacheKey)!;
+        }
+        /**
+         * Finally, if there is no request in progress with the same key,
+         * this `createRetryableRequest()` will actually trigger the
+         * retryable request.
+         */
+        const promise = createRetryableRequest()
+          .finally(() => requestsMap.delete(cacheKey))
+
+        requestsMap.set(cacheKey, promise);
+        return promise;
       },
       {
         /**
