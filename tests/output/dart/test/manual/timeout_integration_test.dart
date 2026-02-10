@@ -53,21 +53,28 @@ void main() {
 
       retryStrategy.dispose();
 
-      expect(times.length, equals(3), reason: 'Should have 3 timeout measurements');
+      expect(times.length, equals(3),
+          reason: 'Should have 3 timeout measurements');
       expect(times[0], greaterThan(1.5),
-          reason: 'Request 1 should be >= 1.5s, got ${times[0].toStringAsFixed(2)}s');
+          reason:
+              'Request 1 should be >= 1.5s, got ${times[0].toStringAsFixed(2)}s');
       expect(times[0], lessThan(2.5),
-          reason: 'Request 1 should be < 2.5s, got ${times[0].toStringAsFixed(2)}s');
+          reason:
+              'Request 1 should be < 2.5s, got ${times[0].toStringAsFixed(2)}s');
 
       expect(times[1], greaterThan(3.5),
-          reason: 'Request 2 should be >= 3.5s, got ${times[1].toStringAsFixed(2)}s');
+          reason:
+              'Request 2 should be >= 3.5s, got ${times[1].toStringAsFixed(2)}s');
       expect(times[1], lessThan(4.5),
-          reason: 'Request 2 should be < 4.5s, got ${times[1].toStringAsFixed(2)}s');
+          reason:
+              'Request 2 should be < 4.5s, got ${times[1].toStringAsFixed(2)}s');
 
       expect(times[2], greaterThan(5.5),
-          reason: 'Request 3 should be >= 5.5s, got ${times[2].toStringAsFixed(2)}s');
+          reason:
+              'Request 3 should be >= 5.5s, got ${times[2].toStringAsFixed(2)}s');
       expect(times[2], lessThan(7.0),
-          reason: 'Request 3 should be < 7.0s, got ${times[2].toStringAsFixed(2)}s');
+          reason:
+              'Request 3 should be < 7.0s, got ${times[2].toStringAsFixed(2)}s');
     });
 
     test('retry count resets to 0 after successful request', () async {
@@ -84,8 +91,7 @@ void main() {
               isRead: true,
             ),
           );
-        } catch (e) {
-        }
+        } catch (e) {}
       }
 
       final badHost = retryStrategy.hosts.first;
@@ -110,7 +116,8 @@ void main() {
 
       expect(response, isNotNull, reason: 'Should get successful response');
       expect(goodHost.retryCount, equals(0),
-          reason: 'retry_count should reset to 0 after success, got ${goodHost.retryCount}');
+          reason:
+              'retry_count should reset to 0 after success, got ${goodHost.retryCount}');
 
       final resetRetryStrategy = createRetryStrategyWithHost('10.255.255.1');
 
@@ -126,11 +133,14 @@ void main() {
         );
         fail('Request should have timed out');
       } catch (e) {
-        final elapsed = DateTime.now().difference(start).inMilliseconds / 1000.0;
+        final elapsed =
+            DateTime.now().difference(start).inMilliseconds / 1000.0;
         expect(elapsed, greaterThan(1.5),
-            reason: 'After reset should be >= 1.5s, got ${elapsed.toStringAsFixed(2)}s');
+            reason:
+                'After reset should be >= 1.5s, got ${elapsed.toStringAsFixed(2)}s');
         expect(elapsed, lessThan(2.5),
-            reason: 'After reset should be < 2.5s, got ${elapsed.toStringAsFixed(2)}s');
+            reason:
+                'After reset should be < 2.5s, got ${elapsed.toStringAsFixed(2)}s');
       }
 
       retryStrategy.dispose();
@@ -160,9 +170,9 @@ void main() {
             isRead: true,
           ),
         );
-      } catch (e) {
-      }
-      final elapsed1 = DateTime.now().difference(start1).inMilliseconds / 1000.0;
+      } catch (e) {}
+      final elapsed1 =
+          DateTime.now().difference(start1).inMilliseconds / 1000.0;
 
       final retryableHost1 = retryStrategy.hosts.elementAt(0);
       final retryableHost2 = retryStrategy.hosts.elementAt(1);
@@ -170,7 +180,8 @@ void main() {
       expect(retryableHost1.retryCount, equals(1),
           reason: 'Host1 should have retry_count = 1');
       expect(retryableHost2.retryCount, equals(1),
-          reason: 'Host2 should have retry_count = 1 (also tried and timed out)');
+          reason:
+              'Host2 should have retry_count = 1 (also tried and timed out)');
 
       // Both hosts should timeout at ~2s on their first attempt
       expect(elapsed1, greaterThan(1.5),
@@ -189,9 +200,9 @@ void main() {
             isRead: true,
           ),
         );
-      } catch (e) {
-      }
-      final elapsed2 = DateTime.now().difference(start2).inMilliseconds / 1000.0;
+      } catch (e) {}
+      final elapsed2 =
+          DateTime.now().difference(start2).inMilliseconds / 1000.0;
 
       expect(retryableHost1.retryCount, equals(2),
           reason: 'Host1 should have retry_count = 2');
@@ -200,9 +211,11 @@ void main() {
 
       // Total timeout should be ~4s + ~4s = ~8s
       expect(elapsed2, greaterThan(7.0),
-          reason: 'Second request should take ~8s total, got ${elapsed2.toStringAsFixed(2)}s');
+          reason:
+              'Second request should take ~8s total, got ${elapsed2.toStringAsFixed(2)}s');
       expect(elapsed2, lessThan(10.0),
-          reason: 'Second request should be < 10s, got ${elapsed2.toStringAsFixed(2)}s');
+          reason:
+              'Second request should be < 10s, got ${elapsed2.toStringAsFixed(2)}s');
 
       retryStrategy.dispose();
     });
@@ -227,15 +240,15 @@ void main() {
           isRead: true,
         ),
       );
-      final elapsed1 = DateTime.now().difference(start1).inMilliseconds / 1000.0;
+      final elapsed1 =
+          DateTime.now().difference(start1).inMilliseconds / 1000.0;
 
       expect(response, isNotNull, reason: 'Should succeed on good host');
 
       // Total time should be ~2s (bad host timeout) + instant (good host)
       expect(elapsed1, greaterThan(1.5),
           reason: 'Should take at least 2s for bad host timeout');
-      expect(elapsed1, lessThan(3.0),
-          reason: 'Should complete within 3s');
+      expect(elapsed1, lessThan(3.0), reason: 'Should complete within 3s');
 
       final retryableHost1 = retryStrategy.hosts.elementAt(0);
       final retryableHost2 = retryStrategy.hosts.elementAt(1);
@@ -243,7 +256,8 @@ void main() {
       expect(retryableHost1.retryCount, equals(1),
           reason: 'Bad host should have retry_count = 1');
       expect(retryableHost2.retryCount, equals(0),
-          reason: 'Good host should have retry_count = 0 (reset after success)');
+          reason:
+              'Good host should have retry_count = 0 (reset after success)');
 
       // Second request: bad host now times out at ~4s, then good host succeeds
       final start2 = DateTime.now();
@@ -254,13 +268,16 @@ void main() {
           isRead: true,
         ),
       );
-      final elapsed2 = DateTime.now().difference(start2).inMilliseconds / 1000.0;
+      final elapsed2 =
+          DateTime.now().difference(start2).inMilliseconds / 1000.0;
 
       // Total time should be ~4s (bad host timeout with retry_count=1) + instant
       expect(elapsed2, greaterThan(3.5),
-          reason: 'Should take at least 4s for bad host timeout, got ${elapsed2.toStringAsFixed(2)}s');
+          reason:
+              'Should take at least 4s for bad host timeout, got ${elapsed2.toStringAsFixed(2)}s');
       expect(elapsed2, lessThan(5.0),
-          reason: 'Should complete within 5s, got ${elapsed2.toStringAsFixed(2)}s');
+          reason:
+              'Should complete within 5s, got ${elapsed2.toStringAsFixed(2)}s');
 
       expect(retryableHost1.retryCount, equals(2),
           reason: 'Bad host should have retry_count = 2');
