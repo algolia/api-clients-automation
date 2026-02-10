@@ -1,3 +1,8 @@
+## [1.44.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.44.0...1.44.1)
+
+- [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
+- [799a10c44](https://github.com/algolia/api-clients-automation/commit/799a10c44) fix(specs): insights-api timestamp documentation ([#5925](https://github.com/algolia/api-clients-automation/pull/5925)) by [@sirockin](https://github.com/sirockin/)
+
 ## [1.44.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.43.3...1.44.0)
 
 - [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)

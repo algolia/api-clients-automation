@@ -1,3 +1,8 @@
+## [7.37.2](https://github.com/algolia/algoliasearch-client-csharp/compare/7.37.1...7.37.2)
+
+- [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
+- [799a10c44](https://github.com/algolia/api-clients-automation/commit/799a10c44) fix(specs): insights-api timestamp documentation ([#5925](https://github.com/algolia/api-clients-automation/pull/5925)) by [@sirockin](https://github.com/sirockin/)
+
 ## [7.37.1](https://github.com/algolia/algoliasearch-client-csharp/compare/7.37.0...7.37.1)
 
 - [0e2b0eb1e](https://github.com/algolia/api-clients-automation/commit/0e2b0eb1e) refactor(csharp): move timeout integration tests to tests/output folder ([#5932](https://github.com/algolia/api-clients-automation/pull/5932)) by [@Fluf22](https://github.com/Fluf22/)

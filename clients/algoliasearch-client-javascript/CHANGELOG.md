@@ -1,3 +1,8 @@
+## [5.48.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.0...5.48.1)
+
+- [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
+- [799a10c44](https://github.com/algolia/api-clients-automation/commit/799a10c44) fix(specs): insights-api timestamp documentation ([#5925](https://github.com/algolia/api-clients-automation/pull/5925)) by [@sirockin](https://github.com/sirockin/)
+
 ## [5.48.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.47.0...5.48.0)
 
 BREAKING CHANGES: this minor version includes multiple breaking changes related to fixes on different APIs. See below for more details.
