@@ -120,4 +120,21 @@ describe('transporter cache', () => {
     expect(secondResponse).toEqual({ value: 1 });
     expect(requestCount).toBe(1);
   });
+
+  test('deduplicates concurrent cacheable requests', async () => {
+    const first = transporter.request(
+      { method: 'GET', path: '/test-concurrent', queryParameters: {}, headers: {}, cacheable: true },
+      {},
+    );
+    const second = transporter.request(
+      { method: 'GET', path: '/test-concurrent', queryParameters: {}, headers: {}, cacheable: true },
+      {},
+    );
+
+    const [firstResponse, secondResponse] = await Promise.all([first, second]);
+
+    expect(firstResponse).toEqual({ value: 1 });
+    expect(secondResponse).toEqual({ value: 1 });
+    expect(requestCount).toBe(1);
+  });
 });
