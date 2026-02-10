@@ -46,8 +46,8 @@ import org.json4s._
   */
 case class SearchHits(
     hits: Seq[Hit],
-    query: String,
-    params: String,
+    query: Option[String] = scala.None,
+    params: Option[String] = scala.None,
     additionalProperties: Option[List[JField]] = None
 )
 

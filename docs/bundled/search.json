@@ -7170,9 +7170,7 @@
           }
         },
         "required": [
-          "hits",
-          "query",
-          "params"
+          "hits"
         ]
       },
       "searchResponse": {
