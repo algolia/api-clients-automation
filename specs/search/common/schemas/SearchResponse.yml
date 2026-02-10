@@ -25,5 +25,3 @@ searchHits:
       example: query=a&hitsPerPage=20
   required:
     - hits
-    - query
-    - params
