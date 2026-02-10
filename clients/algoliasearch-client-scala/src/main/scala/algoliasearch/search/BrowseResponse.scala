@@ -136,8 +136,8 @@ case class BrowseResponse(
     nbPages: Option[Int] = scala.None,
     hitsPerPage: Option[Int] = scala.None,
     hits: Seq[Hit],
-    query: String,
-    params: String,
+    query: Option[String] = scala.None,
+    params: Option[String] = scala.None,
     cursor: Option[String] = scala.None
 )
 
