@@ -32,30 +32,11 @@
   */
 package algoliasearch.search
 
-/** Effect of the rule. For more information, see
-  * [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
+/** Redirect to a virtual replica index. This consequence is only valid for rules with `scope: redirect`.
   *
-  * @param promote
-  *   Records you want to pin to a specific position in the search results. You can promote up to 300 records, either
-  *   individually, or as groups of up to 100 records each.
-  * @param filterPromotes
-  *   Determines whether promoted records must also match active filters for the consequence to apply. This ensures
-  *   user-applied filters take priority and irrelevant matches aren't shown. For example, if you promote a record with
-  *   `color: red` but the user filters for `color: blue`, the \"red\" record won't be shown. > In the Algolia
-  *   dashboard, when you use the **Pin an item** consequence, `filterPromotes` appears as the checkbox: **Pinned items
-  *   must match active filters to be displayed.** For examples, see [Promote results with
-  *   rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/#promote-results-matching-active-filters).
-  * @param hide
-  *   Records you want to hide from the search results.
-  * @param userData
-  *   A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't
-  *   interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
+  * @param indexName
+  *   Name of the virtual replica index to redirect searches to.
   */
-case class Consequence(
-    params: Option[ConsequenceParams] = scala.None,
-    promote: Option[Seq[Promote]] = scala.None,
-    filterPromotes: Option[Boolean] = scala.None,
-    hide: Option[Seq[ConsequenceHide]] = scala.None,
-    redirect: Option[ConsequenceRedirect] = scala.None,
-    userData: Option[Any] = scala.None
+case class ConsequenceRedirect(
+    indexName: String
 )

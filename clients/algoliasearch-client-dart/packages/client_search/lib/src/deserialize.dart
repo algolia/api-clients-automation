@@ -36,6 +36,7 @@ import 'package:algolia_client_search/src/model/consequence.dart';
 import 'package:algolia_client_search/src/model/consequence_hide.dart';
 import 'package:algolia_client_search/src/model/consequence_params.dart';
 import 'package:algolia_client_search/src/model/consequence_query_object.dart';
+import 'package:algolia_client_search/src/model/consequence_redirect.dart';
 import 'package:algolia_client_search/src/model/created_at_response.dart';
 import 'package:algolia_client_search/src/model/cursor.dart';
 import 'package:algolia_client_search/src/model/delete_api_key_response.dart';
@@ -275,6 +276,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ConsequenceQueryObject':
       return ConsequenceQueryObject.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConsequenceRedirect':
+      return ConsequenceRedirect.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'CreatedAtResponse':
       return CreatedAtResponse.fromJson(value as Map<String, dynamic>)
