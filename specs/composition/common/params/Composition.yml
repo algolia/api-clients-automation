@@ -124,5 +124,4 @@ sortBy:
 
     If no value is provided or an invalid value, no sorting strategy is applied.
   default: ''
-  example:
-    'Price (asc)'
+  example: 'Price (asc)'
