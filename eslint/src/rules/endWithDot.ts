@@ -1,15 +1,11 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isBlockScalar, isPairWithKey, isScalar } from '../utils.js';
 
-export const endWithDot = createRule('endWithDot', {
+export const endWithDot: Rule.RuleModule = {
   meta: {
     docs: {
       description: '`description` must end with a period',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       endWithDot: 'description does not end with a period',
@@ -19,10 +15,6 @@ export const endWithDot = createRule('endWithDot', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (!isPairWithKey(node, 'description')) {
@@ -58,4 +50,4 @@ export const endWithDot = createRule('endWithDot', {
       },
     };
   },
-});
+};

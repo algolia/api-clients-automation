@@ -1,15 +1,11 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isPairWithKey, isScalar } from '../utils.js';
 
-export const noFinalDot = createRule('noFinalDot', {
+export const noFinalDot: Rule.RuleModule = {
   meta: {
     docs: {
       description: '`summary` must not end with a period',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       noFinalDot: 'summary ends with a period',
@@ -19,10 +15,6 @@ export const noFinalDot = createRule('noFinalDot', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
         if (!isPairWithKey(node, 'summary')) {
@@ -52,4 +44,4 @@ export const noFinalDot = createRule('noFinalDot', {
       },
     };
   },
-});
+};
