@@ -58,17 +58,11 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       );
       break;
     case 'dart':
-      await run(`dart test ${filter((f) => `test/${f}`)}`, {
+      const testPaths = [...folders.map((f) => `test/${f}`), ...(suites.client ? ['test/manual/'] : [])].join(' ');
+      await run(`dart test ${testPaths}`, {
         cwd,
         language,
       });
-      // run manual timeout tests
-      if (suites.client) {
-        await run('dart test test/manual/', {
-          cwd,
-          language,
-        });
-      }
       break;
     case 'go':
       await run(
