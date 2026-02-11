@@ -41,7 +41,7 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
-
+  '!tests/output/dart/test/manual/**',
   // GO
   'clients/algoliasearch-client-go/algolia/**',
   '!clients/algoliasearch-client-go/*',
