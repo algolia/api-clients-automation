@@ -668,7 +668,7 @@ paths:
                   summary: Timestamp too old
                   value:
                     status: 422
-                    message: The timestamp must be at most 4 days in the past
+                    message: The timestamp is too far in the past
                 TooManyEvents:
                   summary: Too many events
                   description: You can include up to 1,000 events in a single API request.
@@ -890,9 +890,9 @@ components:
       format: int64
       description: >
         Timestamp of the event, measured in milliseconds since the Unix epoch.
+        Must be no older than 30 days.
 
-        By default, the Insights API uses the time it receives an event as its
-        timestamp.
+        If not provided, we use the time at which the request was received.
       example: 1687193127
     ClickedObjectIDsAfterSearch:
       type: object

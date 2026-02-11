@@ -530,7 +530,7 @@ public class BrowseResponse<T> {
   }
 
   /** Search query. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getQuery() {
     return query;
   }
@@ -541,7 +541,7 @@ public class BrowseResponse<T> {
   }
 
   /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getParams() {
     return params;
   }

@@ -541,7 +541,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** Search query. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getQuery() {
     return query;
   }
@@ -552,7 +552,7 @@ public class SearchResponse<T> implements SearchResult<T> {
   }
 
   /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getParams() {
     return params;
   }

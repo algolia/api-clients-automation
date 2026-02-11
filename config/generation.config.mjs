@@ -41,7 +41,7 @@ export const patterns = [
   'clients/algoliasearch-client-dart/packages/client_core/lib/src/version.dart',
   '!clients/algoliasearch-client-dart/packages/*/lib/src/extension.dart',
   '!clients/algoliasearch-client-dart/packages/algoliasearch/lib/algoliasearch.dart',
-
+  '!tests/output/dart/test/manual/**',
   // GO
   'clients/algoliasearch-client-go/algolia/**',
   '!clients/algoliasearch-client-go/*',
@@ -132,6 +132,7 @@ export const patterns = [
   '!clients/algoliasearch-client-ruby/lib/algolia/transport/**',
 
   'tests/output/ruby/Gemfile.lock',
+  '!tests/output/ruby/test/manual/**',
 
   // Scala
   '!clients/algoliasearch-client-scala/**',

@@ -41,6 +41,9 @@ final class HttpRequest {
   /// Maximum duration before the request is automatically cancelled.
   final Duration timeout;
 
+  /// Maximum duration for establishing a connection.
+  final Duration connectTimeout;
+
   /// Headers to be included in the request. Can be null if no headers are needed.
   final Map<String, dynamic>? headers;
 
@@ -56,6 +59,7 @@ final class HttpRequest {
     required this.host,
     required this.path,
     required this.timeout,
+    required this.connectTimeout,
     this.headers,
     this.body,
     required this.queryParameters,
@@ -70,6 +74,7 @@ final class HttpRequest {
           host == other.host &&
           path == other.path &&
           timeout == other.timeout &&
+          connectTimeout == other.connectTimeout &&
           headers == other.headers &&
           body == other.body &&
           queryParameters == other.queryParameters;
@@ -80,13 +85,14 @@ final class HttpRequest {
       host.hashCode ^
       path.hashCode ^
       timeout.hashCode ^
+      connectTimeout.hashCode ^
       headers.hashCode ^
       body.hashCode ^
       queryParameters.hashCode;
 
   @override
   String toString() {
-    return 'HttpRequest{method: $method, host: $host, path: $path, timeout: $timeout, headers: $headers, body: $body, queryParameters: $queryParameters}';
+    return 'HttpRequest{method: $method, host: $host, path: $path, timeout: $timeout, connectTimeout: $connectTimeout, headers: $headers, body: $body, queryParameters: $queryParameters}';
   }
 }
 
