@@ -28,7 +28,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.35.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.35.1\).*/))
   end
 
   # fallbacks to the alias when region is not given

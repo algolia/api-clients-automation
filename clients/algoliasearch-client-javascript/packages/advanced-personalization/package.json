@@ -64,6 +64,5 @@
   },
   "engines": {
     "node": ">= 14.0.0"
-  },
-  "stableVersion": "0.0.1-alpha.27"
+  }
 }
