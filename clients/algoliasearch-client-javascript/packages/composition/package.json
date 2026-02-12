@@ -1,5 +1,5 @@
 {
-  "version": "1.22.4-beta.3",
+  "version": "1.23.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -64,6 +64,5 @@
   },
   "engines": {
     "node": ">= 14.0.0"
-  },
-  "stableVersion": "1.22.4-beta.2"
+  }
 }
