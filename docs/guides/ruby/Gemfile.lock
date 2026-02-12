@@ -13,23 +13,23 @@ GEM
     base64 (0.2.0)
     connection_pool (2.5.0)
     dotenv (3.1.7)
-    faraday (2.12.2)
+    faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-net_http (3.4.0)
-      net-http (>= 0.5.0)
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     faraday-net_http_persistent (2.3.0)
       faraday (~> 2.5)
       net-http-persistent (>= 4.0.4, < 5)
-    json (2.10.2)
-    logger (1.6.6)
-    net-http (0.6.0)
-      uri
+    json (2.18.1)
+    logger (1.7.0)
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
     rake (13.2.1)
-    uri (1.0.4)
+    uri (1.1.1)
 
 PLATFORMS
   ruby
