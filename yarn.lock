@@ -106,7 +106,7 @@ __metadata:
   dependencies:
     "@eslint/json": "npm:1.0.1"
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
-    "@redocly/cli": "npm:2.16.0"
+    "@redocly/cli": "npm:2.18.1"
     eslint: "npm:10.0.0"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-yml: "npm:3.1.2"
@@ -2335,7 +2335,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/ajv@npm:8.17.1, @redocly/ajv@npm:^8.11.2, ajv@npm:@redocly/ajv@8.17.1":
+"@redocly/ajv@npm:8.17.4, @redocly/ajv@npm:^8.17.4, ajv@npm:@redocly/ajv@8.17.4":
+  version: 8.17.4
+  resolution: "@redocly/ajv@npm:8.17.4"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.3"
+    fast-uri: "npm:^3.0.1"
+    json-schema-traverse: "npm:^1.0.0"
+    require-from-string: "npm:^2.0.2"
+  checksum: 10/aae76cbeaed9df0d948ae84d0ea0c1520cfa88062d3f8ef92166c2abeaf0ba649e046ed748a829eec29bc2643d235a1475b4d1f8ec6713a8a9167f3feb48cbca
+  languageName: node
+  linkType: hard
+
+"@redocly/ajv@npm:^8.11.2":
   version: 8.17.1
   resolution: "@redocly/ajv@npm:8.17.1"
   dependencies:
@@ -2347,30 +2359,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/ajv@npm:^8.17.2, ajv@npm:@redocly/ajv@8.17.2":
-  version: 8.17.2
-  resolution: "@redocly/ajv@npm:8.17.2"
-  dependencies:
-    fast-deep-equal: "npm:^3.1.3"
-    fast-uri: "npm:^3.0.1"
-    json-schema-traverse: "npm:^1.0.0"
-    require-from-string: "npm:^2.0.2"
-  checksum: 10/cdd27abe4b06f90d72c5bd718d9d803233edebde7fefb7d56ca56018ccb09da1d78bb0bc33d3941cc6a5be075248903e5107fd03f059e738c7ebf87086a9a988
-  languageName: node
-  linkType: hard
-
-"@redocly/cli@npm:2.16.0":
-  version: 2.16.0
-  resolution: "@redocly/cli@npm:2.16.0"
+"@redocly/cli@npm:2.18.1":
+  version: 2.18.1
+  resolution: "@redocly/cli@npm:2.18.1"
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.202.0"
     "@opentelemetry/resources": "npm:2.0.1"
     "@opentelemetry/sdk-trace-node": "npm:2.0.1"
     "@opentelemetry/semantic-conventions": "npm:1.34.0"
-    "@redocly/openapi-core": "npm:2.16.0"
-    "@redocly/respect-core": "npm:2.16.0"
+    "@redocly/openapi-core": "npm:2.18.1"
+    "@redocly/respect-core": "npm:2.18.1"
     abort-controller: "npm:^3.0.0"
-    ajv: "npm:@redocly/ajv@8.17.1"
+    ajv: "npm:@redocly/ajv@8.17.4"
     ajv-formats: "npm:^3.0.1"
     colorette: "npm:^1.2.0"
     cookie: "npm:^0.7.2"
@@ -2394,7 +2394,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/e397930e81f346f2c59b100736d5f620133ebe4ae1ca407c8f80b7422a82cc33d2948de75a6b0e07743c0247580e88ba658a4ff607914f3df547bbc1c773b3d0
+  checksum: 10/568a8576a4b28872d55b0c3cde000cfbf4370ad4b6c2aaa52a75dc1abcd4074555894cd78aaceb9eb36e20d43dc5cae738eb9846964565e15c4fad70f5a3bcbf
   languageName: node
   linkType: hard
 
@@ -2405,22 +2405,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/config@npm:^0.41.4":
-  version: 0.41.4
-  resolution: "@redocly/config@npm:0.41.4"
+"@redocly/config@npm:^0.43.0":
+  version: 0.43.0
+  resolution: "@redocly/config@npm:0.43.0"
   dependencies:
     json-schema-to-ts: "npm:2.7.2"
-  checksum: 10/e34f546d2eacf2f205917ccfee6372f0f5d5b45b0e782c61e9522086cadac61ab7e0ea957b28ec06ff5bca7a4128fa2a0a3abb345d77e73191656cef9499fc6d
+  checksum: 10/4c337c6aa233cfc13be6f195bfa49b2a9eda1ada02483d601450dd2d269e638db536e2c6244d2e0f48303039aeef3c585683fc587548f3fd61eeda7bc62125e3
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:2.16.0":
-  version: 2.16.0
-  resolution: "@redocly/openapi-core@npm:2.16.0"
+"@redocly/openapi-core@npm:2.18.1":
+  version: 2.18.1
+  resolution: "@redocly/openapi-core@npm:2.18.1"
   dependencies:
-    "@redocly/ajv": "npm:^8.17.2"
-    "@redocly/config": "npm:^0.41.4"
-    ajv: "npm:@redocly/ajv@8.17.2"
+    "@redocly/ajv": "npm:^8.17.4"
+    "@redocly/config": "npm:^0.43.0"
+    ajv: "npm:@redocly/ajv@8.17.4"
     ajv-formats: "npm:^3.0.1"
     colorette: "npm:^1.2.0"
     js-levenshtein: "npm:^1.1.6"
@@ -2428,7 +2428,7 @@ __metadata:
     picomatch: "npm:^4.0.3"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/d9711ed7b5417837ce814b8e2c8f51c48d0c63adb79a6fc226afc01b6ce6aa77be9c30158b0331ebc19be258e5a667e96632c9ae7f7d57cb66f3c87a1074fc9f
+  checksum: 10/9b80a280b5ebcb81cca9897eaecb28a346dc1ea89610d80d0411141f2fdfc5a1ad5bbf505938c8d0c6df70e80374b7c19d575143e805cb5522f29baceb0f6222
   languageName: node
   linkType: hard
 
@@ -2449,15 +2449,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/respect-core@npm:2.16.0":
-  version: 2.16.0
-  resolution: "@redocly/respect-core@npm:2.16.0"
+"@redocly/respect-core@npm:2.18.1":
+  version: 2.18.1
+  resolution: "@redocly/respect-core@npm:2.18.1"
   dependencies:
     "@faker-js/faker": "npm:^7.6.0"
     "@noble/hashes": "npm:^1.8.0"
-    "@redocly/ajv": "npm:8.17.1"
-    "@redocly/openapi-core": "npm:2.16.0"
-    ajv: "npm:@redocly/ajv@8.17.1"
+    "@redocly/ajv": "npm:8.17.4"
+    "@redocly/openapi-core": "npm:2.18.1"
+    ajv: "npm:@redocly/ajv@8.17.4"
     better-ajv-errors: "npm:^1.2.0"
     colorette: "npm:^2.0.20"
     json-pointer: "npm:^0.6.2"
@@ -2465,7 +2465,7 @@ __metadata:
     openapi-sampler: "npm:^1.6.2"
     outdent: "npm:^0.8.0"
     picomatch: "npm:^4.0.3"
-  checksum: 10/249237212b0bb6595e2e2f17b90f58ad669ec040552908616335fe41905dee17e8c654f2444f7d732633adfc6a12aa92d713fd96a99a685ad6920c6a83e27e16
+  checksum: 10/4e5def8659fd4b8e51142106ee6f7e81aa1ae77ea94215eca93bad856a01f14b05619fdd807cf07edb5d451e1725cb5977c7bc08b620b496e7149c5aceb59a0d
   languageName: node
   linkType: hard
 
