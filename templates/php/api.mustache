@@ -732,7 +732,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
           throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
       }
 
-      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+      return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions);
     }
 
     /**
