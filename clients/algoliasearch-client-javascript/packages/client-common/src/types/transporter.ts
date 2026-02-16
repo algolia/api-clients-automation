@@ -109,10 +109,7 @@ export type TransporterOptions = {
    * Since in-flight requests are stored as Promises (which cannot be
    * serialized to JSON), using a serializing cache will cause failures.
    *
-   * Make sure to use a non-serializing cache implementation, such as:
-   *
-   * - `createMemoryCache({ serializable: false })`
-   * - `createNullCache()`
+   * Make sure to use a non-serializing cache implementation, such as `createMemoryCache({ serializable: false })` or to disable request caching with `createNullCache()`
    */
   requestsCache: Cache;
 
