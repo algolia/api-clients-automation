@@ -5,6 +5,14 @@ rule:
   properties:
     objectID:
       $ref: '../../../../common/parameters.yml#/ruleID'
+    condition:
+      deprecated: true
+      description: |
+        **DEPRECATED:** Use `conditions` (plural) instead.
+
+        Legacy field for a single condition. This field is maintained for backward
+        compatibility with older rules but should not be used in new implementations.
+      $ref: '#/condition'
     conditions:
       type: array
       minItems: 0

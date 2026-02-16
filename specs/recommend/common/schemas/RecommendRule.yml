@@ -14,6 +14,14 @@ RecommendRule:
       $ref: '../../../common/parameters.yml#/ruleID'
     condition:
       $ref: '#/Condition'
+    conditions:
+      type: array
+      description: |
+        Multiple conditions for the rule. If specified, only one condition needs to match.
+
+        Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+      items:
+        $ref: '#/Condition'
     consequence:
       $ref: '#/Consequence'
     description:
