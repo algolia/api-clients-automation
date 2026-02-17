@@ -205,7 +205,7 @@
     ],
     "folder": "clients/algoliasearch-client-javascript",
     "gitRepoId": "algoliasearch-client-javascript",
-    "packageVersion": "5.48.1",
+    "packageVersion": "5.48.2",
     "modelFolder": "model",
     "apiFolder": "src",
     "tests": {
@@ -262,7 +262,7 @@
     ],
     "folder": "clients/algoliasearch-client-php",
     "gitRepoId": "algoliasearch-client-php",
-    "packageVersion": "4.38.1",
+    "packageVersion": "4.38.2",
     "modelFolder": "lib/Model",
     "apiFolder": "lib/Api",
     "dockerImage": "apic_base",
