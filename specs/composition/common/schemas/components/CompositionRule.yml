@@ -4,12 +4,6 @@ compositionRule:
   properties:
     objectID:
       $ref: '../Identifiers.yml#/compositionRuleObjectID'
-    condition:
-      deprecated: true
-      description: |
-        Legacy field for a single condition. This field is maintained for backward
-        compatibility with older rules but should not be used in new implementations.
-      $ref: '#/condition'
     conditions:
       type: array
       minItems: 0
@@ -46,6 +40,12 @@ compositionRule:
       items:
         type: string
       example: ['conditional']
+    condition:
+      deprecated: true
+      description: |
+        Legacy field for a single condition. This field is maintained for backward compatibility 
+        with older rules but should not be used in new implementations.
+      $ref: '#/condition'
   required:
     - objectID
     - consequence

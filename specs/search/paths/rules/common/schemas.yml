@@ -5,12 +5,6 @@ rule:
   properties:
     objectID:
       $ref: '../../../../common/parameters.yml#/ruleID'
-    condition:
-      deprecated: true
-      description: |
-        Legacy field for a single condition. This field is maintained for backward
-        compatibility with older rules but should not be used in new implementations.
-      $ref: '#/condition'
     conditions:
       type: array
       minItems: 0
@@ -43,6 +37,12 @@ rule:
         type: string
     scope:
       type: string
+    condition:
+      deprecated: true
+      description: |
+        Legacy field for a single condition. This field is maintained for backward compatibility 
+        with older rules but should not be used in new implementations.
+      $ref: '#/condition'
   required:
     - objectID
     - consequence
