@@ -29,7 +29,11 @@
 package algoliasearch.composition
 
 /** ResultsCompositionsResponse
+  *
+  * @param feedID
+  *   The ID of the feed.
   */
 case class ResultsCompositionsResponse(
+    feedID: Option[String] = scala.None,
     compositions: Map[String, ResultsCompositionInfoResponse]
 )
