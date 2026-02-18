@@ -2522,6 +2522,10 @@ components:
           $ref: '#/components/schemas/SingleResultSet_params'
         query:
           $ref: '#/components/schemas/SingleResultSet_query'
+    feedID:
+      type: string
+      description: The ID of the feed.
+      example: products-feed
     resultsInjectedItemAppliedRulesInfoResponse:
       type: object
       properties:
@@ -2559,6 +2563,8 @@ components:
     resultsCompositionsResponse:
       type: object
       properties:
+        feedID:
+          $ref: '#/components/schemas/feedID'
         compositions:
           additionalProperties:
             $ref: '#/components/schemas/resultsCompositionInfoResponse'
