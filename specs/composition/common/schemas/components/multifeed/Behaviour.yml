@@ -34,10 +34,11 @@ multifeed:
                   params:
                     filters: 'sponsored:true'
       articles-feed:
-        main:
-          source:
-            search:
-              index: articles
+        injection:
+          main:
+            source:
+              search:
+                index: articles
     feedsOrder:
       - products-feed
       - articles-feed
