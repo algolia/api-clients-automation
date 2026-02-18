@@ -1,8 +1,8 @@
 import fsp from 'fs/promises';
 
 import oas2har from '@har-sdk/oas';
-import type { HarRequest } from 'httpsnippet';
-import { HTTPSnippet } from 'httpsnippet';
+import type { HarRequest } from '@readme/httpsnippet';
+import { HTTPSnippet } from '@readme/httpsnippet';
 import yaml from 'js-yaml';
 
 import { Cache } from '../cache.ts';
@@ -112,10 +112,12 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           }
         }
 
+        const curlSnippet = new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl');
+
         specMethod['x-codeSamples'].push({
           lang: 'cURL',
           label: 'curl',
-          source: `${new HTTPSnippet(harRequest as HarRequest).convert('shell', 'curl')}`,
+          source: curlSnippet ? curlSnippet[0] : '',
         });
       }
 
