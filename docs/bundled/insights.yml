@@ -1913,7 +1913,26 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"events":[{"eventName":"Products Clicked","eventType":"click","index":"test-index","userToken":"anonymous-user-1","authenticatedUserToken":"user-1","objectIDs":["object-1"],"positions":[1],"queryID":"7dfe2ada7bca48bdd0629649df0bee07"}]}'
+              --data '
+            {
+              "events": [
+                {
+                  "eventName": "Products Clicked",
+                  "eventType": "click",
+                  "index": "test-index",
+                  "userToken": "anonymous-user-1",
+                  "authenticatedUserToken": "user-1",
+                  "objectIDs": [
+                    "object-1"
+                  ],
+                  "positions": [
+                    1
+                  ],
+                  "queryID": "7dfe2ada7bca48bdd0629649df0bee07"
+                }
+              ]
+            }
+            '
   /1/usertokens/{userToken}:
     delete:
       tags:

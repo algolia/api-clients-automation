@@ -1368,7 +1368,24 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"Custom ranking sales rank test","variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}],"endAt":"2023-06-17T00:00:00Z"}'
+              --data '
+            {
+              "name": "Custom ranking sales rank test",
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ],
+              "endAt": "2023-06-17T00:00:00Z"
+            }
+            '
     get:
       tags:
         - abtest
@@ -2798,7 +2815,39 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"configuration":{"featureFilters":{"dynamicReRanking":true,"aiPerso":true,"multiSignalRanking":true},"outliers":{"exclude":true},"emptySearch":{"exclude":true},"minimumDetectableEffect":{"size":0,"metric":"addToCartRate"}},"variants":[{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"},{"index":"delcourt_production","trafficPercentage":60,"description":"Current production index"}]}'
+              --data '
+            {
+              "configuration": {
+                "featureFilters": {
+                  "dynamicReRanking": true,
+                  "aiPerso": true,
+                  "multiSignalRanking": true
+                },
+                "outliers": {
+                  "exclude": true
+                },
+                "emptySearch": {
+                  "exclude": true
+                },
+                "minimumDetectableEffect": {
+                  "size": 0,
+                  "metric": "addToCartRate"
+                }
+              },
+              "variants": [
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                },
+                {
+                  "index": "delcourt_production",
+                  "trafficPercentage": 60,
+                  "description": "Current production index"
+                }
+              ]
+            }
+            '
 components:
   securitySchemes:
     appId:

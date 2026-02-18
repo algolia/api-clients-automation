@@ -1633,7 +1633,49 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indexName":"ALGOLIA_INDEX_NAME","sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
+              --data '
+            {
+              "indexName": "ALGOLIA_INDEX_NAME",
+              "sourceIndices": [
+                {
+                  "indexName": "products",
+                  "replicas": false,
+                  "analyticsTags": [
+                    "lorem"
+                  ],
+                  "facets": [
+                    {
+                      "attribute": "category",
+                      "amount": 3
+                    },
+                    {
+                      "attribute": "brand",
+                      "amount": 2
+                    }
+                  ],
+                  "minHits": 5,
+                  "minLetters": 4,
+                  "generate": [
+                    [
+                      "color",
+                      "brand"
+                    ]
+                  ],
+                  "external": [
+                    "lorem"
+                  ]
+                }
+              ],
+              "languages": [
+                "lorem"
+              ],
+              "exclude": [
+                "lorem"
+              ],
+              "enablePersonalization": false,
+              "allowSpecialCharacters": false
+            }
+            '
   /1/configs/{indexName}:
     get:
       tags:
@@ -2275,7 +2317,48 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"sourceIndices":[{"indexName":"products","replicas":false,"analyticsTags":["lorem"],"facets":[{"attribute":"category","amount":3},{"attribute":"brand","amount":2}],"minHits":5,"minLetters":4,"generate":[["color","brand"]],"external":["lorem"]}],"languages":["lorem"],"exclude":["lorem"],"enablePersonalization":false,"allowSpecialCharacters":false}'
+              --data '
+            {
+              "sourceIndices": [
+                {
+                  "indexName": "products",
+                  "replicas": false,
+                  "analyticsTags": [
+                    "lorem"
+                  ],
+                  "facets": [
+                    {
+                      "attribute": "category",
+                      "amount": 3
+                    },
+                    {
+                      "attribute": "brand",
+                      "amount": 2
+                    }
+                  ],
+                  "minHits": 5,
+                  "minLetters": 4,
+                  "generate": [
+                    [
+                      "color",
+                      "brand"
+                    ]
+                  ],
+                  "external": [
+                    "lorem"
+                  ]
+                }
+              ],
+              "languages": [
+                "lorem"
+              ],
+              "exclude": [
+                "lorem"
+              ],
+              "enablePersonalization": false,
+              "allowSpecialCharacters": false
+            }
+            '
     delete:
       tags:
         - configurations
