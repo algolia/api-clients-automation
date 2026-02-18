@@ -8902,8 +8902,36 @@ void snippetForsetSettings52() async {
 
 // Snippet for the setSettings method.
 //
-// attributesToHighlightStar
+// highlightWithCustomPrePostTags
 void snippetForsetSettings53() async {
+  // >SEPARATOR setSettings highlightWithCustomPrePostTags
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToHighlight: [
+        "author",
+        "title",
+        "content",
+      ],
+      highlightPreTag: "<em class=\"search-highlight\">",
+      highlightPostTag: "</em>",
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToHighlightStar
+void snippetForsetSettings54() async {
   // >SEPARATOR setSettings attributesToHighlightStar
   // Initialize the client
   final client =
@@ -8927,7 +8955,7 @@ void snippetForsetSettings53() async {
 // Snippet for the setSettings method.
 //
 // everything
-void snippetForsetSettings54() async {
+void snippetForsetSettings55() async {
   // >SEPARATOR setSettings everything
   // Initialize the client
   final client =
@@ -9082,7 +9110,7 @@ void snippetForsetSettings54() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-void snippetForsetSettings55() async {
+void snippetForsetSettings56() async {
   // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   // Initialize the client
   final client =
@@ -9118,7 +9146,7 @@ void snippetForsetSettings55() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesOrdering
-void snippetForsetSettings56() async {
+void snippetForsetSettings57() async {
   // >SEPARATOR setSettings searchableAttributesOrdering
   // Initialize the client
   final client =
@@ -9143,7 +9171,7 @@ void snippetForsetSettings56() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesProductReferenceSuffixes
-void snippetForsetSettings57() async {
+void snippetForsetSettings58() async {
   // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   // Initialize the client
   final client =
@@ -9169,7 +9197,7 @@ void snippetForsetSettings57() async {
 // Snippet for the setSettings method.
 //
 // queryLanguageAndIgnorePlurals
-void snippetForsetSettings58() async {
+void snippetForsetSettings59() async {
   // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   // Initialize the client
   final client =
@@ -9194,7 +9222,7 @@ void snippetForsetSettings58() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesInMovies
-void snippetForsetSettings59() async {
+void snippetForsetSettings60() async {
   // >SEPARATOR setSettings searchableAttributesInMovies
   // Initialize the client
   final client =
@@ -9220,7 +9248,7 @@ void snippetForsetSettings59() async {
 // Snippet for the setSettings method.
 //
 // disablePrefixOnAttributes
-void snippetForsetSettings60() async {
+void snippetForsetSettings61() async {
   // >SEPARATOR setSettings disablePrefixOnAttributes
   // Initialize the client
   final client =
@@ -9244,7 +9272,7 @@ void snippetForsetSettings60() async {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-void snippetForsetSettings61() async {
+void snippetForsetSettings62() async {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   final client =
@@ -9268,7 +9296,7 @@ void snippetForsetSettings61() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExample
-void snippetForsetSettings62() async {
+void snippetForsetSettings63() async {
   // >SEPARATOR setSettings searchableAttributesSimpleExample
   // Initialize the client
   final client =
@@ -9292,7 +9320,7 @@ void snippetForsetSettings62() async {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExampleAlt
-void snippetForsetSettings63() async {
+void snippetForsetSettings64() async {
   // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   // Initialize the client
   final client =
@@ -9317,7 +9345,7 @@ void snippetForsetSettings63() async {
 // Snippet for the setSettings method.
 //
 // set_searchable_attributes
-void snippetForsetSettings64() async {
+void snippetForsetSettings65() async {
   // >SEPARATOR setSettings set_searchable_attributes
   // Initialize the client
   final client =
@@ -9344,7 +9372,7 @@ void snippetForsetSettings64() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_faceting
-void snippetForsetSettings65() async {
+void snippetForsetSettings66() async {
   // >SEPARATOR setSettings set_attributes_for_faceting
   // Initialize the client
   final client =
@@ -9372,7 +9400,7 @@ void snippetForsetSettings65() async {
 // Snippet for the setSettings method.
 //
 // unretrievable_attributes
-void snippetForsetSettings66() async {
+void snippetForsetSettings67() async {
   // >SEPARATOR setSettings unretrievable_attributes
   // Initialize the client
   final client =
@@ -9396,7 +9424,7 @@ void snippetForsetSettings66() async {
 // Snippet for the setSettings method.
 //
 // set_retrievable_attributes
-void snippetForsetSettings67() async {
+void snippetForsetSettings68() async {
   // >SEPARATOR setSettings set_retrievable_attributes
   // Initialize the client
   final client =
@@ -9422,7 +9450,7 @@ void snippetForsetSettings67() async {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_as_retrievable
-void snippetForsetSettings68() async {
+void snippetForsetSettings69() async {
   // >SEPARATOR setSettings set_all_attributes_as_retrievable
   // Initialize the client
   final client =
@@ -9446,7 +9474,7 @@ void snippetForsetSettings68() async {
 // Snippet for the setSettings method.
 //
 // specify_attributes_not_to_retrieve
-void snippetForsetSettings69() async {
+void snippetForsetSettings70() async {
   // >SEPARATOR setSettings specify_attributes_not_to_retrieve
   // Initialize the client
   final client =
@@ -9472,7 +9500,7 @@ void snippetForsetSettings69() async {
 // Snippet for the setSettings method.
 //
 // neural_search
-void snippetForsetSettings70() async {
+void snippetForsetSettings71() async {
   // >SEPARATOR setSettings neural_search
   // Initialize the client
   final client =
@@ -9494,7 +9522,7 @@ void snippetForsetSettings70() async {
 // Snippet for the setSettings method.
 //
 // keyword_search
-void snippetForsetSettings71() async {
+void snippetForsetSettings72() async {
   // >SEPARATOR setSettings keyword_search
   // Initialize the client
   final client =
@@ -9516,7 +9544,7 @@ void snippetForsetSettings71() async {
 // Snippet for the setSettings method.
 //
 // set_default_ranking
-void snippetForsetSettings72() async {
+void snippetForsetSettings73() async {
   // >SEPARATOR setSettings set_default_ranking
   // Initialize the client
   final client =
@@ -9547,7 +9575,7 @@ void snippetForsetSettings72() async {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_asc
-void snippetForsetSettings73() async {
+void snippetForsetSettings74() async {
   // >SEPARATOR setSettings set_ranking_by_attribute_asc
   // Initialize the client
   final client =
@@ -9579,7 +9607,7 @@ void snippetForsetSettings73() async {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_desc
-void snippetForsetSettings74() async {
+void snippetForsetSettings75() async {
   // >SEPARATOR setSettings set_ranking_by_attribute_desc
   // Initialize the client
   final client =
@@ -9611,7 +9639,7 @@ void snippetForsetSettings74() async {
 // Snippet for the setSettings method.
 //
 // set_custom_ranking
-void snippetForsetSettings75() async {
+void snippetForsetSettings76() async {
   // >SEPARATOR setSettings set_custom_ranking
   // Initialize the client
   final client =
@@ -9636,7 +9664,7 @@ void snippetForsetSettings75() async {
 // Snippet for the setSettings method.
 //
 // set_default_relevancy
-void snippetForsetSettings76() async {
+void snippetForsetSettings77() async {
   // >SEPARATOR setSettings set_default_relevancy
   // Initialize the client
   final client =
@@ -9658,7 +9686,7 @@ void snippetForsetSettings76() async {
 // Snippet for the setSettings method.
 //
 // set_replicas
-void snippetForsetSettings77() async {
+void snippetForsetSettings78() async {
   // >SEPARATOR setSettings set_replicas
   // Initialize the client
   final client =
@@ -9683,7 +9711,7 @@ void snippetForsetSettings77() async {
 // Snippet for the setSettings method.
 //
 // set_default_max_values_per_facet
-void snippetForsetSettings78() async {
+void snippetForsetSettings79() async {
   // >SEPARATOR setSettings set_default_max_values_per_facet
   // Initialize the client
   final client =
@@ -9705,7 +9733,7 @@ void snippetForsetSettings78() async {
 // Snippet for the setSettings method.
 //
 // set_default_sort_facet_values_by
-void snippetForsetSettings79() async {
+void snippetForsetSettings80() async {
   // >SEPARATOR setSettings set_default_sort_facet_values_by
   // Initialize the client
   final client =
@@ -9727,7 +9755,7 @@ void snippetForsetSettings79() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_snippet
-void snippetForsetSettings80() async {
+void snippetForsetSettings81() async {
   // >SEPARATOR setSettings set_attributes_to_snippet
   // Initialize the client
   final client =
@@ -9752,7 +9780,7 @@ void snippetForsetSettings80() async {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_to_snippet
-void snippetForsetSettings81() async {
+void snippetForsetSettings82() async {
   // >SEPARATOR setSettings set_all_attributes_to_snippet
   // Initialize the client
   final client =
@@ -9776,7 +9804,7 @@ void snippetForsetSettings81() async {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_pre_tag
-void snippetForsetSettings82() async {
+void snippetForsetSettings83() async {
   // >SEPARATOR setSettings set_default_highlight_pre_tag
   // Initialize the client
   final client =
@@ -9798,7 +9826,7 @@ void snippetForsetSettings82() async {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_post_tag
-void snippetForsetSettings83() async {
+void snippetForsetSettings84() async {
   // >SEPARATOR setSettings set_default_highlight_post_tag
   // Initialize the client
   final client =
@@ -9820,7 +9848,7 @@ void snippetForsetSettings83() async {
 // Snippet for the setSettings method.
 //
 // set_default_snippet_ellipsis_text
-void snippetForsetSettings84() async {
+void snippetForsetSettings85() async {
   // >SEPARATOR setSettings set_default_snippet_ellipsis_text
   // Initialize the client
   final client =
@@ -9842,7 +9870,7 @@ void snippetForsetSettings84() async {
 // Snippet for the setSettings method.
 //
 // enable_restrict_highlight_and_snippet_arrays_by_default
-void snippetForsetSettings85() async {
+void snippetForsetSettings86() async {
   // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
   // Initialize the client
   final client =
@@ -9864,7 +9892,7 @@ void snippetForsetSettings85() async {
 // Snippet for the setSettings method.
 //
 // set_default_hits_per_page
-void snippetForsetSettings86() async {
+void snippetForsetSettings87() async {
   // >SEPARATOR setSettings set_default_hits_per_page
   // Initialize the client
   final client =
@@ -9886,7 +9914,7 @@ void snippetForsetSettings86() async {
 // Snippet for the setSettings method.
 //
 // set_pagination_limit
-void snippetForsetSettings87() async {
+void snippetForsetSettings88() async {
   // >SEPARATOR setSettings set_pagination_limit
   // Initialize the client
   final client =
@@ -9908,7 +9936,7 @@ void snippetForsetSettings87() async {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_one_typo
-void snippetForsetSettings88() async {
+void snippetForsetSettings89() async {
   // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
   // Initialize the client
   final client =
@@ -9930,7 +9958,7 @@ void snippetForsetSettings88() async {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_two_typos
-void snippetForsetSettings89() async {
+void snippetForsetSettings90() async {
   // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
   // Initialize the client
   final client =
@@ -9952,7 +9980,7 @@ void snippetForsetSettings89() async {
 // Snippet for the setSettings method.
 //
 // set_default_typo_tolerance_mode
-void snippetForsetSettings90() async {
+void snippetForsetSettings91() async {
   // >SEPARATOR setSettings set_default_typo_tolerance_mode
   // Initialize the client
   final client =
@@ -9974,7 +10002,7 @@ void snippetForsetSettings90() async {
 // Snippet for the setSettings method.
 //
 // disable_typos_on_numeric_tokens_by_default
-void snippetForsetSettings91() async {
+void snippetForsetSettings92() async {
   // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
   // Initialize the client
   final client =
@@ -9996,7 +10024,7 @@ void snippetForsetSettings91() async {
 // Snippet for the setSettings method.
 //
 // disable_typo_tolerance_for_words
-void snippetForsetSettings92() async {
+void snippetForsetSettings93() async {
   // >SEPARATOR setSettings disable_typo_tolerance_for_words
   // Initialize the client
   final client =
@@ -10021,7 +10049,7 @@ void snippetForsetSettings92() async {
 // Snippet for the setSettings method.
 //
 // set_separators_to_index
-void snippetForsetSettings93() async {
+void snippetForsetSettings94() async {
   // >SEPARATOR setSettings set_separators_to_index
   // Initialize the client
   final client =
@@ -10043,7 +10071,7 @@ void snippetForsetSettings93() async {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_ignoreplurals
-void snippetForsetSettings94() async {
+void snippetForsetSettings95() async {
   // >SEPARATOR setSettings set_querylanguage_ignoreplurals
   // Initialize the client
   final client =
@@ -10068,7 +10096,7 @@ void snippetForsetSettings94() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_transliterate
-void snippetForsetSettings95() async {
+void snippetForsetSettings96() async {
   // >SEPARATOR setSettings set_attributes_to_transliterate
   // Initialize the client
   final client =
@@ -10096,7 +10124,7 @@ void snippetForsetSettings95() async {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_removestopwords
-void snippetForsetSettings96() async {
+void snippetForsetSettings97() async {
   // >SEPARATOR setSettings set_querylanguage_removestopwords
   // Initialize the client
   final client =
@@ -10121,7 +10149,7 @@ void snippetForsetSettings96() async {
 // Snippet for the setSettings method.
 //
 // set_camel_case_attributes
-void snippetForsetSettings97() async {
+void snippetForsetSettings98() async {
   // >SEPARATOR setSettings set_camel_case_attributes
   // Initialize the client
   final client =
@@ -10145,7 +10173,7 @@ void snippetForsetSettings97() async {
 // Snippet for the setSettings method.
 //
 // set_decompounded_attributes
-void snippetForsetSettings98() async {
+void snippetForsetSettings99() async {
   // >SEPARATOR setSettings set_decompounded_attributes
   // Initialize the client
   final client =
@@ -10171,7 +10199,7 @@ void snippetForsetSettings98() async {
 // Snippet for the setSettings method.
 //
 // set_decompounded_multiple_attributes
-void snippetForsetSettings99() async {
+void snippetForsetSettings100() async {
   // >SEPARATOR setSettings set_decompounded_multiple_attributes
   // Initialize the client
   final client =
@@ -10202,7 +10230,7 @@ void snippetForsetSettings99() async {
 // Snippet for the setSettings method.
 //
 // set_keep_diacritics_on_characters
-void snippetForsetSettings100() async {
+void snippetForsetSettings101() async {
   // >SEPARATOR setSettings set_keep_diacritics_on_characters
   // Initialize the client
   final client =
@@ -10224,7 +10252,7 @@ void snippetForsetSettings100() async {
 // Snippet for the setSettings method.
 //
 // set_custom_normalization
-void snippetForsetSettings101() async {
+void snippetForsetSettings102() async {
   // >SEPARATOR setSettings set_custom_normalization
   // Initialize the client
   final client =
@@ -10250,7 +10278,7 @@ void snippetForsetSettings101() async {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_both
-void snippetForsetSettings102() async {
+void snippetForsetSettings103() async {
   // >SEPARATOR setSettings set_querylanguage_both
   // Initialize the client
   final client =
@@ -10276,7 +10304,7 @@ void snippetForsetSettings102() async {
 // Snippet for the setSettings method.
 //
 // set_indexlanguages
-void snippetForsetSettings103() async {
+void snippetForsetSettings104() async {
   // >SEPARATOR setSettings set_indexlanguages
   // Initialize the client
   final client =
@@ -10300,7 +10328,7 @@ void snippetForsetSettings103() async {
 // Snippet for the setSettings method.
 //
 // enable_decompound_query_by_default
-void snippetForsetSettings104() async {
+void snippetForsetSettings105() async {
   // >SEPARATOR setSettings enable_decompound_query_by_default
   // Initialize the client
   final client =
@@ -10322,7 +10350,7 @@ void snippetForsetSettings104() async {
 // Snippet for the setSettings method.
 //
 // enable_rules_syntax_by_default
-void snippetForsetSettings105() async {
+void snippetForsetSettings106() async {
   // >SEPARATOR setSettings enable_rules_syntax_by_default
   // Initialize the client
   final client =
@@ -10344,7 +10372,7 @@ void snippetForsetSettings105() async {
 // Snippet for the setSettings method.
 //
 // enable_personalization_settings
-void snippetForsetSettings106() async {
+void snippetForsetSettings107() async {
   // >SEPARATOR setSettings enable_personalization_settings
   // Initialize the client
   final client =
@@ -10366,7 +10394,7 @@ void snippetForsetSettings106() async {
 // Snippet for the setSettings method.
 //
 // set_default_query_type
-void snippetForsetSettings107() async {
+void snippetForsetSettings108() async {
   // >SEPARATOR setSettings set_default_query_type
   // Initialize the client
   final client =
@@ -10388,7 +10416,7 @@ void snippetForsetSettings107() async {
 // Snippet for the setSettings method.
 //
 // set_default_remove_words_if_no_result
-void snippetForsetSettings108() async {
+void snippetForsetSettings109() async {
   // >SEPARATOR setSettings set_default_remove_words_if_no_result
   // Initialize the client
   final client =
@@ -10410,7 +10438,7 @@ void snippetForsetSettings108() async {
 // Snippet for the setSettings method.
 //
 // enable_advanced_syntax_by_default
-void snippetForsetSettings109() async {
+void snippetForsetSettings110() async {
   // >SEPARATOR setSettings enable_advanced_syntax_by_default
   // Initialize the client
   final client =
@@ -10432,7 +10460,7 @@ void snippetForsetSettings109() async {
 // Snippet for the setSettings method.
 //
 // set_default_optional_words
-void snippetForsetSettings110() async {
+void snippetForsetSettings111() async {
   // >SEPARATOR setSettings set_default_optional_words
   // Initialize the client
   final client =
@@ -10457,7 +10485,7 @@ void snippetForsetSettings110() async {
 // Snippet for the setSettings method.
 //
 // disabling_prefix_search_for_some_attributes_by_default
-void snippetForsetSettings111() async {
+void snippetForsetSettings112() async {
   // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
   // Initialize the client
   final client =
@@ -10481,7 +10509,7 @@ void snippetForsetSettings111() async {
 // Snippet for the setSettings method.
 //
 // disabling_exact_for_some_attributes_by_default
-void snippetForsetSettings112() async {
+void snippetForsetSettings113() async {
   // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
   // Initialize the client
   final client =
@@ -10505,7 +10533,7 @@ void snippetForsetSettings112() async {
 // Snippet for the setSettings method.
 //
 // set_default_exact_single_word_query
-void snippetForsetSettings113() async {
+void snippetForsetSettings114() async {
   // >SEPARATOR setSettings set_default_exact_single_word_query
   // Initialize the client
   final client =
@@ -10527,7 +10555,7 @@ void snippetForsetSettings113() async {
 // Snippet for the setSettings method.
 //
 // set_default_aternative_as_exact
-void snippetForsetSettings114() async {
+void snippetForsetSettings115() async {
   // >SEPARATOR setSettings set_default_aternative_as_exact
   // Initialize the client
   final client =
@@ -10552,7 +10580,7 @@ void snippetForsetSettings114() async {
 // Snippet for the setSettings method.
 //
 // set_numeric_attributes_for_filtering
-void snippetForsetSettings115() async {
+void snippetForsetSettings116() async {
   // >SEPARATOR setSettings set_numeric_attributes_for_filtering
   // Initialize the client
   final client =
@@ -10577,7 +10605,7 @@ void snippetForsetSettings115() async {
 // Snippet for the setSettings method.
 //
 // enable_compression_of_integer_array
-void snippetForsetSettings116() async {
+void snippetForsetSettings117() async {
   // >SEPARATOR setSettings enable_compression_of_integer_array
   // Initialize the client
   final client =
@@ -10599,7 +10627,7 @@ void snippetForsetSettings116() async {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_distinct
-void snippetForsetSettings117() async {
+void snippetForsetSettings118() async {
   // >SEPARATOR setSettings set_attributes_for_distinct
   // Initialize the client
   final client =
@@ -10621,7 +10649,7 @@ void snippetForsetSettings117() async {
 // Snippet for the setSettings method.
 //
 // set_distinct
-void snippetForsetSettings118() async {
+void snippetForsetSettings119() async {
   // >SEPARATOR setSettings set_distinct
   // Initialize the client
   final client =
@@ -10644,7 +10672,7 @@ void snippetForsetSettings118() async {
 // Snippet for the setSettings method.
 //
 // set_replace_synonyms_in_highlights
-void snippetForsetSettings119() async {
+void snippetForsetSettings120() async {
   // >SEPARATOR setSettings set_replace_synonyms_in_highlights
   // Initialize the client
   final client =
@@ -10666,7 +10694,7 @@ void snippetForsetSettings119() async {
 // Snippet for the setSettings method.
 //
 // set_min_proximity
-void snippetForsetSettings120() async {
+void snippetForsetSettings121() async {
   // >SEPARATOR setSettings set_min_proximity
   // Initialize the client
   final client =
@@ -10688,7 +10716,7 @@ void snippetForsetSettings120() async {
 // Snippet for the setSettings method.
 //
 // set_default_field
-void snippetForsetSettings121() async {
+void snippetForsetSettings122() async {
   // >SEPARATOR setSettings set_default_field
   // Initialize the client
   final client =
@@ -10715,7 +10743,7 @@ void snippetForsetSettings121() async {
 // Snippet for the setSettings method.
 //
 // set_max_facet_hits
-void snippetForsetSettings122() async {
+void snippetForsetSettings123() async {
   // >SEPARATOR setSettings set_max_facet_hits
   // Initialize the client
   final client =
@@ -10737,7 +10765,7 @@ void snippetForsetSettings122() async {
 // Snippet for the setSettings method.
 //
 // set_attribute_criteria_computed_by_min_proximity
-void snippetForsetSettings123() async {
+void snippetForsetSettings124() async {
   // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
   // Initialize the client
   final client =
@@ -10759,7 +10787,7 @@ void snippetForsetSettings123() async {
 // Snippet for the setSettings method.
 //
 // set_user_data
-void snippetForsetSettings124() async {
+void snippetForsetSettings125() async {
   // >SEPARATOR setSettings set_user_data
   // Initialize the client
   final client =
@@ -10784,7 +10812,7 @@ void snippetForsetSettings124() async {
 // Snippet for the setSettings method.
 //
 // set_rendering_content
-void snippetForsetSettings125() async {
+void snippetForsetSettings126() async {
   // >SEPARATOR setSettings set_rendering_content
   // Initialize the client
   final client =
@@ -10823,6 +10851,97 @@ void snippetForsetSettings125() async {
           },
         ),
       ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// typoToleranceMin
+void snippetForsetSettings127() async {
+  // >SEPARATOR setSettings typoToleranceMin
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      typoTolerance: TypoToleranceEnum.fromJson("min"),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// minWordSizefor1Typo5
+void snippetForsetSettings128() async {
+  // >SEPARATOR setSettings minWordSizefor1Typo5
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      minWordSizefor1Typo: 5,
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToSnippetBodyTitle
+void snippetForsetSettings129() async {
+  // >SEPARATOR setSettings attributesToSnippetBodyTitle
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      attributesToSnippet: [
+        "body:20",
+        "title",
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// snippetEllipsisTextHellip
+void snippetForsetSettings130() async {
+  // >SEPARATOR setSettings snippetEllipsisTextHellip
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.setSettings(
+    indexName: "<YOUR_INDEX_NAME>",
+    indexSettings: IndexSettings(
+      snippetEllipsisText: "[&hellip;]",
     ),
   );
   // >LOG

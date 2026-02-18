@@ -9497,6 +9497,36 @@ void main() {
 
   // setSettings
   test(
+    'highlightWithCustomPrePostTags',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributesToHighlight: [
+            "author",
+            "title",
+            "content",
+          ],
+          highlightPreTag: "<em class=\"search-highlight\">",
+          highlightPostTag: "</em>",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\\"search-highlight\\">","highlightPostTag":"</em>"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
     'attributesToHighlightStar',
     () => runTest(
       builder: (requester) => SearchClient(
@@ -11534,6 +11564,102 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'typoToleranceMin',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          typoTolerance: TypoToleranceEnum.fromJson("min"),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"typoTolerance":"min"}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'minWordSizefor1Typo5',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          minWordSizefor1Typo: 5,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"minWordSizefor1Typo":5}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'attributesToSnippetBodyTitle',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          attributesToSnippet: [
+            "body:20",
+            "title",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(
+            request.body, """{"attributesToSnippet":["body:20","title"]}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'snippetEllipsisTextHellip',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "theIndexName",
+        indexSettings: IndexSettings(
+          snippetEllipsisText: "[&hellip;]",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/theIndexName/settings');
+        expect(request.method, 'put');
+        expectBody(request.body, """{"snippetEllipsisText":"[&hellip;]"}""");
       },
     ),
   );

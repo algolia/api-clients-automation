@@ -8023,8 +8023,30 @@ class SnippetSearchClient {
 
   // Snippet for the setSettings method.
   //
-  // attributesToHighlightStar
+  // highlightWithCustomPrePostTags
   void snippetForSetSettings53() throws Exception {
+    // >SEPARATOR setSettings highlightWithCustomPrePostTags
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings()
+        .setAttributesToHighlight(Arrays.asList("author", "title", "content"))
+        .setHighlightPreTag("<em class=\"search-highlight\">")
+        .setHighlightPostTag("</em>")
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // attributesToHighlightStar
+  void snippetForSetSettings54() throws Exception {
     // >SEPARATOR setSettings attributesToHighlightStar
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8040,7 +8062,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // everything
-  void snippetForSetSettings54() throws Exception {
+  void snippetForSetSettings55() throws Exception {
     // >SEPARATOR setSettings everything
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8157,7 +8179,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-  void snippetForSetSettings55() throws Exception {
+  void snippetForSetSettings56() throws Exception {
     // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8179,7 +8201,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesOrdering
-  void snippetForSetSettings56() throws Exception {
+  void snippetForSetSettings57() throws Exception {
     // >SEPARATOR setSettings searchableAttributesOrdering
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8198,7 +8220,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesProductReferenceSuffixes
-  void snippetForSetSettings57() throws Exception {
+  void snippetForSetSettings58() throws Exception {
     // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8217,7 +8239,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // queryLanguageAndIgnorePlurals
-  void snippetForSetSettings58() throws Exception {
+  void snippetForSetSettings59() throws Exception {
     // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8236,7 +8258,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesInMovies
-  void snippetForSetSettings59() throws Exception {
+  void snippetForSetSettings60() throws Exception {
     // >SEPARATOR setSettings searchableAttributesInMovies
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8255,7 +8277,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disablePrefixOnAttributes
-  void snippetForSetSettings60() throws Exception {
+  void snippetForSetSettings61() throws Exception {
     // >SEPARATOR setSettings disablePrefixOnAttributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8274,7 +8296,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disableTypoToleranceOnAttributes
-  void snippetForSetSettings61() throws Exception {
+  void snippetForSetSettings62() throws Exception {
     // >SEPARATOR setSettings disableTypoToleranceOnAttributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8293,7 +8315,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesSimpleExample
-  void snippetForSetSettings62() throws Exception {
+  void snippetForSetSettings63() throws Exception {
     // >SEPARATOR setSettings searchableAttributesSimpleExample
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8312,7 +8334,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // searchableAttributesSimpleExampleAlt
-  void snippetForSetSettings63() throws Exception {
+  void snippetForSetSettings64() throws Exception {
     // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8331,7 +8353,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_searchable_attributes
-  void snippetForSetSettings64() throws Exception {
+  void snippetForSetSettings65() throws Exception {
     // >SEPARATOR setSettings set_searchable_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8350,7 +8372,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_attributes_for_faceting
-  void snippetForSetSettings65() throws Exception {
+  void snippetForSetSettings66() throws Exception {
     // >SEPARATOR setSettings set_attributes_for_faceting
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8377,7 +8399,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // unretrievable_attributes
-  void snippetForSetSettings66() throws Exception {
+  void snippetForSetSettings67() throws Exception {
     // >SEPARATOR setSettings unretrievable_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8396,7 +8418,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_retrievable_attributes
-  void snippetForSetSettings67() throws Exception {
+  void snippetForSetSettings68() throws Exception {
     // >SEPARATOR setSettings set_retrievable_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8415,7 +8437,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_all_attributes_as_retrievable
-  void snippetForSetSettings68() throws Exception {
+  void snippetForSetSettings69() throws Exception {
     // >SEPARATOR setSettings set_all_attributes_as_retrievable
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8431,7 +8453,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // specify_attributes_not_to_retrieve
-  void snippetForSetSettings69() throws Exception {
+  void snippetForSetSettings70() throws Exception {
     // >SEPARATOR setSettings specify_attributes_not_to_retrieve
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8450,7 +8472,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // neural_search
-  void snippetForSetSettings70() throws Exception {
+  void snippetForSetSettings71() throws Exception {
     // >SEPARATOR setSettings neural_search
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8466,7 +8488,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // keyword_search
-  void snippetForSetSettings71() throws Exception {
+  void snippetForSetSettings72() throws Exception {
     // >SEPARATOR setSettings keyword_search
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8482,7 +8504,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_ranking
-  void snippetForSetSettings72() throws Exception {
+  void snippetForSetSettings73() throws Exception {
     // >SEPARATOR setSettings set_default_ranking
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8501,7 +8523,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_ranking_by_attribute_asc
-  void snippetForSetSettings73() throws Exception {
+  void snippetForSetSettings74() throws Exception {
     // >SEPARATOR setSettings set_ranking_by_attribute_asc
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8522,7 +8544,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_ranking_by_attribute_desc
-  void snippetForSetSettings74() throws Exception {
+  void snippetForSetSettings75() throws Exception {
     // >SEPARATOR setSettings set_ranking_by_attribute_desc
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8543,7 +8565,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_custom_ranking
-  void snippetForSetSettings75() throws Exception {
+  void snippetForSetSettings76() throws Exception {
     // >SEPARATOR setSettings set_custom_ranking
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8562,7 +8584,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_relevancy
-  void snippetForSetSettings76() throws Exception {
+  void snippetForSetSettings77() throws Exception {
     // >SEPARATOR setSettings set_default_relevancy
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8578,7 +8600,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_replicas
-  void snippetForSetSettings77() throws Exception {
+  void snippetForSetSettings78() throws Exception {
     // >SEPARATOR setSettings set_replicas
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8597,7 +8619,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_max_values_per_facet
-  void snippetForSetSettings78() throws Exception {
+  void snippetForSetSettings79() throws Exception {
     // >SEPARATOR setSettings set_default_max_values_per_facet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8613,7 +8635,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_sort_facet_values_by
-  void snippetForSetSettings79() throws Exception {
+  void snippetForSetSettings80() throws Exception {
     // >SEPARATOR setSettings set_default_sort_facet_values_by
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8629,7 +8651,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_attributes_to_snippet
-  void snippetForSetSettings80() throws Exception {
+  void snippetForSetSettings81() throws Exception {
     // >SEPARATOR setSettings set_attributes_to_snippet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8648,7 +8670,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_all_attributes_to_snippet
-  void snippetForSetSettings81() throws Exception {
+  void snippetForSetSettings82() throws Exception {
     // >SEPARATOR setSettings set_all_attributes_to_snippet
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8664,7 +8686,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_highlight_pre_tag
-  void snippetForSetSettings82() throws Exception {
+  void snippetForSetSettings83() throws Exception {
     // >SEPARATOR setSettings set_default_highlight_pre_tag
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8680,7 +8702,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_highlight_post_tag
-  void snippetForSetSettings83() throws Exception {
+  void snippetForSetSettings84() throws Exception {
     // >SEPARATOR setSettings set_default_highlight_post_tag
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8696,7 +8718,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_snippet_ellipsis_text
-  void snippetForSetSettings84() throws Exception {
+  void snippetForSetSettings85() throws Exception {
     // >SEPARATOR setSettings set_default_snippet_ellipsis_text
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8712,7 +8734,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_restrict_highlight_and_snippet_arrays_by_default
-  void snippetForSetSettings85() throws Exception {
+  void snippetForSetSettings86() throws Exception {
     // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8728,7 +8750,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_hits_per_page
-  void snippetForSetSettings86() throws Exception {
+  void snippetForSetSettings87() throws Exception {
     // >SEPARATOR setSettings set_default_hits_per_page
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8744,7 +8766,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_pagination_limit
-  void snippetForSetSettings87() throws Exception {
+  void snippetForSetSettings88() throws Exception {
     // >SEPARATOR setSettings set_pagination_limit
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8760,7 +8782,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_min_word_size_for_one_typo
-  void snippetForSetSettings88() throws Exception {
+  void snippetForSetSettings89() throws Exception {
     // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8776,7 +8798,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_min_word_size_for_two_typos
-  void snippetForSetSettings89() throws Exception {
+  void snippetForSetSettings90() throws Exception {
     // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8792,7 +8814,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_typo_tolerance_mode
-  void snippetForSetSettings90() throws Exception {
+  void snippetForSetSettings91() throws Exception {
     // >SEPARATOR setSettings set_default_typo_tolerance_mode
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8808,7 +8830,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disable_typos_on_numeric_tokens_by_default
-  void snippetForSetSettings91() throws Exception {
+  void snippetForSetSettings92() throws Exception {
     // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8824,7 +8846,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disable_typo_tolerance_for_words
-  void snippetForSetSettings92() throws Exception {
+  void snippetForSetSettings93() throws Exception {
     // >SEPARATOR setSettings disable_typo_tolerance_for_words
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8843,7 +8865,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_separators_to_index
-  void snippetForSetSettings93() throws Exception {
+  void snippetForSetSettings94() throws Exception {
     // >SEPARATOR setSettings set_separators_to_index
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8859,7 +8881,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_querylanguage_ignoreplurals
-  void snippetForSetSettings94() throws Exception {
+  void snippetForSetSettings95() throws Exception {
     // >SEPARATOR setSettings set_querylanguage_ignoreplurals
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8878,7 +8900,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_attributes_to_transliterate
-  void snippetForSetSettings95() throws Exception {
+  void snippetForSetSettings96() throws Exception {
     // >SEPARATOR setSettings set_attributes_to_transliterate
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8899,7 +8921,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_querylanguage_removestopwords
-  void snippetForSetSettings96() throws Exception {
+  void snippetForSetSettings97() throws Exception {
     // >SEPARATOR setSettings set_querylanguage_removestopwords
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8918,7 +8940,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_camel_case_attributes
-  void snippetForSetSettings97() throws Exception {
+  void snippetForSetSettings98() throws Exception {
     // >SEPARATOR setSettings set_camel_case_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8937,7 +8959,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_decompounded_attributes
-  void snippetForSetSettings98() throws Exception {
+  void snippetForSetSettings99() throws Exception {
     // >SEPARATOR setSettings set_decompounded_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8962,7 +8984,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_decompounded_multiple_attributes
-  void snippetForSetSettings99() throws Exception {
+  void snippetForSetSettings100() throws Exception {
     // >SEPARATOR setSettings set_decompounded_multiple_attributes
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -8988,7 +9010,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_keep_diacritics_on_characters
-  void snippetForSetSettings100() throws Exception {
+  void snippetForSetSettings101() throws Exception {
     // >SEPARATOR setSettings set_keep_diacritics_on_characters
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9004,7 +9026,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_custom_normalization
-  void snippetForSetSettings101() throws Exception {
+  void snippetForSetSettings102() throws Exception {
     // >SEPARATOR setSettings set_custom_normalization
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9036,7 +9058,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_querylanguage_both
-  void snippetForSetSettings102() throws Exception {
+  void snippetForSetSettings103() throws Exception {
     // >SEPARATOR setSettings set_querylanguage_both
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9058,7 +9080,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_indexlanguages
-  void snippetForSetSettings103() throws Exception {
+  void snippetForSetSettings104() throws Exception {
     // >SEPARATOR setSettings set_indexlanguages
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9077,7 +9099,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_decompound_query_by_default
-  void snippetForSetSettings104() throws Exception {
+  void snippetForSetSettings105() throws Exception {
     // >SEPARATOR setSettings enable_decompound_query_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9093,7 +9115,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_rules_syntax_by_default
-  void snippetForSetSettings105() throws Exception {
+  void snippetForSetSettings106() throws Exception {
     // >SEPARATOR setSettings enable_rules_syntax_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9109,7 +9131,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_personalization_settings
-  void snippetForSetSettings106() throws Exception {
+  void snippetForSetSettings107() throws Exception {
     // >SEPARATOR setSettings enable_personalization_settings
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9125,7 +9147,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_query_type
-  void snippetForSetSettings107() throws Exception {
+  void snippetForSetSettings108() throws Exception {
     // >SEPARATOR setSettings set_default_query_type
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9141,7 +9163,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_remove_words_if_no_result
-  void snippetForSetSettings108() throws Exception {
+  void snippetForSetSettings109() throws Exception {
     // >SEPARATOR setSettings set_default_remove_words_if_no_result
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9160,7 +9182,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_advanced_syntax_by_default
-  void snippetForSetSettings109() throws Exception {
+  void snippetForSetSettings110() throws Exception {
     // >SEPARATOR setSettings enable_advanced_syntax_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9176,7 +9198,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_optional_words
-  void snippetForSetSettings110() throws Exception {
+  void snippetForSetSettings111() throws Exception {
     // >SEPARATOR setSettings set_default_optional_words
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9195,7 +9217,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disabling_prefix_search_for_some_attributes_by_default
-  void snippetForSetSettings111() throws Exception {
+  void snippetForSetSettings112() throws Exception {
     // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9214,7 +9236,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // disabling_exact_for_some_attributes_by_default
-  void snippetForSetSettings112() throws Exception {
+  void snippetForSetSettings113() throws Exception {
     // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9233,7 +9255,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_exact_single_word_query
-  void snippetForSetSettings113() throws Exception {
+  void snippetForSetSettings114() throws Exception {
     // >SEPARATOR setSettings set_default_exact_single_word_query
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9252,7 +9274,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_aternative_as_exact
-  void snippetForSetSettings114() throws Exception {
+  void snippetForSetSettings115() throws Exception {
     // >SEPARATOR setSettings set_default_aternative_as_exact
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9271,7 +9293,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_numeric_attributes_for_filtering
-  void snippetForSetSettings115() throws Exception {
+  void snippetForSetSettings116() throws Exception {
     // >SEPARATOR setSettings set_numeric_attributes_for_filtering
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9290,7 +9312,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // enable_compression_of_integer_array
-  void snippetForSetSettings116() throws Exception {
+  void snippetForSetSettings117() throws Exception {
     // >SEPARATOR setSettings enable_compression_of_integer_array
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9306,7 +9328,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_attributes_for_distinct
-  void snippetForSetSettings117() throws Exception {
+  void snippetForSetSettings118() throws Exception {
     // >SEPARATOR setSettings set_attributes_for_distinct
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9322,7 +9344,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_distinct
-  void snippetForSetSettings118() throws Exception {
+  void snippetForSetSettings119() throws Exception {
     // >SEPARATOR setSettings set_distinct
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9341,7 +9363,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_replace_synonyms_in_highlights
-  void snippetForSetSettings119() throws Exception {
+  void snippetForSetSettings120() throws Exception {
     // >SEPARATOR setSettings set_replace_synonyms_in_highlights
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9357,7 +9379,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_min_proximity
-  void snippetForSetSettings120() throws Exception {
+  void snippetForSetSettings121() throws Exception {
     // >SEPARATOR setSettings set_min_proximity
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9373,7 +9395,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_default_field
-  void snippetForSetSettings121() throws Exception {
+  void snippetForSetSettings122() throws Exception {
     // >SEPARATOR setSettings set_default_field
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9392,7 +9414,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_max_facet_hits
-  void snippetForSetSettings122() throws Exception {
+  void snippetForSetSettings123() throws Exception {
     // >SEPARATOR setSettings set_max_facet_hits
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9408,7 +9430,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_attribute_criteria_computed_by_min_proximity
-  void snippetForSetSettings123() throws Exception {
+  void snippetForSetSettings124() throws Exception {
     // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9427,7 +9449,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_user_data
-  void snippetForSetSettings124() throws Exception {
+  void snippetForSetSettings125() throws Exception {
     // >SEPARATOR setSettings set_user_data
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9452,7 +9474,7 @@ class SnippetSearchClient {
   // Snippet for the setSettings method.
   //
   // set_rendering_content
-  void snippetForSetSettings125() throws Exception {
+  void snippetForSetSettings126() throws Exception {
     // >SEPARATOR setSettings set_rendering_content
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
@@ -9478,6 +9500,73 @@ class SnippetSearchClient {
         )
       )
     );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // typoToleranceMin
+  void snippetForSetSettings127() throws Exception {
+    // >SEPARATOR setSettings typoToleranceMin
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // minWordSizefor1Typo5
+  void snippetForSetSettings128() throws Exception {
+    // >SEPARATOR setSettings minWordSizefor1Typo5
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setMinWordSizefor1Typo(5));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // attributesToSnippetBodyTitle
+  void snippetForSetSettings129() throws Exception {
+    // >SEPARATOR setSettings attributesToSnippetBodyTitle
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesToSnippet(Arrays.asList("body:20", "title"))
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the setSettings method.
+  //
+  // snippetEllipsisTextHellip
+  void snippetForSetSettings130() throws Exception {
+    // >SEPARATOR setSettings snippetEllipsisTextHellip
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setSnippetEllipsisText("[&hellip;]"));
     // >LOG
     // print the response
     System.out.println(response);
