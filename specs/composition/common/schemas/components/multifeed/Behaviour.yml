@@ -5,6 +5,7 @@ multifeed:
   properties:
     feeds:
       type: object
+      description: A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
       additionalProperties:
         $ref: '#/feedID'
     feedsOrder:
@@ -43,7 +44,15 @@ multifeed:
 
 feedID:
   type: object
-  description: Description of a feed.
-  additionalProperties: false
   oneOf:
-    - $ref: '../injection/Behaviour.yml#/injection'
+    - $ref: '#/feedInjection' # New behaviour should also be updated here
+
+feedInjection:
+  type: object
+  description: 'Feed formatted as an injection.'
+  additionalProperties: false
+  properties:
+    injection:
+      $ref: '../injection/Behaviour.yml#/injection'
+  required:
+    - injection
