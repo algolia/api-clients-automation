@@ -3015,5 +3015,69 @@
         }
       }
     }
+  },
+  {
+    "testName": "typoToleranceMin",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "typoTolerance": "min"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "typoTolerance": "min"
+      }
+    }
+  },
+  {
+    "testName": "minWordSizefor1Typo5",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "minWordSizefor1Typo": 5
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "minWordSizefor1Typo": 5
+      }
+    }
+  },
+  {
+    "testName": "attributesToSnippetBodyTitle",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "attributesToSnippet": ["body:20", "title"]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "attributesToSnippet": ["body:20", "title"]
+      }
+    }
+  },
+  {
+    "testName": "snippetEllipsisTextHellip",
+    "parameters": {
+      "indexName": "theIndexName",
+      "indexSettings": {
+        "snippetEllipsisText": "[&hellip;]"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/theIndexName/settings",
+      "method": "PUT",
+      "body": {
+        "snippetEllipsisText": "[&hellip;]"
+      }
+    }
   }
 ]
