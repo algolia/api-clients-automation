@@ -772,6 +772,34 @@ func TestComposition_PutComposition(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}`)
 	})
+	t.Run("putComposition", func(t *testing.T) {
+		_, err := client.PutComposition(client.NewApiPutCompositionRequest(
+			"my-compo",
+			composition.NewEmptyComposition().
+				SetObjectID("my-compo").
+				SetName("my composition").
+				SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
+				SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+					composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+						composition.NewEmptyMultifeed().
+							SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+							SetFeedsOrder(
+								[]string{"main-products"}),
+					),
+				)),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/my-compo", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}`)
+	})
 }
 
 func TestComposition_PutCompositionRule(t *testing.T) {

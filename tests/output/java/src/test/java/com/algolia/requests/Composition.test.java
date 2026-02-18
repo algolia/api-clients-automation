@@ -1274,6 +1274,58 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("putComposition")
+  void putCompositionTest5() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-compo",
+        new Composition()
+          .setObjectID("my-compo")
+          .setName("my composition")
+          .setSortingStrategy(
+            new HashMap() {
+              {
+                put("Price-asc", "products-low-to-high");
+                put("Price-desc", "products-high-to-low");
+              }
+            }
+          )
+          .setBehavior(
+            new CompositionMultifeedBehavior().setMultifeed(
+              new Multifeed()
+                .setFeeds(
+                  new HashMap() {
+                    {
+                      put(
+                        "main-products",
+                        new FeedInjection().setInjection(
+                          new Injection().setMain(
+                            new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                          )
+                        )
+                      );
+                    }
+                  }
+                )
+                .setFeedsOrder(Arrays.asList("main-products"))
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-compo\",\"name\":\"my" +
+          " composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putCompositionRule")
   void putCompositionRuleTest() {
     assertDoesNotThrow(() -> {

@@ -1158,6 +1158,52 @@ func SnippetForPutCompositionOfComposition4() {
 	// SEPARATOR<
 }
 
+func SnippetForPutCompositionOfComposition5() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-compo").
+			SetName("my composition").
+			SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
+			SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+				composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+					composition.NewEmptyMultifeed().
+						SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+						SetFeedsOrder(
+							[]string{"main-products"}),
+				),
+			)),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForPutCompositionRuleOfComposition() {
 	/*
 	   Snippet for the putCompositionRule method.

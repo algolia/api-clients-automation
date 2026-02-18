@@ -28,16 +28,8 @@
   */
 package algoliasearch.composition
 
-/** Multifeed
-  *
-  * @param feeds
-  *   A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
-  * @param feedsOrder
-  *   A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a
-  *   subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all
-  *   Feeds are processed and returned with a default ordering.
+/** Feed formatted as an injection.
   */
-case class Multifeed(
-    feeds: Map[String, FeedInjection],
-    feedsOrder: Option[Seq[String]] = scala.None
+case class FeedInjection(
+    injection: Injection
 )

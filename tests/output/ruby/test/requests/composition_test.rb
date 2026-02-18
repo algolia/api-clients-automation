@@ -831,6 +831,45 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # putComposition
+  def test_put_composition5
+    req = @client.put_composition_with_http_info(
+      "my-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-compo",
+        name: "my composition",
+        sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+        behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+          multifeed: Algolia::Composition::Multifeed.new(
+            feeds: {
+              :"main-products" => Algolia::Composition::FeedInjection.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                    )
+                  )
+                )
+              )
+            },
+            feeds_order: ["main-products"]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # putCompositionRule
   def test_put_composition_rule
     req = @client.put_composition_rule_with_http_info(

@@ -879,6 +879,42 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition5() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-compo",
+            composition: Composition(
+                objectID: "my-compo",
+                name: "my composition",
+                behavior: CompositionBehavior
+                    .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                        feeds: [
+                            "main-products": FeedInjection(
+                                injection: Injection(
+                                    main: CompositionMain(
+                                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                                    )
+                                )
+                            ),
+                        ],
+                        feedsOrder: ["main-products"]
+                    ))),
+                sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the putCompositionRule method.
     ///
     /// putCompositionRule

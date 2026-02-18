@@ -15,7 +15,7 @@ Multifeed _$MultifeedFromJson(Map<String, dynamic> json) => $checkedCreate(
               'feeds',
               (v) => (v as Map<String, dynamic>).map(
                     (k, e) => MapEntry(
-                        k, Injection.fromJson(e as Map<String, dynamic>)),
+                        k, FeedInjection.fromJson(e as Map<String, dynamic>)),
                   )),
           feedsOrder: $checkedConvert('feedsOrder',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),

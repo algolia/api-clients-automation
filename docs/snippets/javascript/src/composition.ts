@@ -847,6 +847,36 @@ export async function snippetForPutComposition4(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition5(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-compo',
+    composition: {
+      objectID: 'my-compo',
+      name: 'my composition',
+      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+      behavior: {
+        multifeed: {
+          feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
+          feedsOrder: ['main-products'],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the putCompositionRule method.
 //
 // putCompositionRule

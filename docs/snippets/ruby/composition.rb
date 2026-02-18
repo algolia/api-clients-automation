@@ -958,6 +958,46 @@ def snippet_for_put_composition4
   # SEPARATOR<
 end
 
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition5
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-compo",
+      name: "my composition",
+      sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+      behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+        multifeed: Algolia::Composition::Multifeed.new(
+          feeds: {
+            :"main-products" => Algolia::Composition::FeedInjection.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                  )
+                )
+              )
+            )
+          },
+          feeds_order: ["main-products"]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the putCompositionRule method.
 #
 # putCompositionRule
