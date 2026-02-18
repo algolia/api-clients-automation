@@ -11168,8 +11168,43 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// attributesToHighlightStar
+    /// highlightWithCustomPrePostTags
     func testSetSettingsTest53() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(
+                attributesToHighlight: ["author", "title", "content"],
+                highlightPreTag: "<em class=\"search-highlight\">",
+                highlightPostTag: "</em>"
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"],\"highlightPreTag\":\"<em class=\\\"search-highlight\\\">\",\"highlightPostTag\":\"</em>\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesToHighlightStar
+    func testSetSettingsTest54() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11199,7 +11234,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// everything
-    func testSetSettingsTest54() async throws {
+    func testSetSettingsTest55() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11295,7 +11330,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesWithCustomRankingsAndAttributesForFaceting
-    func testSetSettingsTest55() async throws {
+    func testSetSettingsTest56() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11330,7 +11365,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesOrdering
-    func testSetSettingsTest56() async throws {
+    func testSetSettingsTest57() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11360,7 +11395,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesProductReferenceSuffixes
-    func testSetSettingsTest57() async throws {
+    func testSetSettingsTest58() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11395,7 +11430,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// queryLanguageAndIgnorePlurals
-    func testSetSettingsTest58() async throws {
+    func testSetSettingsTest59() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11428,7 +11463,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesInMovies
-    func testSetSettingsTest59() async throws {
+    func testSetSettingsTest60() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11458,7 +11493,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disablePrefixOnAttributes
-    func testSetSettingsTest60() async throws {
+    func testSetSettingsTest61() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11488,7 +11523,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disableTypoToleranceOnAttributes
-    func testSetSettingsTest61() async throws {
+    func testSetSettingsTest62() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11518,7 +11553,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesSimpleExample
-    func testSetSettingsTest62() async throws {
+    func testSetSettingsTest63() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11548,7 +11583,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchableAttributesSimpleExampleAlt
-    func testSetSettingsTest63() async throws {
+    func testSetSettingsTest64() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11579,7 +11614,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_searchable_attributes
-    func testSetSettingsTest64() async throws {
+    func testSetSettingsTest65() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11615,7 +11650,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attributes_for_faceting
-    func testSetSettingsTest65() async throws {
+    func testSetSettingsTest66() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11652,7 +11687,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// unretrievable_attributes
-    func testSetSettingsTest66() async throws {
+    func testSetSettingsTest67() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11682,7 +11717,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_retrievable_attributes
-    func testSetSettingsTest67() async throws {
+    func testSetSettingsTest68() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11712,7 +11747,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_all_attributes_as_retrievable
-    func testSetSettingsTest68() async throws {
+    func testSetSettingsTest69() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11742,7 +11777,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// specify_attributes_not_to_retrieve
-    func testSetSettingsTest69() async throws {
+    func testSetSettingsTest70() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11772,7 +11807,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// neural_search
-    func testSetSettingsTest70() async throws {
+    func testSetSettingsTest71() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11802,7 +11837,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// keyword_search
-    func testSetSettingsTest71() async throws {
+    func testSetSettingsTest72() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11832,7 +11867,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_ranking
-    func testSetSettingsTest72() async throws {
+    func testSetSettingsTest73() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11872,7 +11907,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_ranking_by_attribute_asc
-    func testSetSettingsTest73() async throws {
+    func testSetSettingsTest74() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11913,7 +11948,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_ranking_by_attribute_desc
-    func testSetSettingsTest74() async throws {
+    func testSetSettingsTest75() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11954,7 +11989,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_custom_ranking
-    func testSetSettingsTest75() async throws {
+    func testSetSettingsTest76() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -11984,7 +12019,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_relevancy
-    func testSetSettingsTest76() async throws {
+    func testSetSettingsTest77() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12014,7 +12049,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_replicas
-    func testSetSettingsTest77() async throws {
+    func testSetSettingsTest78() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12045,7 +12080,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_max_values_per_facet
-    func testSetSettingsTest78() async throws {
+    func testSetSettingsTest79() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12075,7 +12110,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_sort_facet_values_by
-    func testSetSettingsTest79() async throws {
+    func testSetSettingsTest80() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12105,7 +12140,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attributes_to_snippet
-    func testSetSettingsTest80() async throws {
+    func testSetSettingsTest81() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12135,7 +12170,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_all_attributes_to_snippet
-    func testSetSettingsTest81() async throws {
+    func testSetSettingsTest82() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12165,7 +12200,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_highlight_pre_tag
-    func testSetSettingsTest82() async throws {
+    func testSetSettingsTest83() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12195,7 +12230,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_highlight_post_tag
-    func testSetSettingsTest83() async throws {
+    func testSetSettingsTest84() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12225,7 +12260,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_snippet_ellipsis_text
-    func testSetSettingsTest84() async throws {
+    func testSetSettingsTest85() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12255,7 +12290,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_restrict_highlight_and_snippet_arrays_by_default
-    func testSetSettingsTest85() async throws {
+    func testSetSettingsTest86() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12285,7 +12320,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_hits_per_page
-    func testSetSettingsTest86() async throws {
+    func testSetSettingsTest87() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12315,7 +12350,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_pagination_limit
-    func testSetSettingsTest87() async throws {
+    func testSetSettingsTest88() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12345,7 +12380,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_min_word_size_for_one_typo
-    func testSetSettingsTest88() async throws {
+    func testSetSettingsTest89() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12375,7 +12410,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_min_word_size_for_two_typos
-    func testSetSettingsTest89() async throws {
+    func testSetSettingsTest90() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12405,7 +12440,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_typo_tolerance_mode
-    func testSetSettingsTest90() async throws {
+    func testSetSettingsTest91() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12435,7 +12470,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_typos_on_numeric_tokens_by_default
-    func testSetSettingsTest91() async throws {
+    func testSetSettingsTest92() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12465,7 +12500,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disable_typo_tolerance_for_words
-    func testSetSettingsTest92() async throws {
+    func testSetSettingsTest93() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12495,7 +12530,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_separators_to_index
-    func testSetSettingsTest93() async throws {
+    func testSetSettingsTest94() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12525,7 +12560,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_querylanguage_ignoreplurals
-    func testSetSettingsTest94() async throws {
+    func testSetSettingsTest95() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12558,7 +12593,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attributes_to_transliterate
-    func testSetSettingsTest95() async throws {
+    func testSetSettingsTest96() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12592,7 +12627,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_querylanguage_removestopwords
-    func testSetSettingsTest96() async throws {
+    func testSetSettingsTest97() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12625,7 +12660,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_camel_case_attributes
-    func testSetSettingsTest97() async throws {
+    func testSetSettingsTest98() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12655,7 +12690,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_decompounded_attributes
-    func testSetSettingsTest98() async throws {
+    func testSetSettingsTest99() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12685,7 +12720,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_decompounded_multiple_attributes
-    func testSetSettingsTest99() async throws {
+    func testSetSettingsTest100() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12719,7 +12754,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_keep_diacritics_on_characters
-    func testSetSettingsTest100() async throws {
+    func testSetSettingsTest101() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12749,7 +12784,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_custom_normalization
-    func testSetSettingsTest101() async throws {
+    func testSetSettingsTest102() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12779,7 +12814,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_querylanguage_both
-    func testSetSettingsTest102() async throws {
+    func testSetSettingsTest103() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12814,7 +12849,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_indexlanguages
-    func testSetSettingsTest103() async throws {
+    func testSetSettingsTest104() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12844,7 +12879,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_decompound_query_by_default
-    func testSetSettingsTest104() async throws {
+    func testSetSettingsTest105() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12874,7 +12909,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_rules_syntax_by_default
-    func testSetSettingsTest105() async throws {
+    func testSetSettingsTest106() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12904,7 +12939,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_personalization_settings
-    func testSetSettingsTest106() async throws {
+    func testSetSettingsTest107() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12934,7 +12969,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_query_type
-    func testSetSettingsTest107() async throws {
+    func testSetSettingsTest108() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12964,7 +12999,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_remove_words_if_no_result
-    func testSetSettingsTest108() async throws {
+    func testSetSettingsTest109() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -12994,7 +13029,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_advanced_syntax_by_default
-    func testSetSettingsTest109() async throws {
+    func testSetSettingsTest110() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13024,7 +13059,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_optional_words
-    func testSetSettingsTest110() async throws {
+    func testSetSettingsTest111() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13054,7 +13089,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disabling_prefix_search_for_some_attributes_by_default
-    func testSetSettingsTest111() async throws {
+    func testSetSettingsTest112() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13084,7 +13119,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// disabling_exact_for_some_attributes_by_default
-    func testSetSettingsTest112() async throws {
+    func testSetSettingsTest113() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13114,7 +13149,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_exact_single_word_query
-    func testSetSettingsTest113() async throws {
+    func testSetSettingsTest114() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13144,7 +13179,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_aternative_as_exact
-    func testSetSettingsTest114() async throws {
+    func testSetSettingsTest115() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13177,7 +13212,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_numeric_attributes_for_filtering
-    func testSetSettingsTest115() async throws {
+    func testSetSettingsTest116() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13207,7 +13242,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// enable_compression_of_integer_array
-    func testSetSettingsTest116() async throws {
+    func testSetSettingsTest117() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13237,7 +13272,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attributes_for_distinct
-    func testSetSettingsTest117() async throws {
+    func testSetSettingsTest118() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13267,7 +13302,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_distinct
-    func testSetSettingsTest118() async throws {
+    func testSetSettingsTest119() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13297,7 +13332,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_replace_synonyms_in_highlights
-    func testSetSettingsTest119() async throws {
+    func testSetSettingsTest120() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13327,7 +13362,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_min_proximity
-    func testSetSettingsTest120() async throws {
+    func testSetSettingsTest121() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13357,7 +13392,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_default_field
-    func testSetSettingsTest121() async throws {
+    func testSetSettingsTest122() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13387,7 +13422,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_max_facet_hits
-    func testSetSettingsTest122() async throws {
+    func testSetSettingsTest123() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13417,7 +13452,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_attribute_criteria_computed_by_min_proximity
-    func testSetSettingsTest123() async throws {
+    func testSetSettingsTest124() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13447,7 +13482,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_user_data
-    func testSetSettingsTest124() async throws {
+    func testSetSettingsTest125() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13480,7 +13515,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// set_rendering_content
-    func testSetSettingsTest125() async throws {
+    func testSetSettingsTest126() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -13510,6 +13545,127 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let expectedBodyData = "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}"
             .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// typoToleranceMin
+    func testSetSettingsTest127() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(typoTolerance: SearchTypoTolerance
+                .searchTypoToleranceEnum(SearchTypoToleranceEnum.min))
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"typoTolerance\":\"min\"}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// minWordSizefor1Typo5
+    func testSetSettingsTest128() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(minWordSizefor1Typo: 5)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"minWordSizefor1Typo\":5}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// attributesToSnippetBodyTitle
+    func testSetSettingsTest129() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(attributesToSnippet: ["body:20", "title"])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"attributesToSnippet\":[\"body:20\",\"title\"]}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// snippetEllipsisTextHellip
+    func testSetSettingsTest130() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "theIndexName",
+            indexSettings: IndexSettings(snippetEllipsisText: "[&hellip;]")
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"snippetEllipsisText\":\"[&hellip;]\"}".data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)

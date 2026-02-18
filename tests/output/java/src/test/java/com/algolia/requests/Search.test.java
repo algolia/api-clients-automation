@@ -7138,8 +7138,33 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("attributesToHighlightStar")
+  @DisplayName("highlightWithCustomPrePostTags")
   void setSettingsTest53() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings()
+          .setAttributesToHighlight(Arrays.asList("author", "title", "content"))
+          .setHighlightPreTag("<em class=\"search-highlight\">")
+          .setHighlightPostTag("</em>")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"],\"highlightPreTag\":\"<em" +
+          " class=\\\"search-highlight\\\">\",\"highlightPostTag\":\"</em>\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("attributesToHighlightStar")
+  void setSettingsTest54() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToHighlight(Arrays.asList("*")));
     });
@@ -7151,7 +7176,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("everything")
-  void setSettingsTest54() {
+  void setSettingsTest55() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7270,7 +7295,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesWithCustomRankingsAndAttributesForFaceting")
-  void setSettingsTest55() {
+  void setSettingsTest56() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7294,7 +7319,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesOrdering")
-  void setSettingsTest56() {
+  void setSettingsTest57() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("unordered(title)", "cast")));
     });
@@ -7308,7 +7333,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesProductReferenceSuffixes")
-  void setSettingsTest57() {
+  void setSettingsTest58() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7329,7 +7354,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("queryLanguageAndIgnorePlurals")
-  void setSettingsTest58() {
+  void setSettingsTest59() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7346,7 +7371,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesInMovies")
-  void setSettingsTest59() {
+  void setSettingsTest60() {
     assertDoesNotThrow(() -> {
       client.setSettings("movies", new IndexSettings().setSearchableAttributes(Arrays.asList("title_eng", "title_fr", "title_es")));
     });
@@ -7360,7 +7385,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disablePrefixOnAttributes")
-  void setSettingsTest60() {
+  void setSettingsTest61() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("serial_number")));
     });
@@ -7374,7 +7399,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disableTypoToleranceOnAttributes")
-  void setSettingsTest61() {
+  void setSettingsTest62() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnAttributes(Arrays.asList("serial_number")));
     });
@@ -7388,7 +7413,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesSimpleExample")
-  void setSettingsTest62() {
+  void setSettingsTest63() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSearchableAttributes(Arrays.asList("serial_number")));
     });
@@ -7400,7 +7425,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchableAttributesSimpleExampleAlt")
-  void setSettingsTest63() {
+  void setSettingsTest64() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7417,7 +7442,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_searchable_attributes")
-  void setSettingsTest64() {
+  void setSettingsTest65() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7440,7 +7465,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_attributes_for_faceting")
-  void setSettingsTest65() {
+  void setSettingsTest66() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7469,7 +7494,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("unretrievable_attributes")
-  void setSettingsTest66() {
+  void setSettingsTest67() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setUnretrievableAttributes(Arrays.asList("total_number_of_sales")));
     });
@@ -7483,7 +7508,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_retrievable_attributes")
-  void setSettingsTest67() {
+  void setSettingsTest68() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToRetrieve(Arrays.asList("author", "title", "content")));
     });
@@ -7497,7 +7522,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_all_attributes_as_retrievable")
-  void setSettingsTest68() {
+  void setSettingsTest69() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToRetrieve(Arrays.asList("*")));
     });
@@ -7509,7 +7534,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("specify_attributes_not_to_retrieve")
-  void setSettingsTest69() {
+  void setSettingsTest70() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToRetrieve(Arrays.asList("*", "-SKU", "-internal_desc")));
     });
@@ -7523,7 +7548,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("neural_search")
-  void setSettingsTest70() {
+  void setSettingsTest71() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMode(Mode.NEURAL_SEARCH));
     });
@@ -7535,7 +7560,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("keyword_search")
-  void setSettingsTest71() {
+  void setSettingsTest72() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMode(Mode.KEYWORD_SEARCH));
     });
@@ -7547,7 +7572,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_ranking")
-  void setSettingsTest72() {
+  void setSettingsTest73() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7568,7 +7593,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_ranking_by_attribute_asc")
-  void setSettingsTest73() {
+  void setSettingsTest74() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7591,7 +7616,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_ranking_by_attribute_desc")
-  void setSettingsTest74() {
+  void setSettingsTest75() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7614,7 +7639,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_custom_ranking")
-  void setSettingsTest75() {
+  void setSettingsTest76() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setCustomRanking(Arrays.asList("desc(popularity)", "asc(price)")));
     });
@@ -7628,7 +7653,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_relevancy")
-  void setSettingsTest76() {
+  void setSettingsTest77() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setRelevancyStrictness(90));
     });
@@ -7640,7 +7665,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_replicas")
-  void setSettingsTest77() {
+  void setSettingsTest78() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7657,7 +7682,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_max_values_per_facet")
-  void setSettingsTest78() {
+  void setSettingsTest79() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMaxValuesPerFacet(100));
     });
@@ -7669,7 +7694,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_sort_facet_values_by")
-  void setSettingsTest79() {
+  void setSettingsTest80() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSortFacetValuesBy("alpha"));
     });
@@ -7681,7 +7706,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_attributes_to_snippet")
-  void setSettingsTest80() {
+  void setSettingsTest81() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToSnippet(Arrays.asList("content:80", "description")));
     });
@@ -7695,7 +7720,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_all_attributes_to_snippet")
-  void setSettingsTest81() {
+  void setSettingsTest82() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributesToSnippet(Arrays.asList("*:80")));
     });
@@ -7707,7 +7732,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_highlight_pre_tag")
-  void setSettingsTest82() {
+  void setSettingsTest83() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setHighlightPreTag("<em>"));
     });
@@ -7719,7 +7744,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_highlight_post_tag")
-  void setSettingsTest83() {
+  void setSettingsTest84() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setHighlightPostTag("</em>"));
     });
@@ -7731,7 +7756,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_snippet_ellipsis_text")
-  void setSettingsTest84() {
+  void setSettingsTest85() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSnippetEllipsisText("…"));
     });
@@ -7743,7 +7768,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_restrict_highlight_and_snippet_arrays_by_default")
-  void setSettingsTest85() {
+  void setSettingsTest86() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setRestrictHighlightAndSnippetArrays(true));
     });
@@ -7755,7 +7780,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_hits_per_page")
-  void setSettingsTest86() {
+  void setSettingsTest87() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setHitsPerPage(20));
     });
@@ -7767,7 +7792,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_pagination_limit")
-  void setSettingsTest87() {
+  void setSettingsTest88() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setPaginationLimitedTo(1000));
     });
@@ -7779,7 +7804,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_min_word_size_for_one_typo")
-  void setSettingsTest88() {
+  void setSettingsTest89() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMinWordSizefor1Typo(4));
     });
@@ -7791,7 +7816,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_min_word_size_for_two_typos")
-  void setSettingsTest89() {
+  void setSettingsTest90() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMinWordSizefor2Typos(4));
     });
@@ -7803,7 +7828,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_typo_tolerance_mode")
-  void setSettingsTest90() {
+  void setSettingsTest91() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)));
     });
@@ -7815,7 +7840,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disable_typos_on_numeric_tokens_by_default")
-  void setSettingsTest91() {
+  void setSettingsTest92() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAllowTyposOnNumericTokens(false));
     });
@@ -7827,7 +7852,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disable_typo_tolerance_for_words")
-  void setSettingsTest92() {
+  void setSettingsTest93() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisableTypoToleranceOnWords(Arrays.asList("wheel", "1X2BCD")));
     });
@@ -7841,7 +7866,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_separators_to_index")
-  void setSettingsTest93() {
+  void setSettingsTest94() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setSeparatorsToIndex("+#"));
     });
@@ -7853,7 +7878,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_querylanguage_ignoreplurals")
-  void setSettingsTest94() {
+  void setSettingsTest95() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7870,7 +7895,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_attributes_to_transliterate")
-  void setSettingsTest95() {
+  void setSettingsTest96() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7893,7 +7918,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_querylanguage_removestopwords")
-  void setSettingsTest96() {
+  void setSettingsTest97() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7910,7 +7935,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_camel_case_attributes")
-  void setSettingsTest97() {
+  void setSettingsTest98() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setCamelCaseAttributes(Arrays.asList("description")));
     });
@@ -7922,7 +7947,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_decompounded_attributes")
-  void setSettingsTest98() {
+  void setSettingsTest99() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7943,7 +7968,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_decompounded_multiple_attributes")
-  void setSettingsTest99() {
+  void setSettingsTest100() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -7971,7 +7996,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_keep_diacritics_on_characters")
-  void setSettingsTest100() {
+  void setSettingsTest101() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setKeepDiacriticsOnCharacters("øé"));
     });
@@ -7983,7 +8008,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_custom_normalization")
-  void setSettingsTest101() {
+  void setSettingsTest102() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -8013,7 +8038,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_querylanguage_both")
-  void setSettingsTest102() {
+  void setSettingsTest103() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -8037,7 +8062,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_indexlanguages")
-  void setSettingsTest103() {
+  void setSettingsTest104() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setIndexLanguages(Arrays.asList(SupportedLanguage.JA)));
     });
@@ -8049,7 +8074,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_decompound_query_by_default")
-  void setSettingsTest104() {
+  void setSettingsTest105() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDecompoundQuery(true));
     });
@@ -8061,7 +8086,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_rules_syntax_by_default")
-  void setSettingsTest105() {
+  void setSettingsTest106() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setEnableRules(true));
     });
@@ -8073,7 +8098,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_personalization_settings")
-  void setSettingsTest106() {
+  void setSettingsTest107() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setEnablePersonalization(true));
     });
@@ -8085,7 +8110,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_query_type")
-  void setSettingsTest107() {
+  void setSettingsTest108() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setQueryType(QueryType.PREFIX_LAST));
     });
@@ -8097,7 +8122,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_remove_words_if_no_result")
-  void setSettingsTest108() {
+  void setSettingsTest109() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setRemoveWordsIfNoResults(RemoveWordsIfNoResults.NONE));
     });
@@ -8109,7 +8134,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_advanced_syntax_by_default")
-  void setSettingsTest109() {
+  void setSettingsTest110() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAdvancedSyntax(true));
     });
@@ -8121,7 +8146,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_optional_words")
-  void setSettingsTest110() {
+  void setSettingsTest111() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setOptionalWords(OptionalWords.of(Arrays.asList("blue", "iphone case"))));
     });
@@ -8133,7 +8158,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disabling_prefix_search_for_some_attributes_by_default")
-  void setSettingsTest111() {
+  void setSettingsTest112() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisablePrefixOnAttributes(Arrays.asList("sku")));
     });
@@ -8145,7 +8170,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("disabling_exact_for_some_attributes_by_default")
-  void setSettingsTest112() {
+  void setSettingsTest113() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDisableExactOnAttributes(Arrays.asList("description")));
     });
@@ -8157,7 +8182,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_exact_single_word_query")
-  void setSettingsTest113() {
+  void setSettingsTest114() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE));
     });
@@ -8169,7 +8194,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_aternative_as_exact")
-  void setSettingsTest114() {
+  void setSettingsTest115() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -8188,7 +8213,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_numeric_attributes_for_filtering")
-  void setSettingsTest115() {
+  void setSettingsTest116() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setNumericAttributesForFiltering(Arrays.asList("quantity", "popularity")));
     });
@@ -8202,7 +8227,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("enable_compression_of_integer_array")
-  void setSettingsTest116() {
+  void setSettingsTest117() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAllowCompressionOfIntegerArray(true));
     });
@@ -8214,7 +8239,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_attributes_for_distinct")
-  void setSettingsTest117() {
+  void setSettingsTest118() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributeForDistinct("url"));
     });
@@ -8226,7 +8251,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_distinct")
-  void setSettingsTest118() {
+  void setSettingsTest119() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(1)).setAttributeForDistinct("url"));
     });
@@ -8240,7 +8265,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_replace_synonyms_in_highlights")
-  void setSettingsTest119() {
+  void setSettingsTest120() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setReplaceSynonymsInHighlight(false));
     });
@@ -8252,7 +8277,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_min_proximity")
-  void setSettingsTest120() {
+  void setSettingsTest121() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMinProximity(1));
     });
@@ -8264,7 +8289,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_default_field")
-  void setSettingsTest121() {
+  void setSettingsTest122() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setResponseFields(Arrays.asList("hits", "hitsPerPage", "nbPages", "page")));
     });
@@ -8278,7 +8303,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_max_facet_hits")
-  void setSettingsTest122() {
+  void setSettingsTest123() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setMaxFacetHits(10));
     });
@@ -8290,7 +8315,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_attribute_criteria_computed_by_min_proximity")
-  void setSettingsTest123() {
+  void setSettingsTest124() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setAttributeCriteriaComputedByMinProximity(true));
     });
@@ -8304,7 +8329,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_user_data")
-  void setSettingsTest124() {
+  void setSettingsTest125() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -8331,7 +8356,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("set_rendering_content")
-  void setSettingsTest125() {
+  void setSettingsTest126() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -8364,6 +8389,56 @@ class SearchClientRequestsTests {
         JSONCompareMode.STRICT
       )
     );
+  }
+
+  @Test
+  @DisplayName("typoToleranceMin")
+  void setSettingsTest127() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"typoTolerance\":\"min\"}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("minWordSizefor1Typo5")
+  void setSettingsTest128() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setMinWordSizefor1Typo(5));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"minWordSizefor1Typo\":5}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("attributesToSnippetBodyTitle")
+  void setSettingsTest129() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setAttributesToSnippet(Arrays.asList("body:20", "title")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"attributesToSnippet\":[\"body:20\",\"title\"]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("snippetEllipsisTextHellip")
+  void setSettingsTest130() {
+    assertDoesNotThrow(() -> {
+      client.setSettings("theIndexName", new IndexSettings().setSnippetEllipsisText("[&hellip;]"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/theIndexName/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"snippetEllipsisText\":\"[&hellip;]\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

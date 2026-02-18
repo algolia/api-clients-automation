@@ -4993,6 +4993,19 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"attributesToHighlight":["author","title","content"]}`)
 	})
+	t.Run("highlightWithCustomPrePostTags", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAttributesToHighlight(
+				[]string{"author", "title", "content"}).SetHighlightPreTag("<em class=\"search-highlight\">").SetHighlightPostTag("</em>")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\"search-highlight\">","highlightPostTag":"</em>"}`)
+	})
 	t.Run("attributesToHighlightStar", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
@@ -5917,6 +5930,51 @@ func TestSearch_SetSettings(t *testing.T) {
 
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}`)
+	})
+	t.Run("typoToleranceMin", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min")))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"typoTolerance":"min"}`)
+	})
+	t.Run("minWordSizefor1Typo5", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetMinWordSizefor1Typo(5)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"minWordSizefor1Typo":5}`)
+	})
+	t.Run("attributesToSnippetBodyTitle", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetAttributesToSnippet(
+				[]string{"body:20", "title"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"attributesToSnippet":["body:20","title"]}`)
+	})
+	t.Run("snippetEllipsisTextHellip", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"theIndexName",
+			search.NewEmptyIndexSettings().SetSnippetEllipsisText("[&hellip;]")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/theIndexName/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"snippetEllipsisText":"[&hellip;]"}`)
 	})
 }
 
