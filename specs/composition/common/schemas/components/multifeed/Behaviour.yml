@@ -5,10 +5,8 @@ multifeed:
   properties:
     feeds:
       type: object
-      description: A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
       additionalProperties:
-        injection:
-          $ref: '../injection/Behaviour.yml#/injection'
+        $ref: '#/feedID'
     feedsOrder:
       type: array
       description: A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all Feeds are processed and returned with a default ordering.
@@ -42,3 +40,10 @@ multifeed:
     feedsOrder:
       - products-feed
       - articles-feed
+
+feedID:
+  type: object
+  description: Description of a feed.
+  additionalProperties: false
+  oneOf:
+    - $ref: '../injection/Behaviour.yml#/injection'
