@@ -1100,6 +1100,46 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition5(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
+                    'Price-desc' => 'products-high-to-low',
+                ],
+                'behavior' => ['multifeed' => ['feeds' => ['main-products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                ],
+                ],
+                ],
+                ],
+                ],
+                ],
+                    'feedsOrder' => [
+                        'main-products',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PutCompositionRule method.
      *
      * putCompositionRule

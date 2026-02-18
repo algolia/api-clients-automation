@@ -1213,6 +1213,55 @@ void main() {
     ),
   );
 
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-compo",
+        composition: Composition(
+          objectID: "my-compo",
+          name: "my composition",
+          sortingStrategy: {
+            'Price-asc': "products-low-to-high",
+            'Price-desc': "products-high-to-low",
+          },
+          behavior: CompositionMultifeedBehavior(
+            multifeed: Multifeed(
+              feeds: {
+                'main-products': FeedInjection(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "products",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              },
+              feedsOrder: [
+                "main-products",
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}""");
+      },
+    ),
+  );
+
   // putCompositionRule
   test(
     'putCompositionRule',
