@@ -40,12 +40,6 @@ compositionRule:
       items:
         type: string
       example: ['conditional']
-    condition:
-      deprecated: true
-      description: |
-        Legacy field for a single condition. This field is maintained for backward compatibility 
-        with older rules but should not be used in new implementations.
-      $ref: '#/condition'
   required:
     - objectID
     - consequence
