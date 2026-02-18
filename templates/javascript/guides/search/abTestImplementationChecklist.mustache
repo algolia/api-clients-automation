@@ -1,0 +1,25 @@
+{{> snippets/import}}
+
+{{> snippets/init}}
+
+// Set the current user token
+const userToken = getUserToken();
+const searchParams = {
+  enableABTest: true, // Default value, will be updated based on the user token
+}
+
+// Is the user token anonymous?
+if (userToken === null || userToken === undefined || userToken === 'YOUR_ANONYMOUS_USER_TOKEN') {
+  // Disable A/B testing for anonymous users
+  searchParams.enableABTest = false;
+}
+
+try {
+  // Make the search request with the A/B testing enabled or disabled based on the user token
+  const result = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}};
+  // Handle the result
+  console.log(result);
+} catch (err) {
+  // Handle error
+  console.error(err);
+}
