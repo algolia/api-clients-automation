@@ -96,6 +96,8 @@ import org.json4s._
   *   URL-encoded string of all search parameters.
   * @param query
   *   The search query string.
+  * @param feedID
+  *   The ID of the feed.
   */
 case class SearchResultsItem(
     abTestID: Option[Int] = scala.None,
@@ -131,6 +133,7 @@ case class SearchResultsItem(
     page: Option[Int] = scala.None,
     params: Option[String] = scala.None,
     query: Option[String] = scala.None,
+    feedID: Option[String] = scala.None,
     compositions: Map[String, ResultsCompositionInfoResponse]
 )
 

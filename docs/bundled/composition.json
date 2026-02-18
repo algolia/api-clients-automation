@@ -2884,6 +2884,11 @@
           }
         }
       },
+      "feedID": {
+        "type": "string",
+        "description": "The ID of the feed.",
+        "example": "products-feed"
+      },
       "resultsInjectedItemAppliedRulesInfoResponse": {
         "type": "object",
         "properties": {
@@ -2937,6 +2942,9 @@
       "resultsCompositionsResponse": {
         "type": "object",
         "properties": {
+          "feedID": {
+            "$ref": "#/components/schemas/feedID"
+          },
           "compositions": {
             "additionalProperties": {
               "$ref": "#/components/schemas/resultsCompositionInfoResponse"
