@@ -8206,7 +8206,30 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("attributesToHighlightStar53") {
+  test("highlightWithCustomPrePostTags53") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        attributesToHighlight = Some(Seq("author", "title", "content")),
+        highlightPreTag = Some("<em class=\"search-highlight\">"),
+        highlightPostTag = Some("</em>")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\"search-highlight\">","highlightPostTag":"</em>"}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("attributesToHighlightStar54") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8225,7 +8248,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("everything54") {
+  test("everything55") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8336,7 +8359,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesWithCustomRankingsAndAttributesForFaceting55") {
+  test("searchableAttributesWithCustomRankingsAndAttributesForFaceting56") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8359,7 +8382,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesOrdering56") {
+  test("searchableAttributesOrdering57") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8378,7 +8401,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesProductReferenceSuffixes57") {
+  test("searchableAttributesProductReferenceSuffixes58") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8397,7 +8420,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("queryLanguageAndIgnorePlurals58") {
+  test("queryLanguageAndIgnorePlurals59") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8417,7 +8440,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesInMovies59") {
+  test("searchableAttributesInMovies60") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "movies",
@@ -8436,7 +8459,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disablePrefixOnAttributes60") {
+  test("disablePrefixOnAttributes61") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8455,7 +8478,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disableTypoToleranceOnAttributes61") {
+  test("disableTypoToleranceOnAttributes62") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8474,7 +8497,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesSimpleExample62") {
+  test("searchableAttributesSimpleExample63") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8493,7 +8516,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchableAttributesSimpleExampleAlt63") {
+  test("searchableAttributesSimpleExampleAlt64") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8512,7 +8535,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_searchable_attributes64") {
+  test("set_searchable_attributes65") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8532,7 +8555,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attributes_for_faceting65") {
+  test("set_attributes_for_faceting66") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8561,7 +8584,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("unretrievable_attributes66") {
+  test("unretrievable_attributes67") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8580,7 +8603,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_retrievable_attributes67") {
+  test("set_retrievable_attributes68") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8599,7 +8622,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_all_attributes_as_retrievable68") {
+  test("set_all_attributes_as_retrievable69") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8618,7 +8641,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("specify_attributes_not_to_retrieve69") {
+  test("specify_attributes_not_to_retrieve70") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8637,7 +8660,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("neural_search70") {
+  test("neural_search71") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8656,7 +8679,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("keyword_search71") {
+  test("keyword_search72") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8675,7 +8698,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_ranking72") {
+  test("set_default_ranking73") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8695,7 +8718,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_ranking_by_attribute_asc73") {
+  test("set_ranking_by_attribute_asc74") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8716,7 +8739,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_ranking_by_attribute_desc74") {
+  test("set_ranking_by_attribute_desc75") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8737,7 +8760,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_custom_ranking75") {
+  test("set_custom_ranking76") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8756,7 +8779,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_relevancy76") {
+  test("set_default_relevancy77") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8775,7 +8798,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_replicas77") {
+  test("set_replicas78") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8794,7 +8817,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_max_values_per_facet78") {
+  test("set_default_max_values_per_facet79") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8813,7 +8836,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_sort_facet_values_by79") {
+  test("set_default_sort_facet_values_by80") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8832,7 +8855,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attributes_to_snippet80") {
+  test("set_attributes_to_snippet81") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8851,7 +8874,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_all_attributes_to_snippet81") {
+  test("set_all_attributes_to_snippet82") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8870,7 +8893,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_highlight_pre_tag82") {
+  test("set_default_highlight_pre_tag83") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8889,7 +8912,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_highlight_post_tag83") {
+  test("set_default_highlight_post_tag84") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8908,7 +8931,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_snippet_ellipsis_text84") {
+  test("set_default_snippet_ellipsis_text85") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8927,7 +8950,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_restrict_highlight_and_snippet_arrays_by_default85") {
+  test("enable_restrict_highlight_and_snippet_arrays_by_default86") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8946,7 +8969,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_hits_per_page86") {
+  test("set_default_hits_per_page87") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8965,7 +8988,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_pagination_limit87") {
+  test("set_pagination_limit88") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -8984,7 +9007,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_min_word_size_for_one_typo88") {
+  test("set_default_min_word_size_for_one_typo89") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9003,7 +9026,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_min_word_size_for_two_typos89") {
+  test("set_default_min_word_size_for_two_typos90") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9022,7 +9045,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_typo_tolerance_mode90") {
+  test("set_default_typo_tolerance_mode91") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9041,7 +9064,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_typos_on_numeric_tokens_by_default91") {
+  test("disable_typos_on_numeric_tokens_by_default92") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9060,7 +9083,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disable_typo_tolerance_for_words92") {
+  test("disable_typo_tolerance_for_words93") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9079,7 +9102,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_separators_to_index93") {
+  test("set_separators_to_index94") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9098,7 +9121,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_querylanguage_ignoreplurals94") {
+  test("set_querylanguage_ignoreplurals95") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9118,7 +9141,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attributes_to_transliterate95") {
+  test("set_attributes_to_transliterate96") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9138,7 +9161,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_querylanguage_removestopwords96") {
+  test("set_querylanguage_removestopwords97") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9158,7 +9181,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_camel_case_attributes97") {
+  test("set_camel_case_attributes98") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9177,7 +9200,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_decompounded_attributes98") {
+  test("set_decompounded_attributes99") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9196,7 +9219,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_decompounded_multiple_attributes99") {
+  test("set_decompounded_multiple_attributes100") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9223,7 +9246,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_keep_diacritics_on_characters100") {
+  test("set_keep_diacritics_on_characters101") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9242,7 +9265,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_custom_normalization101") {
+  test("set_custom_normalization102") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9261,7 +9284,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_querylanguage_both102") {
+  test("set_querylanguage_both103") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9282,7 +9305,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_indexlanguages103") {
+  test("set_indexlanguages104") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9301,7 +9324,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_decompound_query_by_default104") {
+  test("enable_decompound_query_by_default105") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9320,7 +9343,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_rules_syntax_by_default105") {
+  test("enable_rules_syntax_by_default106") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9339,7 +9362,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_personalization_settings106") {
+  test("enable_personalization_settings107") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9358,7 +9381,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_query_type107") {
+  test("set_default_query_type108") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9377,7 +9400,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_remove_words_if_no_result108") {
+  test("set_default_remove_words_if_no_result109") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9396,7 +9419,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_advanced_syntax_by_default109") {
+  test("enable_advanced_syntax_by_default110") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9415,7 +9438,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_optional_words110") {
+  test("set_default_optional_words111") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9434,7 +9457,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disabling_prefix_search_for_some_attributes_by_default111") {
+  test("disabling_prefix_search_for_some_attributes_by_default112") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9453,7 +9476,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("disabling_exact_for_some_attributes_by_default112") {
+  test("disabling_exact_for_some_attributes_by_default113") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9472,7 +9495,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_exact_single_word_query113") {
+  test("set_default_exact_single_word_query114") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9491,7 +9514,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_aternative_as_exact114") {
+  test("set_default_aternative_as_exact115") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9511,7 +9534,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_numeric_attributes_for_filtering115") {
+  test("set_numeric_attributes_for_filtering116") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9530,7 +9553,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("enable_compression_of_integer_array116") {
+  test("enable_compression_of_integer_array117") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9549,7 +9572,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attributes_for_distinct117") {
+  test("set_attributes_for_distinct118") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9568,7 +9591,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_distinct118") {
+  test("set_distinct119") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9588,7 +9611,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_replace_synonyms_in_highlights119") {
+  test("set_replace_synonyms_in_highlights120") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9607,7 +9630,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_min_proximity120") {
+  test("set_min_proximity121") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9626,7 +9649,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_default_field121") {
+  test("set_default_field122") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9645,7 +9668,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_max_facet_hits122") {
+  test("set_max_facet_hits123") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9664,7 +9687,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_attribute_criteria_computed_by_min_proximity123") {
+  test("set_attribute_criteria_computed_by_min_proximity124") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9683,7 +9706,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_user_data124") {
+  test("set_user_data125") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9709,7 +9732,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("set_rendering_content125") {
+  test("set_rendering_content126") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -9751,6 +9774,82 @@ class SearchTest extends AnyFunSuite {
     val expectedBody = parse(
       """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}"""
     )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("typoToleranceMin127") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        typoTolerance = Some(TypoToleranceEnum.withName("min"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"typoTolerance":"min"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("minWordSizefor1Typo5128") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        minWordSizefor1Typo = Some(5)
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"minWordSizefor1Typo":5}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("attributesToSnippetBodyTitle129") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        attributesToSnippet = Some(Seq("body:20", "title"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"attributesToSnippet":["body:20","title"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("snippetEllipsisTextHellip130") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "theIndexName",
+      indexSettings = IndexSettings(
+        snippetEllipsisText = Some("[&hellip;]")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/theIndexName/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"snippetEllipsisText":"[&hellip;]"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

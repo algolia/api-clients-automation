@@ -10323,9 +10323,41 @@ class SnippetSearchClient
     /**
      * Snippet for the SetSettings method.
      *
-     * attributesToHighlightStar
+     * highlightWithCustomPrePostTags
      */
     public function snippetForSetSettings53(): void
+    {
+        // >SEPARATOR setSettings highlightWithCustomPrePostTags
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesToHighlight' => [
+                'author',
+
+                'title',
+
+                'content',
+            ],
+                'highlightPreTag' => '<em class="search-highlight">',
+                'highlightPostTag' => '</em>',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesToHighlightStar
+     */
+    public function snippetForSetSettings54(): void
     {
         // >SEPARATOR setSettings attributesToHighlightStar
         // Initialize the client
@@ -10351,7 +10383,7 @@ class SnippetSearchClient
      *
      * everything
      */
-    public function snippetForSetSettings54(): void
+    public function snippetForSetSettings55(): void
     {
         // >SEPARATOR setSettings everything
         // Initialize the client
@@ -10498,7 +10530,7 @@ class SnippetSearchClient
      *
      * searchableAttributesWithCustomRankingsAndAttributesForFaceting
      */
-    public function snippetForSetSettings55(): void
+    public function snippetForSetSettings56(): void
     {
         // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
         // Initialize the client
@@ -10542,7 +10574,7 @@ class SnippetSearchClient
      *
      * searchableAttributesOrdering
      */
-    public function snippetForSetSettings56(): void
+    public function snippetForSetSettings57(): void
     {
         // >SEPARATOR setSettings searchableAttributesOrdering
         // Initialize the client
@@ -10570,7 +10602,7 @@ class SnippetSearchClient
      *
      * searchableAttributesProductReferenceSuffixes
      */
-    public function snippetForSetSettings57(): void
+    public function snippetForSetSettings58(): void
     {
         // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
         // Initialize the client
@@ -10600,7 +10632,7 @@ class SnippetSearchClient
      *
      * queryLanguageAndIgnorePlurals
      */
-    public function snippetForSetSettings58(): void
+    public function snippetForSetSettings59(): void
     {
         // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
         // Initialize the client
@@ -10627,7 +10659,7 @@ class SnippetSearchClient
      *
      * searchableAttributesInMovies
      */
-    public function snippetForSetSettings59(): void
+    public function snippetForSetSettings60(): void
     {
         // >SEPARATOR setSettings searchableAttributesInMovies
         // Initialize the client
@@ -10657,7 +10689,7 @@ class SnippetSearchClient
      *
      * disablePrefixOnAttributes
      */
-    public function snippetForSetSettings60(): void
+    public function snippetForSetSettings61(): void
     {
         // >SEPARATOR setSettings disablePrefixOnAttributes
         // Initialize the client
@@ -10683,7 +10715,7 @@ class SnippetSearchClient
      *
      * disableTypoToleranceOnAttributes
      */
-    public function snippetForSetSettings61(): void
+    public function snippetForSetSettings62(): void
     {
         // >SEPARATOR setSettings disableTypoToleranceOnAttributes
         // Initialize the client
@@ -10709,7 +10741,7 @@ class SnippetSearchClient
      *
      * searchableAttributesSimpleExample
      */
-    public function snippetForSetSettings62(): void
+    public function snippetForSetSettings63(): void
     {
         // >SEPARATOR setSettings searchableAttributesSimpleExample
         // Initialize the client
@@ -10735,7 +10767,7 @@ class SnippetSearchClient
      *
      * searchableAttributesSimpleExampleAlt
      */
-    public function snippetForSetSettings63(): void
+    public function snippetForSetSettings64(): void
     {
         // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
         // Initialize the client
@@ -10763,7 +10795,7 @@ class SnippetSearchClient
      *
      * set_searchable_attributes
      */
-    public function snippetForSetSettings64(): void
+    public function snippetForSetSettings65(): void
     {
         // >SEPARATOR setSettings set_searchable_attributes
         // Initialize the client
@@ -10795,7 +10827,7 @@ class SnippetSearchClient
      *
      * set_attributes_for_faceting
      */
-    public function snippetForSetSettings65(): void
+    public function snippetForSetSettings66(): void
     {
         // >SEPARATOR setSettings set_attributes_for_faceting
         // Initialize the client
@@ -10829,7 +10861,7 @@ class SnippetSearchClient
      *
      * unretrievable_attributes
      */
-    public function snippetForSetSettings66(): void
+    public function snippetForSetSettings67(): void
     {
         // >SEPARATOR setSettings unretrievable_attributes
         // Initialize the client
@@ -10855,7 +10887,7 @@ class SnippetSearchClient
      *
      * set_retrievable_attributes
      */
-    public function snippetForSetSettings67(): void
+    public function snippetForSetSettings68(): void
     {
         // >SEPARATOR setSettings set_retrievable_attributes
         // Initialize the client
@@ -10885,7 +10917,7 @@ class SnippetSearchClient
      *
      * set_all_attributes_as_retrievable
      */
-    public function snippetForSetSettings68(): void
+    public function snippetForSetSettings69(): void
     {
         // >SEPARATOR setSettings set_all_attributes_as_retrievable
         // Initialize the client
@@ -10911,7 +10943,7 @@ class SnippetSearchClient
      *
      * specify_attributes_not_to_retrieve
      */
-    public function snippetForSetSettings69(): void
+    public function snippetForSetSettings70(): void
     {
         // >SEPARATOR setSettings specify_attributes_not_to_retrieve
         // Initialize the client
@@ -10941,7 +10973,7 @@ class SnippetSearchClient
      *
      * neural_search
      */
-    public function snippetForSetSettings70(): void
+    public function snippetForSetSettings71(): void
     {
         // >SEPARATOR setSettings neural_search
         // Initialize the client
@@ -10965,7 +10997,7 @@ class SnippetSearchClient
      *
      * keyword_search
      */
-    public function snippetForSetSettings71(): void
+    public function snippetForSetSettings72(): void
     {
         // >SEPARATOR setSettings keyword_search
         // Initialize the client
@@ -10989,7 +11021,7 @@ class SnippetSearchClient
      *
      * set_default_ranking
      */
-    public function snippetForSetSettings72(): void
+    public function snippetForSetSettings73(): void
     {
         // >SEPARATOR setSettings set_default_ranking
         // Initialize the client
@@ -11029,7 +11061,7 @@ class SnippetSearchClient
      *
      * set_ranking_by_attribute_asc
      */
-    public function snippetForSetSettings73(): void
+    public function snippetForSetSettings74(): void
     {
         // >SEPARATOR setSettings set_ranking_by_attribute_asc
         // Initialize the client
@@ -11071,7 +11103,7 @@ class SnippetSearchClient
      *
      * set_ranking_by_attribute_desc
      */
-    public function snippetForSetSettings74(): void
+    public function snippetForSetSettings75(): void
     {
         // >SEPARATOR setSettings set_ranking_by_attribute_desc
         // Initialize the client
@@ -11113,7 +11145,7 @@ class SnippetSearchClient
      *
      * set_custom_ranking
      */
-    public function snippetForSetSettings75(): void
+    public function snippetForSetSettings76(): void
     {
         // >SEPARATOR setSettings set_custom_ranking
         // Initialize the client
@@ -11141,7 +11173,7 @@ class SnippetSearchClient
      *
      * set_default_relevancy
      */
-    public function snippetForSetSettings76(): void
+    public function snippetForSetSettings77(): void
     {
         // >SEPARATOR setSettings set_default_relevancy
         // Initialize the client
@@ -11165,7 +11197,7 @@ class SnippetSearchClient
      *
      * set_replicas
      */
-    public function snippetForSetSettings77(): void
+    public function snippetForSetSettings78(): void
     {
         // >SEPARATOR setSettings set_replicas
         // Initialize the client
@@ -11193,7 +11225,7 @@ class SnippetSearchClient
      *
      * set_default_max_values_per_facet
      */
-    public function snippetForSetSettings78(): void
+    public function snippetForSetSettings79(): void
     {
         // >SEPARATOR setSettings set_default_max_values_per_facet
         // Initialize the client
@@ -11217,7 +11249,7 @@ class SnippetSearchClient
      *
      * set_default_sort_facet_values_by
      */
-    public function snippetForSetSettings79(): void
+    public function snippetForSetSettings80(): void
     {
         // >SEPARATOR setSettings set_default_sort_facet_values_by
         // Initialize the client
@@ -11241,7 +11273,7 @@ class SnippetSearchClient
      *
      * set_attributes_to_snippet
      */
-    public function snippetForSetSettings80(): void
+    public function snippetForSetSettings81(): void
     {
         // >SEPARATOR setSettings set_attributes_to_snippet
         // Initialize the client
@@ -11269,7 +11301,7 @@ class SnippetSearchClient
      *
      * set_all_attributes_to_snippet
      */
-    public function snippetForSetSettings81(): void
+    public function snippetForSetSettings82(): void
     {
         // >SEPARATOR setSettings set_all_attributes_to_snippet
         // Initialize the client
@@ -11295,7 +11327,7 @@ class SnippetSearchClient
      *
      * set_default_highlight_pre_tag
      */
-    public function snippetForSetSettings82(): void
+    public function snippetForSetSettings83(): void
     {
         // >SEPARATOR setSettings set_default_highlight_pre_tag
         // Initialize the client
@@ -11319,7 +11351,7 @@ class SnippetSearchClient
      *
      * set_default_highlight_post_tag
      */
-    public function snippetForSetSettings83(): void
+    public function snippetForSetSettings84(): void
     {
         // >SEPARATOR setSettings set_default_highlight_post_tag
         // Initialize the client
@@ -11343,7 +11375,7 @@ class SnippetSearchClient
      *
      * set_default_snippet_ellipsis_text
      */
-    public function snippetForSetSettings84(): void
+    public function snippetForSetSettings85(): void
     {
         // >SEPARATOR setSettings set_default_snippet_ellipsis_text
         // Initialize the client
@@ -11367,7 +11399,7 @@ class SnippetSearchClient
      *
      * enable_restrict_highlight_and_snippet_arrays_by_default
      */
-    public function snippetForSetSettings85(): void
+    public function snippetForSetSettings86(): void
     {
         // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
         // Initialize the client
@@ -11391,7 +11423,7 @@ class SnippetSearchClient
      *
      * set_default_hits_per_page
      */
-    public function snippetForSetSettings86(): void
+    public function snippetForSetSettings87(): void
     {
         // >SEPARATOR setSettings set_default_hits_per_page
         // Initialize the client
@@ -11415,7 +11447,7 @@ class SnippetSearchClient
      *
      * set_pagination_limit
      */
-    public function snippetForSetSettings87(): void
+    public function snippetForSetSettings88(): void
     {
         // >SEPARATOR setSettings set_pagination_limit
         // Initialize the client
@@ -11439,7 +11471,7 @@ class SnippetSearchClient
      *
      * set_default_min_word_size_for_one_typo
      */
-    public function snippetForSetSettings88(): void
+    public function snippetForSetSettings89(): void
     {
         // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
         // Initialize the client
@@ -11463,7 +11495,7 @@ class SnippetSearchClient
      *
      * set_default_min_word_size_for_two_typos
      */
-    public function snippetForSetSettings89(): void
+    public function snippetForSetSettings90(): void
     {
         // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
         // Initialize the client
@@ -11487,7 +11519,7 @@ class SnippetSearchClient
      *
      * set_default_typo_tolerance_mode
      */
-    public function snippetForSetSettings90(): void
+    public function snippetForSetSettings91(): void
     {
         // >SEPARATOR setSettings set_default_typo_tolerance_mode
         // Initialize the client
@@ -11511,7 +11543,7 @@ class SnippetSearchClient
      *
      * disable_typos_on_numeric_tokens_by_default
      */
-    public function snippetForSetSettings91(): void
+    public function snippetForSetSettings92(): void
     {
         // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
         // Initialize the client
@@ -11535,7 +11567,7 @@ class SnippetSearchClient
      *
      * disable_typo_tolerance_for_words
      */
-    public function snippetForSetSettings92(): void
+    public function snippetForSetSettings93(): void
     {
         // >SEPARATOR setSettings disable_typo_tolerance_for_words
         // Initialize the client
@@ -11563,7 +11595,7 @@ class SnippetSearchClient
      *
      * set_separators_to_index
      */
-    public function snippetForSetSettings93(): void
+    public function snippetForSetSettings94(): void
     {
         // >SEPARATOR setSettings set_separators_to_index
         // Initialize the client
@@ -11587,7 +11619,7 @@ class SnippetSearchClient
      *
      * set_querylanguage_ignoreplurals
      */
-    public function snippetForSetSettings94(): void
+    public function snippetForSetSettings95(): void
     {
         // >SEPARATOR setSettings set_querylanguage_ignoreplurals
         // Initialize the client
@@ -11614,7 +11646,7 @@ class SnippetSearchClient
      *
      * set_attributes_to_transliterate
      */
-    public function snippetForSetSettings95(): void
+    public function snippetForSetSettings96(): void
     {
         // >SEPARATOR setSettings set_attributes_to_transliterate
         // Initialize the client
@@ -11645,7 +11677,7 @@ class SnippetSearchClient
      *
      * set_querylanguage_removestopwords
      */
-    public function snippetForSetSettings96(): void
+    public function snippetForSetSettings97(): void
     {
         // >SEPARATOR setSettings set_querylanguage_removestopwords
         // Initialize the client
@@ -11672,7 +11704,7 @@ class SnippetSearchClient
      *
      * set_camel_case_attributes
      */
-    public function snippetForSetSettings97(): void
+    public function snippetForSetSettings98(): void
     {
         // >SEPARATOR setSettings set_camel_case_attributes
         // Initialize the client
@@ -11698,7 +11730,7 @@ class SnippetSearchClient
      *
      * set_decompounded_attributes
      */
-    public function snippetForSetSettings98(): void
+    public function snippetForSetSettings99(): void
     {
         // >SEPARATOR setSettings set_decompounded_attributes
         // Initialize the client
@@ -11725,7 +11757,7 @@ class SnippetSearchClient
      *
      * set_decompounded_multiple_attributes
      */
-    public function snippetForSetSettings99(): void
+    public function snippetForSetSettings100(): void
     {
         // >SEPARATOR setSettings set_decompounded_multiple_attributes
         // Initialize the client
@@ -11759,7 +11791,7 @@ class SnippetSearchClient
      *
      * set_keep_diacritics_on_characters
      */
-    public function snippetForSetSettings100(): void
+    public function snippetForSetSettings101(): void
     {
         // >SEPARATOR setSettings set_keep_diacritics_on_characters
         // Initialize the client
@@ -11783,7 +11815,7 @@ class SnippetSearchClient
      *
      * set_custom_normalization
      */
-    public function snippetForSetSettings101(): void
+    public function snippetForSetSettings102(): void
     {
         // >SEPARATOR setSettings set_custom_normalization
         // Initialize the client
@@ -11809,7 +11841,7 @@ class SnippetSearchClient
      *
      * set_querylanguage_both
      */
-    public function snippetForSetSettings102(): void
+    public function snippetForSetSettings103(): void
     {
         // >SEPARATOR setSettings set_querylanguage_both
         // Initialize the client
@@ -11837,7 +11869,7 @@ class SnippetSearchClient
      *
      * set_indexlanguages
      */
-    public function snippetForSetSettings103(): void
+    public function snippetForSetSettings104(): void
     {
         // >SEPARATOR setSettings set_indexlanguages
         // Initialize the client
@@ -11863,7 +11895,7 @@ class SnippetSearchClient
      *
      * enable_decompound_query_by_default
      */
-    public function snippetForSetSettings104(): void
+    public function snippetForSetSettings105(): void
     {
         // >SEPARATOR setSettings enable_decompound_query_by_default
         // Initialize the client
@@ -11887,7 +11919,7 @@ class SnippetSearchClient
      *
      * enable_rules_syntax_by_default
      */
-    public function snippetForSetSettings105(): void
+    public function snippetForSetSettings106(): void
     {
         // >SEPARATOR setSettings enable_rules_syntax_by_default
         // Initialize the client
@@ -11911,7 +11943,7 @@ class SnippetSearchClient
      *
      * enable_personalization_settings
      */
-    public function snippetForSetSettings106(): void
+    public function snippetForSetSettings107(): void
     {
         // >SEPARATOR setSettings enable_personalization_settings
         // Initialize the client
@@ -11935,7 +11967,7 @@ class SnippetSearchClient
      *
      * set_default_query_type
      */
-    public function snippetForSetSettings107(): void
+    public function snippetForSetSettings108(): void
     {
         // >SEPARATOR setSettings set_default_query_type
         // Initialize the client
@@ -11959,7 +11991,7 @@ class SnippetSearchClient
      *
      * set_default_remove_words_if_no_result
      */
-    public function snippetForSetSettings108(): void
+    public function snippetForSetSettings109(): void
     {
         // >SEPARATOR setSettings set_default_remove_words_if_no_result
         // Initialize the client
@@ -11983,7 +12015,7 @@ class SnippetSearchClient
      *
      * enable_advanced_syntax_by_default
      */
-    public function snippetForSetSettings109(): void
+    public function snippetForSetSettings110(): void
     {
         // >SEPARATOR setSettings enable_advanced_syntax_by_default
         // Initialize the client
@@ -12007,7 +12039,7 @@ class SnippetSearchClient
      *
      * set_default_optional_words
      */
-    public function snippetForSetSettings110(): void
+    public function snippetForSetSettings111(): void
     {
         // >SEPARATOR setSettings set_default_optional_words
         // Initialize the client
@@ -12035,7 +12067,7 @@ class SnippetSearchClient
      *
      * disabling_prefix_search_for_some_attributes_by_default
      */
-    public function snippetForSetSettings111(): void
+    public function snippetForSetSettings112(): void
     {
         // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
         // Initialize the client
@@ -12061,7 +12093,7 @@ class SnippetSearchClient
      *
      * disabling_exact_for_some_attributes_by_default
      */
-    public function snippetForSetSettings112(): void
+    public function snippetForSetSettings113(): void
     {
         // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
         // Initialize the client
@@ -12087,7 +12119,7 @@ class SnippetSearchClient
      *
      * set_default_exact_single_word_query
      */
-    public function snippetForSetSettings113(): void
+    public function snippetForSetSettings114(): void
     {
         // >SEPARATOR setSettings set_default_exact_single_word_query
         // Initialize the client
@@ -12111,7 +12143,7 @@ class SnippetSearchClient
      *
      * set_default_aternative_as_exact
      */
-    public function snippetForSetSettings114(): void
+    public function snippetForSetSettings115(): void
     {
         // >SEPARATOR setSettings set_default_aternative_as_exact
         // Initialize the client
@@ -12139,7 +12171,7 @@ class SnippetSearchClient
      *
      * set_numeric_attributes_for_filtering
      */
-    public function snippetForSetSettings115(): void
+    public function snippetForSetSettings116(): void
     {
         // >SEPARATOR setSettings set_numeric_attributes_for_filtering
         // Initialize the client
@@ -12167,7 +12199,7 @@ class SnippetSearchClient
      *
      * enable_compression_of_integer_array
      */
-    public function snippetForSetSettings116(): void
+    public function snippetForSetSettings117(): void
     {
         // >SEPARATOR setSettings enable_compression_of_integer_array
         // Initialize the client
@@ -12191,7 +12223,7 @@ class SnippetSearchClient
      *
      * set_attributes_for_distinct
      */
-    public function snippetForSetSettings117(): void
+    public function snippetForSetSettings118(): void
     {
         // >SEPARATOR setSettings set_attributes_for_distinct
         // Initialize the client
@@ -12215,7 +12247,7 @@ class SnippetSearchClient
      *
      * set_distinct
      */
-    public function snippetForSetSettings118(): void
+    public function snippetForSetSettings119(): void
     {
         // >SEPARATOR setSettings set_distinct
         // Initialize the client
@@ -12240,7 +12272,7 @@ class SnippetSearchClient
      *
      * set_replace_synonyms_in_highlights
      */
-    public function snippetForSetSettings119(): void
+    public function snippetForSetSettings120(): void
     {
         // >SEPARATOR setSettings set_replace_synonyms_in_highlights
         // Initialize the client
@@ -12264,7 +12296,7 @@ class SnippetSearchClient
      *
      * set_min_proximity
      */
-    public function snippetForSetSettings120(): void
+    public function snippetForSetSettings121(): void
     {
         // >SEPARATOR setSettings set_min_proximity
         // Initialize the client
@@ -12288,7 +12320,7 @@ class SnippetSearchClient
      *
      * set_default_field
      */
-    public function snippetForSetSettings121(): void
+    public function snippetForSetSettings122(): void
     {
         // >SEPARATOR setSettings set_default_field
         // Initialize the client
@@ -12320,7 +12352,7 @@ class SnippetSearchClient
      *
      * set_max_facet_hits
      */
-    public function snippetForSetSettings122(): void
+    public function snippetForSetSettings123(): void
     {
         // >SEPARATOR setSettings set_max_facet_hits
         // Initialize the client
@@ -12344,7 +12376,7 @@ class SnippetSearchClient
      *
      * set_attribute_criteria_computed_by_min_proximity
      */
-    public function snippetForSetSettings123(): void
+    public function snippetForSetSettings124(): void
     {
         // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
         // Initialize the client
@@ -12368,7 +12400,7 @@ class SnippetSearchClient
      *
      * set_user_data
      */
-    public function snippetForSetSettings124(): void
+    public function snippetForSetSettings125(): void
     {
         // >SEPARATOR setSettings set_user_data
         // Initialize the client
@@ -12392,7 +12424,7 @@ class SnippetSearchClient
      *
      * set_rendering_content
      */
-    public function snippetForSetSettings125(): void
+    public function snippetForSetSettings126(): void
     {
         // >SEPARATOR setSettings set_rendering_content
         // Initialize the client
@@ -12427,6 +12459,106 @@ class SnippetSearchClient
                 ],
             ],
             ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * typoToleranceMin
+     */
+    public function snippetForSetSettings127(): void
+    {
+        // >SEPARATOR setSettings typoToleranceMin
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['typoTolerance' => 'min',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * minWordSizefor1Typo5
+     */
+    public function snippetForSetSettings128(): void
+    {
+        // >SEPARATOR setSettings minWordSizefor1Typo5
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['minWordSizefor1Typo' => 5,
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * attributesToSnippetBodyTitle
+     */
+    public function snippetForSetSettings129(): void
+    {
+        // >SEPARATOR setSettings attributesToSnippetBodyTitle
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['attributesToSnippet' => [
+                'body:20',
+
+                'title',
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SetSettings method.
+     *
+     * snippetEllipsisTextHellip
+     */
+    public function snippetForSetSettings130(): void
+    {
+        // >SEPARATOR setSettings snippetEllipsisTextHellip
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->setSettings(
+            '<YOUR_INDEX_NAME>',
+            ['snippetEllipsisText' => '[&hellip;]',
             ],
         );
 

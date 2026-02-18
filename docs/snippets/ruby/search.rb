@@ -7621,8 +7621,32 @@ end
 
 # Snippet for the setSettings method.
 #
-# attributesToHighlightStar
+# highlightWithCustomPrePostTags
 def snippet_for_set_settings53
+  # >SEPARATOR setSettings highlightWithCustomPrePostTags
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(
+      attributes_to_highlight: ["author", "title", "content"],
+      highlight_pre_tag: "<em class=\"search-highlight\">",
+      highlight_post_tag: "</em>"
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesToHighlightStar
+def snippet_for_set_settings54
   # >SEPARATOR setSettings attributesToHighlightStar
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7642,7 +7666,7 @@ end
 # Snippet for the setSettings method.
 #
 # everything
-def snippet_for_set_settings54
+def snippet_for_set_settings55
   # >SEPARATOR setSettings everything
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7729,7 +7753,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesWithCustomRankingsAndAttributesForFaceting
-def snippet_for_set_settings55
+def snippet_for_set_settings56
   # >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7753,7 +7777,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesOrdering
-def snippet_for_set_settings56
+def snippet_for_set_settings57
   # >SEPARATOR setSettings searchableAttributesOrdering
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7773,7 +7797,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesProductReferenceSuffixes
-def snippet_for_set_settings57
+def snippet_for_set_settings58
   # >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7795,7 +7819,7 @@ end
 # Snippet for the setSettings method.
 #
 # queryLanguageAndIgnorePlurals
-def snippet_for_set_settings58
+def snippet_for_set_settings59
   # >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7815,7 +7839,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesInMovies
-def snippet_for_set_settings59
+def snippet_for_set_settings60
   # >SEPARATOR setSettings searchableAttributesInMovies
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7835,7 +7859,7 @@ end
 # Snippet for the setSettings method.
 #
 # disablePrefixOnAttributes
-def snippet_for_set_settings60
+def snippet_for_set_settings61
   # >SEPARATOR setSettings disablePrefixOnAttributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7855,7 +7879,7 @@ end
 # Snippet for the setSettings method.
 #
 # disableTypoToleranceOnAttributes
-def snippet_for_set_settings61
+def snippet_for_set_settings62
   # >SEPARATOR setSettings disableTypoToleranceOnAttributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7875,7 +7899,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesSimpleExample
-def snippet_for_set_settings62
+def snippet_for_set_settings63
   # >SEPARATOR setSettings searchableAttributesSimpleExample
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7895,7 +7919,7 @@ end
 # Snippet for the setSettings method.
 #
 # searchableAttributesSimpleExampleAlt
-def snippet_for_set_settings63
+def snippet_for_set_settings64
   # >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7915,7 +7939,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_searchable_attributes
-def snippet_for_set_settings64
+def snippet_for_set_settings65
   # >SEPARATOR setSettings set_searchable_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7937,7 +7961,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_attributes_for_faceting
-def snippet_for_set_settings65
+def snippet_for_set_settings66
   # >SEPARATOR setSettings set_attributes_for_faceting
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7965,7 +7989,7 @@ end
 # Snippet for the setSettings method.
 #
 # unretrievable_attributes
-def snippet_for_set_settings66
+def snippet_for_set_settings67
   # >SEPARATOR setSettings unretrievable_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -7985,7 +8009,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_retrievable_attributes
-def snippet_for_set_settings67
+def snippet_for_set_settings68
   # >SEPARATOR setSettings set_retrievable_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8005,7 +8029,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_all_attributes_as_retrievable
-def snippet_for_set_settings68
+def snippet_for_set_settings69
   # >SEPARATOR setSettings set_all_attributes_as_retrievable
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8022,7 +8046,7 @@ end
 # Snippet for the setSettings method.
 #
 # specify_attributes_not_to_retrieve
-def snippet_for_set_settings69
+def snippet_for_set_settings70
   # >SEPARATOR setSettings specify_attributes_not_to_retrieve
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8042,7 +8066,7 @@ end
 # Snippet for the setSettings method.
 #
 # neural_search
-def snippet_for_set_settings70
+def snippet_for_set_settings71
   # >SEPARATOR setSettings neural_search
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8059,7 +8083,7 @@ end
 # Snippet for the setSettings method.
 #
 # keyword_search
-def snippet_for_set_settings71
+def snippet_for_set_settings72
   # >SEPARATOR setSettings keyword_search
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8076,7 +8100,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_ranking
-def snippet_for_set_settings72
+def snippet_for_set_settings73
   # >SEPARATOR setSettings set_default_ranking
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8098,7 +8122,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_ranking_by_attribute_asc
-def snippet_for_set_settings73
+def snippet_for_set_settings74
   # >SEPARATOR setSettings set_ranking_by_attribute_asc
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8120,7 +8144,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_ranking_by_attribute_desc
-def snippet_for_set_settings74
+def snippet_for_set_settings75
   # >SEPARATOR setSettings set_ranking_by_attribute_desc
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8142,7 +8166,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_custom_ranking
-def snippet_for_set_settings75
+def snippet_for_set_settings76
   # >SEPARATOR setSettings set_custom_ranking
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8162,7 +8186,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_relevancy
-def snippet_for_set_settings76
+def snippet_for_set_settings77
   # >SEPARATOR setSettings set_default_relevancy
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8179,7 +8203,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_replicas
-def snippet_for_set_settings77
+def snippet_for_set_settings78
   # >SEPARATOR setSettings set_replicas
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8199,7 +8223,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_max_values_per_facet
-def snippet_for_set_settings78
+def snippet_for_set_settings79
   # >SEPARATOR setSettings set_default_max_values_per_facet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8216,7 +8240,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_sort_facet_values_by
-def snippet_for_set_settings79
+def snippet_for_set_settings80
   # >SEPARATOR setSettings set_default_sort_facet_values_by
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8233,7 +8257,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_attributes_to_snippet
-def snippet_for_set_settings80
+def snippet_for_set_settings81
   # >SEPARATOR setSettings set_attributes_to_snippet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8253,7 +8277,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_all_attributes_to_snippet
-def snippet_for_set_settings81
+def snippet_for_set_settings82
   # >SEPARATOR setSettings set_all_attributes_to_snippet
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8273,7 +8297,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_highlight_pre_tag
-def snippet_for_set_settings82
+def snippet_for_set_settings83
   # >SEPARATOR setSettings set_default_highlight_pre_tag
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8290,7 +8314,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_highlight_post_tag
-def snippet_for_set_settings83
+def snippet_for_set_settings84
   # >SEPARATOR setSettings set_default_highlight_post_tag
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8307,7 +8331,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_snippet_ellipsis_text
-def snippet_for_set_settings84
+def snippet_for_set_settings85
   # >SEPARATOR setSettings set_default_snippet_ellipsis_text
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8324,7 +8348,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_restrict_highlight_and_snippet_arrays_by_default
-def snippet_for_set_settings85
+def snippet_for_set_settings86
   # >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8344,7 +8368,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_hits_per_page
-def snippet_for_set_settings86
+def snippet_for_set_settings87
   # >SEPARATOR setSettings set_default_hits_per_page
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8361,7 +8385,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_pagination_limit
-def snippet_for_set_settings87
+def snippet_for_set_settings88
   # >SEPARATOR setSettings set_pagination_limit
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8378,7 +8402,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_min_word_size_for_one_typo
-def snippet_for_set_settings88
+def snippet_for_set_settings89
   # >SEPARATOR setSettings set_default_min_word_size_for_one_typo
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8395,7 +8419,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_min_word_size_for_two_typos
-def snippet_for_set_settings89
+def snippet_for_set_settings90
   # >SEPARATOR setSettings set_default_min_word_size_for_two_typos
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8412,7 +8436,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_typo_tolerance_mode
-def snippet_for_set_settings90
+def snippet_for_set_settings91
   # >SEPARATOR setSettings set_default_typo_tolerance_mode
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8429,7 +8453,7 @@ end
 # Snippet for the setSettings method.
 #
 # disable_typos_on_numeric_tokens_by_default
-def snippet_for_set_settings91
+def snippet_for_set_settings92
   # >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8449,7 +8473,7 @@ end
 # Snippet for the setSettings method.
 #
 # disable_typo_tolerance_for_words
-def snippet_for_set_settings92
+def snippet_for_set_settings93
   # >SEPARATOR setSettings disable_typo_tolerance_for_words
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8469,7 +8493,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_separators_to_index
-def snippet_for_set_settings93
+def snippet_for_set_settings94
   # >SEPARATOR setSettings set_separators_to_index
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8486,7 +8510,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_querylanguage_ignoreplurals
-def snippet_for_set_settings94
+def snippet_for_set_settings95
   # >SEPARATOR setSettings set_querylanguage_ignoreplurals
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8506,7 +8530,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_attributes_to_transliterate
-def snippet_for_set_settings95
+def snippet_for_set_settings96
   # >SEPARATOR setSettings set_attributes_to_transliterate
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8526,7 +8550,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_querylanguage_removestopwords
-def snippet_for_set_settings96
+def snippet_for_set_settings97
   # >SEPARATOR setSettings set_querylanguage_removestopwords
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8546,7 +8570,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_camel_case_attributes
-def snippet_for_set_settings97
+def snippet_for_set_settings98
   # >SEPARATOR setSettings set_camel_case_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8566,7 +8590,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_decompounded_attributes
-def snippet_for_set_settings98
+def snippet_for_set_settings99
   # >SEPARATOR setSettings set_decompounded_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8586,7 +8610,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_decompounded_multiple_attributes
-def snippet_for_set_settings99
+def snippet_for_set_settings100
   # >SEPARATOR setSettings set_decompounded_multiple_attributes
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8608,7 +8632,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_keep_diacritics_on_characters
-def snippet_for_set_settings100
+def snippet_for_set_settings101
   # >SEPARATOR setSettings set_keep_diacritics_on_characters
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8628,7 +8652,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_custom_normalization
-def snippet_for_set_settings101
+def snippet_for_set_settings102
   # >SEPARATOR setSettings set_custom_normalization
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8648,7 +8672,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_querylanguage_both
-def snippet_for_set_settings102
+def snippet_for_set_settings103
   # >SEPARATOR setSettings set_querylanguage_both
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8668,7 +8692,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_indexlanguages
-def snippet_for_set_settings103
+def snippet_for_set_settings104
   # >SEPARATOR setSettings set_indexlanguages
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8685,7 +8709,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_decompound_query_by_default
-def snippet_for_set_settings104
+def snippet_for_set_settings105
   # >SEPARATOR setSettings enable_decompound_query_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8702,7 +8726,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_rules_syntax_by_default
-def snippet_for_set_settings105
+def snippet_for_set_settings106
   # >SEPARATOR setSettings enable_rules_syntax_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8719,7 +8743,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_personalization_settings
-def snippet_for_set_settings106
+def snippet_for_set_settings107
   # >SEPARATOR setSettings enable_personalization_settings
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8736,7 +8760,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_query_type
-def snippet_for_set_settings107
+def snippet_for_set_settings108
   # >SEPARATOR setSettings set_default_query_type
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8753,7 +8777,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_remove_words_if_no_result
-def snippet_for_set_settings108
+def snippet_for_set_settings109
   # >SEPARATOR setSettings set_default_remove_words_if_no_result
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8773,7 +8797,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_advanced_syntax_by_default
-def snippet_for_set_settings109
+def snippet_for_set_settings110
   # >SEPARATOR setSettings enable_advanced_syntax_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8790,7 +8814,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_optional_words
-def snippet_for_set_settings110
+def snippet_for_set_settings111
   # >SEPARATOR setSettings set_default_optional_words
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8810,7 +8834,7 @@ end
 # Snippet for the setSettings method.
 #
 # disabling_prefix_search_for_some_attributes_by_default
-def snippet_for_set_settings111
+def snippet_for_set_settings112
   # >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8830,7 +8854,7 @@ end
 # Snippet for the setSettings method.
 #
 # disabling_exact_for_some_attributes_by_default
-def snippet_for_set_settings112
+def snippet_for_set_settings113
   # >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8850,7 +8874,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_exact_single_word_query
-def snippet_for_set_settings113
+def snippet_for_set_settings114
   # >SEPARATOR setSettings set_default_exact_single_word_query
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8870,7 +8894,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_aternative_as_exact
-def snippet_for_set_settings114
+def snippet_for_set_settings115
   # >SEPARATOR setSettings set_default_aternative_as_exact
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8890,7 +8914,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_numeric_attributes_for_filtering
-def snippet_for_set_settings115
+def snippet_for_set_settings116
   # >SEPARATOR setSettings set_numeric_attributes_for_filtering
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8910,7 +8934,7 @@ end
 # Snippet for the setSettings method.
 #
 # enable_compression_of_integer_array
-def snippet_for_set_settings116
+def snippet_for_set_settings117
   # >SEPARATOR setSettings enable_compression_of_integer_array
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8930,7 +8954,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_attributes_for_distinct
-def snippet_for_set_settings117
+def snippet_for_set_settings118
   # >SEPARATOR setSettings set_attributes_for_distinct
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8947,7 +8971,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_distinct
-def snippet_for_set_settings118
+def snippet_for_set_settings119
   # >SEPARATOR setSettings set_distinct
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8967,7 +8991,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_replace_synonyms_in_highlights
-def snippet_for_set_settings119
+def snippet_for_set_settings120
   # >SEPARATOR setSettings set_replace_synonyms_in_highlights
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -8987,7 +9011,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_min_proximity
-def snippet_for_set_settings120
+def snippet_for_set_settings121
   # >SEPARATOR setSettings set_min_proximity
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9004,7 +9028,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_default_field
-def snippet_for_set_settings121
+def snippet_for_set_settings122
   # >SEPARATOR setSettings set_default_field
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9024,7 +9048,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_max_facet_hits
-def snippet_for_set_settings122
+def snippet_for_set_settings123
   # >SEPARATOR setSettings set_max_facet_hits
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9041,7 +9065,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_attribute_criteria_computed_by_min_proximity
-def snippet_for_set_settings123
+def snippet_for_set_settings124
   # >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9061,7 +9085,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_user_data
-def snippet_for_set_settings124
+def snippet_for_set_settings125
   # >SEPARATOR setSettings set_user_data
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9083,7 +9107,7 @@ end
 # Snippet for the setSettings method.
 #
 # set_rendering_content
-def snippet_for_set_settings125
+def snippet_for_set_settings126
   # >SEPARATOR setSettings set_rendering_content
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9102,6 +9126,80 @@ def snippet_for_set_settings125
         )
       )
     )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# typoToleranceMin
+def snippet_for_set_settings127
+  # >SEPARATOR setSettings typoToleranceMin
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(typo_tolerance: "min"))
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# minWordSizefor1Typo5
+def snippet_for_set_settings128
+  # >SEPARATOR setSettings minWordSizefor1Typo5
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings("<YOUR_INDEX_NAME>", Algolia::Search::IndexSettings.new(min_word_sizefor1_typo: 5))
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# attributesToSnippetBodyTitle
+def snippet_for_set_settings129
+  # >SEPARATOR setSettings attributesToSnippetBodyTitle
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(attributes_to_snippet: ["body:20", "title"])
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the setSettings method.
+#
+# snippetEllipsisTextHellip
+def snippet_for_set_settings130
+  # >SEPARATOR setSettings snippetEllipsisTextHellip
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.set_settings(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::IndexSettings.new(snippet_ellipsis_text: "[&hellip;]")
   )
 
   # >LOG
