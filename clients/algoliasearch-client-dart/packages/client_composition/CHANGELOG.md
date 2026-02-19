@@ -1,3 +1,8 @@
+## [1.46.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.45.0...1.46.0)
+
+- [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [9aafd690b](https://github.com/algolia/api-clients-automation/commit/9aafd690b) fix(specs): invalid API format for multi feed in Comp API ([#5993](https://github.com/algolia/api-clients-automation/pull/5993)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [1.45.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.44.0...1.45.0)
 
 - [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)

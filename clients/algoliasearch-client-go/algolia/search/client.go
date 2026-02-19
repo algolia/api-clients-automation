@@ -107,10 +107,11 @@ func NewClientWithConfig(cfg SearchConfiguration) (*APIClient, error) {
 }
 
 func getDefaultHosts(appID string) []transport.StatefulHost {
-	hosts := []transport.StatefulHost{
+	hosts := make([]transport.StatefulHost, 0, 5)
+	hosts = append(hosts,
 		transport.NewStatefulHost("https", appID+"-dsn.algolia.net", call.IsRead),
 		transport.NewStatefulHost("https", appID+".algolia.net", call.IsWrite),
-	}
+	)
 	hosts = append(hosts, transport.Shuffle(
 		[]transport.StatefulHost{
 			transport.NewStatefulHost("https", fmt.Sprintf("%s-1.algolianet.com", appID), call.IsReadWrite),
@@ -123,7 +124,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.36.1); Go (%s); Search (4.36.1)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.37.0); Go (%s); Search (4.37.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.

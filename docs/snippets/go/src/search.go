@@ -11144,6 +11144,37 @@ func SnippetForSetSettingsOfSearch53() {
 	/*
 	   Snippet for the setSettings method.
 
+	   highlightWithCustomPrePostTags
+	*/
+
+	// >SEPARATOR setSettings highlightWithCustomPrePostTags
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesToHighlight(
+			[]string{"author", "title", "content"}).SetHighlightPreTag("<em class=\"search-highlight\">").SetHighlightPostTag("</em>")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSettingsOfSearch54() {
+	/*
+	   Snippet for the setSettings method.
+
 	   attributesToHighlightStar
 	*/
 
@@ -11171,7 +11202,7 @@ func SnippetForSetSettingsOfSearch53() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch54() {
+func SnippetForSetSettingsOfSearch55() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11264,7 +11295,7 @@ func SnippetForSetSettingsOfSearch54() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch55() {
+func SnippetForSetSettingsOfSearch56() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11297,7 +11328,7 @@ func SnippetForSetSettingsOfSearch55() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch56() {
+func SnippetForSetSettingsOfSearch57() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11328,7 +11359,7 @@ func SnippetForSetSettingsOfSearch56() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch57() {
+func SnippetForSetSettingsOfSearch58() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11359,7 +11390,7 @@ func SnippetForSetSettingsOfSearch57() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch58() {
+func SnippetForSetSettingsOfSearch59() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11390,7 +11421,7 @@ func SnippetForSetSettingsOfSearch58() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch59() {
+func SnippetForSetSettingsOfSearch60() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11421,7 +11452,7 @@ func SnippetForSetSettingsOfSearch59() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch60() {
+func SnippetForSetSettingsOfSearch61() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11452,7 +11483,7 @@ func SnippetForSetSettingsOfSearch60() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch61() {
+func SnippetForSetSettingsOfSearch62() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11483,7 +11514,7 @@ func SnippetForSetSettingsOfSearch61() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch62() {
+func SnippetForSetSettingsOfSearch63() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11514,7 +11545,7 @@ func SnippetForSetSettingsOfSearch62() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch63() {
+func SnippetForSetSettingsOfSearch64() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11545,7 +11576,7 @@ func SnippetForSetSettingsOfSearch63() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch64() {
+func SnippetForSetSettingsOfSearch65() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11576,7 +11607,7 @@ func SnippetForSetSettingsOfSearch64() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch65() {
+func SnippetForSetSettingsOfSearch66() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11607,7 +11638,7 @@ func SnippetForSetSettingsOfSearch65() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch66() {
+func SnippetForSetSettingsOfSearch67() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11638,7 +11669,7 @@ func SnippetForSetSettingsOfSearch66() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch67() {
+func SnippetForSetSettingsOfSearch68() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11669,7 +11700,7 @@ func SnippetForSetSettingsOfSearch67() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch68() {
+func SnippetForSetSettingsOfSearch69() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11700,7 +11731,7 @@ func SnippetForSetSettingsOfSearch68() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch69() {
+func SnippetForSetSettingsOfSearch70() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11731,7 +11762,7 @@ func SnippetForSetSettingsOfSearch69() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch70() {
+func SnippetForSetSettingsOfSearch71() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11761,7 +11792,7 @@ func SnippetForSetSettingsOfSearch70() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch71() {
+func SnippetForSetSettingsOfSearch72() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11791,7 +11822,7 @@ func SnippetForSetSettingsOfSearch71() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch72() {
+func SnippetForSetSettingsOfSearch73() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11822,7 +11853,7 @@ func SnippetForSetSettingsOfSearch72() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch73() {
+func SnippetForSetSettingsOfSearch74() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11853,7 +11884,7 @@ func SnippetForSetSettingsOfSearch73() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch74() {
+func SnippetForSetSettingsOfSearch75() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11884,7 +11915,7 @@ func SnippetForSetSettingsOfSearch74() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch75() {
+func SnippetForSetSettingsOfSearch76() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11915,7 +11946,7 @@ func SnippetForSetSettingsOfSearch75() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch76() {
+func SnippetForSetSettingsOfSearch77() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11945,7 +11976,7 @@ func SnippetForSetSettingsOfSearch76() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch77() {
+func SnippetForSetSettingsOfSearch78() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -11976,7 +12007,7 @@ func SnippetForSetSettingsOfSearch77() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch78() {
+func SnippetForSetSettingsOfSearch79() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12006,7 +12037,7 @@ func SnippetForSetSettingsOfSearch78() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch79() {
+func SnippetForSetSettingsOfSearch80() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12036,7 +12067,7 @@ func SnippetForSetSettingsOfSearch79() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch80() {
+func SnippetForSetSettingsOfSearch81() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12067,7 +12098,7 @@ func SnippetForSetSettingsOfSearch80() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch81() {
+func SnippetForSetSettingsOfSearch82() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12098,7 +12129,7 @@ func SnippetForSetSettingsOfSearch81() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch82() {
+func SnippetForSetSettingsOfSearch83() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12128,7 +12159,7 @@ func SnippetForSetSettingsOfSearch82() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch83() {
+func SnippetForSetSettingsOfSearch84() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12158,7 +12189,7 @@ func SnippetForSetSettingsOfSearch83() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch84() {
+func SnippetForSetSettingsOfSearch85() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12188,7 +12219,7 @@ func SnippetForSetSettingsOfSearch84() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch85() {
+func SnippetForSetSettingsOfSearch86() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12218,7 +12249,7 @@ func SnippetForSetSettingsOfSearch85() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch86() {
+func SnippetForSetSettingsOfSearch87() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12248,7 +12279,7 @@ func SnippetForSetSettingsOfSearch86() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch87() {
+func SnippetForSetSettingsOfSearch88() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12278,7 +12309,7 @@ func SnippetForSetSettingsOfSearch87() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch88() {
+func SnippetForSetSettingsOfSearch89() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12308,7 +12339,7 @@ func SnippetForSetSettingsOfSearch88() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch89() {
+func SnippetForSetSettingsOfSearch90() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12338,7 +12369,7 @@ func SnippetForSetSettingsOfSearch89() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch90() {
+func SnippetForSetSettingsOfSearch91() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12368,7 +12399,7 @@ func SnippetForSetSettingsOfSearch90() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch91() {
+func SnippetForSetSettingsOfSearch92() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12398,7 +12429,7 @@ func SnippetForSetSettingsOfSearch91() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch92() {
+func SnippetForSetSettingsOfSearch93() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12429,7 +12460,7 @@ func SnippetForSetSettingsOfSearch92() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch93() {
+func SnippetForSetSettingsOfSearch94() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12459,7 +12490,7 @@ func SnippetForSetSettingsOfSearch93() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch94() {
+func SnippetForSetSettingsOfSearch95() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12490,7 +12521,7 @@ func SnippetForSetSettingsOfSearch94() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch95() {
+func SnippetForSetSettingsOfSearch96() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12522,7 +12553,7 @@ func SnippetForSetSettingsOfSearch95() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch96() {
+func SnippetForSetSettingsOfSearch97() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12553,7 +12584,7 @@ func SnippetForSetSettingsOfSearch96() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch97() {
+func SnippetForSetSettingsOfSearch98() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12584,7 +12615,7 @@ func SnippetForSetSettingsOfSearch97() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch98() {
+func SnippetForSetSettingsOfSearch99() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12614,7 +12645,7 @@ func SnippetForSetSettingsOfSearch98() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch99() {
+func SnippetForSetSettingsOfSearch100() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12646,7 +12677,7 @@ func SnippetForSetSettingsOfSearch99() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch100() {
+func SnippetForSetSettingsOfSearch101() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12676,7 +12707,7 @@ func SnippetForSetSettingsOfSearch100() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch101() {
+func SnippetForSetSettingsOfSearch102() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12706,7 +12737,7 @@ func SnippetForSetSettingsOfSearch101() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch102() {
+func SnippetForSetSettingsOfSearch103() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12740,7 +12771,7 @@ func SnippetForSetSettingsOfSearch102() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch103() {
+func SnippetForSetSettingsOfSearch104() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12771,7 +12802,7 @@ func SnippetForSetSettingsOfSearch103() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch104() {
+func SnippetForSetSettingsOfSearch105() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12801,7 +12832,7 @@ func SnippetForSetSettingsOfSearch104() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch105() {
+func SnippetForSetSettingsOfSearch106() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12831,7 +12862,7 @@ func SnippetForSetSettingsOfSearch105() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch106() {
+func SnippetForSetSettingsOfSearch107() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12861,7 +12892,7 @@ func SnippetForSetSettingsOfSearch106() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch107() {
+func SnippetForSetSettingsOfSearch108() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12891,7 +12922,7 @@ func SnippetForSetSettingsOfSearch107() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch108() {
+func SnippetForSetSettingsOfSearch109() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12921,7 +12952,7 @@ func SnippetForSetSettingsOfSearch108() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch109() {
+func SnippetForSetSettingsOfSearch110() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12951,7 +12982,7 @@ func SnippetForSetSettingsOfSearch109() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch110() {
+func SnippetForSetSettingsOfSearch111() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -12982,7 +13013,7 @@ func SnippetForSetSettingsOfSearch110() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch111() {
+func SnippetForSetSettingsOfSearch112() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13013,7 +13044,7 @@ func SnippetForSetSettingsOfSearch111() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch112() {
+func SnippetForSetSettingsOfSearch113() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13044,7 +13075,7 @@ func SnippetForSetSettingsOfSearch112() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch113() {
+func SnippetForSetSettingsOfSearch114() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13074,7 +13105,7 @@ func SnippetForSetSettingsOfSearch113() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch114() {
+func SnippetForSetSettingsOfSearch115() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13105,7 +13136,7 @@ func SnippetForSetSettingsOfSearch114() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch115() {
+func SnippetForSetSettingsOfSearch116() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13136,7 +13167,7 @@ func SnippetForSetSettingsOfSearch115() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch116() {
+func SnippetForSetSettingsOfSearch117() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13166,7 +13197,7 @@ func SnippetForSetSettingsOfSearch116() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch117() {
+func SnippetForSetSettingsOfSearch118() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13196,7 +13227,7 @@ func SnippetForSetSettingsOfSearch117() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch118() {
+func SnippetForSetSettingsOfSearch119() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13226,7 +13257,7 @@ func SnippetForSetSettingsOfSearch118() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch119() {
+func SnippetForSetSettingsOfSearch120() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13256,7 +13287,7 @@ func SnippetForSetSettingsOfSearch119() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch120() {
+func SnippetForSetSettingsOfSearch121() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13286,7 +13317,7 @@ func SnippetForSetSettingsOfSearch120() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch121() {
+func SnippetForSetSettingsOfSearch122() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13317,7 +13348,7 @@ func SnippetForSetSettingsOfSearch121() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch122() {
+func SnippetForSetSettingsOfSearch123() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13347,7 +13378,7 @@ func SnippetForSetSettingsOfSearch122() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch123() {
+func SnippetForSetSettingsOfSearch124() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13377,7 +13408,7 @@ func SnippetForSetSettingsOfSearch123() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch124() {
+func SnippetForSetSettingsOfSearch125() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13407,7 +13438,7 @@ func SnippetForSetSettingsOfSearch124() {
 	// SEPARATOR<
 }
 
-func SnippetForSetSettingsOfSearch125() {
+func SnippetForSetSettingsOfSearch126() {
 	/*
 	   Snippet for the setSettings method.
 
@@ -13433,6 +13464,127 @@ func SnippetForSetSettingsOfSearch125() {
 					[]string{"uniqlo"}).SetHide(
 					[]string{"muji"}).SetSortRemainingBy(search.SortRemainingBy("count")), "size": *search.NewEmptyValue().SetOrder(
 					[]string{"S", "M", "L"}).SetSortRemainingBy(search.SortRemainingBy("hidden"))})))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSettingsOfSearch127() {
+	/*
+	   Snippet for the setSettings method.
+
+	   typoToleranceMin
+	*/
+
+	// >SEPARATOR setSettings typoToleranceMin
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min")))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSettingsOfSearch128() {
+	/*
+	   Snippet for the setSettings method.
+
+	   minWordSizefor1Typo5
+	*/
+
+	// >SEPARATOR setSettings minWordSizefor1Typo5
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetMinWordSizefor1Typo(5)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSettingsOfSearch129() {
+	/*
+	   Snippet for the setSettings method.
+
+	   attributesToSnippetBodyTitle
+	*/
+
+	// >SEPARATOR setSettings attributesToSnippetBodyTitle
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetAttributesToSnippet(
+			[]string{"body:20", "title"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSetSettingsOfSearch130() {
+	/*
+	   Snippet for the setSettings method.
+
+	   snippetEllipsisTextHellip
+	*/
+
+	// >SEPARATOR setSettings snippetEllipsisTextHellip
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SetSettings(client.NewApiSetSettingsRequest(
+		"<YOUR_INDEX_NAME>",
+		search.NewEmptyIndexSettings().SetSnippetEllipsisText("[&hellip;]")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

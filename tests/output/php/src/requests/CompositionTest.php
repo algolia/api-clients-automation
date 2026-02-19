@@ -966,6 +966,41 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('putComposition')]
+    public function testPutComposition5(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-compo',
+            ['objectID' => 'my-compo',
+                'name' => 'my composition',
+                'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
+                    'Price-desc' => 'products-high-to-low',
+                ],
+                'behavior' => ['multifeed' => ['feeds' => ['main-products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                ],
+                ],
+                ],
+                ],
+                ],
+                ],
+                    'feedsOrder' => [
+                        'main-products',
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('putCompositionRule')]
     public function testPutCompositionRule(): void
     {

@@ -516,7 +516,58 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indices":[{"index":"lorem","affinities":["lorem"],"source":{"type":"insights","events":{"viewDetails":[{"type":"view","subtype":"addToCart","name":"lorem"}],"viewListing":[{"type":"view","subtype":"addToCart","name":"lorem"}],"addToCart":[{"type":"view","subtype":"addToCart","name":"lorem"}],"purchase":[{"type":"view","subtype":"addToCart","name":"lorem"}]}}}],"personalizationReRanking":"none","profileType":"basic","features":{"realtime":{"enabled":true}}}'
+              --data '
+            {
+              "indices": [
+                {
+                  "index": "lorem",
+                  "affinities": [
+                    "lorem"
+                  ],
+                  "source": {
+                    "type": "insights",
+                    "events": {
+                      "viewDetails": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "viewListing": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "addToCart": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ],
+                      "purchase": [
+                        {
+                          "type": "view",
+                          "subtype": "addToCart",
+                          "name": "lorem"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "personalizationReRanking": "none",
+              "profileType": "basic",
+              "features": {
+                "realtime": {
+                  "enabled": true
+                }
+              }
+            }
+            '
   /2/users:
     get:
       tags:

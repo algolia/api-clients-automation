@@ -1303,6 +1303,67 @@ public class SnippetCompositionClient
   }
 
   /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition5()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        SortingStrategy = new Dictionary<string, string>
+        {
+          { "Price-asc", "products-low-to-high" },
+          { "Price-desc", "products-high-to-low" },
+        },
+        Behavior = new CompositionBehavior(
+          new CompositionMultifeedBehavior
+          {
+            Multifeed = new Multifeed
+            {
+              Feeds = new Dictionary<string, FeedInjection>
+              {
+                {
+                  "main-products",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "products" },
+                        },
+                      },
+                    },
+                  }
+                },
+              },
+              FeedsOrder = new List<string> { "main-products" },
+            },
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the PutCompositionRule method.
   ///
   /// putCompositionRule

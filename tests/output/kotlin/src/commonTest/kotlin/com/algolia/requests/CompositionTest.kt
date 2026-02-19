@@ -713,6 +713,58 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `putComposition5`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-compo",
+          composition =
+            Composition(
+              objectID = "my-compo",
+              name = "my composition",
+              sortingStrategy =
+                mapOf(
+                  "Price-asc" to "products-low-to-high",
+                  "Price-desc" to "products-high-to-low",
+                ),
+              behavior =
+                CompositionMultifeedBehavior(
+                  multifeed =
+                    Multifeed(
+                      feeds =
+                        mapOf(
+                          "main-products" to
+                            FeedInjection(
+                              injection =
+                                Injection(
+                                  main =
+                                    Main(
+                                      source =
+                                        CompositionSource(
+                                          search = CompositionSourceSearch(index = "products")
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                      feedsOrder = listOf("main-products"),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/my-compo".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // putCompositionRule
 
   @Test

@@ -18,7 +18,7 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.composition.models.injection import Injection
+from algoliasearch.composition.models.feed_injection import FeedInjection
 
 _ALIASES = {
     "feeds": "feeds",
@@ -35,7 +35,7 @@ class Multifeed(BaseModel):
     Multifeed
     """
 
-    feeds: Dict[str, Injection]
+    feeds: Dict[str, FeedInjection]
     """ A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection. """
     feeds_order: Optional[List[str]] = None
     """ A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all Feeds are processed and returned with a default ordering. """
@@ -76,7 +76,7 @@ class Multifeed(BaseModel):
             return cls.model_validate(obj)
 
         obj["feeds"] = (
-            dict((_k, Injection.from_dict(_v)) for _k, _v in obj["feeds"].items())
+            dict((_k, FeedInjection.from_dict(_v)) for _k, _v in obj["feeds"].items())
             if obj.get("feeds") is not None
             else None
         )

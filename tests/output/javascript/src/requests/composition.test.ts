@@ -816,6 +816,38 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-compo',
+      composition: {
+        objectID: 'my-compo',
+        name: 'my composition',
+        sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+        behavior: {
+          multifeed: {
+            feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
+            feedsOrder: ['main-products'],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-compo',
+      name: 'my composition',
+      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
+      behavior: {
+        multifeed: {
+          feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
+          feedsOrder: ['main-products'],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {

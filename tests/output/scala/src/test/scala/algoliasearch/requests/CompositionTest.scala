@@ -1203,6 +1203,47 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("putComposition5") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-compo",
+      composition = Composition(
+        objectID = "my-compo",
+        name = "my composition",
+        sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
+        behavior = CompositionMultifeedBehavior(
+          multifeed = Multifeed(
+            feeds = Map(
+              "main-products" -> FeedInjection(
+                injection = Injection(
+                  main = Main(
+                    source = CompositionSource(
+                      search = CompositionSourceSearch(
+                        index = "products"
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+            feedsOrder = Some(Seq("main-products"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("putCompositionRule") {
     val (client, echo) = testClient()
     val future = client.putCompositionRule(

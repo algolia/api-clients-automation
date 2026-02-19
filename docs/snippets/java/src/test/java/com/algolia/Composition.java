@@ -1074,6 +1074,55 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition5() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
+      "my-compo",
+      new Composition()
+        .setObjectID("my-compo")
+        .setName("my composition")
+        .setSortingStrategy(
+          new HashMap() {
+            {
+              put("Price-asc", "products-low-to-high");
+              put("Price-desc", "products-high-to-low");
+            }
+          }
+        )
+        .setBehavior(
+          new CompositionMultifeedBehavior().setMultifeed(
+            new Multifeed()
+              .setFeeds(
+                new HashMap() {
+                  {
+                    put(
+                      "main-products",
+                      new FeedInjection().setInjection(
+                        new Injection().setMain(
+                          new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                        )
+                      )
+                    );
+                  }
+                }
+              )
+              .setFeedsOrder(Arrays.asList("main-products"))
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the putCompositionRule method.
   //
   // putCompositionRule

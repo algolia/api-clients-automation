@@ -3747,6 +3747,19 @@ components:
           $ref: '#/components/schemas/injection'
       required:
         - injection
+    feedInjection:
+      type: object
+      description: Feed formatted as an injection.
+      additionalProperties: false
+      properties:
+        injection:
+          $ref: '#/components/schemas/injection'
+      required:
+        - injection
+    Behaviour_feedID:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/feedInjection'
     multifeed:
       title: multifeed
       type: object
@@ -3758,7 +3771,7 @@ components:
             A key-value store of Feed ID to Feed. Currently, the only supported
             Feed type is an Injection.
           additionalProperties:
-            $ref: '#/components/schemas/injection'
+            $ref: '#/components/schemas/Behaviour_feedID'
         feedsOrder:
           type: array
           description: >-
@@ -3774,24 +3787,26 @@ components:
       example:
         feeds:
           products-feed:
-            main:
-              source:
-                search:
-                  index: products
-            injectedItems:
-              - key: sponsored
-                position: 0
-                length: 4
+            injection:
+              main:
                 source:
                   search:
                     index: products
-                    params:
-                      filters: sponsored:true
+              injectedItems:
+                - key: sponsored
+                  position: 0
+                  length: 4
+                  source:
+                    search:
+                      index: products
+                      params:
+                        filters: sponsored:true
           articles-feed:
-            main:
-              source:
-                search:
-                  index: articles
+            injection:
+              main:
+                source:
+                  search:
+                    index: articles
         feedsOrder:
           - products-feed
           - articles-feed
