@@ -8198,8 +8198,31 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "attributesToHighlightStar")]
+  [Fact(DisplayName = "highlightWithCustomPrePostTags")]
   public async Task SetSettingsTest53()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesToHighlight = new List<string> { "author", "title", "content" },
+        HighlightPreTag = "<em class=\"search-highlight\">",
+        HighlightPostTag = "</em>",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToHighlight\":[\"author\",\"title\",\"content\"],\"highlightPreTag\":\"<em class=\\\"search-highlight\\\">\",\"highlightPostTag\":\"</em>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "attributesToHighlightStar")]
+  public async Task SetSettingsTest54()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8217,7 +8240,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "everything")]
-  public async Task SetSettingsTest54()
+  public async Task SetSettingsTest55()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8330,7 +8353,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesWithCustomRankingsAndAttributesForFaceting")]
-  public async Task SetSettingsTest55()
+  public async Task SetSettingsTest56()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8365,7 +8388,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesOrdering")]
-  public async Task SetSettingsTest56()
+  public async Task SetSettingsTest57()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8386,7 +8409,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesProductReferenceSuffixes")]
-  public async Task SetSettingsTest57()
+  public async Task SetSettingsTest58()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8412,7 +8435,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "queryLanguageAndIgnorePlurals")]
-  public async Task SetSettingsTest58()
+  public async Task SetSettingsTest59()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8434,7 +8457,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesInMovies")]
-  public async Task SetSettingsTest59()
+  public async Task SetSettingsTest60()
   {
     await client.SetSettingsAsync(
       "movies",
@@ -8455,7 +8478,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disablePrefixOnAttributes")]
-  public async Task SetSettingsTest60()
+  public async Task SetSettingsTest61()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8473,7 +8496,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disableTypoToleranceOnAttributes")]
-  public async Task SetSettingsTest61()
+  public async Task SetSettingsTest62()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8491,7 +8514,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExample")]
-  public async Task SetSettingsTest62()
+  public async Task SetSettingsTest63()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8509,7 +8532,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchableAttributesSimpleExampleAlt")]
-  public async Task SetSettingsTest63()
+  public async Task SetSettingsTest64()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8530,7 +8553,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_searchable_attributes")]
-  public async Task SetSettingsTest64()
+  public async Task SetSettingsTest65()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8557,7 +8580,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_attributes_for_faceting")]
-  public async Task SetSettingsTest65()
+  public async Task SetSettingsTest66()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8585,7 +8608,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "unretrievable_attributes")]
-  public async Task SetSettingsTest66()
+  public async Task SetSettingsTest67()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8603,7 +8626,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_retrievable_attributes")]
-  public async Task SetSettingsTest67()
+  public async Task SetSettingsTest68()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8624,7 +8647,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_all_attributes_as_retrievable")]
-  public async Task SetSettingsTest68()
+  public async Task SetSettingsTest69()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8642,7 +8665,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "specify_attributes_not_to_retrieve")]
-  public async Task SetSettingsTest69()
+  public async Task SetSettingsTest70()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8663,7 +8686,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "neural_search")]
-  public async Task SetSettingsTest70()
+  public async Task SetSettingsTest71()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8681,7 +8704,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "keyword_search")]
-  public async Task SetSettingsTest71()
+  public async Task SetSettingsTest72()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8699,7 +8722,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_ranking")]
-  public async Task SetSettingsTest72()
+  public async Task SetSettingsTest73()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8730,7 +8753,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_ranking_by_attribute_asc")]
-  public async Task SetSettingsTest73()
+  public async Task SetSettingsTest74()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8762,7 +8785,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_ranking_by_attribute_desc")]
-  public async Task SetSettingsTest74()
+  public async Task SetSettingsTest75()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8794,7 +8817,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_custom_ranking")]
-  public async Task SetSettingsTest75()
+  public async Task SetSettingsTest76()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8815,7 +8838,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_relevancy")]
-  public async Task SetSettingsTest76()
+  public async Task SetSettingsTest77()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { RelevancyStrictness = 90 });
 
@@ -8830,7 +8853,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_replicas")]
-  public async Task SetSettingsTest77()
+  public async Task SetSettingsTest78()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8851,7 +8874,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_max_values_per_facet")]
-  public async Task SetSettingsTest78()
+  public async Task SetSettingsTest79()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxValuesPerFacet = 100 });
 
@@ -8866,7 +8889,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_sort_facet_values_by")]
-  public async Task SetSettingsTest79()
+  public async Task SetSettingsTest80()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8884,7 +8907,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_attributes_to_snippet")]
-  public async Task SetSettingsTest80()
+  public async Task SetSettingsTest81()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8905,7 +8928,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_all_attributes_to_snippet")]
-  public async Task SetSettingsTest81()
+  public async Task SetSettingsTest82()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8923,7 +8946,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_highlight_pre_tag")]
-  public async Task SetSettingsTest82()
+  public async Task SetSettingsTest83()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { HighlightPreTag = "<em>" });
 
@@ -8938,7 +8961,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_highlight_post_tag")]
-  public async Task SetSettingsTest83()
+  public async Task SetSettingsTest84()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { HighlightPostTag = "</em>" });
 
@@ -8953,7 +8976,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_snippet_ellipsis_text")]
-  public async Task SetSettingsTest84()
+  public async Task SetSettingsTest85()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { SnippetEllipsisText = "…" });
 
@@ -8968,7 +8991,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_restrict_highlight_and_snippet_arrays_by_default")]
-  public async Task SetSettingsTest85()
+  public async Task SetSettingsTest86()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -8986,7 +9009,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_hits_per_page")]
-  public async Task SetSettingsTest86()
+  public async Task SetSettingsTest87()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { HitsPerPage = 20 });
 
@@ -8997,7 +9020,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_pagination_limit")]
-  public async Task SetSettingsTest87()
+  public async Task SetSettingsTest88()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { PaginationLimitedTo = 1000 });
 
@@ -9012,7 +9035,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_min_word_size_for_one_typo")]
-  public async Task SetSettingsTest88()
+  public async Task SetSettingsTest89()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MinWordSizefor1Typo = 4 });
 
@@ -9027,7 +9050,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_min_word_size_for_two_typos")]
-  public async Task SetSettingsTest89()
+  public async Task SetSettingsTest90()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MinWordSizefor2Typos = 4 });
 
@@ -9042,7 +9065,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_typo_tolerance_mode")]
-  public async Task SetSettingsTest90()
+  public async Task SetSettingsTest91()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9060,7 +9083,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disable_typos_on_numeric_tokens_by_default")]
-  public async Task SetSettingsTest91()
+  public async Task SetSettingsTest92()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9078,7 +9101,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disable_typo_tolerance_for_words")]
-  public async Task SetSettingsTest92()
+  public async Task SetSettingsTest93()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9099,7 +9122,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_separators_to_index")]
-  public async Task SetSettingsTest93()
+  public async Task SetSettingsTest94()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { SeparatorsToIndex = "+#" });
 
@@ -9114,7 +9137,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_querylanguage_ignoreplurals")]
-  public async Task SetSettingsTest94()
+  public async Task SetSettingsTest95()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9136,7 +9159,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_attributes_to_transliterate")]
-  public async Task SetSettingsTest95()
+  public async Task SetSettingsTest96()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9158,7 +9181,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_querylanguage_removestopwords")]
-  public async Task SetSettingsTest96()
+  public async Task SetSettingsTest97()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9180,7 +9203,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_camel_case_attributes")]
-  public async Task SetSettingsTest97()
+  public async Task SetSettingsTest98()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9198,7 +9221,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_decompounded_attributes")]
-  public async Task SetSettingsTest98()
+  public async Task SetSettingsTest99()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9225,7 +9248,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_decompounded_multiple_attributes")]
-  public async Task SetSettingsTest99()
+  public async Task SetSettingsTest100()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9256,7 +9279,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_keep_diacritics_on_characters")]
-  public async Task SetSettingsTest100()
+  public async Task SetSettingsTest101()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9274,7 +9297,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_custom_normalization")]
-  public async Task SetSettingsTest101()
+  public async Task SetSettingsTest102()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9301,7 +9324,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_querylanguage_both")]
-  public async Task SetSettingsTest102()
+  public async Task SetSettingsTest103()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9324,7 +9347,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_indexlanguages")]
-  public async Task SetSettingsTest103()
+  public async Task SetSettingsTest104()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9345,7 +9368,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_decompound_query_by_default")]
-  public async Task SetSettingsTest104()
+  public async Task SetSettingsTest105()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { DecompoundQuery = true });
 
@@ -9360,7 +9383,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_rules_syntax_by_default")]
-  public async Task SetSettingsTest105()
+  public async Task SetSettingsTest106()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { EnableRules = true });
 
@@ -9371,7 +9394,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_personalization_settings")]
-  public async Task SetSettingsTest106()
+  public async Task SetSettingsTest107()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9389,7 +9412,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_query_type")]
-  public async Task SetSettingsTest107()
+  public async Task SetSettingsTest108()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9407,7 +9430,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_remove_words_if_no_result")]
-  public async Task SetSettingsTest108()
+  public async Task SetSettingsTest109()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9425,7 +9448,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_advanced_syntax_by_default")]
-  public async Task SetSettingsTest109()
+  public async Task SetSettingsTest110()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { AdvancedSyntax = true });
 
@@ -9440,7 +9463,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_optional_words")]
-  public async Task SetSettingsTest110()
+  public async Task SetSettingsTest111()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9461,7 +9484,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disabling_prefix_search_for_some_attributes_by_default")]
-  public async Task SetSettingsTest111()
+  public async Task SetSettingsTest112()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9479,7 +9502,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "disabling_exact_for_some_attributes_by_default")]
-  public async Task SetSettingsTest112()
+  public async Task SetSettingsTest113()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9497,7 +9520,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_exact_single_word_query")]
-  public async Task SetSettingsTest113()
+  public async Task SetSettingsTest114()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9515,7 +9538,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_aternative_as_exact")]
-  public async Task SetSettingsTest114()
+  public async Task SetSettingsTest115()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9540,7 +9563,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_numeric_attributes_for_filtering")]
-  public async Task SetSettingsTest115()
+  public async Task SetSettingsTest116()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9561,7 +9584,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "enable_compression_of_integer_array")]
-  public async Task SetSettingsTest116()
+  public async Task SetSettingsTest117()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9579,7 +9602,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_attributes_for_distinct")]
-  public async Task SetSettingsTest117()
+  public async Task SetSettingsTest118()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9597,7 +9620,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_distinct")]
-  public async Task SetSettingsTest118()
+  public async Task SetSettingsTest119()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9615,7 +9638,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_replace_synonyms_in_highlights")]
-  public async Task SetSettingsTest119()
+  public async Task SetSettingsTest120()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9633,7 +9656,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_min_proximity")]
-  public async Task SetSettingsTest120()
+  public async Task SetSettingsTest121()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MinProximity = 1 });
 
@@ -9644,7 +9667,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_default_field")]
-  public async Task SetSettingsTest121()
+  public async Task SetSettingsTest122()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9665,7 +9688,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_max_facet_hits")]
-  public async Task SetSettingsTest122()
+  public async Task SetSettingsTest123()
   {
     await client.SetSettingsAsync("theIndexName", new IndexSettings { MaxFacetHits = 10 });
 
@@ -9676,7 +9699,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_attribute_criteria_computed_by_min_proximity")]
-  public async Task SetSettingsTest123()
+  public async Task SetSettingsTest124()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9694,7 +9717,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_user_data")]
-  public async Task SetSettingsTest124()
+  public async Task SetSettingsTest125()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9718,7 +9741,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "set_rendering_content")]
-  public async Task SetSettingsTest125()
+  public async Task SetSettingsTest126()
   {
     await client.SetSettingsAsync(
       "theIndexName",
@@ -9762,6 +9785,78 @@ public class SearchClientRequestTests
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"size\",\"brand\"]},\"values\":{\"brand\":{\"order\":[\"uniqlo\"],\"hide\":[\"muji\"],\"sortRemainingBy\":\"count\"},\"size\":{\"order\":[\"S\",\"M\",\"L\"],\"sortRemainingBy\":\"hidden\"}}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "typoToleranceMin")]
+  public async Task SetSettingsTest127()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Min")) }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"typoTolerance\":\"min\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "minWordSizefor1Typo5")]
+  public async Task SetSettingsTest128()
+  {
+    await client.SetSettingsAsync("theIndexName", new IndexSettings { MinWordSizefor1Typo = 5 });
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"minWordSizefor1Typo\":5}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "attributesToSnippetBodyTitle")]
+  public async Task SetSettingsTest129()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings
+      {
+        AttributesToSnippet = new List<string> { "body:20", "title" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesToSnippet\":[\"body:20\",\"title\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "snippetEllipsisTextHellip")]
+  public async Task SetSettingsTest130()
+  {
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { SnippetEllipsisText = "[&hellip;]" }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/theIndexName/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"snippetEllipsisText\":\"[&hellip;]\"}",
       req.Body,
       new JsonDiffConfig(false)
     );

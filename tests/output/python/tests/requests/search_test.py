@@ -7643,6 +7643,31 @@ class TestSearchClient:
 
     async def test_set_settings_53(self):
         """
+        highlightWithCustomPrePostTags
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToHighlight": [
+                    "author",
+                    "title",
+                    "content",
+                ],
+                "highlightPreTag": '<em class="search-highlight">',
+                "highlightPostTag": "</em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\\"search-highlight\\">","highlightPostTag":"</em>"}"""
+        )
+
+    async def test_set_settings_54(self):
+        """
         attributesToHighlightStar
         """
         _req = await self._client.set_settings_with_http_info(
@@ -7660,7 +7685,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToHighlight":["*"]}""")
 
-    async def test_set_settings_54(self):
+    async def test_set_settings_55(self):
         """
         everything
         """
@@ -7810,7 +7835,7 @@ class TestSearchClient:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
-    async def test_set_settings_55(self):
+    async def test_set_settings_56(self):
         """
         searchableAttributesWithCustomRankingsAndAttributesForFaceting
         """
@@ -7843,7 +7868,7 @@ class TestSearchClient:
             """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
         )
 
-    async def test_set_settings_56(self):
+    async def test_set_settings_57(self):
         """
         searchableAttributesOrdering
         """
@@ -7865,7 +7890,7 @@ class TestSearchClient:
             """{"searchableAttributes":["unordered(title)","cast"]}"""
         )
 
-    async def test_set_settings_57(self):
+    async def test_set_settings_58(self):
         """
         searchableAttributesProductReferenceSuffixes
         """
@@ -7888,7 +7913,7 @@ class TestSearchClient:
             """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
         )
 
-    async def test_set_settings_58(self):
+    async def test_set_settings_59(self):
         """
         queryLanguageAndIgnorePlurals
         """
@@ -7910,7 +7935,7 @@ class TestSearchClient:
             """{"queryLanguages":["en"],"ignorePlurals":true}"""
         )
 
-    async def test_set_settings_59(self):
+    async def test_set_settings_60(self):
         """
         searchableAttributesInMovies
         """
@@ -7933,7 +7958,7 @@ class TestSearchClient:
             """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
         )
 
-    async def test_set_settings_60(self):
+    async def test_set_settings_61(self):
         """
         disablePrefixOnAttributes
         """
@@ -7954,7 +7979,7 @@ class TestSearchClient:
             """{"disablePrefixOnAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_61(self):
+    async def test_set_settings_62(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -7975,7 +8000,7 @@ class TestSearchClient:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_62(self):
+    async def test_set_settings_63(self):
         """
         searchableAttributesSimpleExample
         """
@@ -7996,7 +8021,7 @@ class TestSearchClient:
             """{"searchableAttributes":["serial_number"]}"""
         )
 
-    async def test_set_settings_63(self):
+    async def test_set_settings_64(self):
         """
         searchableAttributesSimpleExampleAlt
         """
@@ -8018,7 +8043,7 @@ class TestSearchClient:
             """{"searchableAttributes":["serial_number","serial_number_suffixes"]}"""
         )
 
-    async def test_set_settings_64(self):
+    async def test_set_settings_65(self):
         """
         set_searchable_attributes
         """
@@ -8042,7 +8067,7 @@ class TestSearchClient:
             """{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}"""
         )
 
-    async def test_set_settings_65(self):
+    async def test_set_settings_66(self):
         """
         set_attributes_for_faceting
         """
@@ -8067,7 +8092,7 @@ class TestSearchClient:
             """{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}"""
         )
 
-    async def test_set_settings_66(self):
+    async def test_set_settings_67(self):
         """
         unretrievable_attributes
         """
@@ -8088,7 +8113,7 @@ class TestSearchClient:
             """{"unretrievableAttributes":["total_number_of_sales"]}"""
         )
 
-    async def test_set_settings_67(self):
+    async def test_set_settings_68(self):
         """
         set_retrievable_attributes
         """
@@ -8111,7 +8136,7 @@ class TestSearchClient:
             """{"attributesToRetrieve":["author","title","content"]}"""
         )
 
-    async def test_set_settings_68(self):
+    async def test_set_settings_69(self):
         """
         set_all_attributes_as_retrievable
         """
@@ -8130,7 +8155,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToRetrieve":["*"]}""")
 
-    async def test_set_settings_69(self):
+    async def test_set_settings_70(self):
         """
         specify_attributes_not_to_retrieve
         """
@@ -8153,7 +8178,7 @@ class TestSearchClient:
             """{"attributesToRetrieve":["*","-SKU","-internal_desc"]}"""
         )
 
-    async def test_set_settings_70(self):
+    async def test_set_settings_71(self):
         """
         neural_search
         """
@@ -8170,7 +8195,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
 
-    async def test_set_settings_71(self):
+    async def test_set_settings_72(self):
         """
         keyword_search
         """
@@ -8187,7 +8212,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
 
-    async def test_set_settings_72(self):
+    async def test_set_settings_73(self):
         """
         set_default_ranking
         """
@@ -8215,7 +8240,7 @@ class TestSearchClient:
             """{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}"""
         )
 
-    async def test_set_settings_73(self):
+    async def test_set_settings_74(self):
         """
         set_ranking_by_attribute_asc
         """
@@ -8244,7 +8269,7 @@ class TestSearchClient:
             """{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    async def test_set_settings_74(self):
+    async def test_set_settings_75(self):
         """
         set_ranking_by_attribute_desc
         """
@@ -8273,7 +8298,7 @@ class TestSearchClient:
             """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    async def test_set_settings_75(self):
+    async def test_set_settings_76(self):
         """
         set_custom_ranking
         """
@@ -8295,7 +8320,7 @@ class TestSearchClient:
             """{"customRanking":["desc(popularity)","asc(price)"]}"""
         )
 
-    async def test_set_settings_76(self):
+    async def test_set_settings_77(self):
         """
         set_default_relevancy
         """
@@ -8312,7 +8337,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"relevancyStrictness":90}""")
 
-    async def test_set_settings_77(self):
+    async def test_set_settings_78(self):
         """
         set_replicas
         """
@@ -8334,7 +8359,7 @@ class TestSearchClient:
             """{"replicas":["name_of_replica_index1","name_of_replica_index2"]}"""
         )
 
-    async def test_set_settings_78(self):
+    async def test_set_settings_79(self):
         """
         set_default_max_values_per_facet
         """
@@ -8351,7 +8376,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxValuesPerFacet":100}""")
 
-    async def test_set_settings_79(self):
+    async def test_set_settings_80(self):
         """
         set_default_sort_facet_values_by
         """
@@ -8368,7 +8393,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"sortFacetValuesBy":"alpha"}""")
 
-    async def test_set_settings_80(self):
+    async def test_set_settings_81(self):
         """
         set_attributes_to_snippet
         """
@@ -8390,7 +8415,7 @@ class TestSearchClient:
             """{"attributesToSnippet":["content:80","description"]}"""
         )
 
-    async def test_set_settings_81(self):
+    async def test_set_settings_82(self):
         """
         set_all_attributes_to_snippet
         """
@@ -8409,7 +8434,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToSnippet":["*:80"]}""")
 
-    async def test_set_settings_82(self):
+    async def test_set_settings_83(self):
         """
         set_default_highlight_pre_tag
         """
@@ -8426,7 +8451,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"highlightPreTag":"<em>"}""")
 
-    async def test_set_settings_83(self):
+    async def test_set_settings_84(self):
         """
         set_default_highlight_post_tag
         """
@@ -8443,7 +8468,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"highlightPostTag":"</em>"}""")
 
-    async def test_set_settings_84(self):
+    async def test_set_settings_85(self):
         """
         set_default_snippet_ellipsis_text
         """
@@ -8460,7 +8485,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"snippetEllipsisText":"…"}""")
 
-    async def test_set_settings_85(self):
+    async def test_set_settings_86(self):
         """
         enable_restrict_highlight_and_snippet_arrays_by_default
         """
@@ -8479,7 +8504,7 @@ class TestSearchClient:
             """{"restrictHighlightAndSnippetArrays":true}"""
         )
 
-    async def test_set_settings_86(self):
+    async def test_set_settings_87(self):
         """
         set_default_hits_per_page
         """
@@ -8496,7 +8521,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"hitsPerPage":20}""")
 
-    async def test_set_settings_87(self):
+    async def test_set_settings_88(self):
         """
         set_pagination_limit
         """
@@ -8513,7 +8538,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"paginationLimitedTo":1000}""")
 
-    async def test_set_settings_88(self):
+    async def test_set_settings_89(self):
         """
         set_default_min_word_size_for_one_typo
         """
@@ -8530,7 +8555,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minWordSizefor1Typo":4}""")
 
-    async def test_set_settings_89(self):
+    async def test_set_settings_90(self):
         """
         set_default_min_word_size_for_two_typos
         """
@@ -8547,7 +8572,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minWordSizefor2Typos":4}""")
 
-    async def test_set_settings_90(self):
+    async def test_set_settings_91(self):
         """
         set_default_typo_tolerance_mode
         """
@@ -8564,7 +8589,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":true}""")
 
-    async def test_set_settings_91(self):
+    async def test_set_settings_92(self):
         """
         disable_typos_on_numeric_tokens_by_default
         """
@@ -8581,7 +8606,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowTyposOnNumericTokens":false}""")
 
-    async def test_set_settings_92(self):
+    async def test_set_settings_93(self):
         """
         disable_typo_tolerance_for_words
         """
@@ -8603,7 +8628,7 @@ class TestSearchClient:
             """{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}"""
         )
 
-    async def test_set_settings_93(self):
+    async def test_set_settings_94(self):
         """
         set_separators_to_index
         """
@@ -8620,7 +8645,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"separatorsToIndex":"+#"}""")
 
-    async def test_set_settings_94(self):
+    async def test_set_settings_95(self):
         """
         set_querylanguage_ignoreplurals
         """
@@ -8642,7 +8667,7 @@ class TestSearchClient:
             """{"queryLanguages":["es"],"ignorePlurals":true}"""
         )
 
-    async def test_set_settings_95(self):
+    async def test_set_settings_96(self):
         """
         set_attributes_to_transliterate
         """
@@ -8667,7 +8692,7 @@ class TestSearchClient:
             """{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}"""
         )
 
-    async def test_set_settings_96(self):
+    async def test_set_settings_97(self):
         """
         set_querylanguage_removestopwords
         """
@@ -8689,7 +8714,7 @@ class TestSearchClient:
             """{"queryLanguages":["es"],"removeStopWords":true}"""
         )
 
-    async def test_set_settings_97(self):
+    async def test_set_settings_98(self):
         """
         set_camel_case_attributes
         """
@@ -8708,7 +8733,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"camelCaseAttributes":["description"]}""")
 
-    async def test_set_settings_98(self):
+    async def test_set_settings_99(self):
         """
         set_decompounded_attributes
         """
@@ -8731,7 +8756,7 @@ class TestSearchClient:
             """{"decompoundedAttributes":{"de":["name"]}}"""
         )
 
-    async def test_set_settings_99(self):
+    async def test_set_settings_100(self):
         """
         set_decompounded_multiple_attributes
         """
@@ -8759,7 +8784,7 @@ class TestSearchClient:
             """{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}"""
         )
 
-    async def test_set_settings_100(self):
+    async def test_set_settings_101(self):
         """
         set_keep_diacritics_on_characters
         """
@@ -8776,7 +8801,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"keepDiacriticsOnCharacters":"øé"}""")
 
-    async def test_set_settings_101(self):
+    async def test_set_settings_102(self):
         """
         set_custom_normalization
         """
@@ -8799,7 +8824,7 @@ class TestSearchClient:
             """{"customNormalization":{"default":{"ä":"ae"}}}"""
         )
 
-    async def test_set_settings_102(self):
+    async def test_set_settings_103(self):
         """
         set_querylanguage_both
         """
@@ -8822,7 +8847,7 @@ class TestSearchClient:
             """{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}"""
         )
 
-    async def test_set_settings_103(self):
+    async def test_set_settings_104(self):
         """
         set_indexlanguages
         """
@@ -8841,7 +8866,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"indexLanguages":["ja"]}""")
 
-    async def test_set_settings_104(self):
+    async def test_set_settings_105(self):
         """
         enable_decompound_query_by_default
         """
@@ -8858,7 +8883,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"decompoundQuery":true}""")
 
-    async def test_set_settings_105(self):
+    async def test_set_settings_106(self):
         """
         enable_rules_syntax_by_default
         """
@@ -8875,7 +8900,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enableRules":true}""")
 
-    async def test_set_settings_106(self):
+    async def test_set_settings_107(self):
         """
         enable_personalization_settings
         """
@@ -8892,7 +8917,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enablePersonalization":true}""")
 
-    async def test_set_settings_107(self):
+    async def test_set_settings_108(self):
         """
         set_default_query_type
         """
@@ -8909,7 +8934,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"queryType":"prefixLast"}""")
 
-    async def test_set_settings_108(self):
+    async def test_set_settings_109(self):
         """
         set_default_remove_words_if_no_result
         """
@@ -8926,7 +8951,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeWordsIfNoResults":"none"}""")
 
-    async def test_set_settings_109(self):
+    async def test_set_settings_110(self):
         """
         enable_advanced_syntax_by_default
         """
@@ -8943,7 +8968,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
 
-    async def test_set_settings_110(self):
+    async def test_set_settings_111(self):
         """
         set_default_optional_words
         """
@@ -8963,7 +8988,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"optionalWords":["blue","iphone case"]}""")
 
-    async def test_set_settings_111(self):
+    async def test_set_settings_112(self):
         """
         disabling_prefix_search_for_some_attributes_by_default
         """
@@ -8982,7 +9007,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"disablePrefixOnAttributes":["sku"]}""")
 
-    async def test_set_settings_112(self):
+    async def test_set_settings_113(self):
         """
         disabling_exact_for_some_attributes_by_default
         """
@@ -9003,7 +9028,7 @@ class TestSearchClient:
             """{"disableExactOnAttributes":["description"]}"""
         )
 
-    async def test_set_settings_113(self):
+    async def test_set_settings_114(self):
         """
         set_default_exact_single_word_query
         """
@@ -9020,7 +9045,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"exactOnSingleWordQuery":"attribute"}""")
 
-    async def test_set_settings_114(self):
+    async def test_set_settings_115(self):
         """
         set_default_aternative_as_exact
         """
@@ -9042,7 +9067,7 @@ class TestSearchClient:
             """{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
         )
 
-    async def test_set_settings_115(self):
+    async def test_set_settings_116(self):
         """
         set_numeric_attributes_for_filtering
         """
@@ -9064,7 +9089,7 @@ class TestSearchClient:
             """{"numericAttributesForFiltering":["quantity","popularity"]}"""
         )
 
-    async def test_set_settings_116(self):
+    async def test_set_settings_117(self):
         """
         enable_compression_of_integer_array
         """
@@ -9081,7 +9106,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
 
-    async def test_set_settings_117(self):
+    async def test_set_settings_118(self):
         """
         set_attributes_for_distinct
         """
@@ -9098,7 +9123,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
 
-    async def test_set_settings_118(self):
+    async def test_set_settings_119(self):
         """
         set_distinct
         """
@@ -9118,7 +9143,7 @@ class TestSearchClient:
             """{"distinct":1,"attributeForDistinct":"url"}"""
         )
 
-    async def test_set_settings_119(self):
+    async def test_set_settings_120(self):
         """
         set_replace_synonyms_in_highlights
         """
@@ -9135,7 +9160,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
 
-    async def test_set_settings_120(self):
+    async def test_set_settings_121(self):
         """
         set_min_proximity
         """
@@ -9152,7 +9177,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minProximity":1}""")
 
-    async def test_set_settings_121(self):
+    async def test_set_settings_122(self):
         """
         set_default_field
         """
@@ -9176,7 +9201,7 @@ class TestSearchClient:
             """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
         )
 
-    async def test_set_settings_122(self):
+    async def test_set_settings_123(self):
         """
         set_max_facet_hits
         """
@@ -9193,7 +9218,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
 
-    async def test_set_settings_123(self):
+    async def test_set_settings_124(self):
         """
         set_attribute_criteria_computed_by_min_proximity
         """
@@ -9212,7 +9237,7 @@ class TestSearchClient:
             """{"attributeCriteriaComputedByMinProximity":true}"""
         )
 
-    async def test_set_settings_124(self):
+    async def test_set_settings_125(self):
         """
         set_user_data
         """
@@ -9233,7 +9258,7 @@ class TestSearchClient:
             """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
         )
 
-    async def test_set_settings_125(self):
+    async def test_set_settings_126(self):
         """
         set_rendering_content
         """
@@ -9279,6 +9304,79 @@ class TestSearchClient:
         assert loads(_req.data) == loads(
             """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}"""
         )
+
+    async def test_set_settings_127(self):
+        """
+        typoToleranceMin
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": "min",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
+
+    async def test_set_settings_128(self):
+        """
+        minWordSizefor1Typo5
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor1Typo": 5,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor1Typo":5}""")
+
+    async def test_set_settings_129(self):
+        """
+        attributesToSnippetBodyTitle
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "body:20",
+                    "title",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToSnippet":["body:20","title"]}"""
+        )
+
+    async def test_set_settings_130(self):
+        """
+        snippetEllipsisTextHellip
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "snippetEllipsisText": "[&hellip;]",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"snippetEllipsisText":"[&hellip;]"}""")
 
     async def test_update_api_key_(self):
         """
@@ -16942,6 +17040,31 @@ class TestSearchClientSync:
 
     def test_set_settings_53(self):
         """
+        highlightWithCustomPrePostTags
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToHighlight": [
+                    "author",
+                    "title",
+                    "content",
+                ],
+                "highlightPreTag": '<em class="search-highlight">',
+                "highlightPostTag": "</em>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToHighlight":["author","title","content"],"highlightPreTag":"<em class=\\"search-highlight\\">","highlightPostTag":"</em>"}"""
+        )
+
+    def test_set_settings_54(self):
+        """
         attributesToHighlightStar
         """
         _req = self._client.set_settings_with_http_info(
@@ -16959,7 +17082,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToHighlight":["*"]}""")
 
-    def test_set_settings_54(self):
+    def test_set_settings_55(self):
         """
         everything
         """
@@ -17109,7 +17232,7 @@ class TestSearchClientSync:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
-    def test_set_settings_55(self):
+    def test_set_settings_56(self):
         """
         searchableAttributesWithCustomRankingsAndAttributesForFaceting
         """
@@ -17142,7 +17265,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["brand","name","categories","unordered(description)"],"customRanking":["desc(popularity)"],"attributesForFaceting":["searchable(brand)","type","categories","price"]}"""
         )
 
-    def test_set_settings_56(self):
+    def test_set_settings_57(self):
         """
         searchableAttributesOrdering
         """
@@ -17164,7 +17287,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["unordered(title)","cast"]}"""
         )
 
-    def test_set_settings_57(self):
+    def test_set_settings_58(self):
         """
         searchableAttributesProductReferenceSuffixes
         """
@@ -17187,7 +17310,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["name","product_reference","product_reference_suffixes"]}"""
         )
 
-    def test_set_settings_58(self):
+    def test_set_settings_59(self):
         """
         queryLanguageAndIgnorePlurals
         """
@@ -17209,7 +17332,7 @@ class TestSearchClientSync:
             """{"queryLanguages":["en"],"ignorePlurals":true}"""
         )
 
-    def test_set_settings_59(self):
+    def test_set_settings_60(self):
         """
         searchableAttributesInMovies
         """
@@ -17232,7 +17355,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["title_eng","title_fr","title_es"]}"""
         )
 
-    def test_set_settings_60(self):
+    def test_set_settings_61(self):
         """
         disablePrefixOnAttributes
         """
@@ -17253,7 +17376,7 @@ class TestSearchClientSync:
             """{"disablePrefixOnAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_61(self):
+    def test_set_settings_62(self):
         """
         disableTypoToleranceOnAttributes
         """
@@ -17274,7 +17397,7 @@ class TestSearchClientSync:
             """{"disableTypoToleranceOnAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_62(self):
+    def test_set_settings_63(self):
         """
         searchableAttributesSimpleExample
         """
@@ -17295,7 +17418,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["serial_number"]}"""
         )
 
-    def test_set_settings_63(self):
+    def test_set_settings_64(self):
         """
         searchableAttributesSimpleExampleAlt
         """
@@ -17317,7 +17440,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["serial_number","serial_number_suffixes"]}"""
         )
 
-    def test_set_settings_64(self):
+    def test_set_settings_65(self):
         """
         set_searchable_attributes
         """
@@ -17341,7 +17464,7 @@ class TestSearchClientSync:
             """{"searchableAttributes":["title,alternative_title","author","unordered(text)","emails.personal"]}"""
         )
 
-    def test_set_settings_65(self):
+    def test_set_settings_66(self):
         """
         set_attributes_for_faceting
         """
@@ -17366,7 +17489,7 @@ class TestSearchClientSync:
             """{"attributesForFaceting":["author","filterOnly(isbn)","searchable(edition)","afterDistinct(category)","afterDistinct(searchable(publisher))"]}"""
         )
 
-    def test_set_settings_66(self):
+    def test_set_settings_67(self):
         """
         unretrievable_attributes
         """
@@ -17387,7 +17510,7 @@ class TestSearchClientSync:
             """{"unretrievableAttributes":["total_number_of_sales"]}"""
         )
 
-    def test_set_settings_67(self):
+    def test_set_settings_68(self):
         """
         set_retrievable_attributes
         """
@@ -17410,7 +17533,7 @@ class TestSearchClientSync:
             """{"attributesToRetrieve":["author","title","content"]}"""
         )
 
-    def test_set_settings_68(self):
+    def test_set_settings_69(self):
         """
         set_all_attributes_as_retrievable
         """
@@ -17429,7 +17552,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToRetrieve":["*"]}""")
 
-    def test_set_settings_69(self):
+    def test_set_settings_70(self):
         """
         specify_attributes_not_to_retrieve
         """
@@ -17452,7 +17575,7 @@ class TestSearchClientSync:
             """{"attributesToRetrieve":["*","-SKU","-internal_desc"]}"""
         )
 
-    def test_set_settings_70(self):
+    def test_set_settings_71(self):
         """
         neural_search
         """
@@ -17469,7 +17592,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"mode":"neuralSearch"}""")
 
-    def test_set_settings_71(self):
+    def test_set_settings_72(self):
         """
         keyword_search
         """
@@ -17486,7 +17609,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"mode":"keywordSearch"}""")
 
-    def test_set_settings_72(self):
+    def test_set_settings_73(self):
         """
         set_default_ranking
         """
@@ -17514,7 +17637,7 @@ class TestSearchClientSync:
             """{"ranking":["typo","geo","words","filters","attribute","proximity","exact","custom"]}"""
         )
 
-    def test_set_settings_73(self):
+    def test_set_settings_74(self):
         """
         set_ranking_by_attribute_asc
         """
@@ -17543,7 +17666,7 @@ class TestSearchClientSync:
             """{"ranking":["asc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    def test_set_settings_74(self):
+    def test_set_settings_75(self):
         """
         set_ranking_by_attribute_desc
         """
@@ -17572,7 +17695,7 @@ class TestSearchClientSync:
             """{"ranking":["desc(price)","typo","geo","words","filters","proximity","attribute","exact","custom"]}"""
         )
 
-    def test_set_settings_75(self):
+    def test_set_settings_76(self):
         """
         set_custom_ranking
         """
@@ -17594,7 +17717,7 @@ class TestSearchClientSync:
             """{"customRanking":["desc(popularity)","asc(price)"]}"""
         )
 
-    def test_set_settings_76(self):
+    def test_set_settings_77(self):
         """
         set_default_relevancy
         """
@@ -17611,7 +17734,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"relevancyStrictness":90}""")
 
-    def test_set_settings_77(self):
+    def test_set_settings_78(self):
         """
         set_replicas
         """
@@ -17633,7 +17756,7 @@ class TestSearchClientSync:
             """{"replicas":["name_of_replica_index1","name_of_replica_index2"]}"""
         )
 
-    def test_set_settings_78(self):
+    def test_set_settings_79(self):
         """
         set_default_max_values_per_facet
         """
@@ -17650,7 +17773,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxValuesPerFacet":100}""")
 
-    def test_set_settings_79(self):
+    def test_set_settings_80(self):
         """
         set_default_sort_facet_values_by
         """
@@ -17667,7 +17790,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"sortFacetValuesBy":"alpha"}""")
 
-    def test_set_settings_80(self):
+    def test_set_settings_81(self):
         """
         set_attributes_to_snippet
         """
@@ -17689,7 +17812,7 @@ class TestSearchClientSync:
             """{"attributesToSnippet":["content:80","description"]}"""
         )
 
-    def test_set_settings_81(self):
+    def test_set_settings_82(self):
         """
         set_all_attributes_to_snippet
         """
@@ -17708,7 +17831,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributesToSnippet":["*:80"]}""")
 
-    def test_set_settings_82(self):
+    def test_set_settings_83(self):
         """
         set_default_highlight_pre_tag
         """
@@ -17725,7 +17848,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"highlightPreTag":"<em>"}""")
 
-    def test_set_settings_83(self):
+    def test_set_settings_84(self):
         """
         set_default_highlight_post_tag
         """
@@ -17742,7 +17865,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"highlightPostTag":"</em>"}""")
 
-    def test_set_settings_84(self):
+    def test_set_settings_85(self):
         """
         set_default_snippet_ellipsis_text
         """
@@ -17759,7 +17882,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"snippetEllipsisText":"…"}""")
 
-    def test_set_settings_85(self):
+    def test_set_settings_86(self):
         """
         enable_restrict_highlight_and_snippet_arrays_by_default
         """
@@ -17778,7 +17901,7 @@ class TestSearchClientSync:
             """{"restrictHighlightAndSnippetArrays":true}"""
         )
 
-    def test_set_settings_86(self):
+    def test_set_settings_87(self):
         """
         set_default_hits_per_page
         """
@@ -17795,7 +17918,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"hitsPerPage":20}""")
 
-    def test_set_settings_87(self):
+    def test_set_settings_88(self):
         """
         set_pagination_limit
         """
@@ -17812,7 +17935,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"paginationLimitedTo":1000}""")
 
-    def test_set_settings_88(self):
+    def test_set_settings_89(self):
         """
         set_default_min_word_size_for_one_typo
         """
@@ -17829,7 +17952,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minWordSizefor1Typo":4}""")
 
-    def test_set_settings_89(self):
+    def test_set_settings_90(self):
         """
         set_default_min_word_size_for_two_typos
         """
@@ -17846,7 +17969,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minWordSizefor2Typos":4}""")
 
-    def test_set_settings_90(self):
+    def test_set_settings_91(self):
         """
         set_default_typo_tolerance_mode
         """
@@ -17863,7 +17986,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":true}""")
 
-    def test_set_settings_91(self):
+    def test_set_settings_92(self):
         """
         disable_typos_on_numeric_tokens_by_default
         """
@@ -17880,7 +18003,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowTyposOnNumericTokens":false}""")
 
-    def test_set_settings_92(self):
+    def test_set_settings_93(self):
         """
         disable_typo_tolerance_for_words
         """
@@ -17902,7 +18025,7 @@ class TestSearchClientSync:
             """{"disableTypoToleranceOnWords":["wheel","1X2BCD"]}"""
         )
 
-    def test_set_settings_93(self):
+    def test_set_settings_94(self):
         """
         set_separators_to_index
         """
@@ -17919,7 +18042,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"separatorsToIndex":"+#"}""")
 
-    def test_set_settings_94(self):
+    def test_set_settings_95(self):
         """
         set_querylanguage_ignoreplurals
         """
@@ -17941,7 +18064,7 @@ class TestSearchClientSync:
             """{"queryLanguages":["es"],"ignorePlurals":true}"""
         )
 
-    def test_set_settings_95(self):
+    def test_set_settings_96(self):
         """
         set_attributes_to_transliterate
         """
@@ -17966,7 +18089,7 @@ class TestSearchClientSync:
             """{"indexLanguages":["ja"],"attributesToTransliterate":["name","description"]}"""
         )
 
-    def test_set_settings_96(self):
+    def test_set_settings_97(self):
         """
         set_querylanguage_removestopwords
         """
@@ -17988,7 +18111,7 @@ class TestSearchClientSync:
             """{"queryLanguages":["es"],"removeStopWords":true}"""
         )
 
-    def test_set_settings_97(self):
+    def test_set_settings_98(self):
         """
         set_camel_case_attributes
         """
@@ -18007,7 +18130,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"camelCaseAttributes":["description"]}""")
 
-    def test_set_settings_98(self):
+    def test_set_settings_99(self):
         """
         set_decompounded_attributes
         """
@@ -18030,7 +18153,7 @@ class TestSearchClientSync:
             """{"decompoundedAttributes":{"de":["name"]}}"""
         )
 
-    def test_set_settings_99(self):
+    def test_set_settings_100(self):
         """
         set_decompounded_multiple_attributes
         """
@@ -18058,7 +18181,7 @@ class TestSearchClientSync:
             """{"decompoundedAttributes":{"de":["name_de","description_de"],"fi":["name_fi","description_fi"]}}"""
         )
 
-    def test_set_settings_100(self):
+    def test_set_settings_101(self):
         """
         set_keep_diacritics_on_characters
         """
@@ -18075,7 +18198,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"keepDiacriticsOnCharacters":"øé"}""")
 
-    def test_set_settings_101(self):
+    def test_set_settings_102(self):
         """
         set_custom_normalization
         """
@@ -18098,7 +18221,7 @@ class TestSearchClientSync:
             """{"customNormalization":{"default":{"ä":"ae"}}}"""
         )
 
-    def test_set_settings_102(self):
+    def test_set_settings_103(self):
         """
         set_querylanguage_both
         """
@@ -18121,7 +18244,7 @@ class TestSearchClientSync:
             """{"queryLanguages":["es"],"removeStopWords":true,"ignorePlurals":true}"""
         )
 
-    def test_set_settings_103(self):
+    def test_set_settings_104(self):
         """
         set_indexlanguages
         """
@@ -18140,7 +18263,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"indexLanguages":["ja"]}""")
 
-    def test_set_settings_104(self):
+    def test_set_settings_105(self):
         """
         enable_decompound_query_by_default
         """
@@ -18157,7 +18280,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"decompoundQuery":true}""")
 
-    def test_set_settings_105(self):
+    def test_set_settings_106(self):
         """
         enable_rules_syntax_by_default
         """
@@ -18174,7 +18297,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enableRules":true}""")
 
-    def test_set_settings_106(self):
+    def test_set_settings_107(self):
         """
         enable_personalization_settings
         """
@@ -18191,7 +18314,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enablePersonalization":true}""")
 
-    def test_set_settings_107(self):
+    def test_set_settings_108(self):
         """
         set_default_query_type
         """
@@ -18208,7 +18331,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"queryType":"prefixLast"}""")
 
-    def test_set_settings_108(self):
+    def test_set_settings_109(self):
         """
         set_default_remove_words_if_no_result
         """
@@ -18225,7 +18348,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeWordsIfNoResults":"none"}""")
 
-    def test_set_settings_109(self):
+    def test_set_settings_110(self):
         """
         enable_advanced_syntax_by_default
         """
@@ -18242,7 +18365,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"advancedSyntax":true}""")
 
-    def test_set_settings_110(self):
+    def test_set_settings_111(self):
         """
         set_default_optional_words
         """
@@ -18262,7 +18385,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"optionalWords":["blue","iphone case"]}""")
 
-    def test_set_settings_111(self):
+    def test_set_settings_112(self):
         """
         disabling_prefix_search_for_some_attributes_by_default
         """
@@ -18281,7 +18404,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"disablePrefixOnAttributes":["sku"]}""")
 
-    def test_set_settings_112(self):
+    def test_set_settings_113(self):
         """
         disabling_exact_for_some_attributes_by_default
         """
@@ -18302,7 +18425,7 @@ class TestSearchClientSync:
             """{"disableExactOnAttributes":["description"]}"""
         )
 
-    def test_set_settings_113(self):
+    def test_set_settings_114(self):
         """
         set_default_exact_single_word_query
         """
@@ -18319,7 +18442,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"exactOnSingleWordQuery":"attribute"}""")
 
-    def test_set_settings_114(self):
+    def test_set_settings_115(self):
         """
         set_default_aternative_as_exact
         """
@@ -18341,7 +18464,7 @@ class TestSearchClientSync:
             """{"alternativesAsExact":["ignorePlurals","singleWordSynonym"]}"""
         )
 
-    def test_set_settings_115(self):
+    def test_set_settings_116(self):
         """
         set_numeric_attributes_for_filtering
         """
@@ -18363,7 +18486,7 @@ class TestSearchClientSync:
             """{"numericAttributesForFiltering":["quantity","popularity"]}"""
         )
 
-    def test_set_settings_116(self):
+    def test_set_settings_117(self):
         """
         enable_compression_of_integer_array
         """
@@ -18380,7 +18503,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"allowCompressionOfIntegerArray":true}""")
 
-    def test_set_settings_117(self):
+    def test_set_settings_118(self):
         """
         set_attributes_for_distinct
         """
@@ -18397,7 +18520,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"attributeForDistinct":"url"}""")
 
-    def test_set_settings_118(self):
+    def test_set_settings_119(self):
         """
         set_distinct
         """
@@ -18417,7 +18540,7 @@ class TestSearchClientSync:
             """{"distinct":1,"attributeForDistinct":"url"}"""
         )
 
-    def test_set_settings_119(self):
+    def test_set_settings_120(self):
         """
         set_replace_synonyms_in_highlights
         """
@@ -18434,7 +18557,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"replaceSynonymsInHighlight":false}""")
 
-    def test_set_settings_120(self):
+    def test_set_settings_121(self):
         """
         set_min_proximity
         """
@@ -18451,7 +18574,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"minProximity":1}""")
 
-    def test_set_settings_121(self):
+    def test_set_settings_122(self):
         """
         set_default_field
         """
@@ -18475,7 +18598,7 @@ class TestSearchClientSync:
             """{"responseFields":["hits","hitsPerPage","nbPages","page"]}"""
         )
 
-    def test_set_settings_122(self):
+    def test_set_settings_123(self):
         """
         set_max_facet_hits
         """
@@ -18492,7 +18615,7 @@ class TestSearchClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxFacetHits":10}""")
 
-    def test_set_settings_123(self):
+    def test_set_settings_124(self):
         """
         set_attribute_criteria_computed_by_min_proximity
         """
@@ -18511,7 +18634,7 @@ class TestSearchClientSync:
             """{"attributeCriteriaComputedByMinProximity":true}"""
         )
 
-    def test_set_settings_124(self):
+    def test_set_settings_125(self):
         """
         set_user_data
         """
@@ -18532,7 +18655,7 @@ class TestSearchClientSync:
             """{"userData":{"extraData":"This is the custom data that you want to store in your index"}}"""
         )
 
-    def test_set_settings_125(self):
+    def test_set_settings_126(self):
         """
         set_rendering_content
         """
@@ -18578,6 +18701,79 @@ class TestSearchClientSync:
         assert loads(_req.data) == loads(
             """{"renderingContent":{"facetOrdering":{"facets":{"order":["size","brand"]},"values":{"brand":{"order":["uniqlo"],"hide":["muji"],"sortRemainingBy":"count"},"size":{"order":["S","M","L"],"sortRemainingBy":"hidden"}}}}}"""
         )
+
+    def test_set_settings_127(self):
+        """
+        typoToleranceMin
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "typoTolerance": "min",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
+
+    def test_set_settings_128(self):
+        """
+        minWordSizefor1Typo5
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "minWordSizefor1Typo": 5,
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"minWordSizefor1Typo":5}""")
+
+    def test_set_settings_129(self):
+        """
+        attributesToSnippetBodyTitle
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "attributesToSnippet": [
+                    "body:20",
+                    "title",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesToSnippet":["body:20","title"]}"""
+        )
+
+    def test_set_settings_130(self):
+        """
+        snippetEllipsisTextHellip
+        """
+        _req = self._client.set_settings_with_http_info(
+            index_name="theIndexName",
+            index_settings={
+                "snippetEllipsisText": "[&hellip;]",
+            },
+        )
+
+        assert _req.path == "/1/indexes/theIndexName/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"snippetEllipsisText":"[&hellip;]"}""")
 
     def test_update_api_key_(self):
         """

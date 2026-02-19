@@ -997,6 +997,50 @@ class TestCompositionClient:
             """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
         )
 
+    async def test_put_composition_5(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "sortingStrategy": {
+                    "Price-asc": "products-low-to-high",
+                    "Price-desc": "products-high-to-low",
+                },
+                "behavior": {
+                    "multifeed": {
+                        "feeds": {
+                            "main-products": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "products",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        "feedsOrder": [
+                            "main-products",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}"""
+        )
+
     async def test_put_composition_rule_(self):
         """
         putCompositionRule
@@ -2635,6 +2679,50 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}}"""
+        )
+
+    def test_put_composition_5(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-compo",
+            composition={
+                "objectID": "my-compo",
+                "name": "my composition",
+                "sortingStrategy": {
+                    "Price-asc": "products-low-to-high",
+                    "Price-desc": "products-high-to-low",
+                },
+                "behavior": {
+                    "multifeed": {
+                        "feeds": {
+                            "main-products": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "products",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        "feedsOrder": [
+                            "main-products",
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}"""
         )
 
     def test_put_composition_rule_(self):

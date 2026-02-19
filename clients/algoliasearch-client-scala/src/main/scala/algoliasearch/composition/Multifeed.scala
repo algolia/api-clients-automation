@@ -38,6 +38,6 @@ package algoliasearch.composition
   *   Feeds are processed and returned with a default ordering.
   */
 case class Multifeed(
-    feeds: Map[String, Injection],
+    feeds: Map[String, FeedInjection],
     feedsOrder: Option[Seq[String]] = scala.None
 )

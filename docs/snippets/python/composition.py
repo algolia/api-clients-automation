@@ -1216,6 +1216,56 @@ def snippet_for_put_composition4():
     # SEPARATOR<
 
 
+def snippet_for_put_composition5():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-compo",
+        composition={
+            "objectID": "my-compo",
+            "name": "my composition",
+            "sortingStrategy": {
+                "Price-asc": "products-low-to-high",
+                "Price-desc": "products-high-to-low",
+            },
+            "behavior": {
+                "multifeed": {
+                    "feeds": {
+                        "main-products": {
+                            "injection": {
+                                "main": {
+                                    "source": {
+                                        "search": {
+                                            "index": "products",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "feedsOrder": [
+                        "main-products",
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_put_composition_rule():
     """
     Snippet for the putCompositionRule method.

@@ -10608,6 +10608,37 @@ def snippet_for_set_settings53():
     """
     Snippet for the setSettings method.
 
+    highlightWithCustomPrePostTags
+    """
+    # >SEPARATOR setSettings highlightWithCustomPrePostTags
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "attributesToHighlight": [
+                "author",
+                "title",
+                "content",
+            ],
+            "highlightPreTag": '<em class="search-highlight">',
+            "highlightPostTag": "</em>",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings54():
+    """
+    Snippet for the setSettings method.
+
     attributesToHighlightStar
     """
     # >SEPARATOR setSettings attributesToHighlightStar
@@ -10631,7 +10662,7 @@ def snippet_for_set_settings53():
     # SEPARATOR<
 
 
-def snippet_for_set_settings54():
+def snippet_for_set_settings55():
     """
     Snippet for the setSettings method.
 
@@ -10787,7 +10818,7 @@ def snippet_for_set_settings54():
     # SEPARATOR<
 
 
-def snippet_for_set_settings55():
+def snippet_for_set_settings56():
     """
     Snippet for the setSettings method.
 
@@ -10826,7 +10857,7 @@ def snippet_for_set_settings55():
     # SEPARATOR<
 
 
-def snippet_for_set_settings56():
+def snippet_for_set_settings57():
     """
     Snippet for the setSettings method.
 
@@ -10854,7 +10885,7 @@ def snippet_for_set_settings56():
     # SEPARATOR<
 
 
-def snippet_for_set_settings57():
+def snippet_for_set_settings58():
     """
     Snippet for the setSettings method.
 
@@ -10883,7 +10914,7 @@ def snippet_for_set_settings57():
     # SEPARATOR<
 
 
-def snippet_for_set_settings58():
+def snippet_for_set_settings59():
     """
     Snippet for the setSettings method.
 
@@ -10911,7 +10942,7 @@ def snippet_for_set_settings58():
     # SEPARATOR<
 
 
-def snippet_for_set_settings59():
+def snippet_for_set_settings60():
     """
     Snippet for the setSettings method.
 
@@ -10940,7 +10971,7 @@ def snippet_for_set_settings59():
     # SEPARATOR<
 
 
-def snippet_for_set_settings60():
+def snippet_for_set_settings61():
     """
     Snippet for the setSettings method.
 
@@ -10967,7 +10998,7 @@ def snippet_for_set_settings60():
     # SEPARATOR<
 
 
-def snippet_for_set_settings61():
+def snippet_for_set_settings62():
     """
     Snippet for the setSettings method.
 
@@ -10994,7 +11025,7 @@ def snippet_for_set_settings61():
     # SEPARATOR<
 
 
-def snippet_for_set_settings62():
+def snippet_for_set_settings63():
     """
     Snippet for the setSettings method.
 
@@ -11021,7 +11052,7 @@ def snippet_for_set_settings62():
     # SEPARATOR<
 
 
-def snippet_for_set_settings63():
+def snippet_for_set_settings64():
     """
     Snippet for the setSettings method.
 
@@ -11049,7 +11080,7 @@ def snippet_for_set_settings63():
     # SEPARATOR<
 
 
-def snippet_for_set_settings64():
+def snippet_for_set_settings65():
     """
     Snippet for the setSettings method.
 
@@ -11079,7 +11110,7 @@ def snippet_for_set_settings64():
     # SEPARATOR<
 
 
-def snippet_for_set_settings65():
+def snippet_for_set_settings66():
     """
     Snippet for the setSettings method.
 
@@ -11110,7 +11141,7 @@ def snippet_for_set_settings65():
     # SEPARATOR<
 
 
-def snippet_for_set_settings66():
+def snippet_for_set_settings67():
     """
     Snippet for the setSettings method.
 
@@ -11137,7 +11168,7 @@ def snippet_for_set_settings66():
     # SEPARATOR<
 
 
-def snippet_for_set_settings67():
+def snippet_for_set_settings68():
     """
     Snippet for the setSettings method.
 
@@ -11166,7 +11197,7 @@ def snippet_for_set_settings67():
     # SEPARATOR<
 
 
-def snippet_for_set_settings68():
+def snippet_for_set_settings69():
     """
     Snippet for the setSettings method.
 
@@ -11193,7 +11224,7 @@ def snippet_for_set_settings68():
     # SEPARATOR<
 
 
-def snippet_for_set_settings69():
+def snippet_for_set_settings70():
     """
     Snippet for the setSettings method.
 
@@ -11222,7 +11253,7 @@ def snippet_for_set_settings69():
     # SEPARATOR<
 
 
-def snippet_for_set_settings70():
+def snippet_for_set_settings71():
     """
     Snippet for the setSettings method.
 
@@ -11247,7 +11278,7 @@ def snippet_for_set_settings70():
     # SEPARATOR<
 
 
-def snippet_for_set_settings71():
+def snippet_for_set_settings72():
     """
     Snippet for the setSettings method.
 
@@ -11272,7 +11303,7 @@ def snippet_for_set_settings71():
     # SEPARATOR<
 
 
-def snippet_for_set_settings72():
+def snippet_for_set_settings73():
     """
     Snippet for the setSettings method.
 
@@ -11306,7 +11337,7 @@ def snippet_for_set_settings72():
     # SEPARATOR<
 
 
-def snippet_for_set_settings73():
+def snippet_for_set_settings74():
     """
     Snippet for the setSettings method.
 
@@ -11341,7 +11372,7 @@ def snippet_for_set_settings73():
     # SEPARATOR<
 
 
-def snippet_for_set_settings74():
+def snippet_for_set_settings75():
     """
     Snippet for the setSettings method.
 
@@ -11376,7 +11407,7 @@ def snippet_for_set_settings74():
     # SEPARATOR<
 
 
-def snippet_for_set_settings75():
+def snippet_for_set_settings76():
     """
     Snippet for the setSettings method.
 
@@ -11404,7 +11435,7 @@ def snippet_for_set_settings75():
     # SEPARATOR<
 
 
-def snippet_for_set_settings76():
+def snippet_for_set_settings77():
     """
     Snippet for the setSettings method.
 
@@ -11429,7 +11460,7 @@ def snippet_for_set_settings76():
     # SEPARATOR<
 
 
-def snippet_for_set_settings77():
+def snippet_for_set_settings78():
     """
     Snippet for the setSettings method.
 
@@ -11457,7 +11488,7 @@ def snippet_for_set_settings77():
     # SEPARATOR<
 
 
-def snippet_for_set_settings78():
+def snippet_for_set_settings79():
     """
     Snippet for the setSettings method.
 
@@ -11482,7 +11513,7 @@ def snippet_for_set_settings78():
     # SEPARATOR<
 
 
-def snippet_for_set_settings79():
+def snippet_for_set_settings80():
     """
     Snippet for the setSettings method.
 
@@ -11507,7 +11538,7 @@ def snippet_for_set_settings79():
     # SEPARATOR<
 
 
-def snippet_for_set_settings80():
+def snippet_for_set_settings81():
     """
     Snippet for the setSettings method.
 
@@ -11535,7 +11566,7 @@ def snippet_for_set_settings80():
     # SEPARATOR<
 
 
-def snippet_for_set_settings81():
+def snippet_for_set_settings82():
     """
     Snippet for the setSettings method.
 
@@ -11562,7 +11593,7 @@ def snippet_for_set_settings81():
     # SEPARATOR<
 
 
-def snippet_for_set_settings82():
+def snippet_for_set_settings83():
     """
     Snippet for the setSettings method.
 
@@ -11587,7 +11618,7 @@ def snippet_for_set_settings82():
     # SEPARATOR<
 
 
-def snippet_for_set_settings83():
+def snippet_for_set_settings84():
     """
     Snippet for the setSettings method.
 
@@ -11612,7 +11643,7 @@ def snippet_for_set_settings83():
     # SEPARATOR<
 
 
-def snippet_for_set_settings84():
+def snippet_for_set_settings85():
     """
     Snippet for the setSettings method.
 
@@ -11637,7 +11668,7 @@ def snippet_for_set_settings84():
     # SEPARATOR<
 
 
-def snippet_for_set_settings85():
+def snippet_for_set_settings86():
     """
     Snippet for the setSettings method.
 
@@ -11662,7 +11693,7 @@ def snippet_for_set_settings85():
     # SEPARATOR<
 
 
-def snippet_for_set_settings86():
+def snippet_for_set_settings87():
     """
     Snippet for the setSettings method.
 
@@ -11687,7 +11718,7 @@ def snippet_for_set_settings86():
     # SEPARATOR<
 
 
-def snippet_for_set_settings87():
+def snippet_for_set_settings88():
     """
     Snippet for the setSettings method.
 
@@ -11712,7 +11743,7 @@ def snippet_for_set_settings87():
     # SEPARATOR<
 
 
-def snippet_for_set_settings88():
+def snippet_for_set_settings89():
     """
     Snippet for the setSettings method.
 
@@ -11737,7 +11768,7 @@ def snippet_for_set_settings88():
     # SEPARATOR<
 
 
-def snippet_for_set_settings89():
+def snippet_for_set_settings90():
     """
     Snippet for the setSettings method.
 
@@ -11762,7 +11793,7 @@ def snippet_for_set_settings89():
     # SEPARATOR<
 
 
-def snippet_for_set_settings90():
+def snippet_for_set_settings91():
     """
     Snippet for the setSettings method.
 
@@ -11787,7 +11818,7 @@ def snippet_for_set_settings90():
     # SEPARATOR<
 
 
-def snippet_for_set_settings91():
+def snippet_for_set_settings92():
     """
     Snippet for the setSettings method.
 
@@ -11812,7 +11843,7 @@ def snippet_for_set_settings91():
     # SEPARATOR<
 
 
-def snippet_for_set_settings92():
+def snippet_for_set_settings93():
     """
     Snippet for the setSettings method.
 
@@ -11840,7 +11871,7 @@ def snippet_for_set_settings92():
     # SEPARATOR<
 
 
-def snippet_for_set_settings93():
+def snippet_for_set_settings94():
     """
     Snippet for the setSettings method.
 
@@ -11865,7 +11896,7 @@ def snippet_for_set_settings93():
     # SEPARATOR<
 
 
-def snippet_for_set_settings94():
+def snippet_for_set_settings95():
     """
     Snippet for the setSettings method.
 
@@ -11893,7 +11924,7 @@ def snippet_for_set_settings94():
     # SEPARATOR<
 
 
-def snippet_for_set_settings95():
+def snippet_for_set_settings96():
     """
     Snippet for the setSettings method.
 
@@ -11924,7 +11955,7 @@ def snippet_for_set_settings95():
     # SEPARATOR<
 
 
-def snippet_for_set_settings96():
+def snippet_for_set_settings97():
     """
     Snippet for the setSettings method.
 
@@ -11952,7 +11983,7 @@ def snippet_for_set_settings96():
     # SEPARATOR<
 
 
-def snippet_for_set_settings97():
+def snippet_for_set_settings98():
     """
     Snippet for the setSettings method.
 
@@ -11979,7 +12010,7 @@ def snippet_for_set_settings97():
     # SEPARATOR<
 
 
-def snippet_for_set_settings98():
+def snippet_for_set_settings99():
     """
     Snippet for the setSettings method.
 
@@ -12008,7 +12039,7 @@ def snippet_for_set_settings98():
     # SEPARATOR<
 
 
-def snippet_for_set_settings99():
+def snippet_for_set_settings100():
     """
     Snippet for the setSettings method.
 
@@ -12042,7 +12073,7 @@ def snippet_for_set_settings99():
     # SEPARATOR<
 
 
-def snippet_for_set_settings100():
+def snippet_for_set_settings101():
     """
     Snippet for the setSettings method.
 
@@ -12067,7 +12098,7 @@ def snippet_for_set_settings100():
     # SEPARATOR<
 
 
-def snippet_for_set_settings101():
+def snippet_for_set_settings102():
     """
     Snippet for the setSettings method.
 
@@ -12096,7 +12127,7 @@ def snippet_for_set_settings101():
     # SEPARATOR<
 
 
-def snippet_for_set_settings102():
+def snippet_for_set_settings103():
     """
     Snippet for the setSettings method.
 
@@ -12125,7 +12156,7 @@ def snippet_for_set_settings102():
     # SEPARATOR<
 
 
-def snippet_for_set_settings103():
+def snippet_for_set_settings104():
     """
     Snippet for the setSettings method.
 
@@ -12152,7 +12183,7 @@ def snippet_for_set_settings103():
     # SEPARATOR<
 
 
-def snippet_for_set_settings104():
+def snippet_for_set_settings105():
     """
     Snippet for the setSettings method.
 
@@ -12177,7 +12208,7 @@ def snippet_for_set_settings104():
     # SEPARATOR<
 
 
-def snippet_for_set_settings105():
+def snippet_for_set_settings106():
     """
     Snippet for the setSettings method.
 
@@ -12202,7 +12233,7 @@ def snippet_for_set_settings105():
     # SEPARATOR<
 
 
-def snippet_for_set_settings106():
+def snippet_for_set_settings107():
     """
     Snippet for the setSettings method.
 
@@ -12227,7 +12258,7 @@ def snippet_for_set_settings106():
     # SEPARATOR<
 
 
-def snippet_for_set_settings107():
+def snippet_for_set_settings108():
     """
     Snippet for the setSettings method.
 
@@ -12252,7 +12283,7 @@ def snippet_for_set_settings107():
     # SEPARATOR<
 
 
-def snippet_for_set_settings108():
+def snippet_for_set_settings109():
     """
     Snippet for the setSettings method.
 
@@ -12277,7 +12308,7 @@ def snippet_for_set_settings108():
     # SEPARATOR<
 
 
-def snippet_for_set_settings109():
+def snippet_for_set_settings110():
     """
     Snippet for the setSettings method.
 
@@ -12302,7 +12333,7 @@ def snippet_for_set_settings109():
     # SEPARATOR<
 
 
-def snippet_for_set_settings110():
+def snippet_for_set_settings111():
     """
     Snippet for the setSettings method.
 
@@ -12330,7 +12361,7 @@ def snippet_for_set_settings110():
     # SEPARATOR<
 
 
-def snippet_for_set_settings111():
+def snippet_for_set_settings112():
     """
     Snippet for the setSettings method.
 
@@ -12357,7 +12388,7 @@ def snippet_for_set_settings111():
     # SEPARATOR<
 
 
-def snippet_for_set_settings112():
+def snippet_for_set_settings113():
     """
     Snippet for the setSettings method.
 
@@ -12384,7 +12415,7 @@ def snippet_for_set_settings112():
     # SEPARATOR<
 
 
-def snippet_for_set_settings113():
+def snippet_for_set_settings114():
     """
     Snippet for the setSettings method.
 
@@ -12409,7 +12440,7 @@ def snippet_for_set_settings113():
     # SEPARATOR<
 
 
-def snippet_for_set_settings114():
+def snippet_for_set_settings115():
     """
     Snippet for the setSettings method.
 
@@ -12437,7 +12468,7 @@ def snippet_for_set_settings114():
     # SEPARATOR<
 
 
-def snippet_for_set_settings115():
+def snippet_for_set_settings116():
     """
     Snippet for the setSettings method.
 
@@ -12465,7 +12496,7 @@ def snippet_for_set_settings115():
     # SEPARATOR<
 
 
-def snippet_for_set_settings116():
+def snippet_for_set_settings117():
     """
     Snippet for the setSettings method.
 
@@ -12490,7 +12521,7 @@ def snippet_for_set_settings116():
     # SEPARATOR<
 
 
-def snippet_for_set_settings117():
+def snippet_for_set_settings118():
     """
     Snippet for the setSettings method.
 
@@ -12515,7 +12546,7 @@ def snippet_for_set_settings117():
     # SEPARATOR<
 
 
-def snippet_for_set_settings118():
+def snippet_for_set_settings119():
     """
     Snippet for the setSettings method.
 
@@ -12541,7 +12572,7 @@ def snippet_for_set_settings118():
     # SEPARATOR<
 
 
-def snippet_for_set_settings119():
+def snippet_for_set_settings120():
     """
     Snippet for the setSettings method.
 
@@ -12566,7 +12597,7 @@ def snippet_for_set_settings119():
     # SEPARATOR<
 
 
-def snippet_for_set_settings120():
+def snippet_for_set_settings121():
     """
     Snippet for the setSettings method.
 
@@ -12591,7 +12622,7 @@ def snippet_for_set_settings120():
     # SEPARATOR<
 
 
-def snippet_for_set_settings121():
+def snippet_for_set_settings122():
     """
     Snippet for the setSettings method.
 
@@ -12621,7 +12652,7 @@ def snippet_for_set_settings121():
     # SEPARATOR<
 
 
-def snippet_for_set_settings122():
+def snippet_for_set_settings123():
     """
     Snippet for the setSettings method.
 
@@ -12646,7 +12677,7 @@ def snippet_for_set_settings122():
     # SEPARATOR<
 
 
-def snippet_for_set_settings123():
+def snippet_for_set_settings124():
     """
     Snippet for the setSettings method.
 
@@ -12671,7 +12702,7 @@ def snippet_for_set_settings123():
     # SEPARATOR<
 
 
-def snippet_for_set_settings124():
+def snippet_for_set_settings125():
     """
     Snippet for the setSettings method.
 
@@ -12698,7 +12729,7 @@ def snippet_for_set_settings124():
     # SEPARATOR<
 
 
-def snippet_for_set_settings125():
+def snippet_for_set_settings126():
     """
     Snippet for the setSettings method.
 
@@ -12742,6 +12773,109 @@ def snippet_for_set_settings125():
                     },
                 },
             },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings127():
+    """
+    Snippet for the setSettings method.
+
+    typoToleranceMin
+    """
+    # >SEPARATOR setSettings typoToleranceMin
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "typoTolerance": "min",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings128():
+    """
+    Snippet for the setSettings method.
+
+    minWordSizefor1Typo5
+    """
+    # >SEPARATOR setSettings minWordSizefor1Typo5
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "minWordSizefor1Typo": 5,
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings129():
+    """
+    Snippet for the setSettings method.
+
+    attributesToSnippetBodyTitle
+    """
+    # >SEPARATOR setSettings attributesToSnippetBodyTitle
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "attributesToSnippet": [
+                "body:20",
+                "title",
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_set_settings130():
+    """
+    Snippet for the setSettings method.
+
+    snippetEllipsisTextHellip
+    """
+    # >SEPARATOR setSettings snippetEllipsisTextHellip
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.set_settings(
+        index_name="<YOUR_INDEX_NAME>",
+        index_settings={
+            "snippetEllipsisText": "[&hellip;]",
         },
     )
 

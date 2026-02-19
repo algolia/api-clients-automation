@@ -1236,6 +1236,61 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest5()
+  {
+    await client.PutCompositionAsync(
+      "my-compo",
+      new Composition
+      {
+        ObjectID = "my-compo",
+        Name = "my composition",
+        SortingStrategy = new Dictionary<string, string>
+        {
+          { "Price-asc", "products-low-to-high" },
+          { "Price-desc", "products-high-to-low" },
+        },
+        Behavior = new CompositionBehavior(
+          new CompositionMultifeedBehavior
+          {
+            Multifeed = new Multifeed
+            {
+              Feeds = new Dictionary<string, FeedInjection>
+              {
+                {
+                  "main-products",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch { Index = "products" },
+                        },
+                      },
+                    },
+                  }
+                },
+              },
+              FeedsOrder = new List<string> { "main-products" },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "putCompositionRule")]
   public async Task PutCompositionRuleTest()
   {

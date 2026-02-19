@@ -1278,6 +1278,51 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the putComposition method.
+    *
+    * putComposition
+    */
+  def snippetForCompositionClientPutComposition5(): Unit = {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.putComposition(
+        compositionID = "my-compo",
+        composition = Composition(
+          objectID = "my-compo",
+          name = "my composition",
+          sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
+          behavior = CompositionMultifeedBehavior(
+            multifeed = Multifeed(
+              feeds = Map(
+                "main-products" -> FeedInjection(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "products"
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              feedsOrder = Some(Seq("main-products"))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the putCompositionRule method.
     *
     * putCompositionRule

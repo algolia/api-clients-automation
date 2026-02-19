@@ -1388,7 +1388,99 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","queryLanguages":["es"],"relevancyStrictness":90,"ruleContexts":["mobile"],"sortBy":"Price (asc)","userToken":"test-user-123"}}'
+              --data '
+            {
+              "params": {
+                "analytics": true,
+                "analyticsTags": [],
+                "aroundLatLng": "40.71,-74.01",
+                "aroundLatLngViaIP": false,
+                "aroundRadius": 1,
+                "aroundPrecision": 10,
+                "clickAnalytics": false,
+                "enableABTest": true,
+                "enablePersonalization": false,
+                "enableReRanking": true,
+                "enableRules": true,
+                "facetFilters": [
+                  [
+                    "category:Book",
+                    "category:-Movie"
+                  ],
+                  "author:John Doe"
+                ],
+                "facets": {
+                  "facetSpecificList": {
+                    "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                    "value": [
+                      "category",
+                      "disjunctive(brand)",
+                      "price"
+                    ]
+                  }
+                },
+                "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                "getRankingInfo": false,
+                "hitsPerPage": 20,
+                "injectedItems": {
+                  "my-group-key": [
+                    {
+                      "objectID": "my-object-1",
+                      "metadata": {
+                        "my-field": "my-value"
+                      }
+                    },
+                    {
+                      "objectID": "my-object-2"
+                    }
+                  ]
+                },
+                "insideBoundingBox": "lorem",
+                "insidePolygon": [
+                  [
+                    47.3165,
+                    4.9665,
+                    47.3424,
+                    5.0201,
+                    47.32,
+                    4.9
+                  ],
+                  [
+                    40.9234,
+                    2.1185,
+                    38.643,
+                    1.9916,
+                    39.2587,
+                    2.0104
+                  ]
+                ],
+                "minimumAroundRadius": 1,
+                "naturalLanguages": [],
+                "numericFilters": [
+                  [
+                    "inStock = 1",
+                    "deliveryDate < 1441755506"
+                  ],
+                  "price < 1000"
+                ],
+                "optionalFilters": [
+                  "category:Book",
+                  "author:John Doe"
+                ],
+                "page": 0,
+                "query": "",
+                "queryLanguages": [
+                  "es"
+                ],
+                "relevancyStrictness": 90,
+                "ruleContexts": [
+                  "mobile"
+                ],
+                "sortBy": "Price (asc)",
+                "userToken": "test-user-123"
+              }
+            }
+            '
   /1/compositions/{compositionID}/facets/{facetName}/query:
     post:
       tags:
@@ -1733,7 +1825,103 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"params":{"query":"","maxFacetHits":10,"searchQuery":{"analytics":true,"analyticsTags":[],"aroundLatLng":"40.71,-74.01","aroundLatLngViaIP":false,"aroundRadius":1,"aroundPrecision":10,"clickAnalytics":false,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"hitsPerPage":20,"injectedItems":{"my-group-key":[{"objectID":"my-object-1","metadata":{"my-field":"my-value"}},{"objectID":"my-object-2"}]},"insideBoundingBox":"lorem","insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"minimumAroundRadius":1,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"page":0,"query":"","queryLanguages":["es"],"relevancyStrictness":90,"ruleContexts":["mobile"],"sortBy":"Price (asc)","userToken":"test-user-123"}}}'
+              --data '
+            {
+              "params": {
+                "query": "",
+                "maxFacetHits": 10,
+                "searchQuery": {
+                  "analytics": true,
+                  "analyticsTags": [],
+                  "aroundLatLng": "40.71,-74.01",
+                  "aroundLatLngViaIP": false,
+                  "aroundRadius": 1,
+                  "aroundPrecision": 10,
+                  "clickAnalytics": false,
+                  "enableABTest": true,
+                  "enablePersonalization": false,
+                  "enableReRanking": true,
+                  "enableRules": true,
+                  "facetFilters": [
+                    [
+                      "category:Book",
+                      "category:-Movie"
+                    ],
+                    "author:John Doe"
+                  ],
+                  "facets": {
+                    "facetSpecificList": {
+                      "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                      "value": [
+                        "category",
+                        "disjunctive(brand)",
+                        "price"
+                      ]
+                    }
+                  },
+                  "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                  "getRankingInfo": false,
+                  "hitsPerPage": 20,
+                  "injectedItems": {
+                    "my-group-key": [
+                      {
+                        "objectID": "my-object-1",
+                        "metadata": {
+                          "my-field": "my-value"
+                        }
+                      },
+                      {
+                        "objectID": "my-object-2"
+                      }
+                    ]
+                  },
+                  "insideBoundingBox": "lorem",
+                  "insidePolygon": [
+                    [
+                      47.3165,
+                      4.9665,
+                      47.3424,
+                      5.0201,
+                      47.32,
+                      4.9
+                    ],
+                    [
+                      40.9234,
+                      2.1185,
+                      38.643,
+                      1.9916,
+                      39.2587,
+                      2.0104
+                    ]
+                  ],
+                  "minimumAroundRadius": 1,
+                  "naturalLanguages": [],
+                  "numericFilters": [
+                    [
+                      "inStock = 1",
+                      "deliveryDate < 1441755506"
+                    ],
+                    "price < 1000"
+                  ],
+                  "optionalFilters": [
+                    "category:Book",
+                    "author:John Doe"
+                  ],
+                  "page": 0,
+                  "query": "",
+                  "queryLanguages": [
+                    "es"
+                  ],
+                  "relevancyStrictness": 90,
+                  "ruleContexts": [
+                    "mobile"
+                  ],
+                  "sortBy": "Price (asc)",
+                  "userToken": "test-user-123"
+                }
+              }
+            }
+            '
   /1/compositions:
     get:
       tags:
@@ -2282,17 +2470,30 @@ paths:
                   { "Price-desc", "products-high-to-low" },
                 },
                 Behavior = new CompositionBehavior(
-                  new CompositionInjectionBehavior
+                  new CompositionMultifeedBehavior
                   {
-                    Injection = new Injection
+                    Multifeed = new Multifeed
                     {
-                      Main = new Main
+                      Feeds = new Dictionary<string, FeedInjection>
                       {
-                        Source = new CompositionSource
                         {
-                          Search = new CompositionSourceSearch { Index = "products" },
+                          "main-products",
+                          new FeedInjection
+                          {
+                            Injection = new Injection
+                            {
+                              Main = new Main
+                              {
+                                Source = new CompositionSource
+                                {
+                                  Search = new CompositionSourceSearch { Index = "products" },
+                                },
+                              },
+                            },
+                          }
                         },
                       },
+                      FeedsOrder = new List<string> { "main-products" },
                     },
                   }
                 ),
@@ -2318,15 +2519,24 @@ paths:
                   'Price-asc': "products-low-to-high",
                   'Price-desc': "products-high-to-low",
                 },
-                behavior: CompositionInjectionBehavior(
-                  injection: Injection(
-                    main: Main(
-                      source: CompositionSource(
-                        search: CompositionSourceSearch(
-                          index: "products",
+                behavior: CompositionMultifeedBehavior(
+                  multifeed: Multifeed(
+                    feeds: {
+                      'main-products': FeedInjection(
+                        injection: Injection(
+                          main: Main(
+                            source: CompositionSource(
+                              search: CompositionSourceSearch(
+                                index: "products",
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    },
+                    feedsOrder: [
+                      "main-products",
+                    ],
                   ),
                 ),
               ),
@@ -2357,12 +2567,18 @@ paths:
                 SetObjectID("my-compo").
                 SetName("my composition").
                 SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
-                SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
-                  composition.NewEmptyCompositionInjectionBehavior().SetInjection(
-                    composition.NewEmptyInjection().SetMain(
-                      composition.NewEmptyMain().SetSource(
-                        composition.NewEmptyCompositionSource().SetSearch(
-                          composition.NewEmptyCompositionSourceSearch().SetIndex("products"))))))),
+                SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
+                  composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
+                    composition.NewEmptyMultifeed().
+                      SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+                        composition.NewEmptyInjection().SetMain(
+                          composition.NewEmptyMain().SetSource(
+                            composition.NewEmptyCompositionSource().SetSearch(
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+                      SetFeedsOrder(
+                        []string{"main-products"}),
+                  ),
+                )),
             ))
 
             if err != nil {
@@ -2400,10 +2616,23 @@ paths:
                   }
                 )
                 .setBehavior(
-                  new CompositionInjectionBehavior().setInjection(
-                    new Injection().setMain(
-                      new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
-                    )
+                  new CompositionMultifeedBehavior().setMultifeed(
+                    new Multifeed()
+                      .setFeeds(
+                        new HashMap() {
+                          {
+                            put(
+                              "main-products",
+                              new FeedInjection().setInjection(
+                                new Injection().setMain(
+                                  new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                                )
+                              )
+                            );
+                          }
+                        }
+                      )
+                      .setFeedsOrder(Arrays.asList("main-products"))
                   )
                 )
             );
@@ -2429,7 +2658,12 @@ paths:
                 objectID: 'my-compo',
                 name: 'my composition',
                 sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
-                behavior: { injection: { main: { source: { search: { index: 'products' } } } } },
+                behavior: {
+                  multifeed: {
+                    feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
+                    feedsOrder: ['main-products'],
+                  },
+                },
               },
             });
 
@@ -2459,14 +2693,26 @@ paths:
                     sortingStrategy =
                       mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
                     behavior =
-                      CompositionInjectionBehavior(
-                        injection =
-                          Injection(
-                            main =
-                              Main(
-                                source =
-                                  CompositionSource(search = CompositionSourceSearch(index = "products"))
-                              )
+                      CompositionMultifeedBehavior(
+                        multifeed =
+                          Multifeed(
+                            feeds =
+                              mapOf(
+                                "main-products" to
+                                  FeedInjection(
+                                    injection =
+                                      Injection(
+                                        main =
+                                          Main(
+                                            source =
+                                              CompositionSource(
+                                                search = CompositionSourceSearch(index = "products")
+                                              )
+                                          )
+                                      )
+                                  )
+                              ),
+                            feedsOrder = listOf("main-products"),
                           )
                       ),
                   ),
@@ -2494,10 +2740,16 @@ paths:
                     'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
                         'Price-desc' => 'products-high-to-low',
                     ],
-                    'behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                    'behavior' => ['multifeed' => ['feeds' => ['main-products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
                     ],
                     ],
                     ],
+                    ],
+                    ],
+                    ],
+                        'feedsOrder' => [
+                            'main-products',
+                        ],
                     ],
                     ],
                 ],
@@ -2532,14 +2784,23 @@ paths:
                         "Price-desc": "products-high-to-low",
                     },
                     "behavior": {
-                        "injection": {
-                            "main": {
-                                "source": {
-                                    "search": {
-                                        "index": "products",
+                        "multifeed": {
+                            "feeds": {
+                                "main-products": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "products",
+                                                },
+                                            },
+                                        },
                                     },
                                 },
                             },
+                            "feedsOrder": [
+                                "main-products",
+                            ],
                         },
                     },
                 },
@@ -2567,13 +2828,20 @@ paths:
                 algolia_object_id: "my-compo",
                 name: "my composition",
                 sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
-                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
-                  injection: Algolia::Composition::Injection.new(
-                    main: Algolia::Composition::Main.new(
-                      source: Algolia::Composition::CompositionSource.new(
-                        search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
+                  multifeed: Algolia::Composition::Multifeed.new(
+                    feeds: {
+                      :"main-products" => Algolia::Composition::FeedInjection.new(
+                        injection: Algolia::Composition::Injection.new(
+                          main: Algolia::Composition::Main.new(
+                            source: Algolia::Composition::CompositionSource.new(
+                              search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                            )
+                          )
+                        )
                       )
-                    )
+                    },
+                    feeds_order: ["main-products"]
                   )
                 )
               )
@@ -2602,15 +2870,22 @@ paths:
                   objectID = "my-compo",
                   name = "my composition",
                   sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
-                  behavior = CompositionInjectionBehavior(
-                    injection = Injection(
-                      main = Main(
-                        source = CompositionSource(
-                          search = CompositionSourceSearch(
-                            index = "products"
+                  behavior = CompositionMultifeedBehavior(
+                    multifeed = Multifeed(
+                      feeds = Map(
+                        "main-products" -> FeedInjection(
+                          injection = Injection(
+                            main = Main(
+                              source = CompositionSource(
+                                search = CompositionSourceSearch(
+                                  index = "products"
+                                )
+                              )
+                            )
                           )
                         )
-                      )
+                      ),
+                      feedsOrder = Some(Seq("main-products"))
                     )
                   )
                 )
@@ -2639,13 +2914,18 @@ paths:
                     objectID: "my-compo",
                     name: "my composition",
                     behavior: CompositionBehavior
-                        .compositionInjectionBehavior(
-                            CompositionInjectionBehavior(injection: Injection(
-                                main: CompositionMain(source: CompositionSource(
-                                    search: CompositionSourceSearch(index: "products")
-                                ))
-                            ))
-                        ),
+                        .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
+                            feeds: [
+                                "main-products": FeedInjection(
+                                    injection: Injection(
+                                        main: CompositionMain(
+                                            source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                                        )
+                                    )
+                                ),
+                            ],
+                            feedsOrder: ["main-products"]
+                        ))),
                     sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
                 )
             )
@@ -2663,7 +2943,315 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}'
+              --data '
+            {
+              "objectID": "my_composition_object_id",
+              "name": "my lovely crafted composition",
+              "description": "my lovely crafted composition that is used for X purpose",
+              "behavior": {
+                "injection": {
+                  "main": {
+                    "source": {
+                      "search": {
+                        "index": "Products",
+                        "params": {
+                          "advancedSyntax": false,
+                          "advancedSyntaxFeatures": [
+                            "exactPhrase",
+                            "excludeWords"
+                          ],
+                          "allowTyposOnNumericTokens": true,
+                          "alternativesAsExact": [
+                            "ignorePlurals",
+                            "singleWordSynonym"
+                          ],
+                          "analytics": true,
+                          "attributeCriteriaComputedByMinProximity": false,
+                          "attributesToHighlight": [
+                            "author",
+                            "title",
+                            "conten",
+                            "content"
+                          ],
+                          "attributesToRetrieve": [
+                            "author",
+                            "title",
+                            "content"
+                          ],
+                          "attributesToSnippet": [
+                            "content:80",
+                            "description"
+                          ],
+                          "clickAnalytics": false,
+                          "decompoundQuery": true,
+                          "disableExactOnAttributes": [
+                            "description"
+                          ],
+                          "disableTypoToleranceOnAttributes": [
+                            "sku"
+                          ],
+                          "distinct": 1,
+                          "enableABTest": true,
+                          "enablePersonalization": false,
+                          "enableReRanking": true,
+                          "enableRules": true,
+                          "exactOnSingleWordQuery": "attribute",
+                          "facetFilters": [
+                            [
+                              "category:Book",
+                              "category:-Movie"
+                            ],
+                            "author:John Doe"
+                          ],
+                          "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                          "getRankingInfo": false,
+                          "highlightPostTag": "</em>",
+                          "highlightPreTag": "<em>",
+                          "ignorePlurals": [
+                            "ca",
+                            "es"
+                          ],
+                          "maxFacetHits": 10,
+                          "minProximity": 1,
+                          "minWordSizefor1Typo": 4,
+                          "minWordSizefor2Typos": 8,
+                          "naturalLanguages": [],
+                          "numericFilters": [
+                            [
+                              "inStock = 1",
+                              "deliveryDate < 1441755506"
+                            ],
+                            "price < 1000"
+                          ],
+                          "optionalFilters": [
+                            "category:Book",
+                            "author:John Doe"
+                          ],
+                          "optionalWords": "lorem",
+                          "percentileComputation": true,
+                          "personalizationImpact": 100,
+                          "queryLanguages": [
+                            "es"
+                          ],
+                          "queryType": "prefixLast",
+                          "removeStopWords": [
+                            "ca",
+                            "es"
+                          ],
+                          "removeWordsIfNoResults": "firstWords",
+                          "replaceSynonymsInHighlight": false,
+                          "responseFields": [
+                            "*"
+                          ],
+                          "restrictHighlightAndSnippetArrays": false,
+                          "restrictSearchableAttributes": [
+                            "title",
+                            "author"
+                          ],
+                          "ruleContexts": [
+                            "mobile"
+                          ],
+                          "snippetEllipsisText": "…",
+                          "synonyms": true,
+                          "typoTolerance": true,
+                          "facetingAfterDistinct": false,
+                          "facets": {
+                            "facetSpecificList": {
+                              "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                              "value": [
+                                "category",
+                                "disjunctive(brand)",
+                                "price"
+                              ]
+                            }
+                          },
+                          "hitsPerPage": 20,
+                          "maxValuesPerFacet": 100,
+                          "renderingContent": {
+                            "facetOrdering": {
+                              "facets": {
+                                "order": [
+                                  "lorem"
+                                ]
+                              },
+                              "values": {
+                                "property1": {
+                                  "order": [
+                                    "lorem"
+                                  ],
+                                  "sortRemainingBy": "count",
+                                  "hide": [
+                                    "lorem"
+                                  ]
+                                },
+                                "property2": {
+                                  "order": [
+                                    "lorem"
+                                  ],
+                                  "sortRemainingBy": "count",
+                                  "hide": [
+                                    "lorem"
+                                  ]
+                                }
+                              }
+                            },
+                            "redirect": {
+                              "url": "lorem"
+                            },
+                            "widgets": {
+                              "banners": [
+                                {
+                                  "image": {
+                                    "urls": [
+                                      {
+                                        "url": "lorem"
+                                      }
+                                    ],
+                                    "title": "lorem"
+                                  },
+                                  "link": {
+                                    "url": "lorem"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "sortFacetValuesBy": "count",
+                          "sumOrFiltersScores": false
+                        }
+                      }
+                    }
+                  },
+                  "injectedItems": [
+                    {
+                      "key": "lorem",
+                      "source": {
+                        "search": {
+                          "index": "Products",
+                          "params": {
+                            "advancedSyntax": false,
+                            "advancedSyntaxFeatures": [
+                              "exactPhrase",
+                              "excludeWords"
+                            ],
+                            "allowTyposOnNumericTokens": true,
+                            "alternativesAsExact": [
+                              "ignorePlurals",
+                              "singleWordSynonym"
+                            ],
+                            "analytics": true,
+                            "attributeCriteriaComputedByMinProximity": false,
+                            "attributesToHighlight": [
+                              "author",
+                              "title",
+                              "conten",
+                              "content"
+                            ],
+                            "attributesToRetrieve": [
+                              "author",
+                              "title",
+                              "content"
+                            ],
+                            "attributesToSnippet": [
+                              "content:80",
+                              "description"
+                            ],
+                            "clickAnalytics": false,
+                            "decompoundQuery": true,
+                            "disableExactOnAttributes": [
+                              "description"
+                            ],
+                            "disableTypoToleranceOnAttributes": [
+                              "sku"
+                            ],
+                            "distinct": 1,
+                            "enableABTest": true,
+                            "enablePersonalization": false,
+                            "enableReRanking": true,
+                            "enableRules": true,
+                            "exactOnSingleWordQuery": "attribute",
+                            "facetFilters": [
+                              [
+                                "category:Book",
+                                "category:-Movie"
+                              ],
+                              "author:John Doe"
+                            ],
+                            "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                            "getRankingInfo": false,
+                            "highlightPostTag": "</em>",
+                            "highlightPreTag": "<em>",
+                            "ignorePlurals": [
+                              "ca",
+                              "es"
+                            ],
+                            "maxFacetHits": 10,
+                            "minProximity": 1,
+                            "minWordSizefor1Typo": 4,
+                            "minWordSizefor2Typos": 8,
+                            "naturalLanguages": [],
+                            "numericFilters": [
+                              [
+                                "inStock = 1",
+                                "deliveryDate < 1441755506"
+                              ],
+                              "price < 1000"
+                            ],
+                            "optionalFilters": [
+                              "category:Book",
+                              "author:John Doe"
+                            ],
+                            "optionalWords": "lorem",
+                            "percentileComputation": true,
+                            "personalizationImpact": 100,
+                            "queryLanguages": [
+                              "es"
+                            ],
+                            "queryType": "prefixLast",
+                            "removeStopWords": [
+                              "ca",
+                              "es"
+                            ],
+                            "removeWordsIfNoResults": "firstWords",
+                            "replaceSynonymsInHighlight": false,
+                            "responseFields": [
+                              "*"
+                            ],
+                            "restrictHighlightAndSnippetArrays": false,
+                            "restrictSearchableAttributes": [
+                              "title",
+                              "author"
+                            ],
+                            "ruleContexts": [
+                              "mobile"
+                            ],
+                            "snippetEllipsisText": "…",
+                            "synonyms": true,
+                            "typoTolerance": true
+                          }
+                        }
+                      },
+                      "position": 0,
+                      "length": 0,
+                      "metadata": {
+                        "hits": {
+                          "addItemKey": true,
+                          "extra": {}
+                        }
+                      }
+                    }
+                  ],
+                  "deduplication": {
+                    "positioning": "highest"
+                  }
+                }
+              },
+              "sortingStrategy": {
+                "Price (asc)": "products-low-to-high",
+                "Price (desc)": "products-high-to-low"
+              }
+            }
+            '
     delete:
       tags:
         - Compositions
@@ -3533,7 +4121,322 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_object_id","name":"my lovely crafted composition","description":"my lovely crafted composition that is used for X purpose","behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}},"sortingStrategy":{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}}}]}'
+              --data '
+            {
+              "requests": [
+                {
+                  "action": "upsert",
+                  "body": {
+                    "objectID": "my_composition_object_id",
+                    "name": "my lovely crafted composition",
+                    "description": "my lovely crafted composition that is used for X purpose",
+                    "behavior": {
+                      "injection": {
+                        "main": {
+                          "source": {
+                            "search": {
+                              "index": "Products",
+                              "params": {
+                                "advancedSyntax": false,
+                                "advancedSyntaxFeatures": [
+                                  "exactPhrase",
+                                  "excludeWords"
+                                ],
+                                "allowTyposOnNumericTokens": true,
+                                "alternativesAsExact": [
+                                  "ignorePlurals",
+                                  "singleWordSynonym"
+                                ],
+                                "analytics": true,
+                                "attributeCriteriaComputedByMinProximity": false,
+                                "attributesToHighlight": [
+                                  "author",
+                                  "title",
+                                  "conten",
+                                  "content"
+                                ],
+                                "attributesToRetrieve": [
+                                  "author",
+                                  "title",
+                                  "content"
+                                ],
+                                "attributesToSnippet": [
+                                  "content:80",
+                                  "description"
+                                ],
+                                "clickAnalytics": false,
+                                "decompoundQuery": true,
+                                "disableExactOnAttributes": [
+                                  "description"
+                                ],
+                                "disableTypoToleranceOnAttributes": [
+                                  "sku"
+                                ],
+                                "distinct": 1,
+                                "enableABTest": true,
+                                "enablePersonalization": false,
+                                "enableReRanking": true,
+                                "enableRules": true,
+                                "exactOnSingleWordQuery": "attribute",
+                                "facetFilters": [
+                                  [
+                                    "category:Book",
+                                    "category:-Movie"
+                                  ],
+                                  "author:John Doe"
+                                ],
+                                "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                                "getRankingInfo": false,
+                                "highlightPostTag": "</em>",
+                                "highlightPreTag": "<em>",
+                                "ignorePlurals": [
+                                  "ca",
+                                  "es"
+                                ],
+                                "maxFacetHits": 10,
+                                "minProximity": 1,
+                                "minWordSizefor1Typo": 4,
+                                "minWordSizefor2Typos": 8,
+                                "naturalLanguages": [],
+                                "numericFilters": [
+                                  [
+                                    "inStock = 1",
+                                    "deliveryDate < 1441755506"
+                                  ],
+                                  "price < 1000"
+                                ],
+                                "optionalFilters": [
+                                  "category:Book",
+                                  "author:John Doe"
+                                ],
+                                "optionalWords": "lorem",
+                                "percentileComputation": true,
+                                "personalizationImpact": 100,
+                                "queryLanguages": [
+                                  "es"
+                                ],
+                                "queryType": "prefixLast",
+                                "removeStopWords": [
+                                  "ca",
+                                  "es"
+                                ],
+                                "removeWordsIfNoResults": "firstWords",
+                                "replaceSynonymsInHighlight": false,
+                                "responseFields": [
+                                  "*"
+                                ],
+                                "restrictHighlightAndSnippetArrays": false,
+                                "restrictSearchableAttributes": [
+                                  "title",
+                                  "author"
+                                ],
+                                "ruleContexts": [
+                                  "mobile"
+                                ],
+                                "snippetEllipsisText": "…",
+                                "synonyms": true,
+                                "typoTolerance": true,
+                                "facetingAfterDistinct": false,
+                                "facets": {
+                                  "facetSpecificList": {
+                                    "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                                    "value": [
+                                      "category",
+                                      "disjunctive(brand)",
+                                      "price"
+                                    ]
+                                  }
+                                },
+                                "hitsPerPage": 20,
+                                "maxValuesPerFacet": 100,
+                                "renderingContent": {
+                                  "facetOrdering": {
+                                    "facets": {
+                                      "order": [
+                                        "lorem"
+                                      ]
+                                    },
+                                    "values": {
+                                      "property1": {
+                                        "order": [
+                                          "lorem"
+                                        ],
+                                        "sortRemainingBy": "count",
+                                        "hide": [
+                                          "lorem"
+                                        ]
+                                      },
+                                      "property2": {
+                                        "order": [
+                                          "lorem"
+                                        ],
+                                        "sortRemainingBy": "count",
+                                        "hide": [
+                                          "lorem"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "redirect": {
+                                    "url": "lorem"
+                                  },
+                                  "widgets": {
+                                    "banners": [
+                                      {
+                                        "image": {
+                                          "urls": [
+                                            {
+                                              "url": "lorem"
+                                            }
+                                          ],
+                                          "title": "lorem"
+                                        },
+                                        "link": {
+                                          "url": "lorem"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                "sortFacetValuesBy": "count",
+                                "sumOrFiltersScores": false
+                              }
+                            }
+                          }
+                        },
+                        "injectedItems": [
+                          {
+                            "key": "lorem",
+                            "source": {
+                              "search": {
+                                "index": "Products",
+                                "params": {
+                                  "advancedSyntax": false,
+                                  "advancedSyntaxFeatures": [
+                                    "exactPhrase",
+                                    "excludeWords"
+                                  ],
+                                  "allowTyposOnNumericTokens": true,
+                                  "alternativesAsExact": [
+                                    "ignorePlurals",
+                                    "singleWordSynonym"
+                                  ],
+                                  "analytics": true,
+                                  "attributeCriteriaComputedByMinProximity": false,
+                                  "attributesToHighlight": [
+                                    "author",
+                                    "title",
+                                    "conten",
+                                    "content"
+                                  ],
+                                  "attributesToRetrieve": [
+                                    "author",
+                                    "title",
+                                    "content"
+                                  ],
+                                  "attributesToSnippet": [
+                                    "content:80",
+                                    "description"
+                                  ],
+                                  "clickAnalytics": false,
+                                  "decompoundQuery": true,
+                                  "disableExactOnAttributes": [
+                                    "description"
+                                  ],
+                                  "disableTypoToleranceOnAttributes": [
+                                    "sku"
+                                  ],
+                                  "distinct": 1,
+                                  "enableABTest": true,
+                                  "enablePersonalization": false,
+                                  "enableReRanking": true,
+                                  "enableRules": true,
+                                  "exactOnSingleWordQuery": "attribute",
+                                  "facetFilters": [
+                                    [
+                                      "category:Book",
+                                      "category:-Movie"
+                                    ],
+                                    "author:John Doe"
+                                  ],
+                                  "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                                  "getRankingInfo": false,
+                                  "highlightPostTag": "</em>",
+                                  "highlightPreTag": "<em>",
+                                  "ignorePlurals": [
+                                    "ca",
+                                    "es"
+                                  ],
+                                  "maxFacetHits": 10,
+                                  "minProximity": 1,
+                                  "minWordSizefor1Typo": 4,
+                                  "minWordSizefor2Typos": 8,
+                                  "naturalLanguages": [],
+                                  "numericFilters": [
+                                    [
+                                      "inStock = 1",
+                                      "deliveryDate < 1441755506"
+                                    ],
+                                    "price < 1000"
+                                  ],
+                                  "optionalFilters": [
+                                    "category:Book",
+                                    "author:John Doe"
+                                  ],
+                                  "optionalWords": "lorem",
+                                  "percentileComputation": true,
+                                  "personalizationImpact": 100,
+                                  "queryLanguages": [
+                                    "es"
+                                  ],
+                                  "queryType": "prefixLast",
+                                  "removeStopWords": [
+                                    "ca",
+                                    "es"
+                                  ],
+                                  "removeWordsIfNoResults": "firstWords",
+                                  "replaceSynonymsInHighlight": false,
+                                  "responseFields": [
+                                    "*"
+                                  ],
+                                  "restrictHighlightAndSnippetArrays": false,
+                                  "restrictSearchableAttributes": [
+                                    "title",
+                                    "author"
+                                  ],
+                                  "ruleContexts": [
+                                    "mobile"
+                                  ],
+                                  "snippetEllipsisText": "…",
+                                  "synonyms": true,
+                                  "typoTolerance": true
+                                }
+                              }
+                            },
+                            "position": 0,
+                            "length": 0,
+                            "metadata": {
+                              "hits": {
+                                "addItemKey": true,
+                                "extra": {}
+                              }
+                            }
+                          }
+                        ],
+                        "deduplication": {
+                          "positioning": "highest"
+                        }
+                      }
+                    },
+                    "sortingStrategy": {
+                      "Price (asc)": "products-low-to-high",
+                      "Price (desc)": "products-high-to-low"
+                    }
+                  }
+                }
+              ]
+            }
+            '
   /1/compositions/{compositionID}/sortingStrategy:
     post:
       tags:
@@ -3852,7 +4755,12 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"Price (asc)":"products-low-to-high","Price (desc)":"products-high-to-low"}'
+              --data '
+            {
+              "Price (asc)": "products-low-to-high",
+              "Price (desc)": "products-high-to-low"
+            }
+            '
   /1/compositions/{compositionID}/rules/{objectID}:
     get:
       tags:
@@ -4743,7 +5651,331 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}'
+              --data '
+            {
+              "objectID": "my_composition_rule_object_id",
+              "conditions": [
+                {
+                  "pattern": "{facet:genre}",
+                  "anchoring": "is",
+                  "context": "mobile",
+                  "filters": "genre:comedy",
+                  "sortBy": "price-low-to-high"
+                }
+              ],
+              "consequence": {
+                "behavior": {
+                  "injection": {
+                    "main": {
+                      "source": {
+                        "search": {
+                          "index": "Products",
+                          "params": {
+                            "advancedSyntax": false,
+                            "advancedSyntaxFeatures": [
+                              "exactPhrase",
+                              "excludeWords"
+                            ],
+                            "allowTyposOnNumericTokens": true,
+                            "alternativesAsExact": [
+                              "ignorePlurals",
+                              "singleWordSynonym"
+                            ],
+                            "analytics": true,
+                            "attributeCriteriaComputedByMinProximity": false,
+                            "attributesToHighlight": [
+                              "author",
+                              "title",
+                              "conten",
+                              "content"
+                            ],
+                            "attributesToRetrieve": [
+                              "author",
+                              "title",
+                              "content"
+                            ],
+                            "attributesToSnippet": [
+                              "content:80",
+                              "description"
+                            ],
+                            "clickAnalytics": false,
+                            "decompoundQuery": true,
+                            "disableExactOnAttributes": [
+                              "description"
+                            ],
+                            "disableTypoToleranceOnAttributes": [
+                              "sku"
+                            ],
+                            "distinct": 1,
+                            "enableABTest": true,
+                            "enablePersonalization": false,
+                            "enableReRanking": true,
+                            "enableRules": true,
+                            "exactOnSingleWordQuery": "attribute",
+                            "facetFilters": [
+                              [
+                                "category:Book",
+                                "category:-Movie"
+                              ],
+                              "author:John Doe"
+                            ],
+                            "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                            "getRankingInfo": false,
+                            "highlightPostTag": "</em>",
+                            "highlightPreTag": "<em>",
+                            "ignorePlurals": [
+                              "ca",
+                              "es"
+                            ],
+                            "maxFacetHits": 10,
+                            "minProximity": 1,
+                            "minWordSizefor1Typo": 4,
+                            "minWordSizefor2Typos": 8,
+                            "naturalLanguages": [],
+                            "numericFilters": [
+                              [
+                                "inStock = 1",
+                                "deliveryDate < 1441755506"
+                              ],
+                              "price < 1000"
+                            ],
+                            "optionalFilters": [
+                              "category:Book",
+                              "author:John Doe"
+                            ],
+                            "optionalWords": "lorem",
+                            "percentileComputation": true,
+                            "personalizationImpact": 100,
+                            "queryLanguages": [
+                              "es"
+                            ],
+                            "queryType": "prefixLast",
+                            "removeStopWords": [
+                              "ca",
+                              "es"
+                            ],
+                            "removeWordsIfNoResults": "firstWords",
+                            "replaceSynonymsInHighlight": false,
+                            "responseFields": [
+                              "*"
+                            ],
+                            "restrictHighlightAndSnippetArrays": false,
+                            "restrictSearchableAttributes": [
+                              "title",
+                              "author"
+                            ],
+                            "ruleContexts": [
+                              "mobile"
+                            ],
+                            "snippetEllipsisText": "…",
+                            "synonyms": true,
+                            "typoTolerance": true,
+                            "facetingAfterDistinct": false,
+                            "facets": {
+                              "facetSpecificList": {
+                                "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                                "value": [
+                                  "category",
+                                  "disjunctive(brand)",
+                                  "price"
+                                ]
+                              }
+                            },
+                            "hitsPerPage": 20,
+                            "maxValuesPerFacet": 100,
+                            "renderingContent": {
+                              "facetOrdering": {
+                                "facets": {
+                                  "order": [
+                                    "lorem"
+                                  ]
+                                },
+                                "values": {
+                                  "property1": {
+                                    "order": [
+                                      "lorem"
+                                    ],
+                                    "sortRemainingBy": "count",
+                                    "hide": [
+                                      "lorem"
+                                    ]
+                                  },
+                                  "property2": {
+                                    "order": [
+                                      "lorem"
+                                    ],
+                                    "sortRemainingBy": "count",
+                                    "hide": [
+                                      "lorem"
+                                    ]
+                                  }
+                                }
+                              },
+                              "redirect": {
+                                "url": "lorem"
+                              },
+                              "widgets": {
+                                "banners": [
+                                  {
+                                    "image": {
+                                      "urls": [
+                                        {
+                                          "url": "lorem"
+                                        }
+                                      ],
+                                      "title": "lorem"
+                                    },
+                                    "link": {
+                                      "url": "lorem"
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "sortFacetValuesBy": "count",
+                            "sumOrFiltersScores": false
+                          }
+                        }
+                      }
+                    },
+                    "injectedItems": [
+                      {
+                        "key": "lorem",
+                        "source": {
+                          "search": {
+                            "index": "Products",
+                            "params": {
+                              "advancedSyntax": false,
+                              "advancedSyntaxFeatures": [
+                                "exactPhrase",
+                                "excludeWords"
+                              ],
+                              "allowTyposOnNumericTokens": true,
+                              "alternativesAsExact": [
+                                "ignorePlurals",
+                                "singleWordSynonym"
+                              ],
+                              "analytics": true,
+                              "attributeCriteriaComputedByMinProximity": false,
+                              "attributesToHighlight": [
+                                "author",
+                                "title",
+                                "conten",
+                                "content"
+                              ],
+                              "attributesToRetrieve": [
+                                "author",
+                                "title",
+                                "content"
+                              ],
+                              "attributesToSnippet": [
+                                "content:80",
+                                "description"
+                              ],
+                              "clickAnalytics": false,
+                              "decompoundQuery": true,
+                              "disableExactOnAttributes": [
+                                "description"
+                              ],
+                              "disableTypoToleranceOnAttributes": [
+                                "sku"
+                              ],
+                              "distinct": 1,
+                              "enableABTest": true,
+                              "enablePersonalization": false,
+                              "enableReRanking": true,
+                              "enableRules": true,
+                              "exactOnSingleWordQuery": "attribute",
+                              "facetFilters": [
+                                [
+                                  "category:Book",
+                                  "category:-Movie"
+                                ],
+                                "author:John Doe"
+                              ],
+                              "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                              "getRankingInfo": false,
+                              "highlightPostTag": "</em>",
+                              "highlightPreTag": "<em>",
+                              "ignorePlurals": [
+                                "ca",
+                                "es"
+                              ],
+                              "maxFacetHits": 10,
+                              "minProximity": 1,
+                              "minWordSizefor1Typo": 4,
+                              "minWordSizefor2Typos": 8,
+                              "naturalLanguages": [],
+                              "numericFilters": [
+                                [
+                                  "inStock = 1",
+                                  "deliveryDate < 1441755506"
+                                ],
+                                "price < 1000"
+                              ],
+                              "optionalFilters": [
+                                "category:Book",
+                                "author:John Doe"
+                              ],
+                              "optionalWords": "lorem",
+                              "percentileComputation": true,
+                              "personalizationImpact": 100,
+                              "queryLanguages": [
+                                "es"
+                              ],
+                              "queryType": "prefixLast",
+                              "removeStopWords": [
+                                "ca",
+                                "es"
+                              ],
+                              "removeWordsIfNoResults": "firstWords",
+                              "replaceSynonymsInHighlight": false,
+                              "responseFields": [
+                                "*"
+                              ],
+                              "restrictHighlightAndSnippetArrays": false,
+                              "restrictSearchableAttributes": [
+                                "title",
+                                "author"
+                              ],
+                              "ruleContexts": [
+                                "mobile"
+                              ],
+                              "snippetEllipsisText": "…",
+                              "synonyms": true,
+                              "typoTolerance": true
+                            }
+                          }
+                        },
+                        "position": 0,
+                        "length": 0,
+                        "metadata": {
+                          "hits": {
+                            "addItemKey": true,
+                            "extra": {}
+                          }
+                        }
+                      }
+                    ],
+                    "deduplication": {
+                      "positioning": "highest"
+                    }
+                  }
+                }
+              },
+              "description": "Display a promotional banner",
+              "enabled": true,
+              "validity": [
+                {
+                  "from": 42,
+                  "until": 42
+                }
+              ],
+              "tags": [
+                "conditional"
+              ]
+            }
+            '
     delete:
       tags:
         - Composition Rules
@@ -5762,7 +6994,338 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"requests":[{"action":"upsert","body":{"objectID":"my_composition_rule_object_id","conditions":[{"pattern":"{facet:genre}","anchoring":"is","context":"mobile","filters":"genre:comedy","sortBy":"price-low-to-high"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true,"facetingAfterDistinct":false,"facets":{"facetSpecificList":{"summary":"Specify which facet to retrieve with some marked as disjunctive","value":["category","disjunctive(brand)","price"]}},"hitsPerPage":20,"maxValuesPerFacet":100,"renderingContent":{"facetOrdering":{"facets":{"order":["lorem"]},"values":{"property1":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]},"property2":{"order":["lorem"],"sortRemainingBy":"count","hide":["lorem"]}}},"redirect":{"url":"lorem"},"widgets":{"banners":[{"image":{"urls":[{"url":"lorem"}],"title":"lorem"},"link":{"url":"lorem"}}]}},"sortFacetValuesBy":"count","sumOrFiltersScores":false}}}},"injectedItems":[{"key":"lorem","source":{"search":{"index":"Products","params":{"advancedSyntax":false,"advancedSyntaxFeatures":["exactPhrase","excludeWords"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["ignorePlurals","singleWordSynonym"],"analytics":true,"attributeCriteriaComputedByMinProximity":false,"attributesToHighlight":["author","title","conten","content"],"attributesToRetrieve":["author","title","content"],"attributesToSnippet":["content:80","description"],"clickAnalytics":false,"decompoundQuery":true,"disableExactOnAttributes":["description"],"disableTypoToleranceOnAttributes":["sku"],"distinct":1,"enableABTest":true,"enablePersonalization":false,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[["category:Book","category:-Movie"],"author:John Doe"],"filters":"(category:Book OR category:Ebook) AND _tags:published","getRankingInfo":false,"highlightPostTag":"</em>","highlightPreTag":"<em>","ignorePlurals":["ca","es"],"maxFacetHits":10,"minProximity":1,"minWordSizefor1Typo":4,"minWordSizefor2Typos":8,"naturalLanguages":[],"numericFilters":[["inStock = 1","deliveryDate < 1441755506"],"price < 1000"],"optionalFilters":["category:Book","author:John Doe"],"optionalWords":"lorem","percentileComputation":true,"personalizationImpact":100,"queryLanguages":["es"],"queryType":"prefixLast","removeStopWords":["ca","es"],"removeWordsIfNoResults":"firstWords","replaceSynonymsInHighlight":false,"responseFields":["*"],"restrictHighlightAndSnippetArrays":false,"restrictSearchableAttributes":["title","author"],"ruleContexts":["mobile"],"snippetEllipsisText":"…","synonyms":true,"typoTolerance":true}}},"position":0,"length":0,"metadata":{"hits":{"addItemKey":true,"extra":{}}}}],"deduplication":{"positioning":"highest"}}}},"description":"Display a promotional banner","enabled":true,"validity":[{"from":42,"until":42}],"tags":["conditional"]}}]}'
+              --data '
+            {
+              "requests": [
+                {
+                  "action": "upsert",
+                  "body": {
+                    "objectID": "my_composition_rule_object_id",
+                    "conditions": [
+                      {
+                        "pattern": "{facet:genre}",
+                        "anchoring": "is",
+                        "context": "mobile",
+                        "filters": "genre:comedy",
+                        "sortBy": "price-low-to-high"
+                      }
+                    ],
+                    "consequence": {
+                      "behavior": {
+                        "injection": {
+                          "main": {
+                            "source": {
+                              "search": {
+                                "index": "Products",
+                                "params": {
+                                  "advancedSyntax": false,
+                                  "advancedSyntaxFeatures": [
+                                    "exactPhrase",
+                                    "excludeWords"
+                                  ],
+                                  "allowTyposOnNumericTokens": true,
+                                  "alternativesAsExact": [
+                                    "ignorePlurals",
+                                    "singleWordSynonym"
+                                  ],
+                                  "analytics": true,
+                                  "attributeCriteriaComputedByMinProximity": false,
+                                  "attributesToHighlight": [
+                                    "author",
+                                    "title",
+                                    "conten",
+                                    "content"
+                                  ],
+                                  "attributesToRetrieve": [
+                                    "author",
+                                    "title",
+                                    "content"
+                                  ],
+                                  "attributesToSnippet": [
+                                    "content:80",
+                                    "description"
+                                  ],
+                                  "clickAnalytics": false,
+                                  "decompoundQuery": true,
+                                  "disableExactOnAttributes": [
+                                    "description"
+                                  ],
+                                  "disableTypoToleranceOnAttributes": [
+                                    "sku"
+                                  ],
+                                  "distinct": 1,
+                                  "enableABTest": true,
+                                  "enablePersonalization": false,
+                                  "enableReRanking": true,
+                                  "enableRules": true,
+                                  "exactOnSingleWordQuery": "attribute",
+                                  "facetFilters": [
+                                    [
+                                      "category:Book",
+                                      "category:-Movie"
+                                    ],
+                                    "author:John Doe"
+                                  ],
+                                  "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                                  "getRankingInfo": false,
+                                  "highlightPostTag": "</em>",
+                                  "highlightPreTag": "<em>",
+                                  "ignorePlurals": [
+                                    "ca",
+                                    "es"
+                                  ],
+                                  "maxFacetHits": 10,
+                                  "minProximity": 1,
+                                  "minWordSizefor1Typo": 4,
+                                  "minWordSizefor2Typos": 8,
+                                  "naturalLanguages": [],
+                                  "numericFilters": [
+                                    [
+                                      "inStock = 1",
+                                      "deliveryDate < 1441755506"
+                                    ],
+                                    "price < 1000"
+                                  ],
+                                  "optionalFilters": [
+                                    "category:Book",
+                                    "author:John Doe"
+                                  ],
+                                  "optionalWords": "lorem",
+                                  "percentileComputation": true,
+                                  "personalizationImpact": 100,
+                                  "queryLanguages": [
+                                    "es"
+                                  ],
+                                  "queryType": "prefixLast",
+                                  "removeStopWords": [
+                                    "ca",
+                                    "es"
+                                  ],
+                                  "removeWordsIfNoResults": "firstWords",
+                                  "replaceSynonymsInHighlight": false,
+                                  "responseFields": [
+                                    "*"
+                                  ],
+                                  "restrictHighlightAndSnippetArrays": false,
+                                  "restrictSearchableAttributes": [
+                                    "title",
+                                    "author"
+                                  ],
+                                  "ruleContexts": [
+                                    "mobile"
+                                  ],
+                                  "snippetEllipsisText": "…",
+                                  "synonyms": true,
+                                  "typoTolerance": true,
+                                  "facetingAfterDistinct": false,
+                                  "facets": {
+                                    "facetSpecificList": {
+                                      "summary": "Specify which facet to retrieve with some marked as disjunctive",
+                                      "value": [
+                                        "category",
+                                        "disjunctive(brand)",
+                                        "price"
+                                      ]
+                                    }
+                                  },
+                                  "hitsPerPage": 20,
+                                  "maxValuesPerFacet": 100,
+                                  "renderingContent": {
+                                    "facetOrdering": {
+                                      "facets": {
+                                        "order": [
+                                          "lorem"
+                                        ]
+                                      },
+                                      "values": {
+                                        "property1": {
+                                          "order": [
+                                            "lorem"
+                                          ],
+                                          "sortRemainingBy": "count",
+                                          "hide": [
+                                            "lorem"
+                                          ]
+                                        },
+                                        "property2": {
+                                          "order": [
+                                            "lorem"
+                                          ],
+                                          "sortRemainingBy": "count",
+                                          "hide": [
+                                            "lorem"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "redirect": {
+                                      "url": "lorem"
+                                    },
+                                    "widgets": {
+                                      "banners": [
+                                        {
+                                          "image": {
+                                            "urls": [
+                                              {
+                                                "url": "lorem"
+                                              }
+                                            ],
+                                            "title": "lorem"
+                                          },
+                                          "link": {
+                                            "url": "lorem"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "sortFacetValuesBy": "count",
+                                  "sumOrFiltersScores": false
+                                }
+                              }
+                            }
+                          },
+                          "injectedItems": [
+                            {
+                              "key": "lorem",
+                              "source": {
+                                "search": {
+                                  "index": "Products",
+                                  "params": {
+                                    "advancedSyntax": false,
+                                    "advancedSyntaxFeatures": [
+                                      "exactPhrase",
+                                      "excludeWords"
+                                    ],
+                                    "allowTyposOnNumericTokens": true,
+                                    "alternativesAsExact": [
+                                      "ignorePlurals",
+                                      "singleWordSynonym"
+                                    ],
+                                    "analytics": true,
+                                    "attributeCriteriaComputedByMinProximity": false,
+                                    "attributesToHighlight": [
+                                      "author",
+                                      "title",
+                                      "conten",
+                                      "content"
+                                    ],
+                                    "attributesToRetrieve": [
+                                      "author",
+                                      "title",
+                                      "content"
+                                    ],
+                                    "attributesToSnippet": [
+                                      "content:80",
+                                      "description"
+                                    ],
+                                    "clickAnalytics": false,
+                                    "decompoundQuery": true,
+                                    "disableExactOnAttributes": [
+                                      "description"
+                                    ],
+                                    "disableTypoToleranceOnAttributes": [
+                                      "sku"
+                                    ],
+                                    "distinct": 1,
+                                    "enableABTest": true,
+                                    "enablePersonalization": false,
+                                    "enableReRanking": true,
+                                    "enableRules": true,
+                                    "exactOnSingleWordQuery": "attribute",
+                                    "facetFilters": [
+                                      [
+                                        "category:Book",
+                                        "category:-Movie"
+                                      ],
+                                      "author:John Doe"
+                                    ],
+                                    "filters": "(category:Book OR category:Ebook) AND _tags:published",
+                                    "getRankingInfo": false,
+                                    "highlightPostTag": "</em>",
+                                    "highlightPreTag": "<em>",
+                                    "ignorePlurals": [
+                                      "ca",
+                                      "es"
+                                    ],
+                                    "maxFacetHits": 10,
+                                    "minProximity": 1,
+                                    "minWordSizefor1Typo": 4,
+                                    "minWordSizefor2Typos": 8,
+                                    "naturalLanguages": [],
+                                    "numericFilters": [
+                                      [
+                                        "inStock = 1",
+                                        "deliveryDate < 1441755506"
+                                      ],
+                                      "price < 1000"
+                                    ],
+                                    "optionalFilters": [
+                                      "category:Book",
+                                      "author:John Doe"
+                                    ],
+                                    "optionalWords": "lorem",
+                                    "percentileComputation": true,
+                                    "personalizationImpact": 100,
+                                    "queryLanguages": [
+                                      "es"
+                                    ],
+                                    "queryType": "prefixLast",
+                                    "removeStopWords": [
+                                      "ca",
+                                      "es"
+                                    ],
+                                    "removeWordsIfNoResults": "firstWords",
+                                    "replaceSynonymsInHighlight": false,
+                                    "responseFields": [
+                                      "*"
+                                    ],
+                                    "restrictHighlightAndSnippetArrays": false,
+                                    "restrictSearchableAttributes": [
+                                      "title",
+                                      "author"
+                                    ],
+                                    "ruleContexts": [
+                                      "mobile"
+                                    ],
+                                    "snippetEllipsisText": "…",
+                                    "synonyms": true,
+                                    "typoTolerance": true
+                                  }
+                                }
+                              },
+                              "position": 0,
+                              "length": 0,
+                              "metadata": {
+                                "hits": {
+                                  "addItemKey": true,
+                                  "extra": {}
+                                }
+                              }
+                            }
+                          ],
+                          "deduplication": {
+                            "positioning": "highest"
+                          }
+                        }
+                      }
+                    },
+                    "description": "Display a promotional banner",
+                    "enabled": true,
+                    "validity": [
+                      {
+                        "from": 42,
+                        "until": 42
+                      }
+                    ],
+                    "tags": [
+                      "conditional"
+                    ]
+                  }
+                }
+              ]
+            }
+            '
   /1/compositions/{compositionID}/rules/search:
     post:
       tags:
@@ -6095,7 +7658,16 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"query":"","anchoring":"is","context":"mobile","page":0,"hitsPerPage":20,"enabled":true}'
+              --data '
+            {
+              "query": "",
+              "anchoring": "is",
+              "context": "mobile",
+              "page": 0,
+              "hitsPerPage": 20,
+              "enabled": true
+            }
+            '
   /1/compositions/{compositionID}/task/{taskID}:
     get:
       tags:
@@ -7924,6 +9496,10 @@ components:
           $ref: '#/components/schemas/SingleResultSet_params'
         query:
           $ref: '#/components/schemas/SingleResultSet_query'
+    feedID:
+      type: string
+      description: The ID of the feed.
+      example: products-feed
     resultsInjectedItemAppliedRulesInfoResponse:
       type: object
       properties:
@@ -7961,6 +9537,8 @@ components:
     resultsCompositionsResponse:
       type: object
       properties:
+        feedID:
+          $ref: '#/components/schemas/feedID'
         compositions:
           additionalProperties:
             $ref: '#/components/schemas/resultsCompositionInfoResponse'
@@ -9143,6 +10721,19 @@ components:
           $ref: '#/components/schemas/injection'
       required:
         - injection
+    feedInjection:
+      type: object
+      description: Feed formatted as an injection.
+      additionalProperties: false
+      properties:
+        injection:
+          $ref: '#/components/schemas/injection'
+      required:
+        - injection
+    Behaviour_feedID:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/feedInjection'
     multifeed:
       title: multifeed
       type: object
@@ -9154,7 +10745,7 @@ components:
             A key-value store of Feed ID to Feed. Currently, the only supported
             Feed type is an Injection.
           additionalProperties:
-            $ref: '#/components/schemas/injection'
+            $ref: '#/components/schemas/Behaviour_feedID'
         feedsOrder:
           type: array
           description: >-
@@ -9170,24 +10761,26 @@ components:
       example:
         feeds:
           products-feed:
-            main:
-              source:
-                search:
-                  index: products
-            injectedItems:
-              - key: sponsored
-                position: 0
-                length: 4
+            injection:
+              main:
                 source:
                   search:
                     index: products
-                    params:
-                      filters: sponsored:true
+              injectedItems:
+                - key: sponsored
+                  position: 0
+                  length: 4
+                  source:
+                    search:
+                      index: products
+                      params:
+                        filters: sponsored:true
           articles-feed:
-            main:
-              source:
-                search:
-                  index: articles
+            injection:
+              main:
+                source:
+                  search:
+                    index: articles
         feedsOrder:
           - products-feed
           - articles-feed

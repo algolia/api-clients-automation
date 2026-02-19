@@ -20,7 +20,7 @@ class Multifeed extends AbstractModel implements ModelInterface, \ArrayAccess, \
      * @var string[]
      */
     protected static $modelTypes = [
-        'feeds' => 'array<string,\Algolia\AlgoliaSearch\Model\Composition\Injection>',
+        'feeds' => 'array<string,\Algolia\AlgoliaSearch\Model\Composition\FeedInjection>',
         'feedsOrder' => 'string[]',
     ];
 
@@ -168,7 +168,7 @@ class Multifeed extends AbstractModel implements ModelInterface, \ArrayAccess, \
     /**
      * Gets feeds.
      *
-     * @return array<string,Injection>
+     * @return array<string,FeedInjection>
      */
     public function getFeeds()
     {
@@ -178,7 +178,7 @@ class Multifeed extends AbstractModel implements ModelInterface, \ArrayAccess, \
     /**
      * Sets feeds.
      *
-     * @param array<string,Injection> $feeds A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
+     * @param array<string,FeedInjection> $feeds A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
      *
      * @return self
      */

@@ -2140,7 +2140,24 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"eventsScoring":[{"score":42,"eventName":"lorem","eventType":"click"}],"facetsScoring":[{"score":42,"facetName":"lorem"}],"personalizationImpact":0}'
+              --data '
+            {
+              "eventsScoring": [
+                {
+                  "score": 42,
+                  "eventName": "lorem",
+                  "eventType": "click"
+                }
+              ],
+              "facetsScoring": [
+                {
+                  "score": 42,
+                  "facetName": "lorem"
+                }
+              ],
+              "personalizationImpact": 0
+            }
+            '
 components:
   securitySchemes:
     appId:
