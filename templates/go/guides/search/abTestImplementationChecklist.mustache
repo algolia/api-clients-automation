@@ -17,33 +17,35 @@ func abTestImplementationChecklist() {
   {{> snippets/init}}
 
   // Set the searchParams and get the current user token
-  searchParams := search.SearchParamsObjectAsSearchParams(
-    search.NewSearchParamsObject().
-      SetQuery("User search query").
-      SetEnableABTest(true),
-  )
-
   userToken, err := getUserToken()
   if err != nil {
     panic(err)
   }
 
+  var searchParams *search.SearchParams
+
   // Is the user token anonymous?
   if userToken == "" || userToken == "YOUR_ANONYMOUS_USER_TOKEN" {
     // Disable A/B testing for this request
-    searchParams.SearchParamsObject.SetEnableABTest(false)
+    searchParams = search.SearchParamsObjectAsSearchParams(
+      search.NewSearchParamsObject().
+        SetQuery("User search query").
+        SetEnableABTest(false),
+    )
   } else {
     // Set the user token to the current user token
-    searchParams.SearchParamsObject.SetUserToken(userToken)
+    searchParams = search.SearchParamsObjectAsSearchParams(
+      search.NewSearchParamsObject().
+        SetQuery("User search query").
+        SetEnableABTest(true).
+        SetUserToken(userToken),
+    )
   }
 
   // Perform the searchSingleIndex
-  result, err := {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
   if err != nil {
     // SearchSingleIndex errors
     panic(err)
   }
-
-  // SearchSingleIndex results
-  fmt.Printf("%+v\n", result)
 }

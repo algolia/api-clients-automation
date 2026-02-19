@@ -9,19 +9,22 @@ def _get_user_token() -> str:
 _{{> snippets/init}}
 
 # Set the searchParams and get the current user token
-search_params = SearchParams(
-  query="User search query",
-  enable_ab_test=True,
-)
 user_token = _get_user_token()
 
 # Is the user token anonymous?
 if user_token is None or user_token == "" or user_token == "YOUR_ANONYMOUS_USER_TOKEN":
   # Disable A/B testing for this request
-  search_params.enable_ab_test = False
+  search_params = SearchParams(
+    query="User search query",
+    enable_ab_test=False,
+  )
 else:
   # Set the user token to the current user token
-  search_params.user_token = user_token
+  search_params = SearchParams(
+    query="User search query",
+    enable_ab_test=True,
+    user_token=user_token,
+  )
 
 try:
   # Perform the searchSingleIndex

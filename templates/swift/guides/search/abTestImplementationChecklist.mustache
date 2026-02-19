@@ -12,16 +12,20 @@ func abTestImplementationChecklist() async throws {
   {{> snippets/init}}
 
   // Set the searchParams and get the current user token
-  var searchParams = SearchSearchParamsObject(query: "User search query", enableABTest: true)
   let userToken = getUserToken()
 
   // Is the user token anonymous?
+  let searchParams: SearchSearchParams
   if userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN" {
     // Disable A/B testing for this request
-    searchParams.enableABTest = false
+    searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "User search query", enableABTest: false)
+    )
   } else {
     // Set the user token to the current user token
-    searchParams.userToken = userToken
+    searchParams = SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: "User search query", enableABTest: true, userToken: userToken)
+    )
   }
 
   do {

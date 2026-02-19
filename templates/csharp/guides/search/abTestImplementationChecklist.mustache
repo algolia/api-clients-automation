@@ -19,21 +19,24 @@ class AbTestImplementationChecklist {
     {{> snippets/init}}
 
     // Set the searchParams and get the current user token
-    var searchParams = new SearchParams(new SearchParamsObject
-    {
-      Query = "User search query",
-      EnableABTest = true
-    });
     var userToken = GetUserToken();
+
+    var searchParamsObject = new SearchParamsObject
+    {
+      Query = "User search query"
+    };
 
     // Is the user token anonymous?
     if (string.IsNullOrEmpty(userToken) || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
       // Disable A/B testing for this request
-      searchParams.SearchParamsObject.EnableABTest = false;
+      searchParamsObject.EnableABTest = false;
     } else {
       // Set the user token to the current user token
-      searchParams.SearchParamsObject.UserToken = userToken;
+      searchParamsObject.EnableABTest = true;
+      searchParamsObject.UserToken = userToken;
     }
+
+    var searchParams = new SearchParams(searchParamsObject);
 
     try {
       // Perform the searchSingleIndex

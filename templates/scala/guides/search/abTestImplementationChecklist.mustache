@@ -12,19 +12,22 @@ def abTestImplementationChecklist(): Future[Unit] = {
   {{> snippets/init}}
 
   // Set the searchParams and get the current user token
-  val searchParams = SearchParamsObject(
-    query = Some("User search query"),
-    enableABTest = Some(true)
-  )
   val userToken = getUserToken
 
   // Is the user token anonymous?
-  if (userToken == null || userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
+  val searchParams = if (userToken == null || userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
     // Disable A/B testing for this request
-    searchParams.copy(enableABTest = Some(false))
+    SearchParamsObject(
+      query = Some("User search query"),
+      enableABTest = Some(false)
+    )
   } else {
     // Set the user token to the current user token
-    searchParams.copy(userToken = Some(userToken))
+    SearchParamsObject(
+      query = Some("User search query"),
+      enableABTest = Some(true),
+      userToken = Some(userToken)
+    )
   }
 
   // Perform the searchSingleIndex
