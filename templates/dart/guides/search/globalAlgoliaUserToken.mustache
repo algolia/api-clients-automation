@@ -6,7 +6,7 @@ void globalAlgoliaUserID() async {
       apiKey: 'ALGOLIA_API_KEY',
       options: ClientOptions(
         headers: {
-          'X-Algolia-User-ID': 'test-user-123',
+          'X-Algolia-UserToken': 'test-user-123',
         },
       ));
   print(client.options.headers);
