@@ -20,6 +20,7 @@ final class Rule {
     this.validity,
     this.tags,
     this.scope,
+    this.condition,
   });
 
   /// Unique identifier of a rule object.
@@ -51,6 +52,9 @@ final class Rule {
   @JsonKey(name: r'scope')
   final String? scope;
 
+  @JsonKey(name: r'condition')
+  final Condition? condition;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -62,7 +66,8 @@ final class Rule {
           other.enabled == enabled &&
           other.validity == validity &&
           other.tags == tags &&
-          other.scope == scope;
+          other.scope == scope &&
+          other.condition == condition;
 
   @override
   int get hashCode =>
@@ -73,7 +78,8 @@ final class Rule {
       enabled.hashCode +
       validity.hashCode +
       tags.hashCode +
-      scope.hashCode;
+      scope.hashCode +
+      condition.hashCode;
 
   factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
 

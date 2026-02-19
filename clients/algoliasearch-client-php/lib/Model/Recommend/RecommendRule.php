@@ -29,6 +29,7 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         'description' => 'string',
         'enabled' => 'bool',
         'validity' => '\Algolia\AlgoliaSearch\Model\Recommend\TimeRange[]',
+        'conditions' => '\Algolia\AlgoliaSearch\Model\Recommend\Condition[]',
     ];
 
     /**
@@ -44,6 +45,7 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         'description' => null,
         'enabled' => null,
         'validity' => null,
+        'conditions' => null,
     ];
 
     /**
@@ -60,6 +62,7 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         'description' => 'description',
         'enabled' => 'enabled',
         'validity' => 'validity',
+        'conditions' => 'conditions',
     ];
 
     /**
@@ -75,6 +78,7 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         'description' => 'setDescription',
         'enabled' => 'setEnabled',
         'validity' => 'setValidity',
+        'conditions' => 'setConditions',
     ];
 
     /**
@@ -90,6 +94,7 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         'description' => 'getDescription',
         'enabled' => 'getEnabled',
         'validity' => 'getValidity',
+        'conditions' => 'getConditions',
     ];
 
     /**
@@ -126,6 +131,9 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
         }
         if (isset($data['validity'])) {
             $this->container['validity'] = $data['validity'];
+        }
+        if (isset($data['conditions'])) {
+            $this->container['conditions'] = $data['conditions'];
         }
     }
 
@@ -365,6 +373,30 @@ class RecommendRule extends AbstractModel implements ModelInterface, \ArrayAcces
     public function setValidity($validity)
     {
         $this->container['validity'] = $validity;
+
+        return $this;
+    }
+
+    /**
+     * Gets conditions.
+     *
+     * @return null|Condition[]
+     */
+    public function getConditions()
+    {
+        return $this->container['conditions'] ?? null;
+    }
+
+    /**
+     * Sets conditions.
+     *
+     * @param null|Condition[] $conditions Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+     *
+     * @return self
+     */
+    public function setConditions($conditions)
+    {
+        $this->container['conditions'] = $conditions;
 
         return $this;
     }

@@ -27,6 +27,9 @@ module Algolia
       # Time periods when the rule is active.
       attr_accessor :validity
 
+      # Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+      attr_accessor :conditions
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -36,7 +39,8 @@ module Algolia
           :consequence => :consequence,
           :description => :description,
           :enabled => :enabled,
-          :validity => :validity
+          :validity => :validity,
+          :conditions => :conditions
         }
       end
 
@@ -49,7 +53,8 @@ module Algolia
           :consequence => :"Consequence",
           :description => :"String",
           :enabled => :"Boolean",
-          :validity => :"Array<TimeRange>"
+          :validity => :"Array<TimeRange>",
+          :conditions => :"Array<Condition>"
         }
       end
 
@@ -112,6 +117,12 @@ module Algolia
             self.validity = value
           end
         end
+
+        if attributes.key?(:conditions)
+          if (value = attributes[:conditions]).is_a?(Array)
+            self.conditions = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -125,7 +136,8 @@ module Algolia
           consequence == other.consequence &&
           description == other.description &&
           enabled == other.enabled &&
-          validity == other.validity
+          validity == other.validity &&
+          conditions == other.conditions
       end
 
       # @see the `==` method
@@ -137,7 +149,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [_metadata, algolia_object_id, condition, consequence, description, enabled, validity].hash
+        [_metadata, algolia_object_id, condition, consequence, description, enabled, validity, conditions].hash
       end
 
       # Builds the object from hash

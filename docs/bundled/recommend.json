@@ -3554,6 +3554,13 @@
             "items": {
               "$ref": "#/components/schemas/timeRange"
             }
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Multiple conditions for the rule. If specified, only one condition needs to match.\n\nNote: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.\n",
+            "items": {
+              "$ref": "#/components/schemas/Condition"
+            }
           }
         }
       },

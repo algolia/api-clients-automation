@@ -21,6 +21,7 @@ import kotlinx.serialization.json.*
  * @param validity Time periods when the rule is active.
  * @param tags
  * @param scope
+ * @param condition
  */
 @Serializable
 public data class Rule(
@@ -46,4 +47,5 @@ public data class Rule(
   @SerialName(value = "validity") val validity: List<TimeRange>? = null,
   @SerialName(value = "tags") val tags: List<String>? = null,
   @SerialName(value = "scope") val scope: String? = null,
+  @SerialName(value = "condition") val condition: Condition? = null,
 ) {}

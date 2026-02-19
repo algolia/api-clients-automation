@@ -19,6 +19,9 @@ public struct RecommendRule: Codable, JSONEncodable {
     public var enabled: Bool?
     /// Time periods when the rule is active.
     public var validity: [RecommendTimeRange]?
+    /// Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API
+    /// typically uses a single condition. Use `condition` (singular) for single conditions.
+    public var conditions: [RecommendCondition]?
 
     public init(
         metadata: RuleMetadata? = nil,
@@ -27,7 +30,8 @@ public struct RecommendRule: Codable, JSONEncodable {
         consequence: RecommendConsequence? = nil,
         description: String? = nil,
         enabled: Bool? = nil,
-        validity: [RecommendTimeRange]? = nil
+        validity: [RecommendTimeRange]? = nil,
+        conditions: [RecommendCondition]? = nil
     ) {
         self.metadata = metadata
         self.objectID = objectID
@@ -36,6 +40,7 @@ public struct RecommendRule: Codable, JSONEncodable {
         self.description = description
         self.enabled = enabled
         self.validity = validity
+        self.conditions = conditions
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -46,6 +51,7 @@ public struct RecommendRule: Codable, JSONEncodable {
         case description
         case enabled
         case validity
+        case conditions
     }
 
     // Encodable protocol methods
@@ -59,6 +65,7 @@ public struct RecommendRule: Codable, JSONEncodable {
         try container.encodeIfPresent(self.description, forKey: .description)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.validity, forKey: .validity)
+        try container.encodeIfPresent(self.conditions, forKey: .conditions)
     }
 }
 
@@ -70,7 +77,8 @@ extension RecommendRule: Equatable {
             lhs.consequence == rhs.consequence &&
             lhs.description == rhs.description &&
             lhs.enabled == rhs.enabled &&
-            lhs.validity == rhs.validity
+            lhs.validity == rhs.validity &&
+            lhs.conditions == rhs.conditions
     }
 }
 
@@ -83,5 +91,6 @@ extension RecommendRule: Hashable {
         hasher.combine(self.description?.hashValue)
         hasher.combine(self.enabled?.hashValue)
         hasher.combine(self.validity?.hashValue)
+        hasher.combine(self.conditions?.hashValue)
     }
 }

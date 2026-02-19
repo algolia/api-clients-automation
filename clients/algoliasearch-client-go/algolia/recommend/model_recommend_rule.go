@@ -19,6 +19,8 @@ type RecommendRule struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// Time periods when the rule is active.
 	Validity []TimeRange `json:"validity,omitempty"`
+	// Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+	Conditions []Condition `json:"conditions,omitempty"`
 }
 
 type RecommendRuleOption func(f *RecommendRule)
@@ -62,6 +64,12 @@ func WithRecommendRuleEnabled(val bool) RecommendRuleOption {
 func WithRecommendRuleValidity(val []TimeRange) RecommendRuleOption {
 	return func(f *RecommendRule) {
 		f.Validity = val
+	}
+}
+
+func WithRecommendRuleConditions(val []Condition) RecommendRuleOption {
+	return func(f *RecommendRule) {
+		f.Conditions = val
 	}
 }
 
@@ -342,6 +350,43 @@ func (o *RecommendRule) SetValidity(v []TimeRange) *RecommendRule {
 	return o
 }
 
+// GetConditions returns the Conditions field value if set, zero value otherwise.
+func (o *RecommendRule) GetConditions() []Condition {
+	if o == nil || o.Conditions == nil {
+		var ret []Condition
+
+		return ret
+	}
+
+	return o.Conditions
+}
+
+// GetConditionsOk returns a tuple with the Conditions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RecommendRule) GetConditionsOk() ([]Condition, bool) {
+	if o == nil || o.Conditions == nil {
+		return nil, false
+	}
+
+	return o.Conditions, true
+}
+
+// HasConditions returns a boolean if a field has been set.
+func (o *RecommendRule) HasConditions() bool {
+	if o != nil && o.Conditions != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetConditions gets a reference to the given []Condition and assigns it to the Conditions field.
+func (o *RecommendRule) SetConditions(v []Condition) *RecommendRule {
+	o.Conditions = v
+
+	return o
+}
+
 func (o RecommendRule) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if o.Metadata != nil {
@@ -372,6 +417,10 @@ func (o RecommendRule) MarshalJSON() ([]byte, error) {
 		toSerialize["validity"] = o.Validity
 	}
 
+	if o.Conditions != nil {
+		toSerialize["conditions"] = o.Conditions
+	}
+
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal RecommendRule: %w", err)
@@ -389,6 +438,7 @@ func (o RecommendRule) String() string {
 	out += fmt.Sprintf("  description=%v\n", o.Description)
 	out += fmt.Sprintf("  enabled=%v\n", o.Enabled)
 	out += fmt.Sprintf("  validity=%v\n", o.Validity)
+	out += fmt.Sprintf("  conditions=%v\n", o.Conditions)
 
 	return fmt.Sprintf("RecommendRule {\n%s}", out)
 }

@@ -3811,6 +3811,17 @@ components:
           description: Time periods when the rule is active.
           items:
             $ref: '#/components/schemas/timeRange'
+        conditions:
+          type: array
+          description: >
+            Multiple conditions for the rule. If specified, only one condition
+            needs to match.
+
+
+            Note: Recommend API typically uses a single condition. Use
+            `condition` (singular) for single conditions.
+          items:
+            $ref: '#/components/schemas/Condition'
     taskID:
       type: integer
       format: int64

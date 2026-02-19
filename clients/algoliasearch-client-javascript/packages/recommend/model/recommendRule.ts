@@ -34,4 +34,9 @@ export type RecommendRule = {
    * Time periods when the rule is active.
    */
   validity?: Array<TimeRange> | undefined;
+
+  /**
+   * Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+   */
+  conditions?: Array<Condition> | undefined;
 };

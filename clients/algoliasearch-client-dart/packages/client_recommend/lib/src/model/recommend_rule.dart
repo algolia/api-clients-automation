@@ -20,6 +20,7 @@ final class RecommendRule {
     this.description,
     this.enabled,
     this.validity,
+    this.conditions,
   });
 
   @JsonKey(name: r'_metadata')
@@ -47,6 +48,10 @@ final class RecommendRule {
   @JsonKey(name: r'validity')
   final List<TimeRange>? validity;
 
+  /// Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+  @JsonKey(name: r'conditions')
+  final List<Condition>? conditions;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -57,7 +62,8 @@ final class RecommendRule {
           other.consequence == consequence &&
           other.description == description &&
           other.enabled == enabled &&
-          other.validity == validity;
+          other.validity == validity &&
+          other.conditions == conditions;
 
   @override
   int get hashCode =>
@@ -67,7 +73,8 @@ final class RecommendRule {
       consequence.hashCode +
       description.hashCode +
       enabled.hashCode +
-      validity.hashCode;
+      validity.hashCode +
+      conditions.hashCode;
 
   factory RecommendRule.fromJson(Map<String, dynamic> json) =>
       _$RecommendRuleFromJson(json);

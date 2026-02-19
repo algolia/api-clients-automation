@@ -40,6 +40,9 @@ import org.json4s._
   *   Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
   * @param validity
   *   Time periods when the rule is active.
+  * @param conditions
+  *   Multiple conditions for the rule. If specified, only one condition needs to match. Note: Recommend API typically
+  *   uses a single condition. Use `condition` (singular) for single conditions.
   */
 case class RecommendRule(
     metadata /* _metadata */: Option[RuleMetadata] = scala.None,
@@ -48,7 +51,8 @@ case class RecommendRule(
     consequence: Option[Consequence] = scala.None,
     description: Option[String] = scala.None,
     enabled: Option[Boolean] = scala.None,
-    validity: Option[Seq[TimeRange]] = scala.None
+    validity: Option[Seq[TimeRange]] = scala.None,
+    conditions: Option[Seq[Condition]] = scala.None
 )
 
 class RecommendRuleSerializer extends Serializer[RecommendRule] {

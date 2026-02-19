@@ -11772,7 +11772,14 @@ paths:
               "tags": [
                 "lorem"
               ],
-              "scope": "lorem"
+              "scope": "lorem",
+              "condition": {
+                "pattern": "{facet:genre}",
+                "anchoring": "is",
+                "alternatives": false,
+                "context": "mobile",
+                "filters": "genre:comedy"
+              }
             }
             '
     delete:
@@ -12849,7 +12856,14 @@ paths:
                 "tags": [
                   "lorem"
                 ],
-                "scope": "lorem"
+                "scope": "lorem",
+                "condition": {
+                  "pattern": "{facet:genre}",
+                  "anchoring": "is",
+                  "alternatives": false,
+                  "context": "mobile",
+                  "filters": "genre:comedy"
+                }
               }
             ]
             '
@@ -24204,6 +24218,14 @@ components:
             type: string
         scope:
           type: string
+        condition:
+          deprecated: true
+          description: >
+            Legacy field for a single condition. This field is maintained for
+            backward compatibility 
+
+            with older rules but should not be used in new implementations.
+          $ref: '#/components/schemas/condition'
       required:
         - objectID
         - consequence

@@ -31,6 +31,7 @@ _ALIASES = {
     "description": "description",
     "enabled": "enabled",
     "validity": "validity",
+    "conditions": "conditions",
 }
 
 
@@ -54,6 +55,8 @@ class RecommendRule(BaseModel):
     """ Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time. """
     validity: Optional[List[TimeRange]] = None
     """ Time periods when the rule is active. """
+    conditions: Optional[List[Condition]] = None
+    """ Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.  """
 
     model_config = ConfigDict(
         strict=False,
@@ -108,6 +111,11 @@ class RecommendRule(BaseModel):
         obj["validity"] = (
             [TimeRange.from_dict(_item) for _item in obj["validity"]]
             if obj.get("validity") is not None
+            else None
+        )
+        obj["conditions"] = (
+            [Condition.from_dict(_item) for _item in obj["conditions"]]
+            if obj.get("conditions") is not None
             else None
         )
 

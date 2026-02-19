@@ -68,6 +68,13 @@ public partial class RecommendRule
   public List<TimeRange> Validity { get; set; }
 
   /// <summary>
+  /// Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+  /// </summary>
+  /// <value>Multiple conditions for the rule. If specified, only one condition needs to match.  Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions. </value>
+  [JsonPropertyName("conditions")]
+  public List<Condition> Conditions { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -82,6 +89,7 @@ public partial class RecommendRule
     sb.Append("  Description: ").Append(Description).Append("\n");
     sb.Append("  Enabled: ").Append(Enabled).Append("\n");
     sb.Append("  Validity: ").Append(Validity).Append("\n");
+    sb.Append("  Conditions: ").Append(Conditions).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -122,6 +130,12 @@ public partial class RecommendRule
       && (
         Validity == input.Validity
         || Validity != null && input.Validity != null && Validity.SequenceEqual(input.Validity)
+      )
+      && (
+        Conditions == input.Conditions
+        || Conditions != null
+          && input.Conditions != null
+          && Conditions.SequenceEqual(input.Conditions)
       );
   }
 
@@ -158,6 +172,10 @@ public partial class RecommendRule
       if (Validity != null)
       {
         hashCode = (hashCode * 59) + Validity.GetHashCode();
+      }
+      if (Conditions != null)
+      {
+        hashCode = (hashCode * 59) + Conditions.GetHashCode();
       }
       return hashCode;
     }

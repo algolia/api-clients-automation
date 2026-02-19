@@ -35,6 +35,11 @@ RecommendRule _$RecommendRuleFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)
                   ?.map((e) => TimeRange.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          conditions: $checkedConvert(
+              'conditions',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Condition.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -57,5 +62,7 @@ Map<String, dynamic> _$RecommendRuleToJson(RecommendRule instance) {
   writeNotNull('description', instance.description);
   writeNotNull('enabled', instance.enabled);
   writeNotNull('validity', instance.validity?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'conditions', instance.conditions?.map((e) => e.toJson()).toList());
   return val;
 }

@@ -33,6 +33,9 @@ public class RecommendRule {
   @JsonProperty("validity")
   private List<TimeRange> validity;
 
+  @JsonProperty("conditions")
+  private List<Condition> conditions;
+
   public RecommendRule setMetadata(RuleMetadata metadata) {
     this.metadata = metadata;
     return this;
@@ -120,6 +123,29 @@ public class RecommendRule {
     return validity;
   }
 
+  public RecommendRule setConditions(List<Condition> conditions) {
+    this.conditions = conditions;
+    return this;
+  }
+
+  public RecommendRule addConditions(Condition conditionsItem) {
+    if (this.conditions == null) {
+      this.conditions = new ArrayList<>();
+    }
+    this.conditions.add(conditionsItem);
+    return this;
+  }
+
+  /**
+   * Multiple conditions for the rule. If specified, only one condition needs to match. Note:
+   * Recommend API typically uses a single condition. Use `condition` (singular) for single
+   * conditions.
+   */
+  @javax.annotation.Nullable
+  public List<Condition> getConditions() {
+    return conditions;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -136,13 +162,14 @@ public class RecommendRule {
       Objects.equals(this.consequence, recommendRule.consequence) &&
       Objects.equals(this.description, recommendRule.description) &&
       Objects.equals(this.enabled, recommendRule.enabled) &&
-      Objects.equals(this.validity, recommendRule.validity)
+      Objects.equals(this.validity, recommendRule.validity) &&
+      Objects.equals(this.conditions, recommendRule.conditions)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(metadata, objectID, condition, consequence, description, enabled, validity);
+    return Objects.hash(metadata, objectID, condition, consequence, description, enabled, validity, conditions);
   }
 
   @Override
@@ -156,6 +183,7 @@ public class RecommendRule {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
+    sb.append("    conditions: ").append(toIndentedString(conditions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

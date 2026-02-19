@@ -19,6 +19,9 @@ import kotlinx.serialization.json.*
  * @param enabled Indicates whether to enable the rule. If it isn't enabled, it isn't applied at
  *   query time.
  * @param validity Time periods when the rule is active.
+ * @param conditions Multiple conditions for the rule. If specified, only one condition needs to
+ *   match. Note: Recommend API typically uses a single condition. Use `condition` (singular) for
+ *   single conditions.
  */
 @Serializable
 public data class RecommendRule(
@@ -39,4 +42,11 @@ public data class RecommendRule(
 
   /** Time periods when the rule is active. */
   @SerialName(value = "validity") val validity: List<TimeRange>? = null,
+
+  /**
+   * Multiple conditions for the rule. If specified, only one condition needs to match. Note:
+   * Recommend API typically uses a single condition. Use `condition` (singular) for single
+   * conditions.
+   */
+  @SerialName(value = "conditions") val conditions: List<Condition>? = null,
 ) {}
