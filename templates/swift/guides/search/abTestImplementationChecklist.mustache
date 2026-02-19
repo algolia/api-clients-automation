@@ -24,7 +24,7 @@ func abTestImplementationChecklist() async throws {
   } else {
     // Set the user token to the current user token
     searchParams = SearchSearchParams.searchSearchParamsObject(
-      SearchSearchParamsObject(query: "User search query", enableABTest: true, userToken: userToken)
+      SearchSearchParamsObject(query: "User search query", userToken: userToken, enableABTest: true)
     )
   }
 
