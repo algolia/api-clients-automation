@@ -30,7 +30,7 @@ suspend fun abTestImplementationChecklist() {
 
   try {
     // Perform the searchSingleIndex
-    val result = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+    val result = client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
     // SearchSingleIndex results
     println(result)
   } catch (err: Exception) {
