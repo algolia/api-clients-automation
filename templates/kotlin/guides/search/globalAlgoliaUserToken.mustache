@@ -1,7 +1,7 @@
 {{> snippets/import}}
 import com.algolia.client.model.search.*
 
-suspend fun globalAlgoliaUserID() {
+suspend fun globalAlgoliaUserToken() {
   val client = SearchClient(
     appId = "ALGOLIA_APPLICATION_ID",
     apiKey = "ALGOLIA_API_KEY",
