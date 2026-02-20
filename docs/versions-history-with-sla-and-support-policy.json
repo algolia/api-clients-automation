@@ -832,11 +832,21 @@
     },
     "7.37.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
     },
     "7.37.1": {
-      "releaseDate": "2026-02-05",
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-05"
+    },
+    "7.37.2": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "7.38.0": {
+      "releaseDate": "2026-02-18",
       "slaStatus": "eligible",
       "supportStatus": "eligible"
     }
@@ -1269,8 +1279,18 @@
     },
     "1.44.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "1.45.0": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "1.46.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "go": {
@@ -2235,8 +2255,18 @@
     },
     "4.36.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "4.36.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "4.37.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "java": {
@@ -3131,8 +3161,25 @@
     },
     "4.35.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "3.16.12": {
+      "slaStatus": "eligible",
+      "supportStatus": "eligible",
+      "releaseDate": "2026-02-11",
+      "slaEndDate": "2026-08-14",
+      "supportEndDate": "2026-08-14"
+    },
+    "4.35.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "4.36.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "javascript": {
@@ -4693,8 +4740,23 @@
     },
     "5.48.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "5.48.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "5.48.2": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-17"
+    },
+    "5.49.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "kotlin": {
@@ -5316,8 +5378,18 @@
     },
     "3.38.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "3.38.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "3.39.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "php": {
@@ -6222,8 +6294,23 @@
     },
     "4.38.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "4.38.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "4.38.2": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-17"
+    },
+    "4.39.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "python": {
@@ -7021,8 +7108,18 @@
     },
     "4.36.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "4.36.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "4.37.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "ruby": {
@@ -7876,8 +7973,18 @@
     },
     "3.35.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "3.35.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "3.36.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "scala": {
@@ -8171,25 +8278,25 @@
     },
     "1.37.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2020-08-03",
       "slaEndDate": "2026-08-14"
     },
     "1.38.0": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2020-08-06",
       "slaEndDate": "2026-08-14"
     },
     "1.38.1": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2020-09-11",
       "slaEndDate": "2026-08-14"
     },
     "1.38.2": {
       "slaStatus": "eligible",
-      "supportStatus": "not eligible",
+      "supportStatus": "eligible",
       "releaseDate": "2020-10-05",
       "slaEndDate": "2026-08-14"
     },
@@ -8650,8 +8757,18 @@
     },
     "2.37.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "2.37.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "2.38.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "swift": {
@@ -9495,8 +9612,18 @@
     },
     "9.38.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-05"
+    },
+    "9.38.1": {
+      "slaStatus": "eligible",
+      "supportStatus": "not eligible",
+      "releaseDate": "2026-02-12"
+    },
+    "9.39.0": {
+      "releaseDate": "2026-02-18",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   }
 }

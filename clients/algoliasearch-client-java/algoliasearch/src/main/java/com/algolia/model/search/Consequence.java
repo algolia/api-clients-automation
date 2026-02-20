@@ -27,6 +27,9 @@ public class Consequence {
   @JsonProperty("hide")
   private List<ConsequenceHide> hide;
 
+  @JsonProperty("redirect")
+  private ConsequenceRedirect redirect;
+
   @JsonProperty("userData")
   private Object userData;
 
@@ -101,6 +104,17 @@ public class Consequence {
     return hide;
   }
 
+  public Consequence setRedirect(ConsequenceRedirect redirect) {
+    this.redirect = redirect;
+    return this;
+  }
+
+  /** Get redirect */
+  @javax.annotation.Nullable
+  public ConsequenceRedirect getRedirect() {
+    return redirect;
+  }
+
   public Consequence setUserData(Object userData) {
     this.userData = userData;
     return this;
@@ -129,13 +143,14 @@ public class Consequence {
       Objects.equals(this.promote, consequence.promote) &&
       Objects.equals(this.filterPromotes, consequence.filterPromotes) &&
       Objects.equals(this.hide, consequence.hide) &&
+      Objects.equals(this.redirect, consequence.redirect) &&
       Objects.equals(this.userData, consequence.userData)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(params, promote, filterPromotes, hide, userData);
+    return Objects.hash(params, promote, filterPromotes, hide, redirect, userData);
   }
 
   @Override
@@ -146,6 +161,7 @@ public class Consequence {
     sb.append("    promote: ").append(toIndentedString(promote)).append("\n");
     sb.append("    filterPromotes: ").append(toIndentedString(filterPromotes)).append("\n");
     sb.append("    hide: ").append(toIndentedString(hide)).append("\n");
+    sb.append("    redirect: ").append(toIndentedString(redirect)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("}");
     return sb.toString();

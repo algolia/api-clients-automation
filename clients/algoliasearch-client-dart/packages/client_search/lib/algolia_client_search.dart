@@ -43,6 +43,7 @@ export 'src/model/consequence.dart';
 export 'src/model/consequence_hide.dart';
 export 'src/model/consequence_params.dart';
 export 'src/model/consequence_query_object.dart';
+export 'src/model/consequence_redirect.dart';
 export 'src/model/created_at_response.dart';
 export 'src/model/cursor.dart';
 export 'src/model/delete_api_key_response.dart';

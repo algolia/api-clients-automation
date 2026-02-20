@@ -113,6 +113,9 @@ public class SearchResultsItem<T> {
   @JsonProperty("query")
   private String query;
 
+  @JsonProperty("feedID")
+  private String feedID;
+
   @JsonProperty("compositions")
   private Map<String, ResultsCompositionInfoResponse> compositions = new HashMap<>();
 
@@ -549,6 +552,17 @@ public class SearchResultsItem<T> {
     return query;
   }
 
+  public SearchResultsItem<T> setFeedID(String feedID) {
+    this.feedID = feedID;
+    return this;
+  }
+
+  /** The ID of the feed. */
+  @javax.annotation.Nullable
+  public String getFeedID() {
+    return feedID;
+  }
+
   public SearchResultsItem<T> setCompositions(Map<String, ResultsCompositionInfoResponse> compositions) {
     this.compositions = compositions;
     return this;
@@ -608,6 +622,7 @@ public class SearchResultsItem<T> {
       Objects.equals(this.page, searchResultsItem.page) &&
       Objects.equals(this.params, searchResultsItem.params) &&
       Objects.equals(this.query, searchResultsItem.query) &&
+      Objects.equals(this.feedID, searchResultsItem.feedID) &&
       Objects.equals(this.compositions, searchResultsItem.compositions)
     );
   }
@@ -648,6 +663,7 @@ public class SearchResultsItem<T> {
       page,
       params,
       query,
+      feedID,
       compositions
     );
   }
@@ -689,6 +705,7 @@ public class SearchResultsItem<T> {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    feedID: ").append(toIndentedString(feedID)).append("\n");
     sb.append("    compositions: ").append(toIndentedString(compositions)).append("\n");
     sb.append("}");
     return sb.toString();

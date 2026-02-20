@@ -12,8 +12,8 @@ final class SearchHits extends DelegatingMap<String, dynamic> {
   /// Returns a new [SearchHits] instance.
   const SearchHits({
     required this.hits,
-    required this.query,
-    required this.params,
+    this.query,
+    this.params,
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
@@ -23,11 +23,11 @@ final class SearchHits extends DelegatingMap<String, dynamic> {
 
   /// Search query.
   @JsonKey(name: r'query')
-  final String query;
+  final String? query;
 
   /// URL-encoded string of all search parameters.
   @JsonKey(name: r'params')
-  final String params;
+  final String? params;
 
   @override
   bool operator ==(Object other) =>

@@ -10,3 +10,4 @@ specs/analytics @algolia/optimization
 * @algolia/api-clients-automation
 
 specs/composition @algolia/composition
+tests/CTS/**/composition @algolia/composition

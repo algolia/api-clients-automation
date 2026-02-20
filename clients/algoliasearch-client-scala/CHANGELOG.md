@@ -1,3 +1,18 @@
+## [2.38.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.37.1...2.38.0)
+
+- [6d03afc03](https://github.com/algolia/api-clients-automation/commit/6d03afc03) chore(deps): dependencies 2026-02-16 ([#5965](https://github.com/algolia/api-clients-automation/pull/5965)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [9aafd690b](https://github.com/algolia/api-clients-automation/commit/9aafd690b) fix(specs): invalid API format for multi feed in Comp API ([#5993](https://github.com/algolia/api-clients-automation/pull/5993)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
+## [2.37.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.37.0...2.37.1)
+
+- [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
+- [799a10c44](https://github.com/algolia/api-clients-automation/commit/799a10c44) fix(specs): insights-api timestamp documentation ([#5925](https://github.com/algolia/api-clients-automation/pull/5925)) by [@sirockin](https://github.com/sirockin/)
+- [4b3dc5c26](https://github.com/algolia/api-clients-automation/commit/4b3dc5c26) fix(specs): BREAKING CHANGE – remove unnecessary required fields ([#5959](https://github.com/algolia/api-clients-automation/pull/5959)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+  - The `SearchResponse` model now accepts `query` and `params` as optional parameters, as they are not always returned by the API.
+- [dfd992583](https://github.com/algolia/api-clients-automation/commit/dfd992583) fix(specs): add missing `redirect` property to rule consequence schema ([#5934](https://github.com/algolia/api-clients-automation/pull/5934)) by [@Fluf22](https://github.com/Fluf22/)
+- [b39c0798e](https://github.com/algolia/api-clients-automation/commit/b39c0798e) chore(deps): dependencies 2026-02-09 ([#5935](https://github.com/algolia/api-clients-automation/pull/5935)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [2.37.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.36.3...2.37.0)
 
 BREAKING CHANGES: this minor version includes multiple breaking changes related to fixes on different APIs. See below for more details.

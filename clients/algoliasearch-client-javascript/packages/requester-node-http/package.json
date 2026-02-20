@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-node-http",
-  "version": "5.48.0",
+  "version": "5.49.0",
   "description": "Promise-based request library for node using the native http module.",
   "repository": {
     "type": "git",
@@ -35,12 +35,12 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.48.0"
+    "@algolia/client-common": "5.49.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "24.10.9",
-    "nock": "14.0.10",
+    "@types/node": "24.10.13",
+    "nock": "14.0.11",
     "publint": "0.3.17",
     "tsup": "8.5.1",
     "typescript": "5.9.3",

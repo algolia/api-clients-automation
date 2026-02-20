@@ -7510,8 +7510,32 @@ export async function snippetForSetSettings52(): Promise<void> {
 
 // Snippet for the setSettings method.
 //
-// attributesToHighlightStar
+// highlightWithCustomPrePostTags
 export async function snippetForSetSettings53(): Promise<void> {
+  // >SEPARATOR setSettings highlightWithCustomPrePostTags
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: {
+      attributesToHighlight: ['author', 'title', 'content'],
+      highlightPreTag: '<em class="search-highlight">',
+      highlightPostTag: '</em>',
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToHighlightStar
+export async function snippetForSetSettings54(): Promise<void> {
   // >SEPARATOR setSettings attributesToHighlightStar
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7531,7 +7555,7 @@ export async function snippetForSetSettings53(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // everything
-export async function snippetForSetSettings54(): Promise<void> {
+export async function snippetForSetSettings55(): Promise<void> {
   // >SEPARATOR setSettings everything
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7615,7 +7639,7 @@ export async function snippetForSetSettings54(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesWithCustomRankingsAndAttributesForFaceting
-export async function snippetForSetSettings55(): Promise<void> {
+export async function snippetForSetSettings56(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesWithCustomRankingsAndAttributesForFaceting
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7639,7 +7663,7 @@ export async function snippetForSetSettings55(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesOrdering
-export async function snippetForSetSettings56(): Promise<void> {
+export async function snippetForSetSettings57(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesOrdering
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7659,7 +7683,7 @@ export async function snippetForSetSettings56(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesProductReferenceSuffixes
-export async function snippetForSetSettings57(): Promise<void> {
+export async function snippetForSetSettings58(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesProductReferenceSuffixes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7679,7 +7703,7 @@ export async function snippetForSetSettings57(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // queryLanguageAndIgnorePlurals
-export async function snippetForSetSettings58(): Promise<void> {
+export async function snippetForSetSettings59(): Promise<void> {
   // >SEPARATOR setSettings queryLanguageAndIgnorePlurals
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7699,7 +7723,7 @@ export async function snippetForSetSettings58(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesInMovies
-export async function snippetForSetSettings59(): Promise<void> {
+export async function snippetForSetSettings60(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesInMovies
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7719,7 +7743,7 @@ export async function snippetForSetSettings59(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disablePrefixOnAttributes
-export async function snippetForSetSettings60(): Promise<void> {
+export async function snippetForSetSettings61(): Promise<void> {
   // >SEPARATOR setSettings disablePrefixOnAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7739,7 +7763,7 @@ export async function snippetForSetSettings60(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disableTypoToleranceOnAttributes
-export async function snippetForSetSettings61(): Promise<void> {
+export async function snippetForSetSettings62(): Promise<void> {
   // >SEPARATOR setSettings disableTypoToleranceOnAttributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7759,7 +7783,7 @@ export async function snippetForSetSettings61(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExample
-export async function snippetForSetSettings62(): Promise<void> {
+export async function snippetForSetSettings63(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExample
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7779,7 +7803,7 @@ export async function snippetForSetSettings62(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // searchableAttributesSimpleExampleAlt
-export async function snippetForSetSettings63(): Promise<void> {
+export async function snippetForSetSettings64(): Promise<void> {
   // >SEPARATOR setSettings searchableAttributesSimpleExampleAlt
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7799,7 +7823,7 @@ export async function snippetForSetSettings63(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_searchable_attributes
-export async function snippetForSetSettings64(): Promise<void> {
+export async function snippetForSetSettings65(): Promise<void> {
   // >SEPARATOR setSettings set_searchable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7821,7 +7845,7 @@ export async function snippetForSetSettings64(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_faceting
-export async function snippetForSetSettings65(): Promise<void> {
+export async function snippetForSetSettings66(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_for_faceting
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7849,7 +7873,7 @@ export async function snippetForSetSettings65(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // unretrievable_attributes
-export async function snippetForSetSettings66(): Promise<void> {
+export async function snippetForSetSettings67(): Promise<void> {
   // >SEPARATOR setSettings unretrievable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7869,7 +7893,7 @@ export async function snippetForSetSettings66(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_retrievable_attributes
-export async function snippetForSetSettings67(): Promise<void> {
+export async function snippetForSetSettings68(): Promise<void> {
   // >SEPARATOR setSettings set_retrievable_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7889,7 +7913,7 @@ export async function snippetForSetSettings67(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_as_retrievable
-export async function snippetForSetSettings68(): Promise<void> {
+export async function snippetForSetSettings69(): Promise<void> {
   // >SEPARATOR setSettings set_all_attributes_as_retrievable
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7909,7 +7933,7 @@ export async function snippetForSetSettings68(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // specify_attributes_not_to_retrieve
-export async function snippetForSetSettings69(): Promise<void> {
+export async function snippetForSetSettings70(): Promise<void> {
   // >SEPARATOR setSettings specify_attributes_not_to_retrieve
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7929,7 +7953,7 @@ export async function snippetForSetSettings69(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // neural_search
-export async function snippetForSetSettings70(): Promise<void> {
+export async function snippetForSetSettings71(): Promise<void> {
   // >SEPARATOR setSettings neural_search
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7946,7 +7970,7 @@ export async function snippetForSetSettings70(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // keyword_search
-export async function snippetForSetSettings71(): Promise<void> {
+export async function snippetForSetSettings72(): Promise<void> {
   // >SEPARATOR setSettings keyword_search
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7963,7 +7987,7 @@ export async function snippetForSetSettings71(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_ranking
-export async function snippetForSetSettings72(): Promise<void> {
+export async function snippetForSetSettings73(): Promise<void> {
   // >SEPARATOR setSettings set_default_ranking
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -7983,7 +8007,7 @@ export async function snippetForSetSettings72(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_asc
-export async function snippetForSetSettings73(): Promise<void> {
+export async function snippetForSetSettings74(): Promise<void> {
   // >SEPARATOR setSettings set_ranking_by_attribute_asc
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8005,7 +8029,7 @@ export async function snippetForSetSettings73(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_ranking_by_attribute_desc
-export async function snippetForSetSettings74(): Promise<void> {
+export async function snippetForSetSettings75(): Promise<void> {
   // >SEPARATOR setSettings set_ranking_by_attribute_desc
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8027,7 +8051,7 @@ export async function snippetForSetSettings74(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_custom_ranking
-export async function snippetForSetSettings75(): Promise<void> {
+export async function snippetForSetSettings76(): Promise<void> {
   // >SEPARATOR setSettings set_custom_ranking
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8047,7 +8071,7 @@ export async function snippetForSetSettings75(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_relevancy
-export async function snippetForSetSettings76(): Promise<void> {
+export async function snippetForSetSettings77(): Promise<void> {
   // >SEPARATOR setSettings set_default_relevancy
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8064,7 +8088,7 @@ export async function snippetForSetSettings76(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_replicas
-export async function snippetForSetSettings77(): Promise<void> {
+export async function snippetForSetSettings78(): Promise<void> {
   // >SEPARATOR setSettings set_replicas
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8084,7 +8108,7 @@ export async function snippetForSetSettings77(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_max_values_per_facet
-export async function snippetForSetSettings78(): Promise<void> {
+export async function snippetForSetSettings79(): Promise<void> {
   // >SEPARATOR setSettings set_default_max_values_per_facet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8101,7 +8125,7 @@ export async function snippetForSetSettings78(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_sort_facet_values_by
-export async function snippetForSetSettings79(): Promise<void> {
+export async function snippetForSetSettings80(): Promise<void> {
   // >SEPARATOR setSettings set_default_sort_facet_values_by
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8121,7 +8145,7 @@ export async function snippetForSetSettings79(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_snippet
-export async function snippetForSetSettings80(): Promise<void> {
+export async function snippetForSetSettings81(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_to_snippet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8141,7 +8165,7 @@ export async function snippetForSetSettings80(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_all_attributes_to_snippet
-export async function snippetForSetSettings81(): Promise<void> {
+export async function snippetForSetSettings82(): Promise<void> {
   // >SEPARATOR setSettings set_all_attributes_to_snippet
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8161,7 +8185,7 @@ export async function snippetForSetSettings81(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_pre_tag
-export async function snippetForSetSettings82(): Promise<void> {
+export async function snippetForSetSettings83(): Promise<void> {
   // >SEPARATOR setSettings set_default_highlight_pre_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8178,7 +8202,7 @@ export async function snippetForSetSettings82(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_highlight_post_tag
-export async function snippetForSetSettings83(): Promise<void> {
+export async function snippetForSetSettings84(): Promise<void> {
   // >SEPARATOR setSettings set_default_highlight_post_tag
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8198,7 +8222,7 @@ export async function snippetForSetSettings83(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_snippet_ellipsis_text
-export async function snippetForSetSettings84(): Promise<void> {
+export async function snippetForSetSettings85(): Promise<void> {
   // >SEPARATOR setSettings set_default_snippet_ellipsis_text
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8215,7 +8239,7 @@ export async function snippetForSetSettings84(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_restrict_highlight_and_snippet_arrays_by_default
-export async function snippetForSetSettings85(): Promise<void> {
+export async function snippetForSetSettings86(): Promise<void> {
   // >SEPARATOR setSettings enable_restrict_highlight_and_snippet_arrays_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8235,7 +8259,7 @@ export async function snippetForSetSettings85(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_hits_per_page
-export async function snippetForSetSettings86(): Promise<void> {
+export async function snippetForSetSettings87(): Promise<void> {
   // >SEPARATOR setSettings set_default_hits_per_page
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8252,7 +8276,7 @@ export async function snippetForSetSettings86(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_pagination_limit
-export async function snippetForSetSettings87(): Promise<void> {
+export async function snippetForSetSettings88(): Promise<void> {
   // >SEPARATOR setSettings set_pagination_limit
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8272,7 +8296,7 @@ export async function snippetForSetSettings87(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_one_typo
-export async function snippetForSetSettings88(): Promise<void> {
+export async function snippetForSetSettings89(): Promise<void> {
   // >SEPARATOR setSettings set_default_min_word_size_for_one_typo
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8289,7 +8313,7 @@ export async function snippetForSetSettings88(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_min_word_size_for_two_typos
-export async function snippetForSetSettings89(): Promise<void> {
+export async function snippetForSetSettings90(): Promise<void> {
   // >SEPARATOR setSettings set_default_min_word_size_for_two_typos
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8306,7 +8330,7 @@ export async function snippetForSetSettings89(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_typo_tolerance_mode
-export async function snippetForSetSettings90(): Promise<void> {
+export async function snippetForSetSettings91(): Promise<void> {
   // >SEPARATOR setSettings set_default_typo_tolerance_mode
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8323,7 +8347,7 @@ export async function snippetForSetSettings90(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disable_typos_on_numeric_tokens_by_default
-export async function snippetForSetSettings91(): Promise<void> {
+export async function snippetForSetSettings92(): Promise<void> {
   // >SEPARATOR setSettings disable_typos_on_numeric_tokens_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8343,7 +8367,7 @@ export async function snippetForSetSettings91(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disable_typo_tolerance_for_words
-export async function snippetForSetSettings92(): Promise<void> {
+export async function snippetForSetSettings93(): Promise<void> {
   // >SEPARATOR setSettings disable_typo_tolerance_for_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8363,7 +8387,7 @@ export async function snippetForSetSettings92(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_separators_to_index
-export async function snippetForSetSettings93(): Promise<void> {
+export async function snippetForSetSettings94(): Promise<void> {
   // >SEPARATOR setSettings set_separators_to_index
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8380,7 +8404,7 @@ export async function snippetForSetSettings93(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_ignoreplurals
-export async function snippetForSetSettings94(): Promise<void> {
+export async function snippetForSetSettings95(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_ignoreplurals
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8400,7 +8424,7 @@ export async function snippetForSetSettings94(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_to_transliterate
-export async function snippetForSetSettings95(): Promise<void> {
+export async function snippetForSetSettings96(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_to_transliterate
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8420,7 +8444,7 @@ export async function snippetForSetSettings95(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_removestopwords
-export async function snippetForSetSettings96(): Promise<void> {
+export async function snippetForSetSettings97(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_removestopwords
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8440,7 +8464,7 @@ export async function snippetForSetSettings96(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_camel_case_attributes
-export async function snippetForSetSettings97(): Promise<void> {
+export async function snippetForSetSettings98(): Promise<void> {
   // >SEPARATOR setSettings set_camel_case_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8460,7 +8484,7 @@ export async function snippetForSetSettings97(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_decompounded_attributes
-export async function snippetForSetSettings98(): Promise<void> {
+export async function snippetForSetSettings99(): Promise<void> {
   // >SEPARATOR setSettings set_decompounded_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8480,7 +8504,7 @@ export async function snippetForSetSettings98(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_decompounded_multiple_attributes
-export async function snippetForSetSettings99(): Promise<void> {
+export async function snippetForSetSettings100(): Promise<void> {
   // >SEPARATOR setSettings set_decompounded_multiple_attributes
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8500,7 +8524,7 @@ export async function snippetForSetSettings99(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_keep_diacritics_on_characters
-export async function snippetForSetSettings100(): Promise<void> {
+export async function snippetForSetSettings101(): Promise<void> {
   // >SEPARATOR setSettings set_keep_diacritics_on_characters
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8520,7 +8544,7 @@ export async function snippetForSetSettings100(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_custom_normalization
-export async function snippetForSetSettings101(): Promise<void> {
+export async function snippetForSetSettings102(): Promise<void> {
   // >SEPARATOR setSettings set_custom_normalization
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8540,7 +8564,7 @@ export async function snippetForSetSettings101(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_querylanguage_both
-export async function snippetForSetSettings102(): Promise<void> {
+export async function snippetForSetSettings103(): Promise<void> {
   // >SEPARATOR setSettings set_querylanguage_both
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8560,7 +8584,7 @@ export async function snippetForSetSettings102(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_indexlanguages
-export async function snippetForSetSettings103(): Promise<void> {
+export async function snippetForSetSettings104(): Promise<void> {
   // >SEPARATOR setSettings set_indexlanguages
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8577,7 +8601,7 @@ export async function snippetForSetSettings103(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_decompound_query_by_default
-export async function snippetForSetSettings104(): Promise<void> {
+export async function snippetForSetSettings105(): Promise<void> {
   // >SEPARATOR setSettings enable_decompound_query_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8594,7 +8618,7 @@ export async function snippetForSetSettings104(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_rules_syntax_by_default
-export async function snippetForSetSettings105(): Promise<void> {
+export async function snippetForSetSettings106(): Promise<void> {
   // >SEPARATOR setSettings enable_rules_syntax_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8611,7 +8635,7 @@ export async function snippetForSetSettings105(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_personalization_settings
-export async function snippetForSetSettings106(): Promise<void> {
+export async function snippetForSetSettings107(): Promise<void> {
   // >SEPARATOR setSettings enable_personalization_settings
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8631,7 +8655,7 @@ export async function snippetForSetSettings106(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_query_type
-export async function snippetForSetSettings107(): Promise<void> {
+export async function snippetForSetSettings108(): Promise<void> {
   // >SEPARATOR setSettings set_default_query_type
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8648,7 +8672,7 @@ export async function snippetForSetSettings107(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_remove_words_if_no_result
-export async function snippetForSetSettings108(): Promise<void> {
+export async function snippetForSetSettings109(): Promise<void> {
   // >SEPARATOR setSettings set_default_remove_words_if_no_result
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8668,7 +8692,7 @@ export async function snippetForSetSettings108(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_advanced_syntax_by_default
-export async function snippetForSetSettings109(): Promise<void> {
+export async function snippetForSetSettings110(): Promise<void> {
   // >SEPARATOR setSettings enable_advanced_syntax_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8685,7 +8709,7 @@ export async function snippetForSetSettings109(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_optional_words
-export async function snippetForSetSettings110(): Promise<void> {
+export async function snippetForSetSettings111(): Promise<void> {
   // >SEPARATOR setSettings set_default_optional_words
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8705,7 +8729,7 @@ export async function snippetForSetSettings110(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disabling_prefix_search_for_some_attributes_by_default
-export async function snippetForSetSettings111(): Promise<void> {
+export async function snippetForSetSettings112(): Promise<void> {
   // >SEPARATOR setSettings disabling_prefix_search_for_some_attributes_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8725,7 +8749,7 @@ export async function snippetForSetSettings111(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // disabling_exact_for_some_attributes_by_default
-export async function snippetForSetSettings112(): Promise<void> {
+export async function snippetForSetSettings113(): Promise<void> {
   // >SEPARATOR setSettings disabling_exact_for_some_attributes_by_default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8745,7 +8769,7 @@ export async function snippetForSetSettings112(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_exact_single_word_query
-export async function snippetForSetSettings113(): Promise<void> {
+export async function snippetForSetSettings114(): Promise<void> {
   // >SEPARATOR setSettings set_default_exact_single_word_query
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8765,7 +8789,7 @@ export async function snippetForSetSettings113(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_aternative_as_exact
-export async function snippetForSetSettings114(): Promise<void> {
+export async function snippetForSetSettings115(): Promise<void> {
   // >SEPARATOR setSettings set_default_aternative_as_exact
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8785,7 +8809,7 @@ export async function snippetForSetSettings114(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_numeric_attributes_for_filtering
-export async function snippetForSetSettings115(): Promise<void> {
+export async function snippetForSetSettings116(): Promise<void> {
   // >SEPARATOR setSettings set_numeric_attributes_for_filtering
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8805,7 +8829,7 @@ export async function snippetForSetSettings115(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // enable_compression_of_integer_array
-export async function snippetForSetSettings116(): Promise<void> {
+export async function snippetForSetSettings117(): Promise<void> {
   // >SEPARATOR setSettings enable_compression_of_integer_array
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8825,7 +8849,7 @@ export async function snippetForSetSettings116(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attributes_for_distinct
-export async function snippetForSetSettings117(): Promise<void> {
+export async function snippetForSetSettings118(): Promise<void> {
   // >SEPARATOR setSettings set_attributes_for_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8845,7 +8869,7 @@ export async function snippetForSetSettings117(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_distinct
-export async function snippetForSetSettings118(): Promise<void> {
+export async function snippetForSetSettings119(): Promise<void> {
   // >SEPARATOR setSettings set_distinct
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8865,7 +8889,7 @@ export async function snippetForSetSettings118(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_replace_synonyms_in_highlights
-export async function snippetForSetSettings119(): Promise<void> {
+export async function snippetForSetSettings120(): Promise<void> {
   // >SEPARATOR setSettings set_replace_synonyms_in_highlights
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8885,7 +8909,7 @@ export async function snippetForSetSettings119(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_min_proximity
-export async function snippetForSetSettings120(): Promise<void> {
+export async function snippetForSetSettings121(): Promise<void> {
   // >SEPARATOR setSettings set_min_proximity
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8902,7 +8926,7 @@ export async function snippetForSetSettings120(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_default_field
-export async function snippetForSetSettings121(): Promise<void> {
+export async function snippetForSetSettings122(): Promise<void> {
   // >SEPARATOR setSettings set_default_field
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8922,7 +8946,7 @@ export async function snippetForSetSettings121(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_max_facet_hits
-export async function snippetForSetSettings122(): Promise<void> {
+export async function snippetForSetSettings123(): Promise<void> {
   // >SEPARATOR setSettings set_max_facet_hits
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8939,7 +8963,7 @@ export async function snippetForSetSettings122(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_attribute_criteria_computed_by_min_proximity
-export async function snippetForSetSettings123(): Promise<void> {
+export async function snippetForSetSettings124(): Promise<void> {
   // >SEPARATOR setSettings set_attribute_criteria_computed_by_min_proximity
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8959,7 +8983,7 @@ export async function snippetForSetSettings123(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_user_data
-export async function snippetForSetSettings124(): Promise<void> {
+export async function snippetForSetSettings125(): Promise<void> {
   // >SEPARATOR setSettings set_user_data
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8979,7 +9003,7 @@ export async function snippetForSetSettings124(): Promise<void> {
 // Snippet for the setSettings method.
 //
 // set_rendering_content
-export async function snippetForSetSettings125(): Promise<void> {
+export async function snippetForSetSettings126(): Promise<void> {
   // >SEPARATOR setSettings set_rendering_content
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -8998,6 +9022,80 @@ export async function snippetForSetSettings125(): Promise<void> {
         },
       },
     },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// typoToleranceMin
+export async function snippetForSetSettings127(): Promise<void> {
+  // >SEPARATOR setSettings typoToleranceMin
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { typoTolerance: 'min' } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// minWordSizefor1Typo5
+export async function snippetForSetSettings128(): Promise<void> {
+  // >SEPARATOR setSettings minWordSizefor1Typo5
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({ indexName: 'theIndexName', indexSettings: { minWordSizefor1Typo: 5 } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// attributesToSnippetBodyTitle
+export async function snippetForSetSettings129(): Promise<void> {
+  // >SEPARATOR setSettings attributesToSnippetBodyTitle
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { attributesToSnippet: ['body:20', 'title'] },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the setSettings method.
+//
+// snippetEllipsisTextHellip
+export async function snippetForSetSettings130(): Promise<void> {
+  // >SEPARATOR setSettings snippetEllipsisTextHellip
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.setSettings({
+    indexName: 'theIndexName',
+    indexSettings: { snippetEllipsisText: '[&hellip;]' },
   });
 
   // >LOG

@@ -34,7 +34,7 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install sbt
 
 # Java formatter
-ADD https://github.com/google/google-java-format/releases/download/v1.33.0/google-java-format-1.33.0-all-deps.jar /tmp/java-formatter.jar
+ADD https://github.com/google/google-java-format/releases/download/v1.34.1/google-java-format-1.34.1-all-deps.jar /tmp/java-formatter.jar
 
 
 # Python
@@ -51,7 +51,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
-  && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.5.0 \
+  && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.10.1 \
   && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 # Dart

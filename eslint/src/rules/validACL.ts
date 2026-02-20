@@ -1,5 +1,4 @@
-// @ts-ignore
-import { createRule } from 'eslint-plugin-yml/lib/utils';
+import type { Rule } from 'eslint';
 
 import { isPairWithKey, isPairWithValue, isScalar } from '../utils.js';
 
@@ -20,13 +19,10 @@ const ACLs = [
   'admin',
 ];
 
-export const validACL = createRule('validACL', {
+export const validACL: Rule.RuleModule = {
   meta: {
     docs: {
       description: 'x-acl enum must be set and contain valid Algolia ACLs',
-      categories: null,
-      extensionRule: false,
-      layout: false,
     },
     messages: {
       missingACL: 'x-acl is missing',
@@ -38,13 +34,9 @@ export const validACL = createRule('validACL', {
     schema: [],
   },
   create(context) {
-    if (!context.getSourceCode().parserServices?.isYAML) {
-      return {};
-    }
-
     return {
       YAMLPair(node): void {
-        const spec = context.getFilename().match(/specs\/([a-z-]+?)\//)?.[1];
+        const spec = context.filename.match(/specs\/([a-z-]+?)\//)?.[1];
         if (!spec) {
           return;
         }
@@ -63,10 +55,14 @@ export const validACL = createRule('validACL', {
           const hasACL = node.parent.pairs.some((item: any) => isPairWithKey(item, 'x-acl'));
 
           // ignore custom helpers
-          if (isPairWithValue(node, 'customGet') || isPairWithValue(node, 'customPost') || isPairWithValue(node, 'customPut') || isPairWithValue(node, 'customDelete')) {
+          if (
+            isPairWithValue(node, 'customGet') ||
+            isPairWithValue(node, 'customPost') ||
+            isPairWithValue(node, 'customPut') ||
+            isPairWithValue(node, 'customDelete')
+          ) {
             return;
           }
-
 
           if (!hasACL) {
             context.report({
@@ -117,4 +113,4 @@ export const validACL = createRule('validACL', {
       },
     };
   },
-});
+};

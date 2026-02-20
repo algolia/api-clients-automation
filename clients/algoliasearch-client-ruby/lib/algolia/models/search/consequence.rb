@@ -20,6 +20,8 @@ module Algolia
       # Records you want to hide from the search results.
       attr_accessor :hide
 
+      attr_accessor :redirect
+
       # A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
       attr_accessor :user_data
 
@@ -30,6 +32,7 @@ module Algolia
           :promote => :promote,
           :filter_promotes => :filterPromotes,
           :hide => :hide,
+          :redirect => :redirect,
           :user_data => :userData
         }
       end
@@ -41,6 +44,7 @@ module Algolia
           :promote => :"Array<Promote>",
           :filter_promotes => :"Boolean",
           :hide => :"Array<ConsequenceHide>",
+          :redirect => :"ConsequenceRedirect",
           :user_data => :"Object"
         }
       end
@@ -95,6 +99,10 @@ module Algolia
           end
         end
 
+        if attributes.key?(:redirect)
+          self.redirect = attributes[:redirect]
+        end
+
         if attributes.key?(:user_data)
           self.user_data = attributes[:user_data]
         end
@@ -109,6 +117,7 @@ module Algolia
           promote == other.promote &&
           filter_promotes == other.filter_promotes &&
           hide == other.hide &&
+          redirect == other.redirect &&
           user_data == other.user_data
       end
 
@@ -121,7 +130,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, promote, filter_promotes, hide, user_data].hash
+        [params, promote, filter_promotes, hide, redirect, user_data].hash
       end
 
       # Builds the object from hash

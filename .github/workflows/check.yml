@@ -105,7 +105,7 @@ jobs:
 
       - name: Lint json files
         run: |
-          yarn eslint --ext=json .
+          yarn eslint '**/*.json'
           echo 'Use yarn fix:json to fix issues'
 
     outputs:
@@ -711,7 +711,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-        
+
       - name: notify failures
         uses: slackapi/slack-github-action@v2.1.1
         if: ${{ steps.waitForAllReleases.outputs.FAILED_RELEASES != '' }}

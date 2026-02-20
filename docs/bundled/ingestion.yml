@@ -1411,7 +1411,16 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"action":"addObject","records":[{"objectID":"test-record-123"}]}'
+              --data '
+            {
+              "action": "addObject",
+              "records": [
+                {
+                  "objectID": "test-record-123"
+                }
+              ]
+            }
+            '
   /1/authentications:
     get:
       tags:
@@ -1957,7 +1966,17 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
+              --data '
+            {
+              "type": "googleServiceAccount",
+              "name": "lorem",
+              "platform": "bigcommerce",
+              "input": {
+                "clientEmail": "service-account-name@project-id.iam.gserviceaccount.com",
+                "privateKey": "lorem"
+              }
+            }
+            '
   /1/authentications/search:
     post:
       tags:
@@ -2237,7 +2256,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "authenticationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/authentications/{authenticationID}:
     get:
       tags:
@@ -2739,7 +2764,15 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"lorem","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}'
+              --data '
+            {
+              "name": "lorem",
+              "input": {
+                "clientEmail": "service-account-name@project-id.iam.gserviceaccount.com",
+                "privateKey": "lorem"
+              }
+            }
+            '
     delete:
       tags:
         - authentications
@@ -3518,7 +3551,23 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "type": "search",
+              "name": "lorem",
+              "input": {
+                "indexName": "lorem",
+                "recordType": "product",
+                "attributesToExclude": [
+                  "lorem"
+                ]
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "transformationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/destinations/search:
     post:
       tags:
@@ -3800,7 +3849,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"destinationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "destinationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/destinations/{destinationID}:
     get:
       tags:
@@ -4306,7 +4361,23 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"search","name":"lorem","input":{"indexName":"lorem","recordType":"product","attributesToExclude":["lorem"]},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "type": "search",
+              "name": "lorem",
+              "input": {
+                "indexName": "lorem",
+                "recordType": "product",
+                "attributesToExclude": [
+                  "lorem"
+                ]
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "transformationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
     delete:
       tags:
         - destinations
@@ -5163,7 +5234,37 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '
+            {
+              "type": "bigcommerce",
+              "name": "lorem",
+              "input": {
+                "storeKeys": [
+                  "lorem"
+                ],
+                "locales": [
+                  "fr-FR"
+                ],
+                "url": "lorem",
+                "projectKey": "lorem",
+                "fallbackIsInStockValue": true,
+                "productQueryPredicate": "lorem",
+                "useImagesObjects": true,
+                "customFields": {
+                  "inventory": [
+                    "lorem"
+                  ],
+                  "price": [
+                    "lorem"
+                  ],
+                  "category": [
+                    "lorem"
+                  ]
+                }
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            }
+            '
   /1/sources/validate:
     post:
       tags:
@@ -5528,7 +5629,37 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"type":"bigcommerce","name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","projectKey":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '
+            {
+              "type": "bigcommerce",
+              "name": "lorem",
+              "input": {
+                "storeKeys": [
+                  "lorem"
+                ],
+                "locales": [
+                  "fr-FR"
+                ],
+                "url": "lorem",
+                "projectKey": "lorem",
+                "fallbackIsInStockValue": true,
+                "productQueryPredicate": "lorem",
+                "useImagesObjects": true,
+                "customFields": {
+                  "inventory": [
+                    "lorem"
+                  ],
+                  "price": [
+                    "lorem"
+                  ],
+                  "category": [
+                    "lorem"
+                  ]
+                }
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            }
+            '
   /1/sources/search:
     post:
       tags:
@@ -5807,7 +5938,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"sourceIDs":["lorem"]}'
+              --data '
+            {
+              "sourceIDs": [
+                "lorem"
+              ]
+            }
+            '
   /1/sources/{sourceID}:
     get:
       tags:
@@ -6310,7 +6447,35 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '
+            {
+              "name": "lorem",
+              "input": {
+                "storeKeys": [
+                  "lorem"
+                ],
+                "locales": [
+                  "fr-FR"
+                ],
+                "url": "lorem",
+                "fallbackIsInStockValue": true,
+                "productQueryPredicate": "lorem",
+                "useImagesObjects": true,
+                "customFields": {
+                  "inventory": [
+                    "lorem"
+                  ],
+                  "price": [
+                    "lorem"
+                  ],
+                  "category": [
+                    "lorem"
+                  ]
+                }
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            }
+            '
     delete:
       tags:
         - sources
@@ -6824,7 +6989,35 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"name":"lorem","input":{"storeKeys":["lorem"],"locales":["fr-FR"],"url":"lorem","fallbackIsInStockValue":true,"productQueryPredicate":"lorem","useImagesObjects":true,"customFields":{"inventory":["lorem"],"price":["lorem"],"category":["lorem"]}},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'
+              --data '
+            {
+              "name": "lorem",
+              "input": {
+                "storeKeys": [
+                  "lorem"
+                ],
+                "locales": [
+                  "fr-FR"
+                ],
+                "url": "lorem",
+                "fallbackIsInStockValue": true,
+                "productQueryPredicate": "lorem",
+                "useImagesObjects": true,
+                "customFields": {
+                  "inventory": [
+                    "lorem"
+                  ],
+                  "price": [
+                    "lorem"
+                  ],
+                  "category": [
+                    "lorem"
+                  ]
+                }
+              },
+              "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            }
+            '
   /1/sources/{sourceID}/discover:
     post:
       tags:
@@ -7396,7 +7589,21 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"indexToInclude":["lorem"],"indexToExclude":["lorem"],"entityIDs":["lorem"],"entityType":"product","runMetadata":{}}'
+              --data '
+            {
+              "indexToInclude": [
+                "lorem"
+              ],
+              "indexToExclude": [
+                "lorem"
+              ],
+              "entityIDs": [
+                "lorem"
+              ],
+              "entityType": "product",
+              "runMetadata": {}
+            }
+            '
   /2/tasks:
     get:
       tags:
@@ -7911,7 +8118,44 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","action":"replace","subscriptionAction":"replace","cron":"* * 1 * *","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
+              --data '
+            {
+              "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "destinationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "action": "replace",
+              "subscriptionAction": "replace",
+              "cron": "* * 1 * *",
+              "enabled": true,
+              "failureThreshold": 0,
+              "input": {
+                "mapping": {
+                  "format": "mappingkit/v1",
+                  "actions": [
+                    {
+                      "id": "lorem",
+                      "enabled": true,
+                      "trigger": "lorem",
+                      "fieldDirectives": [
+                        {
+                          "fieldKey": "lorem",
+                          "value": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "cursor": "lorem",
+              "notifications": {
+                "email": {
+                  "enabled": true
+                }
+              },
+              "policies": {
+                "criticalThreshold": 1
+              }
+            }
+            '
   /2/tasks/search:
     post:
       tags:
@@ -8216,7 +8460,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "taskIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /2/tasks/{taskID}:
     get:
       tags:
@@ -8732,7 +8982,43 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","action":"replace","subscriptionAction":"replace","cron":"* * 1 * *","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem","notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
+              --data '
+            {
+              "destinationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "action": "replace",
+              "subscriptionAction": "replace",
+              "cron": "* * 1 * *",
+              "enabled": true,
+              "failureThreshold": 0,
+              "input": {
+                "mapping": {
+                  "format": "mappingkit/v1",
+                  "actions": [
+                    {
+                      "id": "lorem",
+                      "enabled": true,
+                      "trigger": "lorem",
+                      "fieldDirectives": [
+                        {
+                          "fieldKey": "lorem",
+                          "value": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "cursor": "lorem",
+              "notifications": {
+                "email": {
+                  "enabled": true
+                }
+              },
+              "policies": {
+                "criticalThreshold": 1
+              }
+            }
+            '
     patch:
       tags:
         - tasks
@@ -8997,7 +9283,41 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","cron":"* * 1 * *","input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"subscriptionAction":"replace","failureThreshold":0,"notifications":{"email":{"enabled":true}},"policies":{"criticalThreshold":1}}'
+              --data '
+            {
+              "destinationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "cron": "* * 1 * *",
+              "input": {
+                "mapping": {
+                  "format": "mappingkit/v1",
+                  "actions": [
+                    {
+                      "id": "lorem",
+                      "enabled": true,
+                      "trigger": "lorem",
+                      "fieldDirectives": [
+                        {
+                          "fieldKey": "lorem",
+                          "value": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "enabled": true,
+              "subscriptionAction": "replace",
+              "failureThreshold": 0,
+              "notifications": {
+                "email": {
+                  "enabled": true
+                }
+              },
+              "policies": {
+                "criticalThreshold": 1
+              }
+            }
+            '
     delete:
       tags:
         - tasks
@@ -9884,7 +10204,16 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"action":"addObject","records":[{"objectID":"test-record-123"}]}'
+              --data '
+            {
+              "action": "addObject",
+              "records": [
+                {
+                  "objectID": "test-record-123"
+                }
+              ]
+            }
+            '
   /2/tasks/{taskID}/enable:
     put:
       tags:
@@ -10921,7 +11250,37 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"sourceID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"type":"onDemand"},"action":"replace","enabled":true,"failureThreshold":0,"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"cursor":"lorem"}'
+              --data '
+            {
+              "sourceID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "destinationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "trigger": {
+                "type": "onDemand"
+              },
+              "action": "replace",
+              "enabled": true,
+              "failureThreshold": 0,
+              "input": {
+                "mapping": {
+                  "format": "mappingkit/v1",
+                  "actions": [
+                    {
+                      "id": "lorem",
+                      "enabled": true,
+                      "trigger": "lorem",
+                      "fieldDirectives": [
+                        {
+                          "fieldKey": "lorem",
+                          "value": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "cursor": "lorem"
+            }
+            '
   /1/tasks/search:
     post:
       tags:
@@ -11228,7 +11587,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"taskIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "taskIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/tasks/{taskID}:
     get:
       tags:
@@ -11737,7 +12102,34 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"destinationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f","trigger":{"cron":"* * 1 * *"},"input":{"mapping":{"format":"mappingkit/v1","actions":[{"id":"lorem","enabled":true,"trigger":"lorem","fieldDirectives":[{"fieldKey":"lorem","value":{}}]}]}},"enabled":true,"failureThreshold":0}'
+              --data '
+            {
+              "destinationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              "trigger": {
+                "cron": "* * 1 * *"
+              },
+              "input": {
+                "mapping": {
+                  "format": "mappingkit/v1",
+                  "actions": [
+                    {
+                      "id": "lorem",
+                      "enabled": true,
+                      "trigger": "lorem",
+                      "fieldDirectives": [
+                        {
+                          "fieldKey": "lorem",
+                          "value": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "enabled": true,
+              "failureThreshold": 0
+            }
+            '
     delete:
       tags:
         - tasks
@@ -13265,7 +13657,20 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","name":"lorem","type":"code","input":{"code":"lorem"},"description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "code": "lorem",
+              "name": "lorem",
+              "type": "code",
+              "input": {
+                "code": "lorem"
+              },
+              "description": "lorem",
+              "authenticationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/transformations/try:
     post:
       tags:
@@ -13567,7 +13972,27 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","type":"code","input":{"code":"lorem"},"sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
+              --data '
+            {
+              "code": "lorem",
+              "type": "code",
+              "input": {
+                "code": "lorem"
+              },
+              "sampleRecord": {},
+              "authentications": [
+                {
+                  "type": "googleServiceAccount",
+                  "name": "lorem",
+                  "platform": "bigcommerce",
+                  "input": {
+                    "clientEmail": "service-account-name@project-id.iam.gserviceaccount.com",
+                    "privateKey": "lorem"
+                  }
+                }
+              ]
+            }
+            '
   /1/transformations/search:
     post:
       tags:
@@ -13872,7 +14297,13 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"transformationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "transformationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
   /1/transformations/{transformationID}:
     get:
       tags:
@@ -14419,7 +14850,20 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","name":"lorem","type":"code","input":{"code":"lorem"},"description":"lorem","authenticationIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f"]}'
+              --data '
+            {
+              "code": "lorem",
+              "name": "lorem",
+              "type": "code",
+              "input": {
+                "code": "lorem"
+              },
+              "description": "lorem",
+              "authenticationIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              ]
+            }
+            '
     delete:
       tags:
         - transformations
@@ -14972,7 +15416,27 @@ paths:
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
-              --data '{"code":"lorem","type":"code","input":{"code":"lorem"},"sampleRecord":{},"authentications":[{"type":"googleServiceAccount","name":"lorem","platform":"bigcommerce","input":{"clientEmail":"service-account-name@project-id.iam.gserviceaccount.com","privateKey":"lorem"}}]}'
+              --data '
+            {
+              "code": "lorem",
+              "type": "code",
+              "input": {
+                "code": "lorem"
+              },
+              "sampleRecord": {},
+              "authentications": [
+                {
+                  "type": "googleServiceAccount",
+                  "name": "lorem",
+                  "platform": "bigcommerce",
+                  "input": {
+                    "clientEmail": "service-account-name@project-id.iam.gserviceaccount.com",
+                    "privateKey": "lorem"
+                  }
+                }
+              ]
+            }
+            '
   /1/runs:
     get:
       tags:

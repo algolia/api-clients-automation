@@ -56,5 +56,6 @@ case class Consequence(
     promote: Option[Seq[Promote]] = scala.None,
     filterPromotes: Option[Boolean] = scala.None,
     hide: Option[Seq[ConsequenceHide]] = scala.None,
+    redirect: Option[ConsequenceRedirect] = scala.None,
     userData: Option[Any] = scala.None
 )

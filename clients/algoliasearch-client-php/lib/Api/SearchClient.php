@@ -86,7 +86,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.38.0';
+    public const VERSION = '4.39.0';
 
     /**
      * @var ApiWrapperInterface
@@ -4422,7 +4422,7 @@ class SearchClient
             throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, 'addObject', $waitForTasks, $batchSize, null, $requestOptions);
     }
 
     /**
@@ -4479,7 +4479,7 @@ class SearchClient
             throw new \InvalidArgumentException('`setTransformationRegion` must have been called before calling this method.');
         }
 
-        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, $requestOptions);
+        return $this->ingestionTransporter->chunkedPush($indexName, $objects, (true == $createIfNotExists) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', $waitForTasks, $batchSize, null, $requestOptions);
     }
 
     /**

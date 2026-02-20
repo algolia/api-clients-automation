@@ -7170,9 +7170,7 @@
           }
         },
         "required": [
-          "hits",
-          "query",
-          "params"
+          "hits"
         ]
       },
       "searchResponse": {
@@ -8418,6 +8416,21 @@
                 "objectID"
               ]
             }
+          },
+          "redirect": {
+            "title": "consequenceRedirect",
+            "type": "object",
+            "description": "Redirect to a virtual replica index.\n\nThis consequence is only valid for rules with `scope: redirect`.\n",
+            "additionalProperties": false,
+            "properties": {
+              "indexName": {
+                "type": "string",
+                "description": "Name of the virtual replica index to redirect searches to."
+              }
+            },
+            "required": [
+              "indexName"
+            ]
           },
           "userData": {
             "type": "object",

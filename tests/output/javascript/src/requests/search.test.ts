@@ -5062,6 +5062,26 @@ describe('setSettings', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('highlightWithCustomPrePostTags', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: {
+        attributesToHighlight: ['author', 'title', 'content'],
+        highlightPreTag: '<em class="search-highlight">',
+        highlightPostTag: '</em>',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      attributesToHighlight: ['author', 'title', 'content'],
+      highlightPreTag: '<em class="search-highlight">',
+      highlightPostTag: '</em>',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('attributesToHighlightStar', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
@@ -6127,6 +6147,54 @@ describe('setSettings', () => {
         },
       },
     });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('typoToleranceMin', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { typoTolerance: 'min' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ typoTolerance: 'min' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('minWordSizefor1Typo5', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { minWordSizefor1Typo: 5 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ minWordSizefor1Typo: 5 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('attributesToSnippetBodyTitle', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { attributesToSnippet: ['body:20', 'title'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ attributesToSnippet: ['body:20', 'title'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('snippetEllipsisTextHellip', async () => {
+    const req = (await client.setSettings({
+      indexName: 'theIndexName',
+      indexSettings: { snippetEllipsisText: '[&hellip;]' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/theIndexName/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ snippetEllipsisText: '[&hellip;]' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
