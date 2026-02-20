@@ -1,0 +1,42 @@
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
+{{> snippets/import}}
+import algoliasearch.search.SearchParamsObject
+
+val getUserToken: String = {
+  "" // Implement your logic here
+}
+
+def abTestImplementationChecklist(): Future[Unit] = {
+  {{> snippets/init}}
+
+  // Set the searchParams and get the current user token
+  val userToken = getUserToken
+
+  // Is the user token anonymous?
+  val searchParams = if (userToken == null || userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
+    // Disable A/B testing for this request
+    SearchParamsObject(
+      query = Some("User search query"),
+      enableABTest = Some(false)
+    )
+  } else {
+    // Set the user token to the current user token
+    SearchParamsObject(
+      query = Some("User search query"),
+      enableABTest = Some(true),
+      userToken = Some(userToken)
+    )
+  }
+
+  // Perform the searchSingleIndex
+  {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}.map { result =>
+    // SearchSingleIndex results
+    println(result)
+  }.recover {
+    case err: Exception =>
+      // SearchSingleIndex errors
+      println(s"An error occurred: ${err.getMessage}")
+  }
+}

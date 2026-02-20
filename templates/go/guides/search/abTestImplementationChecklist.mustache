@@ -1,0 +1,51 @@
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+{{> snippets/import}}
+
+func getUserToken() (string, error) {
+  // Implement your logic here
+  return "", nil
+}
+
+func abTestImplementationChecklist() {
+  {{> snippets/init}}
+
+  // Set the searchParams and get the current user token
+  userToken, err := getUserToken()
+  if err != nil {
+    panic(err)
+  }
+
+  var searchParams *search.SearchParams
+
+  // Is the user token anonymous?
+  if userToken == "" || userToken == "YOUR_ANONYMOUS_USER_TOKEN" {
+    // Disable A/B testing for this request
+    searchParams = search.SearchParamsObjectAsSearchParams(
+      search.NewSearchParamsObject().
+        SetQuery("User search query").
+        SetEnableABTest(false),
+    )
+  } else {
+    // Set the user token to the current user token
+    searchParams = search.SearchParamsObjectAsSearchParams(
+      search.NewSearchParamsObject().
+        SetQuery("User search query").
+        SetEnableABTest(true).
+        SetUserToken(userToken),
+    )
+  }
+
+  // Perform the searchSingleIndex
+  _, err = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+  if err != nil {
+    // SearchSingleIndex errors
+    panic(err)
+  }
+}
