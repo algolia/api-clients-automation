@@ -29,7 +29,14 @@ RecommendRule:
       description: Time periods when the rule is active.
       items:
         $ref: '../../../common/schemas/Rule.yml#/timeRange'
-
+    conditions:
+      type: array
+      description: |
+        Multiple conditions for the rule. If specified, only one condition needs to match.
+        
+        Note: Recommend API typically uses a single condition. Use `condition` (singular) for single conditions.
+      items:
+        $ref: '#/Condition'
 Condition:
   type: object
   description: |
