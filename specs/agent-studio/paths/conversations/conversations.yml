@@ -1,0 +1,130 @@
+get:
+  tags:
+    - Conversations
+  operationId: listAgentConversations
+  x-acl:
+    - logs
+  summary: List Conversations
+  description: Retrieves the conversations for the given agent ID.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+    - name: startDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+        title: startdate
+      description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+    - name: endDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        title: enddate
+      description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+    - name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        description: Page number.
+        default: 1
+        title: page
+      description: Page number.
+    - name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        maximum: 100
+        minimum: 1
+        description: Items per page.
+        default: 20
+        title: limit
+      description: Items per page.
+    - name: X-Algolia-Secure-User-Token
+      in: header
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        title: x-Algolia-Secure-User-Token
+      description: The X-Algolia-Secure-User-Token.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/PaginatedConversationsResponse.yml#/PaginatedConversationsResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Conversations
+  operationId: deleteAgentConversations
+  x-acl:
+    - logs
+  summary: Delete Conversations
+  description: Deletes the conversations matching the given filers.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+    - name: startDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+        title: startdate
+      description: 'Filter conversations created after this date (format: YYYY-MM-DD).'
+    - name: endDate
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: string
+            format: date
+          - type: 'null'
+        description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        title: enddate
+      description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

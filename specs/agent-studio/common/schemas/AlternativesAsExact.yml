@@ -1,0 +1,9 @@
+AlternativesAsExact:
+  type: string
+  enum:
+    - ignorePlurals
+    - singleWordSynonym
+    - multiWordsSynonym
+    - ignoreConjugations
+  title: alternativesAsExact
+  description: AlternativesAsExact.

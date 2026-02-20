@@ -1,0 +1,9 @@
+AroundPrecisionUnion:
+  oneOf:
+    - type: integer
+    - items:
+        additionalProperties:
+          type: integer
+        type: object
+      type: array
+    - type: 'null'

@@ -1,0 +1,69 @@
+openapi: 3.0.2
+info:
+  title: ragApi
+  description: |-
+    Algolia's GenAI Toolkit API, building blocks for your dynamic LLM-enabled experiences.
+
+    Build generative AI experiences with your Algolia data. Combine large language models with Algolia’s Search API using Retrieval Augmented Generation (RAG) techniques.
+  version: 0.1.0
+components:
+  securitySchemes:
+    appId:
+      $ref: '../common/securitySchemes.yml#/appId'
+    apiKey:
+      $ref: '../common/securitySchemes.yml#/apiKey'
+servers:
+  - url: https://agent-studio.eu.algolia.com
+    description: Agent Studio API (EU).
+  - url: https://agent-studio.us.algolia.com
+    description: Agent Studio API (US).
+security:
+  - appId: []
+    apiKey: []
+x-timeouts:
+  server:
+    read: 30000
+tags:
+  - name: Agents
+    description: Create, configure, and manage AI agents.
+  - name: Configurations
+    description: Application-level settings.
+  - name: Internal
+    description: Endpoints that are needed for internal or integration logic.
+  - name: Legacy RAG
+    description: The deprecated GenAI Toolkit API.
+  - name: Providers
+    description: Manage LLM provider configurations.
+  - name: Secret Keys
+    description: Manage secret keys used to authenticate requests.
+paths:
+  /1/agents:
+    $ref: 'paths/agents/agents.yml'
+  /1/agents/{agentId}:
+    $ref: 'paths/agents/agent.yml'
+  /1/agents/{agentId}/cache:
+    $ref: 'paths/agents/agentCache.yml'
+  /1/agents/{agentId}/completions:
+    $ref: 'paths/agents/agentCompletions.yml'
+  /1/agents/{agentId}/conversations:
+    $ref: 'paths/conversations/conversations.yml'
+  /1/agents/{agentId}/conversations/export:
+    $ref: 'paths/conversations/export.yml'
+  /1/agents/{agentId}/conversations/{conversationId}:
+    $ref: 'paths/conversations/conversation.yml'
+  /1/agents/{agentId}/publish:
+    $ref: 'paths/agents/agentPublish.yml'
+  /1/agents/{agentId}/unpublish:
+    $ref: 'paths/agents/agentUnpublish.yml'
+  /1/configuration:
+    $ref: 'paths/configuration/configuration.yml'
+  /1/providers:
+    $ref: 'paths/providers/providers.yml'
+  /1/providers/models:
+    $ref: 'paths/providers/models.yml'
+  /1/providers/{providerId}:
+    $ref: 'paths/providers/provider.yml'
+  /1/providers/{providerId}/models:
+    $ref: 'paths/providers/providerModels.yml'
+  /1/user-data/{userToken}:
+    $ref: 'paths/user-data/user-data.yml'

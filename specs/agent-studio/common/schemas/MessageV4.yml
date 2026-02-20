@@ -1,0 +1,4 @@
+MessageV4:
+  oneOf:
+    - $ref: 'UserMessageV4.yml#/UserMessageV4'
+    - $ref: 'AssistantMessageV4.yml#/AssistantMessageV4'

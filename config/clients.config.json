@@ -4,6 +4,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -80,6 +81,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -114,6 +116,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -201,6 +204,11 @@
       {
         "name": "search",
         "output": "clients/algoliasearch-client-javascript/packages/client-search"
+      },
+      {
+        "name": "agent-studio",
+        "output": "clients/algoliasearch-client-javascript/packages/agent-studio",
+        "isStandaloneClient": true
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
@@ -221,6 +229,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -250,6 +259,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -284,6 +294,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -320,6 +331,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -353,6 +365,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",
@@ -382,6 +395,7 @@
     "clients": [
       "abtesting",
       "abtesting-v3",
+      "agent-studio",
       "analytics",
       "composition",
       "ingestion",

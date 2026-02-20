@@ -1,0 +1,43 @@
+AgentConfigUpdate:
+  properties:
+    name:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: name
+    description:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: description
+    providerId:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: providerid
+    model:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: model
+    instructions:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: instructions
+    config:
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
+      title: config
+    tools:
+      oneOf:
+        - items:
+            $ref: 'ItemsUnion.yml#/ItemsUnion'
+          type: array
+        - type: 'null'
+      title: tools
+  type: object
+  title: agentConfigUpdate

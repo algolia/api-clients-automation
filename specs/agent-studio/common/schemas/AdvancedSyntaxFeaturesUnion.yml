@@ -1,0 +1,6 @@
+AdvancedSyntaxFeaturesUnion:
+  oneOf:
+    - items:
+        $ref: 'AdvancedSyntaxFeatures.yml#/AdvancedSyntaxFeatures'
+      type: array
+    - type: 'null'

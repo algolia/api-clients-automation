@@ -1,0 +1,9 @@
+StartPart:
+  properties:
+    type:
+      type: string
+      const: start
+      title: type
+      default: start
+  type: object
+  title: startPart

@@ -1,0 +1,21 @@
+ToolCallPart:
+  properties:
+    type:
+      type: string
+      const: tool-call
+      title: type
+      default: tool-call
+    toolCallId:
+      type: string
+      title: toolcallid
+    toolName:
+      type: string
+      title: toolname
+    args:
+      title: args
+  type: object
+  required:
+    - toolCallId
+    - toolName
+    - args
+  title: toolCallPart

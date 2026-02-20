@@ -1,0 +1,23 @@
+AgentPonderResponse:
+  properties:
+    savedMemories:
+      items:
+        $ref: 'MemoryRecord.yml#/MemoryRecord'
+      type: array
+      title: savedmemories
+      description: Memories saved to Algolia.
+    taskId:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: taskid
+      description: Algolia task ID for the save operation.
+    message:
+      type: string
+      title: message
+      description: Summary of the operation outcome.
+  type: object
+  required:
+    - message
+  title: agentPonderResponse
+  description: Response model for agent ponder endpoint (episodic save).

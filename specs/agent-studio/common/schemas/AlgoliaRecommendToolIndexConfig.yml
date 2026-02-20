@@ -1,0 +1,21 @@
+AlgoliaRecommendToolIndexConfig:
+  properties:
+    index:
+      type: string
+      maxLength: 100
+      minLength: 1
+      title: index
+    modelName:
+      type: string
+      maxLength: 100
+      minLength: 1
+      title: modelname
+    description:
+      type: string
+      title: description
+      default: ''
+  type: object
+  required:
+    - index
+    - modelName
+  title: algoliaRecommendToolIndexConfig

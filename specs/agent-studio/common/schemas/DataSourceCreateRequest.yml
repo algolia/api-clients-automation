@@ -1,0 +1,23 @@
+DataSourceCreateRequest:
+  properties:
+    name:
+      type: string
+      title: name
+    source:
+      type: string
+      title: source
+    filters:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: filters
+    objectID:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: objectid
+  type: object
+  required:
+    - name
+    - source
+  title: dataSourceCreateRequest

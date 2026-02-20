@@ -1,0 +1,14 @@
+PaginatedConversationsResponse:
+  properties:
+    data:
+      items:
+        $ref: 'ConversationBaseResponse.yml#/ConversationBaseResponse'
+      type: array
+      title: data
+    pagination:
+      $ref: 'PaginationMetadata.yml#/PaginationMetadata'
+  type: object
+  required:
+    - data
+    - pagination
+  title: paginatedConversationsResponse

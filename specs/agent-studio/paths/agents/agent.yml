@@ -1,0 +1,92 @@
+get:
+  tags:
+    - Agents
+  operationId: getAgent
+  x-acl:
+    - settings
+  summary: Get Agent
+  description: Retrieve details of the specified agent.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/AgentWithVersionResponse.yml#/AgentWithVersionResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+patch:
+  tags:
+    - Agents
+  operationId: updateAgent
+  x-acl:
+    - editSettings
+  summary: Update Agent
+  description: Update the specified agent.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/AgentConfigUpdate.yml#/AgentConfigUpdate'
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/AgentWithVersionResponse.yml#/AgentWithVersionResponse'
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+delete:
+  tags:
+    - Agents
+  operationId: deleteAgent
+  x-acl:
+    - editSettings
+  summary: Delete Agent
+  description: Delete the specified agent.
+  parameters:
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        title: agentId
+      description: The agentId.
+  responses:
+    '204':
+      description: Successful Response.
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

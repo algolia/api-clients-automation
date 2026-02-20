@@ -1,0 +1,46 @@
+AgentConfigCreate:
+  properties:
+    name:
+      type: string
+      title: name
+    description:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: description
+    providerId:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: providerid
+    model:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: model
+    instructions:
+      type: string
+      title: instructions
+    config:
+      additionalProperties: true
+      type: object
+      title: config
+      default: {}
+      example:
+        sendUsage: true
+        sendReasoning: true
+        temperature: 0.7
+        max_tokens: 1500
+        reasoning: '{summary: auto}'
+        features: '[memory]'
+    tools:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: tools
+  type: object
+  required:
+    - name
+    - instructions
+  title: agentConfigCreate

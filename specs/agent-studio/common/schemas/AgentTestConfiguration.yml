@@ -1,0 +1,38 @@
+AgentTestConfiguration:
+  properties:
+    id:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: id
+    providerId:
+      oneOf:
+        - type: string
+          format: uuid
+        - type: 'null'
+      title: providerid
+    model:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: model
+    instructions:
+      type: string
+      title: instructions
+    config:
+      additionalProperties: true
+      type: object
+      title: config
+    tools:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: tools
+  type: object
+  required:
+    - instructions
+    - config
+    - tools
+  title: agentTestConfiguration
+  description: Dynamic configuration for testing agents.
