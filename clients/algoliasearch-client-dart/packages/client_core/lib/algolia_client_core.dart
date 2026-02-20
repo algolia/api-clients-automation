@@ -10,6 +10,7 @@ export 'src/api_client.dart';
 export 'src/config/agent_segment.dart';
 export 'src/config/client_options.dart';
 export 'src/config/host.dart';
+export 'src/transport/algolia_agent.dart';
 export 'src/transport/api_request.dart';
 export 'src/transport/request_options.dart';
 export 'src/transport/requester.dart';
