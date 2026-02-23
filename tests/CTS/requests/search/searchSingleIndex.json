@@ -1855,7 +1855,7 @@
     },
     "requestOptions": {
       "headers": {
-        "x-forwarded-for": "X.X.X.X"
+        "x-forwarded-for": "XX.XXX.XXX.XXX"
       }
     },
     "request": {
@@ -1866,7 +1866,7 @@
         "aroundLatLngViaIP": true
       },
       "headers": {
-        "x-forwarded-for": "X.X.X.X"
+        "x-forwarded-for": "XX.XXX.XXX.XXX"
       }
     }
   },
@@ -1877,14 +1877,14 @@
     },
     "requestOptions": {
       "headers": {
-        "x-forwarded-for": "X.X.X.X"
+        "x-forwarded-for": "XX.XXX.XXX.XXX"
       }
     },
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
       "headers": {
-        "x-forwarded-for": "X.X.X.X"
+        "x-forwarded-for": "XX.XXX.XXX.XXX"
       }
     }
   },
