@@ -21,7 +21,6 @@ def abTestImplementationChecklist(): Future[Unit] = {
     enableABTest = Some(true)
   )
 
-
   // Is the user token anonymous?
   if (userToken == null || userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
     // Disable A/B testing for this request

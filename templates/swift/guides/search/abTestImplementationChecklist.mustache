@@ -18,7 +18,6 @@ func abTestImplementationChecklist() async throws {
   // Set the searchParams
   var searchParams = SearchSearchParamsObject(query: query, enableABTest: true)
 
-
   // Is the user token anonymous?
   if userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN" {
     // Disable A/B testing for this request

@@ -17,7 +17,6 @@ search_params = Algolia::Search::SearchParamsObject.new(
   enable_ab_test: true,
 )
 
-
 # Is the user token anonymous?
 if user_token.nil? || user_token.empty? || user_token == "YOUR_ANONYMOUS_USER_TOKEN"
   # Disable A/B testing for this request
