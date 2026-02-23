@@ -1871,6 +1871,24 @@
     }
   },
   {
+    "testName": "forwardUserIpAddress",
+    "parameters": {
+      "indexName": "indexName"
+    },
+    "requestOptions": {
+      "headers": {
+        "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "headers": {
+        "x-forwarded-for": "94.228.178.246 // should be replaced with the actual IP you would like to search around"
+      }
+    }
+  },
+  {
     "testName": "set_around_radius",
     "parameters": {
       "indexName": "indexName",
