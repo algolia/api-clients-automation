@@ -1329,15 +1329,56 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
                         feeds: [
-                            "main-products": FeedInjection(
-                                injection: Injection(
-                                    main: CompositionMain(
-                                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                            "products": FeedInjection(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                    index: "products",
+                                    params: MainInjectionQueryParameters(hitsPerPage: 12)
+                                ))),
+                                injectedItems: [InjectedItem(
+                                    key: "featured-products",
+                                    source: InjectedItemSource.compositionSearchSource(
+                                        CompositionSearchSource(search: Search(
+                                            index: "products",
+                                            params: BaseInjectionQueryParameters(filters: "featured:true")
+                                        ))
+                                    ),
+                                    position: 0,
+                                    length: 2
+                                )]
+                            )),
+                            "articles": FeedInjection(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                    index: "articles",
+                                    params: MainInjectionQueryParameters(
+                                        attributesToRetrieve: ["title", "excerpt", "publishedAt"],
+                                        hitsPerPage: 5
                                     )
+                                ))),
+                                injectedItems: [InjectedItem(
+                                    key: "editorial-picks",
+                                    source: InjectedItemSource.compositionSearchSource(
+                                        CompositionSearchSource(search: Search(
+                                            index: "articles",
+                                            params: BaseInjectionQueryParameters(filters: "editorial_pick:true")
+                                        ))
+                                    ),
+                                    position: 0,
+                                    length: 1
+                                )]
+                            )),
+                            "videos": FeedInjection(
+                                injection: Injection(
+                                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                        index: "videos",
+                                        params: MainInjectionQueryParameters(
+                                            attributesToRetrieve: ["title", "thumbnail", "duration"],
+                                            hitsPerPage: 3
+                                        )
+                                    )))
                                 )
                             ),
                         ],
-                        feedsOrder: ["main-products"]
+                        feedsOrder: ["products", "articles", "videos"]
                     ))),
                 sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
             )
@@ -1348,7 +1389,7 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}"
+        let expectedBodyData = "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

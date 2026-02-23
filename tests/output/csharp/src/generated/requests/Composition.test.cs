@@ -1258,7 +1258,7 @@ public class CompositionClientRequestTests
               Feeds = new Dictionary<string, FeedInjection>
               {
                 {
-                  "main-products",
+                  "products",
                   new FeedInjection
                   {
                     Injection = new Injection
@@ -1267,14 +1267,120 @@ public class CompositionClientRequestTests
                       {
                         Source = new CompositionSource
                         {
-                          Search = new CompositionSourceSearch { Index = "products" },
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "products",
+                            Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
+                          },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "featured-products",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "products",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "featured:true",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 2,
+                        },
+                      },
+                    },
+                  }
+                },
+                {
+                  "articles",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "articles",
+                            Params = new MainInjectionQueryParameters
+                            {
+                              HitsPerPage = 5,
+                              AttributesToRetrieve = new List<string>
+                              {
+                                "title",
+                                "excerpt",
+                                "publishedAt",
+                              },
+                            },
+                          },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "editorial-picks",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "articles",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "editorial_pick:true",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 1,
+                        },
+                      },
+                    },
+                  }
+                },
+                {
+                  "videos",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "videos",
+                            Params = new MainInjectionQueryParameters
+                            {
+                              HitsPerPage = 3,
+                              AttributesToRetrieve = new List<string>
+                              {
+                                "title",
+                                "thumbnail",
+                                "duration",
+                              },
+                            },
+                          },
                         },
                       },
                     },
                   }
                 },
               },
-              FeedsOrder = new List<string> { "main-products" },
+              FeedsOrder = new List<string> { "products", "articles", "videos" },
             },
           }
         ),
@@ -1285,7 +1391,7 @@ public class CompositionClientRequestTests
     Assert.Equal("/1/compositions/my-compo", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}",
+      "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}",
       req.Body,
       new JsonDiffConfig(false)
     );

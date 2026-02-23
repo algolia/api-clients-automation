@@ -1173,12 +1173,83 @@ void snippetForputComposition5() async {
       behavior: CompositionMultifeedBehavior(
         multifeed: Multifeed(
           feeds: {
-            'main-products': FeedInjection(
+            'products': FeedInjection(
               injection: Injection(
                 main: Main(
                   source: CompositionSource(
                     search: CompositionSourceSearch(
                       index: "products",
+                      params: MainInjectionQueryParameters(
+                        hitsPerPage: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "featured-products",
+                    source: SearchSource(
+                      search: Search(
+                        index: "products",
+                        params: BaseInjectionQueryParameters(
+                          filters: "featured:true",
+                        ),
+                      ),
+                    ),
+                    position: 0,
+                    length: 2,
+                  ),
+                ],
+              ),
+            ),
+            'articles': FeedInjection(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "articles",
+                      params: MainInjectionQueryParameters(
+                        hitsPerPage: 5,
+                        attributesToRetrieve: [
+                          "title",
+                          "excerpt",
+                          "publishedAt",
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectedItem(
+                    key: "editorial-picks",
+                    source: SearchSource(
+                      search: Search(
+                        index: "articles",
+                        params: BaseInjectionQueryParameters(
+                          filters: "editorial_pick:true",
+                        ),
+                      ),
+                    ),
+                    position: 0,
+                    length: 1,
+                  ),
+                ],
+              ),
+            ),
+            'videos': FeedInjection(
+              injection: Injection(
+                main: Main(
+                  source: CompositionSource(
+                    search: CompositionSourceSearch(
+                      index: "videos",
+                      params: MainInjectionQueryParameters(
+                        hitsPerPage: 3,
+                        attributesToRetrieve: [
+                          "title",
+                          "thumbnail",
+                          "duration",
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1186,7 +1257,9 @@ void snippetForputComposition5() async {
             ),
           },
           feedsOrder: [
-            "main-products",
+            "products",
+            "articles",
+            "videos",
           ],
         ),
       ),

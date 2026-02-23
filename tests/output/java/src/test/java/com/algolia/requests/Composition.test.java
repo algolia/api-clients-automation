@@ -1297,17 +1297,91 @@ class CompositionClientRequestsTests {
                   new HashMap() {
                     {
                       put(
-                        "main-products",
+                        "products",
+                        new FeedInjection().setInjection(
+                          new Injection()
+                            .setMain(
+                              new Main().setSource(
+                                new CompositionSource().setSearch(
+                                  new CompositionSourceSearch()
+                                    .setIndex("products")
+                                    .setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
+                                )
+                              )
+                            )
+                            .setInjectedItems(
+                              Arrays.asList(
+                                new InjectedItem()
+                                  .setKey("featured-products")
+                                  .setSource(
+                                    new SearchSource().setSearch(
+                                      new Search()
+                                        .setIndex("products")
+                                        .setParams(new BaseInjectionQueryParameters().setFilters("featured:true"))
+                                    )
+                                  )
+                                  .setPosition(0)
+                                  .setLength(2)
+                              )
+                            )
+                        )
+                      );
+                      put(
+                        "articles",
+                        new FeedInjection().setInjection(
+                          new Injection()
+                            .setMain(
+                              new Main().setSource(
+                                new CompositionSource().setSearch(
+                                  new CompositionSourceSearch()
+                                    .setIndex("articles")
+                                    .setParams(
+                                      new MainInjectionQueryParameters()
+                                        .setHitsPerPage(5)
+                                        .setAttributesToRetrieve(Arrays.asList("title", "excerpt", "publishedAt"))
+                                    )
+                                )
+                              )
+                            )
+                            .setInjectedItems(
+                              Arrays.asList(
+                                new InjectedItem()
+                                  .setKey("editorial-picks")
+                                  .setSource(
+                                    new SearchSource().setSearch(
+                                      new Search()
+                                        .setIndex("articles")
+                                        .setParams(new BaseInjectionQueryParameters().setFilters("editorial_pick:true"))
+                                    )
+                                  )
+                                  .setPosition(0)
+                                  .setLength(1)
+                              )
+                            )
+                        )
+                      );
+                      put(
+                        "videos",
                         new FeedInjection().setInjection(
                           new Injection().setMain(
-                            new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                            new Main().setSource(
+                              new CompositionSource().setSearch(
+                                new CompositionSourceSearch()
+                                  .setIndex("videos")
+                                  .setParams(
+                                    new MainInjectionQueryParameters()
+                                      .setHitsPerPage(3)
+                                      .setAttributesToRetrieve(Arrays.asList("title", "thumbnail", "duration"))
+                                  )
+                              )
+                            )
                           )
                         )
                       );
                     }
                   }
                 )
-                .setFeedsOrder(Arrays.asList("main-products"))
+                .setFeedsOrder(Arrays.asList("products", "articles", "videos"))
             )
           )
       );
@@ -1318,7 +1392,7 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"objectID\":\"my-compo\",\"name\":\"my" +
-          " composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}",
+          " composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}",
         req.body,
         JSONCompareMode.STRICT
       )
