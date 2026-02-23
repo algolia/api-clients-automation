@@ -8,12 +8,15 @@ const getUserToken = () => {
   return '';
 };
 
-// Set the searchParams and get the current user token
+// Set the query and get the current user token
+const query = 'User search query';
+const userToken = getUserToken();
+
+// Set the searchParams
 const searchParams: SearchParams = {
-  query: 'User search query',
+  query,
   enableABTest: true,
 };
-const userToken = getUserToken();
 
 // Is the user token anonymous?
 if (userToken === null || userToken === undefined || userToken === 'YOUR_ANONYMOUS_USER_TOKEN') {

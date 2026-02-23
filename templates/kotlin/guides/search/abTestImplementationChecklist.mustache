@@ -9,23 +9,24 @@ fun getUserToken(): String {
 suspend fun abTestImplementationChecklist() {
   {{> snippets/init}}
 
-  // Set the searchParams and get the current user token
+  // Set the query and get the current user token
+  val query = "User search query"
   val userToken = getUserToken()
 
+  // Set the searchParams
+  val searchParams = SearchParamsObject(
+    query = query,
+    enableABTest = true,
+  )
+
+
   // Is the user token anonymous?
-  val searchParams = if (userToken.isEmpty() || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
+  if (userToken.isEmpty() || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
     // Disable A/B testing for this request
-    SearchParamsObject(
-      query = "User search query",
-      enableABTest = false,
-    )
+    searchParams.enableABTest = false
   } else {
     // Set the user token to the current user token
-    SearchParamsObject(
-      query = "User search query",
-      enableABTest = true,
-      userToken = userToken,
-    )
+    searchParams.userToken = userToken
   }
 
   try {

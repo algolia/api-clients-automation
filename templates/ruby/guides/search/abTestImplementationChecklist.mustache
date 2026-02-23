@@ -7,12 +7,16 @@ end
 
 {{> snippets/init}}
 
-# Set the searchParams and get the current user token
+# Set the query and get the current user token
+query = "User search query"
+user_token = get_user_token
+
+# Set the searchParams
 search_params = Algolia::Search::SearchParamsObject.new(
-  query: "User search query",
+  query: query,
   enable_ab_test: true,
 )
-user_token = get_user_token
+
 
 # Is the user token anonymous?
 if user_token.nil? || user_token.empty? || user_token == "YOUR_ANONYMOUS_USER_TOKEN"
@@ -22,7 +26,6 @@ else
   # Set the user token to the current user token
   search_params.user_token = user_token
 end
-
 begin
   # Perform the searchSingleIndex
   result = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}

@@ -11,12 +11,15 @@ $getUserToken = function (): string {
 
 {{> snippets/init}}
 
-// Set the searchParams and get the current user token
+// Set the query and get the current user token
+$query = 'User search query';
+$userToken = $getUserToken();
+
+// Set the searchParams
 $searchParams = (new SearchParamsObject())
-    ->setQuery('User search query')
+    ->setQuery($query)
     ->setEnableABTest(true);
 
-$userToken = $getUserToken();
 
 // Is the user token anonymous?
 if ($userToken === null || $userToken === '' || $userToken === 'YOUR_ANONYMOUS_USER_TOKEN') {

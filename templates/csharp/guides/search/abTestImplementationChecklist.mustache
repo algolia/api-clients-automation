@@ -18,13 +18,17 @@ class AbTestImplementationChecklist {
   {
     {{> snippets/init}}
 
-    // Set the searchParams and get the current user token
+    // Set the query and get the current user token
+    var query = "User search query";
     var userToken = GetUserToken();
 
+    // Set the searchParams
     var searchParamsObject = new SearchParamsObject
     {
-      Query = "User search query"
+      Query = query,
+      EnableABTest = true
     };
+
 
     // Is the user token anonymous?
     if (string.IsNullOrEmpty(userToken) || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
@@ -32,7 +36,6 @@ class AbTestImplementationChecklist {
       searchParamsObject.EnableABTest = false;
     } else {
       // Set the user token to the current user token
-      searchParamsObject.EnableABTest = true;
       searchParamsObject.UserToken = userToken;
     }
 
