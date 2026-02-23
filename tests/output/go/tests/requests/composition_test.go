@@ -782,13 +782,34 @@ func TestComposition_PutComposition(t *testing.T) {
 				SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
 					composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
 						composition.NewEmptyMultifeed().
-							SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+							SetFeeds(map[string]composition.FeedInjection{"products": *composition.NewEmptyFeedInjection().SetInjection(
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyMain().SetSource(
 										composition.NewEmptyCompositionSource().SetSearch(
-											composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+											composition.NewEmptyCompositionSourceSearch().SetIndex("products").SetParams(
+												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(12))))).SetInjectedItems(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("featured-products").SetSource(composition.SearchSourceAsInjectedItemSource(
+										composition.NewEmptySearchSource().SetSearch(
+											composition.NewEmptySearch().SetIndex("products").SetParams(
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("featured:true"))))).SetPosition(0).SetLength(2)})), "articles": *composition.NewEmptyFeedInjection().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("articles").SetParams(
+												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(5).SetAttributesToRetrieve(
+													[]string{"title", "excerpt", "publishedAt"}))))).SetInjectedItems(
+									[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("editorial-picks").SetSource(composition.SearchSourceAsInjectedItemSource(
+										composition.NewEmptySearchSource().SetSearch(
+											composition.NewEmptySearch().SetIndex("articles").SetParams(
+												composition.NewEmptyBaseInjectionQueryParameters().SetFilters("editorial_pick:true"))))).SetPosition(0).SetLength(1)})), "videos": *composition.NewEmptyFeedInjection().SetInjection(
+								composition.NewEmptyInjection().SetMain(
+									composition.NewEmptyMain().SetSource(
+										composition.NewEmptyCompositionSource().SetSearch(
+											composition.NewEmptyCompositionSourceSearch().SetIndex("videos").SetParams(
+												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(3).SetAttributesToRetrieve(
+													[]string{"title", "thumbnail", "duration"}))))))}).
 							SetFeedsOrder(
-								[]string{"main-products"}),
+								[]string{"products", "articles", "videos"}),
 					),
 				)),
 		))
@@ -798,7 +819,7 @@ func TestComposition_PutComposition(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}`)
+			Assertf(*echo.Body, "%s", `{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}`)
 	})
 }
 

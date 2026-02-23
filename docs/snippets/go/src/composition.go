@@ -1183,13 +1183,34 @@ func SnippetForPutCompositionOfComposition5() {
 			SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
 				composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
 					composition.NewEmptyMultifeed().
-						SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+						SetFeeds(map[string]composition.FeedInjection{"products": *composition.NewEmptyFeedInjection().SetInjection(
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyMain().SetSource(
 									composition.NewEmptyCompositionSource().SetSearch(
-										composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+										composition.NewEmptyCompositionSourceSearch().SetIndex("products").SetParams(
+											composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(12))))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("featured-products").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("products").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("featured:true"))))).SetPosition(0).SetLength(2)})), "articles": *composition.NewEmptyFeedInjection().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("articles").SetParams(
+											composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(5).SetAttributesToRetrieve(
+												[]string{"title", "excerpt", "publishedAt"}))))).SetInjectedItems(
+								[]composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("editorial-picks").SetSource(composition.SearchSourceAsInjectedItemSource(
+									composition.NewEmptySearchSource().SetSearch(
+										composition.NewEmptySearch().SetIndex("articles").SetParams(
+											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("editorial_pick:true"))))).SetPosition(0).SetLength(1)})), "videos": *composition.NewEmptyFeedInjection().SetInjection(
+							composition.NewEmptyInjection().SetMain(
+								composition.NewEmptyMain().SetSource(
+									composition.NewEmptyCompositionSource().SetSearch(
+										composition.NewEmptyCompositionSourceSearch().SetIndex("videos").SetParams(
+											composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(3).SetAttributesToRetrieve(
+												[]string{"title", "thumbnail", "duration"}))))))}).
 						SetFeedsOrder(
-							[]string{"main-products"}),
+							[]string{"products", "articles", "videos"}),
 				),
 			)),
 	))

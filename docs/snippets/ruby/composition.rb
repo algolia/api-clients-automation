@@ -976,17 +976,76 @@ def snippet_for_put_composition5
       behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
         multifeed: Algolia::Composition::Multifeed.new(
           feeds: {
-            :"main-products" => Algolia::Composition::FeedInjection.new(
+            products: Algolia::Composition::FeedInjection.new(
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::Main.new(
                   source: Algolia::Composition::CompositionSource.new(
-                    search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                    search: Algolia::Composition::CompositionSourceSearch.new(
+                      index: "products",
+                      params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
+                    )
+                  )
+                ),
+                injected_items: [
+                  Algolia::Composition::InjectedItem.new(
+                    key: "featured-products",
+                    source: Algolia::Composition::SearchSource.new(
+                      search: Algolia::Composition::Search.new(
+                        index: "products",
+                        params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "featured:true")
+                      )
+                    ),
+                    position: 0,
+                    length: 2
+                  )
+                ]
+              )
+            ),
+            articles: Algolia::Composition::FeedInjection.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(
+                      index: "articles",
+                      params: Algolia::Composition::MainInjectionQueryParameters.new(
+                        hits_per_page: 5,
+                        attributes_to_retrieve: ["title", "excerpt", "publishedAt"]
+                      )
+                    )
+                  )
+                ),
+                injected_items: [
+                  Algolia::Composition::InjectedItem.new(
+                    key: "editorial-picks",
+                    source: Algolia::Composition::SearchSource.new(
+                      search: Algolia::Composition::Search.new(
+                        index: "articles",
+                        params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "editorial_pick:true")
+                      )
+                    ),
+                    position: 0,
+                    length: 1
+                  )
+                ]
+              )
+            ),
+            videos: Algolia::Composition::FeedInjection.new(
+              injection: Algolia::Composition::Injection.new(
+                main: Algolia::Composition::Main.new(
+                  source: Algolia::Composition::CompositionSource.new(
+                    search: Algolia::Composition::CompositionSourceSearch.new(
+                      index: "videos",
+                      params: Algolia::Composition::MainInjectionQueryParameters.new(
+                        hits_per_page: 3,
+                        attributes_to_retrieve: ["title", "thumbnail", "duration"]
+                      )
+                    )
                   )
                 )
               )
             )
           },
-          feeds_order: ["main-products"]
+          feeds_order: ["products", "articles", "videos"]
         )
       )
     )

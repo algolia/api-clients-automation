@@ -1234,12 +1234,83 @@ void main() {
           behavior: CompositionMultifeedBehavior(
             multifeed: Multifeed(
               feeds: {
-                'main-products': FeedInjection(
+                'products': FeedInjection(
                   injection: Injection(
                     main: Main(
                       source: CompositionSource(
                         search: CompositionSourceSearch(
                           index: "products",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectedItem(
+                        key: "featured-products",
+                        source: SearchSource(
+                          search: Search(
+                            index: "products",
+                            params: BaseInjectionQueryParameters(
+                              filters: "featured:true",
+                            ),
+                          ),
+                        ),
+                        position: 0,
+                        length: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                'articles': FeedInjection(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "articles",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 5,
+                            attributesToRetrieve: [
+                              "title",
+                              "excerpt",
+                              "publishedAt",
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    injectedItems: [
+                      InjectedItem(
+                        key: "editorial-picks",
+                        source: SearchSource(
+                          search: Search(
+                            index: "articles",
+                            params: BaseInjectionQueryParameters(
+                              filters: "editorial_pick:true",
+                            ),
+                          ),
+                        ),
+                        position: 0,
+                        length: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                'videos': FeedInjection(
+                  injection: Injection(
+                    main: Main(
+                      source: CompositionSource(
+                        search: CompositionSourceSearch(
+                          index: "videos",
+                          params: MainInjectionQueryParameters(
+                            hitsPerPage: 3,
+                            attributesToRetrieve: [
+                              "title",
+                              "thumbnail",
+                              "duration",
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -1247,7 +1318,9 @@ void main() {
                 ),
               },
               feedsOrder: [
-                "main-products",
+                "products",
+                "articles",
+                "videos",
               ],
             ),
           ),
@@ -1257,7 +1330,7 @@ void main() {
         expectPath(request.path, '/1/compositions/my-compo');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}""");
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""");
       },
     ),
   );

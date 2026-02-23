@@ -896,15 +896,56 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
                         feeds: [
-                            "main-products": FeedInjection(
-                                injection: Injection(
-                                    main: CompositionMain(
-                                        source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                            "products": FeedInjection(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                    index: "products",
+                                    params: MainInjectionQueryParameters(hitsPerPage: 12)
+                                ))),
+                                injectedItems: [InjectedItem(
+                                    key: "featured-products",
+                                    source: InjectedItemSource.compositionSearchSource(
+                                        CompositionSearchSource(search: Search(
+                                            index: "products",
+                                            params: BaseInjectionQueryParameters(filters: "featured:true")
+                                        ))
+                                    ),
+                                    position: 0,
+                                    length: 2
+                                )]
+                            )),
+                            "articles": FeedInjection(injection: Injection(
+                                main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                    index: "articles",
+                                    params: MainInjectionQueryParameters(
+                                        attributesToRetrieve: ["title", "excerpt", "publishedAt"],
+                                        hitsPerPage: 5
                                     )
+                                ))),
+                                injectedItems: [InjectedItem(
+                                    key: "editorial-picks",
+                                    source: InjectedItemSource.compositionSearchSource(
+                                        CompositionSearchSource(search: Search(
+                                            index: "articles",
+                                            params: BaseInjectionQueryParameters(filters: "editorial_pick:true")
+                                        ))
+                                    ),
+                                    position: 0,
+                                    length: 1
+                                )]
+                            )),
+                            "videos": FeedInjection(
+                                injection: Injection(
+                                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                        index: "videos",
+                                        params: MainInjectionQueryParameters(
+                                            attributesToRetrieve: ["title", "thumbnail", "duration"],
+                                            hitsPerPage: 3
+                                        )
+                                    )))
                                 )
                             ),
                         ],
-                        feedsOrder: ["main-products"]
+                        feedsOrder: ["products", "articles", "videos"]
                     ))),
                 sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
             )

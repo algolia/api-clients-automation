@@ -826,8 +826,54 @@ describe('putComposition', () => {
         sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
         behavior: {
           multifeed: {
-            feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
-            feedsOrder: ['main-products'],
+            feeds: {
+              products: {
+                injection: {
+                  main: { source: { search: { index: 'products', params: { hitsPerPage: 12 } } } },
+                  injectedItems: [
+                    {
+                      key: 'featured-products',
+                      source: { search: { index: 'products', params: { filters: 'featured:true' } } },
+                      position: 0,
+                      length: 2,
+                    },
+                  ],
+                },
+              },
+              articles: {
+                injection: {
+                  main: {
+                    source: {
+                      search: {
+                        index: 'articles',
+                        params: { hitsPerPage: 5, attributesToRetrieve: ['title', 'excerpt', 'publishedAt'] },
+                      },
+                    },
+                  },
+                  injectedItems: [
+                    {
+                      key: 'editorial-picks',
+                      source: { search: { index: 'articles', params: { filters: 'editorial_pick:true' } } },
+                      position: 0,
+                      length: 1,
+                    },
+                  ],
+                },
+              },
+              videos: {
+                injection: {
+                  main: {
+                    source: {
+                      search: {
+                        index: 'videos',
+                        params: { hitsPerPage: 3, attributesToRetrieve: ['title', 'thumbnail', 'duration'] },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            feedsOrder: ['products', 'articles', 'videos'],
           },
         },
       },
@@ -841,8 +887,54 @@ describe('putComposition', () => {
       sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
       behavior: {
         multifeed: {
-          feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
-          feedsOrder: ['main-products'],
+          feeds: {
+            products: {
+              injection: {
+                main: { source: { search: { index: 'products', params: { hitsPerPage: 12 } } } },
+                injectedItems: [
+                  {
+                    key: 'featured-products',
+                    source: { search: { index: 'products', params: { filters: 'featured:true' } } },
+                    position: 0,
+                    length: 2,
+                  },
+                ],
+              },
+            },
+            articles: {
+              injection: {
+                main: {
+                  source: {
+                    search: {
+                      index: 'articles',
+                      params: { hitsPerPage: 5, attributesToRetrieve: ['title', 'excerpt', 'publishedAt'] },
+                    },
+                  },
+                },
+                injectedItems: [
+                  {
+                    key: 'editorial-picks',
+                    source: { search: { index: 'articles', params: { filters: 'editorial_pick:true' } } },
+                    position: 0,
+                    length: 1,
+                  },
+                ],
+              },
+            },
+            videos: {
+              injection: {
+                main: {
+                  source: {
+                    search: {
+                      index: 'videos',
+                      params: { hitsPerPage: 3, attributesToRetrieve: ['title', 'thumbnail', 'duration'] },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          feedsOrder: ['products', 'articles', 'videos'],
         },
       },
     });
