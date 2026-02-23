@@ -1,11 +1,11 @@
 {{> snippets/import}}
 import com.algolia.client.model.search.*
 
-suspend fun globalAlgoliaUserID() {
+suspend fun globalAlgoliaUserToken() {
   val client = SearchClient(
     appId = "ALGOLIA_APPLICATION_ID",
     apiKey = "ALGOLIA_API_KEY",
-    options = ClientOptions(defaultHeaders = mapOf("X-Algolia-User-ID" to "test-user-123"))
+    options = ClientOptions(defaultHeaders = mapOf("X-Algolia-UserToken" to "test-user-123"))
   )
   println(client.options.defaultHeaders)
 }
