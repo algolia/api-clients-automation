@@ -1589,6 +1589,26 @@
     }
   },
   {
+    "testName": "override_default_page_and_hits_per_page",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "query",
+        "page": 2,
+        "hitsPerPage": 5
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "query",
+        "page": 2,
+        "hitsPerPage": 5
+      }
+    }
+  },
+  {
     "testName": "get_nth_hit",
     "parameters": {
       "indexName": "indexName",
