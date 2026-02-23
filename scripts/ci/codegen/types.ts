@@ -54,7 +54,7 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in 'AlgoliaWeb' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
+  [k in 'AlgoliaWeb' | 'go' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia']: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
@@ -136,6 +136,21 @@ export const pushToRepositoryConfiguration: {
           output: 'nodes/Algolia/specs',
           clients: ['search'],
           placeholderVariables: { appId: 'applicationId' },
+        },
+      },
+    ],
+  },
+  go: {
+    baseBranch: 'master',
+    tasks: [
+      {
+        prBranch: 'feat/automated-update-for-insights-spec',
+        commitMessage: 'chore(insights-api): update OpenAPI spec',
+        files: {
+          type: 'specs',
+          ext: 'yml',
+          output: 'internal/insights/api/spec',
+          clients: ['insights'],
         },
       },
     ],
