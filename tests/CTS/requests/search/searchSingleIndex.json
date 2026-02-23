@@ -281,6 +281,22 @@
     }
   },
   {
+    "testName": "filtersWithScores",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "filters": "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"
+      }
+    }
+  },
+  {
     "testName": "filtersSumOrFiltersScoresFalse",
     "parameters": {
       "indexName": "indexName",
