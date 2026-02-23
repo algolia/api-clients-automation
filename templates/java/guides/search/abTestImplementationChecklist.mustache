@@ -18,8 +18,7 @@ public class abTestImplementationChecklist {
 
     // Set the searchParams
     SearchParamsObject searchParams = new SearchParamsObject()
-      .setQuery(query)
-      .setEnableABTest(true);
+      .setQuery(query);
 
     // Is the user token anonymous?
     if (userToken == null || userToken.isEmpty() || userToken.equals("YOUR_ANONYMOUS_USER_TOKEN")) {
