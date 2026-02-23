@@ -1298,19 +1298,96 @@ class SnippetCompositionClient {
           behavior = CompositionMultifeedBehavior(
             multifeed = Multifeed(
               feeds = Map(
-                "main-products" -> FeedInjection(
+                "products" -> FeedInjection(
                   injection = Injection(
                     main = Main(
                       source = CompositionSource(
                         search = CompositionSourceSearch(
-                          index = "products"
+                          index = "products",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(12)
+                            )
+                          )
+                        )
+                      )
+                    ),
+                    injectedItems = Some(
+                      Seq(
+                        InjectedItem(
+                          key = "featured-products",
+                          source = SearchSource(
+                            search = Search(
+                              index = "products",
+                              params = Some(
+                                BaseInjectionQueryParameters(
+                                  filters = Some("featured:true")
+                                )
+                              )
+                            )
+                          ),
+                          position = 0,
+                          length = 2
+                        )
+                      )
+                    )
+                  )
+                ),
+                "articles" -> FeedInjection(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "articles",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(5),
+                              attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                            )
+                          )
+                        )
+                      )
+                    ),
+                    injectedItems = Some(
+                      Seq(
+                        InjectedItem(
+                          key = "editorial-picks",
+                          source = SearchSource(
+                            search = Search(
+                              index = "articles",
+                              params = Some(
+                                BaseInjectionQueryParameters(
+                                  filters = Some("editorial_pick:true")
+                                )
+                              )
+                            )
+                          ),
+                          position = 0,
+                          length = 1
+                        )
+                      )
+                    )
+                  )
+                ),
+                "videos" -> FeedInjection(
+                  injection = Injection(
+                    main = Main(
+                      source = CompositionSource(
+                        search = CompositionSourceSearch(
+                          index = "videos",
+                          params = Some(
+                            MainInjectionQueryParameters(
+                              hitsPerPage = Some(3),
+                              attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                            )
+                          )
                         )
                       )
                     )
                   )
                 )
               ),
-              feedsOrder = Some(Seq("main-products"))
+              feedsOrder = Some(Seq("products", "articles", "videos"))
             )
           )
         )

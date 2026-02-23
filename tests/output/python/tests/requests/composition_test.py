@@ -1013,12 +1013,83 @@ class TestCompositionClient:
                 "behavior": {
                     "multifeed": {
                         "feeds": {
-                            "main-products": {
+                            "products": {
                                 "injection": {
                                     "main": {
                                         "source": {
                                             "search": {
                                                 "index": "products",
+                                                "params": {
+                                                    "hitsPerPage": 12,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "featured-products",
+                                            "source": {
+                                                "search": {
+                                                    "index": "products",
+                                                    "params": {
+                                                        "filters": "featured:true",
+                                                    },
+                                                },
+                                            },
+                                            "position": 0,
+                                            "length": 2,
+                                        },
+                                    ],
+                                },
+                            },
+                            "articles": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "articles",
+                                                "params": {
+                                                    "hitsPerPage": 5,
+                                                    "attributesToRetrieve": [
+                                                        "title",
+                                                        "excerpt",
+                                                        "publishedAt",
+                                                    ],
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "editorial-picks",
+                                            "source": {
+                                                "search": {
+                                                    "index": "articles",
+                                                    "params": {
+                                                        "filters": "editorial_pick:true",
+                                                    },
+                                                },
+                                            },
+                                            "position": 0,
+                                            "length": 1,
+                                        },
+                                    ],
+                                },
+                            },
+                            "videos": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "videos",
+                                                "params": {
+                                                    "hitsPerPage": 3,
+                                                    "attributesToRetrieve": [
+                                                        "title",
+                                                        "thumbnail",
+                                                        "duration",
+                                                    ],
+                                                },
                                             },
                                         },
                                     },
@@ -1026,7 +1097,9 @@ class TestCompositionClient:
                             },
                         },
                         "feedsOrder": [
-                            "main-products",
+                            "products",
+                            "articles",
+                            "videos",
                         ],
                     },
                 },
@@ -1038,7 +1111,7 @@ class TestCompositionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}"""
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}"""
         )
 
     async def test_put_composition_rule_(self):
@@ -2697,12 +2770,83 @@ class TestCompositionClientSync:
                 "behavior": {
                     "multifeed": {
                         "feeds": {
-                            "main-products": {
+                            "products": {
                                 "injection": {
                                     "main": {
                                         "source": {
                                             "search": {
                                                 "index": "products",
+                                                "params": {
+                                                    "hitsPerPage": 12,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "featured-products",
+                                            "source": {
+                                                "search": {
+                                                    "index": "products",
+                                                    "params": {
+                                                        "filters": "featured:true",
+                                                    },
+                                                },
+                                            },
+                                            "position": 0,
+                                            "length": 2,
+                                        },
+                                    ],
+                                },
+                            },
+                            "articles": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "articles",
+                                                "params": {
+                                                    "hitsPerPage": 5,
+                                                    "attributesToRetrieve": [
+                                                        "title",
+                                                        "excerpt",
+                                                        "publishedAt",
+                                                    ],
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "injectedItems": [
+                                        {
+                                            "key": "editorial-picks",
+                                            "source": {
+                                                "search": {
+                                                    "index": "articles",
+                                                    "params": {
+                                                        "filters": "editorial_pick:true",
+                                                    },
+                                                },
+                                            },
+                                            "position": 0,
+                                            "length": 1,
+                                        },
+                                    ],
+                                },
+                            },
+                            "videos": {
+                                "injection": {
+                                    "main": {
+                                        "source": {
+                                            "search": {
+                                                "index": "videos",
+                                                "params": {
+                                                    "hitsPerPage": 3,
+                                                    "attributesToRetrieve": [
+                                                        "title",
+                                                        "thumbnail",
+                                                        "duration",
+                                                    ],
+                                                },
                                             },
                                         },
                                     },
@@ -2710,7 +2854,9 @@ class TestCompositionClientSync:
                             },
                         },
                         "feedsOrder": [
-                            "main-products",
+                            "products",
+                            "articles",
+                            "videos",
                         ],
                     },
                 },
@@ -2722,7 +2868,7 @@ class TestCompositionClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}"""
+            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}"""
         )
 
     def test_put_composition_rule_(self):

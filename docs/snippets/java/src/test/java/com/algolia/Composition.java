@@ -1103,17 +1103,91 @@ class SnippetCompositionClient {
                 new HashMap() {
                   {
                     put(
-                      "main-products",
+                      "products",
+                      new FeedInjection().setInjection(
+                        new Injection()
+                          .setMain(
+                            new Main().setSource(
+                              new CompositionSource().setSearch(
+                                new CompositionSourceSearch()
+                                  .setIndex("products")
+                                  .setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectedItem()
+                                .setKey("featured-products")
+                                .setSource(
+                                  new SearchSource().setSearch(
+                                    new Search()
+                                      .setIndex("products")
+                                      .setParams(new BaseInjectionQueryParameters().setFilters("featured:true"))
+                                  )
+                                )
+                                .setPosition(0)
+                                .setLength(2)
+                            )
+                          )
+                      )
+                    );
+                    put(
+                      "articles",
+                      new FeedInjection().setInjection(
+                        new Injection()
+                          .setMain(
+                            new Main().setSource(
+                              new CompositionSource().setSearch(
+                                new CompositionSourceSearch()
+                                  .setIndex("articles")
+                                  .setParams(
+                                    new MainInjectionQueryParameters()
+                                      .setHitsPerPage(5)
+                                      .setAttributesToRetrieve(Arrays.asList("title", "excerpt", "publishedAt"))
+                                  )
+                              )
+                            )
+                          )
+                          .setInjectedItems(
+                            Arrays.asList(
+                              new InjectedItem()
+                                .setKey("editorial-picks")
+                                .setSource(
+                                  new SearchSource().setSearch(
+                                    new Search()
+                                      .setIndex("articles")
+                                      .setParams(new BaseInjectionQueryParameters().setFilters("editorial_pick:true"))
+                                  )
+                                )
+                                .setPosition(0)
+                                .setLength(1)
+                            )
+                          )
+                      )
+                    );
+                    put(
+                      "videos",
                       new FeedInjection().setInjection(
                         new Injection().setMain(
-                          new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                          new Main().setSource(
+                            new CompositionSource().setSearch(
+                              new CompositionSourceSearch()
+                                .setIndex("videos")
+                                .setParams(
+                                  new MainInjectionQueryParameters()
+                                    .setHitsPerPage(3)
+                                    .setAttributesToRetrieve(Arrays.asList("title", "thumbnail", "duration"))
+                                )
+                            )
+                          )
                         )
                       )
                     );
                   }
                 }
               )
-              .setFeedsOrder(Arrays.asList("main-products"))
+              .setFeedsOrder(Arrays.asList("products", "articles", "videos"))
           )
         )
     );
