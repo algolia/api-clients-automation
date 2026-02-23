@@ -177,6 +177,46 @@
     }
   },
   {
+    "testName": "custom ranking without categories",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "User search query",
+        "facetingAfterDistinct": true,
+        "filters": "ranked_category:none"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "User search query",
+        "facetingAfterDistinct": true,
+        "filters": "ranked_category:none"
+      }
+    }
+  },
+  {
+    "testName": "custom ranking with categories",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "User search query",
+        "facetingAfterDistinct": true,
+        "filters": "category:${currentCategory} AND (ranked_category:${currentCategory} OR ranked_category:none)"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "User search query",
+        "facetingAfterDistinct": true,
+        "filters": "category:${currentCategory} AND (ranked_category:${currentCategory} OR ranked_category:none)"
+      }
+    }
+  },
+  {
     "testName": "filters boolean",
     "parameters": {
       "indexName": "indexName",
