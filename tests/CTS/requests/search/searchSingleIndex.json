@@ -1883,6 +1883,7 @@
     "request": {
       "path": "/1/indexes/indexName/query",
       "method": "POST",
+      "body": {},
       "headers": {
         "x-forwarded-for": "XX.XXX.XXX.XXX"
       }
