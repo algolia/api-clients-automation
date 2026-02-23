@@ -2477,7 +2477,7 @@ paths:
                       Feeds = new Dictionary<string, FeedInjection>
                       {
                         {
-                          "main-products",
+                          "products",
                           new FeedInjection
                           {
                             Injection = new Injection
@@ -2486,14 +2486,120 @@ paths:
                               {
                                 Source = new CompositionSource
                                 {
-                                  Search = new CompositionSourceSearch { Index = "products" },
+                                  Search = new CompositionSourceSearch
+                                  {
+                                    Index = "products",
+                                    Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
+                                  },
+                                },
+                              },
+                              InjectedItems = new List<InjectedItem>
+                              {
+                                new InjectedItem
+                                {
+                                  Key = "featured-products",
+                                  Source = new InjectedItemSource(
+                                    new SearchSource
+                                    {
+                                      Search = new Algolia.Search.Models.Composition.Search
+                                      {
+                                        Index = "products",
+                                        Params = new BaseInjectionQueryParameters
+                                        {
+                                          Filters = "featured:true",
+                                        },
+                                      },
+                                    }
+                                  ),
+                                  Position = 0,
+                                  Length = 2,
+                                },
+                              },
+                            },
+                          }
+                        },
+                        {
+                          "articles",
+                          new FeedInjection
+                          {
+                            Injection = new Injection
+                            {
+                              Main = new Main
+                              {
+                                Source = new CompositionSource
+                                {
+                                  Search = new CompositionSourceSearch
+                                  {
+                                    Index = "articles",
+                                    Params = new MainInjectionQueryParameters
+                                    {
+                                      HitsPerPage = 5,
+                                      AttributesToRetrieve = new List<string>
+                                      {
+                                        "title",
+                                        "excerpt",
+                                        "publishedAt",
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              InjectedItems = new List<InjectedItem>
+                              {
+                                new InjectedItem
+                                {
+                                  Key = "editorial-picks",
+                                  Source = new InjectedItemSource(
+                                    new SearchSource
+                                    {
+                                      Search = new Algolia.Search.Models.Composition.Search
+                                      {
+                                        Index = "articles",
+                                        Params = new BaseInjectionQueryParameters
+                                        {
+                                          Filters = "editorial_pick:true",
+                                        },
+                                      },
+                                    }
+                                  ),
+                                  Position = 0,
+                                  Length = 1,
+                                },
+                              },
+                            },
+                          }
+                        },
+                        {
+                          "videos",
+                          new FeedInjection
+                          {
+                            Injection = new Injection
+                            {
+                              Main = new Main
+                              {
+                                Source = new CompositionSource
+                                {
+                                  Search = new CompositionSourceSearch
+                                  {
+                                    Index = "videos",
+                                    Params = new MainInjectionQueryParameters
+                                    {
+                                      HitsPerPage = 3,
+                                      AttributesToRetrieve = new List<string>
+                                      {
+                                        "title",
+                                        "thumbnail",
+                                        "duration",
+                                      },
+                                    },
+                                  },
                                 },
                               },
                             },
                           }
                         },
                       },
-                      FeedsOrder = new List<string> { "main-products" },
+                      FeedsOrder = new List<string> { "products", "articles", "videos" },
                     },
                   }
                 ),
@@ -2522,12 +2628,83 @@ paths:
                 behavior: CompositionMultifeedBehavior(
                   multifeed: Multifeed(
                     feeds: {
-                      'main-products': FeedInjection(
+                      'products': FeedInjection(
                         injection: Injection(
                           main: Main(
                             source: CompositionSource(
                               search: CompositionSourceSearch(
                                 index: "products",
+                                params: MainInjectionQueryParameters(
+                                  hitsPerPage: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                          injectedItems: [
+                            InjectedItem(
+                              key: "featured-products",
+                              source: SearchSource(
+                                search: Search(
+                                  index: "products",
+                                  params: BaseInjectionQueryParameters(
+                                    filters: "featured:true",
+                                  ),
+                                ),
+                              ),
+                              position: 0,
+                              length: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      'articles': FeedInjection(
+                        injection: Injection(
+                          main: Main(
+                            source: CompositionSource(
+                              search: CompositionSourceSearch(
+                                index: "articles",
+                                params: MainInjectionQueryParameters(
+                                  hitsPerPage: 5,
+                                  attributesToRetrieve: [
+                                    "title",
+                                    "excerpt",
+                                    "publishedAt",
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          injectedItems: [
+                            InjectedItem(
+                              key: "editorial-picks",
+                              source: SearchSource(
+                                search: Search(
+                                  index: "articles",
+                                  params: BaseInjectionQueryParameters(
+                                    filters: "editorial_pick:true",
+                                  ),
+                                ),
+                              ),
+                              position: 0,
+                              length: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      'videos': FeedInjection(
+                        injection: Injection(
+                          main: Main(
+                            source: CompositionSource(
+                              search: CompositionSourceSearch(
+                                index: "videos",
+                                params: MainInjectionQueryParameters(
+                                  hitsPerPage: 3,
+                                  attributesToRetrieve: [
+                                    "title",
+                                    "thumbnail",
+                                    "duration",
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -2535,7 +2712,9 @@ paths:
                       ),
                     },
                     feedsOrder: [
-                      "main-products",
+                      "products",
+                      "articles",
+                      "videos",
                     ],
                   ),
                 ),
@@ -2570,13 +2749,34 @@ paths:
                 SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
                   composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
                     composition.NewEmptyMultifeed().
-                      SetFeeds(map[string]composition.FeedInjection{"main-products": *composition.NewEmptyFeedInjection().SetInjection(
+                      SetFeeds(map[string]composition.FeedInjection{"products": *composition.NewEmptyFeedInjection().SetInjection(
                         composition.NewEmptyInjection().SetMain(
                           composition.NewEmptyMain().SetSource(
                             composition.NewEmptyCompositionSource().SetSearch(
-                              composition.NewEmptyCompositionSourceSearch().SetIndex("products")))))}).
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("products").SetParams(
+                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(12))))).SetInjectedItems(
+                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("featured-products").SetSource(composition.SearchSourceAsInjectedItemSource(
+                            composition.NewEmptySearchSource().SetSearch(
+                              composition.NewEmptySearch().SetIndex("products").SetParams(
+                                composition.NewEmptyBaseInjectionQueryParameters().SetFilters("featured:true"))))).SetPosition(0).SetLength(2)})), "articles": *composition.NewEmptyFeedInjection().SetInjection(
+                        composition.NewEmptyInjection().SetMain(
+                          composition.NewEmptyMain().SetSource(
+                            composition.NewEmptyCompositionSource().SetSearch(
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("articles").SetParams(
+                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(5).SetAttributesToRetrieve(
+                                  []string{"title", "excerpt", "publishedAt"}))))).SetInjectedItems(
+                          []composition.InjectedItem{*composition.NewEmptyInjectedItem().SetKey("editorial-picks").SetSource(composition.SearchSourceAsInjectedItemSource(
+                            composition.NewEmptySearchSource().SetSearch(
+                              composition.NewEmptySearch().SetIndex("articles").SetParams(
+                                composition.NewEmptyBaseInjectionQueryParameters().SetFilters("editorial_pick:true"))))).SetPosition(0).SetLength(1)})), "videos": *composition.NewEmptyFeedInjection().SetInjection(
+                        composition.NewEmptyInjection().SetMain(
+                          composition.NewEmptyMain().SetSource(
+                            composition.NewEmptyCompositionSource().SetSearch(
+                              composition.NewEmptyCompositionSourceSearch().SetIndex("videos").SetParams(
+                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(3).SetAttributesToRetrieve(
+                                  []string{"title", "thumbnail", "duration"}))))))}).
                       SetFeedsOrder(
-                        []string{"main-products"}),
+                        []string{"products", "articles", "videos"}),
                   ),
                 )),
             ))
@@ -2622,17 +2822,91 @@ paths:
                         new HashMap() {
                           {
                             put(
-                              "main-products",
+                              "products",
+                              new FeedInjection().setInjection(
+                                new Injection()
+                                  .setMain(
+                                    new Main().setSource(
+                                      new CompositionSource().setSearch(
+                                        new CompositionSourceSearch()
+                                          .setIndex("products")
+                                          .setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
+                                      )
+                                    )
+                                  )
+                                  .setInjectedItems(
+                                    Arrays.asList(
+                                      new InjectedItem()
+                                        .setKey("featured-products")
+                                        .setSource(
+                                          new SearchSource().setSearch(
+                                            new Search()
+                                              .setIndex("products")
+                                              .setParams(new BaseInjectionQueryParameters().setFilters("featured:true"))
+                                          )
+                                        )
+                                        .setPosition(0)
+                                        .setLength(2)
+                                    )
+                                  )
+                              )
+                            );
+                            put(
+                              "articles",
+                              new FeedInjection().setInjection(
+                                new Injection()
+                                  .setMain(
+                                    new Main().setSource(
+                                      new CompositionSource().setSearch(
+                                        new CompositionSourceSearch()
+                                          .setIndex("articles")
+                                          .setParams(
+                                            new MainInjectionQueryParameters()
+                                              .setHitsPerPage(5)
+                                              .setAttributesToRetrieve(Arrays.asList("title", "excerpt", "publishedAt"))
+                                          )
+                                      )
+                                    )
+                                  )
+                                  .setInjectedItems(
+                                    Arrays.asList(
+                                      new InjectedItem()
+                                        .setKey("editorial-picks")
+                                        .setSource(
+                                          new SearchSource().setSearch(
+                                            new Search()
+                                              .setIndex("articles")
+                                              .setParams(new BaseInjectionQueryParameters().setFilters("editorial_pick:true"))
+                                          )
+                                        )
+                                        .setPosition(0)
+                                        .setLength(1)
+                                    )
+                                  )
+                              )
+                            );
+                            put(
+                              "videos",
                               new FeedInjection().setInjection(
                                 new Injection().setMain(
-                                  new Main().setSource(new CompositionSource().setSearch(new CompositionSourceSearch().setIndex("products")))
+                                  new Main().setSource(
+                                    new CompositionSource().setSearch(
+                                      new CompositionSourceSearch()
+                                        .setIndex("videos")
+                                        .setParams(
+                                          new MainInjectionQueryParameters()
+                                            .setHitsPerPage(3)
+                                            .setAttributesToRetrieve(Arrays.asList("title", "thumbnail", "duration"))
+                                        )
+                                    )
+                                  )
                                 )
                               )
                             );
                           }
                         }
                       )
-                      .setFeedsOrder(Arrays.asList("main-products"))
+                      .setFeedsOrder(Arrays.asList("products", "articles", "videos"))
                   )
                 )
             );
@@ -2660,8 +2934,54 @@ paths:
                 sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
                 behavior: {
                   multifeed: {
-                    feeds: { 'main-products': { injection: { main: { source: { search: { index: 'products' } } } } } },
-                    feedsOrder: ['main-products'],
+                    feeds: {
+                      products: {
+                        injection: {
+                          main: { source: { search: { index: 'products', params: { hitsPerPage: 12 } } } },
+                          injectedItems: [
+                            {
+                              key: 'featured-products',
+                              source: { search: { index: 'products', params: { filters: 'featured:true' } } },
+                              position: 0,
+                              length: 2,
+                            },
+                          ],
+                        },
+                      },
+                      articles: {
+                        injection: {
+                          main: {
+                            source: {
+                              search: {
+                                index: 'articles',
+                                params: { hitsPerPage: 5, attributesToRetrieve: ['title', 'excerpt', 'publishedAt'] },
+                              },
+                            },
+                          },
+                          injectedItems: [
+                            {
+                              key: 'editorial-picks',
+                              source: { search: { index: 'articles', params: { filters: 'editorial_pick:true' } } },
+                              position: 0,
+                              length: 1,
+                            },
+                          ],
+                        },
+                      },
+                      videos: {
+                        injection: {
+                          main: {
+                            source: {
+                              search: {
+                                index: 'videos',
+                                params: { hitsPerPage: 3, attributesToRetrieve: ['title', 'thumbnail', 'duration'] },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    feedsOrder: ['products', 'articles', 'videos'],
                   },
                 },
               },
@@ -2698,7 +3018,7 @@ paths:
                           Multifeed(
                             feeds =
                               mapOf(
-                                "main-products" to
+                                "products" to
                                   FeedInjection(
                                     injection =
                                       Injection(
@@ -2706,13 +3026,99 @@ paths:
                                           Main(
                                             source =
                                               CompositionSource(
-                                                search = CompositionSourceSearch(index = "products")
+                                                search =
+                                                  CompositionSourceSearch(
+                                                    index = "products",
+                                                    params = MainInjectionQueryParameters(hitsPerPage = 12),
+                                                  )
+                                              )
+                                          ),
+                                        injectedItems =
+                                          listOf(
+                                            InjectedItem(
+                                              key = "featured-products",
+                                              source =
+                                                SearchSource(
+                                                  search =
+                                                    Search(
+                                                      index = "products",
+                                                      params =
+                                                        BaseInjectionQueryParameters(
+                                                          filters = "featured:true"
+                                                        ),
+                                                    )
+                                                ),
+                                              position = 0,
+                                              length = 2,
+                                            )
+                                          ),
+                                      )
+                                  ),
+                                "articles" to
+                                  FeedInjection(
+                                    injection =
+                                      Injection(
+                                        main =
+                                          Main(
+                                            source =
+                                              CompositionSource(
+                                                search =
+                                                  CompositionSourceSearch(
+                                                    index = "articles",
+                                                    params =
+                                                      MainInjectionQueryParameters(
+                                                        hitsPerPage = 5,
+                                                        attributesToRetrieve =
+                                                          listOf("title", "excerpt", "publishedAt"),
+                                                      ),
+                                                  )
+                                              )
+                                          ),
+                                        injectedItems =
+                                          listOf(
+                                            InjectedItem(
+                                              key = "editorial-picks",
+                                              source =
+                                                SearchSource(
+                                                  search =
+                                                    Search(
+                                                      index = "articles",
+                                                      params =
+                                                        BaseInjectionQueryParameters(
+                                                          filters = "editorial_pick:true"
+                                                        ),
+                                                    )
+                                                ),
+                                              position = 0,
+                                              length = 1,
+                                            )
+                                          ),
+                                      )
+                                  ),
+                                "videos" to
+                                  FeedInjection(
+                                    injection =
+                                      Injection(
+                                        main =
+                                          Main(
+                                            source =
+                                              CompositionSource(
+                                                search =
+                                                  CompositionSourceSearch(
+                                                    index = "videos",
+                                                    params =
+                                                      MainInjectionQueryParameters(
+                                                        hitsPerPage = 3,
+                                                        attributesToRetrieve =
+                                                          listOf("title", "thumbnail", "duration"),
+                                                      ),
+                                                  )
                                               )
                                           )
                                       )
-                                  )
+                                  ),
                               ),
-                            feedsOrder = listOf("main-products"),
+                            feedsOrder = listOf("products", "articles", "videos"),
                           )
                       ),
                   ),
@@ -2740,15 +3146,73 @@ paths:
                     'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
                         'Price-desc' => 'products-high-to-low',
                     ],
-                    'behavior' => ['multifeed' => ['feeds' => ['main-products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                    'behavior' => ['multifeed' => ['feeds' => ['products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
+                        'params' => ['hitsPerPage' => 12,
+                        ],
                     ],
                     ],
                     ],
+                        'injectedItems' => [
+                            ['key' => 'featured-products',
+                                'source' => ['search' => ['index' => 'products',
+                                    'params' => ['filters' => 'featured:true',
+                                    ],
+                                ],
+                                ],
+                                'position' => 0,
+                                'length' => 2,
+                            ],
+                        ],
                     ],
                     ],
+                        'articles' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'articles',
+                            'params' => ['hitsPerPage' => 5,
+                                'attributesToRetrieve' => [
+                                    'title',
+
+                                    'excerpt',
+
+                                    'publishedAt',
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                            'injectedItems' => [
+                                ['key' => 'editorial-picks',
+                                    'source' => ['search' => ['index' => 'articles',
+                                        'params' => ['filters' => 'editorial_pick:true',
+                                        ],
+                                    ],
+                                    ],
+                                    'position' => 0,
+                                    'length' => 1,
+                                ],
+                            ],
+                        ],
+                        ],
+                        'videos' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'videos',
+                            'params' => ['hitsPerPage' => 3,
+                                'attributesToRetrieve' => [
+                                    'title',
+
+                                    'thumbnail',
+
+                                    'duration',
+                                ],
+                            ],
+                        ],
+                        ],
+                        ],
+                        ],
+                        ],
                     ],
                         'feedsOrder' => [
-                            'main-products',
+                            'products',
+
+                            'articles',
+
+                            'videos',
                         ],
                     ],
                     ],
@@ -2786,12 +3250,83 @@ paths:
                     "behavior": {
                         "multifeed": {
                             "feeds": {
-                                "main-products": {
+                                "products": {
                                     "injection": {
                                         "main": {
                                             "source": {
                                                 "search": {
                                                     "index": "products",
+                                                    "params": {
+                                                        "hitsPerPage": 12,
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "featured-products",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "products",
+                                                        "params": {
+                                                            "filters": "featured:true",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 2,
+                                            },
+                                        ],
+                                    },
+                                },
+                                "articles": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "articles",
+                                                    "params": {
+                                                        "hitsPerPage": 5,
+                                                        "attributesToRetrieve": [
+                                                            "title",
+                                                            "excerpt",
+                                                            "publishedAt",
+                                                        ],
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        "injectedItems": [
+                                            {
+                                                "key": "editorial-picks",
+                                                "source": {
+                                                    "search": {
+                                                        "index": "articles",
+                                                        "params": {
+                                                            "filters": "editorial_pick:true",
+                                                        },
+                                                    },
+                                                },
+                                                "position": 0,
+                                                "length": 1,
+                                            },
+                                        ],
+                                    },
+                                },
+                                "videos": {
+                                    "injection": {
+                                        "main": {
+                                            "source": {
+                                                "search": {
+                                                    "index": "videos",
+                                                    "params": {
+                                                        "hitsPerPage": 3,
+                                                        "attributesToRetrieve": [
+                                                            "title",
+                                                            "thumbnail",
+                                                            "duration",
+                                                        ],
+                                                    },
                                                 },
                                             },
                                         },
@@ -2799,7 +3334,9 @@ paths:
                                 },
                             },
                             "feedsOrder": [
-                                "main-products",
+                                "products",
+                                "articles",
+                                "videos",
                             ],
                         },
                     },
@@ -2831,17 +3368,76 @@ paths:
                 behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
                   multifeed: Algolia::Composition::Multifeed.new(
                     feeds: {
-                      :"main-products" => Algolia::Composition::FeedInjection.new(
+                      products: Algolia::Composition::FeedInjection.new(
                         injection: Algolia::Composition::Injection.new(
                           main: Algolia::Composition::Main.new(
                             source: Algolia::Composition::CompositionSource.new(
-                              search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                              search: Algolia::Composition::CompositionSourceSearch.new(
+                                index: "products",
+                                params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
+                              )
+                            )
+                          ),
+                          injected_items: [
+                            Algolia::Composition::InjectedItem.new(
+                              key: "featured-products",
+                              source: Algolia::Composition::SearchSource.new(
+                                search: Algolia::Composition::Search.new(
+                                  index: "products",
+                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "featured:true")
+                                )
+                              ),
+                              position: 0,
+                              length: 2
+                            )
+                          ]
+                        )
+                      ),
+                      articles: Algolia::Composition::FeedInjection.new(
+                        injection: Algolia::Composition::Injection.new(
+                          main: Algolia::Composition::Main.new(
+                            source: Algolia::Composition::CompositionSource.new(
+                              search: Algolia::Composition::CompositionSourceSearch.new(
+                                index: "articles",
+                                params: Algolia::Composition::MainInjectionQueryParameters.new(
+                                  hits_per_page: 5,
+                                  attributes_to_retrieve: ["title", "excerpt", "publishedAt"]
+                                )
+                              )
+                            )
+                          ),
+                          injected_items: [
+                            Algolia::Composition::InjectedItem.new(
+                              key: "editorial-picks",
+                              source: Algolia::Composition::SearchSource.new(
+                                search: Algolia::Composition::Search.new(
+                                  index: "articles",
+                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "editorial_pick:true")
+                                )
+                              ),
+                              position: 0,
+                              length: 1
+                            )
+                          ]
+                        )
+                      ),
+                      videos: Algolia::Composition::FeedInjection.new(
+                        injection: Algolia::Composition::Injection.new(
+                          main: Algolia::Composition::Main.new(
+                            source: Algolia::Composition::CompositionSource.new(
+                              search: Algolia::Composition::CompositionSourceSearch.new(
+                                index: "videos",
+                                params: Algolia::Composition::MainInjectionQueryParameters.new(
+                                  hits_per_page: 3,
+                                  attributes_to_retrieve: ["title", "thumbnail", "duration"]
+                                )
+                              )
                             )
                           )
                         )
                       )
                     },
-                    feeds_order: ["main-products"]
+                    feeds_order: ["products", "articles", "videos"]
                   )
                 )
               )
@@ -2873,19 +3469,96 @@ paths:
                   behavior = CompositionMultifeedBehavior(
                     multifeed = Multifeed(
                       feeds = Map(
-                        "main-products" -> FeedInjection(
+                        "products" -> FeedInjection(
                           injection = Injection(
                             main = Main(
                               source = CompositionSource(
                                 search = CompositionSourceSearch(
-                                  index = "products"
+                                  index = "products",
+                                  params = Some(
+                                    MainInjectionQueryParameters(
+                                      hitsPerPage = Some(12)
+                                    )
+                                  )
+                                )
+                              )
+                            ),
+                            injectedItems = Some(
+                              Seq(
+                                InjectedItem(
+                                  key = "featured-products",
+                                  source = SearchSource(
+                                    search = Search(
+                                      index = "products",
+                                      params = Some(
+                                        BaseInjectionQueryParameters(
+                                          filters = Some("featured:true")
+                                        )
+                                      )
+                                    )
+                                  ),
+                                  position = 0,
+                                  length = 2
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        "articles" -> FeedInjection(
+                          injection = Injection(
+                            main = Main(
+                              source = CompositionSource(
+                                search = CompositionSourceSearch(
+                                  index = "articles",
+                                  params = Some(
+                                    MainInjectionQueryParameters(
+                                      hitsPerPage = Some(5),
+                                      attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
+                                    )
+                                  )
+                                )
+                              )
+                            ),
+                            injectedItems = Some(
+                              Seq(
+                                InjectedItem(
+                                  key = "editorial-picks",
+                                  source = SearchSource(
+                                    search = Search(
+                                      index = "articles",
+                                      params = Some(
+                                        BaseInjectionQueryParameters(
+                                          filters = Some("editorial_pick:true")
+                                        )
+                                      )
+                                    )
+                                  ),
+                                  position = 0,
+                                  length = 1
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        "videos" -> FeedInjection(
+                          injection = Injection(
+                            main = Main(
+                              source = CompositionSource(
+                                search = CompositionSourceSearch(
+                                  index = "videos",
+                                  params = Some(
+                                    MainInjectionQueryParameters(
+                                      hitsPerPage = Some(3),
+                                      attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
+                                    )
+                                  )
                                 )
                               )
                             )
                           )
                         )
                       ),
-                      feedsOrder = Some(Seq("main-products"))
+                      feedsOrder = Some(Seq("products", "articles", "videos"))
                     )
                   )
                 )
@@ -2916,15 +3589,56 @@ paths:
                     behavior: CompositionBehavior
                         .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
                             feeds: [
-                                "main-products": FeedInjection(
-                                    injection: Injection(
-                                        main: CompositionMain(
-                                            source: CompositionSource(search: CompositionSourceSearch(index: "products"))
+                                "products": FeedInjection(injection: Injection(
+                                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                        index: "products",
+                                        params: MainInjectionQueryParameters(hitsPerPage: 12)
+                                    ))),
+                                    injectedItems: [InjectedItem(
+                                        key: "featured-products",
+                                        source: InjectedItemSource.compositionSearchSource(
+                                            CompositionSearchSource(search: Search(
+                                                index: "products",
+                                                params: BaseInjectionQueryParameters(filters: "featured:true")
+                                            ))
+                                        ),
+                                        position: 0,
+                                        length: 2
+                                    )]
+                                )),
+                                "articles": FeedInjection(injection: Injection(
+                                    main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                        index: "articles",
+                                        params: MainInjectionQueryParameters(
+                                            attributesToRetrieve: ["title", "excerpt", "publishedAt"],
+                                            hitsPerPage: 5
                                         )
+                                    ))),
+                                    injectedItems: [InjectedItem(
+                                        key: "editorial-picks",
+                                        source: InjectedItemSource.compositionSearchSource(
+                                            CompositionSearchSource(search: Search(
+                                                index: "articles",
+                                                params: BaseInjectionQueryParameters(filters: "editorial_pick:true")
+                                            ))
+                                        ),
+                                        position: 0,
+                                        length: 1
+                                    )]
+                                )),
+                                "videos": FeedInjection(
+                                    injection: Injection(
+                                        main: CompositionMain(source: CompositionSource(search: CompositionSourceSearch(
+                                            index: "videos",
+                                            params: MainInjectionQueryParameters(
+                                                attributesToRetrieve: ["title", "thumbnail", "duration"],
+                                                hitsPerPage: 3
+                                            )
+                                        )))
                                     )
                                 ),
                             ],
-                            feedsOrder: ["main-products"]
+                            feedsOrder: ["products", "articles", "videos"]
                         ))),
                     sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
                 )

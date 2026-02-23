@@ -1335,7 +1335,7 @@ public class SnippetCompositionClient
               Feeds = new Dictionary<string, FeedInjection>
               {
                 {
-                  "main-products",
+                  "products",
                   new FeedInjection
                   {
                     Injection = new Injection
@@ -1344,14 +1344,120 @@ public class SnippetCompositionClient
                       {
                         Source = new CompositionSource
                         {
-                          Search = new CompositionSourceSearch { Index = "products" },
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "products",
+                            Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
+                          },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "featured-products",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "products",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "featured:true",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 2,
+                        },
+                      },
+                    },
+                  }
+                },
+                {
+                  "articles",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "articles",
+                            Params = new MainInjectionQueryParameters
+                            {
+                              HitsPerPage = 5,
+                              AttributesToRetrieve = new List<string>
+                              {
+                                "title",
+                                "excerpt",
+                                "publishedAt",
+                              },
+                            },
+                          },
+                        },
+                      },
+                      InjectedItems = new List<InjectedItem>
+                      {
+                        new InjectedItem
+                        {
+                          Key = "editorial-picks",
+                          Source = new InjectedItemSource(
+                            new SearchSource
+                            {
+                              Search = new Algolia.Search.Models.Composition.Search
+                              {
+                                Index = "articles",
+                                Params = new BaseInjectionQueryParameters
+                                {
+                                  Filters = "editorial_pick:true",
+                                },
+                              },
+                            }
+                          ),
+                          Position = 0,
+                          Length = 1,
+                        },
+                      },
+                    },
+                  }
+                },
+                {
+                  "videos",
+                  new FeedInjection
+                  {
+                    Injection = new Injection
+                    {
+                      Main = new Main
+                      {
+                        Source = new CompositionSource
+                        {
+                          Search = new CompositionSourceSearch
+                          {
+                            Index = "videos",
+                            Params = new MainInjectionQueryParameters
+                            {
+                              HitsPerPage = 3,
+                              AttributesToRetrieve = new List<string>
+                              {
+                                "title",
+                                "thumbnail",
+                                "duration",
+                              },
+                            },
+                          },
                         },
                       },
                     },
                   }
                 },
               },
-              FeedsOrder = new List<string> { "main-products" },
+              FeedsOrder = new List<string> { "products", "articles", "videos" },
             },
           }
         ),

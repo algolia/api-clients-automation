@@ -734,7 +734,7 @@ class CompositionTest {
                     Multifeed(
                       feeds =
                         mapOf(
-                          "main-products" to
+                          "products" to
                             FeedInjection(
                               injection =
                                 Injection(
@@ -742,13 +742,100 @@ class CompositionTest {
                                     Main(
                                       source =
                                         CompositionSource(
-                                          search = CompositionSourceSearch(index = "products")
+                                          search =
+                                            CompositionSourceSearch(
+                                              index = "products",
+                                              params =
+                                                MainInjectionQueryParameters(hitsPerPage = 12),
+                                            )
+                                        )
+                                    ),
+                                  injectedItems =
+                                    listOf(
+                                      InjectedItem(
+                                        key = "featured-products",
+                                        source =
+                                          SearchSource(
+                                            search =
+                                              Search(
+                                                index = "products",
+                                                params =
+                                                  BaseInjectionQueryParameters(
+                                                    filters = "featured:true"
+                                                  ),
+                                              )
+                                          ),
+                                        position = 0,
+                                        length = 2,
+                                      )
+                                    ),
+                                )
+                            ),
+                          "articles" to
+                            FeedInjection(
+                              injection =
+                                Injection(
+                                  main =
+                                    Main(
+                                      source =
+                                        CompositionSource(
+                                          search =
+                                            CompositionSourceSearch(
+                                              index = "articles",
+                                              params =
+                                                MainInjectionQueryParameters(
+                                                  hitsPerPage = 5,
+                                                  attributesToRetrieve =
+                                                    listOf("title", "excerpt", "publishedAt"),
+                                                ),
+                                            )
+                                        )
+                                    ),
+                                  injectedItems =
+                                    listOf(
+                                      InjectedItem(
+                                        key = "editorial-picks",
+                                        source =
+                                          SearchSource(
+                                            search =
+                                              Search(
+                                                index = "articles",
+                                                params =
+                                                  BaseInjectionQueryParameters(
+                                                    filters = "editorial_pick:true"
+                                                  ),
+                                              )
+                                          ),
+                                        position = 0,
+                                        length = 1,
+                                      )
+                                    ),
+                                )
+                            ),
+                          "videos" to
+                            FeedInjection(
+                              injection =
+                                Injection(
+                                  main =
+                                    Main(
+                                      source =
+                                        CompositionSource(
+                                          search =
+                                            CompositionSourceSearch(
+                                              index = "videos",
+                                              params =
+                                                MainInjectionQueryParameters(
+                                                  hitsPerPage = 3,
+                                                  attributesToRetrieve =
+                                                    listOf("title", "thumbnail", "duration"),
+                                                ),
+                                            )
                                         )
                                     )
                                 )
-                            )
+                            ),
                         ),
-                      feedsOrder = listOf("main-products"),
+                      feedsOrder = listOf("products", "articles", "videos"),
                     )
                 ),
             ),
@@ -758,7 +845,7 @@ class CompositionTest {
         assertEquals("/1/compositions/my-compo".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody(
-          """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"main-products":{"injection":{"main":{"source":{"search":{"index":"products"}}}}}},"feedsOrder":["main-products"]}}}""",
+          """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""",
           it.body,
         )
       },

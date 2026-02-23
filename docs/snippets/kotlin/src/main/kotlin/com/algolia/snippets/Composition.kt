@@ -754,7 +754,7 @@ class SnippetCompositionClient {
                   Multifeed(
                     feeds =
                       mapOf(
-                        "main-products" to
+                        "products" to
                           FeedInjection(
                             injection =
                               Injection(
@@ -762,13 +762,99 @@ class SnippetCompositionClient {
                                   Main(
                                     source =
                                       CompositionSource(
-                                        search = CompositionSourceSearch(index = "products")
+                                        search =
+                                          CompositionSourceSearch(
+                                            index = "products",
+                                            params = MainInjectionQueryParameters(hitsPerPage = 12),
+                                          )
+                                      )
+                                  ),
+                                injectedItems =
+                                  listOf(
+                                    InjectedItem(
+                                      key = "featured-products",
+                                      source =
+                                        SearchSource(
+                                          search =
+                                            Search(
+                                              index = "products",
+                                              params =
+                                                BaseInjectionQueryParameters(
+                                                  filters = "featured:true"
+                                                ),
+                                            )
+                                        ),
+                                      position = 0,
+                                      length = 2,
+                                    )
+                                  ),
+                              )
+                          ),
+                        "articles" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  Main(
+                                    source =
+                                      CompositionSource(
+                                        search =
+                                          CompositionSourceSearch(
+                                            index = "articles",
+                                            params =
+                                              MainInjectionQueryParameters(
+                                                hitsPerPage = 5,
+                                                attributesToRetrieve =
+                                                  listOf("title", "excerpt", "publishedAt"),
+                                              ),
+                                          )
+                                      )
+                                  ),
+                                injectedItems =
+                                  listOf(
+                                    InjectedItem(
+                                      key = "editorial-picks",
+                                      source =
+                                        SearchSource(
+                                          search =
+                                            Search(
+                                              index = "articles",
+                                              params =
+                                                BaseInjectionQueryParameters(
+                                                  filters = "editorial_pick:true"
+                                                ),
+                                            )
+                                        ),
+                                      position = 0,
+                                      length = 1,
+                                    )
+                                  ),
+                              )
+                          ),
+                        "videos" to
+                          FeedInjection(
+                            injection =
+                              Injection(
+                                main =
+                                  Main(
+                                    source =
+                                      CompositionSource(
+                                        search =
+                                          CompositionSourceSearch(
+                                            index = "videos",
+                                            params =
+                                              MainInjectionQueryParameters(
+                                                hitsPerPage = 3,
+                                                attributesToRetrieve =
+                                                  listOf("title", "thumbnail", "duration"),
+                                              ),
+                                          )
                                       )
                                   )
                               )
-                          )
+                          ),
                       ),
-                    feedsOrder = listOf("main-products"),
+                    feedsOrder = listOf("products", "articles", "videos"),
                   )
               ),
           ),

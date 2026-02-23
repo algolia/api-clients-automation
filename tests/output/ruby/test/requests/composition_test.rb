@@ -842,17 +842,76 @@ class TestCompositionClient < Test::Unit::TestCase
         behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
           multifeed: Algolia::Composition::Multifeed.new(
             feeds: {
-              :"main-products" => Algolia::Composition::FeedInjection.new(
+              products: Algolia::Composition::FeedInjection.new(
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::Main.new(
                     source: Algolia::Composition::CompositionSource.new(
-                      search: Algolia::Composition::CompositionSourceSearch.new(index: "products")
+                      search: Algolia::Composition::CompositionSourceSearch.new(
+                        index: "products",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "featured-products",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(
+                          index: "products",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "featured:true")
+                        )
+                      ),
+                      position: 0,
+                      length: 2
+                    )
+                  ]
+                )
+              ),
+              articles: Algolia::Composition::FeedInjection.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(
+                        index: "articles",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(
+                          hits_per_page: 5,
+                          attributes_to_retrieve: ["title", "excerpt", "publishedAt"]
+                        )
+                      )
+                    )
+                  ),
+                  injected_items: [
+                    Algolia::Composition::InjectedItem.new(
+                      key: "editorial-picks",
+                      source: Algolia::Composition::SearchSource.new(
+                        search: Algolia::Composition::Search.new(
+                          index: "articles",
+                          params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "editorial_pick:true")
+                        )
+                      ),
+                      position: 0,
+                      length: 1
+                    )
+                  ]
+                )
+              ),
+              videos: Algolia::Composition::FeedInjection.new(
+                injection: Algolia::Composition::Injection.new(
+                  main: Algolia::Composition::Main.new(
+                    source: Algolia::Composition::CompositionSource.new(
+                      search: Algolia::Composition::CompositionSourceSearch.new(
+                        index: "videos",
+                        params: Algolia::Composition::MainInjectionQueryParameters.new(
+                          hits_per_page: 3,
+                          attributes_to_retrieve: ["title", "thumbnail", "duration"]
+                        )
+                      )
                     )
                   )
                 )
               )
             },
-            feeds_order: ["main-products"]
+            feeds_order: ["products", "articles", "videos"]
           )
         )
       )
@@ -864,7 +923,7 @@ class TestCompositionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"main-products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\"}}}}}},\"feedsOrder\":[\"main-products\"]}}}"
+        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}"
       ),
       JSON.parse(req.body)
     )
