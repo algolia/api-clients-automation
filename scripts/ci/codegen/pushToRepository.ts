@@ -7,7 +7,6 @@ import {
   ensureGitHubToken,
   exists,
   getOctokit,
-  gitBranchExists,
   gitCommit,
   LANGUAGES,
   OWNER,
@@ -147,12 +146,15 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
   await run(`git config --global url.https://${token}@github.com/.insteadOf https://github.com/`);
 
+  const shortSha = (await run('git rev-parse --short HEAD', { cwd: toAbsolutePath('.') })).trim();
+
   for (const task of config.tasks) {
     console.log(`Handling '${task.files.type}' file(s)`);
+    const newBranch = `${task.prBranch}-${shortSha}`;
 
     await run(`git checkout ${config.baseBranch}`, { cwd: tempGitDir });
     await run(`git pull origin ${config.baseBranch}`, { cwd: tempGitDir });
-    await run(`git checkout -B ${task.prBranch}`, { cwd: tempGitDir });
+    await run(`git checkout -B ${newBranch}`, { cwd: tempGitDir });
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
@@ -161,14 +163,9 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
     }
 
     if (process.env.DRY_RUN) {
-      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${task.prBranch}'`);
+      console.log(`asked for a dry run, stopping before push and PR for '${repository}' on task '${newBranch}'`);
 
       continue;
-    }
-
-    if (await gitBranchExists(task.prBranch, tempGitDir)) {
-      await run(`git fetch origin ${task.prBranch}`, { cwd: tempGitDir });
-      await run(`git push -d origin ${task.prBranch}`, { cwd: tempGitDir });
     }
 
     if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
@@ -184,7 +181,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
       cwd: tempGitDir,
     });
 
-    await run(`git push -f -u origin ${task.prBranch}`, { cwd: tempGitDir });
+    await run(`git push -f -u origin ${newBranch}`, { cwd: tempGitDir });
 
     console.log(`Creating pull request on ${OWNER}/${repository}...`);
     const octokit = getOctokit();
@@ -197,7 +194,7 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
         'It contains the latest generated guides.',
       ].join('\n\n'),
       base: config.baseBranch,
-      head: task.prBranch,
+      head: newBranch,
     });
 
     await run(`gh --repo ${OWNER}/${repository} pr merge ${data.number} --squash --auto`);
