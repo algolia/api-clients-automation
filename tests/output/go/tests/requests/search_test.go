@@ -2711,6 +2711,33 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"ben","filters":"categories:politics AND store:Gibert Joseph Saint-Michel"}`)
 	})
+	t.Run("customRankingWithoutCategories", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("User search query").SetFacetingAfterDistinct(true).SetFilters("ranked_category:none"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"User search query","facetingAfterDistinct":true,"filters":"ranked_category:none"}`)
+	})
+	t.Run("customRankingWithCategories", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().
+				SetQuery("User search query").
+				SetFacetingAfterDistinct(true).
+				SetFilters("category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)"),
+		)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"query":"User search query","facetingAfterDistinct":true,"filters":"category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)"}`)
+	})
 	t.Run("filters boolean", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -2754,6 +2781,17 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"NOT date_timestamp:1514764800 TO 1546300799"}`)
+	})
+	t.Run("filtersWithScores", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"}`)
 	})
 	t.Run("filtersSumOrFiltersScoresFalse", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -2806,6 +2844,28 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"harry","filters":"_tags:non-fiction"}`)
+	})
+	t.Run("filtersTheNotTags", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetFilters("NOT _tags:non-fiction"))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"filters":"NOT _tags:non-fiction"}`)
+	})
+	t.Run("filtersNumericGreaterThan", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetNumericFilters(search.StringAsNumericFilters("price>20")))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"numericFilters":"price>20"}`)
 	})
 	t.Run("facetFiltersList", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -3059,6 +3119,18 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"restrictSearchableAttributes":["title_fr"]}`)
+	})
+	t.Run("restrictSearchableAttributesWolf", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("wolf").SetRestrictSearchableAttributes(
+				[]string{"title_fr"}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"wolf","restrictSearchableAttributes":["title_fr"]}`)
 	})
 	t.Run("getRankingInfo", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
@@ -3548,6 +3620,17 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","hitsPerPage":10}`)
 	})
+	t.Run("overrideDefaultPageAndHitsPerPage", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("query").SetPage(2).SetHitsPerPage(5))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","page":2,"hitsPerPage":5}`)
+	})
 	t.Run("get_nth_hit", func(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName").WithSearchParams(search.SearchParamsObjectAsSearchParams(
@@ -3631,7 +3714,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 			search.NewEmptySearchParamsObject().
 				SetQuery("query").
 				SetAroundLatLngViaIP(true),
-		)), search.WithHeaderParam("x-forwarded-for", "94.228.178.246 // should be replaced with the actual IP you would like to search around"))
+		)), search.WithHeaderParam("x-forwarded-for", "XX.XXX.XXX.XXX"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -3640,13 +3723,25 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"query":"query","aroundLatLngViaIP":true}`)
 
 		headers := map[string]string{}
-		require.NoError(
-			t,
-			json.Unmarshal(
-				[]byte(`{"x-forwarded-for":"94.228.178.246 // should be replaced with the actual IP you would like to search around"}`),
-				&headers,
-			),
-		)
+		require.NoError(t, json.Unmarshal([]byte(`{"x-forwarded-for":"XX.XXX.XXX.XXX"}`), &headers))
+
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+	})
+	t.Run("forwardUserIpAddress", func(t *testing.T) {
+		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
+			"indexName").WithSearchParams(search.SearchParamsStringAsSearchParams(
+			search.NewEmptySearchParamsString())), search.WithHeaderParam("x-forwarded-for", "XX.XXX.XXX.XXX"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
+
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-forwarded-for":"XX.XXX.XXX.XXX"}`), &headers))
 
 		for k, v := range headers {
 			require.Equal(t, v, echo.Header.Get(k))

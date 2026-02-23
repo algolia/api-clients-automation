@@ -5387,9 +5387,61 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
-     * filters boolean
+     * customRankingWithoutCategories
      */
     public function snippetForSearchSingleIndex7(): void
+    {
+        // >SEPARATOR searchSingleIndex customRankingWithoutCategories
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'User search query',
+                'facetingAfterDistinct' => true,
+                'filters' => 'ranked_category:none',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * customRankingWithCategories
+     */
+    public function snippetForSearchSingleIndex8(): void
+    {
+        // >SEPARATOR searchSingleIndex customRankingWithCategories
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'User search query',
+                'facetingAfterDistinct' => true,
+                'filters' => 'category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filters boolean
+     */
+    public function snippetForSearchSingleIndex9(): void
     {
         // >SEPARATOR searchSingleIndex filters boolean
         // Initialize the client
@@ -5413,7 +5465,7 @@ class SnippetSearchClient
      *
      * distinct
      */
-    public function snippetForSearchSingleIndex8(): void
+    public function snippetForSearchSingleIndex10(): void
     {
         // >SEPARATOR searchSingleIndex distinct
         // Initialize the client
@@ -5437,7 +5489,7 @@ class SnippetSearchClient
      *
      * filtersNumeric
      */
-    public function snippetForSearchSingleIndex9(): void
+    public function snippetForSearchSingleIndex11(): void
     {
         // >SEPARATOR searchSingleIndex filtersNumeric
         // Initialize the client
@@ -5461,7 +5513,7 @@ class SnippetSearchClient
      *
      * filtersTimestamp
      */
-    public function snippetForSearchSingleIndex10(): void
+    public function snippetForSearchSingleIndex12(): void
     {
         // >SEPARATOR searchSingleIndex filtersTimestamp
         // Initialize the client
@@ -5483,9 +5535,33 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
+     * filtersWithScores
+     */
+    public function snippetForSearchSingleIndex13(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersWithScores
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
      * filtersSumOrFiltersScoresFalse
      */
-    public function snippetForSearchSingleIndex11(): void
+    public function snippetForSearchSingleIndex14(): void
     {
         // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresFalse
         // Initialize the client
@@ -5510,7 +5586,7 @@ class SnippetSearchClient
      *
      * filtersSumOrFiltersScoresTrue
      */
-    public function snippetForSearchSingleIndex12(): void
+    public function snippetForSearchSingleIndex15(): void
     {
         // >SEPARATOR searchSingleIndex filtersSumOrFiltersScoresTrue
         // Initialize the client
@@ -5535,7 +5611,7 @@ class SnippetSearchClient
      *
      * filtersStephenKing
      */
-    public function snippetForSearchSingleIndex13(): void
+    public function snippetForSearchSingleIndex16(): void
     {
         // >SEPARATOR searchSingleIndex filtersStephenKing
         // Initialize the client
@@ -5559,7 +5635,7 @@ class SnippetSearchClient
      *
      * filtersNotTags
      */
-    public function snippetForSearchSingleIndex14(): void
+    public function snippetForSearchSingleIndex17(): void
     {
         // >SEPARATOR searchSingleIndex filtersNotTags
         // Initialize the client
@@ -5582,9 +5658,57 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
+     * filtersTheNotTags
+     */
+    public function snippetForSearchSingleIndex18(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersTheNotTags
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['filters' => 'NOT _tags:non-fiction',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * filtersNumericGreaterThan
+     */
+    public function snippetForSearchSingleIndex19(): void
+    {
+        // >SEPARATOR searchSingleIndex filtersNumericGreaterThan
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['numericFilters' => 'price>20',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
      * facetFiltersList
      */
-    public function snippetForSearchSingleIndex15(): void
+    public function snippetForSearchSingleIndex20(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersList
         // Initialize the client
@@ -5616,7 +5740,7 @@ class SnippetSearchClient
      *
      * facetFiltersBook
      */
-    public function snippetForSearchSingleIndex16(): void
+    public function snippetForSearchSingleIndex21(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersBook
         // Initialize the client
@@ -5643,7 +5767,7 @@ class SnippetSearchClient
      *
      * facetFiltersAND
      */
-    public function snippetForSearchSingleIndex17(): void
+    public function snippetForSearchSingleIndex22(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersAND
         // Initialize the client
@@ -5672,7 +5796,7 @@ class SnippetSearchClient
      *
      * facetFiltersOR
      */
-    public function snippetForSearchSingleIndex18(): void
+    public function snippetForSearchSingleIndex23(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersOR
         // Initialize the client
@@ -5703,7 +5827,7 @@ class SnippetSearchClient
      *
      * facetFiltersCombined
      */
-    public function snippetForSearchSingleIndex19(): void
+    public function snippetForSearchSingleIndex24(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersCombined
         // Initialize the client
@@ -5736,7 +5860,7 @@ class SnippetSearchClient
      *
      * facetFiltersNeg
      */
-    public function snippetForSearchSingleIndex20(): void
+    public function snippetForSearchSingleIndex25(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersNeg
         // Initialize the client
@@ -5760,7 +5884,7 @@ class SnippetSearchClient
      *
      * filtersAndFacetFilters
      */
-    public function snippetForSearchSingleIndex21(): void
+    public function snippetForSearchSingleIndex26(): void
     {
         // >SEPARATOR searchSingleIndex filtersAndFacetFilters
         // Initialize the client
@@ -5787,7 +5911,7 @@ class SnippetSearchClient
      *
      * facet author genre
      */
-    public function snippetForSearchSingleIndex22(): void
+    public function snippetForSearchSingleIndex27(): void
     {
         // >SEPARATOR searchSingleIndex facet author genre
         // Initialize the client
@@ -5815,7 +5939,7 @@ class SnippetSearchClient
      *
      * facet wildcard
      */
-    public function snippetForSearchSingleIndex23(): void
+    public function snippetForSearchSingleIndex28(): void
     {
         // >SEPARATOR searchSingleIndex facet wildcard
         // Initialize the client
@@ -5841,7 +5965,7 @@ class SnippetSearchClient
      *
      * maxValuesPerFacet
      */
-    public function snippetForSearchSingleIndex24(): void
+    public function snippetForSearchSingleIndex29(): void
     {
         // >SEPARATOR searchSingleIndex maxValuesPerFacet
         // Initialize the client
@@ -5865,7 +5989,7 @@ class SnippetSearchClient
      *
      * aroundLatLng
      */
-    public function snippetForSearchSingleIndex25(): void
+    public function snippetForSearchSingleIndex30(): void
     {
         // >SEPARATOR searchSingleIndex aroundLatLng
         // Initialize the client
@@ -5889,7 +6013,7 @@ class SnippetSearchClient
      *
      * aroundLatLngViaIP
      */
-    public function snippetForSearchSingleIndex26(): void
+    public function snippetForSearchSingleIndex31(): void
     {
         // >SEPARATOR searchSingleIndex aroundLatLngViaIP
         // Initialize the client
@@ -5913,7 +6037,7 @@ class SnippetSearchClient
      *
      * aroundRadius
      */
-    public function snippetForSearchSingleIndex27(): void
+    public function snippetForSearchSingleIndex32(): void
     {
         // >SEPARATOR searchSingleIndex aroundRadius
         // Initialize the client
@@ -5938,7 +6062,7 @@ class SnippetSearchClient
      *
      * insideBoundingBox
      */
-    public function snippetForSearchSingleIndex28(): void
+    public function snippetForSearchSingleIndex33(): void
     {
         // >SEPARATOR searchSingleIndex insideBoundingBox
         // Initialize the client
@@ -5972,7 +6096,7 @@ class SnippetSearchClient
      *
      * insidePolygon
      */
-    public function snippetForSearchSingleIndex29(): void
+    public function snippetForSearchSingleIndex34(): void
     {
         // >SEPARATOR searchSingleIndex insidePolygon
         // Initialize the client
@@ -6022,7 +6146,7 @@ class SnippetSearchClient
      *
      * optionalFilters
      */
-    public function snippetForSearchSingleIndex30(): void
+    public function snippetForSearchSingleIndex35(): void
     {
         // >SEPARATOR searchSingleIndex optionalFilters
         // Initialize the client
@@ -6048,7 +6172,7 @@ class SnippetSearchClient
      *
      * optionalFiltersMany
      */
-    public function snippetForSearchSingleIndex31(): void
+    public function snippetForSearchSingleIndex36(): void
     {
         // >SEPARATOR searchSingleIndex optionalFiltersMany
         // Initialize the client
@@ -6078,7 +6202,7 @@ class SnippetSearchClient
      *
      * optionalFiltersSimple
      */
-    public function snippetForSearchSingleIndex32(): void
+    public function snippetForSearchSingleIndex37(): void
     {
         // >SEPARATOR searchSingleIndex optionalFiltersSimple
         // Initialize the client
@@ -6106,7 +6230,7 @@ class SnippetSearchClient
      *
      * restrictSearchableAttributes
      */
-    public function snippetForSearchSingleIndex33(): void
+    public function snippetForSearchSingleIndex38(): void
     {
         // >SEPARATOR searchSingleIndex restrictSearchableAttributes
         // Initialize the client
@@ -6130,9 +6254,36 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
+     * restrictSearchableAttributesWolf
+     */
+    public function snippetForSearchSingleIndex39(): void
+    {
+        // >SEPARATOR searchSingleIndex restrictSearchableAttributesWolf
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'wolf',
+                'restrictSearchableAttributes' => [
+                    'title_fr',
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
      * getRankingInfo
      */
-    public function snippetForSearchSingleIndex34(): void
+    public function snippetForSearchSingleIndex40(): void
     {
         // >SEPARATOR searchSingleIndex getRankingInfo
         // Initialize the client
@@ -6156,7 +6307,7 @@ class SnippetSearchClient
      *
      * clickAnalytics
      */
-    public function snippetForSearchSingleIndex35(): void
+    public function snippetForSearchSingleIndex41(): void
     {
         // >SEPARATOR searchSingleIndex clickAnalytics
         // Initialize the client
@@ -6180,7 +6331,7 @@ class SnippetSearchClient
      *
      * clickAnalyticsUserToken
      */
-    public function snippetForSearchSingleIndex36(): void
+    public function snippetForSearchSingleIndex42(): void
     {
         // >SEPARATOR searchSingleIndex clickAnalyticsUserToken
         // Initialize the client
@@ -6205,7 +6356,7 @@ class SnippetSearchClient
      *
      * enablePersonalization
      */
-    public function snippetForSearchSingleIndex37(): void
+    public function snippetForSearchSingleIndex43(): void
     {
         // >SEPARATOR searchSingleIndex enablePersonalization
         // Initialize the client
@@ -6230,7 +6381,7 @@ class SnippetSearchClient
      *
      * userToken
      */
-    public function snippetForSearchSingleIndex38(): void
+    public function snippetForSearchSingleIndex44(): void
     {
         // >SEPARATOR searchSingleIndex userToken
         // Initialize the client
@@ -6254,7 +6405,7 @@ class SnippetSearchClient
      *
      * userToken1234
      */
-    public function snippetForSearchSingleIndex39(): void
+    public function snippetForSearchSingleIndex45(): void
     {
         // >SEPARATOR searchSingleIndex userToken1234
         // Initialize the client
@@ -6279,7 +6430,7 @@ class SnippetSearchClient
      *
      * analyticsTag
      */
-    public function snippetForSearchSingleIndex40(): void
+    public function snippetForSearchSingleIndex46(): void
     {
         // >SEPARATOR searchSingleIndex analyticsTag
         // Initialize the client
@@ -6305,7 +6456,7 @@ class SnippetSearchClient
      *
      * facetFiltersUsers
      */
-    public function snippetForSearchSingleIndex41(): void
+    public function snippetForSearchSingleIndex47(): void
     {
         // >SEPARATOR searchSingleIndex facetFiltersUsers
         // Initialize the client
@@ -6333,7 +6484,7 @@ class SnippetSearchClient
      *
      * buildTheQuery
      */
-    public function snippetForSearchSingleIndex42(): void
+    public function snippetForSearchSingleIndex48(): void
     {
         // >SEPARATOR searchSingleIndex buildTheQuery
         // Initialize the client
@@ -6361,7 +6512,7 @@ class SnippetSearchClient
      *
      * attributesToHighlightOverride
      */
-    public function snippetForSearchSingleIndex43(): void
+    public function snippetForSearchSingleIndex49(): void
     {
         // >SEPARATOR searchSingleIndex attributesToHighlightOverride
         // Initialize the client
@@ -6390,7 +6541,7 @@ class SnippetSearchClient
      *
      * disableTypoToleranceOnAttributes
      */
-    public function snippetForSearchSingleIndex44(): void
+    public function snippetForSearchSingleIndex50(): void
     {
         // >SEPARATOR searchSingleIndex disableTypoToleranceOnAttributes
         // Initialize the client
@@ -6417,7 +6568,7 @@ class SnippetSearchClient
      *
      * search query
      */
-    public function snippetForSearchSingleIndex45(): void
+    public function snippetForSearchSingleIndex51(): void
     {
         // >SEPARATOR searchSingleIndex search query
         // Initialize the client
@@ -6441,7 +6592,7 @@ class SnippetSearchClient
      *
      * search_everything
      */
-    public function snippetForSearchSingleIndex46(): void
+    public function snippetForSearchSingleIndex52(): void
     {
         // >SEPARATOR searchSingleIndex search_everything
         // Initialize the client
@@ -6465,7 +6616,7 @@ class SnippetSearchClient
      *
      * api_filtering_range_example
      */
-    public function snippetForSearchSingleIndex47(): void
+    public function snippetForSearchSingleIndex53(): void
     {
         // >SEPARATOR searchSingleIndex api_filtering_range_example
         // Initialize the client
@@ -6490,7 +6641,7 @@ class SnippetSearchClient
      *
      * similarQuery
      */
-    public function snippetForSearchSingleIndex48(): void
+    public function snippetForSearchSingleIndex54(): void
     {
         // >SEPARATOR searchSingleIndex similarQuery
         // Initialize the client
@@ -6516,7 +6667,7 @@ class SnippetSearchClient
      *
      * override_retrievable_attributes
      */
-    public function snippetForSearchSingleIndex49(): void
+    public function snippetForSearchSingleIndex55(): void
     {
         // >SEPARATOR searchSingleIndex override_retrievable_attributes
         // Initialize the client
@@ -6545,7 +6696,7 @@ class SnippetSearchClient
      *
      * restrict_searchable_attributes
      */
-    public function snippetForSearchSingleIndex50(): void
+    public function snippetForSearchSingleIndex56(): void
     {
         // >SEPARATOR searchSingleIndex restrict_searchable_attributes
         // Initialize the client
@@ -6574,7 +6725,7 @@ class SnippetSearchClient
      *
      * override_default_relevancy
      */
-    public function snippetForSearchSingleIndex51(): void
+    public function snippetForSearchSingleIndex57(): void
     {
         // >SEPARATOR searchSingleIndex override_default_relevancy
         // Initialize the client
@@ -6599,7 +6750,7 @@ class SnippetSearchClient
      *
      * apply_filters
      */
-    public function snippetForSearchSingleIndex52(): void
+    public function snippetForSearchSingleIndex58(): void
     {
         // >SEPARATOR searchSingleIndex apply_filters
         // Initialize the client
@@ -6624,7 +6775,7 @@ class SnippetSearchClient
      *
      * apply_all_filters
      */
-    public function snippetForSearchSingleIndex53(): void
+    public function snippetForSearchSingleIndex59(): void
     {
         // >SEPARATOR searchSingleIndex apply_all_filters
         // Initialize the client
@@ -6649,7 +6800,7 @@ class SnippetSearchClient
      *
      * escape_spaces
      */
-    public function snippetForSearchSingleIndex54(): void
+    public function snippetForSearchSingleIndex60(): void
     {
         // >SEPARATOR searchSingleIndex escape_spaces
         // Initialize the client
@@ -6674,7 +6825,7 @@ class SnippetSearchClient
      *
      * escape_keywords
      */
-    public function snippetForSearchSingleIndex55(): void
+    public function snippetForSearchSingleIndex61(): void
     {
         // >SEPARATOR searchSingleIndex escape_keywords
         // Initialize the client
@@ -6699,7 +6850,7 @@ class SnippetSearchClient
      *
      * escape_single_quotes
      */
-    public function snippetForSearchSingleIndex56(): void
+    public function snippetForSearchSingleIndex62(): void
     {
         // >SEPARATOR searchSingleIndex escape_single_quotes
         // Initialize the client
@@ -6724,7 +6875,7 @@ class SnippetSearchClient
      *
      * escape_double_quotes
      */
-    public function snippetForSearchSingleIndex57(): void
+    public function snippetForSearchSingleIndex63(): void
     {
         // >SEPARATOR searchSingleIndex escape_double_quotes
         // Initialize the client
@@ -6749,7 +6900,7 @@ class SnippetSearchClient
      *
      * apply_optional_filters
      */
-    public function snippetForSearchSingleIndex58(): void
+    public function snippetForSearchSingleIndex64(): void
     {
         // >SEPARATOR searchSingleIndex apply_optional_filters
         // Initialize the client
@@ -6778,7 +6929,7 @@ class SnippetSearchClient
      *
      * apply_negative_filters
      */
-    public function snippetForSearchSingleIndex59(): void
+    public function snippetForSearchSingleIndex65(): void
     {
         // >SEPARATOR searchSingleIndex apply_negative_filters
         // Initialize the client
@@ -6807,7 +6958,7 @@ class SnippetSearchClient
      *
      * apply_negative_filters_restaurants
      */
-    public function snippetForSearchSingleIndex60(): void
+    public function snippetForSearchSingleIndex66(): void
     {
         // >SEPARATOR searchSingleIndex apply_negative_filters_restaurants
         // Initialize the client
@@ -6834,7 +6985,7 @@ class SnippetSearchClient
      *
      * apply_numeric_filters
      */
-    public function snippetForSearchSingleIndex61(): void
+    public function snippetForSearchSingleIndex67(): void
     {
         // >SEPARATOR searchSingleIndex apply_numeric_filters
         // Initialize the client
@@ -6867,7 +7018,7 @@ class SnippetSearchClient
      *
      * apply_tag_filters
      */
-    public function snippetForSearchSingleIndex62(): void
+    public function snippetForSearchSingleIndex68(): void
     {
         // >SEPARATOR searchSingleIndex apply_tag_filters
         // Initialize the client
@@ -6900,7 +7051,7 @@ class SnippetSearchClient
      *
      * set_sum_or_filters_scores
      */
-    public function snippetForSearchSingleIndex63(): void
+    public function snippetForSearchSingleIndex69(): void
     {
         // >SEPARATOR searchSingleIndex set_sum_or_filters_scores
         // Initialize the client
@@ -6925,7 +7076,7 @@ class SnippetSearchClient
      *
      * facets_all
      */
-    public function snippetForSearchSingleIndex64(): void
+    public function snippetForSearchSingleIndex70(): void
     {
         // >SEPARATOR searchSingleIndex facets_all
         // Initialize the client
@@ -6952,7 +7103,7 @@ class SnippetSearchClient
      *
      * retrieve_only_some_facets
      */
-    public function snippetForSearchSingleIndex65(): void
+    public function snippetForSearchSingleIndex71(): void
     {
         // >SEPARATOR searchSingleIndex retrieve_only_some_facets
         // Initialize the client
@@ -6981,7 +7132,7 @@ class SnippetSearchClient
      *
      * override_default_max_values_per_facet
      */
-    public function snippetForSearchSingleIndex66(): void
+    public function snippetForSearchSingleIndex72(): void
     {
         // >SEPARATOR searchSingleIndex override_default_max_values_per_facet
         // Initialize the client
@@ -7006,7 +7157,7 @@ class SnippetSearchClient
      *
      * enable_faceting_after_distinct
      */
-    public function snippetForSearchSingleIndex67(): void
+    public function snippetForSearchSingleIndex73(): void
     {
         // >SEPARATOR searchSingleIndex enable_faceting_after_distinct
         // Initialize the client
@@ -7031,7 +7182,7 @@ class SnippetSearchClient
      *
      * sort_facet_values_alphabetically
      */
-    public function snippetForSearchSingleIndex68(): void
+    public function snippetForSearchSingleIndex74(): void
     {
         // >SEPARATOR searchSingleIndex sort_facet_values_alphabetically
         // Initialize the client
@@ -7056,7 +7207,7 @@ class SnippetSearchClient
      *
      * override_attributes_to_snippet
      */
-    public function snippetForSearchSingleIndex69(): void
+    public function snippetForSearchSingleIndex75(): void
     {
         // >SEPARATOR searchSingleIndex override_attributes_to_snippet
         // Initialize the client
@@ -7085,7 +7236,7 @@ class SnippetSearchClient
      *
      * override_default_highlight_pre_tag
      */
-    public function snippetForSearchSingleIndex70(): void
+    public function snippetForSearchSingleIndex76(): void
     {
         // >SEPARATOR searchSingleIndex override_default_highlight_pre_tag
         // Initialize the client
@@ -7110,7 +7261,7 @@ class SnippetSearchClient
      *
      * override_default_highlight_post_tag
      */
-    public function snippetForSearchSingleIndex71(): void
+    public function snippetForSearchSingleIndex77(): void
     {
         // >SEPARATOR searchSingleIndex override_default_highlight_post_tag
         // Initialize the client
@@ -7135,7 +7286,7 @@ class SnippetSearchClient
      *
      * override_default_snippet_ellipsis_text
      */
-    public function snippetForSearchSingleIndex72(): void
+    public function snippetForSearchSingleIndex78(): void
     {
         // >SEPARATOR searchSingleIndex override_default_snippet_ellipsis_text
         // Initialize the client
@@ -7160,7 +7311,7 @@ class SnippetSearchClient
      *
      * enable_restrict_highlight_and_snippet_arrays
      */
-    public function snippetForSearchSingleIndex73(): void
+    public function snippetForSearchSingleIndex79(): void
     {
         // >SEPARATOR searchSingleIndex enable_restrict_highlight_and_snippet_arrays
         // Initialize the client
@@ -7185,7 +7336,7 @@ class SnippetSearchClient
      *
      * access_page
      */
-    public function snippetForSearchSingleIndex74(): void
+    public function snippetForSearchSingleIndex80(): void
     {
         // >SEPARATOR searchSingleIndex access_page
         // Initialize the client
@@ -7210,7 +7361,7 @@ class SnippetSearchClient
      *
      * override_default_hits_per_page
      */
-    public function snippetForSearchSingleIndex75(): void
+    public function snippetForSearchSingleIndex81(): void
     {
         // >SEPARATOR searchSingleIndex override_default_hits_per_page
         // Initialize the client
@@ -7233,9 +7384,35 @@ class SnippetSearchClient
     /**
      * Snippet for the SearchSingleIndex method.
      *
+     * overrideDefaultPageAndHitsPerPage
+     */
+    public function snippetForSearchSingleIndex82(): void
+    {
+        // >SEPARATOR searchSingleIndex overrideDefaultPageAndHitsPerPage
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            ['query' => 'query',
+                'page' => 2,
+                'hitsPerPage' => 5,
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
      * get_nth_hit
      */
-    public function snippetForSearchSingleIndex76(): void
+    public function snippetForSearchSingleIndex83(): void
     {
         // >SEPARATOR searchSingleIndex get_nth_hit
         // Initialize the client
@@ -7260,7 +7437,7 @@ class SnippetSearchClient
      *
      * get_n_results
      */
-    public function snippetForSearchSingleIndex77(): void
+    public function snippetForSearchSingleIndex84(): void
     {
         // >SEPARATOR searchSingleIndex get_n_results
         // Initialize the client
@@ -7285,7 +7462,7 @@ class SnippetSearchClient
      *
      * override_default_min_word_size_for_one_typo
      */
-    public function snippetForSearchSingleIndex78(): void
+    public function snippetForSearchSingleIndex85(): void
     {
         // >SEPARATOR searchSingleIndex override_default_min_word_size_for_one_typo
         // Initialize the client
@@ -7310,7 +7487,7 @@ class SnippetSearchClient
      *
      * override_default_min_word_size_for_two_typos
      */
-    public function snippetForSearchSingleIndex79(): void
+    public function snippetForSearchSingleIndex86(): void
     {
         // >SEPARATOR searchSingleIndex override_default_min_word_size_for_two_typos
         // Initialize the client
@@ -7335,7 +7512,7 @@ class SnippetSearchClient
      *
      * override_default_typo_tolerance_mode
      */
-    public function snippetForSearchSingleIndex80(): void
+    public function snippetForSearchSingleIndex87(): void
     {
         // >SEPARATOR searchSingleIndex override_default_typo_tolerance_mode
         // Initialize the client
@@ -7360,7 +7537,7 @@ class SnippetSearchClient
      *
      * disable_typos_on_numeric_tokens_at_search_time
      */
-    public function snippetForSearchSingleIndex81(): void
+    public function snippetForSearchSingleIndex88(): void
     {
         // >SEPARATOR searchSingleIndex disable_typos_on_numeric_tokens_at_search_time
         // Initialize the client
@@ -7385,7 +7562,7 @@ class SnippetSearchClient
      *
      * search_around_a_position
      */
-    public function snippetForSearchSingleIndex82(): void
+    public function snippetForSearchSingleIndex89(): void
     {
         // >SEPARATOR searchSingleIndex search_around_a_position
         // Initialize the client
@@ -7410,7 +7587,7 @@ class SnippetSearchClient
      *
      * search_around_server_ip
      */
-    public function snippetForSearchSingleIndex83(): void
+    public function snippetForSearchSingleIndex90(): void
     {
         // >SEPARATOR searchSingleIndex search_around_server_ip
         // Initialize the client
@@ -7424,7 +7601,35 @@ class SnippetSearchClient
             ],
             [
                 'headers' => [
-                    'x-forwarded-for' => '94.228.178.246 // should be replaced with the actual IP you would like to search around',
+                    'x-forwarded-for' => 'XX.XXX.XXX.XXX',
+                ],
+            ]
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchSingleIndex method.
+     *
+     * forwardUserIpAddress
+     */
+    public function snippetForSearchSingleIndex91(): void
+    {
+        // >SEPARATOR searchSingleIndex forwardUserIpAddress
+        // Initialize the client
+        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchSingleIndex(
+            '<YOUR_INDEX_NAME>',
+            [],
+            [
+                'headers' => [
+                    'x-forwarded-for' => 'XX.XXX.XXX.XXX',
                 ],
             ]
         );
@@ -7440,7 +7645,7 @@ class SnippetSearchClient
      *
      * set_around_radius
      */
-    public function snippetForSearchSingleIndex84(): void
+    public function snippetForSearchSingleIndex92(): void
     {
         // >SEPARATOR searchSingleIndex set_around_radius
         // Initialize the client
@@ -7465,7 +7670,7 @@ class SnippetSearchClient
      *
      * disable_automatic_radius
      */
-    public function snippetForSearchSingleIndex85(): void
+    public function snippetForSearchSingleIndex93(): void
     {
         // >SEPARATOR searchSingleIndex disable_automatic_radius
         // Initialize the client
@@ -7490,7 +7695,7 @@ class SnippetSearchClient
      *
      * set_geo_search_precision
      */
-    public function snippetForSearchSingleIndex86(): void
+    public function snippetForSearchSingleIndex94(): void
     {
         // >SEPARATOR searchSingleIndex set_geo_search_precision
         // Initialize the client
@@ -7515,7 +7720,7 @@ class SnippetSearchClient
      *
      * set_geo_search_precision_non_linear
      */
-    public function snippetForSearchSingleIndex87(): void
+    public function snippetForSearchSingleIndex95(): void
     {
         // >SEPARATOR searchSingleIndex set_geo_search_precision_non_linear
         // Initialize the client
@@ -7548,7 +7753,7 @@ class SnippetSearchClient
      *
      * set_minimum_geo_search_radius
      */
-    public function snippetForSearchSingleIndex88(): void
+    public function snippetForSearchSingleIndex96(): void
     {
         // >SEPARATOR searchSingleIndex set_minimum_geo_search_radius
         // Initialize the client
@@ -7573,7 +7778,7 @@ class SnippetSearchClient
      *
      * search_inside_rectangular_area
      */
-    public function snippetForSearchSingleIndex89(): void
+    public function snippetForSearchSingleIndex97(): void
     {
         // >SEPARATOR searchSingleIndex search_inside_rectangular_area
         // Initialize the client
@@ -7608,7 +7813,7 @@ class SnippetSearchClient
      *
      * search_inside_multiple_rectangular_areas
      */
-    public function snippetForSearchSingleIndex90(): void
+    public function snippetForSearchSingleIndex98(): void
     {
         // >SEPARATOR searchSingleIndex search_inside_multiple_rectangular_areas
         // Initialize the client
@@ -7653,7 +7858,7 @@ class SnippetSearchClient
      *
      * search_inside_polygon_area
      */
-    public function snippetForSearchSingleIndex91(): void
+    public function snippetForSearchSingleIndex99(): void
     {
         // >SEPARATOR searchSingleIndex search_inside_polygon_area
         // Initialize the client
@@ -7692,7 +7897,7 @@ class SnippetSearchClient
      *
      * search_inside_multiple_polygon_areas
      */
-    public function snippetForSearchSingleIndex92(): void
+    public function snippetForSearchSingleIndex100(): void
     {
         // >SEPARATOR searchSingleIndex search_inside_multiple_polygon_areas
         // Initialize the client
@@ -7749,7 +7954,7 @@ class SnippetSearchClient
      *
      * set_querylanguages_override
      */
-    public function snippetForSearchSingleIndex93(): void
+    public function snippetForSearchSingleIndex101(): void
     {
         // >SEPARATOR searchSingleIndex set_querylanguages_override
         // Initialize the client
@@ -7778,7 +7983,7 @@ class SnippetSearchClient
      *
      * set_querylanguages_with_japanese_query
      */
-    public function snippetForSearchSingleIndex94(): void
+    public function snippetForSearchSingleIndex102(): void
     {
         // >SEPARATOR searchSingleIndex set_querylanguages_with_japanese_query
         // Initialize the client
@@ -7807,7 +8012,7 @@ class SnippetSearchClient
      *
      * set_natural_languages
      */
-    public function snippetForSearchSingleIndex95(): void
+    public function snippetForSearchSingleIndex103(): void
     {
         // >SEPARATOR searchSingleIndex set_natural_languages
         // Initialize the client
@@ -7834,7 +8039,7 @@ class SnippetSearchClient
      *
      * override_natural_languages_with_query
      */
-    public function snippetForSearchSingleIndex96(): void
+    public function snippetForSearchSingleIndex104(): void
     {
         // >SEPARATOR searchSingleIndex override_natural_languages_with_query
         // Initialize the client
@@ -7862,7 +8067,7 @@ class SnippetSearchClient
      *
      * enable_decompound_query_search_time
      */
-    public function snippetForSearchSingleIndex97(): void
+    public function snippetForSearchSingleIndex105(): void
     {
         // >SEPARATOR searchSingleIndex enable_decompound_query_search_time
         // Initialize the client
@@ -7887,7 +8092,7 @@ class SnippetSearchClient
      *
      * enable_rules_search_time
      */
-    public function snippetForSearchSingleIndex98(): void
+    public function snippetForSearchSingleIndex106(): void
     {
         // >SEPARATOR searchSingleIndex enable_rules_search_time
         // Initialize the client
@@ -7912,7 +8117,7 @@ class SnippetSearchClient
      *
      * set_rule_contexts
      */
-    public function snippetForSearchSingleIndex99(): void
+    public function snippetForSearchSingleIndex107(): void
     {
         // >SEPARATOR searchSingleIndex set_rule_contexts
         // Initialize the client
@@ -7941,7 +8146,7 @@ class SnippetSearchClient
      *
      * enable_personalization
      */
-    public function snippetForSearchSingleIndex100(): void
+    public function snippetForSearchSingleIndex108(): void
     {
         // >SEPARATOR searchSingleIndex enable_personalization
         // Initialize the client
@@ -7966,7 +8171,7 @@ class SnippetSearchClient
      *
      * enable_personalization_with_user_token
      */
-    public function snippetForSearchSingleIndex101(): void
+    public function snippetForSearchSingleIndex109(): void
     {
         // >SEPARATOR searchSingleIndex enable_personalization_with_user_token
         // Initialize the client
@@ -7992,7 +8197,7 @@ class SnippetSearchClient
      *
      * personalization_impact
      */
-    public function snippetForSearchSingleIndex102(): void
+    public function snippetForSearchSingleIndex110(): void
     {
         // >SEPARATOR searchSingleIndex personalization_impact
         // Initialize the client
@@ -8017,7 +8222,7 @@ class SnippetSearchClient
      *
      * set_user_token
      */
-    public function snippetForSearchSingleIndex103(): void
+    public function snippetForSearchSingleIndex111(): void
     {
         // >SEPARATOR searchSingleIndex set_user_token
         // Initialize the client
@@ -8042,7 +8247,7 @@ class SnippetSearchClient
      *
      * set_user_token_with_personalization
      */
-    public function snippetForSearchSingleIndex104(): void
+    public function snippetForSearchSingleIndex112(): void
     {
         // >SEPARATOR searchSingleIndex set_user_token_with_personalization
         // Initialize the client
@@ -8068,7 +8273,7 @@ class SnippetSearchClient
      *
      * override_default_query_type
      */
-    public function snippetForSearchSingleIndex105(): void
+    public function snippetForSearchSingleIndex113(): void
     {
         // >SEPARATOR searchSingleIndex override_default_query_type
         // Initialize the client
@@ -8093,7 +8298,7 @@ class SnippetSearchClient
      *
      * override_default_remove_words_if_no_results
      */
-    public function snippetForSearchSingleIndex106(): void
+    public function snippetForSearchSingleIndex114(): void
     {
         // >SEPARATOR searchSingleIndex override_default_remove_words_if_no_results
         // Initialize the client
@@ -8118,7 +8323,7 @@ class SnippetSearchClient
      *
      * enable_advanced_syntax_search_time
      */
-    public function snippetForSearchSingleIndex107(): void
+    public function snippetForSearchSingleIndex115(): void
     {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_search_time
         // Initialize the client
@@ -8143,7 +8348,7 @@ class SnippetSearchClient
      *
      * overide_default_optional_words
      */
-    public function snippetForSearchSingleIndex108(): void
+    public function snippetForSearchSingleIndex116(): void
     {
         // >SEPARATOR searchSingleIndex overide_default_optional_words
         // Initialize the client
@@ -8172,7 +8377,7 @@ class SnippetSearchClient
      *
      * disabling_exact_for_some_attributes_search_time
      */
-    public function snippetForSearchSingleIndex109(): void
+    public function snippetForSearchSingleIndex117(): void
     {
         // >SEPARATOR searchSingleIndex disabling_exact_for_some_attributes_search_time
         // Initialize the client
@@ -8199,7 +8404,7 @@ class SnippetSearchClient
      *
      * override_default_exact_single_word_query
      */
-    public function snippetForSearchSingleIndex110(): void
+    public function snippetForSearchSingleIndex118(): void
     {
         // >SEPARATOR searchSingleIndex override_default_exact_single_word_query
         // Initialize the client
@@ -8224,7 +8429,7 @@ class SnippetSearchClient
      *
      * override_default_aternative_as_exact
      */
-    public function snippetForSearchSingleIndex111(): void
+    public function snippetForSearchSingleIndex119(): void
     {
         // >SEPARATOR searchSingleIndex override_default_aternative_as_exact
         // Initialize the client
@@ -8251,7 +8456,7 @@ class SnippetSearchClient
      *
      * enable_advanced_syntax_exact_phrase
      */
-    public function snippetForSearchSingleIndex112(): void
+    public function snippetForSearchSingleIndex120(): void
     {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_exact_phrase
         // Initialize the client
@@ -8279,7 +8484,7 @@ class SnippetSearchClient
      *
      * enable_advanced_syntax_exclude_words
      */
-    public function snippetForSearchSingleIndex113(): void
+    public function snippetForSearchSingleIndex121(): void
     {
         // >SEPARATOR searchSingleIndex enable_advanced_syntax_exclude_words
         // Initialize the client
@@ -8307,7 +8512,7 @@ class SnippetSearchClient
      *
      * override_distinct
      */
-    public function snippetForSearchSingleIndex114(): void
+    public function snippetForSearchSingleIndex122(): void
     {
         // >SEPARATOR searchSingleIndex override_distinct
         // Initialize the client
@@ -8332,7 +8537,7 @@ class SnippetSearchClient
      *
      * get_ranking_info
      */
-    public function snippetForSearchSingleIndex115(): void
+    public function snippetForSearchSingleIndex123(): void
     {
         // >SEPARATOR searchSingleIndex get_ranking_info
         // Initialize the client
@@ -8357,7 +8562,7 @@ class SnippetSearchClient
      *
      * disable_click_analytics
      */
-    public function snippetForSearchSingleIndex116(): void
+    public function snippetForSearchSingleIndex124(): void
     {
         // >SEPARATOR searchSingleIndex disable_click_analytics
         // Initialize the client
@@ -8382,7 +8587,7 @@ class SnippetSearchClient
      *
      * enable_click_analytics
      */
-    public function snippetForSearchSingleIndex117(): void
+    public function snippetForSearchSingleIndex125(): void
     {
         // >SEPARATOR searchSingleIndex enable_click_analytics
         // Initialize the client
@@ -8407,7 +8612,7 @@ class SnippetSearchClient
      *
      * disable_analytics
      */
-    public function snippetForSearchSingleIndex118(): void
+    public function snippetForSearchSingleIndex126(): void
     {
         // >SEPARATOR searchSingleIndex disable_analytics
         // Initialize the client
@@ -8432,7 +8637,7 @@ class SnippetSearchClient
      *
      * add_analytics_tags
      */
-    public function snippetForSearchSingleIndex119(): void
+    public function snippetForSearchSingleIndex127(): void
     {
         // >SEPARATOR searchSingleIndex add_analytics_tags
         // Initialize the client
@@ -8461,7 +8666,7 @@ class SnippetSearchClient
      *
      * disable_synonyms
      */
-    public function snippetForSearchSingleIndex120(): void
+    public function snippetForSearchSingleIndex128(): void
     {
         // >SEPARATOR searchSingleIndex disable_synonyms
         // Initialize the client
@@ -8486,7 +8691,7 @@ class SnippetSearchClient
      *
      * override_replace_synonyms_in_highlights
      */
-    public function snippetForSearchSingleIndex121(): void
+    public function snippetForSearchSingleIndex129(): void
     {
         // >SEPARATOR searchSingleIndex override_replace_synonyms_in_highlights
         // Initialize the client
@@ -8511,7 +8716,7 @@ class SnippetSearchClient
      *
      * override_min_proximity
      */
-    public function snippetForSearchSingleIndex122(): void
+    public function snippetForSearchSingleIndex130(): void
     {
         // >SEPARATOR searchSingleIndex override_min_proximity
         // Initialize the client
@@ -8536,7 +8741,7 @@ class SnippetSearchClient
      *
      * override_default_field
      */
-    public function snippetForSearchSingleIndex123(): void
+    public function snippetForSearchSingleIndex131(): void
     {
         // >SEPARATOR searchSingleIndex override_default_field
         // Initialize the client
@@ -8565,7 +8770,7 @@ class SnippetSearchClient
      *
      * override_percentile_computation
      */
-    public function snippetForSearchSingleIndex124(): void
+    public function snippetForSearchSingleIndex132(): void
     {
         // >SEPARATOR searchSingleIndex override_percentile_computation
         // Initialize the client
@@ -8590,7 +8795,7 @@ class SnippetSearchClient
      *
      * set_ab_test
      */
-    public function snippetForSearchSingleIndex125(): void
+    public function snippetForSearchSingleIndex133(): void
     {
         // >SEPARATOR searchSingleIndex set_ab_test
         // Initialize the client
@@ -8615,7 +8820,7 @@ class SnippetSearchClient
      *
      * set_enable_re_ranking
      */
-    public function snippetForSearchSingleIndex126(): void
+    public function snippetForSearchSingleIndex134(): void
     {
         // >SEPARATOR searchSingleIndex set_enable_re_ranking
         // Initialize the client
@@ -8640,7 +8845,7 @@ class SnippetSearchClient
      *
      * with algolia user id
      */
-    public function snippetForSearchSingleIndex127(): void
+    public function snippetForSearchSingleIndex135(): void
     {
         // >SEPARATOR searchSingleIndex with algolia user id
         // Initialize the client
@@ -8669,7 +8874,7 @@ class SnippetSearchClient
      *
      * mcm with algolia user id
      */
-    public function snippetForSearchSingleIndex128(): void
+    public function snippetForSearchSingleIndex136(): void
     {
         // >SEPARATOR searchSingleIndex mcm with algolia user id
         // Initialize the client

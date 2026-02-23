@@ -2710,6 +2710,42 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('customRankingWithoutCategories', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'User search query', facetingAfterDistinct: true, filters: 'ranked_category:none' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'User search query',
+      facetingAfterDistinct: true,
+      filters: 'ranked_category:none',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('customRankingWithCategories', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: {
+        query: 'User search query',
+        facetingAfterDistinct: true,
+        filters: 'category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'User search query',
+      facetingAfterDistinct: true,
+      filters: 'category:{{currentCategory}} AND (ranked_category:{{currentCategory}} OR ranked_category:none)',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('filters boolean', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
@@ -2755,6 +2791,20 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ filters: 'NOT date_timestamp:1514764800 TO 1546300799' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersWithScores', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      filters: '(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)',
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -2815,6 +2865,30 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'harry', filters: '_tags:non-fiction' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersTheNotTags', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { filters: 'NOT _tags:non-fiction' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ filters: 'NOT _tags:non-fiction' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filtersNumericGreaterThan', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { numericFilters: 'price>20' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ numericFilters: 'price>20' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -3067,6 +3141,18 @@ describe('searchSingleIndex', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ restrictSearchableAttributes: ['title_fr'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('restrictSearchableAttributesWolf', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'wolf', restrictSearchableAttributes: ['title_fr'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'wolf', restrictSearchableAttributes: ['title_fr'] });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
@@ -3597,6 +3683,18 @@ describe('searchSingleIndex', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
+  test('overrideDefaultPageAndHitsPerPage', async () => {
+    const req = (await client.searchSingleIndex({
+      indexName: 'indexName',
+      searchParams: { query: 'query', page: 2, hitsPerPage: 5 },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ query: 'query', page: 2, hitsPerPage: 5 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('get_nth_hit', async () => {
     const req = (await client.searchSingleIndex({
       indexName: 'indexName',
@@ -3685,9 +3783,7 @@ describe('searchSingleIndex', () => {
     const req = (await client.searchSingleIndex(
       { indexName: 'indexName', searchParams: { query: 'query', aroundLatLngViaIP: true } },
       {
-        headers: {
-          'x-forwarded-for': '94.228.178.246 // should be replaced with the actual IP you would like to search around',
-        },
+        headers: { 'x-forwarded-for': 'XX.XXX.XXX.XXX' },
       },
     )) as unknown as EchoResponse;
 
@@ -3695,11 +3791,22 @@ describe('searchSingleIndex', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'query', aroundLatLngViaIP: true });
     expect(req.searchParams).toStrictEqual(undefined);
-    expect(req.headers).toEqual(
-      expect.objectContaining({
-        'x-forwarded-for': '94.228.178.246 // should be replaced with the actual IP you would like to search around',
-      }),
-    );
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-forwarded-for': 'XX.XXX.XXX.XXX' }));
+  });
+
+  test('forwardUserIpAddress', async () => {
+    const req = (await client.searchSingleIndex(
+      { indexName: 'indexName', searchParams: {} },
+      {
+        headers: { 'x-forwarded-for': 'XX.XXX.XXX.XXX' },
+      },
+    )) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-forwarded-for': 'XX.XXX.XXX.XXX' }));
   });
 
   test('set_around_radius', async () => {
