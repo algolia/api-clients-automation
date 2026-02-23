@@ -1,4 +1,5 @@
 {{> snippets/import}}
+
 import com.algolia.client.model.search.*
 
 fun getUserToken(): String {
@@ -14,18 +15,22 @@ suspend fun abTestImplementationChecklist() {
   val userToken = getUserToken()
 
   // Set the searchParams
-  val searchParams = SearchParamsObject(
-    query = query,
-    enableABTest = true,
-  )
+  val searchParams: SearchParamsObject
 
   // Is the user token anonymous?
   if (userToken.isEmpty() || userToken == "YOUR_ANONYMOUS_USER_TOKEN") {
     // Disable A/B testing for this request
-    searchParams.enableABTest = false
+    searchParams = SearchParamsObject(
+      query = query,
+      enableABTest = false,
+    )
   } else {
     // Set the user token to the current user token
-    searchParams.userToken = userToken
+    searchParams = SearchParamsObject(
+      query = query,
+      enableABTest = true,
+      userToken = userToken,
+    )
   }
 
   try {
