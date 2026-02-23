@@ -791,6 +791,28 @@
     }
   },
   {
+    "testName": "restrictSearchableAttributesWolf",
+    "parameters": {
+      "indexName": "indexName",
+      "searchParams": {
+        "query": "wolf",
+        "restrictSearchableAttributes": [
+          "title_fr"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/indexName/query",
+      "method": "POST",
+      "body": {
+        "query": "wolf",
+        "restrictSearchableAttributes": [
+          "title_fr"
+        ]
+      }
+    }
+  },
+  {
     "testName": "getRankingInfo",
     "parameters": {
       "indexName": "indexName",
