@@ -1873,7 +1873,8 @@
   {
     "testName": "forwardUserIpAddress",
     "parameters": {
-      "indexName": "indexName"
+      "indexName": "indexName",
+      "searchParams": {}
     },
     "requestOptions": {
       "headers": {
