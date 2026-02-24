@@ -70,7 +70,7 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           specMethod['x-codeSamples'] = [];
         }
 
-        // xCodeSample is the assigned test name for selecting snippets for displaying as x-codeSamples
+        // if a CTS test is marked with isCodeSample: true, it takes priority; otherwise fall back to the first snippet
         if (codeSamples[gen.language][specMethod.operationId]) {
           specMethod['x-codeSamples'].push({
             lang: gen.language,

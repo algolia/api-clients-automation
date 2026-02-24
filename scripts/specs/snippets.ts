@@ -8,7 +8,7 @@ import { getSnippetFile } from '../config.ts';
 import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.ts';
 
 // Reserved key used to store the preferred code sample (marked with isCodeSample: true in CTS JSON).
-export const CODE_SAMPLE_KEY = '__codeSample';
+export const CODE_SAMPLE_KEY = 'PREFERRED_SNIPPET';
 
 export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
   switch (language) {
