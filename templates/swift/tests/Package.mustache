@@ -5,7 +5,7 @@ import PackageDescription
 
 let libraries: [Target.Dependency] = [{{#packageList}}
   .product(
-    name: "{{.}}",
+    name: "Algolia{{.}}",
     package: "algoliasearch-client-swift"
   ),{{/packageList}}
 ]
@@ -23,8 +23,8 @@ let package = Package(
     .target(
         name: "Utils",
         dependencies: [
-            .product(name: "Core", package: "algoliasearch-client-swift"),
-            .product(name: "Search", package: "algoliasearch-client-swift")
+            .product(name: "AlgoliaCore", package: "algoliasearch-client-swift"),
+            .product(name: "AlgoliaSearch", package: "algoliasearch-client-swift")
         ],
         path: "Tests/Utils"
     ),

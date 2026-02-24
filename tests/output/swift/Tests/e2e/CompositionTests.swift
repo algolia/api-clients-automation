@@ -5,8 +5,8 @@ import XCTest
 import DotEnv
 import Utils
 
-@testable import Composition
-@testable import Core
+@testable import AlgoliaComposition
+@testable import AlgoliaCore
 
 final class CompositionClientRequestsTestsE2E: XCTestCase {
     static var APPLICATION_ID = "my_application_id"

@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Composition
-@testable import Core
+@testable import AlgoliaComposition
+@testable import AlgoliaCore
 
 final class CompositionClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -86,7 +86,7 @@ final class CompositionClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.39.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.40.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

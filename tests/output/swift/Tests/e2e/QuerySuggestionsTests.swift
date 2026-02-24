@@ -5,8 +5,8 @@ import XCTest
 import DotEnv
 import Utils
 
-@testable import Core
-@testable import QuerySuggestions
+@testable import AlgoliaCore
+@testable import AlgoliaQuerySuggestions
 
 final class QuerySuggestionsClientRequestsTestsE2E: XCTestCase {
     static var APPLICATION_ID = "my_application_id"

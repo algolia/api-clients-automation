@@ -588,7 +588,7 @@
   },
   "swift": {
     "import": {
-      "default": "import AbtestingV3"
+      "default": "import AlgoliaAbtestingV3"
     },
     "addABTests": {
       "default": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"

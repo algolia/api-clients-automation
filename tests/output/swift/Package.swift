@@ -6,47 +6,47 @@ import PackageDescription
 
 let libraries: [Target.Dependency] = [
     .product(
-        name: "Abtesting",
+        name: "AlgoliaAbtesting",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "AbtestingV3",
+        name: "AlgoliaAbtestingV3",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Analytics",
+        name: "AlgoliaAnalytics",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Composition",
+        name: "AlgoliaComposition",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Ingestion",
+        name: "AlgoliaIngestion",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Insights",
+        name: "AlgoliaInsights",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Monitoring",
+        name: "AlgoliaMonitoring",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Personalization",
+        name: "AlgoliaPersonalization",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "QuerySuggestions",
+        name: "AlgoliaQuerySuggestions",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Recommend",
+        name: "AlgoliaRecommend",
         package: "algoliasearch-client-swift"
     ),
     .product(
-        name: "Search",
+        name: "AlgoliaSearch",
         package: "algoliasearch-client-swift"
     ),
 ]
@@ -64,8 +64,8 @@ let package = Package(
         .target(
             name: "Utils",
             dependencies: [
-                .product(name: "Core", package: "algoliasearch-client-swift"),
-                .product(name: "Search", package: "algoliasearch-client-swift"),
+                .product(name: "AlgoliaCore", package: "algoliasearch-client-swift"),
+                .product(name: "AlgoliaSearch", package: "algoliasearch-client-swift"),
             ],
             path: "Tests/Utils"
         ),
