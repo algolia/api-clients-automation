@@ -1,0 +1,41 @@
+import Foundation
+#if os(Linux) // For linux interop
+  import FoundationNetworking
+#endif
+
+import Core
+{{> snippets/import}}
+
+let getUserToken = {""} // Implement your logic here
+
+func abTestImplementationChecklist() async throws {
+  {{> snippets/init}}
+
+  // Set the query and get the current user token
+  let query = "User search query"
+  let userToken = getUserToken()
+
+  // Set the searchParams
+  // Is the user token anonymous?
+  let searchParams = if userToken.isEmpty || userToken == "YOUR_ANONYMOUS_USER_TOKEN" {
+    // Disable A/B testing for this request
+    SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: query, enableABTest: false)
+    )
+  } else {
+    // Set the user token to the current user token
+    SearchSearchParams.searchSearchParamsObject(
+      SearchSearchParamsObject(query: query, userToken: userToken)
+    )
+  }
+
+  do {
+    // Perform the searchSingleIndex
+    let result: SearchResponse<Hit> = {{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+    // SearchSingleIndex results
+    print(result)
+  } catch {
+    // SearchSingleIndex errors
+    print(error)
+  }
+}
