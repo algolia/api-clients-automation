@@ -4,7 +4,7 @@ import path from 'path';
 import { GENERATORS, capitalize, exists, toAbsolutePath } from '../common.ts';
 import type { Language } from '../types.ts';
 
-import { getSnippetFile } from '../config.ts';
+import { getCTSRequestDir, getSnippetFile } from '../config.ts';
 import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.ts';
 
 // Reserved key used to store the preferred code sample (marked with isCodeSample: true in CTS JSON).
@@ -60,12 +60,7 @@ export function generateSnippetsJSON(codeSamples: CodeSamples): CodeSamples {
 // tags the matching snippet with the reserved CODE_SAMPLE_KEY.
 // Throws if more than one test per operationId is marked as a code sample.
 export async function tagCodeSamples(clientName: string, codeSamples: CodeSamples): Promise<void> {
-  // Validate clientName to prevent path traversal — only lowercase letters, digits, and hyphens are allowed.
-  if (!/^[a-z0-9-]+$/.test(clientName)) {
-    throw new Error(`Invalid clientName: "${clientName}"`);
-  }
-
-  const ctsDir = toAbsolutePath(path.join('tests', 'CTS', 'requests', clientName));
+  const ctsDir = toAbsolutePath(getCTSRequestDir(clientName));
 
   if (!(await exists(ctsDir))) {
     return;
