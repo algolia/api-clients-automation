@@ -365,7 +365,7 @@
     ],
     "folder": "clients/algoliasearch-client-scala",
     "gitRepoId": "algoliasearch-client-scala",
-    "packageVersion": "2.38.0",
+    "packageVersion": "2.38.1",
     "modelFolder": "src/main/scala/algoliasearch",
     "apiFolder": "src/main/scala/algoliasearch/api",
     "dockerImage": "apic_base",
