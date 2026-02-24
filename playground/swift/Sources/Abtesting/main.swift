@@ -5,8 +5,8 @@ import Foundation
 
 import DotEnv
 
-import Core
-@preconcurrency import Abtesting
+import AlgoliaCore
+@preconcurrency import AlgoliaAbtesting
 
 do {
     guard let currentFileURL = URL(string: #file) else {

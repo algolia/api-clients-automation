@@ -9,8 +9,8 @@ import Foundation
 #if canImport(FoundationNetworking)
     import FoundationNetworking
 #endif
-@testable import Core
-@testable import Search
+@testable import AlgoliaCore
+@testable import AlgoliaSearch
 
 public class MockSearchClient<T>: SearchClient {
     var loop = 0
