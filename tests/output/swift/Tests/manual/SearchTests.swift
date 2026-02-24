@@ -9,8 +9,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Search
+@testable import AlgoliaCore
+@testable import AlgoliaSearch
 
 final class SearchClientManualTests: XCTestCase {
     func testBuildFilters() throws {
