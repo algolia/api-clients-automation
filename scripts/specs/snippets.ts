@@ -1,10 +1,14 @@
 import fsp from 'fs/promises';
+import path from 'path';
 
 import { GENERATORS, capitalize, exists, toAbsolutePath } from '../common.ts';
 import type { Language } from '../types.ts';
 
 import { getSnippetFile } from '../config.ts';
 import type { CodeSamples, OpenAPICodeSample, SampleForOperation } from './types.ts';
+
+// Reserved key used to store the preferred code sample (marked with isCodeSample: true in CTS JSON).
+export const CODE_SAMPLE_KEY = '__codeSample';
 
 export function getCodeSampleLabel(language: Language): OpenAPICodeSample['label'] {
   switch (language) {
@@ -50,6 +54,50 @@ export function generateSnippetsJSON(codeSamples: CodeSamples): CodeSamples {
   }
 
   return codeSamples;
+}
+
+// Reads CTS request JSON files and, for tests marked with `isCodeSample: true`,
+// tags the matching snippet with the reserved CODE_SAMPLE_KEY.
+// Throws if more than one test per operationId is marked as a code sample.
+export async function tagCodeSamples(clientName: string, codeSamples: CodeSamples): Promise<void> {
+  const ctsDir = toAbsolutePath(`tests/CTS/requests/${clientName}`);
+
+  if (!(await exists(ctsDir))) {
+    return;
+  }
+
+  const files = await fsp.readdir(ctsDir);
+
+  for (const file of files) {
+    if (!file.endsWith('.json')) {
+      continue;
+    }
+
+    const operationId = path.basename(file, '.json');
+    const tests: Array<{ testName: string; isCodeSample?: boolean }> = JSON.parse(
+      await fsp.readFile(path.join(ctsDir, file), 'utf8'),
+    );
+
+    const codeSampleTests = tests.filter((t) => t.isCodeSample === true);
+
+    if (codeSampleTests.length > 1) {
+      throw new Error(
+        `Found ${codeSampleTests.length} tests with isCodeSample: true for operationId "${operationId}" in ${clientName}. Only one is allowed.`,
+      );
+    }
+
+    if (codeSampleTests.length === 0) {
+      continue;
+    }
+
+    const testName = codeSampleTests[0].testName;
+
+    for (const lang of Object.keys(codeSamples) as Language[]) {
+      if (codeSamples[lang][operationId]?.[testName] !== undefined) {
+        codeSamples[lang][operationId][CODE_SAMPLE_KEY] = codeSamples[lang][operationId][testName];
+      }
+    }
+  }
 }
 
 // Reads the generated `docs/snippets/` file for every languages of the given `clientName` and builds an hashmap of snippets per operationId per language.
@@ -125,6 +173,8 @@ export async function transformGeneratedSnippetsToCodeSamples(clientName: string
       }
     }
   }
+
+  await tagCodeSamples(clientName, codeSamples);
 
   return codeSamples;
 }

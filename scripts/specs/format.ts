@@ -10,7 +10,7 @@ import { GENERATORS, run, toAbsolutePath } from '../common.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Spec } from '../types.ts';
 
-import { getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
+import { CODE_SAMPLE_KEY, getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
@@ -76,7 +76,7 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
             source:
-              codeSamples[gen.language][specMethod.operationId]['xCodeSample'] ||
+              codeSamples[gen.language][specMethod.operationId][CODE_SAMPLE_KEY] ||
               Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }

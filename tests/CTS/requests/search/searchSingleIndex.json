@@ -2891,7 +2891,8 @@
     }
   },
   {
-    "testName": "xCodeSample",
+    "testName": "search with facet filter",
+    "isCodeSample": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {
