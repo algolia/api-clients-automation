@@ -70,11 +70,14 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           specMethod['x-codeSamples'] = [];
         }
 
+        // xCodeSample is the assigned test name for selecting snippets for displaying as x-codeSamples
         if (codeSamples[gen.language][specMethod.operationId]) {
           specMethod['x-codeSamples'].push({
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
-            source: Object.values(codeSamples[gen.language][specMethod.operationId])[0],
+            source:
+              Object.values(codeSamples[gen.language][specMethod.operationId]['xCodeSample']) ||
+              Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }
       }
