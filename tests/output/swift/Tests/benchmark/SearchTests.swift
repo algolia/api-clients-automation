@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Search
+@testable import AlgoliaCore
+@testable import AlgoliaSearch
 
 final class SearchClientClientBenchmark: XCTestCase {
     /// benchmark the search method

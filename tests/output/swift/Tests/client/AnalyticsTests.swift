@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Analytics
-@testable import Core
+@testable import AlgoliaAnalytics
+@testable import AlgoliaCore
 
 final class AnalyticsClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"

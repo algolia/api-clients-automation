@@ -3,8 +3,8 @@ import Foundation
     import FoundationNetworking
 #endif
 
-import Core
-import Ingestion
+import AlgoliaCore
+import AlgoliaIngestion
 
 func pushSetup() async throws {
     do {

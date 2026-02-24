@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Search
+@testable import AlgoliaCore
+@testable import AlgoliaSearch
 
 final class SearchClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"

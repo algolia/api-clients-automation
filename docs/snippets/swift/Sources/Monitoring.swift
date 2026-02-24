@@ -1,8 +1,8 @@
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 // >IMPORT
-import Monitoring
+import AlgoliaMonitoring
 
 // IMPORT<
 

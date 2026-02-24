@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import QuerySuggestions
+@testable import AlgoliaCore
+@testable import AlgoliaQuerySuggestions
 
 final class QuerySuggestionsClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"

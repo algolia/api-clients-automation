@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Core
-@testable import Ingestion
+@testable import AlgoliaCore
+@testable import AlgoliaIngestion
 
 final class IngestionClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"

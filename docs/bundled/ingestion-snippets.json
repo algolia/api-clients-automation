@@ -1961,7 +1961,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Ingestion"
+      "default": "import AlgoliaIngestion"
     },
     "createAuthentication": {
       "createAuthenticationOAuth": "let response = try await client.createAuthentication(authenticationCreate: AuthenticationCreate(\n    type: AuthenticationType.oauth,\n    name: \"authName\",\n    input: AuthInput.authOAuth(AuthOAuth(url: \"http://test.oauth\", clientId: \"myID\", clientSecret: \"mySecret\"))\n))",

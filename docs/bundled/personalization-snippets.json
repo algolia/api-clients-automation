@@ -440,7 +440,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Personalization"
+      "default": "import AlgoliaPersonalization"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",

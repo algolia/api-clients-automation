@@ -5972,7 +5972,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Search"
+      "default": "import AlgoliaSearch"
     },
     "addApiKey": {
       "minimal": "let response = try await client.addApiKey(apiKey: ApiKey(\n    acl: [Acl.search, Acl.addObject],\n    description: \"my new api key\"\n))",
