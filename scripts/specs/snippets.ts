@@ -60,7 +60,12 @@ export function generateSnippetsJSON(codeSamples: CodeSamples): CodeSamples {
 // tags the matching snippet with the reserved CODE_SAMPLE_KEY.
 // Throws if more than one test per operationId is marked as a code sample.
 export async function tagCodeSamples(clientName: string, codeSamples: CodeSamples): Promise<void> {
-  const ctsDir = toAbsolutePath(`tests/CTS/requests/${clientName}`);
+  // Validate clientName to prevent path traversal — only lowercase letters, digits, and hyphens are allowed.
+  if (!/^[a-z0-9-]+$/.test(clientName)) {
+    throw new Error(`Invalid clientName: "${clientName}"`);
+  }
+
+  const ctsDir = toAbsolutePath(path.join('tests', 'CTS', 'requests', clientName));
 
   if (!(await exists(ctsDir))) {
     return;
@@ -69,13 +74,15 @@ export async function tagCodeSamples(clientName: string, codeSamples: CodeSample
   const files = await fsp.readdir(ctsDir);
 
   for (const file of files) {
-    if (!file.endsWith('.json')) {
+    // Use basename to strip any accidental path components returned by readdir.
+    const safeFile = path.basename(file);
+    if (!safeFile.endsWith('.json')) {
       continue;
     }
 
-    const operationId = path.basename(file, '.json');
+    const operationId = path.basename(safeFile, '.json');
     const tests: Array<{ testName: string; isCodeSample?: boolean }> = JSON.parse(
-      await fsp.readFile(path.join(ctsDir, file), 'utf8'),
+      await fsp.readFile(path.join(ctsDir, safeFile), 'utf8'),
     );
 
     const codeSampleTests = tests.filter((t) => t.isCodeSample === true);
@@ -93,8 +100,9 @@ export async function tagCodeSamples(clientName: string, codeSamples: CodeSample
     const testName = codeSampleTests[0].testName;
 
     for (const lang of Object.keys(codeSamples) as Language[]) {
-      if (codeSamples[lang][operationId]?.[testName] !== undefined) {
-        codeSamples[lang][operationId][CODE_SAMPLE_KEY] = codeSamples[lang][operationId][testName];
+      const samplesForOp = codeSamples[lang][operationId];
+      if (samplesForOp !== undefined && Object.hasOwn(samplesForOp, testName)) {
+        samplesForOp[CODE_SAMPLE_KEY] = samplesForOp[testName];
       }
     }
   }

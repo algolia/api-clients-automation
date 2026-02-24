@@ -76,8 +76,9 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
             source:
-              codeSamples[gen.language][specMethod.operationId][CODE_SAMPLE_KEY] ||
-              Object.values(codeSamples[gen.language][specMethod.operationId])[0],
+              (Object.hasOwn(codeSamples[gen.language][specMethod.operationId], CODE_SAMPLE_KEY)
+                ? codeSamples[gen.language][specMethod.operationId][CODE_SAMPLE_KEY]
+                : undefined) || Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }
       }
