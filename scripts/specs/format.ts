@@ -76,9 +76,8 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
             source:
-              (codeSamples[gen.language][specMethod.operationId]['xCodeSample']
-                ? Object.values(codeSamples[gen.language][specMethod.operationId]['xCodeSample'])
-                : undefined) || Object.values(codeSamples[gen.language][specMethod.operationId])[0],
+              codeSamples[gen.language][specMethod.operationId]['xCodeSample'] ||
+              Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }
       }
