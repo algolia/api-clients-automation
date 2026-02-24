@@ -1,3 +1,7 @@
+## [1.46.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.46.0...1.46.1)
+
+- [969c6b510](https://github.com/algolia/api-clients-automation/commit/969c6b510) chore(deps): dependencies 2026-02-23 ([#5999](https://github.com/algolia/api-clients-automation/pull/5999)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [1.46.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.45.0...1.46.0)
 
 - [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)
