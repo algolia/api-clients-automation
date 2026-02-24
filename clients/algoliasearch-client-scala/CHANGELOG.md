@@ -1,3 +1,7 @@
+## [2.38.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.0...2.38.1)
+
+- [175139422](https://github.com/algolia/api-clients-automation/commit/175139422) fix(scala): fix HeaderInterceptor not applying default headers ([#6000](https://github.com/algolia/api-clients-automation/pull/6000)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.38.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.37.1...2.38.0)
 
 - [6d03afc03](https://github.com/algolia/api-clients-automation/commit/6d03afc03) chore(deps): dependencies 2026-02-16 ([#5965](https://github.com/algolia/api-clients-automation/pull/5965)) by [@algolia-bot](https://github.com/algolia-bot/)
