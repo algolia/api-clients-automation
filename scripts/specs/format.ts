@@ -10,7 +10,7 @@ import { GENERATORS, run, toAbsolutePath } from '../common.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Spec } from '../types.ts';
 
-import { getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
+import { CODE_SAMPLE_KEY, getCodeSampleLabel, transformGeneratedSnippetsToCodeSamples } from './snippets.ts';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
@@ -70,11 +70,15 @@ export async function bundleSpecsForDoc(bundledPath: string, clientName: string)
           specMethod['x-codeSamples'] = [];
         }
 
+        // if a CTS test is marked with isCodeSample: true, it takes priority; otherwise fall back to the first snippet
         if (codeSamples[gen.language][specMethod.operationId]) {
           specMethod['x-codeSamples'].push({
             lang: gen.language,
             label: getCodeSampleLabel(gen.language),
-            source: Object.values(codeSamples[gen.language][specMethod.operationId])[0],
+            source:
+              (Object.hasOwn(codeSamples[gen.language][specMethod.operationId], CODE_SAMPLE_KEY)
+                ? codeSamples[gen.language][specMethod.operationId][CODE_SAMPLE_KEY]
+                : undefined) || Object.values(codeSamples[gen.language][specMethod.operationId])[0],
           });
         }
       }
