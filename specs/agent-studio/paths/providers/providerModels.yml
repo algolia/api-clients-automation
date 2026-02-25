@@ -12,7 +12,6 @@ get:
       required: true
       schema:
         type: string
-        format: uuid
         title: providerId
       description: The providerId.
   responses:

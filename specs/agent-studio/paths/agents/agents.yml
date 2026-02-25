@@ -33,7 +33,6 @@ get:
       schema:
         oneOf:
           - type: string
-            format: uuid
           - type: 'null'
         description: Filter by provider id.
         title: providerid

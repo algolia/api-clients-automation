@@ -15,11 +15,9 @@ MessageResponse-Output:
       title: parts
     createdAt:
       type: string
-      format: date-time
       title: createdat
     updatedAt:
       type: string
-      format: date-time
       title: updatedat
     model:
       oneOf:

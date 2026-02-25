@@ -12,7 +12,6 @@ post:
       required: true
       schema:
         type: string
-        format: uuid
         title: agentId
       description: The agentId.
   responses:
