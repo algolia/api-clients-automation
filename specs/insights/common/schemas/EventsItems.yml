@@ -1,4 +1,4 @@
-oneOf:
+anyOf:
   - $ref: './ClickedObjectIDsAfterSearch.yml'
   - $ref: './AddedToCartObjectIDsAfterSearch.yml'
   - $ref: './PurchasedObjectIDsAfterSearch.yml'
