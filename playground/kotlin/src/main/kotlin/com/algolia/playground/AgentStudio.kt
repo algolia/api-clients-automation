@@ -14,7 +14,7 @@ suspend fun main() {
 
     val response = client.listAgents()
     println("List of agents:")
-    for (agent in response.agents) {
+    for (agent in response.data) {
         println("- ${agent.name} (ID: ${agent.id})")
     }
 
