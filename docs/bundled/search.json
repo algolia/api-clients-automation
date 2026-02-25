@@ -8503,6 +8503,11 @@
           },
           "scope": {
             "type": "string"
+          },
+          "condition": {
+            "deprecated": true,
+            "description": "Legacy field for a single condition. This field is maintained for backward compatibility \nwith older rules but should not be used in new implementations.\n",
+            "$ref": "#/components/schemas/condition"
           }
         },
         "required": [
