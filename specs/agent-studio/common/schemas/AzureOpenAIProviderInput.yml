@@ -7,7 +7,6 @@ AzureOpenAIProviderInput:
       type: string
       maxLength: 2083
       minLength: 1
-      format: uri
       title: azureendpoint
     azureDeployment:
       type: string

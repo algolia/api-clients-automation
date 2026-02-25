@@ -24,7 +24,7 @@ object AgentStudio {
     val response = Await.result(res, Duration(100, "sec"))
 
     println("List of agents:")
-    for (agent <- response.agents) {
+    for (agent <- response.data) {
       println(s"- ${agent.name} (ID: ${agent.id})")
     }
   }

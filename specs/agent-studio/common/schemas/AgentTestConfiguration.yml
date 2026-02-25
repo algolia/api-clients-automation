@@ -3,13 +3,11 @@ AgentTestConfiguration:
     id:
       oneOf:
         - type: string
-          format: uuid
         - type: 'null'
       title: id
     providerId:
       oneOf:
         - type: string
-          format: uuid
         - type: 'null'
       title: providerid
     model:

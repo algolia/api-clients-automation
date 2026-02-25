@@ -1,4 +1,4 @@
-ValidationError:
+ValidationErrorItem:
   properties:
     loc:
       items:
@@ -16,4 +16,4 @@ ValidationError:
     - loc
     - msg
     - type
-  title: validationError
+  title: validationErrorItem

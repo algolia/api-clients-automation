@@ -2,7 +2,6 @@ AgentWithVersionResponse:
   properties:
     id:
       type: string
-      format: uuid
       title: id
     name:
       type: string
@@ -17,7 +16,6 @@ AgentWithVersionResponse:
     providerId:
       oneOf:
         - type: string
-          format: uuid
         - type: 'null'
       title: providerid
     model:
@@ -39,18 +37,15 @@ AgentWithVersionResponse:
       title: tools
     createdAt:
       type: string
-      format: date-time
       title: createdat
     updatedAt:
       oneOf:
         - type: string
-          format: date-time
         - type: 'null'
       title: updatedat
     lastUsedAt:
       oneOf:
         - type: string
-          format: date-time
         - type: 'null'
       title: lastusedat
   type: object

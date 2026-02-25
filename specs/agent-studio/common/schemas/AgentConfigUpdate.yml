@@ -13,7 +13,6 @@ AgentConfigUpdate:
     providerId:
       oneOf:
         - type: string
-          format: uuid
         - type: 'null'
       title: providerid
     model:
