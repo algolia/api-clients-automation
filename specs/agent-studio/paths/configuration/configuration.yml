@@ -1,7 +1,7 @@
 get:
   tags:
     - Configurations
-  operationId: getConfiguration
+  operationId: getApplicationConfiguration
   x-acl:
     - logs
   summary: Get Configuration
