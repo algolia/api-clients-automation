@@ -28,7 +28,6 @@ McpServerToolConfig-Input:
     id:
       oneOf:
         - type: string
-          format: uuid
         - type: 'null'
       title: id
       description: Stable unique identifier for this MCP tool.

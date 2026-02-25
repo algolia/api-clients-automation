@@ -18,7 +18,7 @@ async def main():
         response = await client.list_agents()
 
         print("List of agents:")
-        for agent in response.agents:
+        for agent in response.data:
             print(f"- {agent.name} (ID: {agent.id})")
     finally:
         await client.close()

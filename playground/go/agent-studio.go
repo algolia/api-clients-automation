@@ -20,7 +20,7 @@ func testAgentStudio(appID, apiKey string) int {
 	}
 
 	fmt.Println("List of agents:")
-	for _, agent := range response.Agents {
+	for _, agent := range response.Data {
 		fmt.Printf("- %s (ID: %s)\n", agent.Name, agent.Id)
 	}
 
