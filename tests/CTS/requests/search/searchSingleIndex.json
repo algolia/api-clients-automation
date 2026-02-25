@@ -2889,28 +2889,5 @@
         "query": "peace"
       }
     }
-  },
-  {
-    "testName": "search with facet filter",
-    "isCodeSample": true,
-    "parameters": {
-      "indexName": "indexName",
-      "searchParams": {
-        "query": "myQuery",
-        "facetFilters": [
-          "tags:algolia"
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/indexes/indexName/query",
-      "method": "POST",
-      "body": {
-        "query": "myQuery",
-        "facetFilters": [
-          "tags:algolia"
-        ]
-      }
-    }
   }
 ]
