@@ -115,6 +115,13 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
         {{#vendorExtensions.x-discriminator-fields.size}}
         case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
         {{/vendorExtensions.x-discriminator-fields.size}}
+        {{^vendorExtensions.x-discriminator-fields.size}}
+        {{#isMap}}
+        {{^isContainer}}
+        case value: JObject {{#vendorExtensions.x-discriminator-fields}}{{#-first}}if{{/-first}}{{^-first}}&&{{/-first}} value.obj.exists(_._1 == "{{{.}}}"){{/vendorExtensions.x-discriminator-fields}} => Extraction.extract[{{{datatypeWithEnum}}}](value)
+        {{/isContainer}}
+        {{/isMap}}
+        {{/vendorExtensions.x-discriminator-fields.size}}
         {{/isEnumRef}}
         {{/isModel}}
         {{#isMap}}
