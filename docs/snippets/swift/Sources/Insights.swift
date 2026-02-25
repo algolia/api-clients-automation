@@ -1,8 +1,8 @@
-#if canImport(Core)
-    import Core
+#if canImport(AlgoliaCore)
+    import AlgoliaCore
 #endif
 // >IMPORT
-import Insights
+import AlgoliaInsights
 
 // IMPORT<
 
@@ -437,7 +437,7 @@ final class InsightsClientSnippet {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_771_632_000_000)
+                timestamp: Int64(1_771_891_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -446,7 +446,7 @@ final class InsightsClientSnippet {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_771_632_000_000)
+                timestamp: Int64(1_771_891_200_000)
             )),
         ]))
         // >LOG

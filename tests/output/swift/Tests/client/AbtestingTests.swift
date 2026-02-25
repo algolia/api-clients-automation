@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Abtesting
-@testable import Core
+@testable import AlgoliaAbtesting
+@testable import AlgoliaCore
 
 final class AbtestingClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
@@ -38,7 +38,7 @@ final class AbtestingClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.39.0\\).*"
+        let pattern = "^Algolia for Swift \\(9.40.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern

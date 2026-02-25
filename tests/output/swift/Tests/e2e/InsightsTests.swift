@@ -5,8 +5,8 @@ import XCTest
 import DotEnv
 import Utils
 
-@testable import Core
-@testable import Insights
+@testable import AlgoliaCore
+@testable import AlgoliaInsights
 
 final class InsightsClientRequestsTestsE2E: XCTestCase {
     static var APPLICATION_ID = "my_application_id"
@@ -65,7 +65,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_771_632_000_000)
+                timestamp: Int64(1_771_891_200_000)
             )),
             EventsItems.viewedObjectIDs(ViewedObjectIDs(
                 eventName: "Product Detail Page Viewed",
@@ -74,7 +74,7 @@ final class InsightsClientRequestsTestsE2E: XCTestCase {
                 objectIDs: ["9780545139700", "9780439784542"],
                 userToken: "user-123456",
                 authenticatedUserToken: "user-123456",
-                timestamp: Int64(1_771_632_000_000)
+                timestamp: Int64(1_771_891_200_000)
             )),
         ]))
         try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"message\":\"OK\",\"status\":200}")

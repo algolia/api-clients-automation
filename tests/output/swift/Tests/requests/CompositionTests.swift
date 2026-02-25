@@ -4,8 +4,8 @@ import XCTest
 
 import Utils
 
-@testable import Composition
-@testable import Core
+@testable import AlgoliaComposition
+@testable import AlgoliaCore
 
 final class CompositionClientRequestsTests: XCTestCase {
     static let APPLICATION_ID = "my_application_id"
