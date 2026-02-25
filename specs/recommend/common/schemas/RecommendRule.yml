@@ -29,7 +29,7 @@ RecommendRule:
       description: Time periods when the rule is active.
       items:
         $ref: '../../../common/schemas/Rule.yml#/timeRange'
-      
+
 Condition:
   type: object
   description: |
