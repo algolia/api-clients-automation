@@ -3,8 +3,8 @@ import Foundation
     import FoundationNetworking
 #endif
 
-import Core
-import Search
+import AlgoliaCore
+import AlgoliaSearch
 
 func saveObjectsMovies() async throws {
     let url = URL(string: "https://dashboard.algolia.com/api/1/sample_datasets?type=movie")!

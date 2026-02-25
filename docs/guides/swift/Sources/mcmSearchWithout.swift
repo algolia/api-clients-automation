@@ -3,8 +3,8 @@ import Foundation
     import FoundationNetworking
 #endif
 
-import Core
-import Search
+import AlgoliaCore
+import AlgoliaSearch
 
 func mcmSearchWithout() async throws {
     let getAppIDFor = { (_: String) in "" } // Implement your own logic here

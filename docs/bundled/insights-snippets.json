@@ -468,7 +468,7 @@
   },
   "swift": {
     "import": {
-      "default": "import Insights"
+      "default": "import AlgoliaInsights"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
