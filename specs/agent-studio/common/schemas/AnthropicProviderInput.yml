@@ -8,7 +8,6 @@ AnthropicProviderInput:
         - type: string
           maxLength: 2083
           minLength: 1
-          format: uri
         - type: 'null'
       title: baseurl
   type: object

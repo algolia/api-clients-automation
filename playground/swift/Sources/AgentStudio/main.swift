@@ -46,7 +46,7 @@ do {
     let response = try await client.listAgents()
 
     print("List of agents:")
-    for agent in response.agents {
+    for agent in response.data {
         print("- \(agent.name) (ID: \(agent.id))")
     }
 } catch {

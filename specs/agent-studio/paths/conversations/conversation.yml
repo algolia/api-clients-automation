@@ -19,7 +19,6 @@ get:
       required: true
       schema:
         type: string
-        format: uuid
         title: agentId
       description: The agentId.
     - name: X-Algolia-Secure-User-Token
@@ -65,7 +64,6 @@ delete:
       required: true
       schema:
         type: string
-        format: uuid
         title: agentId
       description: The agentId.
   responses:

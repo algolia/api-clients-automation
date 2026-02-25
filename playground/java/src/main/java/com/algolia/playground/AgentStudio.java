@@ -15,7 +15,7 @@ public class AgentStudio {
     try {
       var response = client.listAgents();
       System.out.println("List of agents:");
-      for (var agent : response.getAgents()) {
+      for (var agent : response.getData()) {
         System.out.println("- " + agent.getName() + " (ID: " + agent.getId() + ")");
       }
     } finally {

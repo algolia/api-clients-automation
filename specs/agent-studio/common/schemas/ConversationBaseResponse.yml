@@ -5,7 +5,6 @@ ConversationBaseResponse:
       title: id
     agentId:
       type: string
-      format: uuid
       title: agentid
     title:
       oneOf:
@@ -14,16 +13,13 @@ ConversationBaseResponse:
       title: title
     createdAt:
       type: string
-      format: date-time
       title: createdat
     updatedAt:
       type: string
-      format: date-time
       title: updatedat
     lastActivityAt:
       oneOf:
         - type: string
-          format: date-time
         - type: 'null'
       title: lastactivityat
     userToken:

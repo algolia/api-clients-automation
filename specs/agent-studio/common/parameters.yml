@@ -5,7 +5,6 @@ agentId:
   description: Unique identifier of the agent.
   schema:
     type: string
-    format: uuid
 conversationId:
   name: conversationId
   in: path
@@ -13,7 +12,6 @@ conversationId:
   description: Unique identifier of the conversation.
   schema:
     type: string
-    format: uuid
 providerId:
   name: providerId
   in: path
@@ -21,7 +19,6 @@ providerId:
   description: Unique identifier of the provider authentication.
   schema:
     type: string
-    format: uuid
 userToken:
   name: userToken
   in: path
