@@ -9,6 +9,7 @@
   "dependencies": {
     "@algolia/abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/abtesting",
     "@algolia/advanced-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/advanced-personalization",
+    "@algolia/agent-studio": "link:../../../clients/algoliasearch-client-javascript/packages/agent-studio",
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting",
     "@algolia/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics",
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common",
