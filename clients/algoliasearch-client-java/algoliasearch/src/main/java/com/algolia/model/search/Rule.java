@@ -36,6 +36,9 @@ public class Rule {
   @JsonProperty("scope")
   private String scope;
 
+  @JsonProperty("condition")
+  private Condition condition;
+
   public Rule setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
@@ -152,6 +155,17 @@ public class Rule {
     return scope;
   }
 
+  public Rule setCondition(Condition condition) {
+    this.condition = condition;
+    return this;
+  }
+
+  /** Get condition */
+  @javax.annotation.Nullable
+  public Condition getCondition() {
+    return condition;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -169,13 +183,14 @@ public class Rule {
       Objects.equals(this.enabled, rule.enabled) &&
       Objects.equals(this.validity, rule.validity) &&
       Objects.equals(this.tags, rule.tags) &&
-      Objects.equals(this.scope, rule.scope)
+      Objects.equals(this.scope, rule.scope) &&
+      Objects.equals(this.condition, rule.condition)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objectID, conditions, consequence, description, enabled, validity, tags, scope);
+    return Objects.hash(objectID, conditions, consequence, description, enabled, validity, tags, scope, condition);
   }
 
   @Override
@@ -190,6 +205,7 @@ public class Rule {
     sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
+    sb.append("    condition: ").append(toIndentedString(condition)).append("\n");
     sb.append("}");
     return sb.toString();
   }

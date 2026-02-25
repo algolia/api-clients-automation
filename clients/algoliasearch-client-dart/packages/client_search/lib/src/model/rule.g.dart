@@ -29,6 +29,11 @@ Rule _$RuleFromJson(Map<String, dynamic> json) => $checkedCreate(
           tags: $checkedConvert('tags',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           scope: $checkedConvert('scope', (v) => v as String?),
+          condition: $checkedConvert(
+              'condition',
+              (v) => v == null
+                  ? null
+                  : Condition.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -53,5 +58,6 @@ Map<String, dynamic> _$RuleToJson(Rule instance) {
   writeNotNull('validity', instance.validity?.map((e) => e.toJson()).toList());
   writeNotNull('tags', instance.tags);
   writeNotNull('scope', instance.scope);
+  writeNotNull('condition', instance.condition?.toJson());
   return val;
 }
