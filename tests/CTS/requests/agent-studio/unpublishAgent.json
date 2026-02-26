@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "unpublishAgent",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/unpublish",
+      "method": "POST"
+    }
+  }
+]

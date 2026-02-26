@@ -1,0 +1,39 @@
+[
+  {
+    "testName": "calls api with default read timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "method": "listAgents",
+        "parameters": {},
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 30000,
+            "responseTimeout": 30000
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "calls api with default write timeouts",
+    "steps": [
+      {
+        "type": "method",
+        "method": "createAgent",
+        "parameters": {
+          "name": "test-agent",
+          "instructions": "test instructions"
+        },
+        "expected": {
+          "type": "timeouts",
+          "match": {
+            "connectTimeout": 30000,
+            "responseTimeout": 30000
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "testName": "uses the correct EU region",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "eu"
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "test"
+        },
+        "expected": {
+          "type": "host",
+          "match": "agent-studio.eu.algolia.com"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "uses the correct US region",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "us"
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "test"
+        },
+        "expected": {
+          "type": "host",
+          "match": "agent-studio.us.algolia.com"
+        }
+      }
+    ]
+  },
+  {
+    "testName": "throws when incorrect region is given",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "my-app-id",
+          "apiKey": "my-api-key",
+          "region": "not_a_region"
+        },
+        "expected": {
+          "error": "`region` is required and must be one of the following: eu, us"
+        }
+      }
+    ]
+  }
+]

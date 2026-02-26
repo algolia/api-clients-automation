@@ -1,0 +1,30 @@
+[
+  {
+    "testName": "getProvider",
+    "parameters": {
+      "providerId": "test-provider-id"
+    },
+    "request": {
+      "path": "/1/providers/test-provider-id",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e get provider",
+    "parameters": {
+      "providerId": "test-provider-id"
+    },
+    "request": {
+      "path": "/1/providers/test-provider-id",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "test-provider-id",
+        "name": "cts_e2e_provider",
+        "providerName": "openai"
+      }
+    }
+  }
+]

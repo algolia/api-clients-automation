@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "listProviderModels",
+    "parameters": {
+      "providerId": "test-provider-id"
+    },
+    "request": {
+      "path": "/1/providers/test-provider-id/models",
+      "method": "GET"
+    }
+  }
+]
