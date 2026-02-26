@@ -18,6 +18,7 @@ object AgentStudio {
     val client = AgentStudioClient(
       appId = appId,
       apiKey = apiKey,
+      region = "us",
     )
 
     val res = client.listAgents()

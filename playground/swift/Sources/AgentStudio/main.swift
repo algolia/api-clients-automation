@@ -41,7 +41,7 @@ guard applicationID != "" && apiKey != "" else {
 }
 
 do {
-    let client = try AgentStudioClient(appID: applicationID, apiKey: apiKey)
+    let client = try AgentStudioClient(appID: applicationID, apiKey: apiKey, region: .us)
 
     let response = try await client.listAgents()
 
