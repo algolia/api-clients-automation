@@ -37,6 +37,11 @@ tags:
   - name: Secret Keys
     description: Manage secret keys used to authenticate requests.
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
   /1/agents:
     $ref: 'paths/agents/agents.yml'
   /1/agents/{agentId}:
@@ -67,3 +72,9 @@ paths:
     $ref: 'paths/providers/providerModels.yml'
   /1/user-data/{userToken}:
     $ref: 'paths/user-data/user-data.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'
