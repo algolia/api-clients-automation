@@ -6,7 +6,8 @@ use Algolia\AlgoliaSearch\Api\AgentStudioClient;
 
 $client = AgentStudioClient::create(
     $env['ALGOLIA_APPLICATION_ID'],
-    $env['ALGOLIA_ADMIN_KEY']
+    $env['ALGOLIA_ADMIN_KEY'],
+    'us'
 );
 
 $response = $client->listAgents();

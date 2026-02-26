@@ -10,6 +10,7 @@ suspend fun main() {
     val client = AgentStudioClient(
         appId = dotenv["ALGOLIA_APPLICATION_ID"],
         apiKey = dotenv["ALGOLIA_ADMIN_KEY"],
+        region = "us",
     )
 
     val response = client.listAgents()
