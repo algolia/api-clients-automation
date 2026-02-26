@@ -13,16 +13,22 @@ components:
     apiKey:
       $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
-  - url: https://agent-studio.eu.algolia.com
-    description: Agent Studio API (EU).
-  - url: https://agent-studio.us.algolia.com
-    description: Agent Studio API (US).
+  - url: https://agent-studio.{region}.algolia.com
+    variables:
+      region:
+        description: The region where your Algolia Agent Studio is hosted.
+        enum:
+          - eu
+          - us
+        default: us
 security:
   - appId: []
     apiKey: []
 x-timeouts:
   server:
     read: 30000
+    write: 30000
+    connect: 30000
 tags:
   - name: Agents
     description: Create, configure, and manage AI agents.
