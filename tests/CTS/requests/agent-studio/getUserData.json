@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "getUserData",
+    "parameters": {
+      "userToken": "test-user-token"
+    },
+    "request": {
+      "path": "/1/user-data/test-user-token",
+      "method": "GET"
+    }
+  }
+]

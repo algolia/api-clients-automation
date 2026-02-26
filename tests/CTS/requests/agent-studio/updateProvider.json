@@ -1,0 +1,40 @@
+[
+  {
+    "testName": "updateProvider",
+    "parameters": {
+      "providerId": "test-provider-id",
+      "providerAuthenticationPatch": {
+        "name": "Updated Provider Name"
+      }
+    },
+    "request": {
+      "path": "/1/providers/test-provider-id",
+      "method": "PATCH",
+      "body": {
+        "name": "Updated Provider Name"
+      }
+    }
+  },
+  {
+    "testName": "updateProvider with input",
+    "parameters": {
+      "providerId": "test-provider-id",
+      "providerAuthenticationPatch": {
+        "name": "Updated Provider",
+        "input": {
+          "apiKey": "sk-new-key-5678"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/providers/test-provider-id",
+      "method": "PATCH",
+      "body": {
+        "name": "Updated Provider",
+        "input": {
+          "apiKey": "sk-new-key-5678"
+        }
+      }
+    }
+  }
+]
