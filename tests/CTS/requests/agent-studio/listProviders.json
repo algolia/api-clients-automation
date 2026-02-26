@@ -1,0 +1,54 @@
+[
+  {
+    "testName": "listProviders with no params",
+    "parameters": {},
+    "request": {
+      "path": "/1/providers",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "listProviders with pagination",
+    "parameters": {
+      "page": 2,
+      "limit": 5
+    },
+    "request": {
+      "path": "/1/providers",
+      "method": "GET",
+      "queryParameters": {
+        "page": "2",
+        "limit": "5"
+      }
+    }
+  },
+  {
+    "testName": "e2e list providers",
+    "parameters": {
+      "page": 1,
+      "limit": 2
+    },
+    "request": {
+      "path": "/1/providers",
+      "method": "GET",
+      "queryParameters": {
+        "page": "1",
+        "limit": "2"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "data": [
+          {
+            "name": "cts_e2e_provider"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 2
+        }
+      }
+    }
+  }
+]

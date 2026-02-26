@@ -1,0 +1,31 @@
+[
+  {
+    "testName": "getAgent",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e get agent",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "id": "test-agent-id",
+        "name": "cts_e2e_agent",
+        "status": "published",
+        "instructions": "You are a helpful assistant for CTS e2e testing."
+      }
+    }
+  }
+]

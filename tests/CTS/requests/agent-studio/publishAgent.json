@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "publishAgent",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/publish",
+      "method": "POST"
+    }
+  }
+]

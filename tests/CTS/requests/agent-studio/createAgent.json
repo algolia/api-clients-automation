@@ -1,0 +1,54 @@
+[
+  {
+    "testName": "createAgent with minimal parameters",
+    "parameters": {
+      "name": "test-agent",
+      "instructions": "You are a helpful assistant."
+    },
+    "request": {
+      "path": "/1/agents",
+      "method": "POST",
+      "body": {
+        "name": "test-agent",
+        "instructions": "You are a helpful assistant."
+      }
+    }
+  },
+  {
+    "testName": "createAgent with all parameters",
+    "parameters": {
+      "name": "test-agent",
+      "description": "A test agent for CTS",
+      "providerId": "test-provider-id",
+      "model": "gpt-4",
+      "instructions": "You are a helpful assistant.",
+      "config": {
+        "sendUsage": true,
+        "sendReasoning": true,
+        "temperature": 0.7,
+        "max_tokens": 1500
+      },
+      "tools": [{
+        "type": "start"
+      }]
+    },
+    "request": {
+      "path": "/1/agents",
+      "method": "POST",
+      "body": {
+        "name": "test-agent",
+        "description": "A test agent for CTS",
+        "providerId": "test-provider-id",
+        "model": "gpt-4",
+        "instructions": "You are a helpful assistant.",
+        "config": {
+          "sendUsage": true,
+          "sendReasoning": true,
+          "temperature": 0.7,
+          "max_tokens": 1500
+        },
+        "tools": [{ "type": "start" }]
+      }
+    }
+  }
+]

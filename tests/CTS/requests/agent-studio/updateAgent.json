@@ -1,0 +1,50 @@
+[
+  {
+    "testName": "updateAgent with minimal parameters",
+    "parameters": {
+      "agentId": "test-agent-id",
+      "agentConfigUpdate": {
+        "name": "updated-agent-name"
+      }
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id",
+      "method": "PATCH",
+      "body": {
+        "name": "updated-agent-name"
+      }
+    }
+  },
+  {
+    "testName": "updateAgent with all parameters",
+    "parameters": {
+      "agentId": "test-agent-id",
+      "agentConfigUpdate": {
+        "name": "updated-agent",
+        "description": "Updated description",
+        "providerId": "new-provider-id",
+        "model": "gpt-4o",
+        "instructions": "Updated instructions.",
+        "config": {
+          "temperature": 0.5
+        },
+        "tools": [{ "type": "start" }]
+      }
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id",
+      "method": "PATCH",
+      "body": {
+        "name": "updated-agent",
+        "description": "Updated description",
+        "providerId": "new-provider-id",
+        "model": "gpt-4o",
+        "instructions": "Updated instructions.",
+        "config": {
+          "temperature": 0.5
+        },
+        "tools": [{ "type": "start" }]
+      }
+    }
+  }
+]

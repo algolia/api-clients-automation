@@ -1,0 +1,23 @@
+[
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/providers/models",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e list models",
+    "parameters": {},
+    "request": {
+      "path": "/1/providers/models",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "openai": ["gpt-4o"]
+      }
+    }
+  }
+]
