@@ -1,0 +1,26 @@
+[
+  {
+    "testName": "invalidateAgentCache without before",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/cache",
+      "method": "DELETE"
+    }
+  },
+  {
+    "testName": "invalidateAgentCache with before date",
+    "parameters": {
+      "agentId": "test-agent-id",
+      "before": "2024-12-01"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/cache",
+      "method": "DELETE",
+      "queryParameters": {
+        "before": "2024-12-01"
+      }
+    }
+  }
+]

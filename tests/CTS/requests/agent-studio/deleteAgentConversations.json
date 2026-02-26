@@ -1,0 +1,28 @@
+[
+  {
+    "testName": "deleteAgentConversations without filters",
+    "parameters": {
+      "agentId": "test-agent-id"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/conversations",
+      "method": "DELETE"
+    }
+  },
+  {
+    "testName": "deleteAgentConversations with date filters",
+    "parameters": {
+      "agentId": "test-agent-id",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-30"
+    },
+    "request": {
+      "path": "/1/agents/test-agent-id/conversations",
+      "method": "DELETE",
+      "queryParameters": {
+        "startDate": "2024-01-01",
+        "endDate": "2024-06-30"
+      }
+    }
+  }
+]
