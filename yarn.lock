@@ -106,7 +106,7 @@ __metadata:
   dependencies:
     "@eslint/json": "npm:1.0.1"
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
-    "@redocly/cli": "npm:2.19.1"
+    "@redocly/cli": "npm:2.20.0"
     eslint: "npm:10.0.2"
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-yml: "npm:3.1.2"
@@ -2447,23 +2447,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.19.1":
-  version: 2.19.1
-  resolution: "@redocly/cli@npm:2.19.1"
+"@redocly/cli@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@redocly/cli@npm:2.20.0"
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.202.0"
     "@opentelemetry/resources": "npm:2.0.1"
     "@opentelemetry/sdk-trace-node": "npm:2.0.1"
     "@opentelemetry/semantic-conventions": "npm:1.34.0"
-    "@redocly/openapi-core": "npm:2.19.1"
-    "@redocly/respect-core": "npm:2.19.1"
+    "@redocly/openapi-core": "npm:2.20.0"
+    "@redocly/respect-core": "npm:2.20.0"
     abort-controller: "npm:^3.0.0"
     ajv: "npm:@redocly/ajv@8.17.4"
     ajv-formats: "npm:^3.0.1"
     colorette: "npm:^1.2.0"
     cookie: "npm:^0.7.2"
     dotenv: "npm:16.4.7"
-    glob: "npm:^11.0.1"
+    glob: "npm:^13.0.5"
     handlebars: "npm:^4.7.6"
     https-proxy-agent: "npm:^7.0.5"
     mobx: "npm:^6.0.4"
@@ -2482,7 +2482,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/d761102ca0135e1e7b2ca5e42a1742445986a1c1460b3948812967ef9188d4c9f77b4c35a903efd01662941f823ff8916fb7aabd06e722d22583adeccb25d2e3
+  checksum: 10/93ce02b0ff7bbd0ceaee114fff48bf7a2c931c94a20566349aac6f2ca63987131373d8b272ace288b9324f4e5693c940d867fb1b27c91116582b06b163c7bc9c
   languageName: node
   linkType: hard
 
@@ -2502,9 +2502,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:2.19.1":
-  version: 2.19.1
-  resolution: "@redocly/openapi-core@npm:2.19.1"
+"@redocly/openapi-core@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@redocly/openapi-core@npm:2.20.0"
   dependencies:
     "@redocly/ajv": "npm:^8.17.4"
     "@redocly/config": "npm:^0.43.0"
@@ -2516,7 +2516,7 @@ __metadata:
     picomatch: "npm:^4.0.3"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/7e23a05e7e41c7e1459b2651d920c09c0ff038158664ebb55d7faa5933aa45eb3d5647c651d5b33b2bd53962668ac528bf86e962ecbbadc75def7fd4a099cebf
+  checksum: 10/484918db6188f925017673107948259c5036c7da089876726c487d293852f0462f49e5f66db0f635d8b617b4823c082c9a5cae3e5502f3257939ec89e4571aab
   languageName: node
   linkType: hard
 
@@ -2537,14 +2537,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/respect-core@npm:2.19.1":
-  version: 2.19.1
-  resolution: "@redocly/respect-core@npm:2.19.1"
+"@redocly/respect-core@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@redocly/respect-core@npm:2.20.0"
   dependencies:
     "@faker-js/faker": "npm:^7.6.0"
     "@noble/hashes": "npm:^1.8.0"
     "@redocly/ajv": "npm:8.17.4"
-    "@redocly/openapi-core": "npm:2.19.1"
+    "@redocly/openapi-core": "npm:2.20.0"
     ajv: "npm:@redocly/ajv@8.17.4"
     better-ajv-errors: "npm:^1.2.0"
     colorette: "npm:^2.0.20"
@@ -2553,7 +2553,7 @@ __metadata:
     openapi-sampler: "npm:^1.7.0"
     outdent: "npm:^0.8.0"
     picomatch: "npm:^4.0.3"
-  checksum: 10/f30bc12887e22733e8f034fb860d4027b739c14faa7775b6cbd3017c2708e9b5f6dcac06095589c785fe6989eec1fb8e19deee23ac7f63d025703809e614bcdc
+  checksum: 10/8b12613af884ce5047962749f6c42808b9b4b398d91b30b5b8fff679be6f80dc713186f5db94526e7d0148d5a54d5bd856ac1a5c25dc0536fcddd47866f4ca0d
   languageName: node
   linkType: hard
 
@@ -5856,22 +5856,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^11.0.1":
-  version: 11.1.0
-  resolution: "glob@npm:11.1.0"
-  dependencies:
-    foreground-child: "npm:^3.3.1"
-    jackspeak: "npm:^4.1.1"
-    minimatch: "npm:^10.1.1"
-    minipass: "npm:^7.1.2"
-    package-json-from-dist: "npm:^1.0.0"
-    path-scurry: "npm:^2.0.0"
-  bin:
-    glob: dist/esm/bin.mjs
-  checksum: 10/da4501819633daff8822c007bb3f93d5c4d2cbc7b15a8e886660f4497dd251a1fb4f53a85fba1e760b31704eff7164aeb2c7a82db10f9f2c362d12c02fe52cf3
-  languageName: node
-  linkType: hard
-
 "glob@npm:^13.0.0":
   version: 13.0.0
   resolution: "glob@npm:13.0.0"
@@ -5880,6 +5864,17 @@ __metadata:
     minipass: "npm:^7.1.2"
     path-scurry: "npm:^2.0.0"
   checksum: 10/de390721d29ee1c9ea41e40ec2aa0de2cabafa68022e237dc4297665a5e4d650776f2573191984ea1640aba1bf0ea34eddef2d8cbfbfc2ad24b5fb0af41d8846
+  languageName: node
+  linkType: hard
+
+"glob@npm:^13.0.5":
+  version: 13.0.6
+  resolution: "glob@npm:13.0.6"
+  dependencies:
+    minimatch: "npm:^10.2.2"
+    minipass: "npm:^7.1.3"
+    path-scurry: "npm:^2.0.2"
+  checksum: 10/201ad69e5f0aa74e1d8c00a481581f8b8c804b6a4fbfabeeb8541f5d756932800331daeba99b58fb9e4cd67e12ba5a7eba5b82fb476691588418060b84353214
   languageName: node
   linkType: hard
 
@@ -7042,6 +7037,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minipass@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "minipass@npm:7.1.3"
+  checksum: 10/175e4d5e20980c3cd316ae82d2c031c42f6c746467d8b1905b51060a0ba4461441a0c25bb67c025fd9617f9a3873e152c7b543c6b5ac83a1846be8ade80dffd6
+  languageName: node
+  linkType: hard
+
 "minizlib@npm:^3.0.1, minizlib@npm:^3.1.0":
   version: 3.1.0
   resolution: "minizlib@npm:3.1.0"
@@ -7707,6 +7709,16 @@ __metadata:
     lru-cache: "npm:^11.0.0"
     minipass: "npm:^7.1.2"
   checksum: 10/1e9c74e9ccf94d7c16056a5cb2dba9fa23eec1bc221ab15c44765486b9b9975b4cd9a4d55da15b96eadf67d5202e9a2f1cec9023fbb35fe7d9ccd0ff1891f88b
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "path-scurry@npm:2.0.2"
+  dependencies:
+    lru-cache: "npm:^11.0.0"
+    minipass: "npm:^7.1.2"
+  checksum: 10/2b4257422bcb870a4c2d205b3acdbb213a72f5e2250f61c80f79c9d014d010f82bdf8584441612c8e1fa4eb098678f5704a66fa8377d72646bad4be38e57a2c3
   languageName: node
   linkType: hard
 
