@@ -2412,13 +2412,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@readme/httpsnippet@npm:11.0.0":
-  version: 11.0.0
-  resolution: "@readme/httpsnippet@npm:11.0.0"
+"@readme/httpsnippet@npm:11.1.0":
+  version: 11.1.0
+  resolution: "@readme/httpsnippet@npm:11.1.0"
   dependencies:
-    qs: "npm:^6.11.2"
+    qs: "npm:^6.15.0"
     stringify-object: "npm:^3.3.0"
-  checksum: 10/98c240b3572a5136269cd8b5af5ccaddf1fc6835d52957a773815021f9c0c892eb3cb40cb59d3cf18ca9f22bc6d5592ea6794ef1fdd34e05d5e783a809a01a5d
+    type-fest: "npm:^5.4.4"
+  checksum: 10/6a0ef1334ee95bc828a895ba1bf1b1cded91670ac82714b1fd88f634c7033cf5b9acfdaf2dcc03de1d690f67247dba70ea45f978a0a60c216024007df17a8438
   languageName: node
   linkType: hard
 
@@ -7987,7 +7988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.11.2":
+"qs@npm:^6.15.0":
   version: 6.15.0
   resolution: "qs@npm:6.15.0"
   dependencies:
@@ -8443,7 +8444,7 @@ __metadata:
     "@actions/io": "npm:3.0.2"
     "@har-sdk/oas": "npm:2.12.2"
     "@octokit/rest": "npm:22.0.1"
-    "@readme/httpsnippet": "npm:11.0.0"
+    "@readme/httpsnippet": "npm:11.1.0"
     "@types/express": "npm:5.0.6"
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
@@ -9065,6 +9066,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tagged-tag@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tagged-tag@npm:1.0.0"
+  checksum: 10/e37653df3e495daa7ea7790cb161b810b00075bba2e4d6c93fb06a709e747e3ae9da11a120d0489833203926511b39e038a2affbd9d279cfb7a2f3fcccd30b5d
+  languageName: node
+  linkType: hard
+
 "tar-stream@npm:^3.0.0":
   version: 3.1.7
   resolution: "tar-stream@npm:3.1.7"
@@ -9236,6 +9244,15 @@ __metadata:
   version: 0.21.3
   resolution: "type-fest@npm:0.21.3"
   checksum: 10/f4254070d9c3d83a6e573bcb95173008d73474ceadbbf620dd32d273940ca18734dff39c2b2480282df9afe5d1675ebed5499a00d791758748ea81f61a38961f
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "type-fest@npm:5.4.4"
+  dependencies:
+    tagged-tag: "npm:^1.0.0"
+  checksum: 10/0bbdca645f95740587f389a2d712fe8d5e9ab7d13e74aac97cf396112510abcaab6b75fd90d65172bc13b02fdfc827e6a871322cc9c1c1a5a2754d9ab264c6f5
   languageName: node
   linkType: hard
 

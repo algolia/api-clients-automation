@@ -24,7 +24,7 @@
     "@actions/io": "3.0.2",
     "@har-sdk/oas": "2.12.2",
     "@octokit/rest": "22.0.1",
-    "@readme/httpsnippet": "11.0.0",
+    "@readme/httpsnippet": "11.1.0",
     "@types/express": "5.0.6",
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
