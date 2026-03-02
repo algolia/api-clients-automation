@@ -2,8 +2,8 @@
   {
     "testName": "deleteConversation",
     "parameters": {
-      "conversationId": "test-conversation-id",
-      "agentId": "test-agent-id"
+      "agentId": "test-agent-id",
+      "conversationId": "test-conversation-id"
     },
     "request": {
       "path": "/1/agents/test-agent-id/conversations/test-conversation-id",

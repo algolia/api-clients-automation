@@ -7,13 +7,6 @@ get:
   summary: Get Conversation
   description: Retrieves the conversation and its messages for the given ID.
   parameters:
-    - name: conversationId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: conversationId
-      description: The conversationId.
     - name: agentId
       in: path
       required: true
@@ -21,6 +14,13 @@ get:
         type: string
         title: agentId
       description: The agentId.
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
     - name: X-Algolia-Secure-User-Token
       in: header
       required: false
@@ -52,13 +52,6 @@ delete:
   summary: Delete Conversation
   description: Deletes the conversation with the given ID.
   parameters:
-    - name: conversationId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: conversationId
-      description: The conversationId.
     - name: agentId
       in: path
       required: true
@@ -66,6 +59,13 @@ delete:
         type: string
         title: agentId
       description: The agentId.
+    - name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: conversationId
+      description: The conversationId.
   responses:
     '204':
       description: Successful Response.
