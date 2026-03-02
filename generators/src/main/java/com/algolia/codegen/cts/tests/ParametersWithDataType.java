@@ -495,6 +495,19 @@ public class ParametersWithDataType {
     }
 
     testOutput.put("isFreeFormObject", true);
+    // isSimpleObject=true routes to buildJsonObject (Kotlin) instead of mapOf.
+    // In Kotlin, free-form model properties are rendered as JsonObject (via
+    // data_class_field_type.mustache),
+    // which requires buildJsonObject { ... }. But API method parameters (CodegenParameter) like
+    // query params
+    // are rendered as Map<String, Any>, which requires mapOf(...). Other languages (Scala, Go, C#)
+    // use Map
+    // types for both cases, so this is Kotlin-specific.
+    boolean isSimpleObject = getTypeName(spec).equals("Object");
+    if (language.equals("kotlin") && spec instanceof CodegenProperty && Boolean.TRUE.equals(spec.getIsFreeFormObject())) {
+      isSimpleObject = true;
+    }
+    testOutput.put("isSimpleObject", isSimpleObject);
     testOutput.put("value", values);
   }
 
