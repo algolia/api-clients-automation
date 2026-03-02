@@ -16,7 +16,8 @@
       "startDate": "2024-01-01",
       "endDate": "2024-12-31",
       "page": 2,
-      "limit": 10
+      "limit": 10,
+      "xAlgoliaSecureUserToken": null
     },
     "request": {
       "path": "/1/agents/test-agent-id/conversations",
