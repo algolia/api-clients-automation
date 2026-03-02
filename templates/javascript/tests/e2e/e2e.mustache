@@ -14,7 +14,7 @@ if (!process.env.{{e2eApiKey}}) {
   throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
 }
 
-const client = {{{clientName}}}(process.env.{{e2eAppID}}, process.env.{{e2eApiKey}}){{^isStandaloneClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isStandaloneClient}};
+const client = {{{clientName}}}(process.env.{{e2eAppID}}, process.env.{{e2eApiKey}}{{#isStandaloneClient}}{{#hasRegionalHost}}, '{{{defaultRegion}}}'{{/hasRegionalHost}}{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({{#hasRegionalHost}} {region:'{{{defaultRegion}}}'} {{/hasRegionalHost}}){{/isStandaloneClient}};
 
 {{#blocksE2E}}
 describe('{{operationId}}', () => {
