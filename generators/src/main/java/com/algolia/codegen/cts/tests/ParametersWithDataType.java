@@ -706,12 +706,26 @@ public class ParametersWithDataType {
       return bestOneOf;
     }
 
-    for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
-      // find the correct list
-      if (param instanceof List && prop.getIsArray()) {
-        return prop;
+    if (param instanceof List) {
+      List<CodegenProperty> arrayVariants = model.getComposedSchemas().getOneOf().stream().filter(CodegenProperty::getIsArray).toList();
+
+      if (arrayVariants.size() == 1) {
+        // Single array variant - return it directly (existing behavior)
+        return arrayVariants.get(0);
       }
 
+      if (arrayVariants.size() > 1) {
+        // Multiple array variants - inspect first element to disambiguate
+        List<?> list = (List<?>) param;
+        if (!list.isEmpty() && list.get(0) instanceof Map) {
+          return findBestArrayVariant(arrayVariants, (Map<String, Object>) list.get(0));
+        }
+        // Empty list or non-Map elements - fall back to first
+        return arrayVariants.get(0);
+      }
+    }
+
+    for (CodegenProperty prop : model.getComposedSchemas().getOneOf()) {
       // find the correct enum
       if (param instanceof String && prop.getIsEnumOrRef() && couldMatchEnum(param, prop)) {
         return prop;
@@ -750,6 +764,88 @@ public class ParametersWithDataType {
     }
 
     return maybeMatch;
+  }
+
+  /**
+   * When a oneOf has multiple array variants, score each variant by checking how well its items
+   * type matches a sample element from the data. Uses the same required-field and property-counting
+   * heuristic as the Map-based oneOf resolution.
+   */
+  @SuppressWarnings("unchecked")
+  private CodegenProperty findBestArrayVariant(List<CodegenProperty> arrayVariants, Map<String, Object> sampleElement) {
+    CodegenProperty bestVariant = arrayVariants.get(0);
+    int bestScore = -1;
+
+    for (CodegenProperty variant : arrayVariants) {
+      CodegenProperty items = variant.getItems();
+      if (items == null) continue;
+
+      String itemTypeName = items.getDataType();
+      if (itemTypeName == null) continue;
+
+      CodegenModel itemModel = models.get(itemTypeName);
+      if (itemModel == null) {
+        // Try lowercase first char
+        String lower = itemTypeName.substring(0, 1).toLowerCase() + itemTypeName.substring(1);
+        itemModel = models.get(lower);
+      }
+      if (itemModel == null) continue;
+
+      int score;
+      if (!itemModel.oneOf.isEmpty() && itemModel.interfaceModels != null) {
+        // Items type is itself a oneOf (e.g. MessageV4 = UserMessageV4 | AssistantMessageV4)
+        // Find best sub-match score
+        score = scoreOneOfModelMatch(sampleElement, itemModel);
+      } else {
+        // Items type is a direct model
+        score = scoreDirectModelMatch(sampleElement, itemModel);
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestVariant = variant;
+      }
+    }
+
+    return bestVariant;
+  }
+
+  /**
+   * Score how well a Map matches against the best sub-variant of a oneOf model. Returns -1 if no
+   * sub-variant matches (all have missing required fields).
+   */
+  private int scoreOneOfModelMatch(Map<String, Object> data, CodegenModel oneOfModel) {
+    int bestScore = -1;
+    for (CodegenModel subVariant : oneOfModel.interfaceModels) {
+      if (subVariant.vars.isEmpty()) continue;
+      int score = scoreDirectModelMatch(data, subVariant);
+      if (score > bestScore) {
+        bestScore = score;
+      }
+    }
+    return bestScore;
+  }
+
+  /**
+   * Score how well a Map matches a direct model: -1 if required fields are missing, otherwise the
+   * count of common properties.
+   */
+  private int scoreDirectModelMatch(Map<String, Object> data, CodegenModel model) {
+    // If any required property is missing, this model doesn't match
+    for (CodegenProperty prop : model.requiredVars) {
+      if (!data.containsKey(prop.baseName)) {
+        return -1;
+      }
+    }
+    int commonCount = 0;
+    for (String key : data.keySet()) {
+      for (CodegenProperty prop : model.vars) {
+        if (key.equals(prop.baseName) && couldMatchEnum(data.get(key), prop)) {
+          commonCount++;
+        }
+      }
+    }
+    return commonCount;
   }
 
   // If the model is an enum and contains a valid list of allowed values,

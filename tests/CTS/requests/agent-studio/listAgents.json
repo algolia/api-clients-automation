@@ -28,7 +28,8 @@
     "testName": "e2e list agents",
     "parameters": {
       "page": 1,
-      "limit": 2
+      "limit": 2,
+      "providerId": null
     },
     "request": {
       "path": "/1/agents",
