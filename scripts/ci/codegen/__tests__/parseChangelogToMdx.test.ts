@@ -14,7 +14,7 @@ describe('parseChangelogToMdx', () => {
       '- feat(x): add some feature ([#9999](https://github.com/algolia/api-clients-automation/pull/9999))',
     );
     expect(result).not.toContain('99a999aaa');
-    expect(result).not.toContain('gusernpx vitest run scripts/ci/codegen/__tests__/parseChangelogToMdx.test.ts');
+    expect(result).not.toContain('by [@user](https://github.com/user/)');
   });
 
   it('wraps section-level BREAKING CHANGES in <Warning>', () => {
