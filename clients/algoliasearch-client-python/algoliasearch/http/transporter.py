@@ -51,7 +51,7 @@ class Transporter(BaseTransporter):
 
         path = self.build_path(path, query_parameters)
         if self._config.compression_type == "gzip" and request_options.data:
-            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
+            request_options.data = gzip_compress(request_options.data.encode("utf-8")) # type: ignore
             request_options.headers["content-encoding"] = "gzip"
 
         for host in self._retry_strategy.valid_hosts(self._hosts):
@@ -131,7 +131,7 @@ class EchoTransporter(Transporter):
     ) -> ApiResponse:
         self.prepare(request_options, verb == Verb.GET or use_read_transporter)
         if self._config.compression_type == "gzip" and request_options.data:
-            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
+            request_options.data = gzip_compress(request_options.data.encode("utf-8"))  # type: ignore
             request_options.headers["content-encoding"] = "gzip"
 
         return ApiResponse(
