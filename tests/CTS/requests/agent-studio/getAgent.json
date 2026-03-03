@@ -2,26 +2,26 @@
   {
     "testName": "getAgent",
     "parameters": {
-      "agentId": "test-agent-id"
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/test-agent-id",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get agent",
     "parameters": {
-      "agentId": "test-agent-id"
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/test-agent-id",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "test-agent-id",
+        "id": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
         "name": "cts_e2e_agent",
         "status": "published",
         "instructions": "You are a helpful assistant for CTS e2e testing."
