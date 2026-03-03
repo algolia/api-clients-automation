@@ -322,6 +322,11 @@ final class ApiWrapper implements ApiWrapperInterface
             }
         }
 
+        if ('gzip' === $this->config->getCompressionType() && is_string($body) && '' !== $body) {
+            $body = \gzencode($body);
+            $headers['content-encoding'] = 'gzip';
+        }
+
         return new Request($method, $uri, $headers, $body, $protocolVersion);
     }
 
