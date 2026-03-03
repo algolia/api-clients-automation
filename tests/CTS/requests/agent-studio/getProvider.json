@@ -2,26 +2,26 @@
   {
     "testName": "getProvider",
     "parameters": {
-      "providerId": "test-provider-id"
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
     },
     "request": {
-      "path": "/1/providers/test-provider-id",
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
       "method": "GET"
     }
   },
   {
     "testName": "e2e get provider",
     "parameters": {
-      "providerId": "test-provider-id"
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
     },
     "request": {
-      "path": "/1/providers/test-provider-id",
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
       "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "id": "test-provider-id",
+        "id": "5e33d805-7892-4329-bda7-b524dc3fd04a",
         "name": "cts_e2e_provider",
         "providerName": "openai"
       }

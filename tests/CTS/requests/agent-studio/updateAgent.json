@@ -2,13 +2,13 @@
   {
     "testName": "updateAgent with minimal parameters",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "agentConfigUpdate": {
         "name": "updated-agent-name"
       }
     },
     "request": {
-      "path": "/1/agents/test-agent-id",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "method": "PATCH",
       "body": {
         "name": "updated-agent-name"
@@ -18,7 +18,7 @@
   {
     "testName": "updateAgent with all parameters",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "agentConfigUpdate": {
         "name": "updated-agent",
         "description": "Updated description",
@@ -32,7 +32,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/test-agent-id",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "method": "PATCH",
       "body": {
         "name": "updated-agent",

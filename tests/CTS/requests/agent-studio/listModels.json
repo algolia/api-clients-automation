@@ -16,7 +16,7 @@
     "response": {
       "statusCode": 200,
       "body": {
-        "openai": ["gpt-4o"]
+        "openai": ["gpt-4"]
       }
     }
   }

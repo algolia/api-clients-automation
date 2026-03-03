@@ -2,22 +2,22 @@
   {
     "testName": "deleteAgentConversations without filters",
     "parameters": {
-      "agentId": "test-agent-id"
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/test-agent-id/conversations",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
       "method": "DELETE"
     }
   },
   {
     "testName": "deleteAgentConversations with date filters",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "startDate": "2024-01-01",
       "endDate": "2024-06-30"
     },
     "request": {
-      "path": "/1/agents/test-agent-id/conversations",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/conversations",
       "method": "DELETE",
       "queryParameters": {
         "startDate": "2024-01-01",

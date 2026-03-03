@@ -2,7 +2,7 @@
   {
     "testName": "createAgentCompletion with v4 messages",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "compatibilityMode": "ai-sdk-4",
       "agentCompletionRequest": {
         "messages": [
@@ -14,7 +14,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/test-agent-id/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-4"
@@ -32,7 +32,7 @@
   {
     "testName": "createAgentCompletion with v5 messages and all query params",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "compatibilityMode": "ai-sdk-5",
       "agentCompletionRequest": {
         "messages": [
@@ -53,7 +53,7 @@
       "memory": false
     },
     "request": {
-      "path": "/1/agents/test-agent-id/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-5",
@@ -80,7 +80,7 @@
   {
     "testName": "createAgentCompletion with test configuration",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "compatibilityMode": "ai-sdk-4",
       "agentCompletionRequest": {
         "messages": [
@@ -99,7 +99,7 @@
       }
     },
     "request": {
-      "path": "/1/agents/test-agent-id/completions",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
       "method": "POST",
       "queryParameters": {
         "compatibilityMode": "ai-sdk-4"

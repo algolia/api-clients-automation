@@ -19,7 +19,7 @@
     "parameters": {
       "name": "test-agent",
       "description": "A test agent for CTS",
-      "providerId": "test-provider-id",
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a",
       "model": "gpt-4",
       "instructions": "You are a helpful assistant.",
       "config": {
@@ -38,7 +38,7 @@
       "body": {
         "name": "test-agent",
         "description": "A test agent for CTS",
-        "providerId": "test-provider-id",
+        "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a",
         "model": "gpt-4",
         "instructions": "You are a helpful assistant.",
         "config": {
