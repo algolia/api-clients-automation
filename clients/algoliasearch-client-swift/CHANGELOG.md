@@ -1,3 +1,7 @@
+## [9.40.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.40.0...9.40.1)
+
+- [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [9.40.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.39.0...9.40.0)
 
 - [695e59bb9](https://github.com/algolia/api-clients-automation/commit/695e59bb9) fix(clients): BREAKING CHANGE – update Swift import statements to use Algolia-prefixed subpackages ([#6016](https://github.com/algolia/api-clients-automation/pull/6016)) by [@Fluf22](https://github.com/Fluf22/)

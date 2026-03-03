@@ -1,3 +1,7 @@
+## [2.38.2](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.1...2.38.2)
+
+- [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [2.38.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.38.0...2.38.1)
 
 - [175139422](https://github.com/algolia/api-clients-automation/commit/175139422) fix(scala): fix HeaderInterceptor not applying default headers ([#6000](https://github.com/algolia/api-clients-automation/pull/6000)) by [@Fluf22](https://github.com/Fluf22/)

@@ -1,3 +1,7 @@
+## [5.49.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.1...5.49.2)
+
+- [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [5.49.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.0...5.49.1)
 
 - [969c6b510](https://github.com/algolia/api-clients-automation/commit/969c6b510) chore(deps): dependencies 2026-02-23 ([#5999](https://github.com/algolia/api-clients-automation/pull/5999)) by [@algolia-bot](https://github.com/algolia-bot/)
