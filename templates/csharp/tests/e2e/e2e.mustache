@@ -6,7 +6,6 @@ using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using Xunit;
 using System.Text.Json;
-using Quibble.Xunit;
 using dotenv.net;
 {{#isSearchClient}}
 using Action = Algolia.Search.Models.Search.Action;
@@ -50,6 +49,7 @@ public class {{client}}RequestTestsE2E
 
   }
 
+
   {{#blocksE2E}}
   {{#tests}}
   [Fact(DisplayName = "{{{testName}}}")]
@@ -64,7 +64,7 @@ public class {{client}}RequestTestsE2E
       {{/statusCode}}
 
       {{#body}}
-          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
+          TestHelpers.LenientJsonAssert("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options));
       {{/body}}
       } catch (Exception e)
       {
