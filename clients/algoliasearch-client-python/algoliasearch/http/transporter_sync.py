@@ -2,6 +2,7 @@ from json import loads
 from sys import version_info
 
 from requests import Request, Session, Timeout
+from gzip import compress as gzip_compress
 
 if version_info >= (3, 11):
     from typing import List, Optional, Self
@@ -61,6 +62,9 @@ class TransporterSync(BaseTransporter):
         )
 
         path = self.build_path(path, query_parameters)
+        if self._config.compression_type == "gzip" and request_options.data:
+            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
+            request_options.headers["content-encoding"] = "gzip"
 
         for host in self._retry_strategy.valid_hosts(self._hosts):
             url = self.build_url(host, path)
@@ -138,6 +142,9 @@ class EchoTransporterSync(TransporterSync):
         use_read_transporter: bool,
     ) -> ApiResponse:
         self.prepare(request_options, verb == Verb.GET or use_read_transporter)
+        if self._config.compression_type == "gzip" and request_options.data:
+            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
+            request_options.headers["content-encoding"] = "gzip"
 
         return ApiResponse(
             verb=verb,

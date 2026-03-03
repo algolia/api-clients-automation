@@ -30,6 +30,8 @@ class BaseConfig:
 
         self._user_agent: UserAgent = UserAgent()
 
+        self.compression_type = None
+
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
         self.api_key = api_key
