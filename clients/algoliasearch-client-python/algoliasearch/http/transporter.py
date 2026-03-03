@@ -1,9 +1,9 @@
 from asyncio import TimeoutError
+from gzip import compress as gzip_compress
 from json import loads
 from typing import List, Optional
 
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
-from gzip import compress as gzip_compress
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
@@ -50,8 +50,10 @@ class Transporter(BaseTransporter):
         )
 
         path = self.build_path(path, query_parameters)
-        if self._config.compression_type == "gzip" and request_options.data:
-            request_options.data = gzip_compress(request_options.data.encode("utf-8")) # type: ignore
+        if self._config.compression_type == "gzip" and isinstance(
+            request_options.data, str
+        ):
+            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
             request_options.headers["content-encoding"] = "gzip"
 
         for host in self._retry_strategy.valid_hosts(self._hosts):
@@ -130,8 +132,10 @@ class EchoTransporter(Transporter):
         use_read_transporter: bool,
     ) -> ApiResponse:
         self.prepare(request_options, verb == Verb.GET or use_read_transporter)
-        if self._config.compression_type == "gzip" and request_options.data:
-            request_options.data = gzip_compress(request_options.data.encode("utf-8"))  # type: ignore
+        if self._config.compression_type == "gzip" and isinstance(
+            request_options.data, str
+        ):
+            request_options.data = gzip_compress(request_options.data.encode("utf-8"))
             request_options.headers["content-encoding"] = "gzip"
 
         return ApiResponse(
