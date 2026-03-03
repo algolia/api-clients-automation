@@ -2,21 +2,21 @@
   {
     "testName": "invalidateAgentCache without before",
     "parameters": {
-      "agentId": "test-agent-id"
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff"
     },
     "request": {
-      "path": "/1/agents/test-agent-id/cache",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/cache",
       "method": "DELETE"
     }
   },
   {
     "testName": "invalidateAgentCache with before date",
     "parameters": {
-      "agentId": "test-agent-id",
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
       "before": "2024-12-01"
     },
     "request": {
-      "path": "/1/agents/test-agent-id/cache",
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/cache",
       "method": "DELETE",
       "queryParameters": {
         "before": "2024-12-01"
