@@ -247,6 +247,22 @@ public class GenericPropagator {
         if (!ope.optionalParams.isEmpty()) {
           ope.optionalParams.get(0).vendorExtensions.put("x-is-generic", true);
         }
+      } else if (
+        returnType == null &&
+        ope.returnProperty != null &&
+        (boolean) ope.returnProperty.vendorExtensions.getOrDefault("x-is-generic", false)
+      ) {
+        // The return type itself IS the generic T (inline schema with x-is-generic, no named
+        // model).
+        // We only set x-return-is-generic (not x-is-generic) so that only templates that
+        // explicitly handle x-return-is-generic (e.g. JavaScript) apply the generic behavior.
+        // Other language templates (Java, C#, Swift) remain unchanged, avoiding breaking changes.
+        ope.vendorExtensions.put("x-return-is-generic", true);
+        if (!ope.optionalParams.isEmpty()) {
+          // Mirror onto optionalParams[0] so that templates inside {{#optionalParams.0}} blocks
+          // can find it via Mustache scope resolution.
+          ope.optionalParams.get(0).vendorExtensions.put("x-return-is-generic", true);
+        }
       }
     }
   }

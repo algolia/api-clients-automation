@@ -134,6 +134,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasParams", ope.getHasParams());
               stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+              stepOut.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
               if (ope.returnType != null && ope.returnType.length() > 0) {
                 stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
                 stepOut.put("returnsBoolean", ope.returnType.equals("Boolean")); // ruby requires a ? for boolean functions.
