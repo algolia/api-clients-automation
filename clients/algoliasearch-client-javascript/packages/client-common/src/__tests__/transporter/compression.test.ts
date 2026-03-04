@@ -19,7 +19,7 @@ function makeTransporter(compression?: 'gzip', onRequest?: (req: EndRequest) => 
     algoliaAgent,
     logger: createNullLogger(),
     timeouts: { connect: 1000, read: 2000, write: 3000 },
-    compression,
+    ...(compression ? { compression } : {}),
     requester: {
       send: async (req) => {
         onRequest?.(req);
