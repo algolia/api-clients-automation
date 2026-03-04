@@ -257,6 +257,74 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         resp = {{^isSyncClient}}await {{/isSyncClient}}self.{{operationId}}_with_http_info({{#allParams}}{{paramName}},{{/allParams}}request_options)
         return resp.deserialize({{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}None{{/returnType}}, resp.raw_data)
 
+    {{#vendorExtensions.x-streaming}}
+
+    {{^isSyncClient}}async {{/isSyncClient}}def {{operationId}}_stream{{> partial_api_args}} -> {{^isSyncClient}}AsyncIterator[ServerSentEvent]{{/isSyncClient}}{{#isSyncClient}}Iterator[ServerSentEvent]{{/isSyncClient}}:
+        """
+        {{#notes}}
+        {{{.}}} (streaming version)
+        {{/notes}}
+        {{#allParams}}
+        :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
+        {{/allParams}}
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns an iterator of ServerSentEvent objects.
+        """
+
+        {{#allParams}}
+        {{#required}}
+        if {{paramName}} is None:
+            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}_stream`.")
+
+        {{/required}}
+        {{/allParams}}
+
+        {{#queryParams.0}}
+        _query_parameters: Dict[str, Any] = {}
+        {{/queryParams.0}}
+        {{#headerParams.0}}
+        _headers: Dict[str, str] = {}
+        {{/headerParams.0}}
+        
+        {{#vendorExtensions}}
+        {{#queryParams}}
+        if {{paramName}} is not None:
+        {{^x-is-custom-request}}
+            _query_parameters["{{baseName}}"] = {{paramName}}
+        {{/x-is-custom-request}}
+        {{#x-is-custom-request}}
+            for _qpkey, _qpvalue in {{paramName}}.items():
+                _query_parameters[_qpkey] = _qpvalue
+        {{/x-is-custom-request}}
+        {{/queryParams}}
+        {{/vendorExtensions}}
+
+        {{#headerParams}}
+        if {{paramName}} is not None:
+            _headers['{{#lambda.lowercase}}{{baseName}}{{/lambda.lowercase}}'] = {{paramName}}
+        {{/headerParams}}
+
+        {{#bodyParam}}
+        _data = {}
+        if {{paramName}} is not None:
+            _data = {{paramName}}
+        {{/bodyParam}}
+
+        {{^isSyncClient}}async {{/isSyncClient}}for event in self._transporter.request_stream(
+            verb=Verb.{{httpMethod}},
+            path={{#vendorExtensions}}'{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>, {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}quote(str({{paramName}}), safe=''){{/x-is-custom-request}}){{/pathParams}},{{/vendorExtensions}}
+            request_options=self._request_options.merge(
+                {{#queryParams.0}}query_parameters=_query_parameters,{{/queryParams.0}}
+                {{#headerParams.0}}headers=_headers,{{/headerParams.0}}
+                {{#bodyParam}}data=dumps(body_serializer(_data)),{{/bodyParam}}
+                user_request_options=request_options,
+            ),
+            use_read_transporter={{#vendorExtensions}}{{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}}{{/vendorExtensions}},
+        ):
+            yield event
+
+    {{/vendorExtensions.x-streaming}}
 {{/operation}}
 {{/operations}}
 {{/modes}}
