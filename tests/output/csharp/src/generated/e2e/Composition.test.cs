@@ -6,7 +6,6 @@ using Algolia.Search.Models.Composition;
 using Algolia.Search.Serializer;
 using Algolia.Search.Tests.Utils;
 using dotenv.net;
-using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Composition.Action;
 
@@ -54,10 +53,9 @@ public class CompositionClientRequestTestsE2E
       // Check status code 200
       Assert.NotNull(resp);
 
-      JsonAssert.EqualOverrideDefault(
+      TestHelpers.LenientJsonAssert(
         "{\"items\":[{\"objectID\":\"id1\",\"name\":\"my first composition\",\"description\":\"the first ever composition from the client\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"cts_e2e_small\"}}}}}}],\"nbPages\":1}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
     catch (Exception e)
