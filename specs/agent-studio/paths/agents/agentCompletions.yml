@@ -2,6 +2,7 @@ post:
   tags:
     - Completions
   operationId: createAgentCompletion
+  x-streaming: true
   x-acl:
     - search
   summary: Create Completion
@@ -61,6 +62,9 @@ post:
         application/json:
           schema:
             $ref: '../../common/schemas/AgentCompletionResponse.yml#/AgentCompletionResponse'
+        text/event-stream:
+          schema:
+            type: string
     '422':
       description: Validation Error.
       content:

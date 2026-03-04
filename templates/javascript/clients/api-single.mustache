@@ -179,6 +179,64 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
 
       return transporter.request(request, requestOptions);
     },
+    {{#vendorExtensions.x-streaming}}
+    /**
+     * {{#notes}}{{{.}}} {{/notes}}(streaming version).
+     *
+     * Each event's `data` field contains a JSON-encoded `{{{returnType}}}` object.
+     *
+     * @see {{nickname}} for the non-streaming version.
+     */
+    {{nickname}}Stream( {{> client/api/operation/parameters}} ) : AsyncGenerator<ServerSentEvent> {
+      {{#allParams}}
+      {{#required}}
+      if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
+        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}Stream`.');
+      }
+
+      {{#vars}}
+      {{#required}}
+      if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
+        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}Stream`.');
+      }
+      {{/required}}
+      {{/vars}}
+
+      {{/required}}
+      {{/allParams}}
+
+      {{#vendorExtensions}}
+      const requestPath = '{{{path}}}'{{#pathParams}}.replace({{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent({{paramName}}){{/x-is-custom-request}}){{/pathParams}};
+      {{/vendorExtensions}}
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {{#vendorExtensions.x-is-custom-request}}parameters ? parameters : {{/vendorExtensions.x-is-custom-request}}{};
+
+      {{^vendorExtensions.x-is-custom-request}}{{#queryParams}}
+      if ({{paramName}} !== undefined) {
+        queryParameters['{{baseName}}'] = {{paramName}}.toString();
+      }
+
+      {{/queryParams}}{{/vendorExtensions.x-is-custom-request}}
+
+      {{#headerParams}}
+      if ({{paramName}} !== undefined) {
+        headers['{{baseName}}'] = {{paramName}}.toString();
+      }
+      {{/headerParams}}
+
+      const request: Request = {
+        method: '{{httpMethod}}',
+        path: requestPath,
+        queryParameters,
+        headers,
+        {{#bodyParam}}
+        data: {{paramName}}{{^required}}? {{paramName}} : {}{{/required}},
+        {{/bodyParam}}
+      };
+
+      return transporter.requestStream(request, requestOptions);
+    },
+    {{/vendorExtensions.x-streaming}}
 
     {{/operation}}
   };
