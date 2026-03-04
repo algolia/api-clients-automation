@@ -35,6 +35,14 @@ export type SpecsToPush = {
   clients?: string[];
 };
 
+export type ChangelogsToPush = {
+  // the type of changes to push to the repository
+  type: 'changelogs';
+
+  // the name of the directory to push the files to
+  output: string;
+};
+
 type RepositoryTask = {
   // the name of the pull request branch
   prBranch: string;
@@ -42,7 +50,7 @@ type RepositoryTask = {
   // the commit message of the pull request (will also be used as the title)
   commitMessage: string;
 
-  files: GuidesToPush | SpecsToPush;
+  files: GuidesToPush | SpecsToPush | ChangelogsToPush;
 };
 
 export type RepositoryConfiguration = {
@@ -105,6 +113,14 @@ export const pushToRepositoryConfiguration: {
         files: {
           type: 'guides',
           output: 'specs/guides.json',
+        },
+      },
+      {
+        prBranch: 'feat/automated-update-for-changelogs',
+        commitMessage: 'feat: update SDK changelogs',
+        files: {
+          type: 'changelogs',
+          output: 'snippets/sdk/changelogs',
         },
       },
     ],

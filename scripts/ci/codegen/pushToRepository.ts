@@ -15,7 +15,8 @@ import {
   toAbsolutePath,
 } from '../../common.ts';
 import { getNbGitDiff } from '../utils.ts';
-import type { GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
+import { parseChangelogToMdx } from './parseChangelogToMdx.ts';
+import type { ChangelogsToPush, GuidesToPush, RepositoryConfiguration, SpecsToPush } from './types.ts';
 import { pushToRepositoryConfiguration } from './types.ts';
 
 import { getClientsConfigField } from '../../config.ts';
@@ -114,6 +115,27 @@ async function handleGuideFiles(guide: GuidesToPush, tempGitDir: string): Promis
   await fsp.writeFile(outputPath, JSON.stringify(guides, null, 2));
 }
 
+async function handleChangelogFiles(changelog: ChangelogsToPush, tempGitDir: string): Promise<void> {
+  const output = toAbsolutePath(`${tempGitDir}/${changelog.output}`);
+
+  if (!(await exists(output))) {
+    await fsp.mkdir(output, { recursive: true });
+  }
+
+  for (const language of LANGUAGES) {
+    const changelogPath = toAbsolutePath(`clients/algoliasearch-client-${language}/CHANGELOG.md`);
+
+    if (!(await exists(changelogPath))) {
+      continue;
+    }
+
+    const raw = await fsp.readFile(changelogPath, 'utf-8');
+    const mdx = parseChangelogToMdx(raw);
+
+    await fsp.writeFile(`${output}/${language}.mdx`, mdx);
+  }
+}
+
 async function pushToRepository(repository: string, config: RepositoryConfiguration): Promise<void> {
   const token = ensureGitHubToken();
 
@@ -158,6 +180,8 @@ async function pushToRepository(repository: string, config: RepositoryConfigurat
 
     if (task.files.type === 'specs') {
       await handleSpecFiles(task.files, tempGitDir);
+    } else if (task.files.type === 'changelogs') {
+      await handleChangelogFiles(task.files, tempGitDir);
     } else {
       await handleGuideFiles(task.files, tempGitDir);
     }
