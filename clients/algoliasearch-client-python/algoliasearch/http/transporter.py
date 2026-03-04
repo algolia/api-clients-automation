@@ -1,6 +1,6 @@
 from asyncio import TimeoutError
 from json import loads
-from typing import List, Optional
+from typing import AsyncIterator, List, Optional
 
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 
@@ -14,6 +14,7 @@ from algoliasearch.http.exceptions import (
 from algoliasearch.http.hosts import Host
 from algoliasearch.http.request_options import RequestOptions
 from algoliasearch.http.retry import RetryOutcome, RetryStrategy
+from algoliasearch.http.sse import ServerSentEvent, aiter_sse_events
 from algoliasearch.http.verb import Verb
 
 
@@ -110,6 +111,61 @@ class Transporter(BaseTransporter):
         raise AlgoliaUnreachableHostException(
             "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support"
         )
+
+    async def request_stream(
+        self,
+        verb: Verb,
+        path: str,
+        request_options: RequestOptions,
+        use_read_transporter: bool,
+    ) -> AsyncIterator[ServerSentEvent]:
+        if self._session is None:
+            self._session = ClientSession(
+                connector=TCPConnector(use_dns_cache=False), trust_env=True
+            )
+
+        request_options.headers["accept"] = "text/event-stream"
+
+        query_parameters = self.prepare(
+            request_options, verb == Verb.GET or use_read_transporter
+        )
+
+        path = self.build_path(path, query_parameters)
+
+        valid_hosts = self._retry_strategy.valid_hosts(self._hosts)
+        if not valid_hosts:
+            raise AlgoliaUnreachableHostException(
+                "No hosts available for streaming request"
+            )
+        host = valid_hosts[0]
+        url = self.build_url(host, path)
+        proxy = self.get_proxy(url)
+
+        connect_timeout = request_options.timeouts["connect"] / 1000
+        request_timeout = self._timeout / 1000
+
+        timeout_config = ClientTimeout(
+            connect=connect_timeout, sock_read=request_timeout
+        )
+
+        resp = await self._session.request(
+            method=verb,
+            url=url,
+            headers=request_options.headers,
+            data=request_options.data,
+            proxy=proxy,
+            timeout=timeout_config,
+        )
+
+        try:
+            if resp.status >= 400:
+                error_text = await resp.text()
+                raise RequestException(error_text, resp.status)
+
+            async for event in aiter_sse_events(resp.content.iter_any()):
+                yield event
+        finally:
+            resp.release()
 
 
 class EchoTransporter(Transporter):
