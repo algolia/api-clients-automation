@@ -86,6 +86,7 @@ __metadata:
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.10.13"
+    fflate: "npm:^0.8.2"
     jsdom: "npm:27.4.0"
     publint: "npm:0.3.17"
     ts-node: "npm:10.9.2"
