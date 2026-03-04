@@ -181,7 +181,10 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     },
     {{#vendorExtensions.x-streaming}}
     /**
-     * {{nickname}} as a streaming response.
+     * {{#notes}}{{{.}}} {{/notes}}(streaming version).
+     *
+     * Each event's `data` field contains a JSON-encoded `{{{returnType}}}` object.
+     *
      * @see {{nickname}} for the non-streaming version.
      */
     {{nickname}}Stream( {{> client/api/operation/parameters}} ) : AsyncGenerator<ServerSentEvent> {

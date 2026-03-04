@@ -262,14 +262,17 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
     {{^isSyncClient}}async {{/isSyncClient}}def {{operationId}}_stream{{> partial_api_args}} -> {{^isSyncClient}}AsyncIterator[ServerSentEvent]{{/isSyncClient}}{{#isSyncClient}}Iterator[ServerSentEvent]{{/isSyncClient}}:
         """
         {{#notes}}
-        {{{.}}} (streaming version)
+        {{{.}}} (streaming version).
         {{/notes}}
+
+        {{#returnType}}Each event's ``data`` field contains a JSON-encoded ``{{{returnType}}}`` object.{{/returnType}}
+
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
         :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
         {{/allParams}}
         :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-        :return: Returns an iterator of ServerSentEvent objects.
+        :return: Returns an iterator of ServerSentEvent objects.{{#returnType}} Each event's ``data`` field contains JSON-encoded ``{{{returnType}}}``.{{/returnType}}
         """
 
         {{#allParams}}
