@@ -150,6 +150,14 @@ export type TransporterOptions = {
    * The user agent used. Sent on query parameters.
    */
   algoliaAgent: AlgoliaAgent;
+
+  /**
+   * The compression algorithm to use when sending POST/PUT request bodies.
+   * When set to `'gzip'`, request bodies are gzip-compressed and
+   * `Content-Encoding: gzip` is added to the headers.
+   * Requires Node.js 18+ or a browser that supports the `CompressionStream` API.
+   */
+  compression?: 'gzip';
 };
 
 export type Transporter = TransporterOptions & {
