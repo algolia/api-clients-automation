@@ -59,7 +59,8 @@ post:
       description: Successful Response.
       content:
         application/json:
-          schema: {}
+          schema:
+            $ref: '../../common/schemas/AgentCompletionResponse.yml#/AgentCompletionResponse'
     '422':
       description: Validation Error.
       content:

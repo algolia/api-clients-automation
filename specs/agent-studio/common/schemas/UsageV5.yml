@@ -1,0 +1,21 @@
+UsageV5:
+  properties:
+    inputTokens:
+      type: integer
+      title: inputtokens
+      default: 0
+    outputTokens:
+      type: integer
+      title: outputtokens
+      default: 0
+    reasoningTokens:
+      type: integer
+      title: reasoningtokens
+      default: 0
+    totalTokens:
+      type: integer
+      title: totaltokens
+      default: 0
+  type: object
+  title: usageV5
+  description: Token usage statistics for AI SDK v5 compatibility mode.
