@@ -1,0 +1,4 @@
+AgentCompletionResponse:
+  oneOf:
+    - $ref: 'AssistantMessageV4Response.yml#/AssistantMessageV4Response'
+    - $ref: 'AssistantMessageV5Response.yml#/AssistantMessageV5Response'

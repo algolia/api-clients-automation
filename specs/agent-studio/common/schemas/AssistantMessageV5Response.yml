@@ -1,0 +1,30 @@
+AssistantMessageV5Response:
+  properties:
+    id:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: id
+    role:
+      type: string
+      const: assistant
+      title: role
+      default: assistant
+    parts:
+      items:
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
+      type: array
+      title: parts
+    usage:
+      oneOf:
+        - $ref: 'UsageV5.yml#/UsageV5'
+        - type: 'null'
+    stepsUsages:
+      oneOf:
+        - items:
+            $ref: 'UsageV5.yml#/UsageV5'
+          type: array
+        - type: 'null'
+  type: object
+  title: assistantMessageV5Response
+  description: Non-streaming completion response for AI SDK v5 compatibility mode.

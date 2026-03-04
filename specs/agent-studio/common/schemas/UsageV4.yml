@@ -1,0 +1,21 @@
+UsageV4:
+  properties:
+    promptTokens:
+      type: integer
+      title: prompttokens
+      default: 0
+    completionTokens:
+      type: integer
+      title: completiontokens
+      default: 0
+    reasoningTokens:
+      type: integer
+      title: reasoningtokens
+      default: 0
+    totalTokens:
+      type: integer
+      title: totaltokens
+      default: 0
+  type: object
+  title: usageV4
+  description: Token usage statistics for AI SDK v4 compatibility mode.
