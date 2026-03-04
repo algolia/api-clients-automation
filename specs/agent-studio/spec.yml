@@ -32,8 +32,12 @@ x-timeouts:
 tags:
   - name: Agents
     description: Create, configure, and manage AI agents.
+  - name: Completions
+    description: Generate responses from your agents.
   - name: Configurations
     description: Application-level settings.
+  - name: Conversations
+    description: Manage conversations between users and agents.
   - name: Internal
     description: Endpoints that are needed for internal or integration logic.
   - name: Legacy RAG
@@ -42,6 +46,8 @@ tags:
     description: Manage LLM provider configurations.
   - name: Secret Keys
     description: Manage secret keys used to authenticate requests.
+  - name: User Data
+    description: Manage user-specific data, such as conversation history or preferences.
 paths:
   # ######################
   # ### Custom request ###
