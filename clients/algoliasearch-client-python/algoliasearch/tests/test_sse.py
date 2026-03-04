@@ -5,9 +5,8 @@ for both sync (iter_sse_events) and async (aiter_sse_events) variants.
 """
 
 import asyncio
+import unittest
 from typing import AsyncIterator, List
-
-import pytest
 
 from algoliasearch.http.sse import ServerSentEvent, aiter_sse_events, iter_sse_events
 
@@ -83,7 +82,7 @@ def collect_async_raw(raw_chunks: List[bytes]) -> List[ServerSentEvent]:
 # ---------------------------------------------------------------------------
 
 
-class TestSingleDataEvent:
+class TestSingleDataEvent(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: hello\n\n")
         assert len(events) == 1
@@ -100,7 +99,7 @@ class TestSingleDataEvent:
 # ---------------------------------------------------------------------------
 
 
-class TestMultiLineData:
+class TestMultiLineData(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: line1\ndata: line2\n\n")
         assert len(events) == 1
@@ -117,7 +116,7 @@ class TestMultiLineData:
 # ---------------------------------------------------------------------------
 
 
-class TestEventType:
+class TestEventType(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("event: custom\ndata: hi\n\n")
         assert len(events) == 1
@@ -136,7 +135,7 @@ class TestEventType:
 # ---------------------------------------------------------------------------
 
 
-class TestCommentIgnored:
+class TestCommentIgnored(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync(": comment\ndata: hi\n\n")
         assert len(events) == 1
@@ -153,7 +152,7 @@ class TestCommentIgnored:
 # ---------------------------------------------------------------------------
 
 
-class TestEmptyDataSuppressed:
+class TestEmptyDataSuppressed(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("event: ping\n\n")
         assert len(events) == 0
@@ -168,7 +167,7 @@ class TestEmptyDataSuppressed:
 # ---------------------------------------------------------------------------
 
 
-class TestFieldNoColon:
+class TestFieldNoColon(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data\n\n")
         assert len(events) == 1
@@ -185,7 +184,7 @@ class TestFieldNoColon:
 # ---------------------------------------------------------------------------
 
 
-class TestSingleSpaceStrip:
+class TestSingleSpaceStrip(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data:  hello\n\n")
         assert len(events) == 1
@@ -202,7 +201,7 @@ class TestSingleSpaceStrip:
 # ---------------------------------------------------------------------------
 
 
-class TestUnknownFieldIgnored:
+class TestUnknownFieldIgnored(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("foo: bar\ndata: hi\n\n")
         assert len(events) == 1
@@ -219,7 +218,7 @@ class TestUnknownFieldIgnored:
 # ---------------------------------------------------------------------------
 
 
-class TestIdPersistence:
+class TestIdPersistence(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("id: 42\ndata: a\n\ndata: b\n\n")
         assert len(events) == 2
@@ -240,7 +239,7 @@ class TestIdPersistence:
 # ---------------------------------------------------------------------------
 
 
-class TestIdWithNull:
+class TestIdWithNull(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("id: foo\x00bar\ndata: hi\n\n")
         assert len(events) == 1
@@ -257,7 +256,7 @@ class TestIdWithNull:
 # ---------------------------------------------------------------------------
 
 
-class TestRetryDigitsOnly:
+class TestRetryDigitsOnly(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("retry: 3000\ndata: hi\n\n")
         assert len(events) == 1
@@ -274,7 +273,7 @@ class TestRetryDigitsOnly:
 # ---------------------------------------------------------------------------
 
 
-class TestRetryNonDigits:
+class TestRetryNonDigits(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("retry: 3s\ndata: hi\n\n")
         assert len(events) == 1
@@ -291,7 +290,7 @@ class TestRetryNonDigits:
 # ---------------------------------------------------------------------------
 
 
-class TestCRLineEndings:
+class TestCRLineEndings(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: hello\r\r")
         assert len(events) == 1
@@ -308,7 +307,7 @@ class TestCRLineEndings:
 # ---------------------------------------------------------------------------
 
 
-class TestCRLFLineEndings:
+class TestCRLFLineEndings(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: hello\r\n\r\n")
         assert len(events) == 1
@@ -325,7 +324,7 @@ class TestCRLFLineEndings:
 # ---------------------------------------------------------------------------
 
 
-class TestMixedLineEndings:
+class TestMixedLineEndings(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: a\rdata: b\n\n")
         assert len(events) == 1
@@ -342,7 +341,7 @@ class TestMixedLineEndings:
 # ---------------------------------------------------------------------------
 
 
-class TestStreamEndsMidEvent:
+class TestStreamEndsMidEvent(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("data: partial")
         assert len(events) == 0
@@ -357,7 +356,7 @@ class TestStreamEndsMidEvent:
 # ---------------------------------------------------------------------------
 
 
-class TestTrailingCRAcrossChunks:
+class TestTrailingCRAcrossChunks(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync_raw([b"data: hello\r", b"\ndata: world\r\n\r\n"])
         assert len(events) == 1
@@ -374,16 +373,26 @@ class TestTrailingCRAcrossChunks:
 # ---------------------------------------------------------------------------
 
 
-class TestBufferCap:
+class TestBufferCap(unittest.TestCase):
     def test_sync(self) -> None:
         huge_line = "data: " + "x" * (10 * 1024 * 1024 + 1)
-        with pytest.raises(ValueError, match="10 MB"):
+        raised = False
+        try:
             collect_sync(huge_line)
+        except ValueError as e:
+            raised = True
+            assert "10 MB" in str(e)
+        assert raised, "Expected ValueError to be raised"
 
     def test_async(self) -> None:
         huge_line = "data: " + "x" * (10 * 1024 * 1024 + 1)
-        with pytest.raises(ValueError, match="10 MB"):
+        raised = False
+        try:
             collect_async(huge_line)
+        except ValueError as e:
+            raised = True
+            assert "10 MB" in str(e)
+        assert raised, "Expected ValueError to be raised"
 
 
 # ---------------------------------------------------------------------------
@@ -391,7 +400,7 @@ class TestBufferCap:
 # ---------------------------------------------------------------------------
 
 
-class TestEventTypeResetsOnSuppressedDispatch:
+class TestEventTypeResetsOnSuppressedDispatch(unittest.TestCase):
     def test_sync(self) -> None:
         events = collect_sync("event: custom\n\ndata: hi\n\n")
         # First blank line: no data → suppressed, but eventType resets
