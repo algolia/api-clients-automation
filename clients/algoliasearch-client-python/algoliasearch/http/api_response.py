@@ -65,7 +65,7 @@ class ApiResponse(Generic[T]):
 
         if hasattr(klass, "__origin__") and klass.__origin__ is list:
             sub_kls = klass.__args__[0]
-            arr = json.loads(data)
+            arr = json.loads(data) if isinstance(data, str) else data
             return [ApiResponse.deserialize(sub_kls, sub_data) for sub_data in arr]
 
         if hasattr(klass, "__origin__") and klass.__origin__ is dict:
