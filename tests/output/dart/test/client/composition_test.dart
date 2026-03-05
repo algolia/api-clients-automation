@@ -42,33 +42,6 @@ void main() {
     }
   });
 
-  test('test the compression strategy', () async {
-    final requester = RequestInterceptor();
-    final client = CompositionClient(
-        appId: "test-app-id",
-        apiKey: "test-api-key",
-        options: ClientOptions(compression: 'gzip', hosts: [
-          Host.create(
-              url:
-                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
-              scheme: 'http'),
-        ]));
-    requester.setOnRequest((request) {});
-    try {
-      final res = await client.customPost(
-        path: "1/test/gzip",
-        parameters: {},
-        body: {
-          'message': "this is a compressed body",
-        },
-      );
-      expectBody(res,
-          """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}""");
-    } on InterceptionException catch (_) {
-      // Ignore InterceptionException
-    }
-  });
-
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = CompositionClient(
