@@ -262,6 +262,15 @@ class LoggingIntegrationTest extends TestCase
         $this->assertLogMatches('debug', '/Algolia API client: WARNING: DEBUG level logging is enabled/', 'DEBUG log should warn about DEBUG level logging');
     }
 
+    public function testDebugWarningLoggedOnlyOnce(): void
+    {
+        SearchClient::create('test-app-id', 'test-api-key');
+        SearchClient::create('test-app-id', 'test-api-key');
+
+        $debugWarnings = array_filter($this->logs, fn ($log) => $log['level'] === 'debug' && str_contains($log['message'], 'WARNING: DEBUG level logging is enabled'));
+        $this->assertCount(1, $debugWarnings, 'DEBUG warning should only be logged once across multiple client initializations');
+    }
+
     private function createApiWrapperWithHosts(array $hosts): ApiWrapper
     {
         $config = SearchConfig::create('test-app-id', 'test-api-key')
