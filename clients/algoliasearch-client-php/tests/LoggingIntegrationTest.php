@@ -71,8 +71,7 @@ class LoggingIntegrationTest extends TestCase
             ->send('GET', '/1/test/instant')
         ;
 
-        $msg = $this->firstMessageMatching('info', '/^Algolia API client: GET .+ - \d{3} \(\d+ms\)$/');
-        $this->assertNotNull($msg, 'INFO log should match "{METHOD} {URL} - {STATUS} ({DURATION}ms)"');
+        $this->assertLogMatches('info', '/^Algolia API client: GET .+ - \d{3} \(\d+ms\)$/', 'INFO log should match "{METHOD} {URL} - {STATUS} ({DURATION}ms)"');
     }
 
     public function testDebugRequestResponseDetails(): void
@@ -98,7 +97,7 @@ class LoggingIntegrationTest extends TestCase
             $this->assertStringNotContainsString('secret-in-url', $log['message'], 'URL apiKey param must not appear in any log message');
         }
 
-        $headerLog = $this->firstMessageMatching('debug', '/Request headers:/');
+        $headerLog = $this->assertLogMatches('debug', '/Request headers:/', 'Should have a debug log with request headers');
         $this->assertStringContainsString('[FILTERED]', $headerLog);
     }
 
@@ -113,12 +112,10 @@ class LoggingIntegrationTest extends TestCase
         }
 
         // INFO: retry attempt
-        $infoMsg = $this->firstMessageMatching('info', '/Retry attempt \d+\/\d+ for GET/');
-        $this->assertNotNull($infoMsg, 'INFO log should match "Retry attempt {N}/{MAX} for {METHOD} {PATH}"');
+        $this->assertLogMatches('info', '/Retry attempt \d+\/\d+ for GET/', 'INFO log should match "Retry attempt {N}/{MAX} for {METHOD} {PATH}"');
 
         // DEBUG: retry details with host, reason, next host, backoff
-        $debugMsg = $this->firstMessageMatching('debug', '/Retry \d+\/\d+: .+ on '.$host1.'.+trying '.$host2.'.+backoff/');
-        $this->assertNotNull($debugMsg, 'DEBUG log should include failed host, next host, and backoff');
+        $this->assertLogMatches('debug', '/Retry \d+\/\d+: .+ on '.$host1.'.+trying '.$host2.'.+backoff/', 'DEBUG log should include failed host, next host, and backoff');
     }
 
     // Spec: ERROR "Request failed after {MAX} retries: {ERROR_MESSAGE}"
@@ -129,8 +126,7 @@ class LoggingIntegrationTest extends TestCase
         } catch (UnreachableException $e) {
         }
 
-        $msg = $this->firstMessageMatching('error', '/Request failed after \d+ retries/');
-        $this->assertNotNull($msg, 'ERROR log should match "Request failed after {MAX} retries: ..."');
+        $this->assertLogMatches('error', '/Request failed after \d+ retries/', 'ERROR log should match "Request failed after {MAX} retries: ..."');
     }
 
     // Spec: INFO "Request completed after {N} retries (total: {DURATION}ms)"
@@ -158,8 +154,7 @@ class LoggingIntegrationTest extends TestCase
 
         $wrapper->send('GET', '/1/test/instant');
 
-        $msg = $this->firstMessageMatching('info', '/Request completed after \d+ retries \(total: \d+ms\)/');
-        $this->assertNotNull($msg, 'INFO log should match "Request completed after {N} retries (total: {DURATION}ms)"');
+        $this->assertLogMatches('info', '/Request completed after \d+ retries \(total: \d+ms\)/', 'INFO log should match "Request completed after {N} retries (total: {DURATION}ms)"');
     }
 
     public function testBadRequestLogsError(): void
@@ -188,8 +183,7 @@ class LoggingIntegrationTest extends TestCase
         } catch (BadRequestException $e) {
         }
 
-        $msg = $this->firstMessageMatching('error', '/Bad request:/');
-        $this->assertNotNull($msg, 'ERROR log should match "Bad request: {ERROR_MESSAGE}"');
+        $this->assertLogMatches('error', '/Bad request:/', 'ERROR log should match "Bad request: {ERROR_MESSAGE}"');
     }
 
     public function testDefaultLoggerProducesNoOutput(): void
@@ -204,15 +198,39 @@ class LoggingIntegrationTest extends TestCase
         $this->assertEmpty($this->logs, 'Default disabled DebugLogger should produce no output');
     }
 
+    public function testBatchOperationLogging(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], '{"taskID":1,"objectIDs":["1","2"]}');
+            }
+        };
+
+        $config = SearchConfig::create('test-app-id', 'test-api-key')
+            ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
+            ->setFullHosts(['http://localhost:80'])
+        ;
+
+        $client = new SearchClient(
+            new ApiWrapper($mockHttp, $config, ClusterHosts::create(['http://localhost:80']), new RequestOptionsFactory($config)),
+            $config
+        );
+
+        $this->logs = [];
+        $client->chunkedBatch('test-index', [['objectID' => '1'], ['objectID' => '2']], 'addObject', false);
+
+        $this->assertLogMatches('info', '/Batch operation started: addObject on test-index/', 'INFO log should match "Batch operation started: {OPERATION} on {INDEX}"');
+        $this->assertLogMatches('info', '/Batch progress: 2\/2 objects processed/', 'INFO log should match "Batch progress: {N}/{TOTAL} objects processed"');
+        $this->assertLogMatches('info', '/Batch operation completed: 2 objects in \d+ms/', 'INFO log should match "Batch operation completed: {TOTAL} objects in {DURATION}ms"');
+    }
+
     public function testClientInitLogging(): void
     {
         SearchClient::create('test-app-id', 'test-api-key');
 
-        $infoMsg = $this->firstMessageMatching('info', '/Algolia API client: Algolia SearchClient initialized \(appId: test-app-id\)/');
-        $this->assertNotNull($infoMsg, 'INFO log should match "Algolia {ClientName} initialized (appId: {appId})"');
-
-        $debugMsg = $this->firstMessageMatching('debug', '/Algolia API client: WARNING: DEBUG level logging is enabled/');
-        $this->assertNotNull($debugMsg, 'DEBUG log should warn about DEBUG level logging');
+        $this->assertLogMatches('info', '/Algolia API client: Algolia SearchClient initialized \(appId: test-app-id\)/', 'INFO log should match "Algolia {ClientName} initialized (appId: {appId})"');
+        $this->assertLogMatches('debug', '/Algolia API client: WARNING: DEBUG level logging is enabled/', 'DEBUG log should warn about DEBUG level logging');
     }
 
     private function createApiWrapperWithHosts(array $hosts): ApiWrapper
@@ -239,15 +257,18 @@ class LoggingIntegrationTest extends TestCase
         return array_values(array_filter($this->logs, fn ($log) => $log['level'] === $level));
     }
 
-    private function firstMessageMatching(string $level, string $regex): ?string
+    private function assertLogMatches(string $level, string $regex, string $description = ''): string
     {
         foreach ($this->getLogsByLevel($level) as $log) {
             if (preg_match($regex, $log['message'])) {
+                $this->addToAssertionCount(1);
+
                 return $log['message'];
             }
         }
 
-        return null;
+        $actual = implode("\n  ", array_map(fn ($l) => "[{$l['level']}] {$l['message']}", $this->logs)) ?: '(no logs captured)';
+        $this->fail("{$description}\nExpected {$level} log matching: {$regex}\nCaptured logs:\n  {$actual}");
     }
 
     private function assertContainsPrefix(array $messages, string $prefix): void
