@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.InsightsClient;
 import com.algolia.config.*;
 import com.algolia.model.insights.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InsightsClientRequestsTestsE2E {
@@ -49,7 +48,7 @@ class InsightsClientRequestsTestsE2E {
             .setIndex("products")
             .setUserToken("user-123456")
             .setAuthenticatedUserToken("user-123456")
-            .setTimestamp(1772409600000L)
+            .setTimestamp(1772668800000L)
             .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
             .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
           new ViewedObjectIDs()
@@ -58,13 +57,11 @@ class InsightsClientRequestsTestsE2E {
             .setIndex("products")
             .setUserToken("user-123456")
             .setAuthenticatedUserToken("user-123456")
-            .setTimestamp(1772409600000L)
+            .setTimestamp(1772668800000L)
             .setObjectIDs(Arrays.asList("9780545139700", "9780439784542"))
         )
       )
     );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
-    );
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res)));
   }
 }
