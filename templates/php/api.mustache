@@ -121,6 +121,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         }
         {{/isSearchClient}}
 
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia {{classname}} initialized (appId: '.$config->getAppId().')');
+        $logger->debug('Algolia API client: WARNING: DEBUG level logging is enabled. This logs full request/response bodies which may contain sensitive data. Only use in local development.');
+
         return $client;
     }
 

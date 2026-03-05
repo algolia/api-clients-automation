@@ -3,6 +3,7 @@
 namespace Algolia\AlgoliaSearch\Tests;
 
 use Algolia\AlgoliaSearch\Algolia;
+use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
@@ -201,6 +202,17 @@ class LoggingIntegrationTest extends TestCase
         ;
 
         $this->assertEmpty($this->logs, 'Default disabled DebugLogger should produce no output');
+    }
+
+    public function testClientInitLogging(): void
+    {
+        SearchClient::create('test-app-id', 'test-api-key');
+
+        $infoMsg = $this->firstMessageMatching('info', '/Algolia API client: Algolia SearchClient initialized \(appId: test-app-id\)/');
+        $this->assertNotNull($infoMsg, 'INFO log should match "Algolia {ClientName} initialized (appId: {appId})"');
+
+        $debugMsg = $this->firstMessageMatching('debug', '/Algolia API client: WARNING: DEBUG level logging is enabled/');
+        $this->assertNotNull($debugMsg, 'DEBUG log should warn about DEBUG level logging');
     }
 
     private function createApiWrapperWithHosts(array $hosts): ApiWrapper
