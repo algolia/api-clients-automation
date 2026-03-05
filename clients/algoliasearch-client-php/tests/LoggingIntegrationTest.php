@@ -3,7 +3,9 @@
 namespace Algolia\AlgoliaSearch\Tests;
 
 use Algolia\AlgoliaSearch\Algolia;
+use Algolia\AlgoliaSearch\Api\IngestionClient;
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Configuration\IngestionConfig;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
@@ -219,6 +221,33 @@ class LoggingIntegrationTest extends TestCase
 
         $this->logs = [];
         $client->chunkedBatch('test-index', [['objectID' => '1'], ['objectID' => '2']], 'addObject', false);
+
+        $this->assertLogMatches('info', '/Batch operation started: addObject on test-index/', 'INFO log should match "Batch operation started: {OPERATION} on {INDEX}"');
+        $this->assertLogMatches('info', '/Batch progress: 2\/2 objects processed/', 'INFO log should match "Batch progress: {N}/{TOTAL} objects processed"');
+        $this->assertLogMatches('info', '/Batch operation completed: 2 objects in \d+ms/', 'INFO log should match "Batch operation completed: {TOTAL} objects in {DURATION}ms"');
+    }
+
+    public function testChunkedPushLogging(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], '{"runID":"run-1","eventID":"event-1"}');
+            }
+        };
+
+        $config = IngestionConfig::create('test-app-id', 'test-api-key', 'eu')
+            ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
+            ->setFullHosts(['http://localhost:80'])
+        ;
+
+        $client = new IngestionClient(
+            new ApiWrapper($mockHttp, $config, ClusterHosts::create(['http://localhost:80']), new RequestOptionsFactory($config)),
+            $config
+        );
+
+        $this->logs = [];
+        $client->chunkedPush('test-index', [['objectID' => '1'], ['objectID' => '2']], 'addObject', false);
 
         $this->assertLogMatches('info', '/Batch operation started: addObject on test-index/', 'INFO log should match "Batch operation started: {OPERATION} on {INDEX}"');
         $this->assertLogMatches('info', '/Batch progress: 2\/2 objects processed/', 'INFO log should match "Batch progress: {N}/{TOTAL} objects processed"');
