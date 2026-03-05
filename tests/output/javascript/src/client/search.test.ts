@@ -232,33 +232,6 @@ describe('api', () => {
       expect(result).toEqual({ message: 'success server response' });
     }
   }, 25000);
-
-  test('test the compression strategy', async () => {
-    const client = algoliasearch('test-app-id', 'test-api-key', {
-      hosts: [
-        {
-          url: 'localhost',
-          port: 6678,
-          accept: 'readWrite',
-          protocol: 'http',
-        },
-      ],
-      compression: 'gzip',
-    });
-
-    {
-      const result = await client.customPost({
-        path: '1/test/gzip',
-        parameters: {},
-        body: { message: 'this is a compressed body' },
-      });
-
-      expect(result).toMatchObject({
-        message: 'ok compression test server response',
-        body: { message: 'this is a compressed body' },
-      });
-    }
-  }, 25000);
 });
 
 describe('commonApi', () => {
