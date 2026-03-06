@@ -972,7 +972,6 @@ def snippet_for_put_composition5
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-compo",
       name: "my composition",
-      sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
       behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
         multifeed: Algolia::Composition::Multifeed.new(
           feeds: {

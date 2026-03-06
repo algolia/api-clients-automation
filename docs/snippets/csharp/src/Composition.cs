@@ -1322,11 +1322,6 @@ public class SnippetCompositionClient
       {
         ObjectID = "my-compo",
         Name = "my composition",
-        SortingStrategy = new Dictionary<string, string>
-        {
-          { "Price-asc", "products-low-to-high" },
-          { "Price-desc", "products-high-to-low" },
-        },
         Behavior = new CompositionBehavior(
           new CompositionMultifeedBehavior
           {

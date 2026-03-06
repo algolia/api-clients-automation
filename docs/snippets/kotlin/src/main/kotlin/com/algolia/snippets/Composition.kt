@@ -746,8 +746,6 @@ class SnippetCompositionClient {
           Composition(
             objectID = "my-compo",
             name = "my composition",
-            sortingStrategy =
-              mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
             behavior =
               CompositionMultifeedBehavior(
                 multifeed =
