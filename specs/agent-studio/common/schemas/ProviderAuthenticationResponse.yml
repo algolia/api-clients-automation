@@ -1,0 +1,33 @@
+ProviderAuthenticationResponse:
+  properties:
+    id:
+      type: string
+      title: id
+    name:
+      type: string
+      title: name
+    providerName:
+      type: string
+      title: providername
+    input:
+      $ref: 'ProviderInput.yml#/ProviderInput'
+    createdAt:
+      type: string
+      title: createdat
+    updatedAt:
+      type: string
+      title: updatedat
+    lastUsedAt:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: lastusedat
+  type: object
+  required:
+    - id
+    - name
+    - providerName
+    - input
+    - createdAt
+    - updatedAt
+  title: provider

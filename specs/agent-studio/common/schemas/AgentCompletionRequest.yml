@@ -1,0 +1,18 @@
+AgentCompletionRequest:
+  properties:
+    configuration:
+      $ref: 'ConfigurationUnion.yml#/ConfigurationUnion'
+    messages:
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
+    id:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: id
+    algolia:
+      $ref: 'AlgoliaUnion.yml#/AlgoliaUnion'
+  type: object
+  required:
+    - messages
+  title: agentCompletionRequest
+  description: Request model for creating a completion for an assistant.

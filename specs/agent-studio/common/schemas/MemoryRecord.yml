@@ -1,0 +1,91 @@
+MemoryRecord:
+  properties:
+    memoryType:
+      $ref: 'MemoryType.yml#/MemoryType'
+    episode:
+      $ref: 'EpisodeUnion.yml#/EpisodeUnion'
+    text:
+      type: string
+      maxLength: 2000
+      minLength: 1
+      title: text
+      description: Self-contained, first-person memory for long-term recall.
+    rawExtract:
+      type: string
+      maxLength: 5000
+      minLength: 1
+      title: rawextract
+      description: Verbatim conversation extract, not paraphrased.
+    keywords:
+      items:
+        type: string
+      type: array
+      title: keywords
+      description: '5-20 free-form keywords: entities, context, search terms (any
+        words).'
+    topics:
+      items:
+        type: string
+      type: array
+      title: topics
+      description: '2-4 topics ONLY from this list: [complaints, entertainment, family,
+        feedback, finance, food, goals, health, history, hobbies, learning, praise,
+        preferences, schedule, shopping, technical, travel, work].'
+    _tags:
+      items:
+        type: string
+      type: array
+      title: tags
+      description: Arbitrary labels/themes for flexible categorization (e.g., 'Q1-goals',
+        'paris-trip', 'vip-customer').
+    recallTriggers:
+      items:
+        type: string
+      type: array
+      title: recalltriggers
+      description: 3-5 natural phrases that should trigger this memory.
+    objectID:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: objectid
+      description: ObjectID of existing memory to update. Leave empty for new memory.
+    appId:
+      type: string
+      title: appid
+      description: Application ID.
+      default: ''
+    agentIDs:
+      items:
+        type: string
+      type: array
+      title: agentids
+      description: 'Agent IDs with access: [''agent1''], [''*''] for all, [''*'',
+        ''-agent1''] to exclude.'
+    userID:
+      type: string
+      title: userid
+      description: User ID.
+      default: ''
+    createdAt:
+      type: integer
+      title: createdat
+      description: Epoch seconds.
+      default: 0
+    updatedAt:
+      type: integer
+      title: updatedat
+      description: Epoch seconds.
+      default: 0
+  type: object
+  required:
+    - text
+    - rawExtract
+  title: memoryRecord
+  description: |-
+    Universal storage model for all memory types (semantic, episodic).
+
+    This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory, EpisodicMemory)
+    are used for LLM extraction and converted to MemoryRecord before saving.
+
+    See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types for memory type definitions.

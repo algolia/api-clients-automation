@@ -100,6 +100,12 @@ __metadata:
   languageName: node
   linkType: soft
 
+"@algolia/agent-studio@link:../../../clients/algoliasearch-client-javascript/packages/agent-studio::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@algolia/agent-studio@link:../../../clients/algoliasearch-client-javascript/packages/agent-studio::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
+  languageName: node
+  linkType: soft
+
 "@algolia/api-client-automation@workspace:.":
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
@@ -6397,6 +6403,7 @@ __metadata:
   dependencies:
     "@algolia/abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/abtesting"
     "@algolia/advanced-personalization": "link:../../../clients/algoliasearch-client-javascript/packages/advanced-personalization"
+    "@algolia/agent-studio": "link:../../../clients/algoliasearch-client-javascript/packages/agent-studio"
     "@algolia/client-abtesting": "link:../../../clients/algoliasearch-client-javascript/packages/client-abtesting"
     "@algolia/client-analytics": "link:../../../clients/algoliasearch-client-javascript/packages/client-analytics"
     "@algolia/client-common": "link:../../../clients/algoliasearch-client-javascript/packages/client-common"

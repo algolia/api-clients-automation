@@ -386,11 +386,11 @@ func (c *APIClient) NewApi{{{nickname}}}Request({{#requiredParams}} {{paramName}
 
 {{#allParams}}
 {{^required}}
-// With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
+// With{{#nameInPascalCase}}{{nameInPascalCase}}{{/nameInPascalCase}}{{^nameInPascalCase}}{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}{{/nameInPascalCase}} adds the {{paramName}} to the {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request and returns the request for chaining.
 {{#isDeprecated}}
 // Deprecated
 {{/isDeprecated}}
-func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
+func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) With{{#nameInPascalCase}}{{nameInPascalCase}}{{/nameInPascalCase}}{{^nameInPascalCase}}{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}{{/nameInPascalCase}}({{paramName}} {{^isFreeFormObject}}{{^isArray}}{{^isMap}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isMap}}{{/isArray}}{{/isFreeFormObject}}{{{dataType}}}) {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request {
 	r.{{paramName}} = {{#isPrimitiveType}}{{^isMap}}&{{/isMap}}{{/isPrimitiveType}}{{paramName}}
 	return r
 }

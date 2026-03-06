@@ -1,0 +1,5 @@
+DistinctUnion:
+  oneOf:
+    - type: boolean
+    - type: integer
+    - type: 'null'

@@ -1,0 +1,10 @@
+ToolResultOutputType:
+  type: string
+  enum:
+    - text
+    - json
+    - error-text
+    - error-json
+    - content
+  title: toolResultOutputType
+  description: The valid 'type' of tool results.

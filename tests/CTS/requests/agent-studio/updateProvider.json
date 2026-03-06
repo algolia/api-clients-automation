@@ -1,0 +1,40 @@
+[
+  {
+    "testName": "updateProvider",
+    "parameters": {
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "providerAuthenticationPatch": {
+        "name": "Updated Provider Name"
+      }
+    },
+    "request": {
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "method": "PATCH",
+      "body": {
+        "name": "Updated Provider Name"
+      }
+    }
+  },
+  {
+    "testName": "updateProvider with input",
+    "parameters": {
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "providerAuthenticationPatch": {
+        "name": "Updated Provider",
+        "input": {
+          "apiKey": "sk-new-key-5678"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "method": "PATCH",
+      "body": {
+        "name": "Updated Provider",
+        "input": {
+          "apiKey": "sk-new-key-5678"
+        }
+      }
+    }
+  }
+]
