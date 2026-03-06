@@ -11,7 +11,7 @@ import type {
 } from '../types';
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
-import { compress } from './compress';
+import { compress, COMPRESSION_THRESHOLD } from './compress';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
 import { isRetryable, isSuccess } from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
@@ -87,7 +87,7 @@ export function createTransporter({
     const shouldCompress =
       compression === 'gzip' &&
       serializedData !== undefined &&
-      serializedData.length > 0 &&
+      serializedData.length > COMPRESSION_THRESHOLD &&
       (request.method === 'POST' || request.method === 'PUT');
 
     const data = shouldCompress ? await compress(serializedData) : serializedData;

@@ -3,7 +3,11 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import { createMemoryCache, createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
 import { createTransporter } from '../../transporter';
+import { COMPRESSION_THRESHOLD } from '../../transporter/compress';
 import type { AlgoliaAgent, EndRequest } from '../../types';
+
+// A payload large enough to exceed COMPRESSION_THRESHOLD
+const largePayload = { data: 'x'.repeat(COMPRESSION_THRESHOLD + 1) };
 
 const algoliaAgent: AlgoliaAgent = {
   value: 'test',
@@ -56,14 +60,14 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: largePayload });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBe('gzip');
     expect(captured!.data).toBeInstanceOf(Uint8Array);
 
     const decompressed = gunzipSync(Buffer.from(captured!.data as Uint8Array)).toString();
-    expect(decompressed).toBe('{"foo":"bar"}');
+    expect(decompressed).toBe(JSON.stringify(largePayload));
   });
 
   test('compresses PUT body when compression is gzip', async () => {
@@ -71,14 +75,26 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'PUT', path: '/test', queryParameters: {}, headers: {}, data: { hello: 'world' } });
+    await transporter.request({ method: 'PUT', path: '/test', queryParameters: {}, headers: {}, data: largePayload });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBe('gzip');
     expect(captured!.data).toBeInstanceOf(Uint8Array);
 
     const decompressed = gunzipSync(Buffer.from(captured!.data as Uint8Array)).toString();
-    expect(decompressed).toBe('{"hello":"world"}');
+    expect(decompressed).toBe(JSON.stringify(largePayload));
+  });
+
+  test('does not compress POST when body is below threshold', async () => {
+    const transporter = makeTransporter('gzip', (req) => {
+      captured = req;
+    });
+
+    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+
+    expect(captured).toBeDefined();
+    expect(captured!.headers['content-encoding']).toBeUndefined();
+    expect(typeof captured!.data).toBe('string');
   });
 
   test('does not compress GET requests', async () => {

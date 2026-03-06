@@ -10,11 +10,13 @@ export default defineConfig([
     format: 'cjs',
     dts: { entry: { common: 'src/index.ts' } },
     entry: { common: 'src/index.ts' },
+    define: { __BROWSER__: 'false' },
   },
   {
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'esm',
     dts: { entry: { common: 'src/index.ts' } },
     entry: { common: 'src/index.ts' },
+    define: { __BROWSER__: 'false' },
   },
 ]);
