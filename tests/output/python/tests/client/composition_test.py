@@ -46,6 +46,42 @@ class TestCompositionClient:
         )
         assert _req.host == "test-app-id.algolia.net"
 
+    async def test_api_2(self):
+        """
+        test the compression strategy
+        """
+
+        _config = CompositionConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = CompositionClient.create_with_config(config=_config)
+        _req = await _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "this is a compressed body",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}"""
+        )
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -149,6 +185,42 @@ class TestCompositionClientSync:
             path="test",
         )
         assert _req.host == "test-app-id.algolia.net"
+
+    def test_api_2(self):
+        """
+        test the compression strategy
+        """
+
+        _config = CompositionConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = CompositionClientSync.create_with_config(config=_config)
+        _req = _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "this is a compressed body",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}"""
+        )
 
     def test_common_api_0(self):
         """

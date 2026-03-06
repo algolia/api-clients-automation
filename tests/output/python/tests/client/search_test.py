@@ -175,6 +175,42 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
 
+    async def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "this is a compressed body",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}"""
+        )
+
     async def test_api_7(self):
         """
         calls api with default read timeouts
@@ -1602,6 +1638,42 @@ class TestSearchClientSync:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
+
+    def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "this is a compressed body",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"this is a compressed body"}}"""
+        )
 
     def test_api_7(self):
         """
