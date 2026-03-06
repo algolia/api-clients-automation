@@ -155,7 +155,7 @@ export type TransporterOptions = {
    * The compression algorithm to use when sending POST/PUT request bodies.
    * When set to `'gzip'`, request bodies are gzip-compressed and
    * `Content-Encoding: gzip` is added to the headers.
-   * Requires Node.js 18+ or a browser that supports the `CompressionStream` API.
+   * Works on all Node.js versions and browsers with no native API requirements.
    */
   compression?: 'gzip';
 };
