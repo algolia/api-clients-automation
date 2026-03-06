@@ -1,1 +1,1 @@
-List<int>? gzipCompress(dynamic data) => null;
+List<int>? gzipCompress(String data) => null;
