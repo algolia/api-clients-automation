@@ -9,9 +9,9 @@ import type {
   Transporter,
   TransporterOptions,
 } from '../types';
+import { compress, COMPRESSION_THRESHOLD } from './compress';
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
-import { compress, COMPRESSION_THRESHOLD } from './compress';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
 import { isRetryable, isSuccess } from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';

@@ -1,5 +1,5 @@
-import { gunzipSync } from 'zlib';
 import { beforeEach, describe, expect, test } from 'vitest';
+import { gunzipSync } from 'zlib';
 import { createMemoryCache, createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
 import { createTransporter } from '../../transporter';
@@ -47,7 +47,13 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+    await transporter.request({
+      method: 'POST',
+      path: '/test',
+      queryParameters: {},
+      headers: {},
+      data: { foo: 'bar' },
+    });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBeUndefined();
@@ -90,7 +96,13 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+    await transporter.request({
+      method: 'POST',
+      path: '/test',
+      queryParameters: {},
+      headers: {},
+      data: { foo: 'bar' },
+    });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBeUndefined();
