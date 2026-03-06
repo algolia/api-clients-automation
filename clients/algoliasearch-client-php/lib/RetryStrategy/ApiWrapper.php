@@ -294,7 +294,12 @@ final class ApiWrapper implements ApiWrapperInterface
             throw new AlgoliaException($statusCode.': '.$response->getReasonPhrase(), $statusCode);
         }
 
-        $responseArray = Helpers::json_decode($body, true);
+        try {
+            $responseArray = Helpers::json_decode($body, true);
+        } catch (\InvalidArgumentException $e) {
+            $this->log(LogLevel::ERROR, 'Failed to deserialize response: '.$e->getMessage());
+            throw $e;
+        }
 
         if (404 === $statusCode) {
             throw new NotFoundException($responseArray['message'], $statusCode);
@@ -344,6 +349,7 @@ final class ApiWrapper implements ApiWrapperInterface
             } else {
                 $body = \json_encode($body, $this->jsonOptions);
                 if (JSON_ERROR_NONE !== json_last_error()) {
+                    $this->log(LogLevel::ERROR, 'Serialization error: '.json_last_error_msg());
                     throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
                 }
             }

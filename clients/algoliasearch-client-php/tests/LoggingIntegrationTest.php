@@ -262,13 +262,62 @@ class LoggingIntegrationTest extends TestCase
         $this->assertLogMatches('debug', '/Algolia API client: WARNING: DEBUG level logging is enabled/', 'DEBUG log should warn about DEBUG level logging');
     }
 
+    public function testDeserializationErrorLogsError(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], 'not valid json');
+            }
+        };
+
+        $wrapper = $this->createApiWrapperWithMockHttp($mockHttp);
+
+        try {
+            $wrapper->send('GET', '/1/test');
+        } catch (\Exception $e) {
+        }
+
+        $this->assertLogMatches('error', '/Failed to deserialize response:/', 'ERROR log should match "Failed to deserialize response: {ERROR}"');
+    }
+
+    public function testSerializationErrorLogsError(): void
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], '{}');
+            }
+        };
+
+        $wrapper = $this->createApiWrapperWithMockHttp($mockHttp);
+
+        // NAN cannot be encoded to JSON
+        try {
+            $wrapper->send('POST', '/1/test', ['body' => ['value' => NAN]]);
+        } catch (\Exception $e) {
+        }
+
+        $this->assertLogMatches('error', '/Serialization error:/', 'ERROR log should match "Serialization error: {ERROR}"');
+    }
+
     public function testDebugWarningLoggedOnlyOnce(): void
     {
         SearchClient::create('test-app-id', 'test-api-key');
         SearchClient::create('test-app-id', 'test-api-key');
 
-        $debugWarnings = array_filter($this->logs, fn ($log) => $log['level'] === 'debug' && str_contains($log['message'], 'WARNING: DEBUG level logging is enabled'));
+        $debugWarnings = array_filter($this->logs, fn ($log) => 'debug' === $log['level'] && str_contains($log['message'], 'WARNING: DEBUG level logging is enabled'));
         $this->assertCount(1, $debugWarnings, 'DEBUG warning should only be logged once across multiple client initializations');
+    }
+
+    private function createApiWrapperWithMockHttp(HttpClientInterface $mockHttp): ApiWrapper
+    {
+        $config = SearchConfig::create('test-app-id', 'test-api-key')
+            ->setConnectTimeout(self::CONNECT_TIMEOUT_SECONDS)
+            ->setFullHosts(['http://localhost:80'])
+        ;
+
+        return new ApiWrapper($mockHttp, $config, ClusterHosts::create(['http://localhost:80']), new RequestOptionsFactory($config));
     }
 
     private function createApiWrapperWithHosts(array $hosts): ApiWrapper
