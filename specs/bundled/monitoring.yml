@@ -3,6 +3,13 @@ info:
   title: Algolia Monitoring API
   summary: The Monitoring API lets you check the status of your Algolia infrastructure
   description: >
+    The metrics exposed by this API are based on results from external
+    monitoring probes checking Algolia’s infrastructure.
+
+    These metrics **reflect the overall infrastructure status and don’t
+    represent the performance of the specific APPID** used for authentication.
+
+
     ## Base URLs
 
 
