@@ -18,10 +18,12 @@
   "exports": {
     ".": {
       "types": {
+        "browser": "./dist/common.browser.d.ts",
         "import": "./dist/common.d.ts",
         "module": "./dist/common.d.ts",
         "require": "./dist/common.d.cts"
       },
+      "browser": "./dist/common.browser.js",
       "import": "./dist/common.js",
       "module": "./dist/common.js",
       "require": "./dist/common.cjs"
