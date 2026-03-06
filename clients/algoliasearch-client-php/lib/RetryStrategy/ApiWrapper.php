@@ -24,6 +24,8 @@ use Psr\Log\LogLevel;
 
 final class ApiWrapper implements ApiWrapperInterface
 {
+    private const COMPRESSION_THRESHOLD = 750;
+
     /**
      * @var HttpClientInterface
      */
@@ -322,8 +324,7 @@ final class ApiWrapper implements ApiWrapperInterface
             }
         }
 
-        $compressionThreshold = 750;
-        if ('gzip' === $this->config->getCompressionType() && is_string($body) && strlen($body) >= $compressionThreshold) {
+        if ('gzip' === $this->config->getCompressionType() && is_string($body) && strlen($body) >= self::COMPRESSION_THRESHOLD) {
             $body = \gzencode($body);
             $headers['content-encoding'] = 'gzip';
         }
