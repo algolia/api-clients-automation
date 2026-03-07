@@ -6409,7 +6409,7 @@ __metadata:
     instantsearch.css: "npm:8.11.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
-    react-instantsearch: "npm:7.26.0"
+    react-instantsearch: "npm:7.26.1"
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:8.56.1"
     vite: "npm:7.2.6"
@@ -8094,9 +8094,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-instantsearch-core@npm:7.26.0":
-  version: 7.26.0
-  resolution: "react-instantsearch-core@npm:7.26.0"
+"react-instantsearch-core@npm:7.26.1":
+  version: 7.26.1
+  resolution: "react-instantsearch-core@npm:7.26.1"
   dependencies:
     "@swc/helpers": "npm:0.5.18"
     algoliasearch-helper: "npm:3.28.0"
@@ -8107,23 +8107,23 @@ __metadata:
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 20"
-  checksum: 10/f080141a2acd89ac8b300330460ffe3df0f08d8e4bb6f8c12d146384fd8a81ee82d51afcaa4c90c73f64a681f9970e218c387058d0cfe3fe7591b6ac49aae2ff
+  checksum: 10/12d8dd5a696ef8171f72f0f682be26451321d0a481d7568d411825907a75554009279f8ea17a7bc959409aca2f226294563f95a2ce73e631e09906e8c68d5acd
   languageName: node
   linkType: hard
 
-"react-instantsearch@npm:7.26.0":
-  version: 7.26.0
-  resolution: "react-instantsearch@npm:7.26.0"
+"react-instantsearch@npm:7.26.1":
+  version: 7.26.1
+  resolution: "react-instantsearch@npm:7.26.1"
   dependencies:
     "@swc/helpers": "npm:0.5.18"
     instantsearch-ui-components: "npm:0.20.0"
     instantsearch.js: "npm:4.90.0"
-    react-instantsearch-core: "npm:7.26.0"
+    react-instantsearch-core: "npm:7.26.1"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 20"
     react-dom: ">= 16.8.0 < 20"
-  checksum: 10/e0435dc5af87d3ca8127309daaa76c4fe42e5c448272a4144a30779b6728a9465d7c34f80486e2624d674f4475ec23a4830396a9ff5cd8b3d6d7110be1cb5610
+  checksum: 10/b4fa933b8bc99c927d88fb0f3251e01f4feae0bd97af984fd9837f05c49fb46bfb8d5a37706df7f60b5591edcf2a503870f0362b64f1d9a669a2b612d37f16b9
   languageName: node
   linkType: hard
 
