@@ -3930,7 +3930,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brace-expansion@npm:^2.0.1":
+"brace-expansion@npm:^2.0.1, brace-expansion@npm:^2.0.2":
   version: 2.0.2
   resolution: "brace-expansion@npm:2.0.2"
   dependencies:
@@ -5613,15 +5613,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.1.1":
-  version: 4.1.1
-  resolution: "folder-hash@npm:4.1.1"
+"folder-hash@npm:4.1.2":
+  version: 4.1.2
+  resolution: "folder-hash@npm:4.1.2"
   dependencies:
     debug: "npm:4.4.0"
-    minimatch: "npm:7.4.6"
+    minimatch: "npm:7.4.9"
   bin:
     folder-hash: bin/folder-hash
-  checksum: 10/85b7e9bc9ddc887ba247b81946adccf8ae654507fa1a81d7fc3f07d94181327f6d62e746efb09ec318de7dcc330655939660deb4f445cd7893b3c45cab94a98a
+  checksum: 10/4c07c54c2cd3b33b868bcc11fb710879e5b4bf5bd4161bfa11e634b6e6801a23d9c603b479957d05ea10fdf5080ad66b98dd8da54deaca2216db93c137b4ef95
   languageName: node
   linkType: hard
 
@@ -6938,12 +6938,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:7.4.6":
-  version: 7.4.6
-  resolution: "minimatch@npm:7.4.6"
+"minimatch@npm:7.4.9":
+  version: 7.4.9
+  resolution: "minimatch@npm:7.4.9"
   dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 10/0046ba1161ac6414bde1b07c440792ebcdb2ed93e6714c85c73974332b709b7e692801550bc9da22028a8613407b3f13861e17dd0dd44f4babdeacd44950430b
+    brace-expansion: "npm:^2.0.2"
+  checksum: 10/9bc60b593dafb71d68b1a671a0c1a4bb9a71ef2f8daa8ed4b8b6199bb2d522163fb2e94d82ca40518eaa3b00218f587ad7ab2ed40e56e4c57a8bddb6c2bd1d27
   languageName: node
   linkType: hard
 
@@ -8500,7 +8500,7 @@ __metadata:
     esbuild: "npm:0.27.3"
     execa: "npm:9.6.1"
     express: "npm:5.2.1"
-    folder-hash: "npm:4.1.1"
+    folder-hash: "npm:4.1.2"
     fs-extra: "npm:11.3.3"
     js-yaml: "npm:4.1.1"
     knip: "npm:5.67.1"
