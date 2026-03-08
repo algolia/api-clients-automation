@@ -40,7 +40,7 @@
     "execa": "9.6.1",
     "express": "5.2.1",
     "folder-hash": "4.1.2",
-    "fs-extra": "11.3.3",
+    "fs-extra": "11.3.4",
     "js-yaml": "4.1.1",
     "knip": "5.67.1",
     "micromatch": "4.0.8",
