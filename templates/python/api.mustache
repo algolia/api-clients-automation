@@ -259,13 +259,13 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
 
     {{#vendorExtensions.x-streaming}}
 
-    {{^isSyncClient}}async {{/isSyncClient}}def {{operationId}}_stream{{> partial_api_args}} -> {{^isSyncClient}}AsyncIterator[ServerSentEvent]{{/isSyncClient}}{{#isSyncClient}}Iterator[ServerSentEvent]{{/isSyncClient}}:
+    {{^isSyncClient}}async {{/isSyncClient}}def {{operationId}}_stream_raw{{> partial_api_args}} -> {{^isSyncClient}}AsyncIterator[ServerSentEvent]{{/isSyncClient}}{{#isSyncClient}}Iterator[ServerSentEvent]{{/isSyncClient}}:
         """
         {{#notes}}
-        {{{.}}} (streaming version).
+        {{{.}}} (raw streaming version).
         {{/notes}}
 
-        {{#returnType}}Each event's ``data`` field contains a JSON-encoded ``{{{returnType}}}`` object.{{/returnType}}
+        Yields raw :class:`ServerSentEvent` objects.{{#returnType}} Each event's ``data`` field contains a JSON-encoded ``{{{returnType}}}`` string.{{/returnType}}
 
         {{#allParams}}
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
@@ -278,7 +278,7 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
         {{#allParams}}
         {{#required}}
         if {{paramName}} is None:
-            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}_stream`.")
+            raise ValueError("Parameter `{{paramName}}` is required when calling `{{nickname}}_stream_raw`.")
 
         {{/required}}
         {{/allParams}}
@@ -326,6 +326,29 @@ class {{classname}}{{#isSyncClient}}Sync{{/isSyncClient}}:
             use_read_transporter={{#vendorExtensions}}{{#x-use-read-transporter}}True{{/x-use-read-transporter}}{{^x-use-read-transporter}}False{{/x-use-read-transporter}}{{/vendorExtensions}},
         ):
             yield event
+
+    {{^isSyncClient}}async {{/isSyncClient}}def {{operationId}}_stream{{> partial_api_args}} -> {{^isSyncClient}}AsyncIterator[StreamEvent[{{{returnType}}}{{^returnType}}object{{/returnType}}]]{{/isSyncClient}}{{#isSyncClient}}Iterator[StreamEvent[{{{returnType}}}{{^returnType}}object{{/returnType}}]]{{/isSyncClient}}:
+        """
+        {{#notes}}
+        {{{.}}} (streaming version).
+        {{/notes}}
+
+        Yields :class:`StreamEvent` objects wrapping parsed ``{{{returnType}}}{{^returnType}}object{{/returnType}}`` payloads.
+
+        {{#allParams}}
+        :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
+        {{/allParams}}
+        :param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+        :return: Returns an iterator of :class:`StreamEvent[{{{returnType}}}{{^returnType}}object{{/returnType}}]` objects.
+        """
+
+        {{^isSyncClient}}async {{/isSyncClient}}for event in self.{{operationId}}_stream_raw({{#allParams}}{{paramName}},{{/allParams}}request_options):
+            try:
+                _parsed = ApiResponse.deserialize({{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}None{{/returnType}}, event.data)
+                yield StreamEvent(data=_parsed, raw=event)
+            except Exception as e:
+                yield StreamEvent(data=None, raw=event, error=e)
 
     {{/vendorExtensions.x-streaming}}
 {{/operation}}

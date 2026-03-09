@@ -24,6 +24,22 @@ export type ServerSentEvent = {
   retry: number | null;
 };
 
+/**
+ * Wrapper for a parsed SSE event, yielded by the typed `*Stream` methods.
+ *
+ * - `data` is the JSON-parsed payload when parsing succeeds, `null` otherwise.
+ * - `raw` is the original {@link ServerSentEvent} (always present).
+ * - `error` is set when JSON parsing of `event.data` failed.
+ */
+export type StreamEvent<T> = {
+  /** Parsed data from the event, or `null` if parsing failed. */
+  data: T | null;
+  /** The original, unparsed SSE event. */
+  raw: ServerSentEvent;
+  /** The error that occurred while parsing `event.data`, if any. */
+  error?: Error;
+};
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 /**
