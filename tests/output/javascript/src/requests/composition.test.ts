@@ -823,7 +823,6 @@ describe('putComposition', () => {
       composition: {
         objectID: 'my-compo',
         name: 'my composition',
-        sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
         behavior: {
           multifeed: {
             feeds: {
@@ -884,7 +883,6 @@ describe('putComposition', () => {
     expect(req.data).toEqual({
       objectID: 'my-compo',
       name: 'my composition',
-      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
       behavior: {
         multifeed: {
           feeds: {

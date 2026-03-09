@@ -2464,11 +2464,6 @@ paths:
               {
                 ObjectID = "my-compo",
                 Name = "my composition",
-                SortingStrategy = new Dictionary<string, string>
-                {
-                  { "Price-asc", "products-low-to-high" },
-                  { "Price-desc", "products-high-to-low" },
-                },
                 Behavior = new CompositionBehavior(
                   new CompositionMultifeedBehavior
                   {
@@ -2621,10 +2616,6 @@ paths:
               composition: Composition(
                 objectID: "my-compo",
                 name: "my composition",
-                sortingStrategy: {
-                  'Price-asc': "products-low-to-high",
-                  'Price-desc': "products-high-to-low",
-                },
                 behavior: CompositionMultifeedBehavior(
                   multifeed: Multifeed(
                     feeds: {
@@ -2745,7 +2736,6 @@ paths:
               composition.NewEmptyComposition().
                 SetObjectID("my-compo").
                 SetName("my composition").
-                SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
                 SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
                   composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
                     composition.NewEmptyMultifeed().
@@ -2807,14 +2797,6 @@ paths:
               new Composition()
                 .setObjectID("my-compo")
                 .setName("my composition")
-                .setSortingStrategy(
-                  new HashMap() {
-                    {
-                      put("Price-asc", "products-low-to-high");
-                      put("Price-desc", "products-high-to-low");
-                    }
-                  }
-                )
                 .setBehavior(
                   new CompositionMultifeedBehavior().setMultifeed(
                     new Multifeed()
@@ -2931,7 +2913,6 @@ paths:
               composition: {
                 objectID: 'my-compo',
                 name: 'my composition',
-                sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
                 behavior: {
                   multifeed: {
                     feeds: {
@@ -3010,8 +2991,6 @@ paths:
                   Composition(
                     objectID = "my-compo",
                     name = "my composition",
-                    sortingStrategy =
-                      mapOf("Price-asc" to "products-low-to-high", "Price-desc" to "products-high-to-low"),
                     behavior =
                       CompositionMultifeedBehavior(
                         multifeed =
@@ -3143,9 +3122,6 @@ paths:
                 'my-compo',
                 ['objectID' => 'my-compo',
                     'name' => 'my composition',
-                    'sortingStrategy' => ['Price-asc' => 'products-low-to-high',
-                        'Price-desc' => 'products-high-to-low',
-                    ],
                     'behavior' => ['multifeed' => ['feeds' => ['products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
                         'params' => ['hitsPerPage' => 12,
                         ],
@@ -3243,10 +3219,6 @@ paths:
                 composition={
                     "objectID": "my-compo",
                     "name": "my composition",
-                    "sortingStrategy": {
-                        "Price-asc": "products-low-to-high",
-                        "Price-desc": "products-high-to-low",
-                    },
                     "behavior": {
                         "multifeed": {
                             "feeds": {
@@ -3364,7 +3336,6 @@ paths:
               Algolia::Composition::Composition.new(
                 algolia_object_id: "my-compo",
                 name: "my composition",
-                sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
                 behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
                   multifeed: Algolia::Composition::Multifeed.new(
                     feeds: {
@@ -3465,7 +3436,6 @@ paths:
                 composition = Composition(
                   objectID = "my-compo",
                   name = "my composition",
-                  sortingStrategy = Some(Map("Price-asc" -> "products-low-to-high", "Price-desc" -> "products-high-to-low")),
                   behavior = CompositionMultifeedBehavior(
                     multifeed = Multifeed(
                       feeds = Map(
@@ -3639,8 +3609,7 @@ paths:
                                 ),
                             ],
                             feedsOrder: ["products", "articles", "videos"]
-                        ))),
-                    sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+                        )))
                 )
             )
 

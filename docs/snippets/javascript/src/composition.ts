@@ -861,7 +861,6 @@ export async function snippetForPutComposition5(): Promise<void> {
     composition: {
       objectID: 'my-compo',
       name: 'my composition',
-      sortingStrategy: { 'Price-asc': 'products-low-to-high', 'Price-desc': 'products-high-to-low' },
       behavior: {
         multifeed: {
           feeds: {
