@@ -10,10 +10,21 @@ Reference: https://html.spec.whatwg.org/multipage/server-sent-events.html#event-
 
 import codecs
 from dataclasses import dataclass
-from typing import AsyncIterable, AsyncIterator, Iterable, Iterator, List, Optional
+from typing import (
+    AsyncIterable,
+    AsyncIterator,
+    Generic,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    TypeVar,
+)
 
 _MAX_LINE_SIZE = 10 * 1024 * 1024  # 10 MB
 _BOM = "\ufeff"
+
+T = TypeVar("T")
 
 
 @dataclass
@@ -24,6 +35,20 @@ class ServerSentEvent:
     event: str
     id: Optional[str] = None
     retry: Optional[int] = None
+
+
+@dataclass
+class StreamEvent(Generic[T]):
+    """Wrapper for a parsed SSE event yielded by the typed ``*_stream`` methods.
+
+    ``data`` is the deserialized payload when parsing succeeds, ``None`` otherwise.
+    ``raw`` is the original :class:`ServerSentEvent` (always present).
+    ``error`` is set when JSON parsing / deserialization of ``event.data`` failed.
+    """
+
+    data: Optional[T]
+    raw: ServerSentEvent
+    error: Optional[Exception] = None
 
 
 # ---------------------------------------------------------------------------
