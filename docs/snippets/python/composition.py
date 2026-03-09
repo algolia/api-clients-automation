@@ -1233,10 +1233,6 @@ def snippet_for_put_composition5():
         composition={
             "objectID": "my-compo",
             "name": "my composition",
-            "sortingStrategy": {
-                "Price-asc": "products-low-to-high",
-                "Price-desc": "products-high-to-low",
-            },
             "behavior": {
                 "multifeed": {
                     "feeds": {
