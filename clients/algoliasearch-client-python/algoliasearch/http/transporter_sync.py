@@ -62,8 +62,10 @@ class TransporterSync(BaseTransporter):
         )
 
         path = self.build_path(path, query_parameters)
-        if self._config.compression_type == "gzip" and isinstance(
-            request_options.data, str
+        if (
+            self._config.compression_type == "gzip"
+            and isinstance(request_options.data, str)
+            and len(request_options.data) >= self._config.compression_threshold
         ):
             request_options.data = gzip_compress(request_options.data.encode("utf-8"))
             request_options.headers["content-encoding"] = "gzip"
@@ -144,8 +146,10 @@ class EchoTransporterSync(TransporterSync):
         use_read_transporter: bool,
     ) -> ApiResponse:
         self.prepare(request_options, verb == Verb.GET or use_read_transporter)
-        if self._config.compression_type == "gzip" and isinstance(
-            request_options.data, str
+        if (
+            self._config.compression_type == "gzip"
+            and isinstance(request_options.data, str)
+            and len(request_options.data) >= self._config.compression_threshold
         ):
             request_options.data = gzip_compress(request_options.data.encode("utf-8"))
             request_options.headers["content-encoding"] = "gzip"
