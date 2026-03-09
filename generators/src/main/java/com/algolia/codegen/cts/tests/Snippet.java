@@ -54,6 +54,7 @@ public class Snippet {
 
     try {
       context.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+      context.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
       context.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());

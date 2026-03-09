@@ -140,6 +140,7 @@ public class TestsRequest extends TestsGenerator {
 
         try {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+          test.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
           test.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
 
           if (req.request != null && !isHelper) {

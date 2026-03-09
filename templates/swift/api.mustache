@@ -11,7 +11,7 @@ import Foundation
 */{{/description}}
 {{#objcCompatible}}@objcMembers {{/objcCompatible}}open class {{classname}}{{#objcCompatible}} : NSObject{{/objcCompatible}} {
 
-    private var configuration: {{classname}}Configuration
+    public private(set) var configuration: {{classname}}Configuration
     private var transporter: Transporter
 
     var appID: String {

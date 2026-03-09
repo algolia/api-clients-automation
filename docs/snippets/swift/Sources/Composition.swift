@@ -946,8 +946,7 @@ final class CompositionClientSnippet {
                             ),
                         ],
                         feedsOrder: ["products", "articles", "videos"]
-                    ))),
-                sortingStrategy: ["Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"]
+                    )))
             )
         )
         // >LOG
