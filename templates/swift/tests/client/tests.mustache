@@ -53,7 +53,12 @@
             {{/match.isPrimitive}}
           {{/isHelper}}
           {{^isHelper}}
-            XTCJSONEquals(received: response, expected: "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
+            {{#match.isNull}}
+              XCTAssertTrue(response.value is Void)
+            {{/match.isNull}}
+            {{^match.isNull}}
+              XTCJSONEquals(received: response, expected: "{{#lambda.escapeQuotes}}{{{match.value}}}{{/lambda.escapeQuotes}}")
+            {{/match.isNull}}
           {{/isHelper}}
         {{/testResponse}}
         {{#shouldScope}}
