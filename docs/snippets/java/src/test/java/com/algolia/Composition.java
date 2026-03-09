@@ -1088,14 +1088,6 @@ class SnippetCompositionClient {
       new Composition()
         .setObjectID("my-compo")
         .setName("my composition")
-        .setSortingStrategy(
-          new HashMap() {
-            {
-              put("Price-asc", "products-low-to-high");
-              put("Price-desc", "products-high-to-low");
-            }
-          }
-        )
         .setBehavior(
           new CompositionMultifeedBehavior().setMultifeed(
             new Multifeed()
