@@ -443,6 +443,8 @@ allowReRankingOnPersonalization:
   type: boolean
   description: |
     Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.
+
+    Dynamic Re-Ranking isn't applied when `distinct` > 0, even if `allowReRankingOnPersonalization` is `true`.
   default: false
   x-categories:
     - Personalization
