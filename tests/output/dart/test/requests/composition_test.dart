@@ -1227,10 +1227,6 @@ void main() {
         composition: Composition(
           objectID: "my-compo",
           name: "my composition",
-          sortingStrategy: {
-            'Price-asc': "products-low-to-high",
-            'Price-desc': "products-high-to-low",
-          },
           behavior: CompositionMultifeedBehavior(
             multifeed: Multifeed(
               feeds: {
@@ -1330,7 +1326,7 @@ void main() {
         expectPath(request.path, '/1/compositions/my-compo');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"objectID":"my-compo","name":"my composition","sortingStrategy":{"Price-asc":"products-low-to-high","Price-desc":"products-high-to-low"},"behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""");
+            """{"objectID":"my-compo","name":"my composition","behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""");
       },
     ),
   );
