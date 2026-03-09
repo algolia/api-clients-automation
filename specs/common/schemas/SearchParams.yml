@@ -439,6 +439,14 @@ percentileComputation:
   x-categories:
     - Advanced
 
+allowReRankingOnPersonalization:
+  type: boolean
+  description: |
+    Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.
+  default: false
+  x-categories:
+    - Personalization
+
 personalizationImpact:
   type: integer
   description: |
