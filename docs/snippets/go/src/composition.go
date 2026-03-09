@@ -1179,7 +1179,6 @@ func SnippetForPutCompositionOfComposition5() {
 		composition.NewEmptyComposition().
 			SetObjectID("my-compo").
 			SetName("my composition").
-			SetSortingStrategy(map[string]string{"Price-asc": "products-low-to-high", "Price-desc": "products-high-to-low"}).
 			SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
 				composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
 					composition.NewEmptyMultifeed().

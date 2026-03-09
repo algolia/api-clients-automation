@@ -838,7 +838,6 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-compo",
         name: "my composition",
-        sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
         behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
           multifeed: Algolia::Composition::Multifeed.new(
             feeds: {
@@ -923,7 +922,7 @@ class TestCompositionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"sortingStrategy\":{\"Price-asc\":\"products-low-to-high\",\"Price-desc\":\"products-high-to-low\"},\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}"
+        "{\"objectID\":\"my-compo\",\"name\":\"my composition\",\"behavior\":{\"multifeed\":{\"feeds\":{\"products\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"hitsPerPage\":12}}}},\"injectedItems\":[{\"key\":\"featured-products\",\"source\":{\"search\":{\"index\":\"products\",\"params\":{\"filters\":\"featured:true\"}}},\"position\":0,\"length\":2}]}},\"articles\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"hitsPerPage\":5,\"attributesToRetrieve\":[\"title\",\"excerpt\",\"publishedAt\"]}}}},\"injectedItems\":[{\"key\":\"editorial-picks\",\"source\":{\"search\":{\"index\":\"articles\",\"params\":{\"filters\":\"editorial_pick:true\"}}},\"position\":0,\"length\":1}]}},\"videos\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"videos\",\"params\":{\"hitsPerPage\":3,\"attributesToRetrieve\":[\"title\",\"thumbnail\",\"duration\"]}}}}}}},\"feedsOrder\":[\"products\",\"articles\",\"videos\"]}}}"
       ),
       JSON.parse(req.body)
     )
