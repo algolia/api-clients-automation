@@ -181,23 +181,24 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     },
     {{#vendorExtensions.x-streaming}}
     /**
-     * {{#notes}}{{{.}}} {{/notes}}(streaming version).
+     * {{#notes}}{{{.}}} {{/notes}}(raw streaming version).
      *
-     * Each event's `data` field contains a JSON-encoded `{{{returnType}}}` object.
+     * Yields raw {@link ServerSentEvent} objects. Each event's `data` field contains a JSON-encoded `{{{returnType}}}` string.
      *
+     * @see {{nickname}}Stream for the parsed variant.
      * @see {{nickname}} for the non-streaming version.
      */
-    {{nickname}}Stream( {{> client/api/operation/parameters}} ) : AsyncGenerator<ServerSentEvent> {
+    {{nickname}}StreamRaw( {{> client/api/operation/parameters}} ) : AsyncGenerator<ServerSentEvent> {
       {{#allParams}}
       {{#required}}
       if ({{#isBoolean}}{{paramName}} === null || {{paramName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}Stream`.');
+        throw new Error('Parameter `{{paramName}}` is required when calling `{{nickname}}StreamRaw`.');
       }
 
       {{#vars}}
       {{#required}}
       if ({{#isBoolean}}{{paramName}}.{{baseName}} === null || {{paramName}}.{{baseName}} === undefined{{/isBoolean}}{{^isBoolean}}!{{paramName}}.{{baseName}}{{/isBoolean}}) {
-        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}Stream`.');
+        throw new Error('Parameter `{{paramName}}.{{baseName}}` is required when calling `{{nickname}}StreamRaw`.');
       }
       {{/required}}
       {{/vars}}
@@ -235,6 +236,24 @@ export function create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
       };
 
       return transporter.requestStream(request, requestOptions);
+    },
+    /**
+     * {{#notes}}{{{.}}} {{/notes}}(streaming version).
+     *
+     * Yields {@link StreamEvent} objects wrapping parsed `{{{returnType}}}` payloads.
+     *
+     * @see {{nickname}}StreamRaw for the raw variant.
+     * @see {{nickname}} for the non-streaming version.
+     */
+    async *{{nickname}}Stream( {{> client/api/operation/parameters}} ) : AsyncGenerator<StreamEvent<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Record<string, unknown>{{/returnType}}>> {
+      for await (const event of this.{{nickname}}StreamRaw({{#vendorExtensions}}{{#x-create-wrapping-object}}{ {{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }{{/x-create-wrapping-object}}{{^x-create-wrapping-object}}{{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/x-create-wrapping-object}}{{/vendorExtensions}}, requestOptions)) {
+        try {
+          const data = JSON.parse(event.data) as {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Record<string, unknown>{{/returnType}};
+          yield { data, raw: event };
+        } catch (e) {
+          yield { data: null, raw: event, error: e as Error };
+        }
+      }
     },
     {{/vendorExtensions.x-streaming}}
 
