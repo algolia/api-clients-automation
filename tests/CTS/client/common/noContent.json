@@ -1,0 +1,32 @@
+[
+  {
+    "testName": "handles 204 No Content responses correctly",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6691
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customDelete",
+        "parameters": {
+          "path": "1/test/no-content"
+        },
+        "expected": {
+          "type": "response",
+          "match": null
+        }
+      }
+    ]
+  }
+]
