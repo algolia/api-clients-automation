@@ -115,8 +115,19 @@ public class LoggingTests
   [Fact]
   public async Task InfoRequestSummaryFormat()
   {
-    var transport = CreateTransportWithServerHost();
-    await transport.ExecuteRequestAsync(
+    var mockHttp = new Mock<IHttpRequester>();
+    mockHttp
+      .Setup(h =>
+        h.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .ReturnsAsync(OkResponse());
+
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
       HttpMethod.Get,
       "/1/test/instant",
       new InternalRequestOptions { UseReadTransporter = true }
@@ -132,8 +143,19 @@ public class LoggingTests
   [Fact]
   public async Task DebugRequestResponseDetails()
   {
-    var transport = CreateTransportWithServerHost();
-    await transport.ExecuteRequestAsync(
+    var mockHttp = new Mock<IHttpRequester>();
+    mockHttp
+      .Setup(h =>
+        h.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .ReturnsAsync(OkResponse());
+
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
       HttpMethod.Get,
       "/1/test/instant",
       new InternalRequestOptions { UseReadTransporter = true }
@@ -148,8 +170,19 @@ public class LoggingTests
   [Fact]
   public async Task ApiKeyFilteredFromHeadersAndUrls()
   {
-    var transport = CreateTransportWithServerHost();
-    await transport.ExecuteRequestAsync(
+    var mockHttp = new Mock<IHttpRequester>();
+    mockHttp
+      .Setup(h =>
+        h.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .ReturnsAsync(OkResponse());
+
+    await CreateTransportWithMockHttp(mockHttp.Object).ExecuteRequestAsync(
       HttpMethod.Get,
       "/1/test/instant",
       new InternalRequestOptions
@@ -218,25 +251,29 @@ public class LoggingTests
   [Fact]
   public async Task RetryCompletionLogsInfo()
   {
-    var badHost = new StatefulHost
-    {
-      Url = NonRoutableIp,
-      Accept = CallType.Read | CallType.Write,
-      Up = true,
-    };
-    var goodHost = GetTestServerHost();
+    var mockHttp = new Mock<IHttpRequester>();
+    mockHttp
+      .SetupSequence(h =>
+        h.SendRequestAsync(
+          It.IsAny<Request>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<TimeSpan>(),
+          It.IsAny<CancellationToken>()
+        )
+      )
+      .ReturnsAsync(new AlgoliaHttpResponse { IsNetworkError = true, Error = "Connection refused" })
+      .ReturnsAsync(OkResponse());
 
     var config = new SearchConfig("test-app-id", "test-api-key")
     {
-      CustomHosts = new List<StatefulHost> { badHost, goodHost },
-      ConnectTimeout = TimeSpan.FromSeconds(ConnectTimeoutSeconds),
+      CustomHosts = new List<StatefulHost>
+      {
+        new() { Url = "bad-host", Accept = CallType.Read | CallType.Write, Up = true },
+        new() { Url = "good-host", Accept = CallType.Read | CallType.Write, Up = true },
+      },
     };
 
-    var transport = new HttpTransport(
-      config,
-      new AlgoliaHttpRequester(_loggerFactory),
-      _loggerFactory
-    );
+    var transport = new HttpTransport(config, mockHttp.Object, _loggerFactory);
 
     await transport.ExecuteRequestAsync(
       HttpMethod.Get,
