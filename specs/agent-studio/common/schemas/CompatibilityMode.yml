@@ -4,4 +4,7 @@ CompatibilityMode:
     - ai-sdk-4
     - ai-sdk-5
   title: compatibilityMode
-  description: Support Compatibility modes for the completion API.
+  description: >-
+    Compatibility mode for the completion API.
+    `ai-sdk-4` uses a proprietary response format that is incompatible with server-sent events (SSE). Streaming isn't supported for this mode.
+    `ai-sdk-5` supports both `application/json` and `text/event-stream` responses.
