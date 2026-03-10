@@ -196,11 +196,6 @@ internal class HttpTransport
             }
           }
 
-          if (typeof(TResult) == typeof(VoidResult))
-          {
-            return new VoidResult() as TResult;
-          }
-
           if (_logger.IsEnabled(LogLevel.Debug))
           {
             if (response.ResponseHeaders != null)
@@ -215,10 +210,18 @@ internal class HttpTransport
               }
             }
 
-            var reader = new StreamReader(response.Body);
-            var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-            _logger.LogDebug("Response body: {Json}", json);
-            response.Body.Seek(0, SeekOrigin.Begin);
+            if (response.Body != null)
+            {
+              var reader = new StreamReader(response.Body);
+              var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+              _logger.LogDebug("Response body: {Json}", json);
+              response.Body.Seek(0, SeekOrigin.Begin);
+            }
+          }
+
+          if (typeof(TResult) == typeof(VoidResult))
+          {
+            return new VoidResult() as TResult;
           }
 
           // Returns the raw response when using `*WithHTTPInfo` methods.

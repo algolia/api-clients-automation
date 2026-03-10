@@ -165,7 +165,7 @@ public class LoggingTests
       Assert.DoesNotContain("secret-in-url", log.Message);
     }
 
-    var headerLog = AssertLogMatches(LogLevel.Debug, "Header:", "Should have request header debug log");
+    var headerLog = AssertLogMatches(LogLevel.Debug, @"Header: x-algolia-api-key", "Should have filtered api-key header log");
     Assert.Contains("[FILTERED]", headerLog);
   }
 
