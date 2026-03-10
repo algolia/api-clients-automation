@@ -203,9 +203,21 @@ internal class HttpTransport
 
           if (_logger.IsEnabled(LogLevel.Debug))
           {
+            if (response.ResponseHeaders != null)
+            {
+              foreach (var header in response.ResponseHeaders)
+              {
+                _logger.LogDebug(
+                  "Response header: {HeaderName}: {HeaderValue}",
+                  header.Key,
+                  header.Value
+                );
+              }
+            }
+
             var reader = new StreamReader(response.Body);
             var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-            _logger.LogDebug("Response HTTP {HttpCode}: {Json}", response.HttpStatusCode, json);
+            _logger.LogDebug("Response body: {Json}", json);
             response.Body.Seek(0, SeekOrigin.Begin);
           }
 
