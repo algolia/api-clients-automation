@@ -120,5 +120,37 @@
         }
       }
     }
+  },
+  {
+    "testName": "createAgentCompletion streaming with v4 messages",
+    "isStreaming": true,
+    "parameters": {
+      "agentId": "785b14e4-61a8-4c03-8028-bf2ba3ae85ff",
+      "compatibilityMode": "ai-sdk-4",
+      "agentCompletionRequest": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/agents/785b14e4-61a8-4c03-8028-bf2ba3ae85ff/completions",
+      "method": "POST",
+      "queryParameters": {
+        "compatibilityMode": "ai-sdk-4"
+      },
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    },
+    "skipLanguages": ["csharp", "dart", "go", "java", "kotlin", "php", "ruby", "scala", "swift"]
   }
 ]
