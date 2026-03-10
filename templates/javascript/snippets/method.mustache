@@ -19,6 +19,7 @@ export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pa
   {{> snippets/init}}
 
   // Call the API
+  {{^isStreaming}}
   {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
 
   // >LOG
@@ -26,6 +27,22 @@ export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pa
   // print the response
   console.log(response);
   {{/hasResponse}}
+  {{/isStreaming}}
+  {{#isStreaming}}
+  // Use the streaming variant to iterate over events
+  for await (const event of client.{{method}}Stream({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
+    {{#requestOptions.queryParameters.parameters}}
+      queryParameters: {{{.}}},
+    {{/requestOptions.queryParameters.parameters}}
+    {{#requestOptions.headers.parameters}}
+      headers: {{{.}}},
+    {{/requestOptions.headers.parameters}}
+    }
+    {{/hasRequestOptions}}
+  )) {
+    console.log(event.data);
+  }
+  {{/isStreaming}}
   // SEPARATOR<
 }
 

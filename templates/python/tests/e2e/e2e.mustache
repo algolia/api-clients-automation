@@ -28,6 +28,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
 
     {{#blocksE2E}}
     {{#tests}}
+    {{^isStreamingTest}}
     {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
         {{{testName}}}
@@ -45,6 +46,27 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClien
         assert self._helpers.union(_expected_body, self._helpers.unwrap(resp)) == _expected_body
         {{/body}}
         {{/response}}
+    {{/isStreamingTest}}
+
+    {{#isStreamingTest}}
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        """
+        {{{testName}}}
+        """
+        _events = []
+        {{^isSyncClient}}async {{/isSyncClient}}for event in {{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_stream({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}}):
+            _events.append(event)
+        assert len(_events) > 0
+        {{#response}}
+
+        {{#body}}
+        _all_data = [e.data for e in _events if e.data is not None]
+        assert len(_all_data) > 0
+        _expected_body = loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, self._helpers.unwrap(_all_data[0])) == _expected_body
+        {{/body}}
+        {{/response}}
+    {{/isStreamingTest}}
 
     {{/tests}}
     {{/blocksE2E}}
