@@ -85,29 +85,21 @@ async function testStreaming() {
 
     console.log('[STREAM] Stream object created, iterating events...\n');
 
-    // 4. Iterate over SSE events
+    // 4. Iterate over SSE events (typed: StreamEvent<AgentCompletionResponse>)
     console.log('─── Step 4: Receiving SSE events ───');
     for await (const event of stream) {
       eventCount++;
       const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
 
       console.log(`\n[EVENT #${eventCount}] (t+${elapsed}s)`);
-      console.log(`  event: "${event.event}"`);
-      console.log(`  id:    "${event.id}"`);
-      console.log(`  retry: ${event.retry ?? 'null'}`);
+      console.log(`  event: "${event.raw.event}"`);
+      console.log(`  id:    "${event.raw.id}"`);
 
-      // Show data (truncate if too long)
-      const dataPreview = event.data.length > 200 ? event.data.slice(0, 200) + '...' : event.data;
-      console.log(`  data:  ${dataPreview}`);
-
-      // Try to parse data as JSON
-      if (event.data) {
-        try {
-          const parsed = JSON.parse(event.data);
-          console.log(`  [PARSED JSON] type=${typeof parsed}, keys=[${Object.keys(parsed).join(', ')}]`);
-        } catch {
-          console.log(`  [RAW TEXT] (not JSON)`);
-        }
+      if (event.error) {
+        console.log(`  [PARSE ERROR] ${event.error.message}`);
+        console.log(`  [RAW DATA] ${event.raw.data.slice(0, 200)}`);
+      } else if (event.data) {
+        console.log(`  [TYPED DATA] keys=[${Object.keys(event.data).join(', ')}]`);
       }
     }
 

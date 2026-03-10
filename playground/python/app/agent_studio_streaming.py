@@ -1,4 +1,3 @@
-import json
 import time
 from os import environ
 from asyncio import run
@@ -85,31 +84,22 @@ async def main():
 
         print("[STREAM] Stream object created, iterating events...\n")
 
-        # 4. Iterate over SSE events
+        # 4. Iterate over SSE events (typed: StreamEvent[AgentCompletionResponse])
         print("─── Step 4: Receiving SSE events ───")
         async for event in stream:
             event_count += 1
             elapsed = f"{time.time() - start_time:.2f}"
 
             print(f"\n[EVENT #{event_count}] (t+{elapsed}s)")
-            print(f'  event: "{event.event}"')
-            print(f'  id:    "{event.id}"')
-            print(f"  retry: {event.retry}")
+            print(f'  event: "{event.raw.event}"')
+            print(f'  id:    "{event.raw.id}"')
 
-            # Show data (truncate if too long)
-            data_preview = (
-                event.data[:200] + "..." if len(event.data) > 200 else event.data
-            )
-            print(f"  data:  {data_preview}")
-
-            # Try to parse data as JSON
-            if event.data:
-                try:
-                    parsed = json.loads(event.data)
-                    keys = ", ".join(parsed.keys()) if isinstance(parsed, dict) else str(type(parsed).__name__)
-                    print(f"  [PARSED JSON] type={type(parsed).__name__}, keys=[{keys}]")
-                except (json.JSONDecodeError, ValueError):
-                    print("  [RAW TEXT] (not JSON)")
+            if event.error:
+                print(f"  [PARSE ERROR] {event.error}")
+                print(f"  [RAW DATA] {event.raw.data[:200]}")
+            elif event.data is not None:
+                print(f"  [TYPED DATA] type={type(event.data).__name__}")
+                print(f"  [TYPED DATA] {event.data}")
 
         total_time = f"{time.time() - start_time:.2f}"
         print(f"\n─── Done ───")
