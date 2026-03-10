@@ -11,20 +11,23 @@ Reference: https://html.spec.whatwg.org/multipage/server-sent-events.html#event-
 import codecs
 from dataclasses import dataclass
 from typing import (
+    Any,
     AsyncIterable,
     AsyncIterator,
+    Dict,
     Generic,
     Iterable,
     Iterator,
     List,
     Optional,
-    TypeVar,
 )
+
+from typing_extensions import TypeVar
 
 _MAX_LINE_SIZE = 10 * 1024 * 1024  # 10 MB
 _BOM = "\ufeff"
 
-T = TypeVar("T")
+T = TypeVar("T", default=Dict[str, Any])
 
 
 @dataclass

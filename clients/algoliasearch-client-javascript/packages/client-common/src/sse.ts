@@ -31,7 +31,7 @@ export type ServerSentEvent = {
  * - `raw` is the original {@link ServerSentEvent} (always present).
  * - `error` is set when JSON parsing of `event.data` failed.
  */
-export type StreamEvent<T> = {
+export type StreamEvent<T = Record<string, unknown>> = {
   /** Parsed data from the event, or `null` if parsing failed. */
   data: T | null;
   /** The original, unparsed SSE event. */
