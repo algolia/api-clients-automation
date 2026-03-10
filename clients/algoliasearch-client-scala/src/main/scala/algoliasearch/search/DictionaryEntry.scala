@@ -71,12 +71,12 @@ class DictionaryEntrySerializer extends Serializer[DictionaryEntry] {
           val obj = Extraction.extract[DictionaryEntry](jobject)(formats, mf)
 
           val fields = Set("objectID", "language", "word", "words", "decomposition", "state", "`type`")
-          val additionalProperties = jobject removeField {
+          val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          extraProperties match {
+            case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
             case _                   => obj
           }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as DictionaryEntry")

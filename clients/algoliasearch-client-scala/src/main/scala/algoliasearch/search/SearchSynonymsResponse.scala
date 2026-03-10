@@ -58,12 +58,12 @@ class SearchSynonymsResponseSerializer extends Serializer[SearchSynonymsResponse
           val obj = Extraction.extract[SearchSynonymsResponse](jobject)(formats, mf)
 
           val fields = Set("hits", "nbHits")
-          val additionalProperties = jobject removeField {
+          val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          extraProperties match {
+            case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
             case _                   => obj
           }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as SearchSynonymsResponse")
