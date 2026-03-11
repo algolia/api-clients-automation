@@ -74,12 +74,12 @@ class HitSerializer extends Serializer[Hit] {
           val obj = Extraction.extract[Hit](renamedObject)(formats, mf)
 
           val fields = Set("objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID", "_extra")
-          val additionalProperties = jobject removeField {
+          val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          extraProperties match {
+            case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
             case _                   => obj
           }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as Hit")

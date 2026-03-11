@@ -60,12 +60,12 @@ class HitMetadataSerializer extends Serializer[HitMetadata] {
           val obj = Extraction.extract[HitMetadata](renamedObject)(formats, mf)
 
           val fields = Set("_injectedItemKey")
-          val additionalProperties = jobject removeField {
+          val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          extraProperties match {
+            case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
             case _                   => obj
           }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as HitMetadata")

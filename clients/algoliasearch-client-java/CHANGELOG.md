@@ -1,3 +1,8 @@
+## [4.36.1](https://github.com/algolia/algoliasearch-client-java/compare/4.36.0...4.36.1)
+
+- [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [756d79f6c](https://github.com/algolia/api-clients-automation/commit/756d79f6c) chore(deps): dependencies 2026-03-02 ([#6028](https://github.com/algolia/api-clients-automation/pull/6028)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [4.36.0](https://github.com/algolia/algoliasearch-client-java/compare/4.35.1...4.36.0)
 
 - [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)

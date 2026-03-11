@@ -75,12 +75,12 @@ class RecommendHitSerializer extends Serializer[RecommendHit] {
           val obj = Extraction.extract[RecommendHit](renamedObject)(formats, mf)
 
           val fields = Set("objectID", "_highlightResult", "_snippetResult", "_rankingInfo", "_distinctSeqID", "_score")
-          val additionalProperties = jobject removeField {
+          val extraProperties = jobject removeField {
             case (name, _) if fields.contains(name) => true
             case _                                  => false
           }
-          additionalProperties match {
-            case JObject(fieldsList) => obj copy (additionalProperties = Some(fieldsList))
+          extraProperties match {
+            case JObject(fieldsList) => obj.copy(additionalProperties = Some(fieldsList))
             case _                   => obj
           }
         case _ => throw new IllegalArgumentException(s"Can't deserialize $json as RecommendHit")
