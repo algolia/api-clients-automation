@@ -8,6 +8,9 @@
 export function parseChangelogToMdx(rawChangelog: string): string {
   const lines = rawChangelog.split('\n');
   const out: string[] = [
+    '---',
+    'public: true',
+    '---',
     '{/* This file is auto-generated from the API clients repository. Do not edit manually. */}',
     '',
   ];
