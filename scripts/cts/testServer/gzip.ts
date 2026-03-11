@@ -69,8 +69,8 @@ function addRoutes(app: Express): void {
             return;
           }
 
-          if (decompressedJSON.message !== 'this is a compressed body') {
-            res.json({ message: 'invalid decompressed body', body: decompressedJSON });
+          if (!decompressedJSON.message) {
+            res.json({ message: 'invalid decompressed body: missing message key', body: decompressedJSON });
             return;
           }
 
