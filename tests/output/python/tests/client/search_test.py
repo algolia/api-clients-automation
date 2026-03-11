@@ -175,6 +175,42 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
 
+    async def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}"""
+        )
+
     async def test_api_7(self):
         """
         calls api with default read timeouts
@@ -1602,6 +1638,42 @@ class TestSearchClientSync:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads("""{"status":"ok"}""")
+
+    def test_api_6(self):
+        """
+        test the compression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6678,
+                )
+            ]
+        )
+        _config.compression_type = "gzip"
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_post(
+            path="1/test/gzip",
+            parameters={},
+            body={
+                "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}"""
+        )
 
     def test_api_7(self):
         """
