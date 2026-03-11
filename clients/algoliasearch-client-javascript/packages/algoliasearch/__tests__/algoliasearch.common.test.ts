@@ -123,6 +123,7 @@ describe('api', () => {
       requestStream: expect.any(Function),
       requester: {
         send: expect.any(Function),
+        sendStream: expect.any(Function),
       },
       requestsCache: {
         clear: expect.any(Function),
