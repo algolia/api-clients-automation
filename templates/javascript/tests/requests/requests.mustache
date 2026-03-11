@@ -4,7 +4,7 @@ import { describe, test, expect } from 'vitest';
 import { {{{clientName}}} } from '{{{importPackage}}}';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
-import type { ClientOptions } from '@algolia/client-common';
+import type { ClientOptions, ServerSentEvent } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -33,7 +33,7 @@ describe('{{operationId}}', () => {
 
   {{#isStreamingTest}}
   test('{{{testName}}}', async () => {
-    const events = [];
+    const events: ServerSentEvent[] = [];
     for await (const event of client.{{method}}{{streamMethodSuffix}}({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
       {{#requestOptions.queryParameters.parameters}}
         queryParameters: {{{.}}},
