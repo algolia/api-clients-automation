@@ -101,8 +101,9 @@ public class TestsClient extends TestsGenerator {
               if (hasTransformationRegion) {
                 stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
               }
+            }
 
-              if (step.type.equals("method")) {
+            if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
