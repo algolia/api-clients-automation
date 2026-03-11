@@ -5,6 +5,7 @@ import 'package:algolia_client_core/src/config/agent_segment.dart';
 import 'package:algolia_client_core/src/transport/algolia_agent.dart';
 import 'package:algolia_client_core/src/transport/dio/agent_interceptor.dart';
 import 'package:algolia_client_core/src/transport/dio/auth_interceptor.dart';
+import 'package:algolia_client_core/src/transport/dio/gzip_interceptor.dart';
 import 'package:algolia_client_core/src/transport/dio/platform/platform.dart';
 import 'package:algolia_client_core/src/transport/requester.dart';
 import 'package:algolia_client_core/src/version.dart';
@@ -29,6 +30,7 @@ class DioRequester implements Requester {
     Function(Object?)? logger,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
+    String? compression,
   }) : _authInterceptor = AuthInterceptor(
           appId: appId,
           apiKey: apiKey,
@@ -45,6 +47,7 @@ class DioRequester implements Requester {
             ..addAll(clientSegments ?? const [])
             ..addAll(Platform.agentSegments()),
         ),
+        if (compression == 'gzip') GzipInterceptor(),
         if (logger != null)
           LogInterceptor(
             requestBody: true,
