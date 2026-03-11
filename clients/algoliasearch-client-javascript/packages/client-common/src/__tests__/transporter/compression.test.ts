@@ -47,7 +47,13 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+    await transporter.request({
+      method: 'POST',
+      path: '/test',
+      queryParameters: {},
+      headers: {},
+      data: { foo: 'bar' },
+    });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBeUndefined();
@@ -90,7 +96,13 @@ describe('compression', () => {
       captured = req;
     });
 
-    await transporter.request({ method: 'POST', path: '/test', queryParameters: {}, headers: {}, data: { foo: 'bar' } });
+    await transporter.request({
+      method: 'POST',
+      path: '/test',
+      queryParameters: {},
+      headers: {},
+      data: { foo: 'bar' },
+    });
 
     expect(captured).toBeDefined();
     expect(captured!.headers['content-encoding']).toBeUndefined();
