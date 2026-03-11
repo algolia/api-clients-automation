@@ -18,7 +18,10 @@
     },
     {{/customHosts}}
     ],
-    {{/hasCustomHosts}} 
+    {{/hasCustomHosts}}
+    {{#gzipEncoding}}
+    compression: 'gzip',
+    {{/gzipEncoding}}
     {{#hasTransformationRegion}}
     transformation: { region : "{{{transformationRegion}}}" },
     {{/hasTransformationRegion}} 
