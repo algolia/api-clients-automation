@@ -103,12 +103,8 @@ public class TestsClient extends TestsGenerator {
               }
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
-              // many languages don't support gzip yet
-              if (gzipEncoding && (language.equals("javascript") || language.equals("python") || language.equals("php"))) {
-                continue skipTest;
-              }
-              stepOut.put("gzipEncoding", gzipEncoding);
-            } else if (step.type.equals("method")) {
+
+              if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
                 throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
