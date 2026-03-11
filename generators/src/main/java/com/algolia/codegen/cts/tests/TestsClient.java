@@ -105,7 +105,6 @@ public class TestsClient extends TestsGenerator {
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               // many languages don't support gzip yet
               if (gzipEncoding && language.equals("dart")) {
-
                 continue skipTest;
               }
               stepOut.put("gzipEncoding", gzipEncoding);
