@@ -102,8 +102,6 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("transformationRegion", step.parameters.get("transformationRegion"));
               }
 
-              boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
-
               if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
