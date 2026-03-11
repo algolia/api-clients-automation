@@ -43,6 +43,7 @@ final class RetryStrategy {
                 logger: options.logger,
                 interceptors: options.interceptors,
                 httpClientAdapter: options.httpClientAdapter,
+                compression: options.compression,
               ),
         );
 
