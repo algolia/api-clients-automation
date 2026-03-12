@@ -44,6 +44,29 @@ class TestAnalyticsClient:
         regex_user_agent = compile("^Algolia for Python \\(4.37.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
+    async def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = AnalyticsConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = AnalyticsClient.create_with_config(config=_config)
+        _req = await _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
+
     async def test_parameters_0(self):
         """
         fallbacks to the alias when region is not given
@@ -178,6 +201,29 @@ class TestAnalyticsClientSync:
         )
         regex_user_agent = compile("^Algolia for Python \\(4.37.1\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
+
+    def test_no_content_0(self):
+        """
+        handles 204 No Content responses correctly
+        """
+
+        _config = AnalyticsConfig("test-app-id", "test-api-key", "us")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = AnalyticsClientSync.create_with_config(config=_config)
+        _req = _client.custom_delete(
+            path="1/test/no-content",
+        )
+        assert _req is None
 
     def test_parameters_0(self):
         """

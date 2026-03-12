@@ -144,6 +144,23 @@ final class IngestionClientClientTests: XCTestCase {
         )
     }
 
+    /// handles 204 No Content responses correctly
+    func testNoContentTest0() async throws {
+        let configuration = try IngestionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = IngestionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customDelete(path: "1/test/no-content")
+
+        XCTAssertTrue(response.value is Void)
+    }
+
     /// uses the correct region
     func testParametersTest0() async throws {
         let configuration = try IngestionClientConfiguration(

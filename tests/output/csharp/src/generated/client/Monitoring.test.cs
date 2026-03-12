@@ -52,6 +52,34 @@ public class MonitoringClientTests
     }
   }
 
+  [Fact(DisplayName = "handles 204 No Content responses correctly")]
+  public async Task NoContentTest0()
+  {
+    MonitoringConfig _config = new MonitoringConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6691,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new MonitoringClient(_config);
+
+    var res = await client.CustomDeleteAsync("1/test/no-content");
+
+    Assert.Equal(null, res);
+  }
+
   [Fact(DisplayName = "use the correct host")]
   public async Task ParametersTest0()
   {

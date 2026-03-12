@@ -69,6 +69,37 @@ class AnalyticsTest extends AnyFunSuite {
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }
 
+  test("handles 204 No Content responses correctly") {
+
+    val client = AnalyticsClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      region = Option("us"),
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6691)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customDelete[JObject](
+        path = "1/test/no-content"
+      ),
+      Duration.Inf
+    )
+
+    assert(res == null)
+  }
+
   test("fallbacks to the alias when region is not given") {
 
     val (client, echo) = testClient(appId = "my-app-id", apiKey = "my-api-key")

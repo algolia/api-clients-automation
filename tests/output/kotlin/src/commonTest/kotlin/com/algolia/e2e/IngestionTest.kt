@@ -13,8 +13,6 @@ import kotlin.test.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 
 class IngestionTest {
 
@@ -44,10 +42,9 @@ class IngestionTest {
     client.runTest(
       call = { enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498") },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )
@@ -58,10 +55,9 @@ class IngestionTest {
     client.runTest(
       call = { enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498") },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )
@@ -72,10 +68,9 @@ class IngestionTest {
     client.runTest(
       call = { getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac") },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )
@@ -99,10 +94,9 @@ class IngestionTest {
         )
       },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )
@@ -125,10 +119,9 @@ class IngestionTest {
         )
       },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )
@@ -151,10 +144,9 @@ class IngestionTest {
         )
       },
       response = {
-        JSONAssert.assertEquals(
+        lenientJsonAssert(
           "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
           Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
         )
       },
     )

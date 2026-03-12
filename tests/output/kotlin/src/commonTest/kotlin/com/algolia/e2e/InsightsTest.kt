@@ -13,8 +13,6 @@ import kotlin.test.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 
 class InsightsTest {
 
@@ -54,7 +52,7 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1772928000000L,
+                    timestamp = 1773187200000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                   ),
@@ -64,7 +62,7 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1772928000000L,
+                    timestamp = 1773187200000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                   ),
                 )
@@ -72,11 +70,7 @@ class InsightsTest {
         )
       },
       response = {
-        JSONAssert.assertEquals(
-          "{\"message\":\"OK\",\"status\":200}",
-          Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
-        )
+        lenientJsonAssert("{\"message\":\"OK\",\"status\":200}", Json.encodeToString(it))
       },
     )
   }

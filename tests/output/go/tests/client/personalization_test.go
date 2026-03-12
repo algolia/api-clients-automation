@@ -67,6 +67,39 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 	require.Regexp(t, `^Algolia for Go \(4.37.1\).*`, echo.Header.Get("User-Agent"))
 }
 
+// handles 204 No Content responses correctly.
+func TestPersonalizationnoContent0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *personalization.APIClient
+		cfg    personalization.PersonalizationConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = personalization.PersonalizationConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
+		},
+		Region: personalization.Region("us"),
+	}
+	client, err = personalization.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"1/test/no-content"))
+	require.NoError(t, err)
+	require.Nil(t, res)
+}
+
 // throws when region is not given.
 func TestPersonalizationparameters0(t *testing.T) {
 	var (

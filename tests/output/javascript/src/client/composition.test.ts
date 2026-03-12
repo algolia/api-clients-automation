@@ -55,6 +55,25 @@ describe('commonApi', () => {
   }, 25000);
 });
 
+describe('noContent', () => {
+  test('handles 204 No Content responses correctly', async () => {
+    const client = compositionClient('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6691,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customDelete({ path: '1/test/no-content' });
+
+    expect(result).toEqual(undefined);
+  }, 25000);
+});
+
 describe('setClientApiKey', () => {
   test('switch API key', async () => {
     const client = compositionClient('test-app-id', 'test-api-key', {
