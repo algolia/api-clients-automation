@@ -48,7 +48,7 @@ final class RetryStrategy {
         );
 
   /// Run an request and get a response.
-  Future<Map<String, dynamic>> execute({
+  Future<Map<String, dynamic>?> execute({
     required ApiRequest request,
     RequestOptions? options,
   }) async {
@@ -66,7 +66,7 @@ final class RetryStrategy {
         final response = await requester.perform(httpRequest);
         host.reset();
         requester.setConnectTimeout(requesterConnectTimeout);
-        return response.body ?? const {};
+        return response.statusCode == 204 ? null : response.body;
       } on AlgoliaTimeoutException catch (e) {
         host.timedOut();
         errors.add(e);
