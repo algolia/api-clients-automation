@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import com.algolia.api.InsightsClient;
 import com.algolia.config.*;
 import com.algolia.model.insights.*;
+import com.algolia.utils.TestHelpers;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.*;
 import org.junit.jupiter.api.*;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InsightsClientRequestsTestsE2E {
@@ -63,8 +62,6 @@ class InsightsClientRequestsTestsE2E {
         )
       )
     );
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res), JSONCompareMode.LENIENT)
-    );
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"message\":\"OK\",\"status\":200}", json.writeValueAsString(res)));
   }
 }
