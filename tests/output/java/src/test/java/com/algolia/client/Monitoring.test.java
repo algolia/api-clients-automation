@@ -86,6 +86,30 @@ class MonitoringClientClientTests {
   }
 
   @Test
+  @DisplayName("handles 204 No Content responses correctly")
+  void noContentTest0() {
+    MonitoringClient client = new MonitoringClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customDelete("1/test/no-content");
+
+    assertEquals(null, res);
+  }
+
+  @Test
   @DisplayName("use the correct host")
   void parametersTest0() {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());

@@ -106,6 +106,30 @@ class RecommendClientClientTests {
   }
 
   @Test
+  @DisplayName("handles 204 No Content responses correctly")
+  void noContentTest0() {
+    RecommendClient client = new RecommendClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customDelete("1/test/no-content");
+
+    assertEquals(null, res);
+  }
+
+  @Test
   @DisplayName("switch API key")
   void setClientApiKeyTest0() {
     RecommendClient client = new RecommendClient(

@@ -1,0 +1,1300 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.AgentStudio;"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "var response = await client.CreateAgentAsync(\n  new AgentConfigCreate { Name = \"test-agent\", Instructions = \"You are a helpful assistant.\" }\n);",
+      "createAgent with all parameters": "var response = await client.CreateAgentAsync(\n  new AgentConfigCreate\n  {\n    Name = \"test-agent\",\n    Description = \"A test agent for CTS\",\n    ProviderId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    Model = \"gpt-4\",\n    Instructions = \"You are a helpful assistant.\",\n    Config = new Dictionary<string, object>\n    {\n      { \"sendUsage\", true },\n      { \"sendReasoning\", true },\n      { \"temperature\", 0.7 },\n      { \"max_tokens\", 1500 },\n    },\n    Tools = new List<ItemsUnion> { new ItemsUnion(new StartPart { Type = \"start\" }) },\n  }\n);"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "var response = await client.CreateAgentCompletionAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequest\n  {\n    Messages = new MessagesUnion(\n      new List<MessageV4>\n      {\n        new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n      }\n    ),\n  }\n);",
+      "createAgentCompletion with v5 messages and all query params": "var response = await client.CreateAgentCompletionAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk5\"),\n  new AgentCompletionRequest\n  {\n    Messages = new MessagesUnion(\n      new List<MessageV5>\n      {\n        new MessageV5(\n          new UserMessageV5\n          {\n            Role = \"user\",\n            Parts = new List<TextPartV5>\n            {\n              new TextPartV5 { Type = \"text\", Text = \"What is Algolia?\" },\n            },\n          }\n        ),\n      }\n    ),\n    Id = \"test-conversation-id\",\n  },\n  false,\n  false,\n  false\n);",
+      "createAgentCompletion with test configuration": "var response = await client.CreateAgentCompletionAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequest\n  {\n    Messages = new MessagesUnion(\n      new List<MessageV4>\n      {\n        new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello\" }),\n      }\n    ),\n    Configuration = new AgentTestConfiguration\n    {\n      Instructions = \"Test instructions override\",\n      Config = new Dictionary<string, object> { { \"temperature\", 0.2 } },\n      Tools = new List<ItemsUnion> { new ItemsUnion(new StartPart { Type = \"start\" }) },\n    },\n  }\n);"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My OpenAI Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"Openai\"),\n    Input = new ProviderInput(new OpenAIProviderInput { ApiKey = \"sk-test-key-1234\" }),\n  }\n);",
+      "createProvider with Azure OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My Azure Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"AzureOpenai\"),\n    Input = new ProviderInput(\n      new AzureOpenAIProviderInput\n      {\n        ApiKey = \"az-test-key-5678\",\n        AzureEndpoint = \"https://my-resource.openai.azure.com\",\n        AzureDeployment = \"gpt-4o\",\n      }\n    ),\n  }\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "var response = await client.CustomDeleteAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } }\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "var response = await client.CustomGetAsync(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters with space\" } }\n);",
+      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overridden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "var response = await client.CustomPostAsync(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "var response = await client.CustomPostAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);",
+      "requestOptions can override default query parameters": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query\", \"myQueryParameter\").Build()\n);",
+      "requestOptions merges query parameters with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query2\", \"myQueryParameter\").Build()\n);",
+      "requestOptions can override default headers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions merges headers with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
+      "requestOptions queryParameters accepts booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"isItWorking\", true).Build()\n);",
+      "requestOptions queryParameters accepts integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"myParam\", 2).Build()\n);",
+      "requestOptions queryParameters accepts list of string": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { \"b and c\", \"d\" })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { true, true, false })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { 1, 2 })\n    .Build()\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "var response = await client.CustomPutAsync(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "var response = await client.CustomPutAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);"
+    },
+    "deleteAgent": {
+      "default": "await client.DeleteAgentAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "await client.DeleteAgentConversationsAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "deleteAgentConversations with date filters": "await client.DeleteAgentConversationsAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"2024-01-01\",\n  \"2024-06-30\"\n);"
+    },
+    "deleteConversation": {
+      "default": "await client.DeleteConversationAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"test-conversation-id\"\n);"
+    },
+    "deleteProvider": {
+      "default": "await client.DeleteProviderAsync(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "deleteUserData": {
+      "default": "await client.DeleteUserDataAsync(\"test-user-token\");"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "var response = await client.ExportConversationsAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "exportConversations with date filters": "var response = await client.ExportConversationsAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"2024-01-01\",\n  \"2024-12-31\"\n);"
+    },
+    "getAgent": {
+      "getAgent": "var response = await client.GetAgentAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "e2e get agent": "var response = await client.GetAgentAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "var response = await client.GetApplicationConfigurationAsync();",
+      "e2e getApplicationConfiguration": "var response = await client.GetApplicationConfigurationAsync();"
+    },
+    "getConversation": {
+      "default": "var response = await client.GetConversationAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"test-conversation-id\"\n);"
+    },
+    "getProvider": {
+      "getProvider": "var response = await client.GetProviderAsync(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");",
+      "e2e get provider": "var response = await client.GetProviderAsync(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "getUserData": {
+      "default": "var response = await client.GetUserDataAsync(\"test-user-token\");"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "await client.InvalidateAgentCacheAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "invalidateAgentCache with before date": "await client.InvalidateAgentCacheAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-12-01\");"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "var response = await client.ListAgentConversationsAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "listAgentConversations with all parameters": "var response = await client.ListAgentConversationsAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  2,\n  10,\n  null\n);"
+    },
+    "listAgents": {
+      "list agents with no params": "var response = await client.ListAgentsAsync();",
+      "list agents with all parameters": "var response = await client.ListAgentsAsync(2, 5, \"5e33d805-7892-4329-bda7-b524dc3fd04a\");",
+      "e2e list agents": "var response = await client.ListAgentsAsync(1, 2, null);"
+    },
+    "listModels": {
+      "listModels": "var response = await client.ListModelsAsync();",
+      "e2e list models": "var response = await client.ListModelsAsync();"
+    },
+    "listProviderModels": {
+      "default": "var response = await client.ListProviderModelsAsync(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "listProviders": {
+      "listProviders with no params": "var response = await client.ListProvidersAsync();",
+      "listProviders with pagination": "var response = await client.ListProvidersAsync(2, 5);",
+      "e2e list providers": "var response = await client.ListProvidersAsync(1, 2);"
+    },
+    "publishAgent": {
+      "default": "var response = await client.PublishAgentAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "setClientApiKey": {
+      "default": "client.SetClientApiKey(\"updated-api-key\");"
+    },
+    "unpublishAgent": {
+      "default": "var response = await client.UnpublishAgentAsync(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "var response = await client.UpdateAgentAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  new AgentConfigUpdate { Name = \"updated-agent-name\" }\n);",
+      "updateAgent with all parameters": "var response = await client.UpdateAgentAsync(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  new AgentConfigUpdate\n  {\n    Name = \"updated-agent\",\n    Description = \"Updated description\",\n    ProviderId = \"new-provider-id\",\n    Model = \"gpt-4o\",\n    Instructions = \"Updated instructions.\",\n    Config = new Dictionary<string, object> { { \"temperature\", 0.5 } },\n    Tools = new List<ItemsUnion> { new ItemsUnion(new StartPart { Type = \"start\" }) },\n  }\n);"
+    },
+    "updateConfiguration": {
+      "default": "var response = await client.UpdateConfigurationAsync(\n  new ApplicationConfigPatch { MaxRetentionDays = 30 }\n);"
+    },
+    "updateProvider": {
+      "updateProvider": "var response = await client.UpdateProviderAsync(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  new ProviderAuthenticationPatch { Name = \"Updated Provider Name\" }\n);",
+      "updateProvider with input": "var response = await client.UpdateProviderAsync(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  new ProviderAuthenticationPatch\n  {\n    Name = \"Updated Provider\",\n    Input = new ProviderInput(new OpenAIProviderInput { ApiKey = \"sk-new-key-5678\" }),\n  }\n);"
+    },
+    "init": {
+      "default": "var client = new AgentStudioClient(\n  new AgentStudioConfig(\n    \"ALGOLIA_APPLICATION_ID\",\n    \"ALGOLIA_API_KEY\",\n    \"ALGOLIA_APPLICATION_REGION\"\n  )\n);"
+    }
+  },
+  "dart": {},
+  "go": {
+    "import": {
+      "default": "import (\n\tagentStudio \"github.com/algolia/algoliasearch-client-go/v4/algolia/agent-studio\""
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "response, err := client.CreateAgent(client.NewApiCreateAgentRequest(\n\n  agentStudio.NewEmptyAgentConfigCreate().SetName(\"test-agent\").SetInstructions(\"You are a helpful assistant.\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createAgent with all parameters": "response, err := client.CreateAgent(client.NewApiCreateAgentRequest(\n  agentStudio.NewEmptyAgentConfigCreate().\n    SetName(\"test-agent\").\n    SetDescription(\"A test agent for CTS\").\n    SetProviderId(\"5e33d805-7892-4329-bda7-b524dc3fd04a\").\n    SetModel(\"gpt-4\").\n    SetInstructions(\"You are a helpful assistant.\").\n    SetConfig(map[string]any{\"sendUsage\": true, \"sendReasoning\": true, \"temperature\": 0.7, \"max_tokens\": 1500}).\n    SetTools(\n      []agentStudio.ItemsUnion{*agentStudio.StartPartAsItemsUnion(\n        agentStudio.NewEmptyStartPart().SetType(\"start\"))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "response, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", agentStudio.CompatibilityMode(\"ai-sdk-4\"),\n  agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n    []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n      agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello, how are you?\"))}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createAgentCompletion with v5 messages and all query params": "response, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", agentStudio.CompatibilityMode(\"ai-sdk-5\"),\n  agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(\n    []agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(\n      agentStudio.NewEmptyUserMessageV5().SetRole(\"user\").SetParts(\n        []agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType(\"text\").SetText(\"What is Algolia?\")}))})).SetId(\"test-conversation-id\")).WithStream(false).WithCache(false).WithMemory(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createAgentCompletion with test configuration": "response, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", agentStudio.CompatibilityMode(\"ai-sdk-4\"),\n  agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n    []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n      agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello\"))})).SetConfiguration(\n    agentStudio.NewEmptyAgentTestConfiguration().\n      SetInstructions(\"Test instructions override\").\n      SetConfig(map[string]any{\"temperature\": 0.2}).\n      SetTools(\n        []agentStudio.ItemsUnion{*agentStudio.StartPartAsItemsUnion(\n          agentStudio.NewEmptyStartPart().SetType(\"start\"))}),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My OpenAI Provider\").\n    SetProviderName(agentStudio.ProviderName(\"openai\")).\n    SetInput(agentStudio.OpenAIProviderInputAsProviderInput(\n      agentStudio.NewEmptyOpenAIProviderInput().SetApiKey(\"sk-test-key-1234\"))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createProvider with Azure OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My Azure Provider\").\n    SetProviderName(agentStudio.ProviderName(\"azure_openai\")).\n    SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(\n      agentStudio.NewEmptyAzureOpenAIProviderInput().\n        SetApiKey(\"az-test-key-5678\").\n        SetAzureEndpoint(\"https://my-resource.openai.azure.com\").\n        SetAzureDeployment(\"gpt-4o\"),\n    ),\n    ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow del method for a custom path with all parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow get method for a custom path with all parameters": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters with space\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions should be escaped too": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/all\",\n).WithParameters(map[string]any{\"query\": \"to be overridden\"}), agentStudio.WithQueryParam(\"query\", \"parameters with space\"), agentStudio.WithQueryParam(\"and an array\",\n  []string{\"array\", \"with spaces\"}), agentStudio.WithHeaderParam(\"x-header-1\", \"spaces are left alone\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow post method for a custom path with all parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default query parameters": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"query\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges query parameters with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"query2\", \"myQueryParameter\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions can override default headers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions merges headers with default ones": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithHeaderParam(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"isItWorking\", true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"myParam\", 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of string": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"myParam\",\n  []string{\"b and c\", \"d\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of booleans": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"myParam\",\n  []bool{true, true, false}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "requestOptions queryParameters accepts list of integers": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/requestOptions\",\n).WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"facet\": \"filters\"}), agentStudio.WithQueryParam(\"myParam\",\n  []int32{1, 2}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "allow put method for a custom path with all parameters": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/all\").WithParameters(map[string]any{\"query\": \"parameters\"}).WithBody(map[string]any{\"body\": \"parameters\"}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteAgent": {
+      "default": "err = client.DeleteAgent(client.NewApiDeleteAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "deleteAgentConversations with date filters": "err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-06-30\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteConversation": {
+      "default": "err = client.DeleteConversation(client.NewApiDeleteConversationRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteProvider": {
+      "default": "err = client.DeleteProvider(client.NewApiDeleteProviderRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "deleteUserData": {
+      "default": "err = client.DeleteUserData(client.NewApiDeleteUserDataRequest(\n  \"test-user-token\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "exportConversations with date filters": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getAgent": {
+      "getAgent": "response, err := client.GetAgent(client.NewApiGetAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e get agent": "response, err := client.GetAgent(client.NewApiGetAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "response, err := client.GetApplicationConfiguration()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e getApplicationConfiguration": "response, err := client.GetApplicationConfiguration()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getConversation": {
+      "default": "response, err := client.GetConversation(client.NewApiGetConversationRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getProvider": {
+      "getProvider": "response, err := client.GetProvider(client.NewApiGetProviderRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e get provider": "response, err := client.GetProvider(client.NewApiGetProviderRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "getUserData": {
+      "default": "response, err := client.GetUserData(client.NewApiGetUserDataRequest(\n  \"test-user-token\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "err = client.InvalidateAgentCache(client.NewApiInvalidateAgentCacheRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "invalidateAgentCache with before date": "err = client.InvalidateAgentCache(client.NewApiInvalidateAgentCacheRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\").WithBefore(\"2024-12-01\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "listAgentConversations with all parameters": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\").WithPage(2).WithLimit(10))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listAgents": {
+      "list agents with no params": "response, err := client.ListAgents(client.NewApiListAgentsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "list agents with all parameters": "response, err := client.ListAgents(\n  client.NewApiListAgentsRequest().WithPage(2).WithLimit(5).WithProviderId(\"5e33d805-7892-4329-bda7-b524dc3fd04a\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e list agents": "response, err := client.ListAgents(client.NewApiListAgentsRequest().WithPage(1).WithLimit(2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listModels": {
+      "listModels": "response, err := client.ListModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e list models": "response, err := client.ListModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listProviderModels": {
+      "default": "response, err := client.ListProviderModels(client.NewApiListProviderModelsRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listProviders": {
+      "listProviders with no params": "response, err := client.ListProviders(client.NewApiListProvidersRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "listProviders with pagination": "response, err := client.ListProviders(client.NewApiListProvidersRequest().WithPage(2).WithLimit(5))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "e2e list providers": "response, err := client.ListProviders(client.NewApiListProvidersRequest().WithPage(1).WithLimit(2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "publishAgent": {
+      "default": "response, err := client.PublishAgent(client.NewApiPublishAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "setClientApiKey": {
+      "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "unpublishAgent": {
+      "default": "response, err := client.UnpublishAgent(client.NewApiUnpublishAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "response, err := client.UpdateAgent(client.NewApiUpdateAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  agentStudio.NewEmptyAgentConfigUpdate().SetName(\"updated-agent-name\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "updateAgent with all parameters": "response, err := client.UpdateAgent(client.NewApiUpdateAgentRequest(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  agentStudio.NewEmptyAgentConfigUpdate().\n    SetName(\"updated-agent\").\n    SetDescription(\"Updated description\").\n    SetProviderId(\"new-provider-id\").\n    SetModel(\"gpt-4o\").\n    SetInstructions(\"Updated instructions.\").\n    SetConfig(map[string]any{\"temperature\": 0.5}).\n    SetTools(\n      []agentStudio.ItemsUnion{*agentStudio.StartPartAsItemsUnion(\n        agentStudio.NewEmptyStartPart().SetType(\"start\"))}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "updateConfiguration": {
+      "default": "response, err := client.UpdateConfiguration(client.NewApiUpdateConfigurationRequest(\n\n  agentStudio.NewEmptyApplicationConfigPatch().SetMaxRetentionDays(30)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "updateProvider": {
+      "updateProvider": "response, err := client.UpdateProvider(client.NewApiUpdateProviderRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  agentStudio.NewEmptyProviderAuthenticationPatch().SetName(\"Updated Provider Name\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "updateProvider with input": "response, err := client.UpdateProvider(client.NewApiUpdateProviderRequest(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  agentStudio.NewEmptyProviderAuthenticationPatch().SetName(\"Updated Provider\").SetInput(agentStudio.OpenAIProviderInputAsProviderInput(\n    agentStudio.NewEmptyOpenAIProviderInput().SetApiKey(\"sk-new-key-5678\")))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "init": {
+      "default": "client, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", agentStudio.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.AgentStudioClient;\nimport com.algolia.config.*;"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "AgentWithVersionResponse response = client.createAgent(\n  new AgentConfigCreate().setName(\"test-agent\").setInstructions(\"You are a helpful assistant.\")\n);",
+      "createAgent with all parameters": "AgentWithVersionResponse response = client.createAgent(\n  new AgentConfigCreate()\n    .setName(\"test-agent\")\n    .setDescription(\"A test agent for CTS\")\n    .setProviderId(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")\n    .setModel(\"gpt-4\")\n    .setInstructions(\"You are a helpful assistant.\")\n    .setConfig(\n      new HashMap() {\n        {\n          put(\"sendUsage\", true);\n          put(\"sendReasoning\", true);\n          put(\"temperature\", 0.7);\n          put(\"max_tokens\", 1500);\n        }\n      }\n    )\n    .setTools(Arrays.asList(new StartPart().setType(\"start\")))\n);"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "AgentCompletionResponse response = client.createAgentCompletion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  CompatibilityMode.AI_SDK_4,\n  new AgentCompletionRequest().setMessages(\n    MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole(\"user\").setContent(\"Hello, how are you?\")))\n  )\n);",
+      "createAgentCompletion with v5 messages and all query params": "AgentCompletionResponse response = client.createAgentCompletion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  CompatibilityMode.AI_SDK_5,\n  new AgentCompletionRequest()\n    .setMessages(\n      MessagesUnion.ofListOfMessageV5(\n        Arrays.asList(\n          new UserMessageV5().setRole(\"user\").setParts(Arrays.asList(new TextPartV5().setType(\"text\").setText(\"What is Algolia?\")))\n        )\n      )\n    )\n    .setId(\"test-conversation-id\"),\n  false,\n  false,\n  false\n);",
+      "createAgentCompletion with test configuration": "AgentCompletionResponse response = client.createAgentCompletion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  CompatibilityMode.AI_SDK_4,\n  new AgentCompletionRequest()\n    .setMessages(MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole(\"user\").setContent(\"Hello\"))))\n    .setConfiguration(\n      new AgentTestConfiguration()\n        .setInstructions(\"Test instructions override\")\n        .setConfig(\n          new HashMap() {\n            {\n              put(\"temperature\", 0.2);\n            }\n          }\n        )\n        .setTools(Arrays.asList(new StartPart().setType(\"start\")))\n    )\n);"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "ProviderAuthenticationResponse response = client.createProvider(\n  new ProviderAuthenticationCreate()\n    .setName(\"My OpenAI Provider\")\n    .setProviderName(ProviderName.OPENAI)\n    .setInput(new OpenAIProviderInput().setApiKey(\"sk-test-key-1234\"))\n);",
+      "createProvider with Azure OpenAI": "ProviderAuthenticationResponse response = client.createProvider(\n  new ProviderAuthenticationCreate()\n    .setName(\"My Azure Provider\")\n    .setProviderName(ProviderName.AZURE_OPENAI)\n    .setInput(\n      new AzureOpenAIProviderInput()\n        .setApiKey(\"az-test-key-5678\")\n        .setAzureEndpoint(\"https://my-resource.openai.azure.com\")\n        .setAzureDeployment(\"gpt-4o\")\n    )\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
+      "allow del method for a custom path with all parameters": "Object response = client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "Object response = client.customGet(\"test/minimal\");",
+      "allow get method for a custom path with all parameters": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters with space\");\n    }\n  }\n);",
+      "requestOptions should be escaped too": "Object response = client.customGet(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"to be overridden\");\n    }\n  },\n  new RequestOptions()\n    .addExtraQueryParameters(\"query\", \"parameters with space\")\n    .addExtraQueryParameters(\"and an array\", Arrays.asList(\"array\", \"with spaces\"))\n    .addExtraHeader(\"x-header-1\", \"spaces are left alone\")\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "Object response = client.customPost(\"test/minimal\");",
+      "allow post method for a custom path with all parameters": "Object response = client.customPost(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);",
+      "requestOptions can override default query parameters": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query\", \"myQueryParameter\")\n);",
+      "requestOptions merges query parameters with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"query2\", \"myQueryParameter\")\n);",
+      "requestOptions can override default headers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions merges headers with default ones": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n);",
+      "requestOptions queryParameters accepts booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"isItWorking\", true)\n);",
+      "requestOptions queryParameters accepts integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", 2)\n);",
+      "requestOptions queryParameters accepts list of string": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(\"b and c\", \"d\"))\n);",
+      "requestOptions queryParameters accepts list of booleans": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(true, true, false))\n);",
+      "requestOptions queryParameters accepts list of integers": "Object response = client.customPost(\n  \"test/requestOptions\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"facet\", \"filters\");\n    }\n  },\n  new RequestOptions().addExtraQueryParameters(\"myParam\", Arrays.asList(1, 2))\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "Object response = client.customPut(\"test/minimal\");",
+      "allow put method for a custom path with all parameters": "Object response = client.customPut(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  },\n  new HashMap() {\n    {\n      put(\"body\", \"parameters\");\n    }\n  }\n);"
+    },
+    "deleteAgent": {
+      "default": "client.deleteAgent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "client.deleteAgentConversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "deleteAgentConversations with date filters": "client.deleteAgentConversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-01-01\", \"2024-06-30\");"
+    },
+    "deleteConversation": {
+      "default": "client.deleteConversation(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\");"
+    },
+    "deleteProvider": {
+      "default": "client.deleteProvider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "deleteUserData": {
+      "default": "client.deleteUserData(\"test-user-token\");"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "List response = client.exportConversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "exportConversations with date filters": "List response = client.exportConversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-01-01\", \"2024-12-31\");"
+    },
+    "getAgent": {
+      "getAgent": "AgentWithVersionResponse response = client.getAgent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "e2e get agent": "AgentWithVersionResponse response = client.getAgent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "ApplicationConfigResponse response = client.getApplicationConfiguration();",
+      "e2e getApplicationConfiguration": "ApplicationConfigResponse response = client.getApplicationConfiguration();"
+    },
+    "getConversation": {
+      "default": "ConversationFullResponse response = client.getConversation(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\");"
+    },
+    "getProvider": {
+      "getProvider": "ProviderAuthenticationResponse response = client.getProvider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");",
+      "e2e get provider": "ProviderAuthenticationResponse response = client.getProvider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "getUserData": {
+      "default": "UserDataResponse response = client.getUserData(\"test-user-token\");"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "client.invalidateAgentCache(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "invalidateAgentCache with before date": "client.invalidateAgentCache(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-12-01\");"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "PaginatedConversationsResponse response = client.listAgentConversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");",
+      "listAgentConversations with all parameters": "PaginatedConversationsResponse response = client.listAgentConversations(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  2,\n  10,\n  null\n);"
+    },
+    "listAgents": {
+      "list agents with no params": "PaginatedAgentsResponse response = client.listAgents();",
+      "list agents with all parameters": "PaginatedAgentsResponse response = client.listAgents(2, 5, \"5e33d805-7892-4329-bda7-b524dc3fd04a\");",
+      "e2e list agents": "PaginatedAgentsResponse response = client.listAgents(1, 2, null);"
+    },
+    "listModels": {
+      "listModels": "Map response = client.listModels();",
+      "e2e list models": "Map response = client.listModels();"
+    },
+    "listProviderModels": {
+      "default": "List response = client.listProviderModels(\"5e33d805-7892-4329-bda7-b524dc3fd04a\");"
+    },
+    "listProviders": {
+      "listProviders with no params": "PaginatedProviderAuthenticationsResponse response = client.listProviders();",
+      "listProviders with pagination": "PaginatedProviderAuthenticationsResponse response = client.listProviders(2, 5);",
+      "e2e list providers": "PaginatedProviderAuthenticationsResponse response = client.listProviders(1, 2);"
+    },
+    "publishAgent": {
+      "default": "AgentWithVersionResponse response = client.publishAgent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\"updated-api-key\");"
+    },
+    "unpublishAgent": {
+      "default": "AgentWithVersionResponse response = client.unpublishAgent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\");"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "AgentWithVersionResponse response = client.updateAgent(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  new AgentConfigUpdate().setName(\"updated-agent-name\")\n);",
+      "updateAgent with all parameters": "AgentWithVersionResponse response = client.updateAgent(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  new AgentConfigUpdate()\n    .setName(\"updated-agent\")\n    .setDescription(\"Updated description\")\n    .setProviderId(\"new-provider-id\")\n    .setModel(\"gpt-4o\")\n    .setInstructions(\"Updated instructions.\")\n    .setConfig(\n      new HashMap() {\n        {\n          put(\"temperature\", 0.5);\n        }\n      }\n    )\n    .setTools(Arrays.asList(new StartPart().setType(\"start\")))\n);"
+    },
+    "updateConfiguration": {
+      "default": "ApplicationConfigResponse response = client.updateConfiguration(new ApplicationConfigPatch().setMaxRetentionDays(30));"
+    },
+    "updateProvider": {
+      "updateProvider": "ProviderAuthenticationResponse response = client.updateProvider(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  new ProviderAuthenticationPatch().setName(\"Updated Provider Name\")\n);",
+      "updateProvider with input": "ProviderAuthenticationResponse response = client.updateProvider(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  new ProviderAuthenticationPatch().setName(\"Updated Provider\").setInput(new OpenAIProviderInput().setApiKey(\"sk-new-key-5678\"))\n);"
+    },
+    "init": {
+      "default": "AgentStudioClient client = new AgentStudioClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\");"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { agentStudioClient } from '@algolia/agent-studio';"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "const response = await client.createAgent({ name: 'test-agent', instructions: 'You are a helpful assistant.' });",
+      "createAgent with all parameters": "const response = await client.createAgent({\n  name: 'test-agent',\n  description: 'A test agent for CTS',\n  providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a',\n  model: 'gpt-4',\n  instructions: 'You are a helpful assistant.',\n  config: { sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500 },\n  tools: [{ type: 'start' }],\n});"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "const response = await client.createAgentCompletion({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  compatibilityMode: 'ai-sdk-4',\n  agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },\n});",
+      "createAgentCompletion with v5 messages and all query params": "const response = await client.createAgentCompletion({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  compatibilityMode: 'ai-sdk-5',\n  agentCompletionRequest: {\n    messages: [{ role: 'user', parts: [{ type: 'text', text: 'What is Algolia?' }] }],\n    id: 'test-conversation-id',\n  },\n  stream: false,\n  cache: false,\n  memory: false,\n});",
+      "createAgentCompletion with test configuration": "const response = await client.createAgentCompletion({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  compatibilityMode: 'ai-sdk-4',\n  agentCompletionRequest: {\n    messages: [{ role: 'user', content: 'Hello' }],\n    configuration: {\n      instructions: 'Test instructions override',\n      config: { temperature: 0.2 },\n      tools: [{ type: 'start' }],\n    },\n  },\n});"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "const response = await client.createProvider({\n  name: 'My OpenAI Provider',\n  providerName: 'openai',\n  input: { apiKey: 'sk-test-key-1234' },\n});",
+      "createProvider with Azure OpenAI": "const response = await client.createProvider({\n  name: 'My Azure Provider',\n  providerName: 'azure_openai',\n  input: {\n    apiKey: 'az-test-key-5678',\n    azureEndpoint: 'https://my-resource.openai.azure.com',\n    azureDeployment: 'gpt-4o',\n  },\n});"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
+      "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
+      "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overridden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
+      "allow post method for a custom path with all parameters": "const response = await client.customPost({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});",
+      "requestOptions can override default query parameters": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query: 'myQueryParameter' },\n  },\n);",
+      "requestOptions merges query parameters with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query2: 'myQueryParameter' },\n  },\n);",
+      "requestOptions can override default headers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions merges headers with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions queryParameters accepts booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { isItWorking: true },\n  },\n);",
+      "requestOptions queryParameters accepts integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: 2 },\n  },\n);",
+      "requestOptions queryParameters accepts list of string": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: ['b and c', 'd'] },\n  },\n);",
+      "requestOptions queryParameters accepts list of booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [true, true, false] },\n  },\n);",
+      "requestOptions queryParameters accepts list of integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [1, 2] },\n  },\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
+      "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
+    },
+    "deleteAgent": {
+      "default": "await client.deleteAgent({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "await client.deleteAgentConversations({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });",
+      "deleteAgentConversations with date filters": "await client.deleteAgentConversations({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  startDate: '2024-01-01',\n  endDate: '2024-06-30',\n});"
+    },
+    "deleteConversation": {
+      "default": "await client.deleteConversation({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  conversationId: 'test-conversation-id',\n});"
+    },
+    "deleteProvider": {
+      "default": "await client.deleteProvider({ providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a' });"
+    },
+    "deleteUserData": {
+      "default": "await client.deleteUserData({ userToken: 'test-user-token' });"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "const response = await client.exportConversations({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });",
+      "exportConversations with date filters": "const response = await client.exportConversations({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n});"
+    },
+    "getAgent": {
+      "getAgent": "const response = await client.getAgent({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });",
+      "e2e get agent": "const response = await client.getAgent({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "const response = await client.getApplicationConfiguration();",
+      "e2e getApplicationConfiguration": "const response = await client.getApplicationConfiguration();"
+    },
+    "getConversation": {
+      "default": "const response = await client.getConversation({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  conversationId: 'test-conversation-id',\n});"
+    },
+    "getProvider": {
+      "getProvider": "const response = await client.getProvider({ providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a' });",
+      "e2e get provider": "const response = await client.getProvider({ providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a' });"
+    },
+    "getUserData": {
+      "default": "const response = await client.getUserData({ userToken: 'test-user-token' });"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "await client.invalidateAgentCache({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });",
+      "invalidateAgentCache with before date": "await client.invalidateAgentCache({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff', before: '2024-12-01' });"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "const response = await client.listAgentConversations({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });",
+      "listAgentConversations with all parameters": "const response = await client.listAgentConversations({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n  page: 2,\n  limit: 10,\n});"
+    },
+    "listAgents": {
+      "list agents with no params": "const response = await client.listAgents();",
+      "list agents with all parameters": "const response = await client.listAgents({ page: 2, limit: 5, providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a' });",
+      "e2e list agents": "const response = await client.listAgents({ page: 1, limit: 2 });"
+    },
+    "listModels": {
+      "listModels": "const response = await client.listModels();",
+      "e2e list models": "const response = await client.listModels();"
+    },
+    "listProviderModels": {
+      "default": "const response = await client.listProviderModels({ providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a' });"
+    },
+    "listProviders": {
+      "listProviders with no params": "const response = await client.listProviders();",
+      "listProviders with pagination": "const response = await client.listProviders({ page: 2, limit: 5 });",
+      "e2e list providers": "const response = await client.listProviders({ page: 1, limit: 2 });"
+    },
+    "publishAgent": {
+      "default": "const response = await client.publishAgent({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "unpublishAgent": {
+      "default": "const response = await client.unpublishAgent({ agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff' });"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "const response = await client.updateAgent({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  agentConfigUpdate: { name: 'updated-agent-name' },\n});",
+      "updateAgent with all parameters": "const response = await client.updateAgent({\n  agentId: '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n  agentConfigUpdate: {\n    name: 'updated-agent',\n    description: 'Updated description',\n    providerId: 'new-provider-id',\n    model: 'gpt-4o',\n    instructions: 'Updated instructions.',\n    config: { temperature: 0.5 },\n    tools: [{ type: 'start' }],\n  },\n});"
+    },
+    "updateConfiguration": {
+      "default": "const response = await client.updateConfiguration({ maxRetentionDays: 30 });"
+    },
+    "updateProvider": {
+      "updateProvider": "const response = await client.updateProvider({\n  providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a',\n  providerAuthenticationPatch: { name: 'Updated Provider Name' },\n});",
+      "updateProvider with input": "const response = await client.updateProvider({\n  providerId: '5e33d805-7892-4329-bda7-b524dc3fd04a',\n  providerAuthenticationPatch: { name: 'Updated Provider', input: { apiKey: 'sk-new-key-5678' } },\n});"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
+  "kotlin": {
+    "createAgent": {
+      "createAgent with minimal parameters": "var response =\n  client.createAgent(\n    agentConfigCreate =\n      AgentConfigCreate(name = \"test-agent\", instructions = \"You are a helpful assistant.\")\n  )",
+      "createAgent with all parameters": "var response =\n  client.createAgent(\n    agentConfigCreate =\n      AgentConfigCreate(\n        name = \"test-agent\",\n        description = \"A test agent for CTS\",\n        providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n        model = \"gpt-4\",\n        instructions = \"You are a helpful assistant.\",\n        config =\n          buildJsonObject {\n            put(\"sendUsage\", JsonPrimitive(true))\n            put(\"sendReasoning\", JsonPrimitive(true))\n            put(\"temperature\", JsonPrimitive(0.7))\n            put(\"max_tokens\", JsonPrimitive(1500))\n          },\n        tools = listOf(StartPart(type = \"start\")),\n      )\n  )"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "var response =\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-4\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV4(\n            listOf(UserMessageV4(role = \"user\", content = \"Hello, how are you?\"))\n          )\n      ),\n  )",
+      "createAgentCompletion with v5 messages and all query params": "var response =\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-5\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV5(\n            listOf(\n              UserMessageV5(\n                role = \"user\",\n                parts = listOf(TextPartV5(type = \"text\", text = \"What is Algolia?\")),\n              )\n            )\n          ),\n        id = \"test-conversation-id\",\n      ),\n    stream = false,\n    cache = false,\n    memory = false,\n  )",
+      "createAgentCompletion with test configuration": "var response =\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-4\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV4(\n            listOf(UserMessageV4(role = \"user\", content = \"Hello\"))\n          ),\n        configuration =\n          AgentTestConfiguration(\n            instructions = \"Test instructions override\",\n            config = buildJsonObject { put(\"temperature\", JsonPrimitive(0.2)) },\n            tools = listOf(StartPart(type = \"start\")),\n          ),\n      ),\n  )"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "var response =\n  client.createProvider(\n    providerAuthenticationCreate =\n      ProviderAuthenticationCreate(\n        name = \"My OpenAI Provider\",\n        providerName = ProviderName.entries.first { it.value == \"openai\" },\n        input = OpenAIProviderInput(apiKey = \"sk-test-key-1234\"),\n      )\n  )",
+      "createProvider with Azure OpenAI": "var response =\n  client.createProvider(\n    providerAuthenticationCreate =\n      ProviderAuthenticationCreate(\n        name = \"My Azure Provider\",\n        providerName = ProviderName.entries.first { it.value == \"azure_openai\" },\n        input =\n          AzureOpenAIProviderInput(\n            apiKey = \"az-test-key-5678\",\n            azureEndpoint = \"https://my-resource.openai.azure.com\",\n            azureDeployment = \"gpt-4o\",\n          ),\n      )\n  )"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "var response =\n  client.customDelete(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters\"))"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "var response = client.customGet(path = \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "var response =\n  client.customGet(path = \"test/all\", parameters = mapOf(\"query\" to \"parameters with space\"))",
+      "requestOptions should be escaped too": "var response =\n  client.customGet(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"to be overridden\"),\n    requestOptions =\n      RequestOptions(\n        urlParameters =\n          buildMap {\n            put(\"query\", \"parameters with space\")\n            put(\"and an array\", listOf(\"array\", \"with spaces\"))\n          },\n        headers = buildMap { put(\"x-header-1\", \"spaces are left alone\") },\n      ),\n  )"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "var response = client.customPost(path = \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "var response =\n  client.customPost(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"body\", JsonPrimitive(\"parameters\")) },\n  )",
+      "requestOptions can override default query parameters": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"query\", \"myQueryParameter\") }),\n  )",
+      "requestOptions merges query parameters with default ones": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"query2\", \"myQueryParameter\") }),\n  )",
+      "requestOptions can override default headers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(headers = buildMap { put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\") }),\n  )",
+      "requestOptions merges headers with default ones": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(headers = buildMap { put(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\") }),\n  )",
+      "requestOptions queryParameters accepts booleans": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"isItWorking\", true) }),\n  )",
+      "requestOptions queryParameters accepts integers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"myParam\", 2) }),\n  )",
+      "requestOptions queryParameters accepts list of string": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(\"b and c\", \"d\")) }),\n  )",
+      "requestOptions queryParameters accepts list of booleans": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions =\n      RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(true, true, false)) }),\n  )",
+      "requestOptions queryParameters accepts list of integers": "var response =\n  client.customPost(\n    path = \"test/requestOptions\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"facet\", JsonPrimitive(\"filters\")) },\n    requestOptions = RequestOptions(urlParameters = buildMap { put(\"myParam\", listOf(1, 2)) }),\n  )"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "var response = client.customPut(path = \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "var response =\n  client.customPut(\n    path = \"test/all\",\n    parameters = mapOf(\"query\" to \"parameters\"),\n    body = buildJsonObject { put(\"body\", JsonPrimitive(\"parameters\")) },\n  )"
+    },
+    "deleteAgent": {
+      "default": "client.deleteAgent(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "client.deleteAgentConversations(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "deleteAgentConversations with date filters": "client.deleteAgentConversations(\n  agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  startDate = \"2024-01-01\",\n  endDate = \"2024-06-30\",\n)"
+    },
+    "deleteConversation": {
+      "default": "client.deleteConversation(\n  agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  conversationId = \"test-conversation-id\",\n)"
+    },
+    "deleteProvider": {
+      "default": "client.deleteProvider(providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "deleteUserData": {
+      "default": "client.deleteUserData(userToken = \"test-user-token\")"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "var response = client.exportConversations(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "exportConversations with date filters": "var response =\n  client.exportConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n  )"
+    },
+    "getAgent": {
+      "getAgent": "var response = client.getAgent(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "e2e get agent": "var response = client.getAgent(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "var response = client.getApplicationConfiguration()",
+      "e2e getApplicationConfiguration": "var response = client.getApplicationConfiguration()"
+    },
+    "getConversation": {
+      "default": "var response =\n  client.getConversation(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversationId = \"test-conversation-id\",\n  )"
+    },
+    "getProvider": {
+      "getProvider": "var response = client.getProvider(providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\")",
+      "e2e get provider": "var response = client.getProvider(providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "getUserData": {
+      "default": "var response = client.getUserData(userToken = \"test-user-token\")"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "client.invalidateAgentCache(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "invalidateAgentCache with before date": "client.invalidateAgentCache(\n  agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  before = \"2024-12-01\",\n)"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "var response = client.listAgentConversations(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "listAgentConversations with all parameters": "var response =\n  client.listAgentConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n    page = 2,\n    limit = 10,\n  )"
+    },
+    "listAgents": {
+      "list agents with no params": "var response = client.listAgents()",
+      "list agents with all parameters": "var response =\n  client.listAgents(page = 2, limit = 5, providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\")",
+      "e2e list agents": "var response = client.listAgents(page = 1, limit = 2)"
+    },
+    "listModels": {
+      "listModels": "var response = client.listModels()",
+      "e2e list models": "var response = client.listModels()"
+    },
+    "listProviderModels": {
+      "default": "var response = client.listProviderModels(providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "listProviders": {
+      "listProviders with no params": "var response = client.listProviders()",
+      "listProviders with pagination": "var response = client.listProviders(page = 2, limit = 5)",
+      "e2e list providers": "var response = client.listProviders(page = 1, limit = 2)"
+    },
+    "publishAgent": {
+      "default": "var response = client.publishAgent(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
+    },
+    "unpublishAgent": {
+      "default": "var response = client.unpublishAgent(agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "var response =\n  client.updateAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate = AgentConfigUpdate(name = \"updated-agent-name\"),\n  )",
+      "updateAgent with all parameters": "var response =\n  client.updateAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate =\n      AgentConfigUpdate(\n        name = \"updated-agent\",\n        description = \"Updated description\",\n        providerId = \"new-provider-id\",\n        model = \"gpt-4o\",\n        instructions = \"Updated instructions.\",\n        config = buildJsonObject { put(\"temperature\", JsonPrimitive(0.5)) },\n        tools = listOf(StartPart(type = \"start\")),\n      ),\n  )"
+    },
+    "updateConfiguration": {
+      "default": "var response =\n  client.updateConfiguration(\n    applicationConfigPatch = ApplicationConfigPatch(maxRetentionDays = 30)\n  )"
+    },
+    "updateProvider": {
+      "updateProvider": "var response =\n  client.updateProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch = ProviderAuthenticationPatch(name = \"Updated Provider Name\"),\n  )",
+      "updateProvider with input": "var response =\n  client.updateProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch =\n      ProviderAuthenticationPatch(\n        name = \"Updated Provider\",\n        input = OpenAIProviderInput(apiKey = \"sk-new-key-5678\"),\n      ),\n  )"
+    },
+    "init": {
+      "default": "val client =\n  AgentStudioClient(\n    appId = \"ALGOLIA_APPLICATION_ID\",\n    apiKey = \"ALGOLIA_API_KEY\",\n    region = \"ALGOLIA_APPLICATION_REGION\",\n  )"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\AgentStudioClient;"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "$response = $client->createAgent(\n    ['name' => 'test-agent',\n        'instructions' => 'You are a helpful assistant.',\n    ],\n);",
+      "createAgent with all parameters": "$response = $client->createAgent(\n    ['name' => 'test-agent',\n        'description' => 'A test agent for CTS',\n        'providerId' => '5e33d805-7892-4329-bda7-b524dc3fd04a',\n        'model' => 'gpt-4',\n        'instructions' => 'You are a helpful assistant.',\n        'config' => ['sendUsage' => true,\n            'sendReasoning' => true,\n            'temperature' => 0.7,\n            'max_tokens' => 1500,\n        ],\n        'tools' => [\n            ['type' => 'start',\n            ],\n        ],\n    ],\n);"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "$response = $client->createAgentCompletion(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    'ai-sdk-4',\n    ['messages' => [\n        ['role' => 'user',\n            'content' => 'Hello, how are you?',\n        ],\n    ],\n    ],\n);",
+      "createAgentCompletion with v5 messages and all query params": "$response = $client->createAgentCompletion(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    'ai-sdk-5',\n    ['messages' => [\n        ['role' => 'user',\n            'parts' => [\n                ['type' => 'text',\n                    'text' => 'What is Algolia?',\n                ],\n            ],\n        ],\n    ],\n        'id' => 'test-conversation-id',\n    ],\n    false,\n    false,\n    false,\n);",
+      "createAgentCompletion with test configuration": "$response = $client->createAgentCompletion(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    'ai-sdk-4',\n    ['messages' => [\n        ['role' => 'user',\n            'content' => 'Hello',\n        ],\n    ],\n        'configuration' => ['instructions' => 'Test instructions override',\n            'config' => ['temperature' => 0.2,\n            ],\n            'tools' => [\n                ['type' => 'start',\n                ],\n            ],\n        ],\n    ],\n);"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "$response = $client->createProvider(\n    ['name' => 'My OpenAI Provider',\n        'providerName' => 'openai',\n        'input' => ['apiKey' => 'sk-test-key-1234',\n        ],\n    ],\n);",
+      "createProvider with Azure OpenAI": "$response = $client->createProvider(\n    ['name' => 'My Azure Provider',\n        'providerName' => 'azure_openai',\n        'input' => ['apiKey' => 'az-test-key-5678',\n            'azureEndpoint' => 'https://my-resource.openai.azure.com',\n            'azureDeployment' => 'gpt-4o',\n        ],\n    ],\n);"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
+      "allow del method for a custom path with all parameters": "$response = $client->customDelete(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n);"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
+      "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
+      "allow post method for a custom path with all parameters": "$response = $client->customPost(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);",
+      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
+      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "$response = $client->customPut(\n    'test/minimal',\n);",
+      "allow put method for a custom path with all parameters": "$response = $client->customPut(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);"
+    },
+    "deleteAgent": {
+      "default": "$client->deleteAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "$client->deleteAgentConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);",
+      "deleteAgentConversations with date filters": "$client->deleteAgentConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    '2024-01-01',\n    '2024-06-30',\n);"
+    },
+    "deleteConversation": {
+      "default": "$client->deleteConversation(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    'test-conversation-id',\n);"
+    },
+    "deleteProvider": {
+      "default": "$client->deleteProvider(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n);"
+    },
+    "deleteUserData": {
+      "default": "$client->deleteUserData(\n    'test-user-token',\n);"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "$response = $client->exportConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);",
+      "exportConversations with date filters": "$response = $client->exportConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    '2024-01-01',\n    '2024-12-31',\n);"
+    },
+    "getAgent": {
+      "getAgent": "$response = $client->getAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);",
+      "e2e get agent": "$response = $client->getAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "$response = $client->getApplicationConfiguration();",
+      "e2e getApplicationConfiguration": "$response = $client->getApplicationConfiguration();"
+    },
+    "getConversation": {
+      "default": "$response = $client->getConversation(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    'test-conversation-id',\n);"
+    },
+    "getProvider": {
+      "getProvider": "$response = $client->getProvider(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n);",
+      "e2e get provider": "$response = $client->getProvider(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n);"
+    },
+    "getUserData": {
+      "default": "$response = $client->getUserData(\n    'test-user-token',\n);"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "$client->invalidateAgentCache(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);",
+      "invalidateAgentCache with before date": "$client->invalidateAgentCache(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    '2024-12-01',\n);"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "$response = $client->listAgentConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);",
+      "listAgentConversations with all parameters": "$response = $client->listAgentConversations(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    '2024-01-01',\n    '2024-12-31',\n    2,\n    10,\n    null,\n);"
+    },
+    "listAgents": {
+      "list agents with no params": "$response = $client->listAgents();",
+      "list agents with all parameters": "$response = $client->listAgents(\n    2,\n    5,\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n);",
+      "e2e list agents": "$response = $client->listAgents(\n    1,\n    2,\n    null,\n);"
+    },
+    "listModels": {
+      "listModels": "$response = $client->listModels();",
+      "e2e list models": "$response = $client->listModels();"
+    },
+    "listProviderModels": {
+      "default": "$response = $client->listProviderModels(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n);"
+    },
+    "listProviders": {
+      "listProviders with no params": "$response = $client->listProviders();",
+      "listProviders with pagination": "$response = $client->listProviders(\n    2,\n    5,\n);",
+      "e2e list providers": "$response = $client->listProviders(\n    1,\n    2,\n);"
+    },
+    "publishAgent": {
+      "default": "$response = $client->publishAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);"
+    },
+    "setClientApiKey": {
+      "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
+    },
+    "unpublishAgent": {
+      "default": "$response = $client->unpublishAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n);"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "$response = $client->updateAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    ['name' => 'updated-agent-name',\n    ],\n);",
+      "updateAgent with all parameters": "$response = $client->updateAgent(\n    '785b14e4-61a8-4c03-8028-bf2ba3ae85ff',\n    ['name' => 'updated-agent',\n        'description' => 'Updated description',\n        'providerId' => 'new-provider-id',\n        'model' => 'gpt-4o',\n        'instructions' => 'Updated instructions.',\n        'config' => ['temperature' => 0.5,\n        ],\n        'tools' => [\n            ['type' => 'start',\n            ],\n        ],\n    ],\n);"
+    },
+    "updateConfiguration": {
+      "default": "$response = $client->updateConfiguration(\n    ['maxRetentionDays' => 30,\n    ],\n);"
+    },
+    "updateProvider": {
+      "updateProvider": "$response = $client->updateProvider(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n    ['name' => 'Updated Provider Name',\n    ],\n);",
+      "updateProvider with input": "$response = $client->updateProvider(\n    '5e33d805-7892-4329-bda7-b524dc3fd04a',\n    ['name' => 'Updated Provider',\n        'input' => ['apiKey' => 'sk-new-key-5678',\n        ],\n    ],\n);"
+    },
+    "init": {
+      "default": "$client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.agent_studio.client import AgentStudioClientSync\nfrom json import loads"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "response = client.create_agent(\n    agent_config_create={\n        \"name\": \"test-agent\",\n        \"instructions\": \"You are a helpful assistant.\",\n    },\n)",
+      "createAgent with all parameters": "response = client.create_agent(\n    agent_config_create={\n        \"name\": \"test-agent\",\n        \"description\": \"A test agent for CTS\",\n        \"providerId\": \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n        \"model\": \"gpt-4\",\n        \"instructions\": \"You are a helpful assistant.\",\n        \"config\": {\n            \"sendUsage\": True,\n            \"sendReasoning\": True,\n            \"temperature\": 0.7,\n            \"max_tokens\": 1500,\n        },\n        \"tools\": [\n            {\n                \"type\": \"start\",\n            },\n        ],\n    },\n)"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "response = client.create_agent_completion(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibility_mode=\"ai-sdk-4\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello, how are you?\",\n            },\n        ],\n    },\n)",
+      "createAgentCompletion with v5 messages and all query params": "response = client.create_agent_completion(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibility_mode=\"ai-sdk-5\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"parts\": [\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"What is Algolia?\",\n                    },\n                ],\n            },\n        ],\n        \"id\": \"test-conversation-id\",\n    },\n    stream=False,\n    cache=False,\n    memory=False,\n)",
+      "createAgentCompletion with test configuration": "response = client.create_agent_completion(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibility_mode=\"ai-sdk-4\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello\",\n            },\n        ],\n        \"configuration\": {\n            \"instructions\": \"Test instructions override\",\n            \"config\": {\n                \"temperature\": 0.2,\n            },\n            \"tools\": [\n                {\n                    \"type\": \"start\",\n                },\n            ],\n        },\n    },\n)"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "response = client.create_provider(\n    provider_authentication_create={\n        \"name\": \"My OpenAI Provider\",\n        \"providerName\": \"openai\",\n        \"input\": {\n            \"apiKey\": \"sk-test-key-1234\",\n        },\n    },\n)",
+      "createProvider with Azure OpenAI": "response = client.create_provider(\n    provider_authentication_create={\n        \"name\": \"My Azure Provider\",\n        \"providerName\": \"azure_openai\",\n        \"input\": {\n            \"apiKey\": \"az-test-key-5678\",\n            \"azureEndpoint\": \"https://my-resource.openai.azure.com\",\n            \"azureDeployment\": \"gpt-4o\",\n        },\n    },\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n)"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\n    path=\"test/minimal\",\n)",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters with space\",\n    },\n)",
+      "requestOptions should be escaped too": "response = client.custom_get(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"to be overridden\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-header-1\":\"spaces are left alone\"}\"\"\"),\n        \"query_parameters\": loads(\n            \"\"\"{\"query\":\"parameters with space\",\"and an array\":[\"array\",\"with spaces\"]}\"\"\"\n        ),\n    },\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\n    path=\"test/minimal\",\n)",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"query2\":\"myQueryParameter\"}\"\"\"),\n    },\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"headers\": loads(\"\"\"{\"x-algolia-api-key\":\"ALGOLIA_API_KEY\"}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"isItWorking\":true}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":2}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[\"b and c\",\"d\"]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[true,true,false]}\"\"\"),\n    },\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n    path=\"test/requestOptions\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"facet\": \"filters\",\n    },\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"myParam\":[1,2]}\"\"\"),\n    },\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\n    path=\"test/minimal\",\n)",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\n    path=\"test/all\",\n    parameters={\n        \"query\": \"parameters\",\n    },\n    body={\n        \"body\": \"parameters\",\n    },\n)"
+    },
+    "deleteAgent": {
+      "default": "client.delete_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "client.delete_agent_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)",
+      "deleteAgentConversations with date filters": "client.delete_agent_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-06-30\",\n)"
+    },
+    "deleteConversation": {
+      "default": "client.delete_conversation(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversation_id=\"test-conversation-id\",\n)"
+    },
+    "deleteProvider": {
+      "default": "client.delete_provider(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n)"
+    },
+    "deleteUserData": {
+      "default": "client.delete_user_data(\n    user_token=\"test-user-token\",\n)"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "response = client.export_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)",
+      "exportConversations with date filters": "response = client.export_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n)"
+    },
+    "getAgent": {
+      "getAgent": "response = client.get_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)",
+      "e2e get agent": "response = client.get_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "response = client.get_application_configuration()",
+      "e2e getApplicationConfiguration": "response = client.get_application_configuration()"
+    },
+    "getConversation": {
+      "default": "response = client.get_conversation(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversation_id=\"test-conversation-id\",\n)"
+    },
+    "getProvider": {
+      "getProvider": "response = client.get_provider(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n)",
+      "e2e get provider": "response = client.get_provider(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n)"
+    },
+    "getUserData": {
+      "default": "response = client.get_user_data(\n    user_token=\"test-user-token\",\n)"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "client.invalidate_agent_cache(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)",
+      "invalidateAgentCache with before date": "client.invalidate_agent_cache(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    before=\"2024-12-01\",\n)"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "response = client.list_agent_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)",
+      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n    page=2,\n    limit=10,\n    x_algolia_secure_user_token=None,\n)"
+    },
+    "listAgents": {
+      "list agents with no params": "response = client.list_agents()",
+      "list agents with all parameters": "response = client.list_agents(\n    page=2,\n    limit=5,\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n)",
+      "e2e list agents": "response = client.list_agents(\n    page=1,\n    limit=2,\n    provider_id=None,\n)"
+    },
+    "listModels": {
+      "listModels": "response = client.list_models()",
+      "e2e list models": "response = client.list_models()"
+    },
+    "listProviderModels": {
+      "default": "response = client.list_provider_models(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n)"
+    },
+    "listProviders": {
+      "listProviders with no params": "response = client.list_providers()",
+      "listProviders with pagination": "response = client.list_providers(\n    page=2,\n    limit=5,\n)",
+      "e2e list providers": "response = client.list_providers(\n    page=1,\n    limit=2,\n)"
+    },
+    "publishAgent": {
+      "default": "response = client.publish_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
+    },
+    "unpublishAgent": {
+      "default": "response = client.unpublish_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n)"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "response = client.update_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agent_config_update={\n        \"name\": \"updated-agent-name\",\n    },\n)",
+      "updateAgent with all parameters": "response = client.update_agent(\n    agent_id=\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agent_config_update={\n        \"name\": \"updated-agent\",\n        \"description\": \"Updated description\",\n        \"providerId\": \"new-provider-id\",\n        \"model\": \"gpt-4o\",\n        \"instructions\": \"Updated instructions.\",\n        \"config\": {\n            \"temperature\": 0.5,\n        },\n        \"tools\": [\n            {\n                \"type\": \"start\",\n            },\n        ],\n    },\n)"
+    },
+    "updateConfiguration": {
+      "default": "response = client.update_configuration(\n    application_config_patch={\n        \"maxRetentionDays\": 30,\n    },\n)"
+    },
+    "updateProvider": {
+      "updateProvider": "response = client.update_provider(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    provider_authentication_patch={\n        \"name\": \"Updated Provider Name\",\n    },\n)",
+      "updateProvider with input": "response = client.update_provider(\n    provider_id=\"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    provider_authentication_patch={\n        \"name\": \"Updated Provider\",\n        \"input\": {\n            \"apiKey\": \"sk-new-key-5678\",\n        },\n    },\n)"
+    },
+    "init": {
+      "default": "# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\n    \"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "response = client.create_agent(\n  Algolia::AgentStudio::AgentConfigCreate.new(name: \"test-agent\", instructions: \"You are a helpful assistant.\")\n)",
+      "createAgent with all parameters": "response = client.create_agent(\n  Algolia::AgentStudio::AgentConfigCreate.new(\n    name: \"test-agent\",\n    description: \"A test agent for CTS\",\n    provider_id: \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    model: \"gpt-4\",\n    instructions: \"You are a helpful assistant.\",\n    config: {sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500},\n    tools: [Algolia::AgentStudio::StartPart.new(type: \"start\")]\n  )\n)"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "response = client.create_agent_completion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"ai-sdk-4\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [Algolia::AgentStudio::UserMessageV4.new(role: \"user\", content: \"Hello, how are you?\")]\n  )\n)",
+      "createAgentCompletion with v5 messages and all query params": "response = client.create_agent_completion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"ai-sdk-5\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [\n      Algolia::AgentStudio::UserMessageV5.new(\n        role: \"user\",\n        parts: [Algolia::AgentStudio::TextPartV5.new(type: \"text\", text: \"What is Algolia?\")]\n      )\n    ],\n    id: \"test-conversation-id\"\n  ),\n  false,\n  false,\n  false\n)",
+      "createAgentCompletion with test configuration": "response = client.create_agent_completion(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"ai-sdk-4\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [Algolia::AgentStudio::UserMessageV4.new(role: \"user\", content: \"Hello\")],\n    configuration: Algolia::AgentStudio::AgentTestConfiguration.new(\n      instructions: \"Test instructions override\",\n      config: {temperature: 0.2},\n      tools: [Algolia::AgentStudio::StartPart.new(type: \"start\")]\n    )\n  )\n)"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "response = client.create_provider(\n  Algolia::AgentStudio::ProviderAuthenticationCreate.new(\n    name: \"My OpenAI Provider\",\n    provider_name: \"openai\",\n    input: Algolia::AgentStudio::OpenAIProviderInput.new(api_key: \"sk-test-key-1234\")\n  )\n)",
+      "createProvider with Azure OpenAI": "response = client.create_provider(\n  Algolia::AgentStudio::ProviderAuthenticationCreate.new(\n    name: \"My Azure Provider\",\n    provider_name: \"azure_openai\",\n    input: Algolia::AgentStudio::AzureOpenAIProviderInput.new(\n      api_key: \"az-test-key-5678\",\n      azure_endpoint: \"https://my-resource.openai.azure.com\",\n      azure_deployment: \"gpt-4o\"\n    )\n  )\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
+      "allow del method for a custom path with all parameters": "response = client.custom_delete(\"test/all\", {query: \"parameters\"})"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "response = client.custom_get(\"test/minimal\")",
+      "allow get method for a custom path with all parameters": "response = client.custom_get(\"test/all\", {query: \"parameters with space\"})",
+      "requestOptions should be escaped too": "response = client.custom_get(\n  \"test/all\",\n  {query: \"to be overridden\"},\n  {\n    :header_params => {\"x-header-1\" => \"spaces are left alone\"},\n    :query_params => JSON.parse(\n      \"{\\\"query\\\":\\\"parameters with space\\\",\\\"and an array\\\":[\\\"array\\\",\\\"with spaces\\\"]}\",\n      :symbolize_names => true\n    )\n  }\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "response = client.custom_post(\"test/minimal\")",
+      "allow post method for a custom path with all parameters": "response = client.custom_post(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})",
+      "requestOptions can override default query parameters": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions merges query parameters with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"query2\\\":\\\"myQueryParameter\\\"}\", :symbolize_names => true)}\n)",
+      "requestOptions can override default headers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions merges headers with default ones": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:header_params => {\"x-algolia-api-key\" => \"ALGOLIA_API_KEY\"}}\n)",
+      "requestOptions queryParameters accepts booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"isItWorking\\\":true}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":2}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of string": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[\\\"b and c\\\",\\\"d\\\"]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of booleans": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[true,true,false]}\", :symbolize_names => true)}\n)",
+      "requestOptions queryParameters accepts list of integers": "response = client.custom_post(\n  \"test/requestOptions\",\n  {query: \"parameters\"},\n  {facet: \"filters\"},\n  {:query_params => JSON.parse(\"{\\\"myParam\\\":[1,2]}\", :symbolize_names => true)}\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "response = client.custom_put(\"test/minimal\")",
+      "allow put method for a custom path with all parameters": "response = client.custom_put(\"test/all\", {query: \"parameters\"}, {body: \"parameters\"})"
+    },
+    "deleteAgent": {
+      "default": "client.delete_agent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "client.delete_agent_conversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "deleteAgentConversations with date filters": "client.delete_agent_conversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-01-01\", \"2024-06-30\")"
+    },
+    "deleteConversation": {
+      "default": "client.delete_conversation(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\")"
+    },
+    "deleteProvider": {
+      "default": "client.delete_provider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "deleteUserData": {
+      "default": "client.delete_user_data(\"test-user-token\")"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "response = client.export_conversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "exportConversations with date filters": "response = client.export_conversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-01-01\", \"2024-12-31\")"
+    },
+    "getAgent": {
+      "getAgent": "response = client.get_agent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "e2e get agent": "response = client.get_agent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "response = client.get_application_configuration",
+      "e2e getApplicationConfiguration": "response = client.get_application_configuration"
+    },
+    "getConversation": {
+      "default": "response = client.get_conversation(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"test-conversation-id\")"
+    },
+    "getProvider": {
+      "getProvider": "response = client.get_provider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")",
+      "e2e get provider": "response = client.get_provider(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "getUserData": {
+      "default": "response = client.get_user_data(\"test-user-token\")"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "client.invalidate_agent_cache(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "invalidateAgentCache with before date": "client.invalidate_agent_cache(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", \"2024-12-01\")"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "response = client.list_agent_conversations(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  2,\n  10,\n  nil\n)"
+    },
+    "listAgents": {
+      "list agents with no params": "response = client.list_agents",
+      "list agents with all parameters": "response = client.list_agents(2, 5, \"5e33d805-7892-4329-bda7-b524dc3fd04a\")",
+      "e2e list agents": "response = client.list_agents(1, 2, nil)"
+    },
+    "listModels": {
+      "listModels": "response = client.list_models",
+      "e2e list models": "response = client.list_models"
+    },
+    "listProviderModels": {
+      "default": "response = client.list_provider_models(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "listProviders": {
+      "listProviders with no params": "response = client.list_providers",
+      "listProviders with pagination": "response = client.list_providers(2, 5)",
+      "e2e list providers": "response = client.list_providers(1, 2)"
+    },
+    "publishAgent": {
+      "default": "response = client.publish_agent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "setClientApiKey": {
+      "default": "client.set_client_api_key(\"updated-api-key\")"
+    },
+    "unpublishAgent": {
+      "default": "response = client.unpublish_agent(\"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "response = client.update_agent(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  Algolia::AgentStudio::AgentConfigUpdate.new(name: \"updated-agent-name\")\n)",
+      "updateAgent with all parameters": "response = client.update_agent(\n  \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n  Algolia::AgentStudio::AgentConfigUpdate.new(\n    name: \"updated-agent\",\n    description: \"Updated description\",\n    provider_id: \"new-provider-id\",\n    model: \"gpt-4o\",\n    instructions: \"Updated instructions.\",\n    config: {temperature: 0.5},\n    tools: [Algolia::AgentStudio::StartPart.new(type: \"start\")]\n  )\n)"
+    },
+    "updateConfiguration": {
+      "default": "response = client.update_configuration(Algolia::AgentStudio::ApplicationConfigPatch.new(max_retention_days: 30))"
+    },
+    "updateProvider": {
+      "updateProvider": "response = client.update_provider(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  Algolia::AgentStudio::ProviderAuthenticationPatch.new(name: \"Updated Provider Name\")\n)",
+      "updateProvider with input": "response = client.update_provider(\n  \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n  Algolia::AgentStudio::ProviderAuthenticationPatch.new(\n    name: \"Updated Provider\",\n    input: Algolia::AgentStudio::OpenAIProviderInput.new(api_key: \"sk-new-key-5678\")\n  )\n)"
+    },
+    "init": {
+      "default": "client = Algolia::AgentStudioClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\", \"ALGOLIA_APPLICATION_REGION\")"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.AgentStudioClient\nimport algoliasearch.config.*"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "val response = Await.result(\n  client.createAgent(\n    agentConfigCreate = AgentConfigCreate(\n      name = \"test-agent\",\n      instructions = \"You are a helpful assistant.\"\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createAgent with all parameters": "val response = Await.result(\n  client.createAgent(\n    agentConfigCreate = AgentConfigCreate(\n      name = \"test-agent\",\n      description = Some(\"A test agent for CTS\"),\n      providerId = Some(\"5e33d805-7892-4329-bda7-b524dc3fd04a\"),\n      model = Some(\"gpt-4\"),\n      instructions = \"You are a helpful assistant.\",\n      config = Some(Map(\"sendUsage\" -> true, \"sendReasoning\" -> true, \"temperature\" -> 0.7, \"max_tokens\" -> 1500)),\n      tools = Some(\n        Seq(\n          StartPart(\n            `type` = Some(\"start\")\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-4\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = MessagesUnion(\n        Seq(\n          UserMessageV4(\n            role = Some(\"user\"),\n            content = \"Hello, how are you?\"\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createAgentCompletion with v5 messages and all query params": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-5\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = MessagesUnion(\n        Seq(\n          UserMessageV5(\n            role = Some(\"user\"),\n            parts = Some(\n              Seq(\n                TextPartV5(\n                  `type` = Some(\"text\"),\n                  text = \"What is Algolia?\"\n                )\n              )\n            )\n          )\n        )\n      ),\n      id = Some(\"test-conversation-id\")\n    ),\n    stream = Some(false),\n    cache = Some(false),\n    memory = Some(false)\n  ),\n  Duration(100, \"sec\")\n)",
+      "createAgentCompletion with test configuration": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-4\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = MessagesUnion(\n        Seq(\n          UserMessageV4(\n            role = Some(\"user\"),\n            content = \"Hello\"\n          )\n        )\n      ),\n      configuration = Some(\n        AgentTestConfiguration(\n          instructions = \"Test instructions override\",\n          config = Map(\"temperature\" -> 0.2),\n          tools = Seq(\n            StartPart(\n              `type` = Some(\"start\")\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "val response = Await.result(\n  client.createProvider(\n    providerAuthenticationCreate = ProviderAuthenticationCreate(\n      name = \"My OpenAI Provider\",\n      providerName = ProviderName.withName(\"openai\"),\n      input = OpenAIProviderInput(\n        apiKey = \"sk-test-key-1234\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createProvider with Azure OpenAI": "val response = Await.result(\n  client.createProvider(\n    providerAuthenticationCreate = ProviderAuthenticationCreate(\n      name = \"My Azure Provider\",\n      providerName = ProviderName.withName(\"azure_openai\"),\n      input = AzureOpenAIProviderInput(\n        apiKey = \"az-test-key-5678\",\n        azureEndpoint = \"https://my-resource.openai.azure.com\",\n        azureDeployment = \"gpt-4o\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow del method for a custom path with all parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\"))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow get method for a custom path with all parameters": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters with space\"))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions should be escaped too": "val response = Await.result(\n  client.customGet[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"to be overridden\")),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"parameters with space\")\n        .withQueryParameter(\"and an array\", Seq(\"array\", \"with spaces\"))\n        .withHeader(\"x-header-1\", \"spaces are left alone\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow post method for a custom path with all parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default query parameters": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges query parameters with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"query2\", \"myQueryParameter\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions can override default headers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions merges headers with default ones": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"isItWorking\", true)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", 2)\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of string": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(\"b and c\", \"d\"))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of booleans": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(true, true, false))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "requestOptions queryParameters accepts list of integers": "val response = Await.result(\n  client.customPost[JObject](\n    path = \"test/requestOptions\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"facet\", JString(\"filters\"))))),\n    requestOptions = Some(\n      RequestOptions\n        .builder()\n        .withQueryParameter(\"myParam\", Seq(1, 2))\n        .build()\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "allow put method for a custom path with all parameters": "val response = Await.result(\n  client.customPut[JObject](\n    path = \"test/all\",\n    parameters = Some(Map(\"query\" -> \"parameters\")),\n    body = Some(JObject(List(JField(\"body\", JString(\"parameters\")))))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteAgent": {
+      "default": "Await.result(\n  client.deleteAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "Await.result(\n  client.deleteAgentConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "deleteAgentConversations with date filters": "Await.result(\n  client.deleteAgentConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-06-30\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteConversation": {
+      "default": "Await.result(\n  client.deleteConversation(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversationId = \"test-conversation-id\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteProvider": {
+      "default": "Await.result(\n  client.deleteProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "deleteUserData": {
+      "default": "Await.result(\n  client.deleteUserData(\n    userToken = \"test-user-token\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "exportConversations with date filters": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getAgent": {
+      "getAgent": "val response = Await.result(\n  client.getAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e get agent": "val response = Await.result(\n  client.getAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "val response = Await.result(\n  client.getApplicationConfiguration(\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e getApplicationConfiguration": "val response = Await.result(\n  client.getApplicationConfiguration(\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getConversation": {
+      "default": "val response = Await.result(\n  client.getConversation(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversationId = \"test-conversation-id\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getProvider": {
+      "getProvider": "val response = Await.result(\n  client.getProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e get provider": "val response = Await.result(\n  client.getProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "getUserData": {
+      "default": "val response = Await.result(\n  client.getUserData(\n    userToken = \"test-user-token\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "Await.result(\n  client.invalidateAgentCache(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "invalidateAgentCache with before date": "Await.result(\n  client.invalidateAgentCache(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    before = Some(\"2024-12-01\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "listAgentConversations with all parameters": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\"),\n    page = Some(2),\n    limit = Some(10),\n    xAlgoliaSecureUserToken = None\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listAgents": {
+      "list agents with no params": "val response = Await.result(\n  client.listAgents(\n  ),\n  Duration(100, \"sec\")\n)",
+      "list agents with all parameters": "val response = Await.result(\n  client.listAgents(\n    page = Some(2),\n    limit = Some(5),\n    providerId = Some(\"5e33d805-7892-4329-bda7-b524dc3fd04a\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e list agents": "val response = Await.result(\n  client.listAgents(\n    page = Some(1),\n    limit = Some(2),\n    providerId = None\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listModels": {
+      "listModels": "val response = Await.result(\n  client.listModels(\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e list models": "val response = Await.result(\n  client.listModels(\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listProviderModels": {
+      "default": "val response = Await.result(\n  client.listProviderModels(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listProviders": {
+      "listProviders with no params": "val response = Await.result(\n  client.listProviders(\n  ),\n  Duration(100, \"sec\")\n)",
+      "listProviders with pagination": "val response = Await.result(\n  client.listProviders(\n    page = Some(2),\n    limit = Some(5)\n  ),\n  Duration(100, \"sec\")\n)",
+      "e2e list providers": "val response = Await.result(\n  client.listProviders(\n    page = Some(1),\n    limit = Some(2)\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "publishAgent": {
+      "default": "val response = Await.result(\n  client.publishAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
+    },
+    "unpublishAgent": {
+      "default": "val response = Await.result(\n  client.unpublishAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\"\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "val response = Await.result(\n  client.updateAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate = AgentConfigUpdate(\n      name = Some(\"updated-agent-name\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "updateAgent with all parameters": "val response = Await.result(\n  client.updateAgent(\n    agentId = \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate = AgentConfigUpdate(\n      name = Some(\"updated-agent\"),\n      description = Some(\"Updated description\"),\n      providerId = Some(\"new-provider-id\"),\n      model = Some(\"gpt-4o\"),\n      instructions = Some(\"Updated instructions.\"),\n      config = Some(Map(\"temperature\" -> 0.5)),\n      tools = Some(\n        Seq(\n          StartPart(\n            `type` = Some(\"start\")\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "updateConfiguration": {
+      "default": "val response = Await.result(\n  client.updateConfiguration(\n    applicationConfigPatch = ApplicationConfigPatch(\n      maxRetentionDays = Some(30)\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "updateProvider": {
+      "updateProvider": "val response = Await.result(\n  client.updateProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch = ProviderAuthenticationPatch(\n      name = Some(\"Updated Provider Name\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "updateProvider with input": "val response = Await.result(\n  client.updateProvider(\n    providerId = \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch = ProviderAuthenticationPatch(\n      name = Some(\"Updated Provider\"),\n      input = Some(\n        OpenAIProviderInput(\n          apiKey = \"sk-new-key-5678\"\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "init": {
+      "default": "val client = AgentStudioClient(\n  appId = \"ALGOLIA_APPLICATION_ID\",\n  apiKey = \"ALGOLIA_API_KEY\",\n  region = \"ALGOLIA_APPLICATION_REGION\"\n)"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import AlgoliaAgentStudio"
+    },
+    "createAgent": {
+      "createAgent with minimal parameters": "let response = try await client.createAgent(agentConfigCreate: AgentConfigCreate(\n    name: \"test-agent\",\n    instructions: \"You are a helpful assistant.\"\n))",
+      "createAgent with all parameters": "let response = try await client.createAgent(agentConfigCreate: AgentConfigCreate(\n    name: \"test-agent\",\n    description: \"A test agent for CTS\",\n    providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    model: \"gpt-4\",\n    instructions: \"You are a helpful assistant.\",\n    config: [\"sendUsage\": true, \"sendReasoning\": true, \"temperature\": 0.7, \"max_tokens\": 1500],\n    tools: [ItemsUnion.startPart(StartPart(type: \"start\"))]\n))"
+    },
+    "createAgentCompletion": {
+      "createAgentCompletion with v4 messages": "let response = try await client.createAgentCompletion(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode: CompatibilityMode.aiSdk4,\n    agentCompletionRequest: AgentCompletionRequest(messages: MessagesUnion\n        .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(\n            role: \"user\",\n            content: \"Hello, how are you?\"\n        ))]))\n)",
+      "createAgentCompletion with v5 messages and all query params": "let response = try await client.createAgentCompletion(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode: CompatibilityMode.aiSdk5,\n    agentCompletionRequest: AgentCompletionRequest(\n        messages: MessagesUnion.arrayOfMessageV5([MessageV5.userMessageV5(UserMessageV5(\n            role: \"user\",\n            parts: [TextPartV5(type: \"text\", text: \"What is Algolia?\")]\n        ))]),\n        id: \"test-conversation-id\"\n    ),\n    stream: false,\n    cache: false,\n    memory: false\n)",
+      "createAgentCompletion with test configuration": "let response = try await client.createAgentCompletion(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    compatibilityMode: CompatibilityMode.aiSdk4,\n    agentCompletionRequest: AgentCompletionRequest(\n        configuration: AgentTestConfiguration(\n            instructions: \"Test instructions override\",\n            config: [\"temperature\": 0.2],\n            tools: [ItemsUnion.startPart(StartPart(type: \"start\"))]\n        ),\n        messages: MessagesUnion.arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(\n            role: \"user\",\n            content: \"Hello\"\n        ))])\n    )\n)"
+    },
+    "createProvider": {
+      "createProvider with OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My OpenAI Provider\",\n    providerName: ProviderName.openai,\n    input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: \"sk-test-key-1234\"))\n))",
+      "createProvider with Azure OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My Azure Provider\",\n    providerName: ProviderName.azureOpenai,\n    input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(\n        apiKey: \"az-test-key-5678\",\n        azureEndpoint: \"https://my-resource.openai.azure.com\",\n        azureDeployment: \"gpt-4o\"\n    ))\n))"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
+      "allow del method for a custom path with all parameters": "let response = try await client.customDelete(path: \"test/all\", parameters: [\"query\": AnyCodable(\"parameters\")])"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "let response = try await client.customGet(path: \"test/minimal\")",
+      "allow get method for a custom path with all parameters": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters with space\")]\n)",
+      "requestOptions should be escaped too": "let response = try await client.customGet(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"to be overridden\")],\n    requestOptions: RequestOptions(\n        headers: [\"x-header-1\": \"spaces are left alone\"],\n\n        queryParameters: [\"query\": \"parameters with space\", \"and an array\": [\"array\", \"with spaces\"]]\n    )\n)"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "let response = try await client.customPost(path: \"test/minimal\")",
+      "allow post method for a custom path with all parameters": "let response = try await client.customPost(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)",
+      "requestOptions can override default query parameters": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions merges query parameters with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"query2\": \"myQueryParameter\"]\n    )\n)",
+      "requestOptions can override default headers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions merges headers with default ones": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        headers: [\"x-algolia-api-key\": \"ALGOLIA_API_KEY\"]\n    )\n)",
+      "requestOptions queryParameters accepts booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"isItWorking\": true]\n    )\n)",
+      "requestOptions queryParameters accepts integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": 2]\n    )\n)",
+      "requestOptions queryParameters accepts list of string": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [\"b and c\", \"d\"]]\n    )\n)",
+      "requestOptions queryParameters accepts list of booleans": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [true, true, false]]\n    )\n)",
+      "requestOptions queryParameters accepts list of integers": "let response = try await client.customPost(\n    path: \"test/requestOptions\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"facet\": \"filters\"],\n    requestOptions: RequestOptions(\n        queryParameters: [\"myParam\": [1, 2]]\n    )\n)"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "let response = try await client.customPut(path: \"test/minimal\")",
+      "allow put method for a custom path with all parameters": "let response = try await client.customPut(\n    path: \"test/all\",\n    parameters: [\"query\": AnyCodable(\"parameters\")],\n    body: [\"body\": \"parameters\"]\n)"
+    },
+    "deleteAgent": {
+      "default": "try await client.deleteAgent(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "deleteAgentConversations": {
+      "deleteAgentConversations without filters": "try await client.deleteAgentConversations(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "deleteAgentConversations with date filters": "try await client.deleteAgentConversations(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-06-30\"\n)"
+    },
+    "deleteConversation": {
+      "default": "try await client.deleteConversation(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversationId: \"test-conversation-id\"\n)"
+    },
+    "deleteProvider": {
+      "default": "try await client.deleteProvider(providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "deleteUserData": {
+      "default": "try await client.deleteUserData(userToken: \"test-user-token\")"
+    },
+    "exportConversations": {
+      "exportConversations without filters": "let response = try await client.exportConversations(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "exportConversations with date filters": "let response = try await client.exportConversations(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\"\n)"
+    },
+    "getAgent": {
+      "getAgent": "let response = try await client.getAgent(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "e2e get agent": "let response = try await client.getAgent(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "getApplicationConfiguration": {
+      "getApplicationConfiguration": "let response = try await client.getApplicationConfiguration()",
+      "e2e getApplicationConfiguration": "let response = try await client.getApplicationConfiguration()"
+    },
+    "getConversation": {
+      "default": "let response = try await client.getConversation(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    conversationId: \"test-conversation-id\"\n)"
+    },
+    "getProvider": {
+      "getProvider": "let response = try await client.getProvider(providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\")",
+      "e2e get provider": "let response = try await client.getProvider(providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "getUserData": {
+      "default": "let response = try await client.getUserData(userToken: \"test-user-token\")"
+    },
+    "invalidateAgentCache": {
+      "invalidateAgentCache without before": "try await client.invalidateAgentCache(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "invalidateAgentCache with before date": "try await client.invalidateAgentCache(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\", before: \"2024-12-01\")"
+    },
+    "listAgentConversations": {
+      "listAgentConversations with minimal parameters": "let response = try await client.listAgentConversations(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")",
+      "listAgentConversations with all parameters": "let response = try await client.listAgentConversations(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\",\n    page: 2,\n    limit: 10,\n    xAlgoliaSecureUserToken: nil\n)"
+    },
+    "listAgents": {
+      "list agents with no params": "let response = try await client.listAgents()",
+      "list agents with all parameters": "let response = try await client.listAgents(\n    page: 2,\n    limit: 5,\n    providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\"\n)",
+      "e2e list agents": "let response = try await client.listAgents(page: 1, limit: 2, providerId: nil)"
+    },
+    "listModels": {
+      "listModels": "let response = try await client.listModels()",
+      "e2e list models": "let response = try await client.listModels()"
+    },
+    "listProviderModels": {
+      "default": "let response = try await client.listProviderModels(providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\")"
+    },
+    "listProviders": {
+      "listProviders with no params": "let response = try await client.listProviders()",
+      "listProviders with pagination": "let response = try await client.listProviders(page: 2, limit: 5)",
+      "e2e list providers": "let response = try await client.listProviders(page: 1, limit: 2)"
+    },
+    "publishAgent": {
+      "default": "let response = try await client.publishAgent(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "setClientApiKey": {
+      "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
+    },
+    "unpublishAgent": {
+      "default": "let response = try await client.unpublishAgent(agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\")"
+    },
+    "updateAgent": {
+      "updateAgent with minimal parameters": "let response = try await client.updateAgent(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate: AgentConfigUpdate(name: \"updated-agent-name\")\n)",
+      "updateAgent with all parameters": "let response = try await client.updateAgent(\n    agentId: \"785b14e4-61a8-4c03-8028-bf2ba3ae85ff\",\n    agentConfigUpdate: AgentConfigUpdate(\n        name: \"updated-agent\",\n        description: \"Updated description\",\n        providerId: \"new-provider-id\",\n        model: \"gpt-4o\",\n        instructions: \"Updated instructions.\",\n        config: [\"temperature\": 0.5],\n        tools: [ItemsUnion.startPart(StartPart(type: \"start\"))]\n    )\n)"
+    },
+    "updateConfiguration": {
+      "default": "let response = try await client\n    .updateConfiguration(applicationConfigPatch: ApplicationConfigPatch(maxRetentionDays: 30))"
+    },
+    "updateProvider": {
+      "updateProvider": "let response = try await client.updateProvider(\n    providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch: ProviderAuthenticationPatch(name: \"Updated Provider Name\")\n)",
+      "updateProvider with input": "let response = try await client.updateProvider(\n    providerId: \"5e33d805-7892-4329-bda7-b524dc3fd04a\",\n    providerAuthenticationPatch: ProviderAuthenticationPatch(\n        name: \"Updated Provider\",\n        input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: \"sk-new-key-5678\"))\n    )\n)"
+    },
+    "init": {
+      "default": "let client = try AgentStudioClient(appID: \"ALGOLIA_APPLICATION_ID\", apiKey: \"ALGOLIA_API_KEY\", region: .us)"
+    }
+  }
+}
