@@ -222,18 +222,20 @@ class EchoTransporterSync(TransporterSync):
     ) -> Iterator[ServerSentEvent]:
         self.prepare(request_options, verb == Verb.GET or use_read_transporter)
 
-        data = dumps({
-            "verb": verb,
-            "path": path,
-            "status_code": 200,
-            "host": self._retry_strategy.valid_hosts(self._hosts)[0].url,
-            "timeouts": {
-                "connect": request_options.timeouts["connect"],
-                "response": self._timeout,
-            },
-            "query_parameters": request_options.query_parameters,
-            "headers": dict(request_options.headers),
-            "data": request_options.data,
-        })
+        data = dumps(
+            {
+                "verb": verb,
+                "path": path,
+                "status_code": 200,
+                "host": self._retry_strategy.valid_hosts(self._hosts)[0].url,
+                "timeouts": {
+                    "connect": request_options.timeouts["connect"],
+                    "response": self._timeout,
+                },
+                "query_parameters": request_options.query_parameters,
+                "headers": dict(request_options.headers),
+                "data": request_options.data,
+            }
+        )
 
         yield ServerSentEvent(data=data, event="", id=None, retry=None)

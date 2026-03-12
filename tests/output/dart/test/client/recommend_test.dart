@@ -80,6 +80,28 @@ void main() {
     }
   });
 
+  test('handles 204 No Content responses correctly', () async {
+    final requester = RequestInterceptor();
+    final client = RecommendClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customDelete(
+        path: "1/test/no-content",
+      );
+      expect(res, isA<AlgoliaNoResponse>());
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('switch API key', () async {
     final requester = RequestInterceptor();
     final client = RecommendClient(

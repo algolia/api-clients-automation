@@ -68,6 +68,20 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('handles 204 No Content responses correctly')]
+    public function test0noContent(): void
+    {
+        $client = MonitoringClient::createWithConfig(MonitoringConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6691']));
+
+        $res = $client->customDelete(
+            '1/test/no-content',
+        );
+        $this->assertEquals(
+            null,
+            $res
+        );
+    }
+
     #[TestDox('use the correct host')]
     public function test0parameters(): void
     {

@@ -747,6 +747,38 @@ func TestSearchindexExists2(t *testing.T) {
 	require.EqualError(t, err, "API error [403] Invalid API key")
 }
 
+// handles 204 No Content responses correctly.
+func TestSearchnoContent0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
+		"1/test/no-content"))
+	require.NoError(t, err)
+	require.Nil(t, res)
+}
+
 // client throws with invalid parameters.
 func TestSearchparameters0(t *testing.T) {
 	var (

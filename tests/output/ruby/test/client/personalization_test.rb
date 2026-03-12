@@ -31,6 +31,27 @@ class TestClientPersonalizationClient < Test::Unit::TestCase
     assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.36.1\).*/))
   end
 
+  # handles 204 No Content responses correctly
+  def test_no_content0
+    client = Algolia::PersonalizationClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6691,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "personalizationClient"
+      )
+    )
+    req = client.custom_delete("1/test/no-content")
+    assert_equal(nil, req)
+  end
+
   # throws when region is not given
   def test_parameters0
     begin

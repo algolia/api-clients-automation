@@ -633,6 +633,36 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("handles 204 No Content responses correctly") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6691)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customDelete[JObject](
+        path = "1/test/no-content"
+      ),
+      Duration.Inf
+    )
+
+    assert(res == null)
+  }
+
   test("client throws with invalid parameters") {
 
     assertError("`appId` is missing.") {

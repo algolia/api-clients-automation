@@ -45,6 +45,23 @@ final class AnalyticsClientClientTests: XCTestCase {
         )
     }
 
+    /// handles 204 No Content responses correctly
+    func testNoContentTest0() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customDelete(path: "1/test/no-content")
+
+        XCTAssertTrue(response.value is Void)
+    }
+
     /// fallbacks to the alias when region is not given
     func testParametersTest0() async throws {
         let configuration = try AnalyticsClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)

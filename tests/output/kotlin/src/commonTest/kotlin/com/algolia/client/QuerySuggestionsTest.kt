@@ -55,6 +55,31 @@ class QuerySuggestionsTest {
   }
 
   @Test
+  fun `handles 204 No Content responses correctly`() = runTest {
+    val client =
+      QuerySuggestionsClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        "us",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6691,
+                )
+              )
+          ),
+      )
+    client.runTest(
+      call = { customDelete(path = "1/test/no-content") },
+      response = { assertNull(it) },
+    )
+  }
+
+  @Test
   fun `throws when region is not given`() = runTest {
     assertFails {
         val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")
