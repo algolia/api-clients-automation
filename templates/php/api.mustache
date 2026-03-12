@@ -121,6 +121,10 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         }
         {{/isSearchClient}}
 
+        $logger = Algolia::getLogger();
+        $logger->info('Algolia API client: Algolia {{classname}} initialized (appId: '.$config->getAppId().')');
+        Algolia::logDebugWarningOnce();
+
         return $client;
     }
 
@@ -374,6 +378,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             $waitBatchSize = $batchSize;
         }
 
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
+
         foreach ($objects as $object) {
             $records[] = $object;
             $ok = false;
@@ -382,6 +391,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             if (sizeof($records) === $batchSize || $count === sizeof($objects)) {
                 $responses[] = $this->push($indexName, ['action' => $action, 'records' => $records], false, $referenceIndexName, $requestOptions);
                 $records = [];
+                $logger->info('Algolia API client: Batch progress: '.$count.'/'.$totalObjects.' objects processed');
             }
 
             if ($waitForTasks && !empty($responses) && (0 === sizeof($responses) % $waitBatchSize || $count === sizeof($objects))) {
@@ -414,6 +424,9 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                 $offset = $offset + $waitBatchSize;
             }
         }
+
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
 
         return $responses;
     }
@@ -813,6 +826,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $requests = [];
         $count = 0;
 
+        $logger = Algolia::getLogger();
+        $totalObjects = count($objects);
+        $startTime = microtime(true);
+        $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
+
         foreach ($objects as $object) {
             $requests[] = [
                 'action' => $action,
@@ -822,6 +840,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
+
+                $logger->info('Algolia API client: Batch progress: '.min($count + 1, $totalObjects).'/'.$totalObjects.' objects processed');
             }
 
             ++$count;
@@ -829,6 +849,7 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 
         if (!empty($requests)) {
             $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
+            $logger->info('Algolia API client: Batch progress: '.$totalObjects.'/'.$totalObjects.' objects processed');
         }
 
         if ($waitForTasks && !empty($responses)) {
@@ -837,6 +858,8 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             }
         }
 
+        $durationMs = round((microtime(true) - $startTime) * 1000);
+        $logger->info('Algolia API client: Batch operation completed: '.$totalObjects.' objects in '.$durationMs.'ms');
         return $responses;
     }
 
