@@ -65,6 +65,33 @@ class TestClientCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # test the response decompression strategy
+  def test_api3
+    client = Algolia::CompositionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6691,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "compositionClient"
+      )
+    )
+    req = client.custom_get("1/test/gzip-response")
+    assert_equal(
+      {
+        :"message" => "ok decompression test server response",
+        :"data" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::CompositionClient.create(

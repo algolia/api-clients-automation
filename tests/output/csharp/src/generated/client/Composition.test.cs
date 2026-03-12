@@ -91,6 +91,38 @@ public class CompositionClientTests
     );
   }
 
+  [Fact(DisplayName = "test the response decompression strategy")]
+  public async Task ApiTest3()
+  {
+    CompositionConfig _config = new CompositionConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6691,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new CompositionClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/gzip-response");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "calls api with correct user agent")]
   public async Task CommonApiTest0()
   {
