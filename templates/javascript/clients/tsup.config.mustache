@@ -18,6 +18,9 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
+    // es2018 downlevels public class fields to constructor assignments via __publicField(),
+    // which is required for conservative bundlers (e.g. VTEX IO) that do not transpile node_modules.
+    target: 'es2018',
     name: `node ${pkg.name} cjs`
   },
   {
@@ -47,6 +50,7 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
+    target: 'es2018',
     name: 'node algoliasearch cjs',
     dts: { entry: { 'node': 'builds/node.ts' } },
     entry: ['builds/node.ts'],
