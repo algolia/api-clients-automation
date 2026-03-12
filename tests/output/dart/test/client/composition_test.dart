@@ -70,6 +70,29 @@ void main() {
     }
   });
 
+  test('test the response decompression strategy', () async {
+    final requester = RequestInterceptor();
+    final client = CompositionClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6691',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/gzip-response",
+      );
+      expectBody(res,
+          """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = CompositionClient(

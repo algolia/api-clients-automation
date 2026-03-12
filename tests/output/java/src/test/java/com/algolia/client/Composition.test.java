@@ -134,6 +134,37 @@ class CompositionClientClientTests {
   }
 
   @Test
+  @DisplayName("test the response decompression strategy")
+  void apiTest3() {
+    CompositionClient client = new CompositionClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6691
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/gzip-response");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum" +
+          " dolor sit amet, consectetur adipiscing elit.\"}",
+        json.writeValueAsString(res),
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("calls api with correct user agent")
   void commonApiTest0() {
     CompositionClient client = createClient();

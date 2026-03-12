@@ -135,6 +135,44 @@ func TestCompositionapi2(t *testing.T) {
 	)
 }
 
+// test the response decompression strategy.
+func TestCompositionapi3(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *composition.APIClient
+		cfg    composition.CompositionConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = composition.CompositionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6691", call.IsReadWrite)},
+		},
+	}
+	client, err = composition.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/gzip-response"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(
+		t,
+		`{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}`,
+		string(rawBody),
+	)
+}
+
 // calls api with correct user agent.
 func TestCompositioncommonApi0(t *testing.T) {
 	var (

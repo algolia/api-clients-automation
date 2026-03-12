@@ -91,6 +91,20 @@ class CompositionTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('test the response decompression strategy')]
+    public function test3api(): void
+    {
+        $client = CompositionClient::createWithConfig(CompositionConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6691']));
+
+        $res = $client->customGet(
+            '1/test/gzip-response',
+        );
+        $this->assertEquals(
+            '{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}',
+            json_encode($res)
+        );
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
