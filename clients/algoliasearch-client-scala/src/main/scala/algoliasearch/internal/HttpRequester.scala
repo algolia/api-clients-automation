@@ -161,8 +161,8 @@ private[algoliasearch] class HttpRequester private (
       // Handle unsuccessful responses.
       if (!response.isSuccessful)
         throw AlgoliaApiException(message = response.message, httpErrorCode = response.code)
-      // Deserialize and return the response.
-      jsonSerializer.deserialize[T](response.body.byteStream)
+      if (response.code == 204) null.asInstanceOf[T]
+      else jsonSerializer.deserialize[T](response.body.byteStream)
     } catch {
       case exception: IOException => throw AlgoliaClientException(cause = exception)
       case exception: AlgoliaApiException =>
