@@ -42,6 +42,34 @@ void main() {
     }
   });
 
+  test('test the compression strategy', () async {
+    final requester = RequestInterceptor();
+    final client = CompositionClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(compression: 'gzip', hosts: [
+          Host.create(
+              url:
+                  '${Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6678',
+              scheme: 'http'),
+        ]));
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customPost(
+        path: "1/test/gzip",
+        parameters: {},
+        body: {
+          'message':
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
+        },
+      );
+      expectBody(res,
+          """{"message":"ok compression test server response","body":{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."}}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = CompositionClient(
