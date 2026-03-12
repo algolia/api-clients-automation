@@ -13,8 +13,6 @@ import kotlin.test.*
 import kotlinx.coroutines.test.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 
 class InsightsTest {
 
@@ -72,11 +70,7 @@ class InsightsTest {
         )
       },
       response = {
-        JSONAssert.assertEquals(
-          "{\"message\":\"OK\",\"status\":200}",
-          Json.encodeToString(it),
-          JSONCompareMode.LENIENT,
-        )
+        lenientJsonAssert("{\"message\":\"OK\",\"status\":200}", Json.encodeToString(it))
       },
     )
   }
