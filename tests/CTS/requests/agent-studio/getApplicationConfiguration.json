@@ -1,0 +1,23 @@
+[
+  {
+    "parameters": {},
+    "request": {
+      "path": "/1/configuration",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "e2e getApplicationConfiguration",
+    "parameters": {},
+    "request": {
+      "path": "/1/configuration",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "maxRetentionDays": 90
+      }
+    }
+  }
+]

@@ -1,0 +1,31 @@
+ToolPartV5:
+  properties:
+    type:
+      type: string
+      title: type
+    toolCallId:
+      type: string
+      title: toolcallid
+    state:
+      $ref: 'ToolState.yml#/ToolState'
+    input:
+      additionalProperties: true
+      type: object
+      title: input
+    output:
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
+      title: output
+    errorText:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: errortext
+  type: object
+  required:
+    - type
+    - toolCallId
+  title: toolPartV5
+  description: Model for tool invocation in a Message.

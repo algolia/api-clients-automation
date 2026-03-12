@@ -55,6 +55,10 @@ async Task StartPlayground(string s, Configuration configuration)
       var ingestion = new IngestionPlayground(configuration);
       await ingestion.Run();
       break;
+    case "agent-studio":
+      var agentStudio = new AgentStudioPlayground(configuration);
+      await agentStudio.Run();
+      break;
     case "all":
       await StartPlayground("abtesting", configuration);
       await StartPlayground("analytics", configuration);
@@ -65,6 +69,7 @@ async Task StartPlayground(string s, Configuration configuration)
       await StartPlayground("recommend", configuration);
       await StartPlayground("search", configuration);
       await StartPlayground("ingestion", configuration);
+      await StartPlayground("agent-studio", configuration);
       break;
   }
 }

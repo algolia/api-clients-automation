@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "deleteProvider",
+    "parameters": {
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
+    },
+    "request": {
+      "path": "/1/providers/5e33d805-7892-4329-bda7-b524dc3fd04a",
+      "method": "DELETE"
+    }
+  }
+]

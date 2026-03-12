@@ -1,0 +1,58 @@
+[
+  {
+    "testName": "list agents with no params",
+    "parameters": {},
+    "request": {
+      "path": "/1/agents",
+      "method": "GET"
+    }
+  },
+  {
+    "testName": "list agents with all parameters",
+    "parameters": {
+      "page": 2,
+      "limit": 5,
+      "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
+    },
+    "request": {
+      "path": "/1/agents",
+      "method": "GET",
+      "queryParameters": {
+        "page": "2",
+        "limit": "5",
+        "providerId": "5e33d805-7892-4329-bda7-b524dc3fd04a"
+      }
+    }
+  },
+  {
+    "testName": "e2e list agents",
+    "parameters": {
+      "page": 1,
+      "limit": 2,
+      "providerId": null
+    },
+    "request": {
+      "path": "/1/agents",
+      "method": "GET",
+      "queryParameters": {
+        "page": "1",
+        "limit": "2"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "data": [
+          {
+            "name": "cts_e2e_agent",
+            "status": "published"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 2
+        }
+      }
+    }
+  }
+]

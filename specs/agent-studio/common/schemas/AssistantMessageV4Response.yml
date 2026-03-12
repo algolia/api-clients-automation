@@ -1,0 +1,37 @@
+AssistantMessageV4Response:
+  properties:
+    id:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: id
+    role:
+      type: string
+      const: assistant
+      title: role
+      default: assistant
+    content:
+      type: string
+      title: content
+    parts:
+      items:
+        $ref: 'AssistantPartV4.yml#/AssistantPartV4'
+      type: array
+      title: parts
+    toolInvocations:
+      $ref: 'ToolInvocationsUnion.yml#/ToolInvocationsUnion'
+    usage:
+      oneOf:
+        - $ref: 'UsageV4.yml#/UsageV4'
+        - type: 'null'
+    stepsUsages:
+      oneOf:
+        - items:
+            $ref: 'UsageV4.yml#/UsageV4'
+          type: array
+        - type: 'null'
+  type: object
+  required:
+    - content
+  title: assistantMessageV4Response
+  description: Non-streaming completion response for AI SDK v4 compatibility mode.
