@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - uses: marocchino/sticky-pull-request-comment@v3
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
@@ -593,7 +593,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
@@ -606,7 +606,7 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && secrets.ALGOLIA_BOT_TOKEN || secrets.GITHUB_TOKEN }}
