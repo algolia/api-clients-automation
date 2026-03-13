@@ -44,7 +44,12 @@ export function getDependencies(pkg: PKG, requester: Requester): string[] {
   }
 }
 
-export function getBaseNodeOptions(pkg: PKG, cwd: string, requester: Requester = 'http', target: string = 'node14'): Options {
+export function getBaseNodeOptions(
+  pkg: PKG,
+  cwd: string,
+  requester: Requester = 'http',
+  target: string = 'node14',
+): Options {
   return {
     ...getBaseConfig(cwd),
     platform: 'node',
