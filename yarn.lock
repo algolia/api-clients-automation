@@ -104,7 +104,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@eslint/json": "npm:1.0.1"
+    "@eslint/json": "npm:1.1.0"
     "@openapitools/openapi-generator-cli": "npm:2.25.0"
     "@redocly/cli": "npm:2.20.4"
     eslint: "npm:10.0.3"
@@ -1311,15 +1311,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/json@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@eslint/json@npm:1.0.1"
+"@eslint/json@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@eslint/json@npm:1.1.0"
   dependencies:
-    "@eslint/core": "npm:^1.1.0"
-    "@eslint/plugin-kit": "npm:^0.6.0"
+    "@eslint/core": "npm:^1.1.1"
+    "@eslint/plugin-kit": "npm:^0.6.1"
     "@humanwhocodes/momoa": "npm:^3.3.10"
     natural-compare: "npm:^1.4.0"
-  checksum: 10/65fc79be62e3f50d8cd59b51e3dbc0541e73fba451f27c460cc2c4e2911a1871ec031b91e377a38f2032806d5e083510647bce25f2ef3698ef80058649e5a302
+  checksum: 10/26fc4f9923fc70d308651295c9b3258a4b83557b40b09333fbde7759b5665a27e2686dfc24c48b5366cb2c91cf74b8cd2465100895622c18f6da038a2d6924fa
   languageName: node
   linkType: hard
 
