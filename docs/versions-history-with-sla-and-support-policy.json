@@ -856,9 +856,9 @@
       "releaseDate": "2026-03-09"
     },
     "7.38.2": {
-      "releaseDate": "2026-03-09",
       "slaStatus": "eligible",
-      "supportStatus": "eligible"
+      "supportStatus": "eligible",
+      "releaseDate": "2026-03-09"
     }
   },
   "dart": {
@@ -1299,18 +1299,23 @@
     },
     "1.46.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-18"
     },
     "1.46.1": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-24"
     },
     "1.46.2": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-03-09"
+    },
+    "1.47.0": {
+      "releaseDate": "2026-03-17",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "go": {
@@ -4801,12 +4806,12 @@
     },
     "5.49.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-18"
     },
     "5.49.1": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-24"
     },
     "4.27.0": {
@@ -4818,8 +4823,13 @@
     },
     "5.49.2": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-03-09"
+    },
+    "5.50.0": {
+      "releaseDate": "2026-03-17",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "kotlin": {
@@ -6377,13 +6387,18 @@
     },
     "4.39.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-18"
     },
     "4.39.1": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-03-09"
+    },
+    "4.40.0": {
+      "releaseDate": "2026-03-17",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "python": {
@@ -7191,13 +7206,18 @@
     },
     "4.37.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-18"
     },
     "4.37.1": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-03-09"
+    },
+    "4.38.0": {
+      "releaseDate": "2026-03-17",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "ruby": {
@@ -8061,13 +8081,18 @@
     },
     "3.36.0": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-02-18"
     },
     "3.36.1": {
       "slaStatus": "eligible",
-      "supportStatus": "eligible",
+      "supportStatus": "not eligible",
       "releaseDate": "2026-03-09"
+    },
+    "3.37.0": {
+      "releaseDate": "2026-03-17",
+      "slaStatus": "eligible",
+      "supportStatus": "eligible"
     }
   },
   "scala": {

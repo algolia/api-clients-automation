@@ -1,3 +1,7 @@
+## [4.38.0](https://github.com/algolia/algoliasearch-client-python/compare/4.37.1...4.38.0)
+
+- [b2387066c9](https://github.com/algolia/api-clients-automation/commit/b2387066c9) feat(python): added gzip compression ([#6050](https://github.com/algolia/api-clients-automation/pull/6050)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.37.1](https://github.com/algolia/algoliasearch-client-python/compare/4.37.0...4.37.1)
 
 - [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

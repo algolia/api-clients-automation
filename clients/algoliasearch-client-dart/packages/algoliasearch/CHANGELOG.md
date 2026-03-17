@@ -1,3 +1,7 @@
+## [1.47.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.46.2...1.47.0)
+
+- [3a84c8f9be](https://github.com/algolia/api-clients-automation/commit/3a84c8f9be) feat(dart): Implement gzip compression ([#6057](https://github.com/algolia/api-clients-automation/pull/6057)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [1.46.2](https://github.com/algolia/algoliasearch-client-dart/compare/1.46.1...1.46.2)
 
 - [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

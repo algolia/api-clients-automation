@@ -1,3 +1,7 @@
+## [4.40.0](https://github.com/algolia/algoliasearch-client-php/compare/4.39.1...4.40.0)
+
+- [28cced1ecc](https://github.com/algolia/api-clients-automation/commit/28cced1ecc) feat(php): add gzip compression ([#6051](https://github.com/algolia/api-clients-automation/pull/6051)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.39.1](https://github.com/algolia/algoliasearch-client-php/compare/4.39.0...4.39.1)
 
 - [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
