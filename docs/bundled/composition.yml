@@ -3648,7 +3648,6 @@ paths:
                             "ignorePlurals",
                             "singleWordSynonym"
                           ],
-                          "analytics": true,
                           "attributeCriteriaComputedByMinProximity": false,
                           "attributesToHighlight": [
                             "author",
@@ -3666,7 +3665,6 @@ paths:
                             "description"
                           ],
                           "clickAnalytics": false,
-                          "decompoundQuery": true,
                           "disableExactOnAttributes": [
                             "description"
                           ],
@@ -3694,7 +3692,6 @@ paths:
                             "ca",
                             "es"
                           ],
-                          "maxFacetHits": 10,
                           "minProximity": 1,
                           "minWordSizefor1Typo": 4,
                           "minWordSizefor2Typos": 8,
@@ -3822,7 +3819,6 @@ paths:
                               "ignorePlurals",
                               "singleWordSynonym"
                             ],
-                            "analytics": true,
                             "attributeCriteriaComputedByMinProximity": false,
                             "attributesToHighlight": [
                               "author",
@@ -3840,7 +3836,6 @@ paths:
                               "description"
                             ],
                             "clickAnalytics": false,
-                            "decompoundQuery": true,
                             "disableExactOnAttributes": [
                               "description"
                             ],
@@ -3868,7 +3863,6 @@ paths:
                               "ca",
                               "es"
                             ],
-                            "maxFacetHits": 10,
                             "minProximity": 1,
                             "minWordSizefor1Typo": 4,
                             "minWordSizefor2Typos": 8,
@@ -4830,7 +4824,6 @@ paths:
                                   "ignorePlurals",
                                   "singleWordSynonym"
                                 ],
-                                "analytics": true,
                                 "attributeCriteriaComputedByMinProximity": false,
                                 "attributesToHighlight": [
                                   "author",
@@ -4848,7 +4841,6 @@ paths:
                                   "description"
                                 ],
                                 "clickAnalytics": false,
-                                "decompoundQuery": true,
                                 "disableExactOnAttributes": [
                                   "description"
                                 ],
@@ -4876,7 +4868,6 @@ paths:
                                   "ca",
                                   "es"
                                 ],
-                                "maxFacetHits": 10,
                                 "minProximity": 1,
                                 "minWordSizefor1Typo": 4,
                                 "minWordSizefor2Typos": 8,
@@ -5004,7 +4995,6 @@ paths:
                                     "ignorePlurals",
                                     "singleWordSynonym"
                                   ],
-                                  "analytics": true,
                                   "attributeCriteriaComputedByMinProximity": false,
                                   "attributesToHighlight": [
                                     "author",
@@ -5022,7 +5012,6 @@ paths:
                                     "description"
                                   ],
                                   "clickAnalytics": false,
-                                  "decompoundQuery": true,
                                   "disableExactOnAttributes": [
                                     "description"
                                   ],
@@ -5050,7 +5039,6 @@ paths:
                                     "ca",
                                     "es"
                                   ],
-                                  "maxFacetHits": 10,
                                   "minProximity": 1,
                                   "minWordSizefor1Typo": 4,
                                   "minWordSizefor2Typos": 8,
@@ -6364,7 +6352,6 @@ paths:
                               "ignorePlurals",
                               "singleWordSynonym"
                             ],
-                            "analytics": true,
                             "attributeCriteriaComputedByMinProximity": false,
                             "attributesToHighlight": [
                               "author",
@@ -6382,7 +6369,6 @@ paths:
                               "description"
                             ],
                             "clickAnalytics": false,
-                            "decompoundQuery": true,
                             "disableExactOnAttributes": [
                               "description"
                             ],
@@ -6410,7 +6396,6 @@ paths:
                               "ca",
                               "es"
                             ],
-                            "maxFacetHits": 10,
                             "minProximity": 1,
                             "minWordSizefor1Typo": 4,
                             "minWordSizefor2Typos": 8,
@@ -6538,7 +6523,6 @@ paths:
                                 "ignorePlurals",
                                 "singleWordSynonym"
                               ],
-                              "analytics": true,
                               "attributeCriteriaComputedByMinProximity": false,
                               "attributesToHighlight": [
                                 "author",
@@ -6556,7 +6540,6 @@ paths:
                                 "description"
                               ],
                               "clickAnalytics": false,
-                              "decompoundQuery": true,
                               "disableExactOnAttributes": [
                                 "description"
                               ],
@@ -6584,7 +6567,6 @@ paths:
                                 "ca",
                                 "es"
                               ],
-                              "maxFacetHits": 10,
                               "minProximity": 1,
                               "minWordSizefor1Typo": 4,
                               "minWordSizefor2Typos": 8,
@@ -7711,7 +7693,6 @@ paths:
                                     "ignorePlurals",
                                     "singleWordSynonym"
                                   ],
-                                  "analytics": true,
                                   "attributeCriteriaComputedByMinProximity": false,
                                   "attributesToHighlight": [
                                     "author",
@@ -7729,7 +7710,6 @@ paths:
                                     "description"
                                   ],
                                   "clickAnalytics": false,
-                                  "decompoundQuery": true,
                                   "disableExactOnAttributes": [
                                     "description"
                                   ],
@@ -7757,7 +7737,6 @@ paths:
                                     "ca",
                                     "es"
                                   ],
-                                  "maxFacetHits": 10,
                                   "minProximity": 1,
                                   "minWordSizefor1Typo": 4,
                                   "minWordSizefor2Typos": 8,
@@ -7885,7 +7864,6 @@ paths:
                                       "ignorePlurals",
                                       "singleWordSynonym"
                                     ],
-                                    "analytics": true,
                                     "attributeCriteriaComputedByMinProximity": false,
                                     "attributesToHighlight": [
                                       "author",
@@ -7903,7 +7881,6 @@ paths:
                                       "description"
                                     ],
                                     "clickAnalytics": false,
-                                    "decompoundQuery": true,
                                     "disableExactOnAttributes": [
                                       "description"
                                     ],
@@ -7931,7 +7908,6 @@ paths:
                                       "ca",
                                       "es"
                                     ],
-                                    "maxFacetHits": 10,
                                     "minProximity": 1,
                                     "minWordSizefor1Typo": 4,
                                     "minWordSizefor2Typos": 8,
@@ -10494,25 +10470,6 @@ components:
       default: []
       x-categories:
         - Highlighting and Snippeting
-    decompoundQuery:
-      type: boolean
-      description: >
-        Whether to split compound words in the query into their building blocks
-
-        For more information, see [Word
-        segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-
-        Word segmentation is supported for these languages: German, Dutch,
-        Finnish, Swedish, and Norwegian.
-
-        Decompounding doesn't work for words with [non-spacing mark Unicode
-        characters](https://www.charactercodes.net/category/non-spacing_mark).
-
-        For example, `Gartenstühle` won't be decompounded if the `ü` consists of
-        `u` (U+0075) and `◌̈` (U+0308).
-      default: true
-      x-categories:
-        - Languages
     disableExactOnAttributes:
       type: array
       items:
@@ -11056,8 +11013,6 @@ components:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:
           $ref: '#/components/schemas/IndexSettings_alternativesAsExact'
-        analytics:
-          $ref: '#/components/schemas/analytics'
         attributeCriteriaComputedByMinProximity:
           $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
         attributesToHighlight:
@@ -11068,8 +11023,6 @@ components:
           $ref: '#/components/schemas/attributesToSnippet'
         clickAnalytics:
           $ref: '#/components/schemas/clickAnalytics'
-        decompoundQuery:
-          $ref: '#/components/schemas/decompoundQuery'
         disableExactOnAttributes:
           $ref: '#/components/schemas/disableExactOnAttributes'
         disableTypoToleranceOnAttributes:
@@ -11098,8 +11051,6 @@ components:
           $ref: '#/components/schemas/highlightPreTag'
         ignorePlurals:
           $ref: '#/components/schemas/ignorePlurals'
-        maxFacetHits:
-          $ref: '#/components/schemas/maxFacetHits'
         minProximity:
           $ref: '#/components/schemas/minProximity'
         minWordSizefor1Typo:
