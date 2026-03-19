@@ -1409,16 +1409,11 @@ paths:
                   ],
                   "author:John Doe"
                 ],
-                "facets": {
-                  "facetSpecificList": {
-                    "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                    "value": [
-                      "category",
-                      "disjunctive(brand)",
-                      "price"
-                    ]
-                  }
-                },
+                "facets": [
+                  "category",
+                  "disjunctive(brand)",
+                  "price"
+                ],
                 "filters": "(category:Book OR category:Ebook) AND _tags:published",
                 "getRankingInfo": false,
                 "hitsPerPage": 20,
@@ -1849,16 +1844,11 @@ paths:
                     ],
                     "author:John Doe"
                   ],
-                  "facets": {
-                    "facetSpecificList": {
-                      "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                      "value": [
-                        "category",
-                        "disjunctive(brand)",
-                        "price"
-                      ]
-                    }
-                  },
+                  "facets": [
+                    "category",
+                    "disjunctive(brand)",
+                    "price"
+                  ],
                   "filters": "(category:Book OR category:Ebook) AND _tags:published",
                   "getRankingInfo": false,
                   "hitsPerPage": 20,
@@ -3735,16 +3725,11 @@ paths:
                           "synonyms": true,
                           "typoTolerance": true,
                           "facetingAfterDistinct": false,
-                          "facets": {
-                            "facetSpecificList": {
-                              "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                              "value": [
-                                "category",
-                                "disjunctive(brand)",
-                                "price"
-                              ]
-                            }
-                          },
+                          "facets": [
+                            "category",
+                            "disjunctive(brand)",
+                            "price"
+                          ],
                           "hitsPerPage": 20,
                           "maxValuesPerFacet": 100,
                           "renderingContent": {
@@ -4911,16 +4896,11 @@ paths:
                                 "synonyms": true,
                                 "typoTolerance": true,
                                 "facetingAfterDistinct": false,
-                                "facets": {
-                                  "facetSpecificList": {
-                                    "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                                    "value": [
-                                      "category",
-                                      "disjunctive(brand)",
-                                      "price"
-                                    ]
-                                  }
-                                },
+                                "facets": [
+                                  "category",
+                                  "disjunctive(brand)",
+                                  "price"
+                                ],
                                 "hitsPerPage": 20,
                                 "maxValuesPerFacet": 100,
                                 "renderingContent": {
@@ -6439,16 +6419,11 @@ paths:
                             "synonyms": true,
                             "typoTolerance": true,
                             "facetingAfterDistinct": false,
-                            "facets": {
-                              "facetSpecificList": {
-                                "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                                "value": [
-                                  "category",
-                                  "disjunctive(brand)",
-                                  "price"
-                                ]
-                              }
-                            },
+                            "facets": [
+                              "category",
+                              "disjunctive(brand)",
+                              "price"
+                            ],
                             "hitsPerPage": 20,
                             "maxValuesPerFacet": 100,
                             "renderingContent": {
@@ -7780,16 +7755,11 @@ paths:
                                   "synonyms": true,
                                   "typoTolerance": true,
                                   "facetingAfterDistinct": false,
-                                  "facets": {
-                                    "facetSpecificList": {
-                                      "summary": "Specify which facet to retrieve with some marked as disjunctive",
-                                      "value": [
-                                        "category",
-                                        "disjunctive(brand)",
-                                        "price"
-                                      ]
-                                    }
-                                  },
+                                  "facets": [
+                                    "category",
+                                    "disjunctive(brand)",
+                                    "price"
+                                  ],
                                   "hitsPerPage": 20,
                                   "maxValuesPerFacet": 100,
                                   "renderingContent": {
@@ -8878,17 +8848,10 @@ components:
         and [disjunctive faceting for Smart
         Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
       default: []
-      examples:
-        - facetSpecificList:
-            summary: Specify which facet to retrieve with some marked as disjunctive
-            value:
-              - category
-              - disjunctive(brand)
-              - price
-        - facetAll:
-            summary: Retrieve all facets
-            value:
-              - '*'
+      example:
+        - category
+        - disjunctive(brand)
+        - price
       x-categories:
         - Faceting
     filters:
