@@ -26,7 +26,6 @@ MainInjectionQueryParameters _$MainInjectionQueryParametersFromJson(
               (v) => (v as List<dynamic>?)
                   ?.map((e) => $enumDecode(_$AlternativesAsExactEnumMap, e))
                   .toList()),
-          analytics: $checkedConvert('analytics', (v) => v as bool?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(
               'attributeCriteriaComputedByMinProximity', (v) => v as bool?),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
@@ -36,8 +35,6 @@ MainInjectionQueryParameters _$MainInjectionQueryParametersFromJson(
           attributesToSnippet: $checkedConvert('attributesToSnippet',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           clickAnalytics: $checkedConvert('clickAnalytics', (v) => v as bool?),
-          decompoundQuery:
-              $checkedConvert('decompoundQuery', (v) => v as bool?),
           disableExactOnAttributes: $checkedConvert('disableExactOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           disableTypoToleranceOnAttributes: $checkedConvert(
@@ -60,8 +57,6 @@ MainInjectionQueryParameters _$MainInjectionQueryParametersFromJson(
           highlightPreTag:
               $checkedConvert('highlightPreTag', (v) => v as String?),
           ignorePlurals: $checkedConvert('ignorePlurals', (v) => v),
-          maxFacetHits:
-              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           minProximity:
               $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           minWordSizefor1Typo: $checkedConvert(
@@ -143,14 +138,12 @@ Map<String, dynamic> _$MainInjectionQueryParametersToJson(
   writeNotNull('allowTyposOnNumericTokens', instance.allowTyposOnNumericTokens);
   writeNotNull('alternativesAsExact',
       instance.alternativesAsExact?.map((e) => e.toJson()).toList());
-  writeNotNull('analytics', instance.analytics);
   writeNotNull('attributeCriteriaComputedByMinProximity',
       instance.attributeCriteriaComputedByMinProximity);
   writeNotNull('attributesToHighlight', instance.attributesToHighlight);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('attributesToSnippet', instance.attributesToSnippet);
   writeNotNull('clickAnalytics', instance.clickAnalytics);
-  writeNotNull('decompoundQuery', instance.decompoundQuery);
   writeNotNull('disableExactOnAttributes', instance.disableExactOnAttributes);
   writeNotNull('disableTypoToleranceOnAttributes',
       instance.disableTypoToleranceOnAttributes);
@@ -167,7 +160,6 @@ Map<String, dynamic> _$MainInjectionQueryParametersToJson(
   writeNotNull('highlightPostTag', instance.highlightPostTag);
   writeNotNull('highlightPreTag', instance.highlightPreTag);
   writeNotNull('ignorePlurals', instance.ignorePlurals);
-  writeNotNull('maxFacetHits', instance.maxFacetHits);
   writeNotNull('minProximity', instance.minProximity);
   writeNotNull('minWordSizefor1Typo', instance.minWordSizefor1Typo);
   writeNotNull('minWordSizefor2Typos', instance.minWordSizefor2Typos);
