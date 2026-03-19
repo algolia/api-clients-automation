@@ -11,8 +11,6 @@ baseInjectionQueryParameters:
       $ref: '../../../params/Search.yml#/allowTyposOnNumericTokens'
     alternativesAsExact:
       $ref: '../../../params/Search.yml#/alternativesAsExact'
-    analytics:
-      $ref: '../../../params/Search.yml#/analytics'
     attributeCriteriaComputedByMinProximity:
       $ref: '../../../params/Search.yml#/attributeCriteriaComputedByMinProximity'
     attributesToHighlight:
@@ -23,8 +21,6 @@ baseInjectionQueryParameters:
       $ref: '../../../params/Search.yml#/attributesToSnippet'
     clickAnalytics:
       $ref: '../../../params/Search.yml#/clickAnalytics'
-    decompoundQuery:
-      $ref: '../../../params/Search.yml#/decompoundQuery'
     disableExactOnAttributes:
       $ref: '../../../params/Search.yml#/disableExactOnAttributes'
     disableTypoToleranceOnAttributes:
@@ -53,8 +49,6 @@ baseInjectionQueryParameters:
       $ref: '../../../params/Search.yml#/highlightPreTag'
     ignorePlurals:
       $ref: '../../../params/Search.yml#/ignorePlurals'
-    maxFacetHits:
-      $ref: '../../../params/Search.yml#/maxFacetHits'
     minProximity:
       $ref: '../../../params/Search.yml#/minProximity'
     minWordSizefor1Typo:
