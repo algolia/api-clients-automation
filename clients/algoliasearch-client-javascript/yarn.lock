@@ -12,14 +12,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algolia/abtesting@npm:1.15.2, @algolia/abtesting@workspace:packages/abtesting":
+"@algolia/abtesting@npm:1.16.0, @algolia/abtesting@workspace:packages/abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/abtesting@workspace:packages/abtesting"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -33,10 +33,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/advanced-personalization@workspace:packages/advanced-personalization"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -46,14 +46,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-abtesting@npm:5.49.2, @algolia/client-abtesting@workspace:packages/client-abtesting":
+"@algolia/client-abtesting@npm:5.50.0, @algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -63,14 +63,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-analytics@npm:5.49.2, @algolia/client-analytics@workspace:packages/client-analytics":
+"@algolia/client-analytics@npm:5.50.0, @algolia/client-analytics@workspace:packages/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:packages/client-analytics"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -80,7 +80,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-common@npm:5.49.2, @algolia/client-common@workspace:packages/client-common":
+"@algolia/client-common@npm:5.50.0, @algolia/client-common@workspace:packages/client-common":
   version: 0.0.0-use.local
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
@@ -96,14 +96,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-insights@npm:5.49.2, @algolia/client-insights@workspace:packages/client-insights":
+"@algolia/client-insights@npm:5.50.0, @algolia/client-insights@workspace:packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:packages/client-insights"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -113,14 +113,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-personalization@npm:5.49.2, @algolia/client-personalization@workspace:packages/client-personalization":
+"@algolia/client-personalization@npm:5.50.0, @algolia/client-personalization@workspace:packages/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:packages/client-personalization"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -130,14 +130,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-query-suggestions@npm:5.49.2, @algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
+"@algolia/client-query-suggestions@npm:5.50.0, @algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
   version: 0.0.0-use.local
   resolution: "@algolia/client-query-suggestions@workspace:packages/client-query-suggestions"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -147,14 +147,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@npm:5.49.2, @algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@npm:5.50.0, @algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -168,10 +168,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/composition@workspace:packages/composition"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -181,14 +181,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/ingestion@npm:1.49.2, @algolia/ingestion@workspace:packages/ingestion":
+"@algolia/ingestion@npm:1.50.0, @algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -202,7 +202,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/logger-console@workspace:packages/logger-console"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.12.0"
     jsdom: "npm:27.4.0"
@@ -214,14 +214,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/monitoring@npm:1.49.2, @algolia/monitoring@workspace:packages/monitoring":
+"@algolia/monitoring@npm:1.50.0, @algolia/monitoring@workspace:packages/monitoring":
   version: 0.0.0-use.local
   resolution: "@algolia/monitoring@workspace:packages/monitoring"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -231,14 +231,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/recommend@npm:5.49.2, @algolia/recommend@workspace:packages/recommend":
+"@algolia/recommend@npm:5.50.0, @algolia/recommend@workspace:packages/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:25.1.0"
     publint: "npm:0.3.18"
@@ -248,11 +248,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-browser-xhr@npm:5.49.2, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
+"@algolia/requester-browser-xhr@npm:5.50.0, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.12.0"
     jsdom: "npm:27.4.0"
@@ -264,11 +264,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-fetch@npm:5.49.2, @algolia/requester-fetch@workspace:packages/requester-fetch":
+"@algolia/requester-fetch@npm:5.50.0, @algolia/requester-fetch@workspace:packages/requester-fetch":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.12.0"
     cross-fetch: "npm:4.1.0"
@@ -280,11 +280,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-node-http@npm:5.49.2, @algolia/requester-node-http@workspace:packages/requester-node-http":
+"@algolia/requester-node-http@npm:5.50.0, @algolia/requester-node-http@workspace:packages/requester-node-http":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.12.0"
     nock: "npm:14.0.11"
@@ -295,14 +295,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-testing@npm:5.49.2, @algolia/requester-testing@workspace:packages/requester-testing":
+"@algolia/requester-testing@npm:5.50.0, @algolia/requester-testing@workspace:packages/requester-testing":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-testing@workspace:packages/requester-testing"
   dependencies:
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:24.12.0"
     publint: "npm:0.3.18"
@@ -2975,21 +2975,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch@workspace:packages/algoliasearch"
   dependencies:
-    "@algolia/abtesting": "npm:1.15.2"
-    "@algolia/client-abtesting": "npm:5.49.2"
-    "@algolia/client-analytics": "npm:5.49.2"
-    "@algolia/client-common": "npm:5.49.2"
-    "@algolia/client-insights": "npm:5.49.2"
-    "@algolia/client-personalization": "npm:5.49.2"
-    "@algolia/client-query-suggestions": "npm:5.49.2"
-    "@algolia/client-search": "npm:5.49.2"
-    "@algolia/ingestion": "npm:1.49.2"
-    "@algolia/monitoring": "npm:1.49.2"
-    "@algolia/recommend": "npm:5.49.2"
-    "@algolia/requester-browser-xhr": "npm:5.49.2"
-    "@algolia/requester-fetch": "npm:5.49.2"
-    "@algolia/requester-node-http": "npm:5.49.2"
-    "@algolia/requester-testing": "npm:5.49.2"
+    "@algolia/abtesting": "npm:1.16.0"
+    "@algolia/client-abtesting": "npm:5.50.0"
+    "@algolia/client-analytics": "npm:5.50.0"
+    "@algolia/client-common": "npm:5.50.0"
+    "@algolia/client-insights": "npm:5.50.0"
+    "@algolia/client-personalization": "npm:5.50.0"
+    "@algolia/client-query-suggestions": "npm:5.50.0"
+    "@algolia/client-search": "npm:5.50.0"
+    "@algolia/ingestion": "npm:1.50.0"
+    "@algolia/monitoring": "npm:1.50.0"
+    "@algolia/recommend": "npm:5.50.0"
+    "@algolia/requester-browser-xhr": "npm:5.50.0"
+    "@algolia/requester-fetch": "npm:5.50.0"
+    "@algolia/requester-node-http": "npm:5.50.0"
+    "@algolia/requester-testing": "npm:5.50.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@cloudflare/vitest-pool-workers": "npm:0.12.20"
     "@cloudflare/workers-types": "npm:4.20251115.0"

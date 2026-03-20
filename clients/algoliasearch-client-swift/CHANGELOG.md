@@ -1,3 +1,7 @@
+## [9.41.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.41.0...9.41.1)
+
+- [600f157a13](https://github.com/algolia/api-clients-automation/commit/600f157a13) fix(specs): remove query parameter that are not accepted by the Composition API ([#6128](https://github.com/algolia/api-clients-automation/pull/6128)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [9.41.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.40.0...9.41.0)
 
 - [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
