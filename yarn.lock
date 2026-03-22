@@ -6050,15 +6050,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"instantsearch-ui-components@npm:0.21.0":
-  version: 0.21.0
-  resolution: "instantsearch-ui-components@npm:0.21.0"
+"instantsearch-ui-components@npm:0.22.0":
+  version: 0.22.0
+  resolution: "instantsearch-ui-components@npm:0.22.0"
   dependencies:
     "@swc/helpers": "npm:0.5.18"
     markdown-to-jsx: "npm:^7.7.15"
     zod: "npm:^3.25.76 || ^4"
     zod-to-json-schema: "npm:3.24.6"
-  checksum: 10/98d566f54a85003e187a476e097ef81dc5fdc219f059c7118d24ffc541e95cabbb6680a34ee37bf3d5f0c60fa0fd1b948f6cfe8f9cfde8bcfa99ef8f98726b02
+  checksum: 10/a5398e1bd03b4885a12c86f8abc762fa4b6176513b2683379bc07c2164d95e040612c6fbe4157ff337cc6bcb4cd5f9a8d5785d2c774de716220da97d390c3301
   languageName: node
   linkType: hard
 
@@ -6071,9 +6071,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"instantsearch.js@npm:4.91.0":
-  version: 4.91.0
-  resolution: "instantsearch.js@npm:4.91.0"
+"instantsearch.js@npm:4.92.0":
+  version: 4.92.0
+  resolution: "instantsearch.js@npm:4.92.0"
   dependencies:
     "@algolia/events": "npm:^4.0.1"
     "@swc/helpers": "npm:0.5.18"
@@ -6084,7 +6084,7 @@ __metadata:
     algoliasearch-helper: "npm:3.28.0"
     hogan.js: "npm:^3.0.2"
     htm: "npm:^3.0.0"
-    instantsearch-ui-components: "npm:0.21.0"
+    instantsearch-ui-components: "npm:0.22.0"
     preact: "npm:^10.10.0"
     qs: "npm:^6.5.1"
     react: "npm:>= 0.14.0"
@@ -6093,7 +6093,7 @@ __metadata:
     zod-to-json-schema: "npm:3.24.6"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
-  checksum: 10/9a3d6984171c136b5707b5c07ce3a165bab3c263beb50c12ab61acde5a3188efc833b869b432681f556711000f89117397dcaed8817386ffa2f9e7b03a9c43b5
+  checksum: 10/f4bde0ca9316e8e430eac70216ab0a5c50280ffc491c768dc743077c893ad4390b7a359c1d742baf6d3c12363826ca6c21055d1264445530de1f807939c4b370
   languageName: node
   linkType: hard
 
@@ -6301,7 +6301,7 @@ __metadata:
     instantsearch.css: "npm:8.12.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
-    react-instantsearch: "npm:7.27.0"
+    react-instantsearch: "npm:7.28.0"
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:8.57.1"
     vite: "npm:7.2.6"
@@ -8091,36 +8091,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-instantsearch-core@npm:7.27.0":
-  version: 7.27.0
-  resolution: "react-instantsearch-core@npm:7.27.0"
+"react-instantsearch-core@npm:7.28.0":
+  version: 7.28.0
+  resolution: "react-instantsearch-core@npm:7.28.0"
   dependencies:
     "@swc/helpers": "npm:0.5.18"
     algoliasearch-helper: "npm:3.28.0"
-    instantsearch.js: "npm:4.91.0"
+    instantsearch.js: "npm:4.92.0"
     use-sync-external-store: "npm:^1.0.0"
     zod: "npm:^3.25.76 || ^4"
     zod-to-json-schema: "npm:3.24.6"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 20"
-  checksum: 10/27d05fb13161aefb909538c50cdbf49d074cebfec307a12f8bb0fc81d670b61b3519716e0ae4fe47592f6ca3ae7d985ce4d51028957b9a40a1cf0815c54b13ce
+  checksum: 10/bd40e661f1dca4eef4c3ed53b5cb3c5c39ad7de6cff677ad704fad8524649bdb3298717681563988cf9a82cde4572927a44aa5c77efc29b8f9e1c52904501312
   languageName: node
   linkType: hard
 
-"react-instantsearch@npm:7.27.0":
-  version: 7.27.0
-  resolution: "react-instantsearch@npm:7.27.0"
+"react-instantsearch@npm:7.28.0":
+  version: 7.28.0
+  resolution: "react-instantsearch@npm:7.28.0"
   dependencies:
     "@swc/helpers": "npm:0.5.18"
-    instantsearch-ui-components: "npm:0.21.0"
-    instantsearch.js: "npm:4.91.0"
-    react-instantsearch-core: "npm:7.27.0"
+    instantsearch-ui-components: "npm:0.22.0"
+    instantsearch.js: "npm:4.92.0"
+    react-instantsearch-core: "npm:7.28.0"
   peerDependencies:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 20"
     react-dom: ">= 16.8.0 < 20"
-  checksum: 10/b86051e61684f80f3830a9ac4d12eec48ce55ff3ab935a05aeca5abc2a268a98b117d8e2eedb2b62ed093bad0260f560d4aae5471cdb256d0439408733436272
+  checksum: 10/b0546ff25720818bc653a81fb814bea0fda72d359b20cf3a563c3c8cfc09a862a704d9d0e269f25df4de8e6c0ab84035cce186c89fac99955f78ac8474e7f6ed
   languageName: node
   linkType: hard
 
