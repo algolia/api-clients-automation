@@ -1,6 +1,8 @@
 // {{{generationBanner}}}
 
 {{> client/builds/definition}}
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return create{{#lambda.titlecase}}{{clientName}}{{/lambda.titlecase}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
@@ -21,7 +23,7 @@
         createMemoryCache(),
       ],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 
