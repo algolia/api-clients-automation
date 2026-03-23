@@ -205,6 +205,37 @@ class SearchTest {
   }
 
   @Test
+  fun `test the response decompression strategy`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6691,
+                )
+              )
+          ),
+      )
+    client.runTest(
+      call = { customGet(path = "1/test/gzip-response") },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
   fun `calls api with default read timeouts`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 

@@ -173,8 +173,35 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
-  # calls api with default read timeouts
+  # test the response decompression strategy
   def test_api7
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6691,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.custom_get("1/test/gzip-response")
+    assert_equal(
+      {
+        :"message" => "ok decompression test server response",
+        :"data" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # calls api with default read timeouts
+  def test_api8
     client = Algolia::SearchClient.create(
       "APP_ID",
       "API_KEY",
@@ -187,7 +214,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # calls api with default write timeouts
-  def test_api8
+  def test_api9
     client = Algolia::SearchClient.create(
       "APP_ID",
       "API_KEY",
@@ -200,7 +227,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # can handle unknown response fields
-  def test_api9
+  def test_api10
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -224,7 +251,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # can handle unknown response fields inside a nested oneOf
-  def test_api10
+  def test_api11
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",
@@ -248,7 +275,7 @@ class TestClientSearchClient < Test::Unit::TestCase
   end
 
   # does not retry on success
-  def test_api11
+  def test_api12
     client = Algolia::SearchClient.create_with_config(
       Algolia::Configuration.new(
         "test-app-id",

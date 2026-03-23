@@ -213,6 +213,37 @@ class TestSearchClient:
 
     async def test_api_7(self):
         """
+        test the response decompression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/gzip-response",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}"""
+        )
+
+    async def test_api_8(self):
+        """
         calls api with default read timeouts
         """
         _client = self.create_client()
@@ -223,7 +254,7 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
-    async def test_api_8(self):
+    async def test_api_9(self):
         """
         calls api with default write timeouts
         """
@@ -235,7 +266,7 @@ class TestSearchClient:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
-    async def test_api_9(self):
+    async def test_api_10(self):
         """
         can handle unknown response fields
         """
@@ -266,7 +297,7 @@ class TestSearchClient:
             """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
         )
 
-    async def test_api_10(self):
+    async def test_api_11(self):
         """
         can handle unknown response fields inside a nested oneOf
         """
@@ -298,7 +329,7 @@ class TestSearchClient:
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
 
-    async def test_api_11(self):
+    async def test_api_12(self):
         """
         does not retry on success
         """
@@ -1677,6 +1708,37 @@ class TestSearchClientSync:
 
     def test_api_7(self):
         """
+        test the response decompression strategy
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6691,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/gzip-response",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"message":"ok decompression test server response","data":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}"""
+        )
+
+    def test_api_8(self):
+        """
         calls api with default read timeouts
         """
         _client = self.create_client()
@@ -1687,7 +1749,7 @@ class TestSearchClientSync:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
 
-    def test_api_8(self):
+    def test_api_9(self):
         """
         calls api with default write timeouts
         """
@@ -1699,7 +1761,7 @@ class TestSearchClientSync:
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
 
-    def test_api_9(self):
+    def test_api_10(self):
         """
         can handle unknown response fields
         """
@@ -1730,7 +1792,7 @@ class TestSearchClientSync:
             """{"minWordSizefor1Typo":12,"minWordSizefor2Typos":13,"hitsPerPage":14}"""
         )
 
-    def test_api_10(self):
+    def test_api_11(self):
         """
         can handle unknown response fields inside a nested oneOf
         """
@@ -1762,7 +1824,7 @@ class TestSearchClientSync:
             """{"objectID":"ruleObjectID","consequence":{"promote":[{"objectID":"1","position":10}]}}"""
         )
 
-    def test_api_11(self):
+    def test_api_12(self):
         """
         does not retry on success
         """

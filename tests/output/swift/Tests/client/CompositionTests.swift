@@ -61,6 +61,25 @@ final class CompositionClientClientTests: XCTestCase {
         )
     }
 
+    /// test the response decompression strategy
+    func testApiTest3() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6691")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+        let response = try await client.customGet(path: "1/test/gzip-response")
+
+        XTCJSONEquals(
+            received: response,
+            expected: "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"}"
+        )
+    }
+
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
         let configuration = try CompositionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)

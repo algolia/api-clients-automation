@@ -225,6 +225,38 @@
     ]
   },
   {
+    "testName": "test the response decompression strategy",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6691
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/gzip-response"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok decompression test server response",
+            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "calls api with default read timeouts",
     "steps": [
       {
