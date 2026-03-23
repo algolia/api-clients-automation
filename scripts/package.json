@@ -18,7 +18,7 @@
     "waitForAllReleases": "yarn runScript ci/codegen/waitForAllReleases.ts"
   },
   "devDependencies": {
-    "@actions/artifact": "6.2.0",
+    "@actions/artifact": "6.2.1",
     "@actions/core": "3.0.0",
     "@actions/exec": "3.0.0",
     "@actions/io": "3.0.2",
@@ -36,17 +36,17 @@
     "chalk": "5.6.2",
     "commander": "14.0.2",
     "crc": "4.3.2",
-    "esbuild": "0.27.3",
+    "esbuild": "0.27.4",
     "execa": "9.6.1",
     "express": "5.2.1",
     "folder-hash": "4.1.2",
     "fs-extra": "11.3.4",
     "js-yaml": "4.1.1",
-    "knip": "5.67.1",
+    "knip": "6.0.3",
     "micromatch": "4.0.8",
     "semver": "7.7.4",
     "spinnies": "0.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.18"
+    "vitest": "4.1.0"
   }
 }
