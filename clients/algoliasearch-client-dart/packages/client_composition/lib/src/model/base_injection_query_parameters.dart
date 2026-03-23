@@ -19,13 +19,11 @@ final class BaseInjectionQueryParameters {
     this.advancedSyntaxFeatures,
     this.allowTyposOnNumericTokens,
     this.alternativesAsExact,
-    this.analytics,
     this.attributeCriteriaComputedByMinProximity,
     this.attributesToHighlight,
     this.attributesToRetrieve,
     this.attributesToSnippet,
     this.clickAnalytics,
-    this.decompoundQuery,
     this.disableExactOnAttributes,
     this.disableTypoToleranceOnAttributes,
     this.distinct,
@@ -40,7 +38,6 @@ final class BaseInjectionQueryParameters {
     this.highlightPostTag,
     this.highlightPreTag,
     this.ignorePlurals,
-    this.maxFacetHits,
     this.minProximity,
     this.minWordSizefor1Typo,
     this.minWordSizefor2Typos,
@@ -80,10 +77,6 @@ final class BaseInjectionQueryParameters {
   @JsonKey(name: r'alternativesAsExact')
   final List<AlternativesAsExact>? alternativesAsExact;
 
-  /// Whether this search will be included in Analytics.
-  @JsonKey(name: r'analytics')
-  final bool? analytics;
-
   /// Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
   @JsonKey(name: r'attributeCriteriaComputedByMinProximity')
   final bool? attributeCriteriaComputedByMinProximity;
@@ -103,10 +96,6 @@ final class BaseInjectionQueryParameters {
   /// Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
   @JsonKey(name: r'clickAnalytics')
   final bool? clickAnalytics;
-
-  /// Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-  @JsonKey(name: r'decompoundQuery')
-  final bool? decompoundQuery;
 
   /// Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
   @JsonKey(name: r'disableExactOnAttributes')
@@ -170,11 +159,6 @@ final class BaseInjectionQueryParameters {
   /// - [List<SupportedLanguage>]
   @JsonKey(name: r'ignorePlurals')
   final dynamic ignorePlurals;
-
-  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-  // maximum: 100
-  @JsonKey(name: r'maxFacetHits')
-  final int? maxFacetHits;
 
   /// Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
   // minimum: 1
@@ -282,14 +266,12 @@ final class BaseInjectionQueryParameters {
           other.advancedSyntaxFeatures == advancedSyntaxFeatures &&
           other.allowTyposOnNumericTokens == allowTyposOnNumericTokens &&
           other.alternativesAsExact == alternativesAsExact &&
-          other.analytics == analytics &&
           other.attributeCriteriaComputedByMinProximity ==
               attributeCriteriaComputedByMinProximity &&
           other.attributesToHighlight == attributesToHighlight &&
           other.attributesToRetrieve == attributesToRetrieve &&
           other.attributesToSnippet == attributesToSnippet &&
           other.clickAnalytics == clickAnalytics &&
-          other.decompoundQuery == decompoundQuery &&
           other.disableExactOnAttributes == disableExactOnAttributes &&
           other.disableTypoToleranceOnAttributes ==
               disableTypoToleranceOnAttributes &&
@@ -305,7 +287,6 @@ final class BaseInjectionQueryParameters {
           other.highlightPostTag == highlightPostTag &&
           other.highlightPreTag == highlightPreTag &&
           other.ignorePlurals == ignorePlurals &&
-          other.maxFacetHits == maxFacetHits &&
           other.minProximity == minProximity &&
           other.minWordSizefor1Typo == minWordSizefor1Typo &&
           other.minWordSizefor2Typos == minWordSizefor2Typos &&
@@ -335,13 +316,11 @@ final class BaseInjectionQueryParameters {
       advancedSyntaxFeatures.hashCode +
       allowTyposOnNumericTokens.hashCode +
       alternativesAsExact.hashCode +
-      analytics.hashCode +
       attributeCriteriaComputedByMinProximity.hashCode +
       attributesToHighlight.hashCode +
       attributesToRetrieve.hashCode +
       attributesToSnippet.hashCode +
       clickAnalytics.hashCode +
-      decompoundQuery.hashCode +
       disableExactOnAttributes.hashCode +
       disableTypoToleranceOnAttributes.hashCode +
       distinct.hashCode +
@@ -356,7 +335,6 @@ final class BaseInjectionQueryParameters {
       highlightPostTag.hashCode +
       highlightPreTag.hashCode +
       ignorePlurals.hashCode +
-      maxFacetHits.hashCode +
       minProximity.hashCode +
       minWordSizefor1Typo.hashCode +
       minWordSizefor2Typos.hashCode +

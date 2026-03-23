@@ -58,8 +58,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   \- `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
   *   matches - `singleWordSynonym`. Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches -
   *   `multiWordsSynonym`. Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
-  * @param analytics
-  *   Whether this search will be included in Analytics.
   * @param attributeCriteriaComputedByMinProximity
   *   Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if
   *   the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching
@@ -87,13 +85,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query
   *   and is required for tracking [click and conversion
   *   events](https://www.algolia.com/doc/guides/sending-events/getting-started).
-  * @param decompoundQuery
-  *   Whether to split compound words in the query into their building blocks For more information, see [Word
-  *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-  *   Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding
-  *   doesn't work for words with [non-spacing mark Unicode
-  *   characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
-  *   decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   * @param disableExactOnAttributes
   *   Searchable attributes for which you want to [turn off the Exact ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
@@ -138,9 +129,6 @@ import algoliasearch.composition.SupportedLanguage._
   *   HTML tag to insert after the highlighted parts in all highlighted results and snippets.
   * @param highlightPreTag
   *   HTML tag to insert before the highlighted parts in all highlighted results and snippets.
-  * @param maxFacetHits
-  *   Maximum number of facet values to return when [searching for facet
-  *   values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   * @param minProximity
   *   Minimum proximity score for two matching words This adjusts the [Proximity ranking
   *   criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -207,13 +195,11 @@ case class BaseInjectionQueryParameters(
     advancedSyntaxFeatures: Option[Seq[AdvancedSyntaxFeatures]] = scala.None,
     allowTyposOnNumericTokens: Option[Boolean] = scala.None,
     alternativesAsExact: Option[Seq[AlternativesAsExact]] = scala.None,
-    analytics: Option[Boolean] = scala.None,
     attributeCriteriaComputedByMinProximity: Option[Boolean] = scala.None,
     attributesToHighlight: Option[Seq[String]] = scala.None,
     attributesToRetrieve: Option[Seq[String]] = scala.None,
     attributesToSnippet: Option[Seq[String]] = scala.None,
     clickAnalytics: Option[Boolean] = scala.None,
-    decompoundQuery: Option[Boolean] = scala.None,
     disableExactOnAttributes: Option[Seq[String]] = scala.None,
     disableTypoToleranceOnAttributes: Option[Seq[String]] = scala.None,
     distinct: Option[Distinct] = scala.None,
@@ -228,7 +214,6 @@ case class BaseInjectionQueryParameters(
     highlightPostTag: Option[String] = scala.None,
     highlightPreTag: Option[String] = scala.None,
     ignorePlurals: Option[IgnorePlurals] = scala.None,
-    maxFacetHits: Option[Int] = scala.None,
     minProximity: Option[Int] = scala.None,
     minWordSizefor1Typo: Option[Int] = scala.None,
     minWordSizefor2Typos: Option[Int] = scala.None,
