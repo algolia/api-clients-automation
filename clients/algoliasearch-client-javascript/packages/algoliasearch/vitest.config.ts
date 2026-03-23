@@ -38,7 +38,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [cloudflareTest()],
+        plugins: [cloudflareTest({ miniflare: {} })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/fetch',
@@ -50,7 +50,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [cloudflareTest()],
+        plugins: [cloudflareTest({ miniflare: {} })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/worker',
