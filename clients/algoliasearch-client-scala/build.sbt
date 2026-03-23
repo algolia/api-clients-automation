@@ -1,8 +1,8 @@
 organization := "com.algolia"
 name := "algoliasearch-scala"
 description := "Scala client for Algolia Search API"
-scalaVersion := "3.8.2"
-crossScalaVersions := Seq("2.13.12", "3.6.3")
+scalaVersion := "2.13.18"
+crossScalaVersions := Seq("2.13.12", "3.8.2")
 Test / publishArtifact := false
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
 homepage := Some(url("https://github.com/algolia/algoliasearch-client-scala/"))
