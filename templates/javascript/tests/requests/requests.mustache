@@ -4,7 +4,7 @@ import { describe, test, expect } from 'vitest';
 import { {{{clientName}}} } from '{{{importPackage}}}';
 import { nodeEchoRequester } from '@algolia/requester-testing';
 import type { EchoResponse } from '@algolia/requester-testing';
-import type { ClientOptions } from '@algolia/client-common';
+import type { ClientOptions, ServerSentEvent } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
@@ -15,6 +15,7 @@ const client = {{{clientName}}}(appId, apiKey{{#isStandaloneClient}}, {{#hasRegi
 {{#blocksRequests}}
 describe('{{operationId}}', () => {
   {{#tests}}
+  {{^isStreamingTest}}
   test('{{{testName}}}', async () => {
     const req = ({{> tests/method}}) as unknown as EchoResponse;
 
@@ -28,6 +29,37 @@ describe('{{operationId}}', () => {
     );
     {{/request.headers}}
   });
+  {{/isStreamingTest}}
+
+  {{#isStreamingTest}}
+  test('{{{testName}}}', async () => {
+    const events: ServerSentEvent[] = [];
+    for await (const event of client.{{method}}{{streamMethodSuffix}}({{#hasParams}}{{#parametersWithDataType.size}}{{{parameters}}}{{/parametersWithDataType.size}}{{/hasParams}}{{#hasRequestOptions}}, {
+      {{#requestOptions.queryParameters.parameters}}
+        queryParameters: {{{.}}},
+      {{/requestOptions.queryParameters.parameters}}
+      {{#requestOptions.headers.parameters}}
+        headers: {{{.}}},
+      {{/requestOptions.headers.parameters}}
+      }
+      {{/hasRequestOptions}}
+    )) {
+      events.push(event);
+    }
+    expect(events.length).toBeGreaterThan(0);
+    const req = JSON.parse(events[0].data) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('{{{request.path}}}');
+    expect(req.method).toEqual('{{{request.method}}}');
+    expect(req.data).toEqual({{#request.body}}{{{.}}}{{/request.body}}{{^request.body}}undefined{{/request.body}});
+    expect(req.searchParams).toStrictEqual({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}undefined{{/request.queryParameters}});
+    {{#request.headers}}
+    expect(req.headers).toEqual(
+      expect.objectContaining({{{request.headers}}})
+    );
+    {{/request.headers}}
+  });
+  {{/isStreamingTest}}
 
   {{/tests}}
 })

@@ -12,6 +12,7 @@ public class Request {
   public RequestProp request;
   public ResponseProp response;
   public List<String> skipLanguages;
+  public Boolean isStreaming;
 
   @Override
   public String toString() {
@@ -22,6 +23,7 @@ public class Request {
     sb.append("    requestOptions: ").append(requestOptions).append("\n");
     sb.append("    request: ").append(request).append("\n");
     sb.append("    response: ").append(response).append("\n");
+    sb.append("    isStreaming: ").append(isStreaming).append("\n");
     sb.append("}");
     return sb.toString();
   }
